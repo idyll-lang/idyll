@@ -96,7 +96,6 @@ $ touch custom-component.js
 Then inside of `custom-component.js`:
 
 ```jsx
-const React = require('react');
 const IdyllComponent = require('idyll-component');
 
 class CustomComponent extends IdyllComponent {
