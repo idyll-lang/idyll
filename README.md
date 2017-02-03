@@ -90,7 +90,7 @@ To create a custom component do the following:
 ```
 $ npm install --save idyll-component react
 $ mkdir components
-$ touch custom-component.js
+$ touch components/custom-component.js
 ```
 
 Then inside of `custom-component.js`:
