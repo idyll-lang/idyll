@@ -81,6 +81,8 @@ Hello world.
 [Range value:test min:0 max:10 /]
 ```
 
+To see the rest of the available component, for now see https://github.com/idyll-lang/idyll/tree/master/components
+
 ### Custom Components
 
 To create a custom component do the following:
@@ -131,5 +133,9 @@ Hello world.
 
 [CustomComponent value:test /]
 ```
+
+to update a variable from within a component, you can call `this.updateProps({ propname: val })` and idyll will automatically propegate the changes to that property back to any variables that were bound to it.
+
+
 
 
