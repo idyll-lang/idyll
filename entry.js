@@ -4,11 +4,19 @@ const grammar = require('idyll-grammar');
 const nearley = require("nearley");
 const React = require('react');
 const ReactDOM = require('react-dom');
+const changeCase = require('change-case');
+const htmlTags = require('html-tags');
+const bulk = require('bulk-require');
+
+// Require all of the components up front...
+// this is not ideal!
+const defaultComponents = bulk(process.env.IDYLL_PATH + '/components', [ '**/*.js' ]);
+const customComponents = bulk(process.env.COMPONENTS_FOLDER, [ '**/*.js' ]);
 
 // Create a Parser object from our grammar.
 const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
 
-let processedFile = file.replace(/\n\s*\n/g, "[Break /]");
+let processedFile = file.replace(/\n\s*\n/g, "[br /]");
 processedFile = file.replace(/\n/g, " ");
 processedFile = file.replace(/(\])(\s+)(\[)/g, "$1$3");
 
@@ -31,16 +39,7 @@ const NODES = {
 
 const COMPONENTS = {
   Variable: 'var',
-  Break: 'Break',
-  AngleDisplay: 'AngleDisplay',
-  Range: 'Range',
-  Button: 'Button',
-  Inline: 'Inline',
-  Section: 'Section',
-  Slideshow: 'Slideshow',
-  Slide: 'Slide',
-  Fixed: 'Fixed',
-  Map: 'Map'
+  Dataset: 'data'
 };
 
 const PROPERTIES = {
@@ -54,18 +53,23 @@ const VARIABLE = {
   Value: 'value'
 };
 
-const COMPONENT_CLASSES = {
-  AngleDisplay: require('./components/angle-display'),
-  Break: () => <br/>,
-  Range: require('./components/range'),
-  Button: require('./components/button'),
-  Inline: require('./components/inline'),
-  Section: require('./components/section'),
-  Slideshow: require('./components/slideshow'),
-  Slide: require('./components/slide'),
-  Fixed: require('./components/fixed'),
-  Map: require('./components/map')
-};
+const getComponentClass = (name) => {
+  const paramCaseName = changeCase.paramCase(name);
+
+  if (customComponents[paramCaseName]) {
+    return customComponents[paramCaseName];
+  }
+
+  if (defaultComponents[paramCaseName]) {
+    return defaultComponents[paramCaseName];
+  }
+
+  if (htmlTags.indexOf(paramCaseName) > -1) {
+    return paramCaseName;
+  }
+
+  return 'div';
+}
 
 
 class InteractiveDocument extends React.Component {
@@ -168,10 +172,7 @@ class InteractiveDocument extends React.Component {
             }
           });
 
-          if (COMPONENT_CLASSES[componentName]) {
-            return React.createElement(COMPONENT_CLASSES[componentName], propsObj, children.map(walkNode));
-          }
-          return React.createElement('div', propsObj, children.map(walkNode));
+          return React.createElement(getComponentClass(componentName), propsObj, children.map(walkNode));
         }
       }
     };
