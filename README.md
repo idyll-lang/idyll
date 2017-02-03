@@ -88,7 +88,7 @@ To see the rest of the available component, for now see https://github.com/idyll
 To create a custom component do the following:
 
 ```
-$ npm install --save idyll-component
+$ npm install --save idyll-component react
 $ mkdir components
 $ touch custom-component.js
 ```
@@ -96,6 +96,7 @@ $ touch custom-component.js
 Then inside of `custom-component.js`:
 
 ```jsx
+const React = require('react');
 const IdyllComponent = require('idyll-component');
 
 class CustomComponent extends IdyllComponent {
