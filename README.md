@@ -134,8 +134,15 @@ Hello world.
 [CustomComponent value:test /]
 ```
 
-to update a variable from within a component, you can call `this.updateProps({ propname: val })` and idyll will automatically propegate the changes to that property back to any variables that were bound to it.
+To update a variable from within a component, you can call `this.updateProps({ propname: val })` and idyll will automatically propegate the changes to that property back to any variables that were bound to it, e.g. in 
+`custom-component.js` adding `this.updateProps({value: newValue})` would update the value of the variable `test` and
+subsequently change the position of the range slider.
 
 
+To change the location of your custom components use:
+
+```
+idyll index.idl --css app.css --components ./component-folder/
+```
 
 
