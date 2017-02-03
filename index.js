@@ -6,7 +6,6 @@ var path = require('path');
 
 var babelify = require('babelify');
 var envify = require('envify');
-var requireGlobify = require('require-globify');
 var bulkify = require('bulkify');
 var brfs = require('brfs');
 var reactPreset = require('babel-preset-react');

@@ -1,8 +1,8 @@
 const MapGL = require('react-map-gl');
 const React = require('react');
-const IDLComponent = require('../idl-component');
+const IdyllComponent = require('idyll-component');
 
-class Map extends IDLComponent {
+class Map extends IdyllComponent {
   constructor(props) {
     super(props);
   }

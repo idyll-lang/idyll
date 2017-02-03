@@ -1,7 +1,7 @@
 const React = require('react');
-const IDLComponent = require('../idl-component');
+const IdyllComponent = require('idyll-component');
 
-class Button extends IDLComponent {
+class Button extends IdyllComponent {
   render() {
     return (
       <button onClick={this.props.onClick.bind(this)}>

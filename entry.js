@@ -126,7 +126,6 @@ class InteractiveDocument extends React.Component {
 
     results[0].map(walkVars);
     this.state = initialState;
-    console.log(this.state);
 
     nodeID = -1;
     const walkNode = (node) => {

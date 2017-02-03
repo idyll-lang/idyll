@@ -1,7 +1,7 @@
 const React = require('react');
-const IDLComponent = require('../idl-component');
+const IdyllComponent = require('idyll-component');
 
-class Slide extends IDLComponent {
+class Slide extends IdyllComponent {
   render() {
     return (
       <div className="slide" style={{position: 'absolute'}}>

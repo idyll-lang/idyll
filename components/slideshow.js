@@ -1,8 +1,8 @@
 const React = require('react');
-const IDLComponent = require('../idl-component');
+const IdyllComponent = require('idyll-component');
 const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
-class Slideshow extends IDLComponent {
+class Slideshow extends IdyllComponent {
   render() {
     return (
       <div className="slideshow" style={{position: 'relative'}}>

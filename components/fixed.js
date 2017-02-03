@@ -1,7 +1,7 @@
 const React = require('react');
-const IDLComponent = require('../idl-component');
+const IdyllComponent = require('idyll-component');
 
-class Fixed extends IDLComponent {
+class Fixed extends IdyllComponent {
   render() {
     return (
       <div style={{position: 'fixed'}} className="fixed">
