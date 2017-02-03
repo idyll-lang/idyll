@@ -23,7 +23,6 @@ function fullPath(el){
 
 class IdyllComponent extends React.Component {
   constructor(props) {
-    // Modify the props??
     super(props);
 
     if (props.onEnteredView) {
