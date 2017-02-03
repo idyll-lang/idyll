@@ -2,7 +2,6 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const ScrollWatch = require('scrollwatch');
 
-
 //http://stackoverflow.com/questions/4588119/get-elements-css-selector-when-it-doesnt-have-an-id
 function fullPath(el){
   var names = [];
@@ -22,7 +21,7 @@ function fullPath(el){
   return names.join(" > ");
 }
 
-class IDLComponent extends React.Component {
+class IdyllComponent extends React.Component {
   constructor(props) {
     // Modify the props??
     super(props);
@@ -43,4 +42,4 @@ class IDLComponent extends React.Component {
   }
 }
 
-module.exports = IDLComponent;
+module.exports = IdyllComponent;

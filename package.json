@@ -21,6 +21,7 @@
   "homepage": "https://github.com/idyll-lang/idyll-component#readme",
   "dependencies": {
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "scrollwatch": "^1.2.0"
   }
 }
