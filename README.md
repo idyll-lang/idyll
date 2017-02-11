@@ -1,4 +1,5 @@
-# idyll
+![idyll](https://cloud.githubusercontent.com/assets/1074773/22858218/705cefae-f06b-11e6-922e-642c4ed7851e.png)
+
 Command line interface for idyll lang
 
 ## Installation
