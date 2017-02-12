@@ -10,11 +10,13 @@ var bulkify = require('bulkify');
 var brfs = require('brfs');
 var reactPreset = require('babel-preset-react');
 var es2015Preset = require('babel-preset-es2015');
+var compression = require('compression');
 
 budo(path.resolve(__dirname + '/entry.js'), {
   live: true,
   open: true,
   css: argv.css,
+  middleware: compression(),
   browserify: {
     transform: [
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
