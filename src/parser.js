@@ -12,16 +12,13 @@ var grammar = {
       ['blocks block', '$$ = $1.concat([$2])']
     ],
     block: [
-      ['closedComponent', '$$ = $1'],
       ['BREAK', '$$ = ["br", []]'],
+      ['closedComponent', '$$ = [ $1 ]'],
       ['paragraph', '$$ = ["p", [], $1]'],
-      ['openComponent', '$$ = $1'],
+      ['openComponent', '$$ = $1']
     ],
     paragraph: [
-      ['WORDS', '$$ = [ $1 ]'],
-      ['paragraph WORDS', '$$ = $1.concat([$2])'],
-      // ['WORDS closedComponent WORDS', '$$ = $1'],
-      // ['paragraph closedComponent', '$$ = $1.concat([$2])'],
+      ['WORDS', '$$ = [ $1 ]']
     ],
     openComponent: [
       ['openComponentStart openComponentEnd', '$$ = $1.concat([[]])'],
