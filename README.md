@@ -16,7 +16,7 @@ idyll input.idl --css input.css
 
 ## Walkthrough
 
-Install the project generator and create a new Idyll project:
+Install the [project generator](https://github.com/idyll-lang/generator-idyll) and create a new Idyll project:
 
 ```
 $ npm install -g yo generator-idyll
