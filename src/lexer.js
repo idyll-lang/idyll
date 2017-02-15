@@ -13,7 +13,7 @@ module.exports = function() {
     return 'HEADER';
   });
 
-  lexer.addRule(/\n?[^\[\n\]]+/, function(lexeme) {
+  lexer.addRule(/(\n?[^\[\n\]])+/, function(lexeme) {
     this.reject = inComponent;
     if (!this.reject) {
       text = lexeme;
@@ -118,7 +118,7 @@ module.exports = function() {
       tokens.push(token);
       if (text !== null) {
         tokens.push('TOKEN_VALUE_START');
-        tokens.push('"' + text.trim().replace(/\"/g, '&quot;') + '"');
+        tokens.push('"' + text.replace(/\"/g, '&quot;') + '"');
         tokens.push('TOKEN_VALUE_END');
       }
       token = lexer.lex();

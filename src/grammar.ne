@@ -33,7 +33,7 @@ Block -> (Paragraph | OpenComponent | Header) {%
   }
 %}
 
-Header -> "HEADER" __ TokenValue __ ("WORDS" __ TokenValue):? {%
+Header -> "HEADER" __ TokenValue __ ("WORDS" __ TokenValue _):? {%
   function(data, location, reject) {
     return ["h" + data[2].trim().length, [], data[4] ? [data[4][2]] : []];
   }

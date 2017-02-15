@@ -64,12 +64,12 @@ var grammar = {
         },
     {"name": "Header$string$1", "symbols": [{"literal":"H"}, {"literal":"E"}, {"literal":"A"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "Header$ebnf$1$subexpression$1$string$1", "symbols": [{"literal":"W"}, {"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"S"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "Header$ebnf$1$subexpression$1", "symbols": ["Header$ebnf$1$subexpression$1$string$1", "__", "TokenValue"]},
+    {"name": "Header$ebnf$1$subexpression$1", "symbols": ["Header$ebnf$1$subexpression$1$string$1", "__", "TokenValue", "_"]},
     {"name": "Header$ebnf$1", "symbols": ["Header$ebnf$1$subexpression$1"], "postprocess": id},
     {"name": "Header$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "Header", "symbols": ["Header$string$1", "__", "TokenValue", "__", "Header$ebnf$1"], "postprocess": 
         function(data, location, reject) {
-          return ["h" + data[2].trim().length, [], data[4] ? [data[4][2]] : [] ];
+          return ["h" + data[2].trim().length, [], data[4] ? [data[4][2]] : []];
         }
         },
     {"name": "Paragraph$ebnf$1$subexpression$1$subexpression$1", "symbols": ["ClosedComponent"]},
