@@ -27,6 +27,7 @@
     "mocha": "^3.2.0"
   },
   "dependencies": {
-    "jison": "^0.4.17"
+    "lex": "^1.7.9",
+    "nearley": "^2.7.12"
   }
 }
