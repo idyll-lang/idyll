@@ -4,7 +4,7 @@
   "description": "Compiler for idyll",
   "main": "index.js",
   "scripts": {
-    "build-parser": "nearleyc src/parser.ne -o src/grammar.js",
+    "build-grammar": "nearleyc src/grammar.ne -o src/grammar.js",
     "test": "mocha"
   },
   "repository": {

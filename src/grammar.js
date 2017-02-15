@@ -11,8 +11,13 @@ var grammar = {
     {"name": "__$ebnf$1", "symbols": ["wschar", "__$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "__", "symbols": ["__$ebnf$1"], "postprocess": function(d) {return null;}},
     {"name": "wschar", "symbols": [/[ \t\n\v\f]/], "postprocess": id},
-    {"name": "Sourcefile$string$1", "symbols": [{"literal":"E"}, {"literal":"O"}, {"literal":"F"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "Sourcefile", "symbols": ["Blocks", "__", "Sourcefile$string$1"], "postprocess": 
+    {"name": "Sourcefile$ebnf$1$subexpression$1$string$1", "symbols": [{"literal":"E"}, {"literal":"O"}, {"literal":"F"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Sourcefile$ebnf$1$subexpression$1", "symbols": ["Sourcefile$ebnf$1$subexpression$1$string$1", "_"]},
+    {"name": "Sourcefile$ebnf$1", "symbols": ["Sourcefile$ebnf$1$subexpression$1"]},
+    {"name": "Sourcefile$ebnf$1$subexpression$2$string$1", "symbols": [{"literal":"E"}, {"literal":"O"}, {"literal":"F"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Sourcefile$ebnf$1$subexpression$2", "symbols": ["Sourcefile$ebnf$1$subexpression$2$string$1", "_"]},
+    {"name": "Sourcefile$ebnf$1", "symbols": ["Sourcefile$ebnf$1$subexpression$2", "Sourcefile$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
+    {"name": "Sourcefile", "symbols": ["Blocks", "__", "Sourcefile$ebnf$1"], "postprocess": 
         function(data, location, reject) {
           return data[0];
         }

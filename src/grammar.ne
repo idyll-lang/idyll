@@ -1,6 +1,6 @@
 @builtin "whitespace.ne"
 
-Sourcefile -> Blocks __ "EOF" {%
+Sourcefile -> Blocks __ ("EOF" _):+ {%
   function(data, location, reject) {
     return data[0];
   }
