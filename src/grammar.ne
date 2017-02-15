@@ -27,9 +27,15 @@ Blocks -> "BREAK":? _ Block _ ("BREAK":* __ Block):* _ "BREAK":? {%
   }
 %}
 
-Block -> (Paragraph | OpenComponent) {%
+Block -> (Paragraph | OpenComponent | Header) {%
   function(data, location, reject) {
     return data[0][0];
+  }
+%}
+
+Header -> "HEADER" __ TokenValue __ ("WORDS" __ TokenValue):? {%
+  function(data, location, reject) {
+    return ["h" + data[2].trim().length, [], data[4] ? [data[4][2]] : []];
   }
 %}
 

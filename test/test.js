@@ -1,7 +1,7 @@
 
 var expect = require('expect.js');
 var Lexer = require('../src/lexer');
-var parse = require('../src/correct-parser');
+var parse = require('../src/parser');
 var fs = require('fs');
 
 describe('compiler', function() {
@@ -26,12 +26,11 @@ describe('compiler', function() {
   //     expect(results.values).to.eql([null, 'VarDisplay', 'var', null, 'v', 'work', null, '"no"', 'key', null, '`val`', 'k', null, '12.34', null, null, null]);
   //   });
 
-  //   it('should recognize headings', function() {
-  //     var lex = Lexer();
-  //     var results = lex("\n## my title");
-  //     expect(results.tokens).to.eql(['HEADER', 'WORDS', 'EOF']);
-  //     expect(results.values).to.eql(['##', ' my title', null]);
-  //   });
+    it('should recognize headings', function() {
+      var lex = Lexer();
+      var results = lex("\n## my title");
+      expect(results).to.eql('HEADER TOKEN_VALUE_START "##" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "my title" TOKEN_VALUE_END EOF');
+    });
   //   it('should handle newlines', function() {
   //     var lex = Lexer();
   //     var results = lex("\n\n\n\n lol \n\n");
@@ -108,6 +107,20 @@ describe('compiler', function() {
           ['VarDisplay', [['var', ['variable', 'var']]], []],
           'has a component embedded in it.'
         ]]]);
+    });
+
+    it('should handle a header', function() {
+      var input = '## This is a header\n\n And this is a normal paragraph.';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(lexResults);
+      expect(output).to.eql([
+        ['h2', [], [
+          'This is a header']
+        ],['p', [], [
+          'And this is a normal paragraph.']
+        ],
+      ]);
     });
   })
 });
