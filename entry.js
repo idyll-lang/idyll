@@ -1,6 +1,6 @@
 const fs = require('fs');
 const file = fs.readFileSync(process.env.IDL_FILE, "utf8");
-const grammar = require('idyll-grammar');
+const compile = require('idyll-compiler');
 const React = require('react');
 const ReactDOM = require('react-dom');
 const changeCase = require('change-case');
@@ -12,9 +12,6 @@ const bulk = require('bulk-require');
 const defaultComponents = bulk(process.env.IDYLL_PATH + '/components', [ '**/*.js' ]);
 const customComponents = bulk(process.env.COMPONENTS_FOLDER, [ '**/*.js' ]);
 
-// Create a Parser object from our grammar.
-
-const compile = require('idyll-compiler');
 const results = compile(file);
 
 if (results.length) {
