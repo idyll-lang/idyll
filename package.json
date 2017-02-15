@@ -33,15 +33,13 @@
     "compression": "^1.6.2",
     "envify": "^4.0.0",
     "html-tags": "^1.1.1",
-    "idyll-compiler": "^1.0.1",
+    "idyll-compiler": "^1.1.2",
     "idyll-component": "^1.0.2",
-    "immutable": "^3.8.1",
     "minimist": "^1.2.0",
     "nearley": "^2.7.11",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-map-gl": "^2.0.1",
     "scrollwatch": "^1.2.0"
   }
 }
