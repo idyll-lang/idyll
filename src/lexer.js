@@ -12,8 +12,10 @@ module.exports = function() {
     }
     return 'HEADER';
   });
+  lexer.addRule(/^\s?\/\/[^\n]*$/gm, function(lexeme) {
+  });
 
-  lexer.addRule(/(\n?[^\[\n\]])+/, function(lexeme) {
+  lexer.addRule(/(\n?[^`\[\n\]])+/, function(lexeme) {
     this.reject = inComponent;
     if (!this.reject) {
       text = lexeme;
@@ -21,7 +23,12 @@ module.exports = function() {
     return 'WORDS';
   });
 
-  lexer.addRule(/[ \t]+/, function(lexeme) {
+  lexer.addRule(/```[^`]*```/, function(lexeme) {
+    this.reject = inComponent;
+    if (!this.reject) {
+      text = lexeme;
+    }
+    return 'FENCE';
   });
 
   lexer.addRule(/ *\n{2} */, function(lexeme) {
@@ -32,6 +39,10 @@ module.exports = function() {
     }
     return 'BREAK';
   });
+
+  lexer.addRule(/[ \t\n]+/, function(lexeme) {
+  });
+
 
   lexer.addRule(/\[/, function(lexeme) {
     inComponent = true;
@@ -89,6 +100,14 @@ module.exports = function() {
       text = lexeme;
     }
     return 'STRING';
+  });
+
+  lexer.addRule(/:/, function(lexeme) {
+    this.reject = !inComponent;
+    if (!this.reject) {
+      text = null;
+    }
+    return 'PARAM_SEPARATOR';
   });
 
   lexer.addRule(/:/, function(lexeme) {

@@ -6,53 +6,59 @@ Sourcefile -> Blocks __ ("EOF" _):+ {%
   }
 %}
 
-Blocks -> "BREAK":? _ Block _ ("BREAK":* __ Block):* _ "BREAK":? {%
+Blocks -> ("BREAK" __):* Block (__ ("BREAK" __):* Block):* (__ "BREAK"):* {%
   function(data, location, reject) {
     var blocks = [];
-    if (data[0]) {
-      blocks.push(["br", []]);
-    }
+    //if (data[0]) {
+    //  blocks.push(["br", []]);
+    //}
 
-    blocks.push(data[2]);
+    blocks.push(data[1]);
 
-    data[4].forEach(function(d) {
+    data[2].forEach(function(d) {
       blocks.push(d[2]);
     })
 
-    if (data[6]) {
-      blocks.push(["br", []]);
-    }
+    //if (data[3]) {
+    //  blocks.push(["br", []]);
+    //}
 
     return blocks;
   }
 %}
 
-Block -> (Paragraph | OpenComponent | Header) {%
+Block -> (Paragraph | OpenComponent | ClosedComponent | Header | Fence) {%
   function(data, location, reject) {
     return data[0][0];
   }
 %}
 
-Header -> "HEADER" __ TokenValue __ ("WORDS" __ TokenValue _):? {%
+Header -> "HEADER" __ TokenValue __ ("WORDS" __ TokenValue):? {%
   function(data, location, reject) {
     return ["h" + data[2].trim().length, [], data[4] ? [data[4][2]] : []];
   }
 %}
 
-Paragraph -> ((ClosedComponent | ("WORDS" __ TokenValue)) _):+  {%
+Fence -> "FENCE" __ TokenValue {%
   function(data, location, reject) {
-    var children = [];
-    data[0].forEach(function (child) {
-      if (child[0][0][0] === "WORDS") {
-        children.push(child[0][0][2]);
+    return ["pre", [], [["code", [], [data[2].substring(3, data[2].length-3)]]]];
+  }
+%}
+
+Paragraph -> ("WORDS" __ TokenValue) (__ (("WORDS" __ TokenValue) | ClosedComponent | OpenComponent)):*  {%
+  function(data, location, reject) {
+    var children = [data[0][2]];
+    data[1].forEach(function (child) {
+      if (data[1][0] === "WORDS") {
+        children.push(child[1][2]);
       } else {
-        children.push(child[0][0]);
+        children.push(child[1][0]);
       }
     })
 
-    if (children.length === 1 && typeof children[0] !== 'string') {
-      return children[0];
-    }
+    //if (children.length === 1 && typeof children[0] !== 'string') {
+    //  return children[0];
+    //}
     return ["p", [], children];
   }
 %}
@@ -63,15 +69,15 @@ OpenComponent -> OpenComponentStart __ Blocks:? _ OpenComponentEnd {%
   }
 %}
 
-OpenComponentStart -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties _ "CLOSE_BRACKET"  {%
+OpenComponentStart -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties "CLOSE_BRACKET"  {%
   function(data, location, reject) {
     return [data[2], data[4]];
   }
 %}
 
-OpenComponentEnd -> "OPEN_BRACKET" __ "FORWARD_SLASH" __ ComponentName __ ComponentProperties _ "CLOSE_BRACKET"
+OpenComponentEnd -> "OPEN_BRACKET" __ "FORWARD_SLASH" __ ComponentName __ "CLOSE_BRACKET"
 
-ClosedComponent -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties _ "FORWARD_SLASH" __ "CLOSE_BRACKET" {%
+ClosedComponent -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties "FORWARD_SLASH" __ "CLOSE_BRACKET" {%
   function(data, location, reject) {
     return [data[2], data[4], []];
   }
@@ -83,7 +89,7 @@ ComponentName -> "COMPONENT_WORD" __ TokenValue {%
   }
 %}
 
-ComponentProperties -> (ComponentProperty _):* {%
+ComponentProperties -> (ComponentProperty __):* {%
   function(data, location, reject) {
     return data[0].map(function(d) { return d[0]; });
   }
