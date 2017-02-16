@@ -1,5 +1,10 @@
+[data name:"dataone" source:"1" /]
+[data name:"datatwo" source:"2" /]
+
 
 # Introducing Idyll
+
+### A mathisonian production
 
 This is an Idyll file. Write text
 as you please in here.
@@ -45,32 +50,48 @@ which dataset is being displayed:
 [var name:"dataset" value:dataone /]
 ```
 
+and to update the variable we can 
+add buttons:
+
+```
+[Button onClick:`dataset = dataone`]Dataset 1[/Button]
+[Button onClick:`dataset = datatwo`]Dataset 2[/Button]
+```
+
+
 We can then use the variable to power the 
 input to a chart:
 
+
+
 ```
 [Chart type:"scatter" data:dataset /]
 ```
+
+[var name:"dataset" value:dataone /]
+
 
 which gives the output:
 
-[Chart type:"scatter" data:dataset /]
-
-
-To add interactivity we can bind the click handler
-on buttons to toggle the value of the variable:
-
-```
-[Button onClick:&#96;dataset = dataone&#96;]Dataset 1[/Button]
-[Button onClick:&#96;dataset = datatwo&#96;]Dataset 2[/Button]
-```
-
-And putting it all together, we get:
-
-[Chart type:"scatter" data:dataset /]
 [Button onClick:`dataset = dataone`]Dataset 1[/Button]
 [Button onClick:`dataset = datatwo`]Dataset 2[/Button]
 
+[Chart type:"scatter" data:dataset /]
+
+And putting it all together, it looks like:
+
+```
+
+[data name:"dataone" source:"1" /]
+[data name:"datatwo" source:"2" /]
+
+[var name:"dataset" value:dataone /]
+
+[Button onClick:`dataset = dataone`]Dataset 1[/Button]
+[Button onClick:`dataset = datatwo`]Dataset 2[/Button]
+
+[Chart type:"scatter" data:dataset /]
+```
 
 [data name:"datathree" source:"3" /]
 
@@ -79,8 +100,6 @@ handlers to do more complex things.
 
 [var name:"random" value:datathree /]
 
-[Chart type:"line" data:random /]
-
 [Button onClick:`random = (Array(random.length).fill()).map(Math.random)`]
   Randomize
 [/Button]
@@ -88,5 +107,7 @@ handlers to do more complex things.
 [Button onClick:`random.push(Math.random())`]
   Add another point
 [/Button]
+
+[Chart type:"line" data:random /]
 
 

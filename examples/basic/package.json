@@ -1,13 +1,16 @@
 {
-  "name": "martin-quinn",
+  "name": "idyll-example",
   "version": "1.0.0",
   "scripts": {
-    "start": "idyll index.idl --css styles.css"
+    "start": "idyll index.idl --css styles.css",
+    "build": "cp styles.css build/; idyll-build index.idl | uglifyjs > build/index.js"
   },
   "dependencies": {
     "idyll": "^1.0.0",
     "idyll-component": "^1.0.3",
     "victory": "^0.17.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "uglify-js": "^2.7.5"
+  }
 }

@@ -4,7 +4,8 @@
   "description": "Command line interface for idyll lang",
   "main": "index.js",
   "bin": {
-    "idyll": "index.js"
+    "idyll": "index.js",
+    "idyll-build": "build.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -37,6 +38,7 @@
     "idyll-component": "^1.0.2",
     "minimist": "^1.2.0",
     "nearley": "^2.7.11",
+    "node-watch": "^0.4.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
