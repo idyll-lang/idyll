@@ -23,7 +23,6 @@
   "homepage": "https://github.com/idyll-lang/idyll-compiler#readme",
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "lex": "^1.7.9",
     "mocha": "^3.2.0"
   },
   "dependencies": {
