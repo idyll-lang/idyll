@@ -11,17 +11,13 @@ const bulk = require('bulk-require');
 // this is not ideal!
 const defaultComponents = bulk(process.env.IDYLL_PATH + '/components', [ '**/*.js' ]);
 const customComponents = bulk(process.env.COMPONENTS_FOLDER, [ '**/*.js' ]);
-
+const datasets = bulk(process.env.DATA_FOLDER, [ '**/*.json' ]);
 const results = compile(file);
+
 
 if (results.length) {
   console.log('Successfully parsed file.');
 }
-
-const NODES = {
-  Text: 'text',
-  Component: 'component'
-};
 
 const COMPONENTS = {
   Variable: 'var',
@@ -37,6 +33,11 @@ const PROPERTIES = {
 const VARIABLE = {
   Name: 'name',
   Value: 'value'
+};
+
+const DATASET = {
+  Name: 'name',
+  Source: 'source'
 };
 
 const getComponentClass = (name) => {
@@ -79,7 +80,22 @@ class InteractiveDocument extends React.Component {
       const componentName = node[0];
       const props = node[1];
       const children = node[2];
-      if (componentName === COMPONENTS.Variable) {
+      if (componentName === COMPONENTS.Dataset) {
+        let varName, varVal;
+        props.forEach((propArr) => {
+          const propName = propArr[0];
+          const propValueArr = propArr[1];
+          switch (propName) {
+            case DATASET.Name:
+              varName = propValueArr[1];
+              break;
+            case DATASET.Source:
+              varVal = datasets[propValueArr[1]];
+              break;
+          }
+        });
+        initialState[varName] = varVal;
+      } else if (componentName === COMPONENTS.Variable) {
         let varName, varVal;
         props.forEach((propArr) => {
           const propName = propArr[0];
@@ -89,8 +105,14 @@ class InteractiveDocument extends React.Component {
               varName = propValueArr[1];
               break;
             case VARIABLE.Value:
-              varVal = eval(propValueArr[1]);
-              break;
+              switch (propValueArr[0]) {
+                case PROPERTIES.Value:
+                  varVal = propValueArr[1];
+                  break;
+                case PROPERTIES.Variable:
+                  varVal = initialState[propValueArr[1]];
+                  break;
+              }
           }
         });
         initialState[varName] = varVal;
@@ -126,7 +148,7 @@ class InteractiveDocument extends React.Component {
       const componentName = node[0];
       const props = node[1];
       const children = node[2];
-      if (componentName !== COMPONENTS.Variable) {
+      if (componentName !== COMPONENTS.Variable && componentName !== COMPONENTS.Dataset) {
         const propsObj = {key: nodeID, __handleUpdateProps: this.handleUpdateProps(nodeID)};
         props.forEach((propArr) => {
           const propName = propArr[0];
@@ -142,7 +164,6 @@ class InteractiveDocument extends React.Component {
             evalFunc += propValueArr[1];
             evalFunc += `\nthis.setState({${Object.keys(this.state).join(',')}});\n`;
             evalFunc += '})()';
-
             propsObj[propName] = (function() {
               eval(evalFunc);
             }).bind(this);
@@ -152,6 +173,7 @@ class InteractiveDocument extends React.Component {
         });
 
         if (children) {
+
           return React.createElement(getComponentClass(componentName), propsObj, children.map(walkNode));
         }
         return React.createElement(getComponentClass(componentName), propsObj);

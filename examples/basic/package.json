@@ -1,0 +1,13 @@
+{
+  "name": "martin-quinn",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "idyll index.idl --css styles.css"
+  },
+  "dependencies": {
+    "idyll": "^1.0.0",
+    "idyll-component": "^1.0.3",
+    "victory": "^0.17.0"
+  },
+  "devDependencies": {}
+}

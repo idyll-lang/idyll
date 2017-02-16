@@ -11,4 +11,8 @@ class Button extends IdyllComponent {
   }
 }
 
+Button.defaultProps = {
+  onClick: function() {}
+};
+
 module.exports = Button;

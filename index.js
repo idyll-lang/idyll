@@ -20,7 +20,11 @@ budo(path.resolve(__dirname + '/entry.js'), {
   browserify: {
     transform: [
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-      [ envify, { IDL_FILE: argv._[0], COMPONENTS_FOLDER: path.resolve(argv.components || './components/'), IDYLL_PATH: path.resolve(__dirname) } ],
+      [ envify, {
+        IDL_FILE: argv._[0],
+        COMPONENTS_FOLDER: path.resolve(argv.components || './components/'),
+        DATA_FOLDER: path.resolve(argv.datasets || './data/'),
+        IDYLL_PATH: path.resolve(__dirname) } ],
       [ bulkify ],
       [ brfs ]
     ]

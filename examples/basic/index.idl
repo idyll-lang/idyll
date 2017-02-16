@@ -1,0 +1,63 @@
+[data name:"dataone" source:"1" /]
+[data name:"datatwo" source:"2" /]
+[data name:"datathree" source:"3" /]
+
+# Introducing Idyll
+
+This is an Idyll file. Write text
+as you please in here.
+
+To add interactivity, you can add
+different components to the text.
+
+```
+var code = true;
+```
+
+We can make sure that there is a break
+between these paragraphs, then add
+a component:
+
+[Chart type:"line" /]
+
+
+## Interactivity
+
+In this section I'll discuss
+how you can add interactivity to
+your documents. For example,
+how you might use a variable and
+buttons to control the data that
+powers charts.
+
+To do this, first declare a variable,
+this is going to refer to the dataset
+that we want to load (note, maybe in the
+future the expression value on components
+can be smart about checking whether it is
+a function or a value??)
+
+// Declare a variable named dataset.
+[var name:"dataset" value:dataone /]
+
+[Chart type:"scatter" data:dataset /]
+
+[Button onClick:`dataset = dataone`]Dataset 1[/Button]
+[Button onClick:`dataset = datatwo`]Dataset 2[/Button]
+
+We can add arbitrary javascript expression to make some crazy data..
+
+
+[var name:"random" value:datathree /]
+
+[Chart type:"line" data:random /]
+
+[Button onClick:`random = (Array(random.length).fill()).map(Math.random)`]
+  Randomize
+[/Button]
+
+[Button onClick:`random.push(Math.random())`]
+  Add another point
+[/Button]
+
+
