@@ -23,7 +23,7 @@ module.exports = function() {
     return 'WORDS';
   });
 
-  lexer.addRule(/```[^`]*```/, function(lexeme) {
+  lexer.addRule(/`{3}[\s\S]*?`{3}/g, function(lexeme) {
     this.reject = inComponent;
     if (!this.reject) {
       text = lexeme;
