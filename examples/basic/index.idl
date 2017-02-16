@@ -1,22 +1,25 @@
-[data name:"dataone" source:"1" /]
-[data name:"datatwo" source:"2" /]
-[data name:"datathree" source:"3" /]
 
 # Introducing Idyll
 
 This is an Idyll file. Write text
 as you please in here.
 
-To add interactivity, you can add
-different components to the text.
+It supports some common markdown 
+syntax, for example using a pound sign
+to denote headers, and fences for code:
 
 ```
 var code = true;
 ```
 
-We can make sure that there is a break
-between these paragraphs, then add
-a component:
+We can add components to the document
+by writing something that looks like
+
+```
+[Chart type:"line" /]
+```
+
+this will produce a line chart:
 
 [Chart type:"line" /]
 
@@ -30,23 +33,49 @@ how you might use a variable and
 buttons to control the data that
 powers charts.
 
-To do this, first declare a variable,
-this is going to refer to the dataset
-that we want to load (note, maybe in the
-future the expression value on components
-can be smart about checking whether it is
-a function or a value??)
+To do this, we first load two 
+datasets, and then declare a variable.
+We will use the variable to toggle
+which dataset is being displayed:
 
-// Declare a variable named dataset.
+```
+[data name:"dataone" source:"1" /]
+[data name:"datatwo" source:"2" /]
+
 [var name:"dataset" value:dataone /]
+```
+
+We can then use the variable to power the 
+input to a chart:
+
+```
+[Chart type:"scatter" data:dataset /]
+```
+
+which gives the output:
 
 [Chart type:"scatter" data:dataset /]
 
+
+To add interactivity we can bind the click handler
+on buttons to toggle the value of the variable:
+
+```
+[Button onClick:&#96;dataset = dataone&#96;]Dataset 1[/Button]
+[Button onClick:&#96;dataset = datatwo&#96;]Dataset 2[/Button]
+```
+
+And putting it all together, we get:
+
+[Chart type:"scatter" data:dataset /]
 [Button onClick:`dataset = dataone`]Dataset 1[/Button]
 [Button onClick:`dataset = datatwo`]Dataset 2[/Button]
 
-We can add arbitrary javascript expression to make some crazy data..
 
+[data name:"datathree" source:"3" /]
+
+We can add an arbitrary javascript expression in the click 
+handlers to do more complex things.
 
 [var name:"random" value:datathree /]
 
