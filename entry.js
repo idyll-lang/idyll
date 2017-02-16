@@ -37,22 +37,26 @@ const DATASET = {
   Source: 'source'
 };
 
-const getComponentClass = (name) => {
+const processComponent = (name) => {
   const paramCaseName = changeCase.paramCase(name);
+  let componentClass;
+  const extraProps = {};
 
   if (customComponents[paramCaseName]) {
-    return customComponents[paramCaseName];
+    componentClass = customComponents[paramCaseName];
+  } else if (defaultComponents[paramCaseName]) {
+    componentClass = defaultComponents[paramCaseName];
+  } else if (htmlTags.indexOf(paramCaseName) > -1) {
+    componentClass = paramCaseName;
+  } else {
+    componentClass = 'div';
+    extraProps.className = name.toLowerCase();
   }
 
-  if (defaultComponents[paramCaseName]) {
-    return defaultComponents[paramCaseName];
-  }
-
-  if (htmlTags.indexOf(paramCaseName) > -1) {
-    return paramCaseName;
-  }
-
-  return 'div';
+  return {
+    componentClass,
+    extraProps
+  };
 }
 
 
@@ -169,11 +173,12 @@ class InteractiveDocument extends React.Component {
           }
         });
 
+        const results = processComponent(componentName);
+        const inputProps = Object.assign({}, results.extraProps, propsObj);
         if (children) {
-
-          return React.createElement(getComponentClass(componentName), propsObj, children.map(walkNode));
+          return React.createElement(results.componentClass, inputProps, children.length  ? children.map(walkNode) : null);
         }
-        return React.createElement(getComponentClass(componentName), propsObj);
+        return React.createElement(getComponentClass(componentName), inputProps);
       }
     };
 

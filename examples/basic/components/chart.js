@@ -12,10 +12,12 @@ class Chart extends IdyllComponent {
   render() {
     const INNER_CHART = types[this.props.type.toUpperCase()];
     return (
-      <V.VictoryChart>
-        <INNER_CHART data={this.props.data}>
-        </INNER_CHART>
-      </V.VictoryChart>
+      <div className={this.props.className}>
+        <V.VictoryChart>
+          <INNER_CHART data={this.props.data}>
+          </INNER_CHART>
+        </V.VictoryChart>
+      </div>
     );
   }
 }

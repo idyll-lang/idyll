@@ -3,7 +3,12 @@ button {
   cursor: pointer;
 }
 
+body {
+  background: #CFD2CD;
+}
+
 .article {
   max-width: 600px;
   margin: 0 auto;
+  background: white;
 }

@@ -1,11 +1,11 @@
 [data name:"dataone" source:"1" /]
 [data name:"datatwo" source:"2" /]
 
+[header]
+Introducing Idyll
+[/header]
 
-# Introducing Idyll
-
-### A mathisonian production
-
+[section]
 This is an Idyll file. Write text
 as you please in here.
 
@@ -111,3 +111,4 @@ handlers to do more complex things.
 [Chart type:"line" data:random /]
 
 
+[/section]
