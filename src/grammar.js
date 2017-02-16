@@ -80,7 +80,7 @@ var grammar = {
     {"name": "Fence$string$1", "symbols": [{"literal":"F"}, {"literal":"E"}, {"literal":"N"}, {"literal":"C"}, {"literal":"E"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "Fence", "symbols": ["Fence$string$1", "__", "TokenValue"], "postprocess": 
         function(data, location, reject) {
-          return ["pre", [], [["code", [], [data[2].substring(3, data[2].length-3)]]]];
+          return ["pre", [], [["code", [], [data[2].substring(3, data[2].length-3).trim()]]]];
         }
         },
     {"name": "Paragraph$subexpression$1$string$1", "symbols": [{"literal":"W"}, {"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"S"}], "postprocess": function joiner(d) {return d.join('');}},

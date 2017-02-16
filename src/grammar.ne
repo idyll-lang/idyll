@@ -41,7 +41,7 @@ Header -> "HEADER" __ TokenValue __ ("WORDS" __ TokenValue):? {%
 
 Fence -> "FENCE" __ TokenValue {%
   function(data, location, reject) {
-    return ["pre", [], [["code", [], [data[2].substring(3, data[2].length-3)]]]];
+    return ["pre", [], [["code", [], [data[2].substring(3, data[2].length-3).trim()]]]];
   }
 %}
 
