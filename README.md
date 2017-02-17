@@ -2,6 +2,10 @@
 
 Command line interface for idyll lang
 
+## What is Idyll?
+
+See https://idyll-lang.github.io/idyll/
+
 ## Installation
 
 ```
