@@ -10,7 +10,8 @@ const defaultComponents = bulk(process.env.IDYLL_PATH + '/components', [ '**/*.j
 const customComponents = bulk(process.env.COMPONENTS_FOLDER, [ '**/*.js' ]);
 const datasets = bulk(process.env.DATA_FOLDER, [ '**/*.json' ]);
 
-const results = require(process.env.AST_FILE);
+let results = require(process.env.AST_FILE);
+
 
 if (results.length) {
   console.log('Successfully parsed file.');
@@ -18,7 +19,8 @@ if (results.length) {
 
 const COMPONENTS = {
   Variable: 'var',
-  Dataset: 'data'
+  Dataset: 'data',
+  Paragraph: 'p'
 };
 
 const PROPERTIES = {
@@ -158,12 +160,18 @@ class InteractiveDocument extends React.Component {
             propsObj[propName] = this.state[propValueArr[1]];
           } else if (propValueArr[0] === PROPERTIES.Expression) {
             let evalFunc = '(() => {';
+            const relevantVars = [];
+            const expression = propValueArr[1];
             Object.keys(this.state).forEach((propName) => {
+              if (expression.indexOf(propName) === -1) {
+                return;
+              }
+              relevantVars.push(propName);
               const val = this.state[propName];
               evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
             });
             evalFunc += propValueArr[1];
-            evalFunc += `\nthis.setState({${Object.keys(this.state).join(',')}});\n`;
+            evalFunc += `\nthis.setState({${relevantVars.join(',')}});\n`;
             evalFunc += '})()';
             propsObj[propName] = (function() {
               eval(evalFunc);

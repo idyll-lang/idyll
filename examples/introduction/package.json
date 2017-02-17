@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "idyll index.idl --css styles.css",
-    "build": "cp styles.css build/; idyll-build index.idl | uglifyjs > build/index.js"
+    "build": "cp styles.css build/; cp -r images build/; idyll-build index.idl | uglifyjs > build/index.js"
   },
   "dependencies": {
     "idyll": "^1.0.0",

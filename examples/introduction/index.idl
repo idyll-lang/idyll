@@ -1,0 +1,389 @@
+[data name:"exampleLine" source:"example-line" /]
+
+[header]
+[img src:"images/logo.png" className:"logo" /]
+Introducing Idyll
+
+[a href:"https://twitter.com/mathisonian"]Matthew Conlen[/a]
+[/header]
+
+[section]
+
+Idyll is a tool to make it easier to create interactive documents.
+The goal of the project is to provide a friendly
+markup language — and an associated toolchain —
+that can be used to produce data-driven articles.
+
+
+Idyll lowers the barrier-to-entry for
+individuals to create documents that use common narrative techniques
+such as embedding interactive charts and graphs,
+scrolly-telling, slideshows, and more. Its human
+readable format is also meant to facilitate
+collaboration between writers, editors, designers,
+and programmers on more complex projects.
+
+Idyll will take a text file and turn it into
+an interactive webpage. Here is a simple example:
+
+```
+# This is a title
+
+This is an Idyll file. Write text as you please in here.
+
+[Chart type:"line" data:exampleData /]
+```
+
+This will produce a header, some body text,
+and a line chart.
+
+[Chart type:"line" data:exampleLine className:"inset" /]
+
+The project is inspired by markdown, and
+supports a subset of commonly used markdown
+syntax, for example using a pound sign
+to denote headers, and using three backticks to
+display code.
+
+In addition to being able to render static text,
+Idyll can output interactive components.
+These components can be driven by datasets and
+be responsive to reader input.
+
+For an example of a more complicated Idyll file,
+see the [link href:"https://github.com/idyll-lang/idyll/blob/master/examples/introduction/index.idl" text:"source for this page" /].
+
+## Components
+
+
+A component can be invoked in one of two ways. It can be self
+closing, for example
+
+```
+[Range min:0 max:10 value:5 /]
+```
+
+[var name:"rangevar" value:5 /]
+
+[inset]
+[Range min:0 max:10 value:rangevar /]
+[/inset]
+
+or have a closing and opening tag,
+
+```
+[Button]
+Click Me
+[/Button]
+```
+
+[Inset]
+[Button]
+Click Me
+[/Button]
+[/Inset]
+
+### Component Properties
+
+Properties can be based into components
+in the following ways:
+
+```
+// Number
+[Component propName:10 /]
+
+// String
+[Component propName:"propValue" /]
+
+// Variable or dataset
+[Component propName:myVar /]
+
+// Callback
+[Component onClick:`myVar++` /]
+```
+
+### Built-In Componets
+
+Idyll ships with a variety of components that
+you can use without digging in to any JavaScript
+code. Here is a sample of the available components,
+
+```
+// A button, as seen above
+[Button][/Button]
+
+// A range slider
+[Range /]
+
+// A link to another webpage
+[Link /]
+
+// A chart, pass in type
+// to specify line, scatter, or bar
+[Chart /]
+
+// Dynamic slideshow
+[Slideshow]
+  [Slide][/Slide]
+[/Slideshow]
+
+// Display the value of a variable
+// or dataset
+[DisplayVar /]
+```
+
+Additionally there are some components provided that
+help with page layout, for example,
+
+```
+[Section]
+This text is in its own section
+[/Section]
+
+[Inline]These two components[/Inline]
+[Inline]will be displayed without a line break.[/Inline]
+
+[Fixed]
+Contents inside of a fixed tag will stay on the page
+even when a user scrolls.
+[/Fixed]
+```
+
+### Custom Components
+
+Idyll is designed for people to use their own custom components as well.
+Under the hood an Idyll component just needs to be anything that will
+function as a React component. If you create a custom component in
+JavaScript, point Idyll to the folder where you created it and
+everything will just work, no need to worry about compiling, bundling,
+or module loading.
+
+For example,
+
+```
+const React = require('react');
+const IdyllComponent = require('idyll-component');
+
+class CustomComponent extends IdyllComponent {
+  render() {
+    return (
+      <div {...this.props}>
+        This is a custom component
+      </div>
+    );
+  }
+}
+
+module.exports = CustomComponent;
+```
+
+could be invoked inside of an Idyll file with the
+following code:
+
+```
+[CustomComponent /]
+```
+
+The "IdyllComponent" class provides some utilities for keeping
+variables in sync with the rest of the document.
+
+## Datasets and Variables
+
+In addition to components, Idyll supports datasets and variables.
+These are declared similarly to components.
+
+```
+[var name:"myVar" value:5 /]
+[data name:"myDataset" source:"data.json" /]
+```
+
+The above code declares a variable called "myVar" and initializes it
+with the value 5. It also imports a dataset from a JSON file.
+
+### Variables
+
+A variable is initialized with a value, and can be used as an input to a component.
+For example, the following code declares a variable called "myVar", and uses
+it as input to two components,
+
+```
+[var name:"myVar" value:5 /]
+[Range min:0 max:10 value:myVar /]
+[DisplayVar var:myVar /]
+```
+
+Idyll handles all of the updating and rerendering of components for you,
+so when a reader interacts with the range slider, the display will be updated
+automatically!
+
+[var name:"myVar" value:5 /]
+
+[inset]
+[Range min:0 max:10 value:myVar /]
+[DisplayVar var:myVar /]
+[/inset]
+
+### Datasets
+
+Datasets are just like variables, except instead of receiving
+an initial value, they expect a filename. The following code
+would load a dataset and use it to display a chart,
+
+```
+[data name:"fourPoints" source:"four-points.json" /]
+[Chart type:"scatter" data:fourPoints /]
+```
+
+[data name:"fourPoints" source:"four-points" /]
+[Chart type:"scatter" data:fourPoints className:"inset" /]
+
+## Interactivity
+
+By combining the methods shown above,
+Idyll can be used to create rich,
+interactive documents.
+
+As an example, I'll show how
+to create buttons that allow a reader
+to display different datasets on
+a single scatter plot.
+
+To do this, first load the relevant
+datasets, and then declare a variable.
+We will use the variable to toggle
+which dataset is being displayed:
+
+```
+[data name:"one" source:"1.json" /]
+[data name:"two" source:"2.json" /]
+[data name:"three" source:"3.json" /]
+[data name:"four" source:"4.json" /]
+
+[var name:"dataset" value:one /]
+```
+
+and to update the variable we can
+add buttons:
+
+```
+[Button onClick:`dataset = one`]Dataset 1[/Button]
+[Button onClick:`dataset = two`]Dataset 2[/Button]
+[Button onClick:`dataset = three`]Dataset 3[/Button]
+[Button onClick:`dataset = four`]Dataset 4[/Button]
+```
+
+We can then use the variable to power the
+input to a chart:
+
+
+```
+[Chart type:"scatter" data:dataset /]
+```
+
+
+[data name:"one" source:"1" /]
+[data name:"two" source:"2" /]
+[data name:"three" source:"3" /]
+[data name:"four" source:"4" /]
+
+[var name:"dataset" value:one /]
+
+which gives the output:
+
+[inset]
+[Chart type:"scatter" data:dataset /]
+
+[Button onClick:`dataset = one`]Dataset 1[/Button]
+[Button onClick:`dataset = two`]Dataset 2[/Button]
+[Button onClick:`dataset = three`]Dataset 3[/Button]
+[Button onClick:`dataset = four`]Dataset 4[/Button]
+[/inset]
+
+[br/]
+You may recognize this data as [link href:"https://en.wikipedia.org/wiki/Anscombe's_quartet" text:"Anscombe's quartet" /].
+
+Additionally we can add an arbitrary javascript expression in the click
+handlers to do more complex things. The following example
+has a button that will either add a random point to a line,
+or randomize all of the points along that line.
+
+[data name:"emptyLine" source:"empty" /]
+[var name:"random" value:emptyLine /]
+
+[inset]
+[Chart type:"line" data:random className:"inset" /]
+
+[Button onClick:`random.push(Math.random())`]
+  Add Point
+[/Button]
+
+[Button onClick:`random = (Array(random.length).fill()).map(Math.random)`]
+  Randomize
+[/Button]
+[/inset]
+
+```
+[data name:"initialLine" source:"initial-line.json" /]
+[var name:"random" value:initialLine /]
+
+[Button onClick:`random.push(Math.random())`]
+  Add Point
+[/Button]
+
+[Button onClick:`random = (Array(random.length).fill()).map(Math.random)`]
+  Randomize
+[/Button]
+
+[Chart type:"line" data:random className:"inset" /]
+```
+
+In the future, Idyll will support referring to custom JavaScript functions
+in these callbacks, so that code simplifies to
+
+```
+[data name:"initialLine" source:"initial-line.json" /]
+[var name:"random" value:initialLine /]
+
+[Button onClick:`addPoint()`] Add Point [/Button]
+[Button onClick:`randomizePoints()`] Randomize [/Button]
+
+[Chart type:"line" data:random className:"inset" /]
+```
+
+## Using Idyll
+
+There are two ways to get started using Idyll. The simplest way is to
+install it from npm, create a new file and start writing:
+
+```
+$ npm install -g idyll
+$ idyll my-file.idl
+```
+
+The "idyll" command will automatically compile everything and load the
+interactive page in your web browser.
+
+Additionally there is a project generator that will help get you set up
+using custom components, datasets, and stylesheets. To use the generator:
+
+```
+$ npm install -g yo generator-idyll
+$ yo idyll
+```
+
+## Going Forward
+
+Idyll is a very new project, and I'm eager to get feedback. Feel free
+to contact me on twitter [link href:"http://twitter.com/mathisonian" text:"@mathisonian" /]
+or by email [link href:"mailto:idyll@mathisonian.com" text:"idyll@mathisonian.com" /].
+
+Please be kind as there are still plenty of bugs.
+
+There are several features that I plan to add in the near future:
+
+* Support for JSON objects as property inputs
+* Additional built-in components
+* A special optional header at the top of the document for page meta-data
+* Access to a function library in the component callbacks
+
+[/section]

@@ -13,7 +13,7 @@ class Chart extends IdyllComponent {
     const INNER_CHART = types[this.props.type.toUpperCase()];
     return (
       <div className={this.props.className}>
-        <V.VictoryChart>
+        <V.VictoryChart domainPadding={10}>
           <INNER_CHART data={this.props.data}>
           </INNER_CHART>
         </V.VictoryChart>
