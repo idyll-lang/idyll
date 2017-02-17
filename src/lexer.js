@@ -27,7 +27,7 @@ module.exports = function() {
   });
 
   lexer.addRule(/(\n?[^`\[\n\]])+/, function(lexeme) {
-    this.reject = inComponent;
+    this.reject = inComponent || lexeme.trim() === '';
     if (!this.reject) {
       text = lexeme;
     }
