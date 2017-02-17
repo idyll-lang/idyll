@@ -96,8 +96,6 @@ page:
 
 ```
 
-[waypoint onEnteredView:`randomSeed=4` /]
-
 [/section]
 
 [fixed]
