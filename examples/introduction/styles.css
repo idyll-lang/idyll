@@ -36,7 +36,6 @@ header a {
   font-size: 20px;
   color: #984447;
   text-align: center;
-  text-decoration: none;
 }
 
 header a:hover {
@@ -45,6 +44,7 @@ header a:hover {
 
 a {
   color: #984447;
+  text-decoration: none;
 }
 
 .section {
