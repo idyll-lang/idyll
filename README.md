@@ -6,6 +6,11 @@ Command line interface for idyll lang
 
 See https://idyll-lang.github.io/idyll/
 
+## Examples
+
+* The project introduction https://idyll-lang.github.io/idyll/
+* A scrolly example https://idyll-lang.github.io/idyll/scroll/
+
 ## Installation
 
 ```
