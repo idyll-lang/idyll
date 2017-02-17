@@ -1,0 +1,107 @@
+
+[var name:"filterIndex" value:0 /]
+
+[section]
+
+[article-title]Idyll
+[/article-title]
+
+[waypoint onEnteredView:`filterIndex=0` /]
+
+[pullquote]
+A new markup language 
+for creating interactive 
+documents
+[/pullquote]
+
+
+[waypoint onEnteredView:`filterIndex=1` /]
+
+[pullquote]
+Combine a light-weight 
+markup language and reactive 
+JavaScript components
+[/pullquote]
+
+
+[waypoint onEnteredView:`filterIndex=0` /]
+
+[pullquote]
+Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
+for more information
+[/pullquote]
+
+[waypoint onEnteredView:`filterIndex=2` /]
+
+
+[pullquote]
+Here is the markup for this 
+page:
+[/pullquote]
+
+[waypoint onEnteredView:`filterIndex=3` /]
+
+
+```
+[var name:"filterIndex" value:0 /]
+
+[section]
+
+[article-title]Idyll
+[/article-title]
+
+[waypoint onEnteredView:`filterIndex=0` /]
+
+[pullquote]
+A new markup language 
+for creating interactive 
+documents
+[/pullquote]
+
+
+[waypoint onEnteredView:`filterIndex=1` /]
+
+[pullquote]
+Combine a light-weight 
+markup language and reactive 
+JavaScript components
+[/pullquote]
+
+
+[waypoint onEnteredView:`filterIndex=0` /]
+
+[pullquote]
+Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
+for more information
+[/pullquote]
+
+[waypoint onEnteredView:`filterIndex=2` /]
+
+
+[pullquote]
+Here is the markup for this 
+page:
+[/pullquote]
+
+[waypoint onEnteredView:`filterIndex=3` /]
+
+[/section]
+
+[fixed]
+
+[Chart type:"scatter" data:data filterIndex:filterIndex /]
+
+[/fixed]
+
+
+```
+
+[waypoint onEnteredView:`filterIndex=4` /]
+
+[/section]
+
+[fixed]
+
+[Chart type:"scatter" data:data filterIndex:filterIndex /]
+
+[/fixed]
