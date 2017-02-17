@@ -1,4 +1,3 @@
-[data name:"exampleLine" source:"example-line" /]
 
 [header]
 [img src:"images/logo.png" className:"logo" /]
@@ -37,6 +36,7 @@ This is an Idyll file. Write text as you please in here.
 This will produce a header, some body text,
 and a line chart.
 
+[data name:"exampleLine" source:"example-line" /]
 [Chart type:"line" data:exampleLine className:"inset" /]
 
 The project is inspired by markdown, and
