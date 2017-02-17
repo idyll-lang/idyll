@@ -1,9 +1,108 @@
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  font-family: Verdana;
+  font-size: 14px;
+}
+
+.logo {
+  display: block;
+  max-width: 100px;
+  margin: 0 auto;
+}
+
+header {
+  font-family: Georgia,Times,Times New Roman,serif;
+  font-size: 48px;
+  padding: 60px 10px 30px 10px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+header p {
+  margin: 0;
+  color: #000;
+  text-align: center;
+}
+
+header a {
+  margin: 0;
+  display: block;
+  font-size: 20px;
+  color: #984447;
+  text-align: center;
+  text-decoration: none;
+}
+
+header a:hover {
+  text-decoration: underline;
+}
+
+a {
+  color: #984447;
+}
+
+.section {
+  padding: 0 10px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+* {
+  box-sizing: border-box;
+}
 
 button {
   cursor: pointer;
+  background: #5B5E7A;
+  color: #fff;
+  border: none;
+  margin-right: 15px;
+  padding: 10px 10px;
 }
 
 .article {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
+  background: #fff;
+  margin-bottom: 60px;
+}
+
+h1,h2,h3,h4,h5,h6{
+  margin: 40px 0 20px 0;
+  font-family: Georgia,Times,Times New Roman,serif;
+}
+
+pre {
+  margin: 25px 0;
+  width: 100%;
+}
+
+pre code {
+  background: #F2F3F2;
+  color: #000;
+  padding: 20px 15px;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+
+.inset {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+tspan {
+  font-family: Verdana;
+  font-size: 11px;
+}
+
+input {
+  cursor: pointer;
 }
