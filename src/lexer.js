@@ -6,12 +6,23 @@ module.exports = function() {
   var inComponent = false;
   var text;
 
-  lexer.addRule(/^\s?#{1,6}/gm, function(lexeme) {
+  lexer.addRule(/^\s*#{1,6}\s*[^\n]*\n?/gm, function(lexeme) {
+    const match = /\s*(#{1,6})\s*([^\n]*)/.exec(lexeme);
     if (!this.reject) {
-      text = lexeme.trim();
+      text = match[2].trim();
     }
-    return 'HEADER';
+    return 'HEADER_' + match[1].length;
   });
+
+  lexer.addRule(/^\s*\*\s*[^\n]*\n?/gm, function(lexeme) {
+    const match = /\s*\*\s*([^\n]*)/.exec(lexeme);
+    if (!this.reject) {
+      text = match[1].trim();
+    }
+    return 'UNORDERED_ITEM';
+  });
+
+
   lexer.addRule(/^\s?\/\/[^\n]*$/gm, function(lexeme) {
   });
 
@@ -70,6 +81,22 @@ module.exports = function() {
     return 'FORWARD_SLASH';
   });
 
+  lexer.addRule(/true/, function(lexeme) {
+    this.reject = !inComponent;
+    if (!this.reject) {
+      text = null;
+    }
+    return 'BOOLEAN TRUE';
+  });
+
+  lexer.addRule(/false/, function(lexeme) {
+    this.reject = !inComponent;
+    if (!this.reject) {
+      text = null;
+    }
+    return 'BOOLEAN FALSE';
+  });
+
   lexer.addRule(/[^0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*/, function(lexeme) {
     this.reject = !inComponent;
     if (!this.reject) {
@@ -100,14 +127,6 @@ module.exports = function() {
       text = lexeme;
     }
     return 'STRING';
-  });
-
-  lexer.addRule(/:/, function(lexeme) {
-    this.reject = !inComponent;
-    if (!this.reject) {
-      text = null;
-    }
-    return 'PARAM_SEPARATOR';
   });
 
   lexer.addRule(/:/, function(lexeme) {

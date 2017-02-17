@@ -27,17 +27,24 @@ Blocks -> ("BREAK" __):* Block (__ ("BREAK" __):* Block):* (__ "BREAK"):* {%
   }
 %}
 
-Block -> (Paragraph | OpenComponent | ClosedComponent | Header | Fence) {%
+Block -> (Paragraph | OpenComponent | ClosedComponent | Header | Fence | UnorderedList) {%
   function(data, location, reject) {
     return data[0][0];
   }
 %}
 
-Header -> "HEADER" __ TokenValue __ ("WORDS" __ TokenValue):? {%
+Header -> "HEADER_" [1-6] __ TokenValue {%
   function(data, location, reject) {
-    return ["h" + data[2].trim().length, [], data[4] ? [data[4][2]] : []];
+    return ["h" + data[1], [], [data[3]]];
   }
 %}
+
+UnorderedList -> ("UNORDERED_ITEM" __ TokenValue):+ {%
+  function(data, location, reject) {
+    return ["ul", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
+  }
+%}
+
 
 Fence -> "FENCE" __ TokenValue {%
   function(data, location, reject) {
@@ -49,16 +56,16 @@ Paragraph -> ("WORDS" __ TokenValue) (__ (("WORDS" __ TokenValue) | ClosedCompon
   function(data, location, reject) {
     var children = [data[0][2]];
     data[1].forEach(function (child) {
-      if (data[1][0] === "WORDS") {
-        children.push(child[1][2]);
+      if (child[1][0].length && child[1][0][0] === "WORDS") {
+        children.push(child[1][0][2]);
       } else {
         children.push(child[1][0]);
       }
     })
 
-    //if (children.length === 1 && typeof children[0] !== 'string') {
-    //  return children[0];
-    //}
+    if (children.length === 1 && typeof children[0] !== 'string') {
+      return children[0];
+    }
     return ["p", [], children];
   }
 %}

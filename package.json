@@ -1,6 +1,6 @@
 {
   "name": "idyll-compiler",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "description": "Compiler for idyll",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,6 @@
   "homepage": "https://github.com/idyll-lang/idyll-compiler#readme",
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "lex": "^1.7.9",
     "mocha": "^3.2.0"
   },
   "dependencies": {

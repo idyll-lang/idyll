@@ -62,19 +62,27 @@ var grammar = {
     {"name": "Block$subexpression$1", "symbols": ["ClosedComponent"]},
     {"name": "Block$subexpression$1", "symbols": ["Header"]},
     {"name": "Block$subexpression$1", "symbols": ["Fence"]},
+    {"name": "Block$subexpression$1", "symbols": ["UnorderedList"]},
     {"name": "Block", "symbols": ["Block$subexpression$1"], "postprocess": 
         function(data, location, reject) {
           return data[0][0];
         }
         },
-    {"name": "Header$string$1", "symbols": [{"literal":"H"}, {"literal":"E"}, {"literal":"A"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "Header$ebnf$1$subexpression$1$string$1", "symbols": [{"literal":"W"}, {"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"S"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "Header$ebnf$1$subexpression$1", "symbols": ["Header$ebnf$1$subexpression$1$string$1", "__", "TokenValue"]},
-    {"name": "Header$ebnf$1", "symbols": ["Header$ebnf$1$subexpression$1"], "postprocess": id},
-    {"name": "Header$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "Header", "symbols": ["Header$string$1", "__", "TokenValue", "__", "Header$ebnf$1"], "postprocess": 
+    {"name": "Header$string$1", "symbols": [{"literal":"H"}, {"literal":"E"}, {"literal":"A"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}, {"literal":"_"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Header", "symbols": ["Header$string$1", /[1-6]/, "__", "TokenValue"], "postprocess": 
         function(data, location, reject) {
-          return ["h" + data[2].trim().length, [], data[4] ? [data[4][2]] : []];
+          return ["h" + data[1], [], [data[3]]];
+        }
+        },
+    {"name": "UnorderedList$ebnf$1$subexpression$1$string$1", "symbols": [{"literal":"U"}, {"literal":"N"}, {"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}, {"literal":"E"}, {"literal":"D"}, {"literal":"_"}, {"literal":"I"}, {"literal":"T"}, {"literal":"E"}, {"literal":"M"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "UnorderedList$ebnf$1$subexpression$1", "symbols": ["UnorderedList$ebnf$1$subexpression$1$string$1", "__", "TokenValue"]},
+    {"name": "UnorderedList$ebnf$1", "symbols": ["UnorderedList$ebnf$1$subexpression$1"]},
+    {"name": "UnorderedList$ebnf$1$subexpression$2$string$1", "symbols": [{"literal":"U"}, {"literal":"N"}, {"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}, {"literal":"E"}, {"literal":"D"}, {"literal":"_"}, {"literal":"I"}, {"literal":"T"}, {"literal":"E"}, {"literal":"M"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "UnorderedList$ebnf$1$subexpression$2", "symbols": ["UnorderedList$ebnf$1$subexpression$2$string$1", "__", "TokenValue"]},
+    {"name": "UnorderedList$ebnf$1", "symbols": ["UnorderedList$ebnf$1$subexpression$2", "UnorderedList$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
+    {"name": "UnorderedList", "symbols": ["UnorderedList$ebnf$1"], "postprocess": 
+        function(data, location, reject) {
+          return ["ul", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
         }
         },
     {"name": "Fence$string$1", "symbols": [{"literal":"F"}, {"literal":"E"}, {"literal":"N"}, {"literal":"C"}, {"literal":"E"}], "postprocess": function joiner(d) {return d.join('');}},
@@ -97,16 +105,16 @@ var grammar = {
         function(data, location, reject) {
           var children = [data[0][2]];
           data[1].forEach(function (child) {
-            if (data[1][0] === "WORDS") {
-              children.push(child[1][2]);
+            if (child[1][0].length && child[1][0][0] === "WORDS") {
+              children.push(child[1][0][2]);
             } else {
               children.push(child[1][0]);
             }
           })
         
-          //if (children.length === 1 && typeof children[0] !== 'string') {
-          //  return children[0];
-          //}
+          if (children.length === 1 && typeof children[0] !== 'string') {
+            return children[0];
+          }
           return ["p", [], children];
         }
         },
