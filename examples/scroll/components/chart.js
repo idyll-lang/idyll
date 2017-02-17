@@ -10,7 +10,7 @@ const types = {
 
 class Chart extends IdyllComponent {
   render() {
-    const scale = 1 / (( this.props.filterIndex % 3  +  1));
+    const scale = 1 / (( this.props.randomSeed % 3  +  1));
     const INNER_CHART = types[this.props.type.toUpperCase()];
     const data = Array(100).fill().map((_) => {
       return {

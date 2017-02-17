@@ -12,11 +12,10 @@ The goal of the project is to provide a friendly
 markup language — and an associated toolchain —
 that can be used to produce data-driven articles.
 
-
-Idyll lowers the barrier-to-entry for
+Idyll lowers the barrier to entry for
 individuals to create documents that use common narrative techniques
 such as embedding interactive charts and graphs,
-scrolly-telling, slideshows, and more. Its human
+scrollytelling, slideshows, and more. Its human
 readable format is also meant to facilitate
 collaboration between writers, editors, designers,
 and programmers on more complex projects.
@@ -52,11 +51,17 @@ be responsive to reader input.
 For an example of a more complicated Idyll file,
 see the [link href:"https://github.com/idyll-lang/idyll/blob/master/examples/introduction/index.idl" text:"source for this page" /].
 
+
+[ul]
+[li][link href:"https://github.com/idyll-lang/idyll" text:"Github Link" /][/li]
+[li][link href:"https://idyll-lang.github.io/idyll/scroll/" text:"Scrolly Example" /][/li]
+[/ul]
+
 ## Components
 
 
 A component can be invoked in one of two ways. It can be self
-closing, for example
+closing,
 
 ```
 [Range min:0 max:10 value:5 /]
@@ -68,7 +73,7 @@ closing, for example
 [Range min:0 max:10 value:rangevar /]
 [/inset]
 
-or have a closing and opening tag,
+or have a closing and opening tag.
 
 ```
 [Button]
@@ -105,7 +110,7 @@ in the following ways:
 
 Idyll ships with a variety of components that
 you can use without digging in to any JavaScript
-code. Here is a sample of the available components,
+code. Find a sample of available components below.
 
 ```
 // A button, as seen above
@@ -132,7 +137,7 @@ code. Here is a sample of the available components,
 ```
 
 Additionally there are some components provided that
-help with page layout, for example,
+help with page layout.
 
 ```
 [Section]
@@ -157,7 +162,7 @@ JavaScript, point Idyll to the folder where you created it and
 everything will just work, no need to worry about compiling, bundling,
 or module loading.
 
-For example,
+For example, this custom component
 
 ```
 const React = require('react');
@@ -203,7 +208,7 @@ with the value 5. It also imports a dataset from a JSON file.
 
 A variable is initialized with a value, and can be used as an input to a component.
 For example, the following code declares a variable called "myVar", and uses
-it as input to two components,
+it as input to two components.
 
 ```
 [var name:"myVar" value:5 /]
@@ -226,7 +231,7 @@ automatically!
 
 Datasets are just like variables, except instead of receiving
 an initial value, they expect a filename. The following code
-would load a dataset and use it to display a chart,
+would load a dataset and use it to display a chart.
 
 ```
 [data name:"fourPoints" source:"four-points.json" /]
@@ -272,7 +277,7 @@ add buttons:
 ```
 
 We can then use the variable to power the
-input to a chart:
+input to a chart.
 
 
 ```

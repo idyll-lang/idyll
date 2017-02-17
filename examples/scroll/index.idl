@@ -1,12 +1,12 @@
 
-[var name:"filterIndex" value:0 /]
+[var name:"randomSeed" value:0 /]
 
 [section]
 
 [article-title]Idyll
 [/article-title]
 
-[waypoint onEnteredView:`filterIndex=0` /]
+[waypoint onEnteredView:`randomSeed=0` /]
 
 [pullquote]
 A new markup language 
@@ -15,23 +15,23 @@ documents
 [/pullquote]
 
 
-[waypoint onEnteredView:`filterIndex=1` /]
+[waypoint onEnteredView:`randomSeed=1` /]
 
 [pullquote]
-Combine a light-weight 
+Combine a lightweight 
 markup language and reactive 
 JavaScript components
 [/pullquote]
 
 
-[waypoint onEnteredView:`filterIndex=0` /]
+[waypoint onEnteredView:`randomSeed=0` /]
 
 [pullquote]
 Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
 for more information
 [/pullquote]
 
-[waypoint onEnteredView:`filterIndex=2` /]
+[waypoint onEnteredView:`randomSeed=2` /]
 
 
 [pullquote]
@@ -39,18 +39,18 @@ Here is the markup for this
 page:
 [/pullquote]
 
-[waypoint onEnteredView:`filterIndex=3` /]
+[waypoint onEnteredView:`randomSeed=3` /]
 
 
 ```
-[var name:"filterIndex" value:0 /]
+[var name:"randomSeed" value:0 /]
 
 [section]
 
 [article-title]Idyll
 [/article-title]
 
-[waypoint onEnteredView:`filterIndex=0` /]
+[waypoint onEnteredView:`randomSeed=0` /]
 
 [pullquote]
 A new markup language 
@@ -59,7 +59,7 @@ documents
 [/pullquote]
 
 
-[waypoint onEnteredView:`filterIndex=1` /]
+[waypoint onEnteredView:`randomSeed=1` /]
 
 [pullquote]
 Combine a light-weight 
@@ -68,14 +68,14 @@ JavaScript components
 [/pullquote]
 
 
-[waypoint onEnteredView:`filterIndex=0` /]
+[waypoint onEnteredView:`randomSeed=0` /]
 
 [pullquote]
 Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
 for more information
 [/pullquote]
 
-[waypoint onEnteredView:`filterIndex=2` /]
+[waypoint onEnteredView:`randomSeed=2` /]
 
 
 [pullquote]
@@ -83,25 +83,25 @@ Here is the markup for this
 page:
 [/pullquote]
 
-[waypoint onEnteredView:`filterIndex=3` /]
+[waypoint onEnteredView:`randomSeed=3` /]
 
 [/section]
 
 [fixed]
 
-[Chart type:"scatter" data:data filterIndex:filterIndex /]
+[Chart type:"scatter" randomSeed:randomSeed /]
 
 [/fixed]
 
 
 ```
 
-[waypoint onEnteredView:`filterIndex=4` /]
+[waypoint onEnteredView:`randomSeed=4` /]
 
 [/section]
 
 [fixed]
 
-[Chart type:"scatter" data:data filterIndex:filterIndex /]
+[Chart type:"scatter" randomSeed:randomSeed /]
 
 [/fixed]
