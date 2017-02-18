@@ -66,7 +66,7 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
     children.push(data[1]);
     if (children.length === 1 && typeof children[0] !== 'string') {
       return children[0];
-    } else if (children.filter(function (c) { typeof c === 'string' }).length === 0) {
+    } else if (children.filter(function (c) { return typeof c === 'string' }).length === 0) {
       return ["div", [], children];
     }
 
@@ -74,7 +74,7 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
   }
 %}
 
-ParagraphItem -> (Text | ClosedComponent | OpenComponent) {%
+ParagraphItem -> (Text | ClosedComponent | OpenComponent | TextInline) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -83,6 +83,30 @@ ParagraphItem -> (Text | ClosedComponent | OpenComponent) {%
 Text -> ("WORDS" __ TokenValue) {%
   function(data, location, reject) {
     return data[0][2];
+  }
+%}
+
+TextInline -> (CodeInline | BoldInline | EmInline) {%
+  function(data, location, reject) {
+    return data[0][0];
+  }
+%}
+
+BoldInline -> "STAR STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR STAR" {%
+  function(data, location, reject) {
+    return ['strong', [], data[2].map(function (d) { return d[0][0]})];
+  }
+%}
+
+EmInline -> "STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR" {%
+  function(data, location, reject) {
+    return ['em', [], data[2].map(function (d) { return d[0][0]})];
+  }
+%}
+
+CodeInline -> "BACKTICK" __ ((Text) __):* "BACKTICK" {%
+  function(data, location, reject) {
+    return ['code', [], data[2].map(function (d) { return d[0][0]})];
   }
 %}
 

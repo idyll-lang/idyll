@@ -32,7 +32,6 @@ module.exports = function(str) {
   var results = p.results;
 
   if (results.length) {
-    console.log(results.length);
     if (results.length > 1) {
       // console.log(JSON.stringify(results, null, 2));
       // console.log(str);

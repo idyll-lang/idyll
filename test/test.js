@@ -37,6 +37,13 @@ describe('compiler', function() {
   //     expect(results.tokens).to.eql(['BREAK', 'BREAK', 'WORDS', 'BREAK', 'EOF']);
   //     expect(results.values).to.eql([null, null, 'lol ', null, null]);
   //   });
+
+    it('should handle backticks in a paragraph', function() {
+      var lex = Lexer();
+      var results = lex("regular text and stuff, then some `code`");
+      expect(results).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then some " TOKEN_VALUE_END BACKTICK WORDS TOKEN_VALUE_START "code" TOKEN_VALUE_END BACKTICK EOF');
+    });
+
   });
 
   describe('parser', function() {
@@ -154,6 +161,25 @@ describe('compiler', function() {
         [
           ['p', [], ['text text text lots of text']],
           ['pre', [], [['code', [], ['var code = true;']]]]
+        ]);
+    });
+    it('should handle backticks in a paragraph', function() {
+      var lex = Lexer();
+      var lexResults = lex("regular text and stuff, then some `code`");
+      var output = parse(lexResults);
+      expect(output).to.eql(
+        [
+          ['p', [], ['regular text and stuff, then some ', ['code', [], ['code']]]]
+        ]);
+    });
+
+    it('should handle italics and bold', function() {
+      var lex = Lexer();
+      var lexResults = lex("regular text and stuff, then some *italics* and some **bold**.");
+      var output = parse(lexResults);
+      expect(output).to.eql(
+        [
+          ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
         ]);
     });
   })

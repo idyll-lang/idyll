@@ -22,24 +22,39 @@ module.exports = function() {
     return 'UNORDERED_ITEM';
   });
 
-
-  lexer.addRule(/^\s?\/\/[^\n]*$/gm, function(lexeme) {
-  });
-
-  lexer.addRule(/(\n?[^`\[\n\]])+/, function(lexeme) {
-    this.reject = inComponent || lexeme.trim() === '';
-    if (!this.reject) {
-      text = lexeme;
-    }
-    return 'WORDS';
-  });
-
   lexer.addRule(/`{3}[\s\S]*?`{3}/g, function(lexeme) {
     this.reject = inComponent;
     if (!this.reject) {
       text = lexeme;
     }
     return 'FENCE';
+  });
+
+  lexer.addRule(/`/, function(lexeme) {
+    this.reject = inComponent;
+    if (!this.reject) {
+      text = null;
+    }
+    return 'BACKTICK';
+  });
+
+  lexer.addRule(/\*/, function(lexeme) {
+    this.reject = inComponent;
+    if (!this.reject) {
+      text = null;
+    }
+    return 'STAR';
+  });
+
+  lexer.addRule(/^\s?\/\/[^\n]*$/gm, function(lexeme) {
+  });
+
+  lexer.addRule(/(\n?[^`\*\[\n\]])+/, function(lexeme) {
+    this.reject = inComponent || lexeme.trim() === '';
+    if (!this.reject) {
+      text = lexeme;
+    }
+    return 'WORDS';
   });
 
   lexer.addRule(/ *\n{2,} */, function(lexeme) {
