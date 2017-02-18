@@ -3,6 +3,11 @@ const nearley = require("nearley");
 
 // Create a Parser object from our grammar.
 
+
+/**
+ * Clean results removes unnecessary 
+ * <p> tags inside of other blocks.
+ */
 const cleanResults = (node) => {
   if (typeof node === 'string') {
     return node;
@@ -25,7 +30,13 @@ module.exports = function(str) {
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
   p.feed(str);
   var results = p.results;
+
   if (results.length) {
+    console.log(results.length);
+    if (results.length > 1) {
+      // console.log(JSON.stringify(results, null, 2));
+      // console.log(str);
+    }
     return results[0].map(cleanResults);
   }
   throw new Error('No parse results');

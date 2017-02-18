@@ -29,7 +29,7 @@ describe('compiler', function() {
     it('should recognize headings', function() {
       var lex = Lexer();
       var results = lex("\n## my title");
-      expect(results).to.eql('HEADER TOKEN_VALUE_START "##" TOKEN_VALUE_END WORDS TOKEN_VALUE_START " my title" TOKEN_VALUE_END EOF');
+      expect(results).to.eql('HEADER_2 TOKEN_VALUE_START "my title" TOKEN_VALUE_END EOF');
     });
   //   it('should handle newlines', function() {
   //     var lex = Lexer();
@@ -104,18 +104,18 @@ describe('compiler', function() {
               ["OpenComponent", [["key", ["value", "val"]]], []]
       ]]]);
     });
-    // it('should handle an inline closed component', function() {
-    //   var input = 'This is a normal text paragraph that [VarDisplay var:var /] has a component embedded in it.';
-    //   var lex = Lexer();
-    //   var lexResults = lex(input);
-    //   var output = parse(lexResults);
-    //   expect(output).to.eql([
-    //     ['p', [], [
-    //       'This is a normal text paragraph that ',
-    //       ['VarDisplay', [['var', ['variable', 'var']]], []],
-    //       ' has a component embedded in it.'
-    //     ]]]);
-    // });
+    it('should handle an inline closed component', function() {
+      var input = 'This is a normal text paragraph that [VarDisplay var:var /] has a component embedded in it.';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(lexResults);
+      expect(output).to.eql([
+        ['p', [], [
+          'This is a normal text paragraph that ',
+          ['VarDisplay', [['var', ['variable', 'var']]], []],
+          ' has a component embedded in it.'
+        ]]]);
+    });
 
     it('should handle a header', function() {
       var input = '## This is a header\n\n And this is a normal paragraph.';
@@ -124,11 +124,37 @@ describe('compiler', function() {
       var output = parse(lexResults);
       expect(output).to.eql([
         ['h2', [], [
-          ' This is a header']
+          'This is a header']
         ],['p', [], [
-          'And this is a normal paragraph.']
+          ' And this is a normal paragraph.']
         ],
       ]);
+    });
+
+    it('should parse an open component with a break at the end', function() {
+      var input = '[Slideshow currentSlide:1]text and stuff \n\n [/Slideshow]';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(lexResults);
+      expect(output).to.eql(
+        [
+          ['Slideshow', [['currentSlide', ['value', 1]]],
+            [
+              "text and stuff "
+            ]
+          ]
+      ]);
+    });
+    it('should parse a paragraph and code fence', function() {
+      var input = 'text text text lots of text\n\n\n```\nvar code = true;\n```\n';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(lexResults);
+      expect(output).to.eql(
+        [
+          ['p', [], ['text text text lots of text']],
+          ['pre', [], [['code', [], ['var code = true;']]]]
+        ]);
     });
   })
 });

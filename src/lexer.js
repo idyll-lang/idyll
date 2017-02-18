@@ -6,7 +6,7 @@ module.exports = function() {
   var inComponent = false;
   var text;
 
-  lexer.addRule(/^\s*#{1,6}\s*[^\n]*\n?/gm, function(lexeme) {
+  lexer.addRule(/^\s*#{1,6}\s*[^\n]*\n*/gm, function(lexeme) {
     const match = /\s*(#{1,6})\s*([^\n]*)/.exec(lexeme);
     if (!this.reject) {
       text = match[2].trim();
@@ -42,7 +42,7 @@ module.exports = function() {
     return 'FENCE';
   });
 
-  lexer.addRule(/ *\n{2} */, function(lexeme) {
+  lexer.addRule(/ *\n{2,} */, function(lexeme) {
     this.reject = inComponent;
 
     if (!this.reject) {
@@ -149,7 +149,7 @@ module.exports = function() {
     var tokens = [];
     text = null;
 
-    lexer.input = str;
+    lexer.input = str.trim();
 
     var token = lexer.lex();
     while(token) {

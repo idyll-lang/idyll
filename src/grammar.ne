@@ -1,33 +1,38 @@
 @builtin "whitespace.ne"
 
-Sourcefile -> Blocks __ ("EOF" _):+ {%
+Sourcefile -> Blocks "EOF" {%
   function(data, location, reject) {
     return data[0];
   }
 %}
 
-Blocks -> ("BREAK" __):* Block (__ ("BREAK" __):* Block):* (__ "BREAK"):* {%
+Blocks -> ("BREAK" __):* ((BreakBlock __ ("BREAK" __):+) | (NoBreakBlock __ ("BREAK" __):*)):*  (BreakBlock __):? {%
   function(data, location, reject) {
     var blocks = [];
-    //if (data[0]) {
-    //  blocks.push(["br", []]);
-    //}
-
-    blocks.push(data[1]);
-
-    data[2].forEach(function(d) {
-      blocks.push(d[2]);
+    data[1].forEach(function(d) {
+      blocks.push(d[0][0]);
     })
 
-    //if (data[3]) {
-    //  blocks.push(["br", []]);
-    //}
-
+    if (data[2]) {
+      blocks.push(data[2][0]);
+    }
     return blocks;
   }
 %}
 
-Block -> (Paragraph | OpenComponent | ClosedComponent | Header | Fence | UnorderedList) {%
+Block -> (BreakBlock | NoBreakBlock) {%
+  function(data, location, reject) {
+    return data[0][0];
+  }
+%}
+
+NoBreakBlock -> (Header | Fence | UnorderedList) {%
+  function(data, location, reject) {
+    return data[0][0];
+  }
+%}
+
+BreakBlock -> (Paragraph) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -52,25 +57,36 @@ Fence -> "FENCE" __ TokenValue {%
   }
 %}
 
-Paragraph -> ("WORDS" __ TokenValue) (__ (("WORDS" __ TokenValue) | ClosedComponent | OpenComponent)):*  {%
+Paragraph -> (ParagraphItem __):* ParagraphItem  {%
   function(data, location, reject) {
-    var children = [data[0][2]];
-    data[1].forEach(function (child) {
-      if (child[1][0].length && child[1][0][0] === "WORDS") {
-        children.push(child[1][0][2]);
-      } else {
-        children.push(child[1][0]);
-      }
-    })
-
+    var children = [];
+    data[0].map(function (child) {
+      children.push(child[0]);
+    });
+    children.push(data[1]);
     if (children.length === 1 && typeof children[0] !== 'string') {
       return children[0];
+    } else if (children.filter(function (c) { typeof c === 'string' }).length === 0) {
+      return ["div", [], children];
     }
+
     return ["p", [], children];
   }
 %}
 
-OpenComponent -> OpenComponentStart __ Blocks:? _ OpenComponentEnd {%
+ParagraphItem -> (Text | ClosedComponent | OpenComponent) {%
+  function(data, location, reject) {
+    return data[0][0];
+  }
+%}
+
+Text -> ("WORDS" __ TokenValue) {%
+  function(data, location, reject) {
+    return data[0][2];
+  }
+%}
+
+OpenComponent -> OpenComponentStart __ Blocks:? OpenComponentEnd {%
   function(data, location, reject) {
     return [data[0][0], data[0][1], data[2] || []];
   }
