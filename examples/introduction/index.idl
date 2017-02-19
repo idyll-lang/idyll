@@ -58,6 +58,9 @@ Here are some other useful links:
 [li][link href:"https://idyll-lang.github.io/idyll/scroll/" text:"Scrolly Example" /][/li]
 [/ul]
 
+If you just want to learn how to install and start using Idyll, scroll to the bottom of this 
+page.
+
 ## Components
 
 
@@ -419,6 +422,28 @@ code is needed. See the
 [link href:"https://idyll-lang.github.io/idyll/scroll/" text:"scroll" /]
 example for more info on how to use `onEnteredView`.
 
+### Component Resolution
+
+Components are resolved according to this algorithm
+
+[ol]
+[li] If there is a custom component with this name, use it. [/li]
+[li] If there is a built-in component with this name, use it. [/li]
+[li] If there is a valid HTML tag with this name, use it. [/li]
+[li] If none of the above, just use a div, but give it the class of the component name [/li]
+[/ol]
+
+So, for example, 
+
+```
+// Renders `<img />` because it is a valid  HTML tag
+[img /]
+
+// Renders `<div class="somethingElse"></div>`,
+// assuming a custom component somethingElse doesn't
+// exist.
+[somethingElse /]` 
+```
 
 ## Using Idyll
 
