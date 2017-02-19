@@ -7,7 +7,7 @@ Introducing Idyll
 
 [section]
 
-Idyll is a tool to make it easier to create interactive documents.
+Idyll is a tool that makes it easier to create interactive documents.
 The goal of the project is to provide a friendly
 markup language — and an associated toolchain —
 that can be used to produce data-driven articles.
@@ -15,10 +15,10 @@ that can be used to produce data-driven articles.
 Idyll lowers the barrier to entry for
 individuals to create documents that use common narrative techniques
 such as embedding interactive charts and graphs,
-scrollytelling, slideshows, and more. Its human
-readable format is also meant to facilitate
+scrollytelling, slideshows, and more. Additionally,
+its readable format facilitates
 collaboration between writers, editors, designers,
-and programmers on more complex projects.
+and programmers on complex projects.
 
 Idyll will take a text file and turn it into
 an interactive webpage. Here is a simple example:
@@ -39,9 +39,9 @@ and a line chart.
 
 The project is inspired by markdown, and
 supports a subset of commonly used markdown
-syntax, for example using a pound sign
-to denote headers, and using three backticks to
-display code.
+syntax, for example using a `#` pound sign
+to denote headers, using three backticks to
+display code, and using stars to display inline **bold** and *italics*.
 
 In addition to being able to render static text,
 Idyll can output interactive components.
@@ -51,9 +51,10 @@ be responsive to reader input.
 For an example of a more complicated Idyll file,
 see the [link href:"https://github.com/idyll-lang/idyll/blob/master/examples/introduction/index.idl" text:"source for this page" /].
 
+Here are some other useful links:
 
 [ul]
-[li][link href:"https://github.com/idyll-lang/idyll" text:"Github Link" /][/li]
+[li][link href:"https://github.com/idyll-lang/idyll" text:"Github Repo" /][/li]
 [li][link href:"https://idyll-lang.github.io/idyll/scroll/" text:"Scrolly Example" /][/li]
 [/ul]
 
@@ -106,7 +107,7 @@ in the following ways:
 [Component onClick:`myVar++` /]
 ```
 
-### Built-In Componets
+### Built-In Components
 
 Idyll ships with a variety of components that
 you can use without digging in to any JavaScript
@@ -153,44 +154,6 @@ even when a user scrolls.
 [/Fixed]
 ```
 
-### Custom Components
-
-Idyll is designed for people to use their own custom components as well.
-Under the hood an Idyll component just needs to be anything that will
-function as a React component. If you create a custom component in
-JavaScript, point Idyll to the folder where you created it and
-everything will just work, no need to worry about compiling, bundling,
-or module loading.
-
-For example, this custom component
-
-```
-const React = require('react');
-const IdyllComponent = require('idyll-component');
-
-class CustomComponent extends IdyllComponent {
-  render() {
-    return (
-      <div {...this.props}>
-        This is a custom component
-      </div>
-    );
-  }
-}
-
-module.exports = CustomComponent;
-```
-
-could be invoked inside of an Idyll file with the
-following code:
-
-```
-[CustomComponent /]
-```
-
-The "IdyllComponent" class provides some utilities for keeping
-variables in sync with the rest of the document.
-
 ## Datasets and Variables
 
 In addition to components, Idyll supports datasets and variables.
@@ -201,13 +164,13 @@ These are declared similarly to components.
 [data name:"myDataset" source:"data.json" /]
 ```
 
-The above code declares a variable called "myVar" and initializes it
+The above code declares a variable `myVar` and initializes it
 with the value 5. It also imports a dataset from a JSON file.
 
 ### Variables
 
 A variable is initialized with a value, and can be used as an input to a component.
-For example, the following code declares a variable called "myVar", and uses
+For example, the following code declares a variable `myVar`, and uses
 it as input to two components.
 
 ```
@@ -328,31 +291,134 @@ or randomize all of the points along that line.
 
 ```
 [data name:"initialLine" source:"initial-line.json" /]
-[var name:"random" value:initialLine /]
+[var name:"points" value:initialLine /]
 
-[Button onClick:`random.push(Math.random())`]
+[Button onClick:`points.push(Math.random())`]
   Add Point
 [/Button]
 
-[Button onClick:`random = (Array(random.length).fill()).map(Math.random)`]
+[Button onClick:`points = (Array(points.length).fill()).map(Math.random)`]
   Randomize
 [/Button]
 
-[Chart type:"line" data:random className:"inset" /]
+[Chart type:"line" data:points className:"inset" /]
 ```
 
-In the future, Idyll will support referring to custom JavaScript functions
-in these callbacks, so that code simplifies to
+In the future, Idyll will support JSON objects as 
+properties, and referring to custom JavaScript functions
+in these callbacks.
 
 ```
-[data name:"initialLine" source:"initial-line.json" /]
-[var name:"random" value:initialLine /]
+[var name:"points" value:[0, 1] /]
 
-[Button onClick:`addPoint()`] Add Point [/Button]
-[Button onClick:`randomizePoints()`] Randomize [/Button]
+[Button onClick:`points = addPoint(points)`] Add Point [/Button]
+[Button onClick:`points = randomizePoints(points)`] Randomize [/Button]
 
-[Chart type:"line" data:random className:"inset" /]
+[Chart type:"line" data:points className:"inset" /]
 ```
+
+## Custom Components
+
+Idyll is designed for people to use their own custom components as well.
+Under the hood an Idyll component just needs to be anything that will
+function as a React component. If you create a custom component in
+JavaScript, point Idyll to the folder where you created it and
+everything will just work, no need to worry about compiling, bundling,
+or module loading.
+
+For example, this custom component
+
+```
+const React = require('react');
+const IdyllComponent = require('idyll-component');
+
+class CustomComponent extends IdyllComponent {
+  render() {
+    return (
+      <div {...this.props}>
+        This is a custom component
+      </div>
+    );
+  }
+}
+
+module.exports = CustomComponent;
+```
+
+could be invoked inside of an Idyll file with the
+following code:
+
+```
+[CustomComponent /]
+```
+
+The `IdyllComponent` class adds an 
+`updateProps` method that is used to keep
+variables in sync with the rest of the document, and also 
+adds a property `onEnteredView` that can be used to 
+trigger events in scroll-based narratives.
+
+For example, a component can change the value of a 
+property that it receives, and Idyll will propegate
+the change to any bound variables on the page.
+
+```
+const React = require('react');
+const IdyllComponent = require('idyll-component');
+
+class Incrementer extends IdyllComponent {
+
+  increment() {
+    this.updateProps({
+      value: this.props.value + 1
+    })
+  }
+
+  render() {
+    return (
+      <div onClick={this.increment.bind(this)}>
+        Click me.
+      </div>
+    );
+  }
+}
+
+module.exports = Incrementer;
+```
+
+The `Incrementer` component could then be used as follows:
+
+```
+[var name:"clickCount" value:0 /]
+
+[Incrementer value:clickCount /]
+[DisplayVar var:clickCount /]
+```
+
+[var name:"clickCount" value:0 /]
+
+[Button onClick:`clickCount+=1` ]Click Me.[/Button]
+
+[DisplayVar var:clickCount /]
+
+Notice that even thought the `Incrementer` component doesn't know 
+anything about the variable `clickCount`, it is still correctly
+updated.
+
+Of course, this trivial example could be accomplished using built-in components.
+
+```
+[var name:"clickCount" value:0 /]
+
+[Button onClick:`clickCount+=1` ]Click Me.[/Button]
+[DisplayVar var:clickCount /]
+```
+
+Custom component are meant for times when more complex and custom 
+code is needed. See the 
+[link href:"https://idyll-lang.github.io/idyll/scroll/" text:"scroll" /]
+example for more info on how to use `onEnteredView`.
+
 
 ## Using Idyll
 
@@ -364,8 +430,14 @@ $ npm install -g idyll
 $ idyll my-file.idl
 ```
 
-The "idyll" command will automatically compile everything and load the
+The `idyll` command will automatically compile everything and load the
 interactive page in your web browser.
+
+To use a custom stylesheet, use the `--css` flag.
+
+```
+$ idyll my-file.idl --css styles.css
+```
 
 Additionally there is a project generator that will help get you set up
 using custom components, datasets, and stylesheets. To use the generator:
@@ -374,6 +446,22 @@ using custom components, datasets, and stylesheets. To use the generator:
 $ npm install -g yo generator-idyll
 $ yo idyll
 ```
+
+### Publishing with Idyll
+
+Idyll includes a tool `idyll-build` that will take in an Idyll file and
+output the compiled JavaScript. This can be combined with other
+useful tools to quickly generate a webpage.
+
+```
+$ npm install -g indexhtmlify 
+$ idyll-build my-file.idl | indexhtmlify --style styles.css > idyll.html
+```
+
+The above command uses `idyll-build` to generate the JavaScript bundle
+and [link href:"https://github.com/dominictarr/indexhtmlify/" text:"indexhtmlify" /] to create
+an HTML page with the proper script and style tags. You can then publish this HTML
+page online via any means that you please.
 
 ## Going Forward
 
@@ -389,5 +477,6 @@ There are several features that I plan to add in the near future:
 * Additional built-in components
 * A special optional header at the top of the document for page meta-data
 * Access to a function library in the component callbacks
+* Better feedback for syntax errors
 
 [/section]

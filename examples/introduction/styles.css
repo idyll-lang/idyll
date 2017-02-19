@@ -91,6 +91,11 @@ pre code {
   display: block;
   overflow-x: auto;
 }
+code {
+  background: #F2F3F2;
+  color: #000;
+  padding: 1px 5px;
+}
 
 .inset {
   max-width: 400px;
