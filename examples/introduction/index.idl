@@ -93,7 +93,7 @@ Click Me
 
 ### Component Properties
 
-Properties can be based into components
+Properties can be passed into components
 in the following ways:
 
 ```
@@ -272,7 +272,7 @@ which gives the output:
 [br/]
 You may recognize this data as [link href:"https://en.wikipedia.org/wiki/Anscombe's_quartet" text:"Anscombe's quartet" /].
 
-Additionally we can add an arbitrary javascript expression in the click
+Additionally we can add an arbitrary JavaScript expression in the click
 handlers to do more complex things. The following example
 has a button that will either add a random point to a line,
 or randomize all of the points along that line.
