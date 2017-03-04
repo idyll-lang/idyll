@@ -2,10 +2,9 @@
   "name": "idyll",
   "version": "1.0.10",
   "description": "Command line interface for idyll lang",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": {
-    "idyll": "index.js",
-    "idyll-build": "build.js"
+    "idyll": "src/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -42,6 +41,7 @@
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
+    "require-directory": "^2.1.1",
     "scrollwatch": "^1.2.0",
     "victory": "^0.17.0"
   }

@@ -1,0 +1,1 @@
+module.exports = {range: require('/Users/mathisonian/projects/idyll/idyll/src/components/range')} 

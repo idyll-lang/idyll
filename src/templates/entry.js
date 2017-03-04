@@ -6,8 +6,12 @@ const bulk = require('bulk-require');
 
 // Require all of the components up front...
 // this is not ideal!
-const defaultComponents = bulk(process.env.IDYLL_PATH + '/components', [ '**/*.js' ]);
-const customComponents = bulk(process.env.COMPONENTS_FOLDER, [ '**/*.js' ]);
+
+const components = require('./components');
+// const datasets = require('./datasets');
+
+// const defaultComponents = bulk(process.env.IDYLL_PATH + '/components', [ '**/*.js' ]);
+// const customComponents = bulk(process.env.COMPONENTS_FOLDER, [ '**/*.js' ]);
 const datasets = bulk(process.env.DATA_FOLDER, [ '**/*.json' ]);
 
 let results = require(process.env.AST_FILE);
@@ -44,10 +48,8 @@ const processComponent = (name) => {
   let componentClass;
   const extraProps = {};
 
-  if (customComponents[paramCaseName]) {
-    componentClass = customComponents[paramCaseName];
-  } else if (defaultComponents[paramCaseName]) {
-    componentClass = defaultComponents[paramCaseName];
+  if (components[paramCaseName]) {
+    componentClass = components[paramCaseName];
   } else if (htmlTags.indexOf(paramCaseName) > -1) {
     componentClass = paramCaseName;
   } else {
