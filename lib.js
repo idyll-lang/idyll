@@ -37,8 +37,6 @@ var IdyllComponent = function (_React$Component) {
     _classCallCheck(this, IdyllComponent);
 
     var _this = _possibleConstructorReturn(this, (IdyllComponent.__proto__ || Object.getPrototypeOf(IdyllComponent)).call(this, props));
-    // Modify the props??
-
 
     if (props.onEnteredView) {
       _this.componentDidMount = function () {
