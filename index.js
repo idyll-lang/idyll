@@ -21,7 +21,7 @@ function fullPath(el){
   return names.join(" > ");
 }
 
-class IdyllComponent extends React.Component {
+class IdyllComponent extends React.PureComponent {
   constructor(props) {
     super(props);
 
