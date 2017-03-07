@@ -5,7 +5,8 @@ const V = require('victory');
 const types = {
   LINE: V.VictoryLine,
   BAR: V.VictoryBar,
-  SCATTER: V.VictoryScatter
+  SCATTER: V.VictoryScatter,
+  PIE: V.VictoryPie
 };
 
 class Chart extends IdyllComponent {
@@ -14,7 +15,10 @@ class Chart extends IdyllComponent {
     return (
       <div className={this.props.className}>
         <V.VictoryChart domainPadding={10}>
-          <INNER_CHART data={this.props.data}>
+
+          <V.VictoryAxis theme={VictoryTheme.material} />
+          <V.VictoryAxis theme={VictoryTheme.material} scale={'time'} tickComponent={10} dependentAxis />
+          <INNER_CHART data={this.props.data}  tickCount={2}>
           </INNER_CHART>
         </V.VictoryChart>
       </div>

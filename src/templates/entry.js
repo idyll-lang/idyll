@@ -3,19 +3,9 @@ const ReactDOM = require('react-dom');
 const changeCase = require('change-case');
 const htmlTags = require('html-tags');
 const bulk = require('bulk-require');
-
-// Require all of the components up front...
-// this is not ideal!
-
-const components = require('./components');
-// const datasets = require('./datasets');
-
-// const defaultComponents = bulk(process.env.IDYLL_PATH + '/components', [ '**/*.js' ]);
-// const customComponents = bulk(process.env.COMPONENTS_FOLDER, [ '**/*.js' ]);
 const datasets = bulk(process.env.DATA_FOLDER, [ '**/*.json' ]);
-
+const componentClasses = require(process.env.COMPONENT_FILE);
 let results = require(process.env.AST_FILE);
-
 
 if (results.length) {
   console.log('Successfully parsed file.');
@@ -23,14 +13,14 @@ if (results.length) {
 
 const COMPONENTS = {
   Variable: 'var',
-  Dataset: 'data',
-  Paragraph: 'p'
+  Dataset: 'data'
 };
 
 const PROPERTIES = {
   Expression: 'expression',
   Variable: 'variable',
-  Value: 'value'
+  Value: 'value',
+  Function: 'function'
 };
 
 const VARIABLE = {
@@ -48,8 +38,8 @@ const processComponent = (name) => {
   let componentClass;
   const extraProps = {};
 
-  if (components[paramCaseName]) {
-    componentClass = components[paramCaseName];
+  if (componentClasses[paramCaseName]) {
+    componentClass = componentClasses[paramCaseName];
   } else if (htmlTags.indexOf(paramCaseName) > -1) {
     componentClass = paramCaseName;
   } else {
@@ -65,13 +55,13 @@ const processComponent = (name) => {
 
 
 class InteractiveDocument extends React.Component {
-
   constructor(props) {
     super(props);
     this.handleUpdateProps = this.handleUpdateProps.bind(this);
 
     // Walk the tree, creating the proper components for evererything.
     this.bindings = {};
+    this._idyllRefs = {};
     const initialState = {};
 
     let nodeID = -1;
@@ -117,13 +107,27 @@ class InteractiveDocument extends React.Component {
                 case PROPERTIES.Variable:
                   varVal = initialState[propValueArr[1]];
                   break;
+                case PROPERTIES.Expression:
+                  let evalFunc = '(() => {';
+                  const expression = propValueArr[1];
+                  Object.keys(initialState).forEach((propName) => {
+                    if (expression.indexOf(propName) === -1) {
+                      return;
+                    }
+                    const val = initialState[propName];
+                    evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
+                  });
+                  evalFunc += 'return ' + propValueArr[1] + ';';
+                  evalFunc += '})()';
+                  varVal = eval(evalFunc);
+                  break;
               }
           }
         });
         initialState[varName] = varVal;
       } else {
         const propsObj = {key: nodeID, __handleUpdateProps: this.handleUpdateProps(nodeID)};
-        props.forEach((propArr) => {
+        props.forEach((propArr, i) => {
           const propName = propArr[0];
           const propValueArr = propArr[1];
           if (propValueArr[0] === PROPERTIES.Variable) {
@@ -132,6 +136,16 @@ class InteractiveDocument extends React.Component {
             }
             this.bindings[nodeID][propName] = propValueArr[1];
           }
+          if (propName === 'ref') {
+            propValueArr[0] = 'function'
+            const refName = propValueArr[1];
+            propValueArr[1] = (node) => {
+              this._idyllRefs[refName] = {
+                scrollProgress: 0,
+                domNode: ReactDOM.findDOMNode(node)
+              }
+            }
+          }
         });
 
         if (children) {
@@ -139,11 +153,12 @@ class InteractiveDocument extends React.Component {
         }
       }
     };
-
     results.map(walkVars);
-    this.state = initialState;
 
     nodeID = -1;
+    this.state = Object.assign({}, initialState, {
+      _idyllRefs: this._idyllRefs
+    });
     const walkNode = (node) => {
       nodeID++;
       if (typeof node === 'string') {
@@ -155,29 +170,47 @@ class InteractiveDocument extends React.Component {
       const children = node[2];
       if (componentName !== COMPONENTS.Variable && componentName !== COMPONENTS.Dataset) {
         const propsObj = {key: nodeID, __handleUpdateProps: this.handleUpdateProps(nodeID)};
+
         props.forEach((propArr) => {
           const propName = propArr[0];
           const propValueArr = propArr[1];
           if (propValueArr[0] === PROPERTIES.Variable) {
             propsObj[propName] = this.state[propValueArr[1]];
           } else if (propValueArr[0] === PROPERTIES.Expression) {
-            let evalFunc = '(() => {';
-            const relevantVars = [];
-            const expression = propValueArr[1];
-            Object.keys(this.state).forEach((propName) => {
-              if (expression.indexOf(propName) === -1) {
-                return;
-              }
-              relevantVars.push(propName);
-              const val = this.state[propName];
-              evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
-            });
-            evalFunc += propValueArr[1];
-            evalFunc += `\nthis.setState({${relevantVars.join(',')}});\n`;
-            evalFunc += '})()';
-            propsObj[propName] = (function() {
-              eval(evalFunc);
-            }).bind(this);
+            if (propName.startsWith('on') || propName.startsWith('handle')) {
+              let evalFunc = '(() => {';
+              const relevantVars = [];
+              const expression = propValueArr[1];
+              Object.keys(this.state).forEach((propName) => {
+                if (expression.indexOf(propName) === -1) {
+                  return;
+                }
+                relevantVars.push(propName);
+                const val = this.state[propName];
+                evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
+              });
+              evalFunc += `var refs = ${JSON.stringify(this.state._idyllRefs)};\n`;
+              evalFunc += propValueArr[1];
+              evalFunc += `\nthis.setState({${relevantVars.join(',')}});\n`;
+              evalFunc += '})()';
+              propsObj[propName] = (function() {
+                eval(evalFunc);
+              }).bind(this);
+            } else {
+              let evalFunc = '(() => {';
+              const expression = propValueArr[1];
+              Object.keys(this.state).forEach((propName) => {
+                if (expression.indexOf(propName) === -1) {
+                  return;
+                }
+                const val = this.state[propName];
+                evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
+              });
+              evalFunc += `var refs = ${JSON.stringify(this.state._idyllRefs)};\n`;
+              evalFunc += `var retVal; try { retVal = ${propValueArr[1]}; } catch (e) { /*console.log(e)*/ }; return retVal;\n`;
+              evalFunc += '})()';
+              propsObj[propName] = eval(evalFunc);
+            }
           } else {
             propsObj[propName] = propValueArr[1];
           }
@@ -186,7 +219,7 @@ class InteractiveDocument extends React.Component {
         const results = processComponent(componentName);
         const inputProps = Object.assign({}, results.extraProps, propsObj);
         if (children) {
-          return React.createElement(results.componentClass, inputProps, children.length  ? children.map(walkNode) : null);
+          return React.createElement(results.componentClass, inputProps, children.length ? children.map(walkNode) : null);
         }
         return React.createElement(getComponentClass(componentName), inputProps);
       }
@@ -213,6 +246,44 @@ class InteractiveDocument extends React.Component {
     };
   }
 
+  componentDidMount() {
+    Object.keys(this.state._idyllRefs).forEach((name) => {
+      const ref = this._idyllRefs[name];
+      const rect = ref.domNode.getBoundingClientRect();;
+      const height = rect.bottom - rect.top;
+
+      this._idyllRefs[name].height = height;
+      this._idyllRefs[name].absoluteTop = rect.top + window.scrollY;
+      this._idyllRefs[name].absoluteBottom = rect.bottom + window.scrollY;
+    })
+    window.addEventListener('scroll', (e) => {
+      // calculate current position based on scroll position
+      const body = document.body;
+      const html = document.documentElement;
+      const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      const scrollY = window.scrollY;
+
+      const newRefs = {};
+      Object.keys(this.state._idyllRefs).forEach((ref) => {
+        const { absoluteBottom, absoluteTop, height } = this._idyllRefs[ref];
+        const position = (windowHeight - height) - (absoluteTop - scrollY);
+
+        // 0 percent === top of the div is over the bottom of the window
+        const min = Math.max(0, absoluteTop - windowHeight);
+        // 100 percent === bottom of div is at top of window
+        const max = Math.min(documentHeight - windowHeight, absoluteBottom);
+
+        newRefs[ref] = {
+          scrollProgress: Math.max(0, Math.min(1, (scrollY - min) / (max - min)))
+        };
+      });
+      this.setState({
+        _idyllRefs: newRefs
+      });
+    });
+  }
+
   render() {
     return (<div className="article">{this.getChildren()}</div>);
   }
@@ -220,6 +291,5 @@ class InteractiveDocument extends React.Component {
 
 var mountNode = document.createElement('div');
 document.body.appendChild(mountNode);
-
 
 ReactDOM.render(<InteractiveDocument />, mountNode);

@@ -1,67 +1,79 @@
 #! /usr/bin/env node
-var browserify = require('browserify');
-var budo = require('budo');
-var babelify = require('babelify');
-var argv = require('minimist')(process.argv.slice(2));
-var path = require('path');
-var compile = require('idyll-compiler');
-var fs = require('fs');
-var watch = require('node-watch');
-
-var babelify = require('babelify');
-var envify = require('envify');
-var bulkify = require('bulkify');
-var brfs = require('brfs');
-var reactPreset = require('babel-preset-react');
-var es2015Preset = require('babel-preset-es2015');
-var compression = require('compression');
+const browserify = require('browserify');
+const budo = require('budo');
+const babelify = require('babelify');
+const argv = require('minimist')(process.argv.slice(2));
+const path = require('path');
+const compile = require('idyll-compiler');
+const fs = require('fs');
+const watch = require('node-watch');
+const changeCase = require('change-case');
+const envify = require('envify');
+const bulkify = require('bulkify');
+const brfs = require('brfs');
+const reactPreset = require('babel-preset-react');
+const es2015Preset = require('babel-preset-es2015');
+const compression = require('compression');
 
 const IDL_FILE = argv._[0];
-const AST_FILE = path.resolve('./.ast.json');
-const COMPONENTS_FOLDER = path.resolve(argv.components || './components/');
+const TMP_PATH = path.resolve('./.idyll/');
+
+if (!fs.existsSync(TMP_PATH)){
+    fs.mkdirSync(TMP_PATH);
+}
+
+const AST_FILE = path.resolve(TMP_PATH + '/ast.json');
+const COMPONENT_FILE = path.resolve(TMP_PATH + '/components.js');
+const CUSTOM_COMPONENTS_FOLDER = path.resolve(argv.components || './components/');
 const DATA_FOLDER = path.resolve(argv.datasets || './data/');
 const IDYLL_PATH = path.resolve(__dirname);
 
 const components = fs.readdirSync(path.resolve(__dirname + '/components/'));
-const customComponents = [];
+let customComponents = [];
 try {
-  customComponents = fs.readdirSync(COMPONENTS_FOLDER);
-} catch(e) {}
+  customComponents = fs.readdirSync(CUSTOM_COMPONENTS_FOLDER);
+} catch(e) {
+  console.log(e);
+}
 
 const writeTemplates = (ast) => {
   const outputComponents = [];
+  const checkedComponents = [];
+  const ignoreNames = ['var', 'data'];
+
+
   const handleNode = (node) => {
     if (typeof node === 'string') {
       return;
     }
-    const name = node[0].toLowerCase();
+
+    const name = changeCase.paramCase(node[0]);
     const props = node[1];
     const children = node[2] || [];
-    const ignoreNames = ['var', 'data'];
-    if (ignoreNames.indexOf(name) === -1) {
+    if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
       if (customComponents.indexOf(name + '.js') > -1) {
-        outputComponents.push(`${name}: require('${COMPONENTS_FOLDER}/${name}')`);
+        outputComponents.push(`"${name}": require('${CUSTOM_COMPONENTS_FOLDER}/${name}')`);
       } else if (components.indexOf(name + '.js') > -1) {
-        outputComponents.push(`${name}: require('${IDYLL_PATH}/components/${name}')`);
+        outputComponents.push(`"${name}": require('${IDYLL_PATH}/components/${name}')`);
       }
+      checkedComponents.push(name);
     }
     children.map(handleNode);
   }
   ast.map(handleNode);
-  fs.writeFile(path.resolve(__dirname + '/templates/components.js'), `module.exports = {${outputComponents.join(',')}} `);
+  fs.writeFile(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
 }
 
 
 const build = () => {
   process.env['NODE_ENV'] = 'production';
-
   var b = browserify(path.resolve(__dirname + '/templates/entry.js'), {
     fullPaths: true,
     transform: [
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
       [ envify, {
         AST_FILE,
-        COMPONENTS_FOLDER,
+        COMPONENT_FILE,
         DATA_FOLDER,
         IDYLL_PATH } ],
       [ bulkify ],
@@ -105,7 +117,7 @@ const start = () => {
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
         [ envify, {
           AST_FILE,
-          COMPONENTS_FOLDER,
+          COMPONENT_FILE,
           DATA_FOLDER,
           IDYLL_PATH } ],
         [ bulkify ],

@@ -58,7 +58,7 @@ Here are some other useful links:
 [li][link href:"https://idyll-lang.github.io/idyll/scroll/" text:"Scrolly Example" /][/li]
 [/ul]
 
-If you just want to learn how to install and start using Idyll, scroll to the bottom of this 
+If you just want to learn how to install and start using Idyll, scroll to the bottom of this
 page.
 
 ## Components
@@ -68,7 +68,7 @@ A component can be invoked in one of two ways. It can be self
 closing,
 
 ```
-[Range min:0 max:10 value:5 /]
+[Range min:0 max:10 value:value /]
 ```
 
 [var name:"rangevar" value:5 /]
@@ -96,17 +96,27 @@ Click Me
 Properties can be passed into components
 in the following ways:
 
+#### Number
+
 ```
-// Number
 [Component propName:10 /]
+```
 
-// String
+#### String
+
+```
 [Component propName:"propValue" /]
+```
 
-// Variable or dataset
+#### Variable or Dataset
+
+```
 [Component propName:myVar /]
+```
 
-// Callback
+#### Expression
+
+```
 [Component onClick:`myVar++` /]
 ```
 
@@ -224,22 +234,18 @@ We will use the variable to toggle
 which dataset is being displayed:
 
 ```
-[data name:"one" source:"1.json" /]
-[data name:"two" source:"2.json" /]
-[data name:"three" source:"3.json" /]
-[data name:"four" source:"4.json" /]
-
-[var name:"dataset" value:one /]
+[data name:"quartet" source:"quartet.json" /]
+[var name:"dataset" value:`quartet[0]` /]
 ```
 
 and to update the variable we can
 add buttons:
 
 ```
-[Button onClick:`dataset = one`]Dataset 1[/Button]
-[Button onClick:`dataset = two`]Dataset 2[/Button]
-[Button onClick:`dataset = three`]Dataset 3[/Button]
-[Button onClick:`dataset = four`]Dataset 4[/Button]
+[Button onClick:`dataset = quartet[0]`]Dataset 1[/Button]
+[Button onClick:`dataset = quartet[1]`]Dataset 2[/Button]
+[Button onClick:`dataset = quartet[2]`]Dataset 3[/Button]
+[Button onClick:`dataset = quartet[3]`]Dataset 4[/Button]
 ```
 
 We can then use the variable to power the
@@ -250,23 +256,18 @@ input to a chart.
 [Chart type:"scatter" data:dataset /]
 ```
 
-
-[data name:"one" source:"1" /]
-[data name:"two" source:"2" /]
-[data name:"three" source:"3" /]
-[data name:"four" source:"4" /]
-
-[var name:"dataset" value:one /]
+[data name:"quartet" source:"quartet" /]
+[var name:"dataset" value:`quartet[0]` /]
 
 which gives the output:
 
 [inset]
 [Chart type:"scatter" data:dataset /]
 
-[Button onClick:`dataset = one`]Dataset 1[/Button]
-[Button onClick:`dataset = two`]Dataset 2[/Button]
-[Button onClick:`dataset = three`]Dataset 3[/Button]
-[Button onClick:`dataset = four`]Dataset 4[/Button]
+[Button onClick:`dataset = quartet[0]`]Dataset 1[/Button]
+[Button onClick:`dataset = quartet[1]`]Dataset 2[/Button]
+[Button onClick:`dataset = quartet[2]`]Dataset 3[/Button]
+[Button onClick:`dataset = quartet[3]`]Dataset 4[/Button]
 [/inset]
 
 [br/]
@@ -277,8 +278,7 @@ handlers to do more complex things. The following example
 has a button that will either add a random point to a line,
 or randomize all of the points along that line.
 
-[data name:"emptyLine" source:"empty" /]
-[var name:"random" value:emptyLine /]
+[var name:"random" value:`[0, 1]` /]
 
 [inset]
 [Chart type:"line" data:random className:"inset" /]
@@ -293,8 +293,7 @@ or randomize all of the points along that line.
 [/inset]
 
 ```
-[data name:"initialLine" source:"initial-line.json" /]
-[var name:"points" value:initialLine /]
+[var name:"points" value:`[0, 1]` /]
 
 [Button onClick:`points.push(Math.random())`]
   Add Point
@@ -303,19 +302,6 @@ or randomize all of the points along that line.
 [Button onClick:`points = (Array(points.length).fill()).map(Math.random)`]
   Randomize
 [/Button]
-
-[Chart type:"line" data:points className:"inset" /]
-```
-
-In the future, Idyll will support JSON objects as 
-properties, and referring to custom JavaScript functions
-in these callbacks.
-
-```
-[var name:"points" value:[0, 1] /]
-
-[Button onClick:`points = addPoint(points)`] Add Point [/Button]
-[Button onClick:`points = randomizePoints(points)`] Randomize [/Button]
 
 [Chart type:"line" data:points className:"inset" /]
 ```
@@ -355,13 +341,13 @@ following code:
 [CustomComponent /]
 ```
 
-The `IdyllComponent` class adds an 
+The `IdyllComponent` class adds an
 `updateProps` method that is used to keep
-variables in sync with the rest of the document, and also 
-adds a property `onEnteredView` that can be used to 
+variables in sync with the rest of the document, and also
+adds a property `onEnteredView` that can be used to
 trigger events in scroll-based narratives.
 
-For example, a component can change the value of a 
+For example, a component can change the value of a
 property that it receives, and Idyll will propegate
 the change to any bound variables on the page.
 
@@ -401,10 +387,9 @@ The `Incrementer` component could then be used as follows:
 [var name:"clickCount" value:0 /]
 
 [Button onClick:`clickCount+=1` ]Click Me.[/Button]
-
 [DisplayVar var:clickCount /]
 
-Notice that even thought the `Incrementer` component doesn't know 
+Notice that even thought the `Incrementer` component doesn't know
 anything about the variable `clickCount`, it is still correctly
 updated.
 
@@ -417,8 +402,8 @@ Of course, this trivial example could be accomplished using built-in components.
 [DisplayVar var:clickCount /]
 ```
 
-Custom component are meant for times when more complex and custom 
-code is needed. See the 
+Custom component are meant for times when more complex and custom
+code is needed. See the
 [link href:"https://idyll-lang.github.io/idyll/scroll/" text:"scroll" /]
 example for more info on how to use `onEnteredView`.
 
@@ -433,7 +418,7 @@ Components are resolved according to this algorithm
 [li] If none of the above, just use a div, but give it the class of the component name [/li]
 [/ol]
 
-So, for example, 
+So, for example,
 
 ```
 // Renders `<img />` because it is a valid  HTML tag
@@ -442,7 +427,7 @@ So, for example,
 // Renders `<div class="somethingElse"></div>`,
 // assuming a custom component somethingElse doesn't
 // exist.
-[somethingElse /]` 
+[somethingElse /]`
 ```
 
 ## Using Idyll
@@ -479,11 +464,11 @@ output the compiled JavaScript. This can be combined with other
 useful tools to quickly generate a webpage.
 
 ```
-$ npm install -g indexhtmlify 
-$ idyll-build my-file.idl | indexhtmlify --style styles.css > idyll.html
+$ npm install -g indexhtmlify
+$ idyll my-file.idl --build | indexhtmlify --style styles.css > idyll.html
 ```
 
-The above command uses `idyll-build` to generate the JavaScript bundle
+The above command uses `idyll --build` to generate the JavaScript bundle
 and [link href:"https://github.com/dominictarr/indexhtmlify/" text:"indexhtmlify" /] to create
 an HTML page with the proper script and style tags. You can then publish this HTML
 page online via any means that you please.
