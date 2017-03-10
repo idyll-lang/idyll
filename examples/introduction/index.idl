@@ -96,25 +96,38 @@ Click Me
 Properties can be passed into components
 in the following ways:
 
-#### Number
+#### Number, String
+
+Numbers or string literals may be used.
 
 ```
 [Component propName:10 /]
-```
-
-#### String
-
-```
 [Component propName:"propValue" /]
 ```
 
 #### Variable or Dataset
+
+A variable or dataset can be passed in directly, this will
+automatically create a binding between that variable and property,
+more on this later.
 
 ```
 [Component propName:myVar /]
 ```
 
 #### Expression
+
+Use backticks to pass an evaluated expression:
+
+```
+[Component propName:`2 * 2 * 2` /]
+[Component propName:`{ an: "object" }` /]
+```
+
+If the property expects a function,
+the expression will automatically be
+converted to a callback. This is convenient
+for updating variables on events, for example.
 
 ```
 [Component onClick:`myVar++` /]
@@ -193,7 +206,7 @@ it as input to two components.
 ```
 
 Idyll handles all of the updating and rerendering of components for you,
-so when a reader interacts with the range slider, the display will be updated
+so when someone interacts with the range slider, the display will be updated
 automatically!
 
 [var name:"myVar" value:5 /]
@@ -305,6 +318,60 @@ or randomize all of the points along that line.
 
 [Chart type:"line" data:points className:"inset" /]
 ```
+
+## Refs
+
+Idyll exposes the `ref` property to allow you to refer to specific components in
+property expressions.
+
+```
+[Component ref:"thisComponent" propName:`refs.thisComponent`  /]
+```
+
+The ref property allows you to update the state of one component based on another. Idyll
+provides some utilities automatically, for example keeping track of the position
+of a component on the page, and how far through a component's content the reader has
+scrolled.
+
+Each ref object has the following properties:
+
+```
+{
+  scrollProgress: {
+    x: number,
+    y: number
+  },
+  domNode: node,
+  size: {
+    x: number,
+    y: number
+  },
+  position: {
+    left: number,
+    top: number,
+    right: number,
+    bottom: number
+  }
+}
+```
+
+For example:
+
+```
+[section ref:'section' style:`{ opacity: 1 - refs.section.scrollProgress.y }`]
+
+Lorem ipsum...
+...
+lots of text here
+...
+
+[/section]
+```
+
+The above code will create a section of text that fades out as the user scrolls to the bottom of it.
+`scrollProgress.y` in this case is a value from 0 to 1 that Idyll automatically computes,
+providing the percentage that a user has scrolled through a certain component.
+
 
 ## Custom Components
 
@@ -479,14 +546,6 @@ Idyll is a very new project, and I'm eager to get feedback. Feel free
 to contact me on twitter [link href:"http://twitter.com/mathisonian" text:"@mathisonian" /]
 or by email [link href:"mailto:idyll@mathisonian.com" text:"idyll@mathisonian.com" /].
 
-Please be kind as there are still plenty of bugs.
-
-There are several features that I plan to add in the near future:
-
-* Support for JSON objects as property inputs
-* Additional built-in components
-* A special optional header at the top of the document for page meta-data
-* Access to a function library in the component callbacks
-* Better feedback for syntax errors
+Please be kind as there are still plenty of bugs to fix and improvements to be made.
 
 [/section]
