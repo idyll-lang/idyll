@@ -28,11 +28,11 @@ class Chart extends IdyllComponent {
       <div className={this.props.className}>
         {type !== 'PIE' ? (
           <V.VictoryChart domainPadding={10} scale={scale}>
-            <INNER_CHART data={data}>
+            <INNER_CHART data={data} x={this.props.x} y={this.props.y}>
             </INNER_CHART>
           </V.VictoryChart>
         ) : (
-          <INNER_CHART data={data}>
+          <INNER_CHART data={data} colorScale={this.props.colorScale}>
           </INNER_CHART>
         )
         }
