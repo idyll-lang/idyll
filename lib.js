@@ -30,8 +30,8 @@ function fullPath(el) {
   return names.join(" > ");
 }
 
-var IdyllComponent = function (_React$Component) {
-  _inherits(IdyllComponent, _React$Component);
+var IdyllComponent = function (_React$PureComponent) {
+  _inherits(IdyllComponent, _React$PureComponent);
 
   function IdyllComponent(props) {
     _classCallCheck(this, IdyllComponent);
@@ -59,6 +59,6 @@ var IdyllComponent = function (_React$Component) {
   }]);
 
   return IdyllComponent;
-}(React.Component);
+}(React.PureComponent);
 
 module.exports = IdyllComponent;
