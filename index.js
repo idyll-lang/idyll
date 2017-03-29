@@ -5,6 +5,6 @@ var Lexer = require('./src/lexer');
 module.exports = function(input) {
   var lex = Lexer();
   var lexResults = lex(input);
-  var output = parse(lexResults);
+  var output = parse(input, lexResults.tokens, lexResults.positions);
   return output;
 }

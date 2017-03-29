@@ -5,7 +5,7 @@ const nearley = require("nearley");
 
 
 /**
- * Clean results removes unnecessary 
+ * Clean results removes unnecessary
  * <p> tags inside of other blocks.
  */
 const cleanResults = (node) => {
@@ -26,9 +26,19 @@ const cleanResults = (node) => {
 };
 
 
-module.exports = function(str) {
+module.exports = function(input, tokens, positions) {
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
-  p.feed(str);
+  try {
+    p.feed(tokens);
+  } catch(err) {
+    const index = tokens.substring(0, err.offset).match(/\s(?=(?:[^'"`]*(['"`])[^'"`]*\1)*[^'"`]*$)/g).length;
+    const position = positions[index];
+    const message = 'Error parsing input at line ' + position[0] + ', column ' + position[1] + '\n\n' + input.split('\n')[position[0] - 1] + '\n' + Array(position[1] - 2).join(' ') + '^^^';
+    const e = new Error(message);
+    e.row = position[0];
+    e.column = position[1];
+    throw e;
+  }
   var results = p.results;
 
   if (results.length) {
