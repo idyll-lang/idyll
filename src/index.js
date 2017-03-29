@@ -98,10 +98,11 @@ const start = () => {
         return;
       }
       try {
+        const ast = compile(data);
         writeTemplates(ast);
-        fs.writeFile(AST_FILE, JSON.stringify(compile(data)));
+        fs.writeFile(AST_FILE, JSON.stringify(ast));
       } catch(err) {
-        console.log('Error parsing file');
+        console.log(err.message);
       }
     })
   });
@@ -129,9 +130,13 @@ const start = () => {
 
 
 const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
-const ast = compile(idlInput);
-writeTemplates(ast);
-fs.writeFileSync(AST_FILE, JSON.stringify(ast));
+try {
+  const ast = compile(idlInput);
+  writeTemplates(ast);
+  fs.writeFileSync(AST_FILE, JSON.stringify(ast));
+} catch(err) {
+  console.log(err.message);
+}
 
 if (argv.build) {
   build();
