@@ -31,7 +31,8 @@ module.exports = function(input, tokens, positions) {
   try {
     p.feed(tokens);
   } catch(err) {
-    const index = tokens.substring(0, err.offset).match(/\s(?=(?:[^'"`]*(['"`])[^'"`]*\1)*[^'"`]*$)/g).length;
+    const cleaned = tokens.substring(0, err.offset).replace(/"[^"]*"/g, 'x');
+    const index = cleaned.match(/ /g).length;
     const position = positions[index];
     const message = 'Error parsing input at line ' + position[0] + ', column ' + position[1] + '\n\n' + input.split('\n')[position[0] - 1] + '\n' + Array(position[1] - 2).join(' ') + '^^^';
     const e = new Error(message);
