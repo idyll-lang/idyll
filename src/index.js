@@ -36,6 +36,10 @@ try {
   console.log(e);
 }
 
+const compilerOptions = {
+  spellcheck: argv.spellcheck
+};
+
 const writeTemplates = (ast) => {
   const outputComponents = [];
   const checkedComponents = [];
@@ -98,7 +102,7 @@ const start = () => {
         return;
       }
       try {
-        const ast = compile(data);
+        const ast = compile(data, compilerOptions);
         writeTemplates(ast);
         fs.writeFile(AST_FILE, JSON.stringify(ast));
       } catch(err) {
@@ -131,7 +135,7 @@ const start = () => {
 
 const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
 try {
-  const ast = compile(idlInput);
+  const ast = compile(idlInput, compilerOptions);
   writeTemplates(ast);
   fs.writeFileSync(AST_FILE, JSON.stringify(ast));
 } catch(err) {
