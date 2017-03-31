@@ -5,40 +5,46 @@ const Spellcheck = require('spellchecker');
 // Create a Parser object from our grammar.
 
 
-/**
- * Clean results removes unnecessary
- * <p> tags inside of other blocks.
- */
-const cleanResults = (node) => {
-  if (typeof node === 'string') {
-    node.split(/\s/).forEach((word) => {
-      word = word.trim();
-      if (Spellcheck.isMisspelled(word)) {
-        const suggestions = Spellcheck.getCorrectionsForMisspelling(word);
-        if (suggestions.length) {
-          console.log(word + ': did you mean ' + Spellcheck.getCorrectionsForMisspelling(word)[0]);
-        } else {
-          console.log(word + ': no suggestions found');
-        }
+
+module.exports = function(input, tokens, positions, options) {
+  options = options || {};
+  /**
+   * Clean results removes unnecessary
+   * <p> tags inside of other blocks.
+   */
+  const cleanResults = (node) => {
+    if (typeof node === 'string') {
+      if (options.spellcheck) {
+        node.split(/\s/).forEach((word) => {
+          word = word.trim();
+          if (Spellcheck.isMisspelled(word)) {
+            const suggestions = Spellcheck.getCorrectionsForMisspelling(word);
+            if (suggestions.length) {
+              console.log(word + ': did you mean ' + Spellcheck.getCorrectionsForMisspelling(word)[0]);
+            } else {
+              console.log(word + ': no suggestions found');
+            }
+          }
+        })
       }
-    })
-    return smartquotes(node);
-  }
+      if (options.smartquotes) {
+        return smartquotes(node);
+      }
+      return node;
+    }
 
-  if (node[0] !== 'p'
-    && node[2].length === 1
-    && node[2][0][0] === 'p'
-    && node[2][0][2]
-    && node[2][0][2].length === 1
-    && typeof node[2][0][2][0] === 'string') {
-      return [node[0], node[1], node[2][0][2]];
-  }
+    if (node[0] !== 'p'
+      && node[2].length === 1
+      && node[2][0][0] === 'p'
+      && node[2][0][2]
+      && node[2][0][2].length === 1
+      && typeof node[2][0][2][0] === 'string') {
+        return [node[0], node[1], node[2][0][2]];
+    }
 
-  return [node[0], node[1], node[2].map(cleanResults)];
-};
+    return [node[0], node[1], node[2].map(cleanResults)];
+  };
 
-
-module.exports = function(input, tokens, positions) {
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
   try {
     p.feed(tokens);
