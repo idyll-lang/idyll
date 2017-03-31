@@ -1,6 +1,7 @@
 const grammar = require('./grammar');
-const nearley = require("nearley");
-
+const nearley = require('nearley');
+const smartquotes = require('smartquotes');
+const Spellcheck = require('spellchecker');
 // Create a Parser object from our grammar.
 
 
@@ -10,7 +11,18 @@ const nearley = require("nearley");
  */
 const cleanResults = (node) => {
   if (typeof node === 'string') {
-    return node;
+    node.split(/\s/).forEach((word) => {
+      word = word.trim();
+      if (Spellcheck.isMisspelled(word)) {
+        const suggestions = Spellcheck.getCorrectionsForMisspelling(word);
+        if (suggestions.length) {
+          console.log(word + ': did you mean ' + Spellcheck.getCorrectionsForMisspelling(word)[0]);
+        } else {
+          console.log(word + ': no suggestions found');
+        }
+      }
+    })
+    return smartquotes(node);
   }
 
   if (node[0] !== 'p'
@@ -47,6 +59,7 @@ module.exports = function(input, tokens, positions) {
       // console.log(JSON.stringify(results, null, 2));
       // console.log(str);
     }
+    console.log('\n\nSpellcheck:');
     return results[0].map(cleanResults);
   }
   throw new Error('No parse results');
