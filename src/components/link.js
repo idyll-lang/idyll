@@ -7,8 +7,12 @@ class Link extends IdyllComponent {
   }
 
   render() {
+    let props = this.props;
+    if (props.url) {
+      props.href = props.url;
+    }
     return (
-      <a {...this.props}>
+      <a {...props}>
         {this.props.text}
       </a>
     );
