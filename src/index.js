@@ -25,7 +25,7 @@ if (!fs.existsSync(TMP_PATH)){
 }
 
 const HTML_TEMPLATE = path.resolve('_index.html');
-const HTML_OUTPUT = path.resolve('index.html');
+const HTML_OUTPUT = path.resolve('build/index.html');
 const AST_FILE = path.resolve(TMP_PATH + '/ast.json');
 const COMPONENT_FILE = path.resolve(TMP_PATH + '/components.js');
 const CSS_INPUT = (argv.css) ?  path.resolve(argv.css) : false;
@@ -61,12 +61,8 @@ const writeCSS = () => {
 
 const handleHTML = () => {
   const templateString = fs.readFileSync(HTML_TEMPLATE, 'utf8');
-  console.log(templateContext);
-  console.log(templateString);
-  console.log('ummm')
   const output = Mustache.render(templateString, templateContext);
-  console.log(HTML_OUTPUT);
-  res.writeFileSync(HTML_OUTPUT, output);
+  fs.writeFileSync(HTML_OUTPUT, output);
 };
 
 const writeTemplates = (ast) => {
@@ -94,9 +90,9 @@ const writeTemplates = (ast) => {
       switch(name) {
         case 'meta':
           templateContext = {}
-          Object.keys(props).forEach((key) => {
-            templateContext[key] = props[key];
-          });
+          props.forEach((p) => {
+            templateContext[p[0]] = p[1][1];
+          })
           break;
       }
     }
@@ -108,6 +104,7 @@ const writeTemplates = (ast) => {
 
 
 const build = () => {
+  handleHTML();
   process.env['NODE_ENV'] = 'production';
   var b = browserify(path.resolve(__dirname + '/templates/entry.js'), {
     fullPaths: true,
@@ -142,7 +139,6 @@ const start = () => {
       }
       try {
         const ast = compile(data, compilerOptions);
-        handleHTML();
         writeTemplates(ast);
         writeCSS();
         fs.writeFile(AST_FILE, JSON.stringify(ast));
@@ -177,7 +173,6 @@ const start = () => {
 const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
 try {
   const ast = compile(idlInput, compilerOptions);
-  handleHTML();
   writeTemplates(ast);
   writeCSS();
   fs.writeFileSync(AST_FILE, JSON.stringify(ast));
