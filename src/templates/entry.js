@@ -88,6 +88,25 @@ const transformRefs = (refs) => {
     });
   });
   return output;
+};
+
+const stringifyRefs = (refs) => {
+  console.log('stringify refs:');
+  console.log(refs);
+  const output = {};
+  const keys = ['scrollProgress', 'size', 'position'];
+  Object.keys(refs).forEach((ref) => {
+    const val = refs[ref];
+    output[ref] = {};
+    Object.keys(val).forEach((key) => {
+      if (keys.indexOf(key) === -1) {
+        return;
+      }
+      output[ref][key] = val[key];
+    });
+  });
+  console.log(output);
+  return JSON.stringify(output);
 }
 
 class InteractiveDocument extends React.PureComponent {
@@ -226,7 +245,7 @@ class InteractiveDocument extends React.PureComponent {
                 const val = this.state[propName];
                 evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
               });
-              evalFunc += `var refs = ${JSON.stringify(this._idyllRefs)};\n`;
+              evalFunc += `var refs = ${stringifyRefs(this._idyllRefs)};\n`;
               evalFunc += propValueArr[1];
               evalFunc += `\nthis.setState({${relevantVars.join(',')}});\n`;
               evalFunc += '})()';
@@ -243,7 +262,7 @@ class InteractiveDocument extends React.PureComponent {
                 const val = this.state[propName];
                 evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
               });
-              evalFunc += `var refs = ${JSON.stringify(this._idyllRefs)};\n`;
+              evalFunc += `var refs = ${stringifyRefs(this._idyllRefs)};\n`;
               evalFunc += `var retVal; try { retVal = ${propValueArr[1]}; } catch (e) { /*console.log(e)*/ }; return retVal;\n`;
               evalFunc += '})()';
               propsObj[propName] = eval(evalFunc);
@@ -287,6 +306,7 @@ class InteractiveDocument extends React.PureComponent {
     Object.keys(this._idyllRefs).forEach((name) => {
       const ref = this._idyllRefs[name];
       const rect = ref.domNode().getBoundingClientRect();
+      this._idyllRefs[name]._node = ref.domNode();
       this._idyllRefs[name].size = {
         x: rect.width,
         y: rect.height
@@ -322,7 +342,7 @@ class InteractiveDocument extends React.PureComponent {
 
       const newRefs = {};
       Object.keys(this._idyllRefs).forEach((ref) => {
-        const { size, absolutePosition } = this._idyllRefs[ref];
+        const { size, absolutePosition, _node } = this._idyllRefs[ref];
 
         // 0 percent === top of the div is over the bottom of the window
         const minY = Math.max(0, absolutePosition.top - windowHeight);
@@ -332,17 +352,18 @@ class InteractiveDocument extends React.PureComponent {
         const minX = Math.max(0, absolutePosition.left - windowWidth);
         const maxX = Math.min(documentWidth - windowWidth, absolutePosition.right);
 
+        const rect = _node.getBoundingClientRect();
         newRefs[ref] = {
           scrollProgress: {
             x: minX === maxX ? 1 : Math.max(0, Math.min(1, (scrollX - minX) / (maxX - minX))),
             y: minY === maxY ? 1 : Math.max(0, Math.min(1, (scrollY - minY) / (maxY - minY)))
           },
           position: {
-            top: absolutePosition.top - scrollY,
-            left: absolutePosition.left - scrollX,
-            bottom: absolutePosition.bottom - scrollY,
-            right: absolutePosition.right - scrollX
-          }
+            top: rect.top,
+            left: rect.left,
+            right: rect.right,
+            bottom:  rect.bottom
+          } 
         };
         this._idyllRefs[ref] = Object.assign({}, this._idyllRefs[ref], newRefs[ref]);
       });
