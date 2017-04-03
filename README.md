@@ -1,10 +1,10 @@
-![idyll](https://cloud.githubusercontent.com/assets/1074773/22858218/705cefae-f06b-11e6-922e-642c4ed7851e.png)
+![idyll-text](https://cloud.githubusercontent.com/assets/1074773/24593778/6e8da730-17db-11e7-84e0-d4943466a006.png)
 
 Command line interface for idyll lang
 
 ## What is Idyll?
 
-See https://idyll-lang.github.io/idyll/
+See https://idyll-lang.github.io/
 
 ## Examples
 
