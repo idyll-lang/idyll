@@ -5,6 +5,8 @@
   margin: 0 auto;
   padding: 60px 0;
   margin-bottom: 60px;
+  width: 600px;
+  margin-left: 10vw;
 }
 
 .section {
@@ -14,13 +16,7 @@
 
 .article-header {
   width: 600px;
-  margin-left: 10vw;
-}
-
-.article-body {
-  width: 600px;
-  margin-left: 10vw;
-  margin-top: 45px;
+  margin-bottom: 45px;
 }
 
 .inset {
@@ -58,11 +54,8 @@ input {
 }
 
 @media all and (max-width: 1600px) {
-  .article-header {
-    margin-left: 5vw;
-  }
-  .article-body {
-    margin-left: 5vw;
+  .article {
+    margin-left: 100px;
   }
 
   .fixed {
@@ -72,12 +65,7 @@ input {
 
 
 @media all and (max-width: 1200px) {
-  /* put your css styles in here */
-  .article-header {
-    margin-left: 10px;
-    width: 500px;
-  }
-  .article-body {
+  .article {
     margin-left: 10px;
     width: 500px;
   }
@@ -110,12 +98,7 @@ input {
     padding: 15px 0;
   }
 
-  .article-header {
-    width: 90vw;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .article-body {
+  .article {
     width: 90vw;
     max-width: 600px;
     margin: 0 auto;
