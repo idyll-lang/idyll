@@ -21,7 +21,7 @@ JavaScript components
 
 
 [waypoint onEnteredView:`randomSeed=1` ]
-Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
+Visit [link href:"https://idyll-lang.github.io/" text:"https://idyll-lang.github.io/" /]
 for more information
 [/waypoint]
 
@@ -52,7 +52,7 @@ JavaScript components
 
 
 [waypoint onEnteredView:`randomSeed=1` ]
-Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
+Visit [link href:"https://idyll-lang.github.io/" text:"https://idyll-lang.github.io/" /]
 for more information
 [/waypoint]
 
