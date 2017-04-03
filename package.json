@@ -36,6 +36,7 @@
     "idyll-compiler": "^1.1.10",
     "idyll-component": "^1.0.2",
     "minimist": "^1.2.0",
+    "mustache": "^2.3.0",
     "nearley": "^2.7.11",
     "node-watch": "^0.4.1",
     "react": "^15.4.2",

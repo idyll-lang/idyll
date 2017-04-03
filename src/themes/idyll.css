@@ -40,8 +40,8 @@ p, .article-body {
 .hed {
   font-size: 3rem;
   line-height: 3rem;
-  font-weight: 100;
   margin: 20px 0 20px;
+  font-weight: bold;
   width: 150%;
   max-width: 90vw;
 }
@@ -117,7 +117,8 @@ a:hover {
 
 
 pre {
-  margin: 25px 75px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 pre code {
