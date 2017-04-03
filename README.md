@@ -134,4 +134,6 @@ To use a custom stylesheet, use the `--css` flag.
 $ idyll my-file.idl --css styles.css
 ```
 
-Continue to the [next section](/configuration-and-styles) to learn more.
+
+*Continue reading at https://idyll-lang.github.io/*.
+
