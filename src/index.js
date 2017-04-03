@@ -43,11 +43,15 @@ try {
   console.log(e);
 }
 
+
+const compilerOptions = {
+  spellcheck: argv.spellcheck
+};
 const writeCSS = () => {
   const inputCSS = CSS_INPUT ? fs.readFileSync(CSS_INPUT) : '';
   const themeCSS = fs.readFileSync(THEME_INPUT);
   fs.writeFileSync(CSS_OUTPUT, themeCSS + '\n' + inputCSS);
-}
+};
 
 const writeTemplates = (ast) => {
   const outputComponents = [];
@@ -112,7 +116,7 @@ const start = () => {
         return;
       }
       try {
-        const ast = compile(data);
+        const ast = compile(data, compilerOptions);
         writeTemplates(ast);
         writeCSS();
         fs.writeFile(AST_FILE, JSON.stringify(ast));
@@ -146,7 +150,7 @@ const start = () => {
 
 const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
 try {
-  const ast = compile(idlInput);
+  const ast = compile(idlInput, compilerOptions);
   writeTemplates(ast);
   writeCSS();
   fs.writeFileSync(AST_FILE, JSON.stringify(ast));
