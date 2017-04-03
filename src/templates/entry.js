@@ -140,7 +140,9 @@ class InteractiveDocument extends React.PureComponent {
               varName = propValueArr[1];
               break;
             case DATASET.Source:
-              varVal = datasets[propValueArr[1]];
+              const source = propValueArr[1];
+              const cleanedSource = source.endsWith('.json') ? source.slice(0, -4) : source;
+              varVal = datasets[cleanedSource];
               break;
           }
         });
