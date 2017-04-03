@@ -1,8 +1,10 @@
 const grammar = require('./grammar');
 const nearley = require('nearley');
 const smartquotes = require('smartquotes');
-const Spellcheck = require('spellchecker');
-// Create a Parser object from our grammar.
+let Spellcheck;
+try {
+  Spellcheck = require('spellchecker');
+} catch(e) {}
 
 
 
@@ -15,7 +17,7 @@ module.exports = function(input, tokens, positions, options) {
    */
   const cleanResults = (node) => {
     if (typeof node === 'string') {
-      if (options.spellcheck) {
+      if (options.spellcheck && Spellcheck) {
         node.split(/\s/).forEach((word) => {
           word = word.trim();
           if (Spellcheck.isMisspelled(word)) {
@@ -68,11 +70,11 @@ module.exports = function(input, tokens, positions, options) {
       // console.log(str);
     }
     misspellings = 0;
-    if (options.spellcheck) {
+    if (options.spellcheck && Spellcheck) {
       console.log('\n\nSpellcheck:');
     }
     const ret = results[0].map(cleanResults);
-    if (options.spellcheck && misspellings === 0) {
+    if (options.spellcheck && Spellcheck && misspellings === 0) {
       console.log('No misspellings found.');
     }
     return ret;
