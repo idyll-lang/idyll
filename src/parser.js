@@ -8,6 +8,7 @@ const Spellcheck = require('spellchecker');
 
 module.exports = function(input, tokens, positions, options) {
   options = options || {};
+  let misspellings = 0;
   /**
    * Clean results removes unnecessary
    * <p> tags inside of other blocks.
@@ -19,6 +20,7 @@ module.exports = function(input, tokens, positions, options) {
           word = word.trim();
           if (Spellcheck.isMisspelled(word)) {
             const suggestions = Spellcheck.getCorrectionsForMisspelling(word);
+            misspellings++;
             if (suggestions.length) {
               console.log(word + ': did you mean ' + Spellcheck.getCorrectionsForMisspelling(word)[0]);
             } else {
@@ -65,8 +67,15 @@ module.exports = function(input, tokens, positions, options) {
       // console.log(JSON.stringify(results, null, 2));
       // console.log(str);
     }
-    console.log('\n\nSpellcheck:');
-    return results[0].map(cleanResults);
+    misspellings = 0;
+    if (options.spellcheck) {
+      console.log('\n\nSpellcheck:');
+    }
+    const ret = results[0].map(cleanResults);
+    if (options.spellcheck && misspellings === 0) {
+      console.log('No misspellings found.');
+    }
+    return ret;
   }
   throw new Error('No parse results');
 }
