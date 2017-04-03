@@ -8,7 +8,9 @@ class Waypoint extends IdyllComponent {
 
   render() {
     return (
-      <div/>
+      <div className={`waypoint ${this.props.className || ''}`} {...this.props}>
+        {this.props.children}
+      </div>
     );
   }
 }

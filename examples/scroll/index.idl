@@ -3,87 +3,64 @@
 
 [section]
 
-[article-title]Idyll
-[/article-title]
+[waypoint]
+Idyll
+[/waypoint]
 
-[waypoint onEnteredView:`randomSeed=0` /]
-
-[pullquote]
+[waypoint onEnteredView:`randomSeed=1`]
 A new markup language 
 for creating interactive 
 documents
-[/pullquote]
+[/waypoint]
 
-
-[waypoint onEnteredView:`randomSeed=1` /]
-
-[pullquote]
+[waypoint onEnteredView:`randomSeed=0` ]
 Combine a lightweight 
 markup language and reactive 
 JavaScript components
-[/pullquote]
+[/waypoint]
 
 
-[waypoint onEnteredView:`randomSeed=0` /]
-
-[pullquote]
+[waypoint onEnteredView:`randomSeed=1` ]
 Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
 for more information
-[/pullquote]
+[/waypoint]
 
-[waypoint onEnteredView:`randomSeed=2` /]
-
-
-[pullquote]
+[waypoint onEnteredView:`randomSeed=2`]
 Here is the markup for this 
 page:
-[/pullquote]
-
-[waypoint onEnteredView:`randomSeed=3` /]
-
 
 ```
 [var name:"randomSeed" value:0 /]
 
 [section]
 
-[article-title]Idyll
-[/article-title]
+[waypoint]
+Idyll
+[/waypoint]
 
-[waypoint onEnteredView:`randomSeed=0` /]
-
-[pullquote]
+[waypoint onEnteredView:`randomSeed=1`]
 A new markup language 
 for creating interactive 
 documents
-[/pullquote]
+[/waypoint]
 
-
-[waypoint onEnteredView:`randomSeed=1` /]
-
-[pullquote]
-Combine a light-weight 
+[waypoint onEnteredView:`randomSeed=0` ]
+Combine a lightweight 
 markup language and reactive 
 JavaScript components
-[/pullquote]
+[/waypoint]
 
 
-[waypoint onEnteredView:`randomSeed=0` /]
-
-[pullquote]
+[waypoint onEnteredView:`randomSeed=1` ]
 Visit [link href:"https://github.com/idyll-lang/idyll" text:"https://github.com/idyll-lang/idyll" /]
 for more information
-[/pullquote]
+[/waypoint]
 
-[waypoint onEnteredView:`randomSeed=2` /]
-
-
-[pullquote]
+[waypoint onEnteredView:`randomSeed=2`]
 Here is the markup for this 
 page:
-[/pullquote]
 
-[waypoint onEnteredView:`randomSeed=3` /]
+[/waypoint]
 
 [/section]
 
@@ -93,8 +70,9 @@ page:
 
 [/fixed]
 
-
 ```
+
+[/waypoint]
 
 [/section]
 

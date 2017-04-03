@@ -62,7 +62,7 @@ p, .article-body {
   margin-top: 1rem;
 }
 
-a, a:visited {
+a, a:visited, a:hover {
   color: black;
   cursor: pointer;
   text-decoration: none;
@@ -115,9 +115,9 @@ a:hover {
   top: 120px;
 }
 
+
 pre {
-  margin: 25px 0;
-  width: 100%;
+  margin: 25px 75px;
 }
 
 pre code {
@@ -127,6 +127,9 @@ pre code {
   width: 100%;
   display: block;
   overflow-x: auto;
+  font-size: 12px;
+  text-align: initial;
+  font-style: normal;
 }
 code {
   background: #F2F3F2;

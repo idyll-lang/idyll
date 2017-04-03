@@ -1,0 +1,38 @@
+
+.article {
+  top: 0;
+  left: 0;
+  max-width: 50%;
+  padding: 30px;
+}
+
+.section {
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+.fixed {
+  top: 0;
+  right: 7.5%;
+  bottom: 0;
+  max-width: 50%;
+  padding: 20px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section .waypoint {
+  margin-top: 130vh;
+  margin-bottom: 20vh;
+}
+section .waypoint,
+section .waypoint p {
+  font-size: 36px;
+  text-align: center;
+}
+
+section .waypoint:first-of-type {
+  margin-top: 45vh;
+}
