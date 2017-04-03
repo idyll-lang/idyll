@@ -15,15 +15,17 @@ const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const compression = require('compression');
+const Mustache = require('mustache');
 
 const IDL_FILE = argv._[0];
 const TMP_PATH = path.resolve('./.idyll/');
-
 
 if (!fs.existsSync(TMP_PATH)){
     fs.mkdirSync(TMP_PATH);
 }
 
+const HTML_TEMPLATE = path.resolve('_index.html');
+const HTML_OUTPUT = path.resolve('index.html');
 const AST_FILE = path.resolve(TMP_PATH + '/ast.json');
 const COMPONENT_FILE = path.resolve(TMP_PATH + '/components.js');
 const CSS_INPUT = (argv.css) ?  path.resolve(argv.css) : false;
@@ -45,6 +47,7 @@ try {
   console.log(e);
 }
 
+let templateContext = {};
 
 const compilerOptions = {
   spellcheck: argv.spellcheck
@@ -56,10 +59,20 @@ const writeCSS = () => {
   fs.writeFileSync(CSS_OUTPUT, layoutCSS + '\n' + themeCSS + '\n' + inputCSS);
 };
 
+const handleHTML = () => {
+  const templateString = fs.readFileSync(HTML_TEMPLATE, 'utf8');
+  console.log(templateContext);
+  console.log(templateString);
+  console.log('ummm')
+  const output = Mustache.render(templateString, templateContext);
+  console.log(HTML_OUTPUT);
+  res.writeFileSync(HTML_OUTPUT, output);
+};
+
 const writeTemplates = (ast) => {
   const outputComponents = [];
   const checkedComponents = [];
-  const ignoreNames = ['var', 'data'];
+  const ignoreNames = ['var', 'data', 'meta'];
 
 
   const handleNode = (node) => {
@@ -77,6 +90,15 @@ const writeTemplates = (ast) => {
         outputComponents.push(`"${name}": require('${IDYLL_PATH}/components/${name}')`);
       }
       checkedComponents.push(name);
+    } else if (ignoreNames.indexOf(name) > -1) {
+      switch(name) {
+        case 'meta':
+          templateContext = {}
+          Object.keys(props).forEach((key) => {
+            templateContext[key] = props[key];
+          });
+          break;
+      }
     }
     children.map(handleNode);
   }
@@ -120,6 +142,7 @@ const start = () => {
       }
       try {
         const ast = compile(data, compilerOptions);
+        handleHTML();
         writeTemplates(ast);
         writeCSS();
         fs.writeFile(AST_FILE, JSON.stringify(ast));
@@ -154,6 +177,7 @@ const start = () => {
 const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
 try {
   const ast = compile(idlInput, compilerOptions);
+  handleHTML();
   writeTemplates(ast);
   writeCSS();
   fs.writeFileSync(AST_FILE, JSON.stringify(ast));

@@ -23,6 +23,11 @@
   justify-content: center;
 }
 
+
+pre {
+  margin-top: 25px 75px;
+}
+
 section .waypoint {
   margin-top: 130vh;
   margin-bottom: 20vh;
