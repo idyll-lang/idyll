@@ -1,6 +1,4 @@
-
-![idyll-text](https://cloud.githubusercontent.com/assets/1074773/24593798/b48f0cce-17db-11e7-996c-3fc864873b23.png)
-
+![idyll-text](https://cloud.githubusercontent.com/assets/1074773/24593881/6ea01f9a-17dc-11e7-884e-b64fb1668962.png)
 
 Command line interface for idyll lang
 
