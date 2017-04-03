@@ -43,6 +43,7 @@
     "react-dom": "^15.4.2",
     "require-directory": "^2.1.1",
     "scrollwatch": "^1.2.0",
+    "sheetify": "^6.0.1",
     "victory": "^0.17.0"
   }
 }

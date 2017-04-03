@@ -22,12 +22,7 @@ class Slideshow extends IdyllComponent {
   render() {
     return (
       <div className="slideshow" style={{position: 'relative'}}>
-            <ReactCSSTransitionGroup
-              transitionName="slideshow-slide"
-              transitionEnterTimeout={800}
-              transitionLeaveTimeout={300}>
-                {this.getChildren(this.props.children)[this.props.currentSlide-1]}
-            </ReactCSSTransitionGroup>
+          {this.getChildren(this.props.children)[this.props.currentSlide-1]}
       </div>
     );
   }

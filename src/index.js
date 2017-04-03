@@ -9,6 +9,7 @@ const fs = require('fs');
 const watch = require('node-watch');
 const changeCase = require('change-case');
 const envify = require('envify');
+const sheetify = require('sheetify/transform');
 const bulkify = require('bulkify');
 const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
@@ -18,15 +19,21 @@ const compression = require('compression');
 const IDL_FILE = argv._[0];
 const TMP_PATH = path.resolve('./.idyll/');
 
+
 if (!fs.existsSync(TMP_PATH)){
     fs.mkdirSync(TMP_PATH);
 }
 
 const AST_FILE = path.resolve(TMP_PATH + '/ast.json');
 const COMPONENT_FILE = path.resolve(TMP_PATH + '/components.js');
+const CSS_INPUT = (argv.css) ?  path.resolve(argv.css) : false;
+const CSS_OUTPUT = path.resolve(TMP_PATH + '/styles.css');
 const CUSTOM_COMPONENTS_FOLDER = path.resolve(argv.components || './components/');
 const DATA_FOLDER = path.resolve(argv.datasets || './data/');
 const IDYLL_PATH = path.resolve(__dirname);
+
+const THEME = argv.theme || 'blog';
+const THEME_INPUT = path.resolve(`${IDYLL_PATH}/themes/${THEME}.css`);
 
 const components = fs.readdirSync(path.resolve(__dirname + '/components/'));
 let customComponents = [];
@@ -36,8 +43,14 @@ try {
   console.log(e);
 }
 
+
 const compilerOptions = {
   spellcheck: argv.spellcheck
+};
+const writeCSS = () => {
+  const inputCSS = CSS_INPUT ? fs.readFileSync(CSS_INPUT) : '';
+  const themeCSS = fs.readFileSync(THEME_INPUT);
+  fs.writeFileSync(CSS_OUTPUT, themeCSS + '\n' + inputCSS);
 };
 
 const writeTemplates = (ast) => {
@@ -81,7 +94,8 @@ const build = () => {
         DATA_FOLDER,
         IDYLL_PATH } ],
       [ bulkify ],
-      [ brfs ]
+      [ brfs ],
+      [ sheetify ]
     ]
   });
 
@@ -104,6 +118,7 @@ const start = () => {
       try {
         const ast = compile(data, compilerOptions);
         writeTemplates(ast);
+        writeCSS();
         fs.writeFile(AST_FILE, JSON.stringify(ast));
       } catch(err) {
         console.log(err.message);
@@ -114,7 +129,7 @@ const start = () => {
   budo(path.resolve(__dirname + '/templates/entry.js'), {
     live: true,
     open: true,
-    css: argv.css,
+    css: '.idyll/styles.css',
     middleware: compression(),
     watchGlob: '**/*.{html,css,json,js}',
     browserify: {
@@ -126,17 +141,18 @@ const start = () => {
           DATA_FOLDER,
           IDYLL_PATH } ],
         [ bulkify ],
-        [ brfs ]
+        [ brfs ],
+        [ sheetify ]
       ]
     }
   });
 }
 
-
 const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
 try {
   const ast = compile(idlInput, compilerOptions);
   writeTemplates(ast);
+  writeCSS();
   fs.writeFileSync(AST_FILE, JSON.stringify(ast));
 } catch(err) {
   console.log(err.message);
