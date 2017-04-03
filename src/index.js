@@ -32,7 +32,9 @@ const CUSTOM_COMPONENTS_FOLDER = path.resolve(argv.components || './components/'
 const DATA_FOLDER = path.resolve(argv.datasets || './data/');
 const IDYLL_PATH = path.resolve(__dirname);
 
-const THEME = argv.theme || 'blog';
+const LAYOUT = argv.layout || 'blog';
+const THEME = argv.theme || 'idyll';
+const LAYOUT_INPUT = path.resolve(`${IDYLL_PATH}/layouts/${LAYOUT}.css`);
 const THEME_INPUT = path.resolve(`${IDYLL_PATH}/themes/${THEME}.css`);
 
 const components = fs.readdirSync(path.resolve(__dirname + '/components/'));
@@ -49,8 +51,9 @@ const compilerOptions = {
 };
 const writeCSS = () => {
   const inputCSS = CSS_INPUT ? fs.readFileSync(CSS_INPUT) : '';
+  const layoutCSS = fs.readFileSync(LAYOUT_INPUT);
   const themeCSS = fs.readFileSync(THEME_INPUT);
-  fs.writeFileSync(CSS_OUTPUT, themeCSS + '\n' + inputCSS);
+  fs.writeFileSync(CSS_OUTPUT, layoutCSS + '\n' + themeCSS + '\n' + inputCSS);
 };
 
 const writeTemplates = (ast) => {

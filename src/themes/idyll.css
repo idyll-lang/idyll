@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1,h2,h3,h4,h5,h6{
+  margin: 40px 0 20px 0;
+  font-weight: bold;
+}
+
+
+body {
+  color: black;
+}
+
+p, .article-body {
+  font-size: 1.15rem;
+  line-height: 1.75rem;
+}
+
+.byline a {
+  color: black;
+}
+
+
+.hed {
+  font-size: 3rem;
+  line-height: 3rem;
+  font-weight: 100;
+  margin: 20px 0 20px;
+  width: 150%;
+  max-width: 90vw;
+}
+
+.dek {
+  margin: 0;
+  display: block;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  color: black;
+  margin-top: 1rem;
+}
+
+.byline {
+  font-size: .95rem;
+  line-height: 1rem;
+  color: black;
+  margin-top: 1rem;
+}
+
+a, a:visited {
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+  /*border-bottom: 1px solid #EAE7D6;*/
+  box-shadow: inset 0 -4px 0 #EAE7D6;
+  transition: box-shadow 0.25s ease-out;
+}
+
+a:hover {
+  color: black;
+  /*background: #EAE7D6;*/
+  box-shadow: inset 0 -20px 0 #EAE7D6;
+}
+
+.logo-lockup {
+  display: block;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.logo-lockup a {
+  display: block;
+  cursor: pointer;
+}
+
+.logo-lockup a .logo {
+  width: 60px;
+  height: 60px;
+  background: #EAE7D6;
+}
+
+.logo-lockup a small {
+  display: block;
+  transform: rotate(-90deg);
+  margin-top: 0;
+  font-size: 1rem;
+  line-height: 60px;
+  opacity: 0;
+  padding: 0 20px;
+  top: 60px;
+  left: -30px;
+  position: fixed;
+  z-index: -1;
+  transition: all .25s ease-in-out;
+}
+
+.logo-lockup a:hover small {
+  opacity: 1;
+  top: 120px;
+}
+
+pre {
+  margin: 25px 0;
+  width: 100%;
+}
+
+pre code {
+  background: #F2F3F2;
+  color: black;
+  padding: 20px 15px;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+}
+code {
+  background: #F2F3F2;
+  color: black;
+  padding: 1px 5px;
+}
