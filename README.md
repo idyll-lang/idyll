@@ -4,6 +4,8 @@ Command line interface for idyll lang.
 
 *See https://idyll-lang.github.io/ for full documentation*.
 
+*Join our chatroom on Gitter: https://gitter.im/idyll-lang/Lobby*
+
 # What is Idyll?
 
 Idyll is a tool that makes it easier to author interactive narratives 
