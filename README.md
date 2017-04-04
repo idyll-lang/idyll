@@ -6,6 +6,29 @@ Command line interface for idyll lang.
 
 # What is Idyll?
 
+Idyll is a tool that makes it easier to author interactive narratives 
+for the web. The goal of the project is to provide a friendly
+markup language — and an associated toolchain —
+that can be used to create dynamic, text-driven web pages. 
+ 
+Idyll lowers the barrier to entry for
+individuals to create documents that use common narrative techniques
+such as embedding interactive charts and graphs,
+responding to scroll events, and [explorable explanations](http://explorableexplanations.com/). Additionally,
+its readable format facilitates
+collaboration between writers, editors, designers,
+and programmers on complex projects.
+
+Check out some articles create with Idyll:
+
+* The Etymology of Trig Functions - https://mathisonian.github.io/trig/etymology/
+* Seattle PD’s Dashcam Problem - https://mathisonian.github.io/dashcam/
+* United Complaints of America - https://mathisonian.github.io/consumer-complaints/
+* A Scrolling Introduction to Idyll - <a href="https://idyll-lang.github.io/idyll/scroll/" target="_blank">https://idyll-lang.github.io/idyll/scroll/<a/>
+
+```md
+# Idyll
+
 This is *Idyll* markup. By default, everything is text,
 using some common markdown syntax.
 
