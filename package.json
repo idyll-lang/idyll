@@ -1,6 +1,6 @@
 {
   "name": "idyll",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Command line interface for idyll lang",
   "main": "src/index.js",
   "bin": {
