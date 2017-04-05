@@ -91,8 +91,6 @@ const transformRefs = (refs) => {
 };
 
 const stringifyRefs = (refs) => {
-  console.log('stringify refs:');
-  console.log(refs);
   const output = {};
   const keys = ['scrollProgress', 'size', 'position'];
   Object.keys(refs).forEach((ref) => {
@@ -105,7 +103,6 @@ const stringifyRefs = (refs) => {
       output[ref][key] = val[key];
     });
   });
-  console.log(output);
   return JSON.stringify(output);
 }
 
@@ -365,7 +362,7 @@ class InteractiveDocument extends React.PureComponent {
             left: rect.left,
             right: rect.right,
             bottom:  rect.bottom
-          } 
+          }
         };
         this._idyllRefs[ref] = Object.assign({}, this._idyllRefs[ref], newRefs[ref]);
       });
