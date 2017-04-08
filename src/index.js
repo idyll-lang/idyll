@@ -68,7 +68,7 @@ const handleHTML = () => {
 const writeTemplates = (ast) => {
   const outputComponents = [];
   const checkedComponents = [];
-  const ignoreNames = ['var', 'data', 'meta'];
+  const ignoreNames = ['var', 'data', 'meta', 'derived'];
 
 
   const handleNode = (node) => {
@@ -106,7 +106,7 @@ const writeTemplates = (ast) => {
 const build = () => {
   handleHTML();
   process.env['NODE_ENV'] = 'production';
-  var b = browserify(path.resolve(__dirname + '/templates/entry.js'), {
+  var b = browserify(path.resolve(__dirname + '/client/entry.js'), {
     fullPaths: true,
     transform: [
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
@@ -148,7 +148,7 @@ const start = () => {
     })
   });
 
-  budo(path.resolve(__dirname + '/templates/entry.js'), {
+  budo(path.resolve(__dirname + '/client/entry.js'), {
     live: true,
     open: true,
     css: '.idyll/styles.css',
