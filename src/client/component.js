@@ -7,10 +7,6 @@ const walkNode = require('./visitors/node');
 
 let results = require(process.env.AST_FILE);
 
-if (results.length) {
-  console.log('Successfully parsed file.');
-}
-
 const transformRefs = (refs) => {
   const output = {};
   const keys = ['scrollProgress', 'size', 'position'];
@@ -150,7 +146,7 @@ class InteractiveDocument extends React.PureComponent {
   }
 
   render() {
-    return (<div className="article">{this.getChildren()}</div>);
+    return React.createElement('div', {className: 'idyll-root'}, this.getChildren());
   }
 }
 
