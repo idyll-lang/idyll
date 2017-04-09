@@ -16,7 +16,12 @@ const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const compression = require('compression');
 const Mustache = require('mustache');
+const ReactDOMServer = require('react-dom/server');
+const React = require('react');
 
+require('babel-core/register')({
+    presets: ['es2015', 'react']
+});
 const IDL_FILE = argv._[0];
 const TMP_PATH = path.resolve('./.idyll/');
 
@@ -61,6 +66,12 @@ const writeCSS = () => {
 
 const handleHTML = () => {
   const templateString = fs.readFileSync(HTML_TEMPLATE, 'utf8');
+  process.env['AST_FILE'] = AST_FILE;
+  process.env['COMPONENT_FILE'] = COMPONENT_FILE;
+  process.env['DATA_FOLDER'] = DATA_FOLDER;
+  process.env['IDYLL_PATH'] = IDYLL_PATH;
+  const InteractiveDocument = require('./client/component');
+  templateContext.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
   const output = Mustache.render(templateString, templateContext);
   fs.writeFileSync(HTML_OUTPUT, output);
 };
@@ -104,9 +115,9 @@ const writeTemplates = (ast) => {
 
 
 const build = () => {
-  handleHTML();
   process.env['NODE_ENV'] = 'production';
-  var b = browserify(path.resolve(__dirname + '/client/entry.js'), {
+  handleHTML();
+  var b = browserify(path.resolve(__dirname + '/client/build.js'), {
     fullPaths: true,
     transform: [
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
@@ -148,7 +159,7 @@ const start = () => {
     })
   });
 
-  budo(path.resolve(__dirname + '/client/entry.js'), {
+  budo(path.resolve(__dirname + '/client/live.js'), {
     live: true,
     open: true,
     css: '.idyll/styles.css',

@@ -1,6 +1,6 @@
 
 
-.article {
+.idyll-root {
   max-width: 90vw;
   margin: 0 auto;
   padding: 60px 0;
@@ -54,7 +54,7 @@ input {
 }
 
 @media all and (max-width: 1600px) {
-  .article {
+  .idyll-root {
     margin-left: 100px;
   }
 
@@ -65,7 +65,7 @@ input {
 
 
 @media all and (max-width: 1200px) {
-  .article {
+  .idyll-root {
     margin-left: 10px;
     width: 500px;
   }
@@ -94,11 +94,11 @@ input {
     width: 100%;
   }
 
-  .article {
+  .idyll-root {
     padding: 15px 0;
   }
 
-  .article {
+  .idyll-root {
     width: 90vw;
     max-width: 600px;
     margin: 0 auto;
