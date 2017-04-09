@@ -99,9 +99,9 @@ module.exports = function(component) {
         }
       });
       this.derivedVars[varName] = {
-        value: eval(getFunc(this.initialState)),
+        value: eval(getFunc(Object.assign({}, this.initialState, this.getDerivedVars()))),
         update: () => {
-          this.derivedVars[varName].value = eval(getFunc(this.state));
+          this.derivedVars[varName].value = eval(getFunc(Object.assign({}, this.state, this.getDerivedVars())));
         }
       };
     } else {

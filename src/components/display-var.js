@@ -8,9 +8,9 @@ class DisplayVar extends IdyllComponent {
 
   render() {
     return (
-      <div>
+      <span>
         {this.props.var}
-      </div>
+      </span>
     );
   }
 }

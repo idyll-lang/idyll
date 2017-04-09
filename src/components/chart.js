@@ -1,6 +1,7 @@
 const React = require('react');
 const IdyllComponent = require('idyll-component');
 const V = require('victory');
+const d3Arr = require('d3-array');
 
 const types = {
   TIME: V.VictoryLine,
@@ -16,6 +17,18 @@ class Chart extends IdyllComponent {
     const INNER_CHART = types[type];
     let scale = this.props.scale;
     let data = this.props.data;
+    let domain = this.props.domain;
+
+    if (this.props.equation) {
+      const d = this.props.domain;
+      data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / this.props.samplePoints).map((x) => {
+        return {
+          x: x,
+          y: this.props.equation(x)
+        };
+      });
+    }
+
     if (type === 'TIME') {
       scale = {x: 'time', y: 'linear'};
       data = data.map((d) => {
@@ -40,5 +53,13 @@ class Chart extends IdyllComponent {
     );
   }
 }
+
+Chart.defaultProps = {
+  domain: [-1, 1],
+  range: [-1, 1],
+  domainPadding: 0,
+  samplePoints: 100,
+  type: 'line'
+};
 
 module.exports = Chart;
