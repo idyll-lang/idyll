@@ -53,6 +53,7 @@ p, .article-body {
   line-height: 2.2rem;
   color: black;
   margin-top: 1rem;
+  max-width: 90vw;
 }
 
 .byline {
@@ -175,4 +176,11 @@ code {
 .logo-lockup a:hover small {
   opacity: 1;
   top: 120px;
+}
+
+
+@media all and (max-width: 700px) {
+  .logo-lockup {
+    display: none;
+  }
 }

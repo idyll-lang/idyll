@@ -16,6 +16,7 @@
 
 .article-header {
   width: 600px;
+  max-width: 90vw;
   margin-bottom: 45px;
 }
 
