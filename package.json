@@ -29,5 +29,8 @@
     "lex": "^1.7.9",
     "nearley": "^2.7.12",
     "smartquotes": "^2.0.0"
+  },
+  "optionalDependencies": {
+    "spellchecker": "^3.3.1"
   }
 }
