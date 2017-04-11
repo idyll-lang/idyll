@@ -2,6 +2,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const IdyllComponent = require('idyll-component');
 const Latex = require('react-latex');
+const select = require('d3-selection').select;
+const format = require('d3-format').format;
 
 document.write('<link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css" rel="stylesheet">');
 
@@ -26,8 +28,8 @@ class Equation extends IdyllComponent {
 
     this.propNodes = {};
     const self = this;
-    d3.select(dom).selectAll('.mord.mathit').each(function (d) {
-      const $this = d3.select(this);
+    select(dom).selectAll('.mord.mathit').each(function (d) {
+      const $this = select(this);
       Object.keys(self.props).filter((prop) => {
         return allowedProps.indexOf(prop) === -1
       }).forEach((prop) => {
@@ -86,7 +88,7 @@ class Equation extends IdyllComponent {
     return (
       <div style={{ paddingTop: 15 }}>
         Editing {this.state.var}
-        <input type='range' value={d3.format('0.1f')(this.props[this.state.var])} min={d[0]} max={d[1]} onChange={this.handleRangeUpdate.bind(this)} step={step} />
+        <input type='range' value={format('0.1f')(this.props[this.state.var])} min={d[0]} max={d[1]} onChange={this.handleRangeUpdate.bind(this)} step={step} />
       </div>
     );
   }
