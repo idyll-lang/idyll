@@ -1,4 +1,5 @@
 const React = require('react');
+const ReactDOM = require('react-dom');
 const IdyllComponent = require('idyll-component');
 const Latex = require('react-latex');
 
