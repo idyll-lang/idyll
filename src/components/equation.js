@@ -28,7 +28,7 @@ class Equation extends IdyllComponent {
 
     this.propNodes = {};
     const self = this;
-    select(dom).selectAll('.mord.mathit').each(function (d) {
+    select(dom).selectAll('.mord').each(function (d) {
       const $this = select(this);
       Object.keys(self.props).filter((prop) => {
         return allowedProps.indexOf(prop) === -1

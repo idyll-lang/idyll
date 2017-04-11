@@ -31,6 +31,7 @@
     "bulkify": "^1.4.2",
     "change-case": "^3.0.1",
     "compression": "^1.6.2",
+    "d3-drag": "^1.0.4",
     "d3-format": "^1.2.0",
     "d3-selection": "^1.0.5",
     "envify": "^4.0.0",
