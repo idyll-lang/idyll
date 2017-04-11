@@ -35,6 +35,7 @@
     "d3-format": "^1.2.0",
     "d3-selection": "^1.0.5",
     "envify": "^4.0.0",
+    "glslify": "^6.0.2",
     "html-tags": "^1.1.1",
     "idyll-compiler": "^1.1.10",
     "idyll-component": "^1.0.2",

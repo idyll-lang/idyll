@@ -86,8 +86,7 @@ class Equation extends IdyllComponent {
     const d = (this.props.domain || {})[this.state.var] || [-10, 10];
     const step = (this.props.step || {})[this.state.var] || 0.1;
     return (
-      <div style={{ paddingTop: 15 }}>
-        Editing {this.state.var}
+      <div style={{ paddingTop: 15, textAlign: 'center' }}>
         <input type='range' value={format('0.1f')(this.props[this.state.var])} min={d[0]} max={d[1]} onChange={this.handleRangeUpdate.bind(this)} step={step} />
       </div>
     );
