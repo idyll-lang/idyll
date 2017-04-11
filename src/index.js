@@ -9,7 +9,6 @@ const fs = require('fs');
 const watch = require('node-watch');
 const changeCase = require('change-case');
 const envify = require('envify');
-const glslify = require('glslify');
 const sheetify = require('sheetify/transform');
 const bulkify = require('bulkify');
 const brfs = require('brfs');
@@ -122,7 +121,6 @@ const build = () => {
     fullPaths: true,
     transform: [
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-      [ glslify ],
       [ envify, {
         AST_FILE,
         COMPONENT_FILE,
@@ -170,7 +168,6 @@ const start = () => {
     browserify: {
       transform: [
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-        [ glslify ],
         [ envify, {
           AST_FILE,
           COMPONENT_FILE,
