@@ -40,6 +40,11 @@ const stringifyRefs = (refs) => {
   return JSON.stringify(output);
 }
 
+const filterPropsByComponentName = {
+  meta: ['description', '__handleUpdateProps'],
+  p: ['__handleUpdateProps']
+};
+
 module.exports = function(component) {
   let nodeID = -1;
   const walkNode = function (node) {
@@ -49,13 +54,19 @@ module.exports = function(component) {
     }
 
     const componentName = node[0];
+    const filterProps = filterPropsByComponentName[componentName];
     const props = node[1];
     const children = node[2];
     if ([COMPONENTS.Variable, COMPONENTS.Dataset, COMPONENTS.Derived].indexOf(componentName) === -1) {
-      const propsObj = {key: nodeID, __handleUpdateProps: this.handleUpdateProps(nodeID)};
+      const propsObj = {key: nodeID};
+
+      if (!filterProps || filterProps.indexOf('__handleUpdateProps') === -1) {
+        propsObj.__handleUpdateProps = this.handleUpdateProps(nodeID)
+      }
 
       props.forEach((propArr) => {
         const propName = propArr[0];
+        if(filterProps && filterProps.indexOf(propName) !== -1) return;
         const propValueArr = propArr[1];
         if (propValueArr[0] === PROPERTIES.Variable) {
           propsObj[propName] = this.state[propValueArr[1]];
@@ -117,6 +128,7 @@ module.exports = function(component) {
       });
 
       const results = processComponent(componentName);
+
       const inputProps = Object.assign({}, results.extraProps, propsObj);
       if (children) {
         return React.createElement(results.componentClass, inputProps, children.length ? children.map(walkNode.bind(this)) : null);
