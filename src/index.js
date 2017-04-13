@@ -162,6 +162,7 @@ const start = () => {
   budo(path.resolve(__dirname + '/client/live.js'), {
     live: true,
     open: true,
+    forceDefaultIndex: true,
     css: '.idyll/styles.css',
     middleware: compression(),
     watchGlob: '**/*.{html,css,json,js}',
