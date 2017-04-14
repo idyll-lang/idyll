@@ -4,13 +4,14 @@ const changeCase = require('change-case');
 const componentClasses = require(process.env.COMPONENT_FILE);
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
-const processComponent = (name) => {
+const processComponent = (component, name, id) => {
   const paramCaseName = changeCase.paramCase(name);
   let componentClass;
   const extraProps = {};
 
   if (componentClasses[paramCaseName]) {
     componentClass = componentClasses[paramCaseName];
+    extraProps.__handleUpdateProps = component.handleUpdateProps(id);
   } else if (htmlTags.indexOf(paramCaseName) > -1) {
     componentClass = paramCaseName;
   } else {
@@ -41,8 +42,8 @@ const stringifyRefs = (refs) => {
 }
 
 const filterPropsByComponentName = {
-  meta: ['description', '__handleUpdateProps'],
-  p: ['__handleUpdateProps']
+  meta: ['description'],
+  p: []
 };
 
 module.exports = function(component) {
@@ -60,31 +61,27 @@ module.exports = function(component) {
     if ([COMPONENTS.Variable, COMPONENTS.Dataset, COMPONENTS.Derived].indexOf(componentName) === -1) {
       const propsObj = {key: nodeID};
 
-      if (!filterProps || filterProps.indexOf('__handleUpdateProps') === -1) {
-        propsObj.__handleUpdateProps = this.handleUpdateProps(nodeID)
-      }
-
       props.forEach((propArr) => {
         const propName = propArr[0];
         if(filterProps && filterProps.indexOf(propName) !== -1) return;
         const propValueArr = propArr[1];
         if (propValueArr[0] === PROPERTIES.Variable) {
-          propsObj[propName] = this.state[propValueArr[1]];
+          propsObj[propName] = component.state[propValueArr[1]];
         } else if (propValueArr[0] === PROPERTIES.Expression) {
 
           if (propName.startsWith('on') || propName.startsWith('handle')) {
             let evalFunc = '(() => {';
             const relevantVars = [];
             const expression = propValueArr[1];
-            Object.keys(this.state).forEach((propName) => {
+            Object.keys(component.state).forEach((propName) => {
               if (expression.indexOf(propName) === -1) {
                 return;
               }
               relevantVars.push(propName);
-              const val = this.state[propName];
+              const val = component.state[propName];
               evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
             });
-            const dvs = this.getDerivedVars();
+            const dvs = component.getDerivedVars();
             Object.keys(dvs).forEach((propName) => {
               if (expression.indexOf(propName) === -1) {
                 return;
@@ -92,17 +89,17 @@ module.exports = function(component) {
               const val = dvs[propName];
               evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
             });
-            evalFunc += `var refs = ${stringifyRefs(this._idyllRefs)};\n`;
+            evalFunc += `var refs = ${stringifyRefs(component._idyllRefs)};\n`;
             evalFunc += propValueArr[1];
-            evalFunc += `\nthis.setStateAndDerived({${relevantVars.join(',')}});\n`;
+            evalFunc += `\ncomponent.setStateAndDerived({${relevantVars.join(',')}});\n`;
             evalFunc += '})()';
             propsObj[propName] = (function() {
               eval(evalFunc);
-            }).bind(this);
+            }).bind(component);
           } else {
             let evalFunc = '(() => {';
             const expression = propValueArr[1];
-            Object.keys(this.state).forEach((propName) => {
+            Object.keys(component.state).forEach((propName) => {
               if (expression.indexOf(propName) === -1) {
                 return;
               }
@@ -127,14 +124,14 @@ module.exports = function(component) {
         }
       });
 
-      const results = processComponent(componentName);
+      const results = processComponent(component, componentName, nodeID);
 
       const inputProps = Object.assign({}, results.extraProps, propsObj);
       if (children) {
-        return React.createElement(results.componentClass, inputProps, children.length ? children.map(walkNode.bind(this)) : null);
+        return React.createElement(results.componentClass, inputProps, children.length ? children.map(walkNode) : null);
       }
       return React.createElement(getComponentClass(componentName), inputProps);
     }
   };
-  return walkNode.bind(component);
+  return walkNode;
 }
