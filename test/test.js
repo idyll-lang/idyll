@@ -174,17 +174,45 @@ describe('compiler', function() {
         ]);
     });
 
-    it('should handle italics and bold', function() {
-      const input = "regular text and stuff, then some *italics* and some **bold**.";
+    
+
+    // it('should handle italics and bold', function() {
+    //   const input = "regular text and stuff, then some *italics* and some **bold**.";
+    //   var lex = Lexer();
+    //   var lexResults = lex(input);
+    //   var output = parse(input, lexResults.tokens, lexResults.positions);
+    //   expect(output).to.eql(
+    //     [
+    //       ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
+    //     ]);
+    // });
+
+    it('should accept negative numbers', function() {
+      var input = "[component prop:-10 /]";
       var lex = Lexer();
       var lexResults = lex(input);
       var output = parse(input, lexResults.tokens, lexResults.positions);
       expect(output).to.eql(
         [
-          ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
+          ['component', [['prop', ['value', -10]]], []]
         ]);
+
+    });
+
+    it('should accept positive numbers', function() {
+      var input = "[component prop:10 /]";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['component', [['prop', ['value', 10]]], []]
+        ]);
+
     });
   });
+
+ 
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {
