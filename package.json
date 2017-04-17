@@ -7,7 +7,12 @@
     "idyll": "src/index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/**/*.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -54,5 +59,11 @@
     "scrollwatch": "^1.2.0",
     "sheetify": "^6.0.1",
     "victory": "^0.17.0"
+  },
+  "devDependencies": {
+    "babel-jest": "^19.0.0",
+    "enzyme": "^2.8.2",
+    "jest": "^19.0.2",
+    "react-test-renderer": "^15.5.4"
   }
 }

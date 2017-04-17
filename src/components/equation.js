@@ -94,7 +94,7 @@ class Equation extends IdyllComponent {
 
   render() {
     const latexChar = '$';
-    const latexString = latexChar + (this.props.children[0] ? this.props.children[0] : '') + latexChar;
+    const latexString = latexChar + ((this.props.children && this.props.children[0]) ? this.props.children[0] : '') + latexChar;
     return (
       <span>
           <Latex displayMode={this.props.display}>{latexString}</Latex>
