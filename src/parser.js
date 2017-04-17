@@ -6,8 +6,6 @@ try {
   Spellcheck = require('spellchecker');
 } catch(e) {}
 
-
-
 module.exports = function(input, tokens, positions, options) {
   options = options || {};
   let misspellings = 0;

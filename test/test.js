@@ -19,24 +19,16 @@ describe('compiler', function() {
       expect(results.tokens).to.eql("WORDS TOKEN_VALUE_START \"Hello \" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START \"World! \" TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_WORD TOKEN_VALUE_START \"VarDisplay\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"var\" TOKEN_VALUE_END PARAM_SEPARATOR COMPONENT_WORD TOKEN_VALUE_START \"v\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"work\" TOKEN_VALUE_END PARAM_SEPARATOR STRING TOKEN_VALUE_START \"&quot;no&quot;\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF");
     });
 
-  //   it('should tokenize the parameters correctly', function() {
-  //     var lex = Lexer();
-  //     var results = lex("[VarDisplay var:v work:\"no\" key:`val` k:12.34 /]");
-  //     expect(results.tokens).to.eql(['OPEN_BRACKET', 'COMPONENT_WORD', 'COMPONENT_WORD', 'PARAM_SEPARATOR', 'COMPONENT_WORD', 'COMPONENT_WORD', 'PARAM_SEPARATOR', 'STRING', 'COMPONENT_WORD', 'PARAM_SEPARATOR', 'EXPRESSION', 'COMPONENT_WORD', 'PARAM_SEPARATOR', 'NUMBER', 'FORWARD_SLASH', 'CLOSE_BRACKET', 'EOF']);
-  //     expect(results.values).to.eql([null, 'VarDisplay', 'var', null, 'v', 'work', null, '"no"', 'key', null, '`val`', 'k', null, '12.34', null, null, null]);
-  //   });
-
     it('should recognize headings', function() {
       var lex = Lexer();
       var results = lex("\n## my title");
       expect(results.tokens).to.eql('HEADER_2 TOKEN_VALUE_START "my title" TOKEN_VALUE_END EOF');
     });
-  //   it('should handle newlines', function() {
-  //     var lex = Lexer();
-  //     var results = lex("\n\n\n\n lol \n\n");
-  //     expect(results.tokens).to.eql(['BREAK', 'BREAK', 'WORDS', 'BREAK', 'EOF']);
-  //     expect(results.values).to.eql([null, null, 'lol ', null, null]);
-  //   });
+    it('should handle newlines', function() {
+      var lex = Lexer();
+      var results = lex("\n\n\n\n text \n\n");
+      expect(results.tokens.split(' ')).to.eql(['WORDS', 'TOKEN_VALUE_START', '\"text\"', 'TOKEN_VALUE_END', 'EOF']);
+    });
 
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
@@ -47,19 +39,6 @@ describe('compiler', function() {
   });
 
   describe('parser', function() {
-
-  //   before(function() {
-  //     console.log('ya');
-  //     // var parser = Parser();
-  //     // var lexer = Lexer();
-  //     // parser.lexer = lexer;
-  //     // var parserSource = parser.generate();
-  //     // fs.writeFileSync('tmp-parser.js', parserSource);
-  //   });
-
-  //   after(function() {
-  //     // fs.unlinkSync('tmp-parser.js');
-  //   });
 
     it('should parse a simple string', function() {
       var input = 'Just a simple string';
@@ -174,7 +153,7 @@ describe('compiler', function() {
         ]);
     });
 
-    
+
 
     // it('should handle italics and bold', function() {
     //   const input = "regular text and stuff, then some *italics* and some **bold**.";
@@ -212,7 +191,7 @@ describe('compiler', function() {
     });
   });
 
- 
+
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {
