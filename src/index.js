@@ -20,7 +20,7 @@ const ReactDOMServer = require('react-dom/server');
 const React = require('react');
 
 require('babel-core/register')({
-    presets: ['es2015', 'react']
+    presets: ['react']
 });
 const IDL_FILE = argv._[0];
 const TMP_PATH = path.resolve('./.idyll/');
