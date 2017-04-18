@@ -184,11 +184,66 @@ span.action {
   border-width: 2px;
   border-style: none none solid none;
   color: #5601FF;
-  /*font-size: 0.9em;*/
-  padding: -4px 5px;
-  margin: 0 5px;
   cursor: pointer;
+  margin: 5px;
 }
+
+
+table {
+  margin: 0;
+  text-align: right;
+  margin-top: 30px;
+  padding: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 45px;
+  width: 100%;
+}
+
+td {
+  padding: 10px 10px;
+  font-size: 12px;
+  font-family: 'Source Sans Pro', sans-serif;
+  vertical-align: top;
+  max-width: 75%;
+}
+th {
+  padding: 10px;
+  font-size: 14px;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tr.selected {
+  background-color: #ccc;
+}
+td.number {
+  font-family: 'Fira Mono', monospace;
+  text-align: right;
+}
+
+tspan {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 12px;
+}
+
+.idyll-dynamic {
+  border-bottom: dashed 2px blue;
+  cursor: ew-resize;
+}
+
+
+thead {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: bold;
+  padding: 10px;
+  color: black;
+  border-bottom: solid 2px black;
+  vertical-align: bottom;
+}
+
 
 @media all and (max-width: 700px) {
   .logo-lockup {
