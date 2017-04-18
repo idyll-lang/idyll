@@ -10,7 +10,6 @@ const watch = require('node-watch');
 const changeCase = require('change-case');
 const envify = require('envify');
 const sheetify = require('sheetify/transform');
-const bulkify = require('bulkify');
 const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
@@ -18,6 +17,7 @@ const compression = require('compression');
 const Mustache = require('mustache');
 const ReactDOMServer = require('react-dom/server');
 const React = require('react');
+const Baby = require('babyparse');
 
 require('babel-core/register')({
     presets: ['react']
@@ -33,6 +33,7 @@ const HTML_TEMPLATE = path.resolve('_index.html');
 const HTML_OUTPUT = path.resolve('build/index.html');
 const AST_FILE = path.resolve(TMP_PATH + '/ast.json');
 const COMPONENT_FILE = path.resolve(TMP_PATH + '/components.js');
+const DATA_FILE = path.resolve(TMP_PATH + '/data.js');
 const CSS_INPUT = (argv.css) ?  path.resolve(argv.css) : false;
 const CSS_OUTPUT = path.resolve(TMP_PATH + '/styles.css');
 const CUSTOM_COMPONENTS_FOLDER = path.resolve(argv.components || './components/');
@@ -68,16 +69,17 @@ const handleHTML = () => {
   const templateString = fs.readFileSync(HTML_TEMPLATE, 'utf8');
   process.env['AST_FILE'] = AST_FILE;
   process.env['COMPONENT_FILE'] = COMPONENT_FILE;
-  process.env['DATA_FOLDER'] = DATA_FOLDER;
+  process.env['DATA_FILE'] = DATA_FILE;
   process.env['IDYLL_PATH'] = IDYLL_PATH;
   const InteractiveDocument = require('./client/component');
-  templateContext.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
+  // templateContext.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
   const output = Mustache.render(templateString, templateContext);
   fs.writeFileSync(HTML_OUTPUT, output);
 };
 
 const writeTemplates = (ast) => {
   const outputComponents = [];
+  const outputData = {};
   const checkedComponents = [];
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
 
@@ -99,6 +101,33 @@ const writeTemplates = (ast) => {
       checkedComponents.push(name);
     } else if (ignoreNames.indexOf(name) > -1) {
       switch(name) {
+        case 'data':
+          let key, source, data;
+          props.forEach((p) => {
+            const name = p[0];
+            const type = p[1][0];
+            const value = p[1][1];
+            switch(name) {
+              case 'name':
+                if (type === 'value') {
+                  key = value;
+                }
+                break;
+              case 'source':
+                if (type === 'value') {
+                  source = value;
+                }
+                break;
+            };
+          })
+          if (source.endsWith('.csv')) {
+            parsed = Baby.parseFiles(DATA_FOLDER + '/' + source, { header: true });
+            data = parsed.data;
+          } else {
+            data = require(DATA_FOLDER + '/' + source);
+          }
+          outputData[key] = data;
+          break;
         case 'meta':
           templateContext = {}
           props.forEach((p) => {
@@ -111,6 +140,7 @@ const writeTemplates = (ast) => {
   }
   ast.map(handleNode);
   fs.writeFile(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
+  fs.writeFile(DATA_FILE, `module.exports = ${JSON.stringify(outputData)}`);
 }
 
 
@@ -124,9 +154,8 @@ const build = () => {
       [ envify, {
         AST_FILE,
         COMPONENT_FILE,
-        DATA_FOLDER,
+        DATA_FILE,
         IDYLL_PATH } ],
-      [ bulkify ],
       [ brfs ],
       [ sheetify ]
     ]
@@ -172,9 +201,8 @@ const start = () => {
         [ envify, {
           AST_FILE,
           COMPONENT_FILE,
-          DATA_FOLDER,
+          DATA_FILE,
           IDYLL_PATH } ],
-        [ bulkify ],
         [ brfs ],
         [ sheetify ]
       ]
