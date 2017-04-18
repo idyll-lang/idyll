@@ -13,7 +13,6 @@ const types = {
 
 class Chart extends IdyllComponent {
   render() {
-    console.log(this.props);
     const type = this.props.type.toUpperCase();
     const INNER_CHART = types[type];
     let scale = this.props.scale;
