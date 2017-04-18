@@ -1,6 +1,6 @@
 const ReactDOM = require('react-dom');
 const { COMPONENTS, DATASET, PROPERTIES, DERIVED, VARIABLE } = require('../constants');
-
+const datasets = require(process.env.DATA_FILE);
 module.exports = function(component) {
   let nodeID = -1;
   const walkVars = function (node) {
@@ -20,11 +20,7 @@ module.exports = function(component) {
         switch (propName) {
           case DATASET.Name:
             varName = propValueArr[1];
-            break;
-          case DATASET.Source:
-            const source = propValueArr[1];
-            const cleanedSource = source.endsWith('.json') ? source.slice(0, -4) : source;
-            varVal = datasets[cleanedSource];
+            varVal = datasets[varName];
             break;
         }
       });

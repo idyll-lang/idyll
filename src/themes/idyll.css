@@ -179,8 +179,20 @@ code {
 }
 
 
+span.action {
+  border-color: #5601FF;
+  border-width: 2px;
+  border-style: none none solid none;
+  color: #5601FF;
+  /*font-size: 0.9em;*/
+  padding: -4px 5px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
 @media all and (max-width: 700px) {
   .logo-lockup {
     display: none;
   }
 }
+

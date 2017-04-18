@@ -1,7 +1,4 @@
 const React = require('react');
-const bulk = require('bulk-require');
-const datasets = bulk(process.env.DATA_FOLDER, [ '**/*.json' ]);
-
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 

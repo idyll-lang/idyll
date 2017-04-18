@@ -29,7 +29,7 @@ class Chart extends IdyllComponent {
       });
     }
 
-    if (type === 'TIME') {
+    if (type === types.TIME) {
       scale = {x: 'time', y: 'linear'};
       data = data.map((d) => {
         return Object.assign({}, d, {

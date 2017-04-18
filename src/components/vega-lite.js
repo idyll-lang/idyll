@@ -5,13 +5,12 @@ window.d3 = d3;
 const VL = require('react-vega-lite').default;
 
 class VegaLite extends IdyllComponent {
-  componentShouldUpdate() {
-    return false;
-  }
-
   render() {
+    const data = {
+      values: this.props.data
+    };
     return (
-      <VL {...this.props} />
+      <VL {...this.props} data={data} />
     );
   }
 }

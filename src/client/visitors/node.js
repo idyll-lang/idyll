@@ -103,10 +103,10 @@ module.exports = function(component) {
               if (expression.indexOf(propName) === -1) {
                 return;
               }
-              const val = this.state[propName];
+              const val = component.state[propName];
               evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
             });
-            const dvs = this.getDerivedVars();
+            const dvs = component.getDerivedVars();
             Object.keys(dvs).forEach((propName) => {
               if (expression.indexOf(propName) === -1) {
                 return;
@@ -114,7 +114,7 @@ module.exports = function(component) {
               const val = dvs[propName];
               evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
             });
-            evalFunc += `var refs = ${stringifyRefs(this._idyllRefs)};\n`;
+            evalFunc += `var refs = ${stringifyRefs(component._idyllRefs)};\n`;
             evalFunc += `var retVal; try { retVal = ${propValueArr[1]}; } catch (e) { /*console.log(e)*/ }; return retVal;\n`;
             evalFunc += '})()';
             propsObj[propName] = eval(evalFunc);
