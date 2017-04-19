@@ -119,22 +119,31 @@ module.exports = function() {
     return 'FORWARD_SLASH';
   });
 
-  lexer.addRule(/true/, function(lexeme) {
-    this.reject = !inComponent;
-    if (!this.reject) {
-      text = null;
-      updatePosition(lexeme);
-    }
-    return 'BOOLEAN TRUE';
-  });
+  // lexer.addRule(/true/, function(lexeme) {
+  //   this.reject = !inComponent;
+  //   if (!this.reject) {
+  //     text = null;
+  //     updatePosition(lexeme);
+  //   }
+  //   return 'BOOLEAN TRUE';
+  // });
 
-  lexer.addRule(/false/, function(lexeme) {
+  // lexer.addRule(/false/, function(lexeme) {
+  //   this.reject = !inComponent;
+  //   if (!this.reject) {
+  //     text = null;
+  //     updatePosition(lexeme);
+  //   }
+  //   return 'BOOLEAN FALSE';
+  // });
+
+  lexer.addRule(/true|false/, function(lexeme) {
     this.reject = !inComponent;
     if (!this.reject) {
-      text = null;
+      text = lexeme;
       updatePosition(lexeme);
     }
-    return 'BOOLEAN FALSE';
+    return 'BOOLEAN';
   });
 
   lexer.addRule(/[^0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*/, function(lexeme) {

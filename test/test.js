@@ -48,18 +48,18 @@ describe('compiler', function() {
 
   describe('parser', function() {
 
-  //   before(function() {
-  //     console.log('ya');
-  //     // var parser = Parser();
-  //     // var lexer = Lexer();
-  //     // parser.lexer = lexer;
-  //     // var parserSource = parser.generate();
-  //     // fs.writeFileSync('tmp-parser.js', parserSource);
-  //   });
+    before(function() {
+      console.log('ya');
+      // var parser = Parser();
+      // var lexer = Lexer();
+      // parser.lexer = lexer;
+      // var parserSource = parser.generate();
+      // fs.writeFileSync('tmp-parser.js', parserSource);
+    });
 
-  //   after(function() {
-  //     // fs.unlinkSync('tmp-parser.js');
-  //   });
+    after(function() {
+      // fs.unlinkSync('tmp-parser.js');
+    });
 
     it('should parse a simple string', function() {
       var input = 'Just a simple string';
@@ -183,6 +183,28 @@ describe('compiler', function() {
         [
           ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
         ]);
+    });
+
+    it('should handle booleans', function() {
+      const input = "[component prop:true /]";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);      
+      expect(output).to.eql(
+        [
+          ['component', [['prop', ['value', "true"]]], []]
+        ]);
+      });
+
+      it('should handle booleans', function() {
+        const input = "[component prop:`true` /]";
+        var lex = Lexer();
+        var lexResults = lex(input);
+        var output = parse(input, lexResults.tokens, lexResults.positions);
+        expect(output).to.eql(
+          [
+            ['component', [['prop', ['expression', "true"]]], []]
+          ]);
     });
   });
 
