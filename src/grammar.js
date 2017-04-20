@@ -244,7 +244,9 @@ var grammar = {
             val = +val;
           } else if (t === 'EXPRESSION' || t === 'STRING') {
             val = val.substring(1, val.length-1);
-          } 
+          } else if (t === 'BOOLEAN') {
+            val = (val === 'true');
+          }
         
           var typeString = '';
           if (t === 'EXPRESSION') {

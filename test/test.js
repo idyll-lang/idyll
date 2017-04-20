@@ -192,18 +192,18 @@ describe('compiler', function() {
       var output = parse(input, lexResults.tokens, lexResults.positions);      
       expect(output).to.eql(
         [
-          ['component', [['prop', ['value', "true"]]], []]
+          ['component', [['prop', ['value', true]]], []]
         ]);
       });
 
-      it('should handle booleans', function() {
+      it('should handle booleans in backticks', function() {
         const input = "[component prop:`true` /]";
         var lex = Lexer();
         var lexResults = lex(input);
         var output = parse(input, lexResults.tokens, lexResults.positions);
         expect(output).to.eql(
           [
-            ['component', [['prop', ['expression', "true"]]], []]
+            ['component', [['prop', ['expression', 'true']]], []]
           ]);
     });
   });
