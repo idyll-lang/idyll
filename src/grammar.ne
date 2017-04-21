@@ -150,7 +150,7 @@ ComponentProperty -> "COMPONENT_WORD" __ TokenValue __ "PARAM_SEPARATOR" __  Com
   }
 %}
 
-ComponentPropertyValue -> ("NUMBER" | "EXPRESSION" | "STRING" | "COMPONENT_WORD") __ TokenValue {%
+ComponentPropertyValue -> ("NUMBER" | "EXPRESSION" | "STRING" | "COMPONENT_WORD" | "BOOLEAN") __ TokenValue {%
   function(data, location, reject) {
     var t = data[0][0];
     var val = data[2];
@@ -158,12 +158,14 @@ ComponentPropertyValue -> ("NUMBER" | "EXPRESSION" | "STRING" | "COMPONENT_WORD"
       val = +val;
     } else if (t === 'EXPRESSION' || t === 'STRING') {
       val = val.substring(1, val.length-1);
+    } else if (t === 'BOOLEAN') {
+      val = (val === 'true');
     }
 
     var typeString = '';
     if (t === 'EXPRESSION') {
       typeString = 'expression';
-    } else if (t === 'NUMBER' || t === 'STRING') {
+    } else if (t === 'NUMBER' || t === 'STRING' || t === 'BOOLEAN') {
       typeString = 'value';
     } else if (t === 'COMPONENT_WORD') {
       typeString = 'variable';

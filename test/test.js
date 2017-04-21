@@ -39,7 +39,6 @@ describe('compiler', function() {
   });
 
   describe('parser', function() {
-
     it('should parse a simple string', function() {
       var input = 'Just a simple string';
       var lex = Lexer();
@@ -188,6 +187,28 @@ describe('compiler', function() {
           ['component', [['prop', ['value', 10]]], []]
         ]);
 
+    });
+
+    it('should handle booleans', function() {
+      const input = "[component prop:true /]";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);      
+      expect(output).to.eql(
+        [
+          ['component', [['prop', ['value', true]]], []]
+        ]);
+      });
+
+      it('should handle booleans in backticks', function() {
+        const input = "[component prop:`true` /]";
+        var lex = Lexer();
+        var lexResults = lex(input);
+        var output = parse(input, lexResults.tokens, lexResults.positions);
+        expect(output).to.eql(
+          [
+            ['component', [['prop', ['expression', 'true']]], []]
+          ]);
     });
   });
 
