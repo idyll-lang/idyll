@@ -146,7 +146,7 @@ module.exports = function() {
     return 'BOOLEAN';
   });
 
-  lexer.addRule(/[^0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*/, function(lexeme) {
+  lexer.addRule(/[^+\-0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*/, function(lexeme) {
     this.reject = !inComponent;
     if (!this.reject) {
       text = lexeme;
@@ -164,7 +164,7 @@ module.exports = function() {
     return 'EXPRESSION';
   });
 
-  lexer.addRule(/[0-9]+\.?[0-9]*/, function(lexeme) {
+  lexer.addRule(/[+\-]?[0-9]+\.?[0-9]*/, function(lexeme) {
     this.reject = !inComponent;
     if (!this.reject) {
       text = lexeme;
