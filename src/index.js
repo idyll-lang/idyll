@@ -9,7 +9,7 @@ const fs = require('fs');
 const watch = require('node-watch');
 const changeCase = require('change-case');
 const envify = require('envify');
-const sheetify = require('sheetify/transform');
+const css = require('browserify-css');
 const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
@@ -150,14 +150,14 @@ const build = () => {
   var b = browserify(path.resolve(__dirname + '/client/build.js'), {
     fullPaths: true,
     transform: [
+      [ css ],
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
       [ envify, {
         AST_FILE,
         COMPONENT_FILE,
         DATA_FILE,
         IDYLL_PATH } ],
-      [ brfs ],
-      [ sheetify ]
+      [ brfs ]
     ]
   });
 
@@ -197,14 +197,14 @@ const start = () => {
     watchGlob: '**/*.{html,css,json,js}',
     browserify: {
       transform: [
+        [ css ],
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
         [ envify, {
           AST_FILE,
           COMPONENT_FILE,
           DATA_FILE,
           IDYLL_PATH } ],
-        [ brfs ],
-        [ sheetify ]
+        [ brfs ]
       ]
     }
   });

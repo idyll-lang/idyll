@@ -33,6 +33,7 @@
     "babelify": "^7.3.0",
     "babyparse": "^0.4.6",
     "brfs": "^1.4.3",
+    "browserify-css": "^0.10.0",
     "budo": "^9.4.7",
     "change-case": "^3.0.1",
     "compression": "^1.6.2",
@@ -57,7 +58,6 @@
     "reactable": "^0.14.1",
     "require-directory": "^2.1.1",
     "scrollwatch": "^1.2.0",
-    "sheetify": "^6.0.1",
     "victory": "^0.17.0"
   },
   "devDependencies": {

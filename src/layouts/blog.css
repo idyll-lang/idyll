@@ -64,19 +64,6 @@ input {
   }
 }
 
-
-@media all and (max-width: 1200px) {
-  .idyll-root {
-    margin-left: 10px;
-    width: 500px;
-  }
-
-  .fixed {
-    width: calc((500px - 10px) - 50px);
-  }
-}
-
-
 @media all and (max-width: 1000px) {
   /* put your css styles in here */
   .desktop {

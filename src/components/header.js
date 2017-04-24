@@ -4,14 +4,14 @@ class Header extends IdyllComponent {
   render() {
     return (
       <div className={'article-header'}>
-        <div className={'hed'}>
+        <h1 className={'hed'}>
           {this.props.title}
-        </div>
+        </h1>
         {
           this.props.subtitle && (
-            <div className={'dek'}>
+            <h2 className={'dek'}>
               {this.props.subtitle}
-            </div>
+            </h2>
           )
         }
         <div className={'byline'}>
