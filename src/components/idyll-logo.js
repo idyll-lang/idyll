@@ -1,6 +1,6 @@
 const React = require('react');
 const IdyllComponent = require('idyll-component');
-const css = require('./styles/idyll-logo.css');
+const css = require('../component-styles/idyll-logo.css');
 
 class Logo extends IdyllComponent {
   render() {
