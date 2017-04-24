@@ -4,7 +4,7 @@
   "description": "Command line interface for idyll lang",
   "main": "src/index.js",
   "bin": {
-    "idyll": "src/index.js"
+    "idyll": "bin/idyll.js"
   },
   "scripts": {
     "test": "jest"
