@@ -4,15 +4,11 @@
   "description": "Command line interface for idyll lang",
   "main": "src/index.js",
   "bin": {
-    "idyll": "src/index.js"
+    "idyll": "bin/idyll.js"
   },
   "scripts": {
-    "test": "jest"
-  },
-  "jest": {
-    "testMatch": [
-      "**/test/**/*.js"
-    ]
+    "test-deps": "cd test/test-project && npm install",
+    "test": "npm run test-deps; mocha --timeout 20000"
   },
   "repository": {
     "type": "git",
@@ -36,34 +32,21 @@
     "budo": "^9.4.7",
     "change-case": "^3.0.1",
     "compression": "^1.6.2",
-    "d3-drag": "^1.0.4",
-    "d3-format": "^1.2.0",
-    "d3-selection": "^1.0.5",
     "envify": "^4.0.0",
     "html-tags": "^1.1.1",
     "idyll-compiler": "^1.1.10",
-    "idyll-component": "^1.0.2",
-    "katex": "^0.7.1",
+    "insert-css": "^2.0.0",
     "minimist": "^1.2.0",
     "mustache": "^2.3.0",
-    "nearley": "^2.7.11",
     "node-watch": "^0.4.1",
     "react": "^15.4.2",
-    "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-inlinesvg": "^0.5.5",
-    "react-latex": "0.0.8",
-    "react-vega-lite": "0.0.1",
-    "reactable": "^0.14.1",
     "require-directory": "^2.1.1",
-    "scrollwatch": "^1.2.0",
     "sheetify": "^6.0.1",
-    "victory": "^0.17.0"
+    "uglify-js": "^2.8.22"
   },
   "devDependencies": {
-    "babel-jest": "^19.0.0",
-    "enzyme": "^2.8.2",
-    "jest": "^19.0.2",
-    "react-test-renderer": "^15.5.4"
+    "expect.js": "^0.3.1",
+    "mocha": "^3.3.0"
   }
 }
