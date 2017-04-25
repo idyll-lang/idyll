@@ -47,7 +47,6 @@
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "idyll-default-components": "^1.0.1",
     "mocha": "^3.3.0"
   }
 }
