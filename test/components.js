@@ -13,7 +13,7 @@ import Fixed from '../components/fixed';
 import Float from '../components/float';
 import Gist from '../components/gist';
 import Header from '../components/header';
-// import IdyllLogo from '../components/idyll-logo';
+import IdyllLogo from '../components/idyll-logo';
 import Inline from '../components/inline';
 import Link from '../components/link';
 import Range from '../components/range';
@@ -60,9 +60,9 @@ describe('Components sanity check', () => {
   it('<Header />', () => {
     const wrapper = shallow(<Header />);
   });
-  // it('<IdyllLogo />', () => {
-  //   const wrapper = shallow(<IdyllLogo />);
-  // });
+  it('<IdyllLogo />', () => {
+    const wrapper = mount(<IdyllLogo />);
+  });
   it('<Inline />', () => {
     const wrapper = shallow(<Inline />);
   });
