@@ -29,6 +29,7 @@
     "babelify": "^7.3.0",
     "babyparse": "^0.4.6",
     "brfs": "^1.4.3",
+    "browserify-css": "^0.10.0",
     "budo": "^9.4.7",
     "change-case": "^3.0.1",
     "compression": "^1.6.2",
@@ -42,7 +43,6 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "require-directory": "^2.1.1",
-    "sheetify": "^6.0.1",
     "uglify-js": "^2.8.22"
   },
   "devDependencies": {
