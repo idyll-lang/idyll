@@ -58,6 +58,7 @@
     "require-directory": "^2.1.1",
     "scrollwatch": "^1.2.0",
     "sheetify": "^6.0.1",
+    "uglify-js": "^2.8.22",
     "victory": "^0.17.0"
   },
   "devDependencies": {

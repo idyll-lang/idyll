@@ -16,6 +16,7 @@ const Mustache = require('mustache');
 const ReactDOMServer = require('react-dom/server');
 const React = require('react');
 const Baby = require('babyparse');
+const UglifyJS = require("uglify-js");
 
 require('babel-core/register')({
     presets: ['react']
@@ -175,7 +176,10 @@ const idyll = (inputPath, opts) => {
         console.log(err);
         return;
       }
-      fs.writeFileSync(JAVASCRIP_OUTPUT, buff.toString('utf8'));
+      const jsOutput = UglifyJS.minify(buff.toString('utf8'), {
+        fromString: true
+      });
+      fs.writeFileSync(JAVASCRIP_OUTPUT, jsOutput.code);
       fs.unlink(AST_FILE);
     });
   }
