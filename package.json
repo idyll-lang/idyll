@@ -41,6 +41,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "require-directory": "^2.1.1",
+    "sheetify": "^6.0.1",
     "uglify-js": "^2.8.22"
   },
   "devDependencies": {
