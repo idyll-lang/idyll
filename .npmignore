@@ -39,3 +39,4 @@ jspm_packages
 .ast.json
 
 examples
+test

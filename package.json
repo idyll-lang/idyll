@@ -7,7 +7,7 @@
     "idyll": "bin/idyll.js"
   },
   "scripts": {
-    "test": "true"
+    "test": "mocha --timeout 20000"
   },
   "repository": {
     "type": "git",
@@ -44,5 +44,8 @@
     "uglify-js": "^2.8.22"
   },
   "devDependencies": {
+    "expect.js": "^0.3.1",
+    "idyll-default-components": "^1.0.1",
+    "mocha": "^3.3.0"
   }
 }

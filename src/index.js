@@ -22,7 +22,7 @@ require('babel-core/register')({
     presets: ['react']
 });
 
-const idyll = (inputPath, opts) => {
+const idyll = (inputPath, opts, cb) => {
   options = Object.assign({}, {
     output: 'build/',
     htmlTemplate: '_index.html',
@@ -38,7 +38,7 @@ const idyll = (inputPath, opts) => {
   }, opts || {});
 
   const IDL_FILE = inputPath;
-  const TMP_PATH = path.resolve('./.idyll/');
+  const TMP_PATH = path.resolve( './.idyll/');
 
   if (!fs.existsSync(TMP_PATH)){
       fs.mkdirSync(TMP_PATH);
@@ -46,7 +46,7 @@ const idyll = (inputPath, opts) => {
 
   const BUILD_PATH = path.resolve(options.output);
   const HTML_TEMPLATE = path.resolve(options.htmlTemplate);
-  const JAVASCRIP_OUTPUT = path.resolve(BUILD_PATH + '/index.js');
+  const JAVASCRIPT_OUTPUT = path.resolve(BUILD_PATH + '/index.js');
   const HTML_OUTPUT = path.resolve(BUILD_PATH + '/index.html');
   const AST_FILE = path.resolve(TMP_PATH + '/ast.json');
   const COMPONENT_FILE = path.resolve(TMP_PATH + '/components.js');
@@ -156,7 +156,7 @@ const idyll = (inputPath, opts) => {
   }
 
 
-  const build = () => {
+  const build = (cb) => {
     process.env['NODE_ENV'] = 'production';
     handleHTML();
     var b = browserify(path.resolve(__dirname + '/client/build.js'), {
@@ -172,7 +172,6 @@ const idyll = (inputPath, opts) => {
         [ sheetify ]
       ]
     });
-
     b.bundle(function(err, buff) {
       if (err) {
         console.log(err);
@@ -181,8 +180,9 @@ const idyll = (inputPath, opts) => {
       const jsOutput = UglifyJS.minify(buff.toString('utf8'), {
         fromString: true
       });
-      fs.writeFileSync(JAVASCRIP_OUTPUT, jsOutput.code);
+      fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
       fs.unlink(AST_FILE);
+      cb && cb();
     });
   }
 
@@ -194,9 +194,9 @@ const idyll = (inputPath, opts) => {
         }
         try {
           const ast = compile(data, options.compilerOptions);
+          fs.writeFile(AST_FILE, JSON.stringify(ast));
           writeTemplates(ast);
           writeCSS();
-          fs.writeFile(AST_FILE, JSON.stringify(ast));
         } catch(err) {
           console.log(err.message);
         }
@@ -228,15 +228,15 @@ const idyll = (inputPath, opts) => {
   const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
   try {
     const ast = compile(idlInput, options.compilerOptions);
+    fs.writeFileSync(AST_FILE, JSON.stringify(ast));
     writeTemplates(ast);
     writeCSS();
-    fs.writeFileSync(AST_FILE, JSON.stringify(ast));
   } catch(err) {
     console.log(err.message);
   }
 
   if (options.build) {
-    build();
+    build(cb);
   } else {
     start();
   }
