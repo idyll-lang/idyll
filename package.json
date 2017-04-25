@@ -1,0 +1,51 @@
+{
+  "name": "idyll-default-components",
+  "version": "1.0.0",
+  "description": "Components that ship by default in new idyll projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/**/*.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idyll-lang/idyll-default-components.git"
+  },
+  "keywords": [
+    "Idyll"
+  ],
+  "author": "Matthew Conlen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/idyll-lang/idyll-default-components/issues"
+  },
+  "homepage": "https://github.com/idyll-lang/idyll-default-components#readme",
+  "dependencies": {
+    "d3": "^3.5.17",
+    "d3-array": "^1.2.0",
+    "d3-drag": "^1.0.4",
+    "d3-format": "^1.2.0",
+    "d3-selection": "^1.0.5",
+    "idyll-component": "^1.1.0",
+    "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-dom": "^15.5.4",
+    "react-inlinesvg": "^0.5.5",
+    "react-latex": "0.0.8",
+    "react-vega-lite": "0.0.1",
+    "reactable": "^0.14.1",
+    "victory": "^0.18.4"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^2.8.2",
+    "jest": "^19.0.2",
+    "react-addons-test-utils": "^15.5.1"
+  }
+}
