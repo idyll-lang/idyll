@@ -39,4 +39,5 @@ jspm_packages
 .ast.json
 
 build
+!test/test-project/build
 .idyll
