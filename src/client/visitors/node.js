@@ -1,4 +1,4 @@
-const React = require('React');
+const React = require('react');
 const htmlTags = require('html-tags');
 const changeCase = require('change-case');
 const componentClasses = require(process.env.COMPONENT_FILE);

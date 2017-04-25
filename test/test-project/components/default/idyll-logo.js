@@ -1,6 +1,9 @@
 const React = require('react');
 const IdyllComponent = require('idyll-component');
-const css = require('../component-styles/idyll-logo.css');
+const insertCSS = require('insert-css');
+const fs = require('fs');
+const css = fs.readFileSync(__dirname + '/styles/idyll-logo.css');
+insertCSS(css.toString('utf8'));
 
 class Logo extends IdyllComponent {
   render() {
