@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-var idyll = require('../src/');
+const idyll = require('../src/');
 const argv = require('minimist')(process.argv.slice(2));
 
 let options = {
@@ -20,6 +20,9 @@ if (argv.hasOwnProperty('css')) {
 }
 if (argv.hasOwnProperty('components')) {
   options.componentFolder = argv.components;
+}
+if (argv.hasOwnProperty('default-components')) {
+  options.defaultComponents = argv['default-components'];
 }
 if (argv.hasOwnProperty('datasets')) {
   options.dataFolder = argv.datasets;

@@ -27,6 +27,7 @@ const idyll = (inputPath, opts) => {
     output: 'build/',
     htmlTemplate: '_index.html',
     componentFolder: './components/',
+    defaultComponents: './components/default/',
     dataFolder: './data',
     layout: 'blog',
     theme: 'idyll',
@@ -53,7 +54,7 @@ const idyll = (inputPath, opts) => {
   const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
   const CSS_OUTPUT = path.resolve(BUILD_PATH + '/styles.css');
   const CUSTOM_COMPONENTS_FOLDER = path.resolve(options.componentFolder);
-  const DEFAULT_COMPONENTS_FOLDER = path.resolve(argv.defaultComponents || './components/default/');
+  const DEFAULT_COMPONENTS_FOLDER = path.resolve(options.defaultComponents);
   const DATA_FOLDER = path.resolve(options.dataFolder);
   const IDYLL_PATH = path.resolve(__dirname);
 
@@ -107,7 +108,7 @@ const idyll = (inputPath, opts) => {
         if (customComponents.indexOf(name + '.js') > -1) {
           outputComponents.push(`"${name}": require('${CUSTOM_COMPONENTS_FOLDER}/${name}')`);
         } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents.push(`"${name}": require('${IDYLL_PATH}/components/${name}')`);
+          outputComponents.push(`"${name}": require('${DEFAULT_COMPONENTS_FOLDER}/${name}')`);
         }
         checkedComponents.push(name);
       } else if (ignoreNames.indexOf(name) > -1) {
