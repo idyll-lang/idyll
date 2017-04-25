@@ -43,6 +43,7 @@
     "html-tags": "^1.1.1",
     "idyll-compiler": "^1.1.10",
     "idyll-component": "^1.0.2",
+    "insert-css": "^2.0.0",
     "katex": "^0.7.1",
     "minimist": "^1.2.0",
     "mustache": "^2.3.0",

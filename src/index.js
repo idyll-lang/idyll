@@ -53,13 +53,14 @@ const idyll = (inputPath, opts) => {
   const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
   const CSS_OUTPUT = path.resolve(BUILD_PATH + '/styles.css');
   const CUSTOM_COMPONENTS_FOLDER = path.resolve(options.componentFolder);
+  const DEFAULT_COMPONENTS_FOLDER = path.resolve(argv.defaultComponents || './components/default/');
   const DATA_FOLDER = path.resolve(options.dataFolder);
   const IDYLL_PATH = path.resolve(__dirname);
 
   const LAYOUT_INPUT = path.resolve(`${IDYLL_PATH}/layouts/${options.layout}.css`);
   const THEME_INPUT = path.resolve(`${IDYLL_PATH}/themes/${options.theme}.css`);
 
-  const components = fs.readdirSync(path.resolve(__dirname + '/components/'));
+  const components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
   let customComponents = [];
   try {
     customComponents = fs.readdirSync(CUSTOM_COMPONENTS_FOLDER);
