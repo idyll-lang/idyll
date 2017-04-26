@@ -33,7 +33,6 @@
     "budo": "^9.4.7",
     "change-case": "^3.0.1",
     "compression": "^1.6.2",
-    "d3": "^3.5.17",
     "envify": "^4.0.0",
     "html-tags": "^1.1.1",
     "idyll-compiler": "^1.1.10",
