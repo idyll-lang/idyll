@@ -185,27 +185,32 @@ const idyll = (inputPath, opts, cb) => {
   }
 
   const start = () => {
-    watch(IDL_FILE, (eventType, filename) => {
-      fs.readFile(IDL_FILE, 'utf8', function(err, data) {
-        if (err) {
-          return;
-        }
-        try {
-          const ast = compile(data, options.compilerOptions);
-          fs.writeFile(AST_FILE, JSON.stringify(ast));
-          writeTemplates(ast);
-          writeCSS();
-        } catch(err) {
-          console.log(err.message);
-        }
-      })
+    const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
+    watch(watchedFiles, (filename) => {
+      if (filename.indexOf('.css')) {
+        writeCSS();
+      } else {
+        fs.readFile(IDL_FILE, 'utf8', function(err, data) {
+          if (err) {
+            return;
+          }
+          try {
+            const ast = compile(data, options.compilerOptions);
+            fs.writeFile(AST_FILE, JSON.stringify(ast));
+            writeTemplates(ast);
+          } catch(err) {
+            console.log(err.message);
+          }
+        })
+      }
+
     });
 
     budo(path.resolve(__dirname + '/client/live.js'), {
       live: true,
       open: true,
       forceDefaultIndex: true,
-      css: '.idyll/styles.css',
+      css: options.output + '/styles.css',
       middleware: compression(),
       watchGlob: '**/*.{html,css,json,js}',
       browserify: {
