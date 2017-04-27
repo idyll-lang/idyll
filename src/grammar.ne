@@ -26,7 +26,7 @@ Block -> (BreakBlock | NoBreakBlock) {%
   }
 %}
 
-NoBreakBlock -> (Header | Fence | UnorderedList) {%
+NoBreakBlock -> (Header | Fence | UnorderedList | OrderedList) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -47,6 +47,12 @@ Header -> "HEADER_" [1-6] __ TokenValue {%
 UnorderedList -> ("UNORDERED_ITEM" __ TokenValue):+ {%
   function(data, location, reject) {
     return ["ul", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
+  }
+%}
+
+OrderedList -> ("ORDERED_ITEM" __ TokenValue):+ {%
+  function(data, location, reject) {
+    return ["ol", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
   }
 %}
 

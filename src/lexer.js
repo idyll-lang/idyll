@@ -36,6 +36,15 @@ module.exports = function() {
     return 'UNORDERED_ITEM';
   });
 
+  lexer.addRule(/^\s*\d+\.\s*[^\n]*\n?/gm, function(lexeme) {
+    const match = /\s*\d+\.\s*([^\n]*)/.exec(lexeme);
+    if (!this.reject) {
+      text = match[1].trim();
+      updatePosition(lexeme);
+    }
+    return 'ORDERED_ITEM';
+  })
+
   lexer.addRule(/`{3}[\s\S]*?`{3}/g, function(lexeme) {
     this.reject = inComponent;
     if (!this.reject) {
