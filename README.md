@@ -81,6 +81,7 @@ To use the generator:
 ```sh
 $ npm install -g yo generator-idyll
 $ yo idyll
+$ cd idyll-project
 ```
 
 The generator will produce a structure that looks like this:
