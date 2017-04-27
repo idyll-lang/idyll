@@ -23,11 +23,11 @@ require('babel-core/register')({
 
 const idyll = (inputPath, opts, cb) => {
   options = Object.assign({}, {
-    output: 'build/',
+    output: 'build',
     htmlTemplate: '_index.html',
-    componentFolder: './components/',
-    defaultComponents: './components/default/',
-    dataFolder: './data',
+    componentFolder: 'components',
+    defaultComponents: path.join('components', 'default'),
+    dataFolder: 'data',
     layout: 'blog',
     theme: 'idyll',
     compilerOptions: {
@@ -37,7 +37,7 @@ const idyll = (inputPath, opts, cb) => {
   }, opts || {});
 
   const IDL_FILE = inputPath;
-  const TMP_PATH = path.resolve( './.idyll/');
+  const TMP_PATH = path.resolve('.idyll');
 
   if (!fs.existsSync(TMP_PATH)){
       fs.mkdirSync(TMP_PATH);
@@ -45,20 +45,20 @@ const idyll = (inputPath, opts, cb) => {
 
   const BUILD_PATH = path.resolve(options.output);
   const HTML_TEMPLATE = path.resolve(options.htmlTemplate);
-  const JAVASCRIPT_OUTPUT = path.resolve(BUILD_PATH + '/index.js');
-  const HTML_OUTPUT = path.resolve(BUILD_PATH + '/index.html');
-  const AST_FILE = path.resolve(TMP_PATH + '/ast.json');
-  const COMPONENT_FILE = path.resolve(TMP_PATH + '/components.js');
-  const DATA_FILE = path.resolve(TMP_PATH + '/data.js');
+  const JAVASCRIPT_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.js'));
+  const HTML_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.html'));
+  const AST_FILE = path.resolve(path.join(TMP_PATH, 'ast.json'));
+  const COMPONENT_FILE = path.resolve(path.join(TMP_PATH, 'components.js'));
+  const DATA_FILE = path.resolve(path.join(TMP_PATH, 'data.js'));
   const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
-  const CSS_OUTPUT = path.resolve(BUILD_PATH + '/styles.css');
+  const CSS_OUTPUT = path.resolve(path.join(BUILD_PATH, 'styles.css'));
   const CUSTOM_COMPONENTS_FOLDER = path.resolve(options.componentFolder);
   const DEFAULT_COMPONENTS_FOLDER = path.resolve(options.defaultComponents);
   const DATA_FOLDER = path.resolve(options.dataFolder);
   const IDYLL_PATH = path.resolve(__dirname);
 
-  const LAYOUT_INPUT = path.resolve(`${IDYLL_PATH}/layouts/${options.layout}.css`);
-  const THEME_INPUT = path.resolve(`${IDYLL_PATH}/themes/${options.theme}.css`);
+  const LAYOUT_INPUT = path.resolve(path.join(IDYLL_PATH, 'layouts', options.layout + '.css'));
+  const THEME_INPUT = path.resolve(path.join(IDYLL_PATH, 'themes', options.theme + '.css'));
 
   const components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
   let customComponents = [];
@@ -132,10 +132,10 @@ const idyll = (inputPath, opts, cb) => {
               };
             })
             if (source.endsWith('.csv')) {
-              parsed = Baby.parseFiles(DATA_FOLDER + '/' + source, { header: true });
+              parsed = Baby.parseFiles(path.join(DATA_FOLDER, source), { header: true });
               data = parsed.data;
             } else {
-              data = require(DATA_FOLDER + '/' + source);
+              data = require(path.join(DATA_FOLDER, source));
             }
             outputData[key] = data;
             break;
@@ -158,7 +158,7 @@ const idyll = (inputPath, opts, cb) => {
   const build = (cb) => {
     process.env['NODE_ENV'] = 'production';
     handleHTML();
-    var b = browserify(path.resolve(__dirname + '/client/build.js'), {
+    var b = browserify(path.resolve(path.join(__dirname, 'client', 'build.js')), {
       fullPaths: true,
       transform: [
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
@@ -206,11 +206,11 @@ const idyll = (inputPath, opts, cb) => {
 
     });
 
-    budo(path.resolve(__dirname + '/client/live.js'), {
+    budo(path.resolve(path.join(__dirname, 'client', 'live.js')), {
       live: true,
       open: true,
       forceDefaultIndex: true,
-      css: options.output + '/styles.css',
+      css: path.join(options.output, 'styles.css'),
       middleware: compression(),
       watchGlob: '**/*.{html,css,json,js}',
       browserify: {
