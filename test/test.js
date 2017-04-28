@@ -4,20 +4,19 @@ const idyll = require('..');
 const fs = require('fs');
 const path = require('path');
 
-const inputPath = __dirname + '/test-project/';
-const outputPath = __dirname + '/test-project/build/';
-const expectedPath = __dirname + '/expected-output';
+const inputPath = path.join(__dirname, 'test-project');
+const outputPath = path.join(__dirname, 'test-project', 'build');
+const expectedPath = path.join(__dirname, 'expected-output');
 const expectedFiles = fs.readdirSync(expectedPath);
 
 describe('build task', function() {
-
     it('should compile the files', function(done) {
-        idyll(inputPath + '/index.idl', {
+        idyll(path.join(inputPath, 'index.idl'), {
           output: outputPath,
-          htmlTemplate: inputPath + '/_index.html',
-          componentFolder: inputPath + '/components/',
-          defaultComponents: inputPath + '/components/default/',
-          dataFolder: inputPath + '/data',
+          htmlTemplate: path.join(inputPath, '_index.html'),
+          componentFolder: path.join(inputPath, 'components'),
+          defaultComponents: path.join(inputPath, 'components', 'default'),
+          dataFolder: path.join(inputPath, 'data'),
           compilerOptions: {
             spellcheck: false
           },
