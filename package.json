@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test-deps": "cd test/test-project && npm install",
-    "test": "npm run test-deps; mocha --timeout 20000"
+    "test": "npm run test-deps && mocha --timeout 20000"
   },
   "repository": {
     "type": "git",
