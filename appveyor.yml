@@ -3,19 +3,19 @@ image:
 
 environment:
   nodejs_version: "6"
+  SPELLCHECKER_PREFER_HUNSPELL: true
 
 install:
   # Get the latest stable version of Node.js
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - npm install
+  - npm --msvs_version=2013 install
 
 # Post-install test scripts.
 test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
-  # run tests
   - npm test
 
 # Don't actually build.
