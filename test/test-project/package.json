@@ -7,7 +7,7 @@
     "deploy": "npm run build && gh-pages -d ./build"
   },
   "dependencies": {
-    "idyll": "^1.0.0",
+    "idyll": "idyll-lang/idyll#fix-paths",
     "idyll-default-components": "^1.0.0"
   },
   "devDependencies": {
