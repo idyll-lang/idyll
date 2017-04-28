@@ -89,6 +89,8 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const writeTemplates = (ast) => {
+    console.log(ast);
+
     const outputComponents = [];
     const outputData = {};
     const checkedComponents = [];
