@@ -107,9 +107,9 @@ const idyll = (inputPath, opts, cb) => {
       const children = node[2] || [];
       if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
         if (customComponents.indexOf(name + '.js') > -1) {
-          outputComponents.push(`"${name}": require('${CUSTOM_COMPONENTS_FOLDER}/${name}')`);
+          outputComponents.push(`"${name}": require('${path.join(CUSTOM_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
         } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents.push(`"${name}": require('${DEFAULT_COMPONENTS_FOLDER}/${name}')`);
+          outputComponents.push(`"${name}": require('${path.join(DEFAULT_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
         }
         checkedComponents.push(name);
       } else if (ignoreNames.indexOf(name) > -1) {
