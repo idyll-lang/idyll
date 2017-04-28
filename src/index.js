@@ -186,7 +186,7 @@ const idyll = (inputPath, opts, cb) => {
   const start = () => {
     const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
     watch(watchedFiles, (filename) => {
-      if (filename.indexOf('.css')) {
+      if (filename.indexOf('.css') !== -1) {
         writeCSS();
       } else {
         fs.readFile(IDL_FILE, 'utf8', function(err, data) {
