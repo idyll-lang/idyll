@@ -89,13 +89,10 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const writeTemplates = (ast) => {
-    console.log(ast);
-
     const outputComponents = [];
     const outputData = {};
     const checkedComponents = [];
     const ignoreNames = ['var', 'data', 'meta', 'derived'];
-
 
     const handleNode = (node) => {
       if (typeof node === 'string') {
@@ -152,7 +149,6 @@ const idyll = (inputPath, opts, cb) => {
       children.map(handleNode);
     }
     ast.map(handleNode);
-    console.log(`module.exports = {\n${outputComponents.join(',\n')}\n}`);
     fs.writeFile(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
     fs.writeFile(DATA_FILE, `module.exports = ${JSON.stringify(outputData)}`);
   }
