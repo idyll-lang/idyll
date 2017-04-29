@@ -10,8 +10,9 @@ const expectedPath = path.join(__dirname, 'expected-output');
 const expectedFiles = fs.readdirSync(expectedPath);
 
 describe('build task', function() {
-    it('should compile the files', function(done) {
-        idyll(path.join(inputPath, 'index.idl'), {
+
+    before(function(done) {
+      idyll(path.join(inputPath, 'index.idl'), {
           output: outputPath,
           htmlTemplate: path.join(inputPath, '_index.html'),
           componentFolder: path.join(inputPath, 'components'),
@@ -22,13 +23,22 @@ describe('build task', function() {
           },
           build: true
         }, function() {
-          const outputFiles = fs.readdirSync(outputPath);
-          Object.keys(expectedFiles).forEach((f) => {
-            expect(Object.keys(outputFiles).indexOf(f)).to.be.above(-1);
-          });
           done();
         });
+    })
 
+    it('should compile the files', function(done) {
+      const outputFiles = fs.readdirSync(outputPath);
+      Object.keys(expectedFiles).forEach((f) => {
+        expect(Object.keys(outputFiles).indexOf(f)).to.be.above(-1);
+      });
+      done();
+    });
+
+    it('should strip meta from the AST output', function(done) {
+      const ast = JSON.parse(fs.readFileSync(path.join('.idyll', 'ast.json')));
+      expect(JSON.stringify(ast)).to.eql(JSON.stringify([["Header",[["title",["value","Welcome to Idyll"]],["subtitle",["value","Open index.idl to start writing"]],["author",["value","Your Name Here"]],["authorLink",["value","https://idyll-lang.github.io"]]],[]],["p",[],["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]],["p",[],["Here is how you can use a variable:"]],["var",[["name",["value","exampleVar"]],["value",["value",5]]],[]],["div",[],[["Range",[["min",["value",0]],["max",["value",10]],["value",["variable","exampleVar"]]],[]],["DisplayVar",[["var",["variable","exampleVar"]]],[]]]],["pre",[],[["code",[],["var code = true;"]]]],["p",[],["And here is a custom component:"]],["CustomComponent",[],[]],["p",[],["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]]]));
+      done();
     });
 
 });

@@ -40,3 +40,6 @@ jspm_packages
 
 examples
 test
+
+build
+.idyll
