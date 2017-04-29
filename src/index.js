@@ -88,6 +88,22 @@ const idyll = (inputPath, opts, cb) => {
     fs.writeFileSync(HTML_OUTPUT, output);
   };
 
+  const writeAST = (ast) => {
+    const ignoreNames = ['meta'];
+    const astFilter = (node) => {
+      if (typeof node === 'string') {
+        return true;
+      }
+      const name = changeCase.paramCase(node[0]);
+      if (ignoreNames.indexOf(name) > -1) {
+        return false;
+      }
+      return true;
+    }
+    const filteredAST = ast.filter(astFilter);
+    fs.writeFileSync(AST_FILE, JSON.stringify(filteredAST));
+  };
+
   const writeTemplates = (ast) => {
     const outputComponents = [];
     const outputData = {};
@@ -178,7 +194,6 @@ const idyll = (inputPath, opts, cb) => {
         fromString: true
       });
       fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
-      fs.unlink(AST_FILE);
       cb && cb();
     });
   }
@@ -195,7 +210,7 @@ const idyll = (inputPath, opts, cb) => {
           }
           try {
             const ast = compile(data, options.compilerOptions);
-            fs.writeFile(AST_FILE, JSON.stringify(ast));
+            writeAST(ast);
             writeTemplates(ast);
           } catch(err) {
             console.log(err.message);
@@ -229,7 +244,7 @@ const idyll = (inputPath, opts, cb) => {
   const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
   try {
     const ast = compile(idlInput, options.compilerOptions);
-    fs.writeFileSync(AST_FILE, JSON.stringify(ast));
+    writeAST(ast);
     writeTemplates(ast);
     writeCSS();
   } catch(err) {
