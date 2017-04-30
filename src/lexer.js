@@ -27,23 +27,24 @@ module.exports = function() {
     return 'HEADER_' + match[1].length;
   });
 
-  lexer.addRule(/^\s*\*\s*[^\n]*\n?/gm, function(lexeme) {
-    const match = /\s*\*\s*([^\n]*)/.exec(lexeme);
-    if (!this.reject) {
-      text = match[1].trim();
-      updatePosition(lexeme);
-    }
-    return 'UNORDERED_ITEM';
-  });
+  // lexer.addRule(/^\s*\*\h*[^\n]*\n?/gm, function(lexeme) {
+  //   const match = /\s*\*\h*([^\n]*)/.exec(lexeme);
+  //   if (!this.reject) {
+  //     text = match[1].trim();
+  //     updatePosition(lexeme);
+  //   }
+  //   return 'UNORDERED_ITEM';
+  // });
 
-  lexer.addRule(/^\s*\d+\.\s*[^\n]*\n?/gm, function(lexeme) {
-    const match = /\s*\d+\.\s*([^\n]*)/.exec(lexeme);
+  lexer.addRule(/^\s*\d+\.\h*[^\n]*\n?/gm, function(lexeme) {
+    const match = /\s*\d+\.\h*([^\n]*)/.exec(lexeme);
+    console.log(lexeme);
     if (!this.reject) {
       text = match[1].trim();
       updatePosition(lexeme);
     }
     return 'ORDERED_ITEM';
-  })
+  });
 
   lexer.addRule(/`{3}[\s\S]*?`{3}/g, function(lexeme) {
     this.reject = inComponent;
@@ -127,24 +128,6 @@ module.exports = function() {
     }
     return 'FORWARD_SLASH';
   });
-
-  // lexer.addRule(/true/, function(lexeme) {
-  //   this.reject = !inComponent;
-  //   if (!this.reject) {
-  //     text = null;
-  //     updatePosition(lexeme);
-  //   }
-  //   return 'BOOLEAN TRUE';
-  // });
-
-  // lexer.addRule(/false/, function(lexeme) {
-  //   this.reject = !inComponent;
-  //   if (!this.reject) {
-  //     text = null;
-  //     updatePosition(lexeme);
-  //   }
-  //   return 'BOOLEAN FALSE';
-  // });
 
   lexer.addRule(/true|false/, function(lexeme) {
     this.reject = !inComponent;

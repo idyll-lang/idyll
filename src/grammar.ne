@@ -44,18 +44,30 @@ Header -> "HEADER_" [1-6] __ TokenValue {%
   }
 %}
 
-UnorderedList -> ("UNORDERED_ITEM" __ TokenValue):+ {%
+UnorderedList -> (UnorderedListItem):+ {%
   function(data, location, reject) {
+    console.log(data);
     return ["ul", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
   }
 %}
 
-OrderedList -> ("ORDERED_ITEM" __ TokenValue):+ {%
+UnorderedListItem -> ("STAR" __ TokenValue):+ {%
+  function(data, location, reject) {
+    return ["li", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
+  }
+%}
+
+OrderedList -> ("ORDERED_ITEM" __ OrderedListItem):+ {%
   function(data, location, reject) {
     return ["ol", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
   }
 %}
 
+OrderedListItem -> TokenValue {%
+  function(data, location, reject) {
+    return data[0];
+  }
+%}
 
 Fence -> "FENCE" __ TokenValue {%
   function(data, location, reject) {
