@@ -47,7 +47,7 @@ const idyll = (inputPath, opts, cb) => {
   const HTML_TEMPLATE = path.resolve(options.htmlTemplate);
   const JAVASCRIPT_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.js'));
   const HTML_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.html'));
-  const AST_FILE = path.resolve(path.join(TMP_PATH, 'ast.json'));
+  const AST_FILE = path.resolve('ast.json');
   const COMPONENT_FILE = path.resolve(path.join(TMP_PATH, 'components.js'));
   const DATA_FILE = path.resolve(path.join(TMP_PATH, 'data.js'));
   const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
@@ -202,7 +202,7 @@ const idyll = (inputPath, opts, cb) => {
     const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
     watch(watchedFiles, (filename) => {
       if (filename.indexOf('.css') !== -1) {
-        writeCSS();
+        // writeCSS();
       } else {
         fs.readFile(IDL_FILE, 'utf8', function(err, data) {
           if (err) {
@@ -220,33 +220,37 @@ const idyll = (inputPath, opts, cb) => {
 
     });
 
-    budo(path.resolve(path.join(__dirname, 'client', 'live.js')), {
-      live: true,
-      open: true,
-      forceDefaultIndex: true,
-      css: path.join(options.output, 'styles.css'),
-      middleware: compression(),
-      watchGlob: '**/*.{html,css,json,js}',
-      browserify: {
-        transform: [
-          [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-          [ envify, {
-            AST_FILE,
-            COMPONENT_FILE,
-            DATA_FILE,
-            IDYLL_PATH } ],
-          [ brfs ]
-        ]
-      }
-    });
+    // budo(path.resolve(path.join(__dirname, 'client', 'live.js')), {
+    //   live: true,
+    //   open: true,
+    //   forceDefaultIndex: true,
+    //   css: path.join(options.output, 'styles.css'),
+    //   middleware: compression(),
+    //   watchGlob: '**/*.{html,css,json,js}',
+    //   browserify: {
+    //     transform: [
+    //       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
+    //       [ envify, {
+    //         AST_FILE,
+    //         COMPONENT_FILE,
+    //         DATA_FILE,
+    //         IDYLL_PATH } ],
+    //       [ brfs ]
+    //     ]
+    //   }
+    // });
   }
 
+  console.log('AST_FILE=' + AST_FILE);
+  console.log('COMPONENT_FILE=' + COMPONENT_FILE);
+  console.log('DATA_FILE=' + DATA_FILE);
+  console.log('IDYLL_PATH=' + IDYLL_PATH);
   const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
   try {
     const ast = compile(idlInput, options.compilerOptions);
     writeAST(ast);
     writeTemplates(ast);
-    writeCSS();
+    // writeCSS();
   } catch(err) {
     console.log(err.message);
   }

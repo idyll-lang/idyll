@@ -1,8 +1,14 @@
 const React = require('react');
+
+import {
+  View,
+  ScrollView
+} from 'react-native';
+
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 
-let results = require(process.env.AST_FILE);
+let results = require('/Users/mathisonian/projects/AwesomeProject/ast.json');
 
 const transformRefs = (refs) => {
   const output = {};
@@ -22,7 +28,7 @@ const transformRefs = (refs) => {
   return output;
 };
 
-class InteractiveDocument extends React.PureComponent {
+class InteractiveDocument extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpdateProps = this.handleUpdateProps.bind(this);
@@ -73,77 +79,77 @@ class InteractiveDocument extends React.PureComponent {
   }
 
   componentDidMount() {
-    Object.keys(this._idyllRefs).forEach((name) => {
-      const ref = this._idyllRefs[name];
-      const rect = ref.domNode().getBoundingClientRect();
-      this._idyllRefs[name]._node = ref.domNode();
-      this._idyllRefs[name].size = {
-        x: rect.width,
-        y: rect.height
-      };
+    // Object.keys(this._idyllRefs).forEach((name) => {
+    //   const ref = this._idyllRefs[name];
+    //   const rect = ref.domNode().getBoundingClientRect();
+    //   this._idyllRefs[name]._node = ref.domNode();
+    //   this._idyllRefs[name].size = {
+    //     x: rect.width,
+    //     y: rect.height
+    //   };
 
-      this._idyllRefs[name].position = {
-        top: rect.top,
-        left: rect.left,
-        right: rect.right,
-        bottom:  rect.bottom
-      };
+    //   this._idyllRefs[name].position = {
+    //     top: rect.top,
+    //     left: rect.left,
+    //     right: rect.right,
+    //     bottom:  rect.bottom
+    //   };
 
-      this._idyllRefs[name].absolutePosition = {
-        top: rect.top + window.scrollY,
-        left: rect.left + window.scrollX,
-        right: rect.right + window.scrollX,
-        bottom:  rect.bottom + window.scrollY
-      };
+    //   this._idyllRefs[name].absolutePosition = {
+    //     top: rect.top + window.scrollY,
+    //     left: rect.left + window.scrollX,
+    //     right: rect.right + window.scrollX,
+    //     bottom:  rect.bottom + window.scrollY
+    //   };
 
-    });
-    this.setState(transformRefs(this._idyllRefs));
+    // });
+    // this.setState(transformRefs(this._idyllRefs));
 
-    window.addEventListener('scroll', (e) => {
-      // calculate current position based on scroll position
-      const body = document.body;
-      const html = document.documentElement;
-      const documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth );
-      const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-      const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-      const scrollX = window.scrollX;
-      const scrollY = window.scrollY;
+    // window.addEventListener('scroll', (e) => {
+    //   // calculate current position based on scroll position
+    //   const body = document.body;
+    //   const html = document.documentElement;
+    //   const documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth );
+    //   const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+    //   const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    //   const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    //   const scrollX = window.scrollX;
+    //   const scrollY = window.scrollY;
 
-      const newRefs = {};
-      Object.keys(this._idyllRefs).forEach((ref) => {
-        const { size, absolutePosition, _node } = this._idyllRefs[ref];
+    //   const newRefs = {};
+    //   Object.keys(this._idyllRefs).forEach((ref) => {
+    //     const { size, absolutePosition, _node } = this._idyllRefs[ref];
 
-        // 0 percent === top of the div is over the bottom of the window
-        const minY = Math.max(0, absolutePosition.top - windowHeight);
-        // 100 percent === bottom of div is at top of window
-        const maxY = Math.min(documentHeight - windowHeight, absolutePosition.bottom);
+    //     // 0 percent === top of the div is over the bottom of the window
+    //     const minY = Math.max(0, absolutePosition.top - windowHeight);
+    //     // 100 percent === bottom of div is at top of window
+    //     const maxY = Math.min(documentHeight - windowHeight, absolutePosition.bottom);
 
-        const minX = Math.max(0, absolutePosition.left - windowWidth);
-        const maxX = Math.min(documentWidth - windowWidth, absolutePosition.right);
+    //     const minX = Math.max(0, absolutePosition.left - windowWidth);
+    //     const maxX = Math.min(documentWidth - windowWidth, absolutePosition.right);
 
-        const rect = _node.getBoundingClientRect();
-        newRefs[ref] = {
-          scrollProgress: {
-            x: minX === maxX ? 1 : Math.max(0, Math.min(1, (scrollX - minX) / (maxX - minX))),
-            y: minY === maxY ? 1 : Math.max(0, Math.min(1, (scrollY - minY) / (maxY - minY)))
-          },
-          position: {
-            top: rect.top,
-            left: rect.left,
-            right: rect.right,
-            bottom:  rect.bottom
-          }
-        };
-        this._idyllRefs[ref] = Object.assign({}, this._idyllRefs[ref], newRefs[ref]);
-      });
+    //     const rect = _node.getBoundingClientRect();
+    //     newRefs[ref] = {
+    //       scrollProgress: {
+    //         x: minX === maxX ? 1 : Math.max(0, Math.min(1, (scrollX - minX) / (maxX - minX))),
+    //         y: minY === maxY ? 1 : Math.max(0, Math.min(1, (scrollY - minY) / (maxY - minY)))
+    //       },
+    //       position: {
+    //         top: rect.top,
+    //         left: rect.left,
+    //         right: rect.right,
+    //         bottom:  rect.bottom
+    //       }
+    //     };
+    //     this._idyllRefs[ref] = Object.assign({}, this._idyllRefs[ref], newRefs[ref]);
+    //   });
 
-      this.setState(transformRefs(newRefs));
-    });
+    //   this.setState(transformRefs(newRefs));
+    // });
   }
 
   render() {
-    return React.createElement('div', {className: 'idyll-root'}, this.getChildren());
+    return React.createElement(ScrollView, {className: 'idyll-root'}, this.getChildren());
   }
 }
 

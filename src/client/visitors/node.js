@@ -1,7 +1,7 @@
 const React = require('react');
 const htmlTags = require('html-tags');
 const changeCase = require('change-case');
-const componentClasses = require(process.env.COMPONENT_FILE);
+const componentClasses = require('/Users/mathisonian/projects/AwesomeProject/.idyll/components.js');
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
 const processComponent = (component, name, id) => {
