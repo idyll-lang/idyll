@@ -1,10 +1,15 @@
 #! /usr/bin/env node
 const idyll = require('../src/');
-const argv = require('minimist')(process.argv.slice(2));
+const argv = require('minimist')(process.argv.slice(2), {
+  boolean: ['spellcheck'],
+  default: {
+    spellcheck: true
+  }
+});
 
 let options = {
   compilerOptions: {
-    spellcheck: argv.spellcheck ? argv.spellcheck : true
+    spellcheck: argv.spellcheck
   },
   build: argv.build ? argv.build : false
 };
