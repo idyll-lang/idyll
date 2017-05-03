@@ -215,7 +215,6 @@ describe('compiler', function() {
         const input = "regular text and stuff, then some *italics* and some **bold**.";
         var lex = Lexer();
         var lexResults = lex(input);
-        console.log(lexResults);
         var output = parse(input, lexResults.tokens, lexResults.positions);
         expect(output).to.eql(
           [
@@ -224,33 +223,30 @@ describe('compiler', function() {
       });
 
 
-      // it('should handle unordered list', function() {
-      //   const input = "* this is the first list\n* this is the second list";
-      //   var lex = Lexer();
-      //   var lexResults = lex(input);
-      //   var output = parse(input, lexResults.tokens, lexResults.positions);
-      //   console.log(output);
-      //   expect(output).to.eql(
-      //   [
-      //     ['ul', [], 
-      //       [['li', [], ['this is the first list']], 
-      //       ['li', [], ['this is the second list']]
-      //     ]],
-      //   ]);
-      // });
-      
-      it('should handle ordered list', function() {
-        const input = "1. this is the first list\n2. this is the second list";
+      it('should handle unordered list', function() {
+        const input = "* this is the first unordered list\n* this is the second unordered list";
         var lex = Lexer();
         var lexResults = lex(input);
-        console.log(lexResults);
         var output = parse(input, lexResults.tokens, lexResults.positions);
-        console.log(output);
+        expect(output).to.eql(
+        [
+          ['ul', [], 
+            [['li', [], ['this is the first unordered list']], 
+            ['li', [], ['this is the second unordered list']]
+          ]],
+        ]);
+      });
+      
+      it('should handle ordered list', function() {
+        const input = "1. this is the first ordered list\n2. this is the second ordered list";
+        var lex = Lexer();
+        var lexResults = lex(input);
+        var output = parse(input, lexResults.tokens, lexResults.positions);
         expect(output).to.eql(
           [
             ['ol', [], [
-              ['li', [], ['this is the first list']],
-              ['li', [], ['this is the second list']]
+              ['li', [], ['this is the first ordered list']],
+              ['li', [], ['this is the second ordered list']]
             ]
           ]
         ]);

@@ -64,7 +64,7 @@ module.exports = function(input, tokens, positions, options) {
 
   if (results.length) {
     if (results.length > 1) {
-      // console.log(JSON.stringify(results, null, 2));
+      console.log(JSON.stringify(results, null, 2));
       // console.log(str);
     }
     misspellings = 0;
