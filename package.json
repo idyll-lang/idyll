@@ -9,7 +9,7 @@
   "scripts": {
     "test-deps": "cd test/test-project && mkdir build && npm install",
     "test-local": "NODE_PATH=./test/test-project/node_modules/ mocha --timeout 20000",
-    "test-windows": "npm run test-deps && SET NODE_PATH=./test/test-project/node_modules/ && mocha --timeout 20000",
+    "test-windows": "npm run test-deps && SET NODE_PATH=%cd%\\test\\test-project\\node_modules\\ && mocha --timeout 20000",
     "test": "npm run test-deps && NODE_PATH=./test/test-project/node_modules/ mocha --timeout 20000"
   },
   "repository": {
