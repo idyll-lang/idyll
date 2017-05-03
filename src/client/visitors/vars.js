@@ -125,8 +125,7 @@ module.exports = function(component) {
           }
         }
       });
-
-      if (children) {
+      if (children && children.map) {
         children.map(walkVars.bind(this));
       }
     }
