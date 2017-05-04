@@ -36,6 +36,16 @@ const idyll = (inputPath, opts, cb) => {
     build: true
   }, opts || {});
 
+  const inputDirectory = path.dirname(inputPath);
+  // Expose an "idyll" field on package.json
+  const inputPackage = require(path.join(inputDirectory, 'package.json'));
+  const inputConfig = Object.assign({}, {
+    components: {}
+  }, inputPackage.idyll || {});
+  Object.keys(inputConfig.components).forEach(key => {
+    inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
+  });
+
   const IDL_FILE = inputPath;
   const TMP_PATH = path.resolve('.idyll');
 
@@ -105,7 +115,7 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const writeTemplates = (ast) => {
-    const outputComponents = [];
+    const outputComponents = {};
     const outputData = {};
     const checkedComponents = [];
     const ignoreNames = ['var', 'data', 'meta', 'derived'];
@@ -114,15 +124,22 @@ const idyll = (inputPath, opts, cb) => {
       if (typeof node === 'string') {
         return;
       }
-
       const name = changeCase.paramCase(node[0]);
       const props = node[1];
       const children = node[2] || [];
       if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
-        if (customComponents.indexOf(name + '.js') > -1) {
-          outputComponents.push(`"${name}": require('${path.join(CUSTOM_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
+        if (inputConfig.components[name]) {
+          outputComponents[name] = `require('${inputConfig.components[name]}')`;
+        } else if (customComponents.indexOf(name + '.js') > -1) {
+          outputComponents[name] = `require('${path.join(CUSTOM_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`;
         } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents.push(`"${name}": require('${path.join(DEFAULT_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
+          outputComponents[name] = `require('${path.join(DEFAULT_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`;
+        } else {
+          try {
+            require.resolve(name);
+            outputComponents[name] = `require('${name}')`;
+          } catch (err) {
+          }
         }
         checkedComponents.push(name);
       } else if (ignoreNames.indexOf(name) > -1) {
@@ -165,8 +182,9 @@ const idyll = (inputPath, opts, cb) => {
       children.map(handleNode);
     }
     ast.map(handleNode);
-    fs.writeFile(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
-    fs.writeFile(DATA_FILE, `module.exports = ${JSON.stringify(outputData)}`);
+
+    fs.writeFileSync(COMPONENT_FILE, `module.exports = ${JSON.stringify(outputComponents, null, 2)}`);
+    fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(outputData)}`);
   }
 
 

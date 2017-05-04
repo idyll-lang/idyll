@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test-deps": "cd test/test-project && mkdir build && npm install",
-    "test": "npm run test-deps && mocha --timeout 20000"
+    "test-local": "NODE_PATH=./test/test-project/node_modules/ mocha --timeout 20000",
+    "test-windows": "npm run test-deps && npm install react-micro-bar-chart && mocha --timeout 20000",
+    "test": "npm run test-deps && NODE_PATH=./test/test-project/node_modules/ mocha --timeout 20000"
   },
   "repository": {
     "type": "git",

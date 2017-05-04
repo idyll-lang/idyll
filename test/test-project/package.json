@@ -6,8 +6,14 @@
     "build": "idyll index.idl --layout centered --theme github --css styles.css --build; cp -r {images,fonts} build/;",
     "deploy": "npm run build && gh-pages -d ./build"
   },
+  "idyll": {
+    "components": {
+      "PackageJsonComponentTest": "path/to/some/file.js"
+    }
+  },
   "dependencies": {
-    "idyll-default-components": "^1.0.0"
+    "idyll-default-components": "^1.0.0",
+    "react-micro-bar-chart": "^1.1.0"
   },
   "devDependencies": {
     "uglify-js": "^2.7.5",

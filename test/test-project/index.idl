@@ -30,3 +30,6 @@ You can use standard html tags if a
 component with the same name
 doesn't exist.
 
+[ReactMicroBarChart data:`[0, 1, 3, 2]` /]
+
+[PackageJsonComponentTest /]
