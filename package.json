@@ -7,8 +7,8 @@
     "idyll": "bin/idyll.js"
   },
   "scripts": {
-    "test-deps": "cd test/test-project && mkdir build && npm install",
-    "test": "npm run test-deps && mocha --timeout 20000"
+    "test-init": "cd test/test-project && rm -rf build && mkdir build && npm install",
+    "test": "mocha --timeout 20000"
   },
   "repository": {
     "type": "git",
