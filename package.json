@@ -7,6 +7,7 @@
     "idyll": "bin/idyll.js"
   },
   "scripts": {
+    "postinstall": "npm run test-init",
     "test-init": "cd test/test-project && rm -rf build && mkdir build && npm install",
     "test": "mocha --timeout 20000"
   },
