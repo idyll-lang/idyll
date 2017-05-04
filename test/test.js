@@ -27,13 +27,23 @@ describe('build task', function() {
         });
     })
 
-    it('should compile the files', function(done) {
+    it('should create the expected files', function(done) {
       const outputFiles = fs.readdirSync(outputPath);
-      Object.keys(expectedFiles).forEach((f) => {
-        expect(Object.keys(outputFiles).indexOf(f)).to.be.above(-1);
+      expectedFiles.forEach(expectedFile => {
+        expect(outputFiles.includes(expectedFile)).to.be(true);
       });
       done();
     });
+
+    // it('should create files with the correct contents', function(done) {
+    //   const outputFiles = fs.readdirSync(outputPath);
+    //   expectedFiles.forEach(expectedFile => {
+    //     const expectedContents = fs.readFileSync(path.join(expectedPath, expectedFile), 'utf8');
+    //     const outputContents = fs.readFileSync(path.join(outputPath, expectedFile), 'utf8');
+    //     expect(outputContents).to.eql(expectedContents);
+    //   });
+    //   done();
+    // });
 
     it('should strip meta from the AST output', function(done) {
       const ast = JSON.parse(fs.readFileSync(path.join('.idyll', 'ast.json')));
