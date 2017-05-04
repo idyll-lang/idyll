@@ -153,18 +153,6 @@ describe('compiler', function() {
     });
 
 
-
-    // it('should handle italics and bold', function() {
-    //   const input = "regular text and stuff, then some *italics* and some **bold**.";
-    //   var lex = Lexer();
-    //   var lexResults = lex(input);
-    //   var output = parse(input, lexResults.tokens, lexResults.positions);
-    //   expect(output).to.eql(
-    //     [
-    //       ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
-    //     ]);
-    // });
-
     it('should accept negative numbers', function() {
       var input = "[component prop:-10 /]";
       var lex = Lexer();

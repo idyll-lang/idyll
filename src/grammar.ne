@@ -44,30 +44,48 @@ Header -> "HEADER_" [1-6] __ TokenValue {%
   }
 %}
 
-UnorderedList -> (UnorderedListItem):+ {%
+UnorderedList -> (UnorderedListItem __):* UnorderedListItem {%
   function(data, location, reject) {
-    console.log(data);
-    return ["ul", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
+    var children = [];
+    data[0].map(function (child) {
+      children.push(child[0]);
+    });
+    children.push(data[1]);
+    if (children.length === 1 ) {
+      return children[0];
+    } else {
+      return ["ul", [], children];
+    }
   }
 %}
 
-UnorderedListItem -> ("STAR" __ TokenValue):+ {%
+UnorderedListItem -> "UNORDERED_ITEM" __ TokenValue {%
   function(data, location, reject) {
-    return ["li", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
+    return ["li", [], [data[2]]];
   }
 %}
 
-OrderedList -> ("ORDERED_ITEM" __ OrderedListItem):+ {%
+OrderedList -> (OrderedListItem __):* OrderedListItem  {%
   function(data, location, reject) {
-    return ["ol", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
+    var children = [];
+    data[0].map(function (child) {
+      children.push(child[0]);
+    });
+    children.push(data[1]);
+    if (children.length === 1) {
+      return children[0];
+    } else {
+      return ["ol", [], children];
+    }
   }
 %}
 
-OrderedListItem -> TokenValue {%
+OrderedListItem -> "ORDERED_ITEM" __ TokenValue {%
   function(data, location, reject) {
-    return data[0];
+    return ["li", [], [data[2]]];
   }
 %}
+
 
 Fence -> "FENCE" __ TokenValue {%
   function(data, location, reject) {
@@ -87,7 +105,7 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
     } else if (children.filter(function (c) { return typeof c === 'string' }).length === 0) {
       return ["div", [], children];
     }
-
+    
     return ["p", [], children];
   }
 %}

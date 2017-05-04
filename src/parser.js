@@ -43,7 +43,6 @@ module.exports = function(input, tokens, positions, options) {
       && typeof node[2][0][2][0] === 'string') {
         return [node[0], node[1], node[2][0][2]];
     }
-
     return [node[0], node[1], node[2].map(cleanResults)];
   };
 

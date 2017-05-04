@@ -27,18 +27,17 @@ module.exports = function() {
     return 'HEADER_' + match[1].length;
   });
 
-  // lexer.addRule(/^\s*\*\h*[^\n]*\n?/gm, function(lexeme) {
-  //   const match = /\s*\*\h*([^\n]*)/.exec(lexeme);
-  //   if (!this.reject) {
-  //     text = match[1].trim();
-  //     updatePosition(lexeme);
-  //   }
-  //   return 'UNORDERED_ITEM';
-  // });
+  lexer.addRule(/^\s*\*\s*[^\n]*\n?/gm, function(lexeme) {
+    const match = /\s*\*\s*([^\n]*)/.exec(lexeme);
+    if (!this.reject) {
+      text = match[1].trim();
+      updatePosition(lexeme);
+    }
+    return 'UNORDERED_ITEM';
+  });
 
-  lexer.addRule(/^\s*\d+\.\h*[^\n]*\n?/gm, function(lexeme) {
-    const match = /\s*\d+\.\h*([^\n]*)/.exec(lexeme);
-    console.log(lexeme);
+  lexer.addRule(/^\s*\d+\.\s*[^\n]*\n?/gm, function(lexeme) {
+    const match = /\s*\d+\.\s*([^\n]*)/.exec(lexeme);
     if (!this.reject) {
       text = match[1].trim();
       updatePosition(lexeme);
