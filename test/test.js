@@ -35,6 +35,16 @@ describe('build task', function() {
       done();
     });
 
+    it('should create files with the correct contents', function(done) {
+      const outputFiles = fs.readdirSync(outputPath);
+      expectedFiles.forEach(expectedFile => {
+        const expectedContents = fs.readFileSync(path.join(expectedPath, expectedFile), 'utf8');
+        const outputContents = fs.readFileSync(path.join(outputPath, expectedFile), 'utf8');
+        expect(outputContents).to.eql(expectedContents);
+      });
+      done();
+    });
+
     it('should strip meta from the AST output', function(done) {
       const ast = JSON.parse(fs.readFileSync(path.join('.idyll', 'ast.json')));
       expect(JSON.stringify(ast)).to.eql(JSON.stringify([["Header",[["title",["value","Welcome to Idyll"]],["subtitle",["value","Open index.idl to start writing"]],["author",["value","Your Name Here"]],["authorLink",["value","https://idyll-lang.github.io"]]],[]],["p",[],["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]],["p",[],["Here is how you can use a variable:"]],["var",[["name",["value","exampleVar"]],["value",["value",5]]],[]],["div",[],[["Range",[["min",["value",0]],["max",["value",10]],["value",["variable","exampleVar"]]],[]],["DisplayVar",[["var",["variable","exampleVar"]]],[]]]],["pre",[],[["code",[],["var code = true;"]]]],["p",[],["And here is a custom component:"]],["CustomComponent",[],[]],["p",[],["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]]]));
