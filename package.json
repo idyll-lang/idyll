@@ -8,8 +8,8 @@
   },
   "scripts": {
     "init": "cd test/test-project && rm -rf build && mkdir build && npm install",
-    "test-windows": "npm install react-micro-bar-chart && mocha --timeout 20000",
-    "test": "NODE_PATH=./test/test-project/node_modules/ mocha --timeout 20000"
+    "test-windows": "npm install react-micro-bar-chart && jest",
+    "test": "NODE_PATH=./test/test-project/src/node_modules/ jest"
   },
   "repository": {
     "type": "git",
@@ -47,7 +47,6 @@
     "uglify-js": "^2.8.22"
   },
   "devDependencies": {
-    "expect.js": "^0.3.1",
-    "mocha": "^3.3.0"
+    "jest": "19.0.2"
   }
 }
