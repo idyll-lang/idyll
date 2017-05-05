@@ -195,14 +195,18 @@ const idyll = (inputPath, opts, cb) => {
   const build = (cb) => {
     process.env['NODE_ENV'] = 'production';
     handleHTML();
-    var b = browserify(path.resolve(path.join(__dirname, 'client', 'build.js')), {
+    // this path stuff is pretty ugly but necessary until client files don't rely on env vars
+    const clientDir = path.join(__dirname, 'client');
+    const visitorsDir = path.join(clientDir, 'visitors');
+    var b = browserify(path.join(clientDir, 'build.js'), {
       transform: [
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
         [ envify, {
-          AST_FILE,
-          COMPONENT_FILE,
-          DATA_FILE,
-          IDYLL_PATH } ],
+          AST_FILE: path.join(path.relative(clientDir, TMP_PATH), path.parse(AST_FILE).base),
+          COMPONENT_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(COMPONENT_FILE).base),
+          DATA_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(DATA_FILE).base),
+          IDYLL_PATH
+        } ],
         [ brfs ]
       ]
     });
