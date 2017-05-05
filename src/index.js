@@ -129,7 +129,7 @@ const idyll = (inputPath, opts, cb) => {
       const children = node[2] || [];
       if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
         if (inputConfig.components[name]) {
-          outputComponents.push(`"${name}": require('${path.resolve(path.join(inputDirectory, inputConfig.components[name]))}')`);
+          outputComponents.push(`"${name}": require('${path.resolve(path.join(inputDirectory, inputConfig.components[name])).replace(/\\/g, '\\\\')}')`);
         } else if (customComponents.indexOf(name + '.js') > -1) {
           outputComponents.push(`"${name}": require('${path.join(CUSTOM_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
         } else if (components.indexOf(name + '.js') > -1) {
