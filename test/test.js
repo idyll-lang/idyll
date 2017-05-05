@@ -267,9 +267,16 @@ describe('compiler', function() {
       expect(output).to.eql([["p",[],["If you want to define an ",["img",[["src",["value","https://idyll-lang.github.io/logo-text.svg"]], ["alt", ["value", "inline image"]]],[]]," in the standard markdown style, you can do that."]]]
       );
     });
+
+    it('should handle lines that start with bold or italic', function() {
+      const input = "**If** I start a line with bold this should work,\nwhat if I\n\n*start with an italic*?";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([["p",[],[["strong",[],["If"]]," I start a line with bold this should work,\nwhat if I"]],["p",[],[["em",[],["start with an italic"]],"?"]]]
+      );
+    })
   });
-
-
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {

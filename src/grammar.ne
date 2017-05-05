@@ -6,7 +6,7 @@ Sourcefile -> Blocks "EOF" {%
   }
 %}
 
-Blocks -> ("BREAK" __):* ((BreakBlock __ ("BREAK" __):*) | (NoBreakBlock __ ("BREAK" __):*)):*  (BreakBlock __):? {%
+Blocks -> ("BREAK" __):* ((BreakBlock __ ("BREAK" __):+) | (NoBreakBlock __ ("BREAK" __):*)):*  (BreakBlock __):? {%
   function(data, location, reject) {
     var blocks = [];
     data[1].forEach(function(d) {
@@ -44,24 +44,13 @@ Header -> "HEADER_" [1-6] __ TokenValue {%
   }
 %}
 
-UnorderedList -> (UnorderedListItem __):* UnorderedListItem {%
+UnorderedList -> "UNORDERED_LIST" (__ TokenValue):+  {%
   function(data, location, reject) {
     var children = [];
-    data[0].map(function (child) {
-      children.push(child[0]);
+    data[1].map(function (child) {
+      children.push(["li", [], [child[1]]]);
     });
-    children.push(data[1]);
-    if (children.length === 1 ) {
-      return children[0];
-    } else {
-      return ["ul", [], children];
-    }
-  }
-%}
-
-UnorderedListItem -> "UNORDERED_ITEM" __ TokenValue {%
-  function(data, location, reject) {
-    return ["li", [], [data[2]]];
+    return ["ul", [], children];
   }
 %}
 
@@ -116,15 +105,15 @@ TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | ImageInline) {%
   }
 %}
 
-BoldInline -> "STAR STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR STAR" {%
+BoldInline -> "STRONG" __ TokenValue {%
   function(data, location, reject) {
-    return ['strong', [], data[2].map(function (d) { return d[0][0]})];
+    return ['strong', [], [data[2]]];
   }
 %}
 
-EmInline -> "STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR" {%
+EmInline -> "EM" __ TokenValue {%
   function(data, location, reject) {
-    return ['em', [], data[2].map(function (d) { return d[0][0]})];
+    return ['em', [], [data[2]]];
   }
 %}
 

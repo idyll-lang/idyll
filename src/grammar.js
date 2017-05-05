@@ -22,10 +22,12 @@ var grammar = {
     {"name": "Blocks$ebnf$1$subexpression$1", "symbols": ["Blocks$ebnf$1$subexpression$1$string$1", "__"]},
     {"name": "Blocks$ebnf$1", "symbols": ["Blocks$ebnf$1$subexpression$1", "Blocks$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "Blocks$ebnf$2", "symbols": []},
-    {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1", "symbols": []},
     {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$1$string$1", "symbols": [{"literal":"B"}, {"literal":"R"}, {"literal":"E"}, {"literal":"A"}, {"literal":"K"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$1", "symbols": ["Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$1$string$1", "__"]},
-    {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1", "symbols": ["Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$1", "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
+    {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1", "symbols": ["Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$1"]},
+    {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$2$string$1", "symbols": [{"literal":"B"}, {"literal":"R"}, {"literal":"E"}, {"literal":"A"}, {"literal":"K"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$2", "symbols": ["Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$2$string$1", "__"]},
+    {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1", "symbols": ["Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1$subexpression$2", "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
     {"name": "Blocks$ebnf$2$subexpression$1$subexpression$1", "symbols": ["BreakBlock", "__", "Blocks$ebnf$2$subexpression$1$subexpression$1$ebnf$1"]},
     {"name": "Blocks$ebnf$2$subexpression$1", "symbols": ["Blocks$ebnf$2$subexpression$1$subexpression$1"]},
     {"name": "Blocks$ebnf$2$subexpression$1$subexpression$2$ebnf$1", "symbols": []},
@@ -79,27 +81,18 @@ var grammar = {
           return ["h" + data[1], [], [data[3]]];
         }
         },
-    {"name": "UnorderedList$ebnf$1", "symbols": []},
-    {"name": "UnorderedList$ebnf$1$subexpression$1", "symbols": ["UnorderedListItem", "__"]},
-    {"name": "UnorderedList$ebnf$1", "symbols": ["UnorderedList$ebnf$1$subexpression$1", "UnorderedList$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "UnorderedList", "symbols": ["UnorderedList$ebnf$1", "UnorderedListItem"], "postprocess": 
+    {"name": "UnorderedList$string$1", "symbols": [{"literal":"U"}, {"literal":"N"}, {"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}, {"literal":"E"}, {"literal":"D"}, {"literal":"_"}, {"literal":"L"}, {"literal":"I"}, {"literal":"S"}, {"literal":"T"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "UnorderedList$ebnf$1$subexpression$1", "symbols": ["__", "TokenValue"]},
+    {"name": "UnorderedList$ebnf$1", "symbols": ["UnorderedList$ebnf$1$subexpression$1"]},
+    {"name": "UnorderedList$ebnf$1$subexpression$2", "symbols": ["__", "TokenValue"]},
+    {"name": "UnorderedList$ebnf$1", "symbols": ["UnorderedList$ebnf$1$subexpression$2", "UnorderedList$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
+    {"name": "UnorderedList", "symbols": ["UnorderedList$string$1", "UnorderedList$ebnf$1"], "postprocess": 
         function(data, location, reject) {
           var children = [];
-          data[0].map(function (child) {
-            children.push(child[0]);
+          data[1].map(function (child) {
+            children.push(["li", [], [child[1]]]);
           });
-          children.push(data[1]);
-          if (children.length === 1 ) {
-            return children[0];
-          } else {
-            return ["ul", [], children];
-          }
-        }
-        },
-    {"name": "UnorderedListItem$string$1", "symbols": [{"literal":"U"}, {"literal":"N"}, {"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}, {"literal":"E"}, {"literal":"D"}, {"literal":"_"}, {"literal":"I"}, {"literal":"T"}, {"literal":"E"}, {"literal":"M"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "UnorderedListItem", "symbols": ["UnorderedListItem$string$1", "__", "TokenValue"], "postprocess": 
-        function(data, location, reject) {
-          return ["li", [], [data[2]]];
+          return ["ul", [], children];
         }
         },
     {"name": "OrderedList$string$1", "symbols": [{"literal":"O"}, {"literal":"R"}, {"literal":"D"}, {"literal":"E"}, {"literal":"R"}, {"literal":"E"}, {"literal":"D"}, {"literal":"_"}, {"literal":"L"}, {"literal":"I"}, {"literal":"S"}, {"literal":"T"}], "postprocess": function joiner(d) {return d.join('');}},
@@ -167,30 +160,16 @@ var grammar = {
           return data[0][0];
         }
         },
-    {"name": "BoldInline$string$1", "symbols": [{"literal":"S"}, {"literal":"T"}, {"literal":"A"}, {"literal":"R"}, {"literal":" "}, {"literal":"S"}, {"literal":"T"}, {"literal":"A"}, {"literal":"R"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "BoldInline$ebnf$1", "symbols": []},
-    {"name": "BoldInline$ebnf$1$subexpression$1$subexpression$1", "symbols": ["Text"]},
-    {"name": "BoldInline$ebnf$1$subexpression$1$subexpression$1", "symbols": ["ClosedComponent"]},
-    {"name": "BoldInline$ebnf$1$subexpression$1$subexpression$1", "symbols": ["OpenComponent"]},
-    {"name": "BoldInline$ebnf$1$subexpression$1", "symbols": ["BoldInline$ebnf$1$subexpression$1$subexpression$1", "__"]},
-    {"name": "BoldInline$ebnf$1", "symbols": ["BoldInline$ebnf$1$subexpression$1", "BoldInline$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "BoldInline$string$2", "symbols": [{"literal":"S"}, {"literal":"T"}, {"literal":"A"}, {"literal":"R"}, {"literal":" "}, {"literal":"S"}, {"literal":"T"}, {"literal":"A"}, {"literal":"R"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "BoldInline", "symbols": ["BoldInline$string$1", "__", "BoldInline$ebnf$1", "BoldInline$string$2"], "postprocess": 
+    {"name": "BoldInline$string$1", "symbols": [{"literal":"S"}, {"literal":"T"}, {"literal":"R"}, {"literal":"O"}, {"literal":"N"}, {"literal":"G"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "BoldInline", "symbols": ["BoldInline$string$1", "__", "TokenValue"], "postprocess": 
         function(data, location, reject) {
-          return ['strong', [], data[2].map(function (d) { return d[0][0]})];
+          return ['strong', [], [data[2]]];
         }
         },
-    {"name": "EmInline$string$1", "symbols": [{"literal":"S"}, {"literal":"T"}, {"literal":"A"}, {"literal":"R"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "EmInline$ebnf$1", "symbols": []},
-    {"name": "EmInline$ebnf$1$subexpression$1$subexpression$1", "symbols": ["Text"]},
-    {"name": "EmInline$ebnf$1$subexpression$1$subexpression$1", "symbols": ["ClosedComponent"]},
-    {"name": "EmInline$ebnf$1$subexpression$1$subexpression$1", "symbols": ["OpenComponent"]},
-    {"name": "EmInline$ebnf$1$subexpression$1", "symbols": ["EmInline$ebnf$1$subexpression$1$subexpression$1", "__"]},
-    {"name": "EmInline$ebnf$1", "symbols": ["EmInline$ebnf$1$subexpression$1", "EmInline$ebnf$1"], "postprocess": function arrconcat(d) {return [d[0]].concat(d[1]);}},
-    {"name": "EmInline$string$2", "symbols": [{"literal":"S"}, {"literal":"T"}, {"literal":"A"}, {"literal":"R"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "EmInline", "symbols": ["EmInline$string$1", "__", "EmInline$ebnf$1", "EmInline$string$2"], "postprocess": 
+    {"name": "EmInline$string$1", "symbols": [{"literal":"E"}, {"literal":"M"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "EmInline", "symbols": ["EmInline$string$1", "__", "TokenValue"], "postprocess": 
         function(data, location, reject) {
-          return ['em', [], data[2].map(function (d) { return d[0][0]})];
+          return ['em', [], [data[2]]];
         }
         },
     {"name": "CodeInline$string$1", "symbols": [{"literal":"B"}, {"literal":"A"}, {"literal":"C"}, {"literal":"K"}, {"literal":"T"}, {"literal":"I"}, {"literal":"C"}, {"literal":"K"}], "postprocess": function joiner(d) {return d.join('');}},
