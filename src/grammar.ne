@@ -26,7 +26,7 @@ Block -> (BreakBlock | NoBreakBlock) {%
   }
 %}
 
-NoBreakBlock -> (Header | Fence | UnorderedList) {%
+NoBreakBlock -> (Header | MultilineCode | UnorderedList | OrderedList) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -44,16 +44,29 @@ Header -> "HEADER_" [1-6] __ TokenValue {%
   }
 %}
 
-UnorderedList -> ("UNORDERED_ITEM" __ TokenValue):+ {%
+UnorderedList -> "UNORDERED_LIST" (__ TokenValue):+  {%
   function(data, location, reject) {
-    return ["ul", [], data[0].map(function(d) { return ["li", [], [d[2]]]; })];
+    var children = [];
+    data[1].map(function (child) {
+      children.push(["li", [], [child[1]]]);
+    });
+    return ["ul", [], children];
   }
 %}
 
-
-Fence -> "FENCE" __ TokenValue {%
+OrderedList -> "ORDERED_LIST" (__ TokenValue):+  {%
   function(data, location, reject) {
-    return ["pre", [], [["code", [], [data[2].substring(3, data[2].length-3).trim()]]]];
+    var children = [];
+    data[1].map(function (child) {
+      children.push(["li", [], [child[1]]]);
+    });
+    return ["ol", [], children];
+  }
+%}
+
+MultilineCode -> "MULTILINE_CODE" __ TokenValue __ TokenValue {%
+  function(data, location, reject) {
+    return ["pre", [], [["code", [], [data[4]]]]];
   }
 %}
 
@@ -92,21 +105,21 @@ TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | ImageInline) {%
   }
 %}
 
-BoldInline -> "STAR STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR STAR" {%
+BoldInline -> "STRONG" __ TokenValue {%
   function(data, location, reject) {
-    return ['strong', [], data[2].map(function (d) { return d[0][0]})];
+    return ['strong', [], [data[2]]];
   }
 %}
 
-EmInline -> "STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR" {%
+EmInline -> "EM" __ TokenValue {%
   function(data, location, reject) {
-    return ['em', [], data[2].map(function (d) { return d[0][0]})];
+    return ['em', [], [data[2]]];
   }
 %}
 
-CodeInline -> "BACKTICK" __ ((Text) __):* "BACKTICK" {%
+CodeInline -> "INLINE_CODE" __ TokenValue {%
   function(data, location, reject) {
-    return ['code', [], data[2].map(function (d) { return d[0][0]})];
+    return ['code', [], [data[2]]];
   }
 %}
 

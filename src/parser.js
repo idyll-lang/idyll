@@ -43,7 +43,6 @@ module.exports = function(input, tokens, positions, options) {
       && typeof node[2][0][2][0] === 'string') {
         return [node[0], node[1], node[2][0][2]];
     }
-
     return [node[0], node[1], node[2].map(cleanResults)];
   };
 
@@ -63,6 +62,7 @@ module.exports = function(input, tokens, positions, options) {
   var results = p.results;
 
   if (results.length) {
+    // console.log('Results length: ' + results.length);
     if (results.length > 1) {
       // console.log(JSON.stringify(results, null, 2));
       // console.log(str);

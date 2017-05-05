@@ -33,7 +33,7 @@ describe('compiler', function() {
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
       var results = lex("regular text and stuff, then some `code`");
-      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then some " TOKEN_VALUE_END BACKTICK WORDS TOKEN_VALUE_START "code" TOKEN_VALUE_END BACKTICK EOF');
+      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then some " TOKEN_VALUE_END INLINE_CODE TOKEN_VALUE_START "code" TOKEN_VALUE_END EOF');
     });
 
     it('should handle a markdown-style link in a paragraph', function() {
@@ -152,6 +152,27 @@ describe('compiler', function() {
           ['pre', [], [['code', [], ['var code = true;']]]]
         ]);
     });
+    it('should parse a code fence with backticks inside', function() {
+      var input = 'text text text lots of text\n\n\n````\n```\nvar code = true;\n```\n````\n';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['p', [], ['text text text lots of text']],
+          ['pre', [], [['code', [], ['```\nvar code = true;\n```']]]]
+        ]);
+    });
+    it('should parse inline code with backticks inside', function() {
+      var input = 'text text text lots of text `` `var code = true;` ``\n';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['p', [], ['text text text lots of text ', ['code', [], ['`var code = true;`']]]]
+        ]);
+    });
     it('should handle backticks in a paragraph', function() {
       var input = "regular text and stuff, then some `code`";
       var lex = Lexer();
@@ -163,18 +184,6 @@ describe('compiler', function() {
         ]);
     });
 
-
-
-    // it('should handle italics and bold', function() {
-    //   const input = "regular text and stuff, then some *italics* and some **bold**.";
-    //   var lex = Lexer();
-    //   var lexResults = lex(input);
-    //   var output = parse(input, lexResults.tokens, lexResults.positions);
-    //   expect(output).to.eql(
-    //     [
-    //       ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
-    //     ]);
-    // });
 
     it('should accept negative numbers', function() {
       var input = "[component prop:-10 /]";
@@ -209,7 +218,7 @@ describe('compiler', function() {
         [
           ['component', [['prop', ['value', true]]], []]
         ]);
-      });
+    });
 
     it('should handle booleans in backticks', function() {
       const input = "[component prop:`true` /]";
@@ -220,6 +229,46 @@ describe('compiler', function() {
         [
           ['component', [['prop', ['expression', 'true']]], []]
         ]);
+    });
+
+    it('should handle italics and bold', function() {
+      const input = "regular text and stuff, then some *italics* and some **bold**.";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
+        ]);
+    });
+
+    it('should handle unordered list', function() {
+      const input = "* this is the first unordered list\n* this is the second unordered list";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+      [
+        ['ul', [],
+          [['li', [], ['this is the first unordered list']],
+          ['li', [], ['this is the second unordered list']]
+        ]],
+      ]);
+    });
+
+    it('should handle ordered list', function() {
+      const input = "1. this is the first ordered list\n2. this is the second ordered list";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['ol', [], [
+            ['li', [], ['this is the first ordered list']],
+            ['li', [], ['this is the second ordered list']]
+          ]
+        ]
+      ]);
     });
 
     it('should handle inline links', function() {
@@ -238,9 +287,16 @@ describe('compiler', function() {
       expect(output).to.eql([["p",[],["If you want to define an ",["img",[["src",["value","https://idyll-lang.github.io/logo-text.svg"]], ["alt", ["value", "inline image"]]],[]]," in the standard markdown style, you can do that."]]]
       );
     });
+
+    it('should handle lines that start with bold or italic', function() {
+      const input = "**If** I start a line with bold this should work,\nwhat if I\n\n*start with an italic*?";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([["p",[],[["strong",[],["If"]]," I start a line with bold this should work,\nwhat if I"]],["p",[],[["em",[],["start with an italic"]],"?"]]]
+      );
+    })
   });
-
-
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {
