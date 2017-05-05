@@ -86,7 +86,7 @@ Text -> ("WORDS" __ TokenValue) {%
   }
 %}
 
-TextInline -> (CodeInline | BoldInline | EmInline) {%
+TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | ImageInline) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -107,6 +107,18 @@ EmInline -> "STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR" {%
 CodeInline -> "BACKTICK" __ ((Text) __):* "BACKTICK" {%
   function(data, location, reject) {
     return ['code', [], data[2].map(function (d) { return d[0][0]})];
+  }
+%}
+
+ImageInline -> "IMAGE" __ TokenValue __ TokenValue {%
+  function(data, location, reject) {
+    return ['img', [["src", ["value", data[4]]], ["alt", ["value", data[2]]]], []];
+  }
+%}
+
+LinkInline -> "LINK" __ TokenValue __ TokenValue {%
+  function(data, location, reject) {
+    return ['a', [["href", ["value", data[4]]]], [data[2]]];
   }
 %}
 
