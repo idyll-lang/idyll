@@ -131,16 +131,16 @@ const idyll = (inputPath, opts, cb) => {
       if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
         if (inputConfig.components[name]) {
           const compPath = path.parse(path.join(inputDirectory, inputConfig.components[name]));
-          outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '\\\\')}')`);
+          outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/')}')`);
         } else if (customComponents.indexOf(name + '.js') > -1) {
-          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '\\\\')}')`);
+          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/')}')`);
         } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '\\\\')}')`);
+          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/')}')`);
         } else {
           try {
             // npm modules are required via relative paths to support working with a locally linked idyll
             const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
-            outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '\\\\')}')`);
+            outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/')}')`);
           } catch (err) {
             if (node[0].toLowerCase() !== node[0]) throw new Error(`Component named ${node[0]} could not be found.`)
           }
