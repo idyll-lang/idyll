@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "idyll index.idl --css styles.css --layout centered --theme github --spellcheck",
-    "build": "idyll index.idl --layout centered --theme github --css styles.css --build; cp -r {images,fonts} build/;",
+    "build": "idyll index.idl --layout centered --theme github --css styles.css --build",
     "deploy": "npm run build && gh-pages -d ./build"
   },
   "idyll": {
