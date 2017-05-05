@@ -33,7 +33,7 @@ describe('compiler', function() {
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
       var results = lex("regular text and stuff, then some `code`");
-      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then some " TOKEN_VALUE_END BACKTICK WORDS TOKEN_VALUE_START "code" TOKEN_VALUE_END BACKTICK EOF');
+      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then some " TOKEN_VALUE_END INLINE_CODE TOKEN_VALUE_START "code" TOKEN_VALUE_END EOF');
     });
 
     it('should handle a markdown-style link in a paragraph', function() {
@@ -152,6 +152,27 @@ describe('compiler', function() {
           ['pre', [], [['code', [], ['var code = true;']]]]
         ]);
     });
+    it('should parse a code fence with backticks inside', function() {
+      var input = 'text text text lots of text\n\n\n````\n```\nvar code = true;\n```\n````\n';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['p', [], ['text text text lots of text']],
+          ['pre', [], [['code', [], ['```\nvar code = true;\n```']]]]
+        ]);
+    });
+    it('should parse inline code with backticks inside', function() {
+      var input = 'text text text lots of text `` `var code = true;` ``\n';
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['p', [], ['text text text lots of text ', ['code', [], ['`var code = true;`']]]]
+        ]);
+    });
     it('should handle backticks in a paragraph', function() {
       var input = "regular text and stuff, then some `code`";
       var lex = Lexer();
@@ -220,7 +241,6 @@ describe('compiler', function() {
           ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
         ]);
     });
-
 
     it('should handle unordered list', function() {
       const input = "* this is the first unordered list\n* this is the second unordered list";

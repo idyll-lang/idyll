@@ -26,7 +26,7 @@ Block -> (BreakBlock | NoBreakBlock) {%
   }
 %}
 
-NoBreakBlock -> (Header | Fence | UnorderedList | OrderedList) {%
+NoBreakBlock -> (Header | MultilineCode | UnorderedList | OrderedList) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -64,9 +64,9 @@ OrderedList -> "ORDERED_LIST" (__ TokenValue):+  {%
   }
 %}
 
-Fence -> "FENCE" __ TokenValue {%
+MultilineCode -> "MULTILINE_CODE" __ TokenValue __ TokenValue {%
   function(data, location, reject) {
-    return ["pre", [], [["code", [], [data[2].substring(3, data[2].length-3).trim()]]]];
+    return ["pre", [], [["code", [], [data[4]]]]];
   }
 %}
 
@@ -117,9 +117,9 @@ EmInline -> "EM" __ TokenValue {%
   }
 %}
 
-CodeInline -> "BACKTICK" __ ((Text) __):* "BACKTICK" {%
+CodeInline -> "INLINE_CODE" __ TokenValue {%
   function(data, location, reject) {
-    return ['code', [], data[2].map(function (d) { return d[0][0]})];
+    return ['code', [], [data[2]]];
   }
 %}
 

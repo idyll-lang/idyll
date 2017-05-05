@@ -2,6 +2,7 @@
 var Lexer = require('lex');
 
 const formatToken = (text) => {
+  text = text || '';
   const results = []
   results.push('TOKEN_VALUE_START');
   results.push('"' + text.replace(/\"/g, '&quot;') + '"');
@@ -25,18 +26,41 @@ module.exports = function() {
     column += lines[lines.length - 1].length;
   }
 
+  lexer.addRule(/`{4}(\S*)\n([\s\S]+)`{4}/g, function(lexeme, language, text) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['MULTILINE_CODE'].concat(formatToken(language)).concat(formatToken(text.trim()));
+  });
+  lexer.addRule(/`{3}(\S*)\n([\s\S]+)`{3}/g, function(lexeme, language, text) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['MULTILINE_CODE'].concat(formatToken(language)).concat(formatToken(text.trim()));
+  });
+  lexer.addRule(/```(((?!```)[^\n])+)```/, function(lexeme, text) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['INLINE_CODE'].concat(formatToken(text.trim()));
+  });
+  lexer.addRule(/``(((?!``)[^\n])+)``/, function(lexeme, text) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['INLINE_CODE'].concat(formatToken(text.trim()));
+  });
+  lexer.addRule(/`([^\n\`]+)`/, function(lexeme, text) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['INLINE_CODE'].concat(formatToken(text.trim()));
+  });
+
   lexer.addRule(/^\s*(#{1,6})\s*([^\n]*)\n*/gm, function(lexeme, hashes, text) {
     if (this.reject) return;
     updatePosition(lexeme);
     return ['HEADER_' + hashes.length].concat(formatToken(text));
-  });
-
-
-  lexer.addRule(/`{3}[\s\S]*?`{3}/g, function(lexeme) {
-    this.reject = inComponent;
-    if (this.reject) return;
-    updatePosition(lexeme);
-    return ['FENCE'].concat(formatToken(lexeme));
   });
 
   lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*/g, function(lexeme, text) {
@@ -89,12 +113,6 @@ module.exports = function() {
     });
     return output;
   });
-  lexer.addRule(/`/, function(lexeme) {
-    this.reject = inComponent;
-    if (this.reject) return;
-    updatePosition(lexeme);
-    return ['BACKTICK'];
-  });
 
   lexer.addRule(/!\[([^\]]*)\]\(([^\)]*)\)/, function(lexeme, text, link) {
     this.reject = inComponent;
@@ -122,7 +140,7 @@ module.exports = function() {
   });
   // Match on separately so we can greedily match the
   // other tags.
-  lexer.addRule(/[!\d\*_]/, function(lexeme) {
+  lexer.addRule(/[!\d\*_`]/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);

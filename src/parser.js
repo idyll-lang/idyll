@@ -62,6 +62,7 @@ module.exports = function(input, tokens, positions, options) {
   var results = p.results;
 
   if (results.length) {
+    // console.log('Results length: ' + results.length);
     if (results.length > 1) {
       // console.log(JSON.stringify(results, null, 2));
       // console.log(str);
