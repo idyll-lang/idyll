@@ -50,6 +50,9 @@ beforeAll(done => {
     componentFolder: join(PROJECT_DIR, 'components'),
     defaultComponents: join(PROJECT_DIR, 'components', 'default'),
     dataFolder: join(PROJECT_DIR, 'data'),
+    layout: 'centered',
+    theme: 'github',
+    css: join(PROJECT_DIR, 'styles.css'),
     compilerOptions: {
       spellcheck: false
     },
