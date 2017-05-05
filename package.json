@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build-grammar": "nearleyc src/grammar.ne -o src/grammar.js",
-    "test": "npm run build-grammar && mocha"
+    "test": "npm run build-grammar && mocha",
+    "prepublish": "npm run build-grammar"
   },
   "repository": {
     "type": "git",
