@@ -65,27 +65,15 @@ UnorderedListItem -> "UNORDERED_ITEM" __ TokenValue {%
   }
 %}
 
-OrderedList -> (OrderedListItem __):* OrderedListItem  {%
+OrderedList -> "ORDERED_LIST" (__ TokenValue):+  {%
   function(data, location, reject) {
     var children = [];
-    data[0].map(function (child) {
-      children.push(child[0]);
+    data[1].map(function (child) {
+      children.push(["li", [], [child[1]]]);
     });
-    children.push(data[1]);
-    if (children.length === 1) {
-      return children[0];
-    } else {
-      return ["ol", [], children];
-    }
+    return ["ol", [], children];
   }
 %}
-
-OrderedListItem -> "ORDERED_ITEM" __ TokenValue {%
-  function(data, location, reject) {
-    return ["li", [], [data[2]]];
-  }
-%}
-
 
 Fence -> "FENCE" __ TokenValue {%
   function(data, location, reject) {
@@ -105,7 +93,7 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
     } else if (children.filter(function (c) { return typeof c === 'string' }).length === 0) {
       return ["div", [], children];
     }
-    
+
     return ["p", [], children];
   }
 %}
@@ -122,7 +110,7 @@ Text -> ("WORDS" __ TokenValue) {%
   }
 %}
 
-TextInline -> (CodeInline | BoldInline | EmInline) {%
+TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | ImageInline) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -143,6 +131,18 @@ EmInline -> "STAR" __ ((Text | ClosedComponent | OpenComponent) __):* "STAR" {%
 CodeInline -> "BACKTICK" __ ((Text) __):* "BACKTICK" {%
   function(data, location, reject) {
     return ['code', [], data[2].map(function (d) { return d[0][0]})];
+  }
+%}
+
+ImageInline -> "IMAGE" __ TokenValue __ TokenValue {%
+  function(data, location, reject) {
+    return ['img', [["src", ["value", data[4]]], ["alt", ["value", data[2]]]], []];
+  }
+%}
+
+LinkInline -> "LINK" __ TokenValue __ TokenValue {%
+  function(data, location, reject) {
+    return ['a', [["href", ["value", data[4]]]], [data[2]]];
   }
 %}
 

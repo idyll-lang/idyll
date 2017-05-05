@@ -10,13 +10,13 @@ describe('compiler', function() {
     it('should tokenize the input', function() {
       var lex = Lexer();
       var results = lex("Hello \n\nWorld! []");
-      expect(results.tokens).to.eql("WORDS TOKEN_VALUE_START \"Hello \" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START \"World! \" TOKEN_VALUE_END OPEN_BRACKET CLOSE_BRACKET EOF");
+      expect(results.tokens).to.eql("WORDS TOKEN_VALUE_START \"Hello \" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START \"World\" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \"!\" TOKEN_VALUE_END OPEN_BRACKET CLOSE_BRACKET EOF");
     });
 
     it('should tokenize the input with a complex component', function() {
       var lex = Lexer();
-      var results = lex("Hello \n\nWorld! \n\n [VarDisplay var:v work:\"no\" /]");
-      expect(results.tokens).to.eql("WORDS TOKEN_VALUE_START \"Hello \" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START \"World! \" TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_WORD TOKEN_VALUE_START \"VarDisplay\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"var\" TOKEN_VALUE_END PARAM_SEPARATOR COMPONENT_WORD TOKEN_VALUE_START \"v\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"work\" TOKEN_VALUE_END PARAM_SEPARATOR STRING TOKEN_VALUE_START \"&quot;no&quot;\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF");
+      var results = lex("Hello \n\nWorld \n\n [VarDisplay var:v work:\"no\" /]");
+      expect(results.tokens).to.eql("WORDS TOKEN_VALUE_START \"Hello \" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START \"World \" TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_WORD TOKEN_VALUE_START \"VarDisplay\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"var\" TOKEN_VALUE_END PARAM_SEPARATOR COMPONENT_WORD TOKEN_VALUE_START \"v\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"work\" TOKEN_VALUE_END PARAM_SEPARATOR STRING TOKEN_VALUE_START \"&quot;no&quot;\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF");
     });
 
     it('should recognize headings', function() {
@@ -34,6 +34,17 @@ describe('compiler', function() {
       var lex = Lexer();
       var results = lex("regular text and stuff, then some `code`");
       expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then some " TOKEN_VALUE_END BACKTICK WORDS TOKEN_VALUE_START "code" TOKEN_VALUE_END BACKTICK EOF');
+    });
+
+    it('should handle a markdown-style link in a paragraph', function() {
+      var lex = Lexer();
+      var results = lex("regular text and stuff, then a [link](https://idyll-lang.github.io/).");
+      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then a " TOKEN_VALUE_END LINK TOKEN_VALUE_START "link" TOKEN_VALUE_END TOKEN_VALUE_START "https://idyll-lang.github.io/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
+    });
+    it('should handle a markdown-style image', function() {
+      var lex = Lexer();
+      var results = lex("This is an image inline ![image](https://idyll-lang.github.io/logo-text.svg).");
+      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "This is an image inline " TOKEN_VALUE_END IMAGE TOKEN_VALUE_START "image" TOKEN_VALUE_END TOKEN_VALUE_START "https://idyll-lang.github.io/logo-text.svg" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
     });
 
   });
@@ -181,65 +192,81 @@ describe('compiler', function() {
       const input = "[component prop:true /]";
       var lex = Lexer();
       var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens, lexResults.positions);      
+      var output = parse(input, lexResults.tokens, lexResults.positions);
       expect(output).to.eql(
         [
           ['component', [['prop', ['value', true]]], []]
         ]);
-      });
+    });
 
-      it('should handle booleans in backticks', function() {
-        const input = "[component prop:`true` /]";
-        var lex = Lexer();
-        var lexResults = lex(input);
-        var output = parse(input, lexResults.tokens, lexResults.positions);
-        expect(output).to.eql(
-          [
-            ['component', [['prop', ['expression', 'true']]], []]
-          ]);
-      });
-
-      it('should handle italics and bold', function() {
-        const input = "regular text and stuff, then some *italics* and some **bold**.";
-        var lex = Lexer();
-        var lexResults = lex(input);
-        var output = parse(input, lexResults.tokens, lexResults.positions);
-        expect(output).to.eql(
-          [
-            ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
-          ]);
-      });
-
-
-      it('should handle unordered list', function() {
-        const input = "* this is the first unordered list\n* this is the second unordered list";
-        var lex = Lexer();
-        var lexResults = lex(input);
-        var output = parse(input, lexResults.tokens, lexResults.positions);
-        expect(output).to.eql(
+    it('should handle booleans in backticks', function() {
+      const input = "[component prop:`true` /]";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
         [
-          ['ul', [], 
-            [['li', [], ['this is the first unordered list']], 
-            ['li', [], ['this is the second unordered list']]
-          ]],
+          ['component', [['prop', ['expression', 'true']]], []]
         ]);
-      });
-      
-      it('should handle ordered list', function() {
-        const input = "1. this is the first ordered list\n2. this is the second ordered list";
-        var lex = Lexer();
-        var lexResults = lex(input);
-        var output = parse(input, lexResults.tokens, lexResults.positions);
-        expect(output).to.eql(
-          [
-            ['ol', [], [
-              ['li', [], ['this is the first ordered list']],
-              ['li', [], ['this is the second ordered list']]
-            ]
-          ]
-        ]);
-      });
+    });
 
+    it('should handle italics and bold', function() {
+      const input = "regular text and stuff, then some *italics* and some **bold**.";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
+        ]);
+    });
+
+
+    it('should handle unordered list', function() {
+      const input = "* this is the first unordered list\n* this is the second unordered list";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+      [
+        ['ul', [],
+          [['li', [], ['this is the first unordered list']],
+          ['li', [], ['this is the second unordered list']]
+        ]],
+      ]);
+    });
+
+    it('should handle ordered list', function() {
+      const input = "1. this is the first ordered list\n2. this is the second ordered list";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql(
+        [
+          ['ol', [], [
+            ['li', [], ['this is the first ordered list']],
+            ['li', [], ['this is the second ordered list']]
+          ]
+        ]
+      ]);
+    });
+
+    it('should handle inline links', function() {
+      const input = "If you want to define an [inline link](https://idyll-lang.github.io) in the standard markdown style, you can do that.";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([["p",[],["If you want to define an ",["a",[["href",["value","https://idyll-lang.github.io"]]],["inline link"]]," in the standard markdown style, you can do that."]]]
+      );
+    });
+    it('should handle inline images', function() {
+      const input = "If you want to define an ![inline image](https://idyll-lang.github.io/logo-text.svg) in the standard markdown style, you can do that.";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([["p",[],["If you want to define an ",["img",[["src",["value","https://idyll-lang.github.io/logo-text.svg"]], ["alt", ["value", "inline image"]]],[]]," in the standard markdown style, you can do that."]]]
+      );
+    });
   });
 
 
