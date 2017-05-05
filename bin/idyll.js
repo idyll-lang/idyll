@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 const idyll = require('../src/');
+const path = require('path');
 const argv = require('minimist')(process.argv.slice(2), {
   boolean: ['spellcheck'],
   default: {
@@ -39,5 +40,4 @@ if (argv.hasOwnProperty('theme')) {
   options.theme = argv.theme;
 }
 
-
-idyll(argv._[0], options);
+idyll(path.resolve(argv._[0]), options);

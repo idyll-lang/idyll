@@ -8,7 +8,6 @@ const processComponent = (component, name, id) => {
   const paramCaseName = changeCase.paramCase(name);
   let componentClass;
   const extraProps = {};
-
   if (componentClasses[paramCaseName]) {
     componentClass = componentClasses[paramCaseName];
     extraProps.__handleUpdateProps = component.handleUpdateProps(id);

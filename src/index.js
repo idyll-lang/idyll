@@ -115,7 +115,7 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const writeTemplates = (ast) => {
-    const outputComponents = {};
+    const outputComponents = [];
     const outputData = {};
     const checkedComponents = [];
     const ignoreNames = ['var', 'data', 'meta', 'derived'];
@@ -129,15 +129,15 @@ const idyll = (inputPath, opts, cb) => {
       const children = node[2] || [];
       if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
         if (inputConfig.components[name]) {
-          outputComponents[name] = `require('${inputConfig.components[name]}')`;
+          outputComponents.push(`"${name}": require('${inputConfig.components[name]}')`);
         } else if (customComponents.indexOf(name + '.js') > -1) {
-          outputComponents[name] = `require('${path.join(CUSTOM_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`;
+          outputComponents.push(`"${name}": require('${path.join(CUSTOM_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
         } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents[name] = `require('${path.join(DEFAULT_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`;
+          outputComponents.push(`"${name}": require('${path.join(DEFAULT_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
         } else {
           try {
             require.resolve(name);
-            outputComponents[name] = `require('${name}')`;
+            outputComponents.push(`"${name}": require('${name}')`);
           } catch (err) {
           }
         }
@@ -183,7 +183,7 @@ const idyll = (inputPath, opts, cb) => {
     }
     ast.map(handleNode);
 
-    fs.writeFileSync(COMPONENT_FILE, `module.exports = ${JSON.stringify(outputComponents, null, 2)}`);
+    fs.writeFileSync(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
     fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(outputData)}`);
   }
 
