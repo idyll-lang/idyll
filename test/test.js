@@ -49,20 +49,20 @@ describe('build task', function() {
     });
 
     it('should strip meta from the AST output', function(done) {
-      const ast = JSON.parse(fs.readFileSync(path.join('.idyll', 'ast.json')));
+      const ast = JSON.parse(fs.readFileSync(path.join(__dirname, 'test-project', '.idyll', 'ast.json')));
       expect(JSON.stringify(ast)).to.eql(JSON.stringify([["Header",[["title",["value","Welcome to Idyll"]],["subtitle",["value","Open index.idl to start writing"]],["author",["value","Your Name Here"]],["authorLink",["value","https://idyll-lang.github.io"]]],[]],["p",[],["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]],["p",[],["Here is how you can use a variable:"]],["var",[["name",["value","exampleVar"]],["value",["value",5]]],[]],["div",[],[["Range",[["min",["value",0]],["max",["value",10]],["value",["variable","exampleVar"]]],[]],["DisplayVar",[["var",["variable","exampleVar"]]],[]]]],["pre",[],[["code",[],["var code = true;"]]]],["p",[],["And here is a custom component:"]],["CustomComponent",[],[]],["p",[],["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]],["ReactMicroBarChart",[["data",["expression","[0, 1, 3, 2]"]]],[]],["PackageJsonComponentTest",[],[]]]));
       done();
     });
 
     it('should pick up custom npm components', function(done) {
-      const components = require(path.resolve(path.join('.idyll', 'components.js')));
-      expect(components['react-micro-bar-chart']).to.eql("require('react-micro-bar-chart')");
+      const componentString = fs.readFileSync(path.join(__dirname, 'test-project', '.idyll', 'components.js'));
+      expect(componentString.indexOf('"react-micro-bar-chart": require(\'react-micro-bar-chart\')')).to.be.greaterThan(-1);
       done();
     });
 
     it('should pick up on explicit component mappings from package.json', function(done) {
-      const components = require(path.resolve(path.join('.idyll', 'components.js')));
-      expect(components['package-json-component-test']).to.eql("require('path/to/some/file.js')");
+      const componentString = fs.readFileSync(path.join(__dirname, 'test-project', '.idyll', 'components.js'));
+      expect(componentString.indexOf(`"package-json-component-test": require(\'${path.join(__dirname, 'test-project', 'components', 'custom-component.js')}')`)).to.be.greaterThan(-1);
       done();
     });
 

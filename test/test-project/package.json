@@ -8,7 +8,7 @@
   },
   "idyll": {
     "components": {
-      "PackageJsonComponentTest": "path/to/some/file.js"
+      "PackageJsonComponentTest": "components/custom-component.js"
     }
   },
   "dependencies": {
