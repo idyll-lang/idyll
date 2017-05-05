@@ -6,7 +6,7 @@ Sourcefile -> Blocks "EOF" {%
   }
 %}
 
-Blocks -> ("BREAK" __):* ((BreakBlock __ ("BREAK" __):+) | (NoBreakBlock __ ("BREAK" __):*)):*  (BreakBlock __):? {%
+Blocks -> ("BREAK" __):* ((BreakBlock __ ("BREAK" __):*) | (NoBreakBlock __ ("BREAK" __):*)):*  (BreakBlock __):? {%
   function(data, location, reject) {
     var blocks = [];
     data[1].forEach(function(d) {

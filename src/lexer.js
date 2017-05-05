@@ -41,9 +41,9 @@ module.exports = function() {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    const items = lexeme.split('\n');
+    const items = lexeme.trim().split('\n');
     const matches = items.map((item) => /\d+\.\s*([^\n]*)/.exec(item)[1]);
-    let output = ['ORDERED_LIST'];
+    let output = ['BREAK', 'ORDERED_LIST'];
     matches.forEach((item) => {
       output = output.concat(formatToken(item));
     });
@@ -89,23 +89,29 @@ module.exports = function() {
     updatePosition(lexeme);
   });
 
-  lexer.addRule(/(\n?[^`\*\[\n\]!])+/, function(lexeme) {
+  lexer.addRule(/(\n?[^`\*\[\n\]!\d])+/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
-  // Match on ! separately so we can greedily match the
-  // image tag.
-  lexer.addRule(/!/, function(lexeme) {
+  // Match on separately so we can greedily match the
+  // other tags.
+  lexer.addRule(/[!\d]/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
+  // lexer.addRule(/\s*\n\d\.\s/, function(lexeme) {
+  //   this.reject = inComponent || lexeme.trim() === '';
+  //   if (this.reject) return;
+  //   updatePosition(lexeme);
+  //   return ['WORDS'].concat(formatToken(lexeme));
+  // });
 
 
-  lexer.addRule(/ *\n{2,} */, function(lexeme) {
+  lexer.addRule(/\s*\n{2,}\s*/, function(lexeme) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
