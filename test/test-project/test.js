@@ -76,9 +76,9 @@ test('creates the expected build artifacts', () => {
 })
 
 test('should include npm components', () => {
-  expect(projectIdyllResults['components.js']).toContain(`require('react-micro-bar-chart')`);
+  expect(projectIdyllResults['components.js']).toContain('react-micro-bar-chart');
 })
 
 test('should include components configured in package.json', () => {
-  expect(projectIdyllResults['components.js']).toContain(`"custom-component": require(`);
+  expect(projectIdyllResults['components.js']).toContain('package-json-component-test');
 })

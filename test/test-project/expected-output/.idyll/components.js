@@ -1,8 +1,8 @@
 module.exports = {
-"header": require('/Users/bclinkinbeard/Code/forks/idyll/test/test-project/src/components/default/header'),
-"range": require('/Users/bclinkinbeard/Code/forks/idyll/test/test-project/src/components/default/range'),
-"display-var": require('/Users/bclinkinbeard/Code/forks/idyll/test/test-project/src/components/default/display-var'),
-"custom-component": require('/Users/bclinkinbeard/Code/forks/idyll/test/test-project/src/components/custom-component'),
-"react-micro-bar-chart": require('react-micro-bar-chart'),
-"package-json-component-test": require('/Users/bclinkinbeard/Code/forks/idyll/test/test-project/src/components/custom-component.js')
+'header': require('../components/default/header'),
+'range': require('../components/default/range'),
+'display-var': require('../components/default/display-var'),
+'custom-component': require('../components/custom-component'),
+'react-micro-bar-chart': require('../node_modules/react-micro-bar-chart/dist/index.js'),
+'package-json-component-test': require('../components/custom-component.js')
 } 

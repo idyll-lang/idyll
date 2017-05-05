@@ -9,7 +9,7 @@
   "scripts": {
     "init": "cd test/test-project && rm -rf build && mkdir build && npm install",
     "test-windows": "npm install react-micro-bar-chart && jest",
-    "test": "NODE_PATH=./test/test-project/src/node_modules/ jest"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "require-directory": "^2.1.1",
+    "resolve": "1.3.3",
     "uglify-js": "^2.8.22"
   },
   "devDependencies": {

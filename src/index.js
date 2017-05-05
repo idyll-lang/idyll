@@ -11,6 +11,7 @@ const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const compression = require('compression');
+const resolve = require('resolve');
 const Mustache = require('mustache');
 const ReactDOMServer = require('react-dom/server');
 const React = require('react');
@@ -50,7 +51,7 @@ const idyll = (inputPath, opts, cb) => {
   const TMP_PATH = path.resolve(path.join(inputDirectory, '.idyll'));
 
   if (!fs.existsSync(TMP_PATH)){
-      fs.mkdirSync(TMP_PATH);
+    fs.mkdirSync(TMP_PATH);
   }
 
   const BUILD_PATH = path.resolve(options.output);
@@ -129,16 +130,19 @@ const idyll = (inputPath, opts, cb) => {
       const children = node[2] || [];
       if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
         if (inputConfig.components[name]) {
-          outputComponents.push(`"${name}": require('${path.resolve(path.join(inputDirectory, inputConfig.components[name])).replace(/\\/g, '\\\\')}')`);
+          const compPath = path.parse(path.join(inputDirectory, inputConfig.components[name]));
+          outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base)}')`);
         } else if (customComponents.indexOf(name + '.js') > -1) {
-          outputComponents.push(`"${name}": require('${path.join(CUSTOM_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
+          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name))}')`);
         } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents.push(`"${name}": require('${path.join(DEFAULT_COMPONENTS_FOLDER, name).replace(/\\/g, '\\\\')}')`);
+          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name))}')`);
         } else {
           try {
-            require.resolve(name);
-            outputComponents.push(`"${name}": require('${name}')`);
+            // npm modules are required via relative paths to support working with a locally linked idyll
+            const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
+            outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base)}')`);
           } catch (err) {
+            if (node[0].toLowerCase() !== node[0]) throw new Error(`Component named ${node[0]} could not be found.`)
           }
         }
         checkedComponents.push(name);
@@ -192,7 +196,6 @@ const idyll = (inputPath, opts, cb) => {
     process.env['NODE_ENV'] = 'production';
     handleHTML();
     var b = browserify(path.resolve(path.join(__dirname, 'client', 'build.js')), {
-      fullPaths: true,
       transform: [
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
         [ envify, {
