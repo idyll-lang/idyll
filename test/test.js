@@ -62,7 +62,7 @@ describe('build task', function() {
 
     it('should pick up on explicit component mappings from package.json', function(done) {
       const componentString = fs.readFileSync(path.join(__dirname, 'test-project', '.idyll', 'components.js'));
-      expect(componentString.indexOf(`"package-json-component-test": require(\'${path.join(__dirname, 'test-project', 'components', 'custom-component.js')}')`)).to.be.greaterThan(-1);
+      expect(componentString.indexOf(`"package-json-component-test": require(\'${path.join(__dirname, 'test-project', 'components', 'custom-component.js').replace(/\\/g, '\\\\')}')`)).to.be.greaterThan(-1);
       done();
     });
 
