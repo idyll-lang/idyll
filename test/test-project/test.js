@@ -1,3 +1,5 @@
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
+
 const idyll = require('../../');
 const fs = require('fs');
 const { join } = require('path');
