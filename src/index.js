@@ -81,45 +81,72 @@ const idyll = (inputPath, opts, cb) => {
     fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css(options));
   };
 
-  const writeHTML = (ast) => {
+  const writeData = (data) => {
+    fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(data)}`);
+  };
+
+  const writeHTML = (meta) => {
     process.env['AST_FILE'] = AST_FILE;
     process.env['COMPONENT_FILE'] = COMPONENT_FILE;
     process.env['DATA_FILE'] = DATA_FILE;
     process.env['IDYLL_PATH'] = IDYLL_PATH;
 
-    const tree = interpretAST(ast);
     // const InteractiveDocument = require('./client/component');
     // tree.meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
-    const output = Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), tree.meta);
+    const output = Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), meta);
     fs.writeFileSync(HTML_OUTPUT, output);
   };
 
   const interpretAST = (ast) => {
     const ignoreNames = ['var', 'data', 'meta', 'derived'];
 
-    const getMeta = (acc, prop) => {
-      acc[prop[0]] = prop[1][1];
-      return acc;
+    const getMeta = (ast) => {
+      // there should only be one meta node
+      const metaNode = getNodesByName('meta', ast)[0];
+      // data is stored in props, hence [1]
+      return metaNode[1].reduce(
+        (acc, prop) => {
+          acc[prop[0]] = prop[1][1];
+          return acc;
+        },
+        {}
+      )
     }
 
-    const readNode = (acc, node) => {
-      if (typeof node === 'string') return acc;
+    const getData = (acc, node) => {
+      // can be multiple data nodes
+      const dataNodes = getNodesByName('data', ast);
 
-      const name = changeCase.paramCase(node[0]);
-      const props = node[1];
-      const children = node[2] || [];
+      // turn each data node into a field on an object
+      // whose key is the name prop
+      // and whose value is the parsed data
+      return dataNodes.reduce(
+        (acc, dataNode) => {
+          const props = dataNode[1];
+          const { name, source } = props.reduce(
+            (hash, val) => {
+              hash[val[0]] = val[1][1];
+              return hash;
+            },
+            {}
+          );
 
-      if (name === 'meta') {
-        acc.meta = props.reduce(getMeta, {});
-      }
+          if (source.endsWith('.csv')) {
+            acc[name] = Baby.parseFiles(path.join(DATA_FOLDER, source), { header: true }).data;
+          } else {
+            acc[name] = require(path.join(DATA_FOLDER, source));
+          }
 
-      return acc;
+          return acc;
+        },
+        {}
+      );
     }
 
-    return ast.reduce(
-      readNode,
-      {}
-    )
+    return {
+      meta: getMeta(ast),
+      data: getData(ast)
+    }
   };
 
   const writeAST = (ast) => {
@@ -157,43 +184,12 @@ const idyll = (inputPath, opts, cb) => {
           }
         }
         checkedComponents.push(name);
-      } else if (ignoreNames.indexOf(name) > -1) {
-        switch(name) {
-          case 'data':
-            let key, source, data;
-            props.forEach((p) => {
-              const name = p[0];
-              const type = p[1][0];
-              const value = p[1][1];
-              switch(name) {
-                case 'name':
-                  if (type === 'value') {
-                    key = value;
-                  }
-                  break;
-                case 'source':
-                  if (type === 'value') {
-                    source = value;
-                  }
-                  break;
-              };
-            })
-            if (source.endsWith('.csv')) {
-              parsed = Baby.parseFiles(path.join(DATA_FOLDER, source), { header: true });
-              data = parsed.data;
-            } else {
-              data = require(path.join(DATA_FOLDER, source));
-            }
-            outputData[key] = data;
-            break;
-        }
       }
       children.map(handleNode);
     }
     ast.map(handleNode);
 
     fs.writeFileSync(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
-    fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(outputData)}`);
   }
 
 
@@ -270,11 +266,30 @@ const idyll = (inputPath, opts, cb) => {
     });
   }
 
+  const getNodesByName = (name, tree) => {
+    const byName = (acc, val) => {
+      if (typeof val === 'string') return acc;
+      if (changeCase.paramCase(val[0]) === name) acc.push(val);
+
+      if (val[2] && typeof val[2] !== 'string') acc = val[2].reduce(byName, acc);
+
+      return acc;
+    }
+
+    return tree.reduce(
+      byName,
+      []
+    )
+  }
+
   const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
   try {
     const ast = compile(idlInput, options.compilerOptions);
+    const tree = interpretAST(ast);
+
     writeAST(ast);
-    writeHTML(ast);
+    writeHTML(tree.meta);
+    writeData(tree.data);
     writeTemplates(ast);
     writeCSS();
   } catch(err) {
