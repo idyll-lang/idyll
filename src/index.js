@@ -77,8 +77,8 @@ const idyll = (inputPath, opts, cb) => {
     console.log(e);
   }
 
-  const writeCSS = () => {
-    fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css(options));
+  const writeCSS = (css) => {
+    fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css);
   };
 
   const writeData = (data) => {
@@ -233,7 +233,7 @@ const idyll = (inputPath, opts, cb) => {
     const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
     watch(watchedFiles, (filename) => {
       if (filename.indexOf('.css') !== -1) {
-        writeCSS();
+        writeCSS(css(options));
       } else {
         compileAndWriteFiles();
       }
@@ -285,12 +285,13 @@ const idyll = (inputPath, opts, cb) => {
     try {
       const ast = compile(idlInput, options.compilerOptions);
       const tree = interpretAST(ast);
+      tree.css = css(options);
 
       writeAST(ast);
       writeHTML(tree.meta);
       writeData(tree.data);
       writeComponents(tree.components);
-      writeCSS();
+      writeCSS(tree.css);
     } catch(err) {
       console.log(err.message);
     }
