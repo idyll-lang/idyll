@@ -18,6 +18,8 @@ const React = require('react');
 const Baby = require('babyparse');
 const UglifyJS = require("uglify-js");
 
+const css = require('./assets/css');
+
 require('babel-core/register')({
     presets: ['react']
 });
@@ -61,15 +63,10 @@ const idyll = (inputPath, opts, cb) => {
   const AST_FILE = path.resolve(path.join(TMP_PATH, 'ast.json'));
   const COMPONENT_FILE = path.resolve(path.join(TMP_PATH, 'components.js'));
   const DATA_FILE = path.resolve(path.join(TMP_PATH, 'data.js'));
-  const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
-  const CSS_OUTPUT = path.resolve(path.join(BUILD_PATH, 'styles.css'));
   const CUSTOM_COMPONENTS_FOLDER = path.resolve(options.componentFolder);
   const DEFAULT_COMPONENTS_FOLDER = path.resolve(options.defaultComponents);
   const DATA_FOLDER = path.resolve(options.dataFolder);
   const IDYLL_PATH = path.resolve(__dirname);
-
-  const LAYOUT_INPUT = path.resolve(path.join(IDYLL_PATH, 'layouts', options.layout + '.css'));
-  const THEME_INPUT = path.resolve(path.join(IDYLL_PATH, 'themes', options.theme + '.css'));
 
   const components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
   let customComponents = [];
@@ -81,10 +78,7 @@ const idyll = (inputPath, opts, cb) => {
 
   let templateContext = {};
   const writeCSS = () => {
-    const inputCSS = CSS_INPUT ? fs.readFileSync(CSS_INPUT) : '';
-    const layoutCSS = fs.readFileSync(LAYOUT_INPUT);
-    const themeCSS = fs.readFileSync(THEME_INPUT);
-    fs.writeFileSync(CSS_OUTPUT, layoutCSS + '\n' + themeCSS + '\n' + inputCSS);
+    fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css(options));
   };
 
   const handleHTML = () => {
