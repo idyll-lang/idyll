@@ -113,7 +113,7 @@ const idyll = (inputPath, opts, cb) => {
       )
     }
 
-    const getData = (acc, node) => {
+    const getData = (ast) => {
       // can be multiple data nodes
       const dataNodes = getNodesByName('data', ast);
 
