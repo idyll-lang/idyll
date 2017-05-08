@@ -19,6 +19,7 @@ const Baby = require('babyparse');
 const UglifyJS = require("uglify-js");
 
 const css = require('./assets/css');
+const filterAST = require('./assets/ast');
 
 require('babel-core/register')({
     presets: ['react']
@@ -94,19 +95,7 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const writeAST = (ast) => {
-    const ignoreNames = ['meta'];
-    const astFilter = (node) => {
-      if (typeof node === 'string') {
-        return true;
-      }
-      const name = changeCase.paramCase(node[0]);
-      if (ignoreNames.indexOf(name) > -1) {
-        return false;
-      }
-      return true;
-    }
-    const filteredAST = ast.filter(astFilter);
-    fs.writeFileSync(AST_FILE, JSON.stringify(filteredAST));
+    fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
   };
 
   const writeTemplates = (ast) => {
