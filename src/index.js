@@ -219,6 +219,7 @@ const idyll = (inputPath, opts, cb) => {
         fromString: true
       });
       fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
+      compileAndWriteFiles();
       cb && cb();
     });
   }
@@ -229,18 +230,7 @@ const idyll = (inputPath, opts, cb) => {
       if (filename.indexOf('.css') !== -1) {
         writeCSS();
       } else {
-        fs.readFile(IDL_FILE, 'utf8', function(err, data) {
-          if (err) {
-            return;
-          }
-          try {
-            const ast = compile(data, options.compilerOptions);
-            writeAST(ast);
-            writeTemplates(ast);
-          } catch(err) {
-            console.log(err.message);
-          }
-        })
+        compileAndWriteFiles();
       }
 
     });
@@ -264,6 +254,7 @@ const idyll = (inputPath, opts, cb) => {
         ]
       }
     });
+    compileAndWriteFiles();
   }
 
   const getNodesByName = (name, tree) => {
@@ -282,18 +273,20 @@ const idyll = (inputPath, opts, cb) => {
     )
   }
 
-  const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
-  try {
-    const ast = compile(idlInput, options.compilerOptions);
-    const tree = interpretAST(ast);
+  const compileAndWriteFiles = () => {
+    const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
+    try {
+      const ast = compile(idlInput, options.compilerOptions);
+      const tree = interpretAST(ast);
 
-    writeAST(ast);
-    writeHTML(tree.meta);
-    writeData(tree.data);
-    writeTemplates(ast);
-    writeCSS();
-  } catch(err) {
-    console.log(err.message);
+      writeAST(ast);
+      writeHTML(tree.meta);
+      writeData(tree.data);
+      writeTemplates(ast);
+      writeCSS();
+    } catch(err) {
+      console.log(err.message);
+    }
   }
 
   if (options.build) {
