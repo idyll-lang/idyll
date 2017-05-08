@@ -85,6 +85,15 @@ const idyll = (inputPath, opts, cb) => {
     fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(data)}`);
   };
 
+  const writeComponents = (components) => {
+    const src = Object.keys(components)
+      .map((key) => {
+        return `'${key}': require('${components[key]}')`;
+      })
+      .join(',\n\t');
+    fs.writeFileSync(COMPONENT_FILE, `module.exports = {\n\t${src}\n}\n`);
+  };
+
   const writeHTML = (meta) => {
     process.env['AST_FILE'] = AST_FILE;
     process.env['COMPONENT_FILE'] = COMPONENT_FILE;
@@ -98,11 +107,10 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const interpretAST = (ast) => {
-    const ignoreNames = ['var', 'data', 'meta', 'derived'];
-
     const getMeta = (ast) => {
       // there should only be one meta node
       const metaNode = getNodesByName('meta', ast)[0];
+
       // data is stored in props, hence [1]
       return metaNode[1].reduce(
         (acc, prop) => {
@@ -143,55 +151,52 @@ const idyll = (inputPath, opts, cb) => {
       );
     }
 
+    const getComponents = (ast) => {
+      const ignoreNames = ['var', 'data', 'meta', 'derived'];
+      // component node names begin with capital letters
+      const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
+
+      return componentNodes.reduce(
+        (acc, node) => {
+          const name = changeCase.paramCase(node[0]);
+          const props = node[1];
+          const children = node[2] || [];
+
+          if (!acc[name]) {
+            if (inputConfig.components[name]) {
+              const compPath = path.parse(path.join(inputDirectory, inputConfig.components[name]));
+              acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
+            } else if (customComponents.indexOf(name + '.js') > -1) {
+              acc[name] = path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
+            } else if (components.indexOf(name + '.js') > -1) {
+              acc[name] = path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
+            } else {
+              try {
+                // npm modules are required via relative paths to support working with a locally linked idyll
+                const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
+                acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
+              } catch (err) {
+                if (node[0].toLowerCase() !== node[0]) throw new Error(`Component named ${node[0]} could not be found.`)
+              }
+            }
+          }
+
+          return acc;
+        },
+        {}
+      )
+    }
+
     return {
-      meta: getMeta(ast),
-      data: getData(ast)
+      components: getComponents(ast),
+      data: getData(ast),
+      meta: getMeta(ast)
     }
   };
 
   const writeAST = (ast) => {
     fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
   };
-
-  const writeTemplates = (ast) => {
-    const outputComponents = [];
-    const outputData = {};
-    const checkedComponents = [];
-    const ignoreNames = ['var', 'data', 'meta', 'derived'];
-
-    const handleNode = (node) => {
-      if (typeof node === 'string') {
-        return;
-      }
-      const name = changeCase.paramCase(node[0]);
-      const props = node[1];
-      const children = node[2] || [];
-      if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
-        if (inputConfig.components[name]) {
-          const compPath = path.parse(path.join(inputDirectory, inputConfig.components[name]));
-          outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/')}')`);
-        } else if (customComponents.indexOf(name + '.js') > -1) {
-          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/')}')`);
-        } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/')}')`);
-        } else {
-          try {
-            // npm modules are required via relative paths to support working with a locally linked idyll
-            const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
-            outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/')}')`);
-          } catch (err) {
-            if (node[0].toLowerCase() !== node[0]) throw new Error(`Component named ${node[0]} could not be found.`)
-          }
-        }
-        checkedComponents.push(name);
-      }
-      children.map(handleNode);
-    }
-    ast.map(handleNode);
-
-    fs.writeFileSync(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
-  }
-
 
   const build = (cb) => {
     process.env['NODE_ENV'] = 'production';
@@ -258,9 +263,11 @@ const idyll = (inputPath, opts, cb) => {
   }
 
   const getNodesByName = (name, tree) => {
+    const predicate = typeof name === 'string' ? (s) => s === name : name;
+
     const byName = (acc, val) => {
       if (typeof val === 'string') return acc;
-      if (changeCase.paramCase(val[0]) === name) acc.push(val);
+      if (predicate(val[0])) acc.push(val);
 
       if (val[2] && typeof val[2] !== 'string') acc = val[2].reduce(byName, acc);
 
@@ -282,7 +289,7 @@ const idyll = (inputPath, opts, cb) => {
       writeAST(ast);
       writeHTML(tree.meta);
       writeData(tree.data);
-      writeTemplates(ast);
+      writeComponents(tree.components);
       writeCSS();
     } catch(err) {
       console.log(err.message);
