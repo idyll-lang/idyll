@@ -77,21 +77,49 @@ const idyll = (inputPath, opts, cb) => {
     console.log(e);
   }
 
-  let templateContext = {};
   const writeCSS = () => {
     fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css(options));
   };
 
-  const handleHTML = () => {
-    const templateString = fs.readFileSync(HTML_TEMPLATE, 'utf8');
+  const writeHTML = (ast) => {
     process.env['AST_FILE'] = AST_FILE;
     process.env['COMPONENT_FILE'] = COMPONENT_FILE;
     process.env['DATA_FILE'] = DATA_FILE;
     process.env['IDYLL_PATH'] = IDYLL_PATH;
+
+    const tree = interpretAST(ast);
     // const InteractiveDocument = require('./client/component');
-    // templateContext.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
-    const output = Mustache.render(templateString, templateContext);
+    // tree.meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
+    const output = Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), tree.meta);
     fs.writeFileSync(HTML_OUTPUT, output);
+  };
+
+  const interpretAST = (ast) => {
+    const ignoreNames = ['var', 'data', 'meta', 'derived'];
+
+    const getMeta = (acc, prop) => {
+      acc[prop[0]] = prop[1][1];
+      return acc;
+    }
+
+    const readNode = (acc, node) => {
+      if (typeof node === 'string') return acc;
+
+      const name = changeCase.paramCase(node[0]);
+      const props = node[1];
+      const children = node[2] || [];
+
+      if (name === 'meta') {
+        acc.meta = props.reduce(getMeta, {});
+      }
+
+      return acc;
+    }
+
+    return ast.reduce(
+      readNode,
+      {}
+    )
   };
 
   const writeAST = (ast) => {
@@ -158,12 +186,6 @@ const idyll = (inputPath, opts, cb) => {
             }
             outputData[key] = data;
             break;
-          case 'meta':
-            templateContext = {}
-            props.forEach((p) => {
-              templateContext[p[0]] = p[1][1];
-            })
-            break;
         }
       }
       children.map(handleNode);
@@ -177,7 +199,6 @@ const idyll = (inputPath, opts, cb) => {
 
   const build = (cb) => {
     process.env['NODE_ENV'] = 'production';
-    handleHTML();
     // this path stuff is pretty ugly but necessary until client files don't rely on env vars
     const clientDir = path.join(__dirname, 'client');
     const visitorsDir = path.join(clientDir, 'visitors');
@@ -253,6 +274,7 @@ const idyll = (inputPath, opts, cb) => {
   try {
     const ast = compile(idlInput, options.compilerOptions);
     writeAST(ast);
+    writeHTML(ast);
     writeTemplates(ast);
     writeCSS();
   } catch(err) {
