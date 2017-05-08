@@ -81,7 +81,9 @@ test('creates the expected output', () => {
 })
 
 test('creates the expected build artifacts', () => {
-  expect(projectIdyllResults).toEqual(EXPECTED_IDYLL_RESULTS);
+  Object.keys(projectIdyllResults).forEach((key) => {
+    expect(projectIdyllResults[key]).toEqual(EXPECTED_IDYLL_RESULTS[key]);
+  })
 })
 
 test('should include npm components', () => {
