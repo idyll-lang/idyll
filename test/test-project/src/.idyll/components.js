@@ -1,5 +1,6 @@
 module.exports = {
 'header': require('../components/default/header'),
+'table': require('../components/default/table'),
 'range': require('../components/default/range'),
 'display-var': require('../components/default/display-var'),
 'custom-component': require('../components/custom-component'),

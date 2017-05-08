@@ -11,6 +11,9 @@ This is an Idyll file. Write text
 as you please in here. To add interactivity,
 you can add  different components to the text.
 
+[data name:"myData" source:"example-data.json" /]
+[Table data:myData /]
+
 Here is how you can use a variable:
 
 [var name:"exampleVar" value:5 /]
@@ -30,6 +33,6 @@ You can use standard html tags if a
 component with the same name
 doesn't exist.
 
-[ReactMicroBarChart data:`[0, 1, 3, 2]` /]
+[ReactMicroBarChart data:`[4, 1, 3, 2]` /]
 
 [PackageJsonComponentTest /]
