@@ -178,6 +178,7 @@ const idyll = (inputPath, opts, cb) => {
     }
 
     return {
+      ast,
       components: getComponents(ast),
       data: getData(ast),
       meta: getMeta(ast)
@@ -188,7 +189,7 @@ const idyll = (inputPath, opts, cb) => {
     fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
   };
 
-  const build = (cb) => {
+  const build = (callback) => {
     process.env['NODE_ENV'] = 'production';
     var b = browserify(path.join(__dirname, 'client', 'build.js'), {
       transform: [
@@ -202,14 +203,9 @@ const idyll = (inputPath, opts, cb) => {
     b.bundle(function(err, buff) {
       if (err) {
         console.log(err);
-        return;
+        process.exit(1);
       }
-      const jsOutput = UglifyJS.minify(buff.toString('utf8'), {
-        fromString: true
-      });
-      fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
-      compileAndWriteFiles();
-      cb && cb();
+      callback(buff.toString('utf8'));
     });
   }
 
@@ -271,17 +267,23 @@ const idyll = (inputPath, opts, cb) => {
       tree.css = css(options);
 
       writeAST(ast);
-      writeHTML(tree.meta);
-      writeData(tree.data);
       writeComponents(tree.components);
+      writeData(tree.data);
+      writeHTML(tree.meta);
       writeCSS(tree.css);
+      return tree;
     } catch(err) {
       console.log(err.message);
     }
   }
 
   if (options.build) {
-    build(cb);
+    const tree = compileAndWriteFiles();
+    build(function (js) {
+      const jsOutput = UglifyJS.minify(js, {fromString: true});
+      fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
+      if (cb) cb(tree);
+    });
   } else {
     start();
   }
