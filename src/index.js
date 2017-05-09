@@ -202,7 +202,8 @@ const idyll = (inputPath, opts, cb) => {
     b.require(DATA_FILE, {expose: '__IDYLL_DATA__'});
     b.bundle(function(err, buff) {
       if (err) {
-        console.log(err);
+        console.error('Error creating index.js bundle:');
+        console.error(err);
         process.exit(1);
       }
       callback(buff.toString('utf8'));
@@ -273,7 +274,8 @@ const idyll = (inputPath, opts, cb) => {
       writeCSS(tree.css);
       return tree;
     } catch(err) {
-      console.log(err.message);
+      console.error('Error writing artifacts to disk:');
+      console.error(err.message);
     }
   }
 
