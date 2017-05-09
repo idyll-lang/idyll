@@ -100,6 +100,24 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const interpretAST = (ast) => {
+    const getNodesByName = (name, tree) => {
+      const predicate = typeof name === 'string' ? (s) => s === name : name;
+
+      const byName = (acc, val) => {
+        if (typeof val === 'string') return acc;
+        if (predicate(val[0])) acc.push(val);
+
+        if (val[2] && typeof val[2] !== 'string') acc = val[2].reduce(byName, acc);
+
+        return acc;
+      }
+
+      return tree.reduce(
+        byName,
+        []
+      )
+    }
+
     const getMeta = (ast) => {
       // there should only be one meta node
       const metaNode = getNodesByName('meta', ast)[0];
@@ -240,24 +258,6 @@ const idyll = (inputPath, opts, cb) => {
       }
     });
     compileAndWriteFiles();
-  }
-
-  const getNodesByName = (name, tree) => {
-    const predicate = typeof name === 'string' ? (s) => s === name : name;
-
-    const byName = (acc, val) => {
-      if (typeof val === 'string') return acc;
-      if (predicate(val[0])) acc.push(val);
-
-      if (val[2] && typeof val[2] !== 'string') acc = val[2].reduce(byName, acc);
-
-      return acc;
-    }
-
-    return tree.reduce(
-      byName,
-      []
-    )
   }
 
   const compileAndWriteFiles = () => {
