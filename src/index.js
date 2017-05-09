@@ -153,14 +153,11 @@ const idyll = (inputPath, opts, cb) => {
 
     const getComponents = (ast) => {
       const ignoreNames = ['var', 'data', 'meta', 'derived'];
-      // component node names begin with capital letters
       const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
 
       return componentNodes.reduce(
         (acc, node) => {
           const name = changeCase.paramCase(node[0]);
-          const props = node[1];
-          const children = node[2] || [];
 
           if (!acc[name]) {
             if (inputConfig.components[name]) {
