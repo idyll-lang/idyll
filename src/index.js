@@ -207,17 +207,23 @@ const idyll = (inputPath, opts, cb) => {
     }
   };
 
+  const browserifyOpts = {
+    transform: [
+      [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
+      [ brfs ]
+    ],
+    plugin: [
+      (b) => b.require([
+        {file: AST_FILE, expose: '__IDYLL_AST__'},
+        {file: COMPONENT_FILE, expose: '__IDYLL_COMPONENTS__'},
+        {file: DATA_FILE, expose: '__IDYLL_DATA__'}
+      ])
+    ]
+  };
+
   const build = (callback) => {
     process.env['NODE_ENV'] = 'production';
-    var b = browserify(path.join(__dirname, 'client', 'build.js'), {
-      transform: [
-        [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-        [ brfs ]
-      ]
-    });
-    b.require(AST_FILE, {expose: '__IDYLL_AST__'});
-    b.require(COMPONENT_FILE, {expose: '__IDYLL_COMPONENTS__'});
-    b.require(DATA_FILE, {expose: '__IDYLL_DATA__'});
+    var b = browserify(path.join(__dirname, 'client', 'build.js'), browserifyOpts);
     b.bundle(function(err, buff) {
       if (err) {
         console.error('Error creating index.js bundle:');
@@ -229,6 +235,7 @@ const idyll = (inputPath, opts, cb) => {
   }
 
   const start = () => {
+    const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
     const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
     watch(watchedFiles, (filename) => {
       if (filename.indexOf('.css') !== -1) {
@@ -236,7 +243,6 @@ const idyll = (inputPath, opts, cb) => {
       } else {
         compileAndWriteFiles();
       }
-
     });
 
     budo(path.resolve(path.join(__dirname, 'client', 'live.js')), {
@@ -246,16 +252,7 @@ const idyll = (inputPath, opts, cb) => {
       css: path.join(options.output, 'styles.css'),
       middleware: compression(),
       watchGlob: '**/*.{html,css,json,js}',
-      browserify: {
-        transform: [
-          [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-          [ envify, {
-            AST_FILE,
-            COMPONENT_FILE,
-            DATA_FILE } ],
-          [ brfs ]
-        ]
-      }
+      browserify: browserifyOpts
     });
     compileAndWriteFiles();
   }
