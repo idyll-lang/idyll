@@ -75,6 +75,10 @@ const idyll = (inputPath, opts, cb) => {
     console.log(e);
   }
 
+  const writeAST = (ast) => {
+    fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
+  };
+
   const writeCSS = (css) => {
     fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css);
   };
@@ -201,10 +205,6 @@ const idyll = (inputPath, opts, cb) => {
       data: getData(ast),
       meta: getMeta(ast)
     }
-  };
-
-  const writeAST = (ast) => {
-    fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
   };
 
   const build = (callback) => {
