@@ -2,7 +2,7 @@ const React = require('react');
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 
-let results = require(process.env.AST_FILE);
+let results = require('__IDYLL_AST__');
 
 const transformRefs = (refs) => {
   const output = {};

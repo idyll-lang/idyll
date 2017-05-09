@@ -6,7 +6,6 @@ const compile = require('idyll-compiler');
 const fs = require('fs');
 const watch = require('node-watch');
 const changeCase = require('change-case');
-const envify = require('envify');
 const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
@@ -94,10 +93,6 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const writeHTML = (meta) => {
-    process.env['AST_FILE'] = AST_FILE;
-    process.env['COMPONENT_FILE'] = COMPONENT_FILE;
-    process.env['DATA_FILE'] = DATA_FILE;
-
     // const InteractiveDocument = require('./client/component');
     // tree.meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
     const output = Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), meta);
@@ -195,20 +190,15 @@ const idyll = (inputPath, opts, cb) => {
 
   const build = (cb) => {
     process.env['NODE_ENV'] = 'production';
-    // this path stuff is pretty ugly but necessary until client files don't rely on env vars
-    const clientDir = path.join(__dirname, 'client');
-    const visitorsDir = path.join(clientDir, 'visitors');
-    var b = browserify(path.join(clientDir, 'build.js'), {
+    var b = browserify(path.join(__dirname, 'client', 'build.js'), {
       transform: [
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-        [ envify, {
-          AST_FILE: path.join(path.relative(clientDir, TMP_PATH), path.parse(AST_FILE).base),
-          COMPONENT_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(COMPONENT_FILE).base),
-          DATA_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(DATA_FILE).base)
-        } ],
         [ brfs ]
       ]
     });
+    b.require(AST_FILE, {expose: '__IDYLL_AST__'});
+    b.require(COMPONENT_FILE, {expose: '__IDYLL_COMPONENTS__'});
+    b.require(DATA_FILE, {expose: '__IDYLL_DATA__'});
     b.bundle(function(err, buff) {
       if (err) {
         console.log(err);
