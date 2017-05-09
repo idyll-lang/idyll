@@ -16,6 +16,7 @@ const ReactDOMServer = require('react-dom/server');
 const React = require('react');
 const Baby = require('babyparse');
 const UglifyJS = require("uglify-js");
+const htmlTags = require('html-tags');
 
 const css = require('./assets/css');
 const filterAST = require('./assets/ast');
@@ -188,7 +189,9 @@ const idyll = (inputPath, opts, cb) => {
                 const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
                 acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
               } catch (err) {
-                if (node[0].toLowerCase() !== node[0]) throw new Error(`Component named ${node[0]} could not be found.`)
+                if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
+                  throw new Error(`Component named ${node[0]} could not be found.`)
+                }
               }
             }
           }

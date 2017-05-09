@@ -11,11 +11,8 @@ const processComponent = (component, name, id) => {
   if (componentClasses[paramCaseName]) {
     componentClass = componentClasses[paramCaseName];
     extraProps.__handleUpdateProps = component.handleUpdateProps(id);
-  } else if (htmlTags.indexOf(paramCaseName) > -1) {
-    componentClass = paramCaseName;
-  } else {
-    componentClass = 'div';
-    extraProps.className = name.toLowerCase();
+  } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
+    componentClass = name.toLowerCase();
   }
 
   return {
