@@ -67,7 +67,6 @@ const idyll = (inputPath, opts, cb) => {
   const CUSTOM_COMPONENTS_FOLDER = path.resolve(options.componentFolder);
   const DEFAULT_COMPONENTS_FOLDER = path.resolve(options.defaultComponents);
   const DATA_FOLDER = path.resolve(options.dataFolder);
-  const IDYLL_PATH = path.resolve(__dirname);
 
   const components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
   let customComponents = [];
@@ -98,7 +97,6 @@ const idyll = (inputPath, opts, cb) => {
     process.env['AST_FILE'] = AST_FILE;
     process.env['COMPONENT_FILE'] = COMPONENT_FILE;
     process.env['DATA_FILE'] = DATA_FILE;
-    process.env['IDYLL_PATH'] = IDYLL_PATH;
 
     // const InteractiveDocument = require('./client/component');
     // tree.meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
@@ -206,8 +204,7 @@ const idyll = (inputPath, opts, cb) => {
         [ envify, {
           AST_FILE: path.join(path.relative(clientDir, TMP_PATH), path.parse(AST_FILE).base),
           COMPONENT_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(COMPONENT_FILE).base),
-          DATA_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(DATA_FILE).base),
-          IDYLL_PATH
+          DATA_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(DATA_FILE).base)
         } ],
         [ brfs ]
       ]
@@ -250,8 +247,7 @@ const idyll = (inputPath, opts, cb) => {
           [ envify, {
             AST_FILE,
             COMPONENT_FILE,
-            DATA_FILE,
-            IDYLL_PATH } ],
+            DATA_FILE } ],
           [ brfs ]
         ]
       }
