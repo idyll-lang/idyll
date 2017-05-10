@@ -51,3 +51,20 @@ In Idyll the entire document is reactive, built on top of Facebook's React frame
   * [Refs](https://idyll-lang.github.io/components-refs)
 * Publishing
   * [Deploying to the web](https://idyll-lang.github.io/publishing-deploying-to-the-web)
+
+
+# Contributing to Idyll
+
+Idyll attempts to adhere to the [open open source](http://openopensource.org/) philosophy as much as reasonably possible. Pull requests are very welcome!
+
+To submit a PR do the following:
+
+* Fork the repo and clone it
+* run `yarn` to install the dependencies
+* make your changes
+* update the tests
+* make sure the tests pass
+* submit the PR
+
+If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby. 
+
