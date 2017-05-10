@@ -287,7 +287,8 @@ const idyll = (inputPath, opts, cb) => {
     const tree = compileAndWriteFiles();
     build(function (js) {
       const jsOutput = UglifyJS.minify(js, {fromString: true});
-      fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
+      tree.js = jsOutput.code;
+      fs.writeFileSync(JAVASCRIPT_OUTPUT, tree.js);
       if (cb) cb(tree);
     });
   } else {
