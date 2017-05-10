@@ -62,7 +62,7 @@ To submit a PR do the following:
 * Fork the repo and clone it
 * Run `yarn` to install the dependencies
 * Make your changes
-* Make sure the tests pass. If you add a feature, add a test for it.
+* Make sure the tests pass by running `npm test`. If you add a feature, add a test for it.
 * Submit the PR!
 
 If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby. 
