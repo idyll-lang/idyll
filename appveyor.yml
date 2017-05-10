@@ -5,11 +5,14 @@ environment:
   nodejs_version: "6"
   SPELLCHECKER_PREFER_HUNSPELL: true
 
+cache:
+ - "%LOCALAPPDATA%\\Yarn"
+
 install:
   # Get the latest stable version of Node.js
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - npm --msvs_version=2013 install
+  - yarn --msvs_version=2013
 
 # Post-install test scripts.
 test_script:
