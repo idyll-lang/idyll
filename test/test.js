@@ -16,7 +16,7 @@ describe('compiler', function() {
     it('should tokenize the input with a complex component', function() {
       var lex = Lexer();
       var results = lex("Hello \n\nWorld \n\n [VarDisplay var:v work:\"no\" /]");
-      expect(results.tokens).to.eql("WORDS TOKEN_VALUE_START \"Hello \" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START \"World \" TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_WORD TOKEN_VALUE_START \"VarDisplay\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"var\" TOKEN_VALUE_END PARAM_SEPARATOR COMPONENT_WORD TOKEN_VALUE_START \"v\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"work\" TOKEN_VALUE_END PARAM_SEPARATOR STRING TOKEN_VALUE_START \"&quot;no&quot;\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF");
+      expect(results.tokens).to.eql("WORDS TOKEN_VALUE_START \"Hello \" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START \"World \" TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"VarDisplay\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"var\" TOKEN_VALUE_END PARAM_SEPARATOR COMPONENT_WORD TOKEN_VALUE_START \"v\" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START \"work\" TOKEN_VALUE_END PARAM_SEPARATOR STRING TOKEN_VALUE_START \"&quot;no&quot;\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF");
     });
 
     it('should recognize headings', function() {
@@ -45,6 +45,17 @@ describe('compiler', function() {
       var lex = Lexer();
       var results = lex("This is an image inline ![image](https://idyll-lang.github.io/logo-text.svg).");
       expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "This is an image inline " TOKEN_VALUE_END IMAGE TOKEN_VALUE_START "image" TOKEN_VALUE_END TOKEN_VALUE_START "https://idyll-lang.github.io/logo-text.svg" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
+    });
+
+    it('should handle a component name with a period', function() {
+      var lex = Lexer();
+      var results = lex("This component name has a period separator [component.val /].");
+      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"component.val\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
+    });
+    it('should handle a component name with multiple periods', function() {
+      var lex = Lexer();
+      var results = lex("This component name has a period separator [component.val.v /].");
+      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"component.val.v\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
     });
 
   });
@@ -295,6 +306,20 @@ describe('compiler', function() {
       var output = parse(input, lexResults.tokens, lexResults.positions);
       expect(output).to.eql([["p",[],[["strong",[],["If"]]," I start a line with bold this should work,\nwhat if I"]],["p",[],[["em",[],["start with an italic"]],"?"]]]
       );
+    })
+    it('should handle component name with a period', function() {
+      const input = "This component name has a period separator [component.val /].";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([["p",[],["This component name has a period separator ",["component.val",[],[]],"."]]]);
+    })
+    it('should handle component name with multiple periods', function() {
+      const input = "This component name has a period separator [component.val.v /].";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([["p",[],["This component name has a period separator ",["component.val.v",[],[]],"."]]]);
     })
   });
 

@@ -155,7 +155,7 @@ ClosedComponent -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties "FORWA
   }
 %}
 
-ComponentName -> "COMPONENT_WORD" __ TokenValue {%
+ComponentName -> "COMPONENT_NAME" __ TokenValue {%
   function(data, location, reject) {
     return data[2];
   }
