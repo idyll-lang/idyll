@@ -1,0 +1,9 @@
+{
+  "name": "tres",
+  "version": "0.0.0",
+  "description": "Lowest package in examples.",
+  "main": "index.js",
+  "dependencies": {
+    "tresdep": "*"
+  }
+}

@@ -1,0 +1,7 @@
+/node_modules/
+/Gruntfile.coffee
+/test/
+/bower.json
+/coffeelint.json
+/src/
+/browser-builds/

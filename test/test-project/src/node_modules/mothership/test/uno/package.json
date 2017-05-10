@@ -1,0 +1,9 @@
+{
+  "name": "uno",
+  "version": "0.0.0",
+  "description": "Highest package in examples.",
+  "main": "index.js",
+  "dependencies": {
+    "unodep": "*"
+  }
+}

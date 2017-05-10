@@ -3,6 +3,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
 const idyll = require('../../');
 const fs = require('fs');
 const { join } = require('path');
+const rimraf = require('rimraf');
 
 const getFilenames = (dir) => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');
@@ -44,6 +45,11 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 const EXPECTED_IDYLL_DIR = join(EXPECTED_DIR, '.idyll');
 const EXPECTED_IDYLL_FILENAMES = getFilenames(EXPECTED_IDYLL_DIR);
 const EXPECTED_IDYLL_RESULTS = dirToHash(EXPECTED_IDYLL_DIR);
+
+beforeAll(() => {
+  rimraf.sync(PROJECT_BUILD_DIR);
+  rimraf.sync(PROJECT_IDYLL_DIR);
+})
 
 beforeAll(done => {
   idyll(join(PROJECT_DIR, 'index.idl'), {

@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- '0.10'
+deploy:
+  provider: npm
+  email: bvdrucker@gmail.com
+  api_key:
+    secure: Sac3VYncrHBXjRVH9fwKtKUsypSueMGKfFxkoteRv8is6sSR5ntFvCBPMzZsBhKSLdnZVhGC/mfqRUo0IHwciGzFhRiyCNCxDoiGuWVbFa+fm51zWW5Fso32HBwuQIfoJgF6XtSdItexPki7VRdVOw3GtZb6wNaHXScgoDPv5XA=
+  on:
+    tags: true
+    all_branches: true
+    repo: bendrucker/has-require

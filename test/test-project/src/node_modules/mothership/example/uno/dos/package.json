@@ -1,0 +1,9 @@
+{
+  "name": "dos",
+  "version": "0.0.0",
+  "description": "Second highest package in examples.",
+  "main": "index.js",
+  "dependencies": {
+    "dosdep": "*"
+  }
+}

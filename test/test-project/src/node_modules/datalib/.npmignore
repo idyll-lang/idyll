@@ -1,0 +1,5 @@
+.DS_Store
+coverage
+scripts
+temp
+test
