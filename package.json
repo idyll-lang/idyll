@@ -7,7 +7,6 @@
     "idyll": "bin/idyll.js"
   },
   "scripts": {
-    "test-windows": "npm install react-micro-bar-chart && jest",
     "test": "jest"
   },
   "repository": {
