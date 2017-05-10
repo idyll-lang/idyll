@@ -59,9 +59,9 @@ Idyll attempts to adhere to the [open open source](http://openopensource.org/) p
 
 To submit a PR do the following:
 
-* Fork the repo and clone it
-* Run `yarn` to install the dependencies
-* Make your changes
+* [Fork the repo](https://help.github.com/articles/fork-a-repo/) and [clone it](https://help.github.com/articles/cloning-a-repository/) onto to your computer.
+* Run `yarn` to install the dependencies. If you don't have yarn installed, see https://yarnpkg.com/en/docs/install
+* Make your changes.
 * Make sure the tests pass by running `npm test`. If you add a feature, add a test for it.
 * Submit the PR!
 
