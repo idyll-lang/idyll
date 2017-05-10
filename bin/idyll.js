@@ -1,6 +1,10 @@
 #! /usr/bin/env node
 const idyll = require('../src/');
 const path = require('path');
+const isPath = (str) => {
+  return (str.indexOf('/') > -1 || str.indexOf('\\') > -1);
+};
+
 const argv = require('minimist')(process.argv.slice(2), {
   boolean: ['spellcheck'],
   default: {
@@ -35,9 +39,15 @@ if (argv.hasOwnProperty('datasets')) {
 }
 if (argv.hasOwnProperty('layout')) {
   options.layout = argv.layout;
+  if (isPath(options.layout)) {
+    options.layout = path.resolve(options.layout);
+  }
 }
 if (argv.hasOwnProperty('theme')) {
   options.theme = argv.theme;
+  if (isPath(options.theme)) {
+    options.theme = path.resolve(options.theme);
+  }
 }
 
 idyll(path.resolve(argv._[0]), options);

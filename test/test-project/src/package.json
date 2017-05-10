@@ -2,8 +2,8 @@
   "name": "test-project",
   "version": "1.0.0",
   "scripts": {
-    "start": "idyll index.idl --defaultComponents ./components/default/ --css styles.css --layout centered --theme github --spellcheck",
-    "build": "idyll index.idl --layout centered --theme github --css styles.css --build"
+    "start": "idyll index.idl --css styles.css --layout centered --theme github --spellcheck",
+    "build": "idyll index.idl --layout centered --theme ./custom-theme.css --css styles.css --build"
   },
   "idyll": {
     "components": {
