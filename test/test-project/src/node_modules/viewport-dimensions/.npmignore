@@ -1,0 +1,8 @@
+/test/
+/.editorconfig
+/.eslintrc
+/.gitattributes
+/.travis.yml
+/bower.json
+/gulpfile.js
+/karma.conf.js

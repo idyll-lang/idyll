@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "preserveConstEnums": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "typeRoots" : ["./typings", "node_modules/@types"]
+  },
+  "include": [
+    "**/*.ts",
+    "typings/*.d.ts",
+    "node_modules/@types/**/*.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "bower_components",
+    "data",
+    "_site",
+    "lib"
+  ]
+}

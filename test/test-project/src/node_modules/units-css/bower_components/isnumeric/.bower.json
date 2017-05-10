@@ -1,0 +1,14 @@
+{
+  "name": "isnumeric",
+  "homepage": "https://github.com/leecrossley/isNumeric",
+  "_release": "08be09ca97",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "08be09ca97d51a87435fa1bf90a2accf29c4bec5"
+  },
+  "_source": "git://github.com/leecrossley/isNumeric.git",
+  "_target": "*",
+  "_originalSource": "isnumeric",
+  "_direct": true
+}

@@ -1,0 +1,32 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+
+  "rules": {
+    "strict": 2,
+
+    "comma-dangle": [2, "never"],
+    "no-floating-decimal": 2,
+    "no-use-before-define": [2, "nofunc"],
+
+    "indent": [2, 2, {"indentSwitchCase": true}],
+    "brace-style": [2, "1tbs", {"allowSingleLine": true}],
+    "comma-style": [2, "last"],
+    "consistent-this": [2, "self"],
+    "consistent-return": 0,
+    "curly": [2, "multi-line"],
+    "new-cap": [2, {"newIsCap": true, "capIsNew": false}],
+    "no-shadow": 1,
+    "quote-props": [2, "as-needed"],
+    "quotes": [2, "single", "avoid-escape"],
+    "space-after-function-name": [2, "never"],
+    "space-after-keywords": [2, "always"],
+    "space-before-blocks": [2, "always"],
+    "space-in-brackets": [2, "never"],
+    "space-in-parens": [2, "never"],
+    "spaced-line-comment": [2, "always"],
+    "yoda": [2, "never"]
+  }
+}
