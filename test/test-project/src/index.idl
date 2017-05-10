@@ -36,3 +36,5 @@ doesn't exist.
 [ReactMicroBarChart data:`[4, 1, 3, 2]` /]
 
 [PackageJsonComponentTest /]
+
+This adds support for indexed components: [CustomComponent.IndexedComponent /]

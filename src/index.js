@@ -177,7 +177,7 @@ const idyll = (inputPath, opts, cb) => {
 
       return componentNodes.reduce(
         (acc, node) => {
-          const name = changeCase.paramCase(node[0]);
+          const name = changeCase.paramCase(node[0].split('.')[0]);
 
           if (!acc[name]) {
             if (inputConfig.components[name]) {
