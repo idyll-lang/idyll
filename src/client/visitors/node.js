@@ -5,11 +5,15 @@ const componentClasses = require('__IDYLL_COMPONENTS__');
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
 const processComponent = (component, name, id) => {
-  const paramCaseName = changeCase.paramCase(name);
+  const split = name.split('.');
+  const paramCaseName = changeCase.paramCase(split[0]);
   let componentClass;
   const extraProps = {};
   if (componentClasses[paramCaseName]) {
     componentClass = componentClasses[paramCaseName];
+    for (var i = 1; i < split.length; i++) {
+      componentClass = componentClass[split[i]];
+    }
     extraProps.__handleUpdateProps = component.handleUpdateProps(id);
   } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
     componentClass = name.toLowerCase();

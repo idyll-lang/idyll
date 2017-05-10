@@ -12,3 +12,13 @@ class CustomComponent extends IdyllComponent {
 }
 
 module.exports = CustomComponent;
+
+module.exports.IndexedComponent = class extends IdyllComponent {
+  render() {
+    return (
+      <div {...this.props}>
+        This is another custom component
+      </div>
+    );
+  }
+};

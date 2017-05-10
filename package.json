@@ -33,7 +33,7 @@
     "change-case": "^3.0.1",
     "compression": "^1.6.2",
     "html-tags": "^1.1.1",
-    "idyll-compiler": "^1.2.0",
+    "idyll-compiler": "^1.3.0",
     "insert-css": "^2.0.0",
     "minimist": "^1.2.0",
     "mustache": "^2.3.0",
