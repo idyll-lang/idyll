@@ -14,6 +14,7 @@ const formatToken = (text) => {
 module.exports = function() {
   var lexer = new Lexer();
   var inComponent = false;
+  var gotName = false;
   var column = 1;
   var row = 1;
 
@@ -168,6 +169,7 @@ module.exports = function() {
 
   lexer.addRule(/\]/, function(lexeme) {
     inComponent = false;
+    gotName = false;
     if (this.reject) return;
     updatePosition(lexeme);
     return ['CLOSE_BRACKET'];
@@ -187,6 +189,13 @@ module.exports = function() {
     return ['BOOLEAN'].concat(formatToken(lexeme));
   });
 
+  lexer.addRule(/[^+\-0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*\.?[^:\s\/\]"'`\.]*/, function(lexeme) {
+    this.reject = !inComponent || gotName;
+    if (this.reject) return;
+    gotName = true;
+    updatePosition(lexeme);
+    return ['COMPONENT_NAME'].concat(formatToken(lexeme));
+  });
   lexer.addRule(/[^+\-0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*/, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
