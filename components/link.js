@@ -13,7 +13,7 @@ class Link extends IdyllComponent {
     }
     return (
       <a {...props}>
-        {this.props.text}
+        {this.props.text || this.props.children}
       </a>
     );
   }
