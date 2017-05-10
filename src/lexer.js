@@ -189,7 +189,7 @@ module.exports = function() {
     return ['BOOLEAN'].concat(formatToken(lexeme));
   });
 
-  lexer.addRule(/[^+\-0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*\.?[^:\s\/\]"'`\.]*/, function(lexeme) {
+  lexer.addRule(/[^+\-0-9:\s\/\]"'`\.][^:\s\/\]"'`]*[^:\s\/\]"'`\.]/, function(lexeme) {
     this.reject = !inComponent || gotName;
     if (this.reject) return;
     gotName = true;

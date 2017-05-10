@@ -52,6 +52,11 @@ describe('compiler', function() {
       var results = lex("This component name has a period separator [component.val /].");
       expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"component.val\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
     });
+    it('should handle a component name with multiple periods', function() {
+      var lex = Lexer();
+      var results = lex("This component name has a period separator [component.val.v /].");
+      expect(results.tokens).to.eql('WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"component.val.v\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
+    });
 
   });
 
@@ -308,6 +313,13 @@ describe('compiler', function() {
       var lexResults = lex(input);
       var output = parse(input, lexResults.tokens, lexResults.positions);
       expect(output).to.eql([["p",[],["This component name has a period separator ",["component.val",[],[]],"."]]]);
+    })
+    it('should handle component name with multiple periods', function() {
+      const input = "This component name has a period separator [component.val.v /].";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([["p",[],["This component name has a period separator ",["component.val.v",[],[]],"."]]]);
     })
   });
 
