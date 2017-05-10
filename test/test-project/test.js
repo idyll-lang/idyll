@@ -79,10 +79,6 @@ test('creates the expected files', () => {
 })
 
 test('creates the expected output', () => {
-  var isWin = /^win/.test(process.platform);
-  if (isWin) {
-    return;
-  }
   expect(projectBuildResults).toEqual(EXPECTED_BUILD_RESULTS);
 })
 
