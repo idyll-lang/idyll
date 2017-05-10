@@ -1,1 +1,1 @@
-module.exports = {}
+module.exports = {"myData":[{"x":0,"y":0},{"x":1,"y":1}]}

@@ -6,7 +6,6 @@ const compile = require('idyll-compiler');
 const fs = require('fs');
 const watch = require('node-watch');
 const changeCase = require('change-case');
-const envify = require('envify');
 const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
@@ -17,6 +16,10 @@ const ReactDOMServer = require('react-dom/server');
 const React = require('react');
 const Baby = require('babyparse');
 const UglifyJS = require("uglify-js");
+const htmlTags = require('html-tags');
+
+const css = require('./assets/css');
+const filterAST = require('./assets/ast');
 
 require('babel-core/register')({
     presets: ['react']
@@ -61,15 +64,9 @@ const idyll = (inputPath, opts, cb) => {
   const AST_FILE = path.resolve(path.join(TMP_PATH, 'ast.json'));
   const COMPONENT_FILE = path.resolve(path.join(TMP_PATH, 'components.js'));
   const DATA_FILE = path.resolve(path.join(TMP_PATH, 'data.js'));
-  const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
-  const CSS_OUTPUT = path.resolve(path.join(BUILD_PATH, 'styles.css'));
   const CUSTOM_COMPONENTS_FOLDER = path.resolve(options.componentFolder);
   const DEFAULT_COMPONENTS_FOLDER = path.resolve(options.defaultComponents);
   const DATA_FOLDER = path.resolve(options.dataFolder);
-  const IDYLL_PATH = path.resolve(__dirname);
-
-  const LAYOUT_INPUT = path.resolve(path.join(IDYLL_PATH, 'layouts', options.layout + '.css'));
-  const THEME_INPUT = path.resolve(path.join(IDYLL_PATH, 'themes', options.theme + '.css'));
 
   const components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
   let customComponents = [];
@@ -79,170 +76,176 @@ const idyll = (inputPath, opts, cb) => {
     console.log(e);
   }
 
-  let templateContext = {};
-  const writeCSS = () => {
-    const inputCSS = CSS_INPUT ? fs.readFileSync(CSS_INPUT) : '';
-    const layoutCSS = fs.readFileSync(LAYOUT_INPUT);
-    const themeCSS = fs.readFileSync(THEME_INPUT);
-    fs.writeFileSync(CSS_OUTPUT, layoutCSS + '\n' + themeCSS + '\n' + inputCSS);
+  const writeAST = (ast) => {
+    fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
   };
 
-  const handleHTML = () => {
-    const templateString = fs.readFileSync(HTML_TEMPLATE, 'utf8');
-    process.env['AST_FILE'] = AST_FILE;
-    process.env['COMPONENT_FILE'] = COMPONENT_FILE;
-    process.env['DATA_FILE'] = DATA_FILE;
-    process.env['IDYLL_PATH'] = IDYLL_PATH;
+  const writeCSS = (css) => {
+    fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css);
+  };
+
+  const writeData = (data) => {
+    fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(data)}`);
+  };
+
+  const writeComponents = (components) => {
+    const src = Object.keys(components)
+      .map((key) => {
+        return `'${key}': require('${components[key]}')`;
+      })
+      .join(',\n\t');
+    fs.writeFileSync(COMPONENT_FILE, `module.exports = {\n\t${src}\n}\n`);
+  };
+
+  const writeHTML = (meta) => {
     // const InteractiveDocument = require('./client/component');
-    // templateContext.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
-    const output = Mustache.render(templateString, templateContext);
+    // tree.meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
+    const output = Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), meta);
     fs.writeFileSync(HTML_OUTPUT, output);
   };
 
-  const writeAST = (ast) => {
-    const ignoreNames = ['meta'];
-    const astFilter = (node) => {
-      if (typeof node === 'string') {
-        return true;
+  const interpretAST = (ast) => {
+    const getNodesByName = (name, tree) => {
+      const predicate = typeof name === 'string' ? (s) => s === name : name;
+
+      const byName = (acc, val) => {
+        if (typeof val === 'string') return acc;
+        if (predicate(val[0])) acc.push(val);
+
+        if (val[2] && typeof val[2] !== 'string') acc = val[2].reduce(byName, acc);
+
+        return acc;
       }
-      const name = changeCase.paramCase(node[0]);
-      if (ignoreNames.indexOf(name) > -1) {
-        return false;
-      }
-      return true;
+
+      return tree.reduce(
+        byName,
+        []
+      )
     }
-    const filteredAST = ast.filter(astFilter);
-    fs.writeFileSync(AST_FILE, JSON.stringify(filteredAST));
+
+    const getMeta = (ast) => {
+      // there should only be one meta node
+      const metaNode = getNodesByName('meta', ast)[0];
+
+      // data is stored in props, hence [1]
+      return metaNode[1].reduce(
+        (acc, prop) => {
+          acc[prop[0]] = prop[1][1];
+          return acc;
+        },
+        {}
+      )
+    }
+
+    const getData = (ast) => {
+      // can be multiple data nodes
+      const dataNodes = getNodesByName('data', ast);
+
+      // turn each data node into a field on an object
+      // whose key is the name prop
+      // and whose value is the parsed data
+      return dataNodes.reduce(
+        (acc, dataNode) => {
+          const props = dataNode[1];
+          const { name, source } = props.reduce(
+            (hash, val) => {
+              hash[val[0]] = val[1][1];
+              return hash;
+            },
+            {}
+          );
+
+          if (source.endsWith('.csv')) {
+            acc[name] = Baby.parseFiles(path.join(DATA_FOLDER, source), { header: true }).data;
+          } else {
+            acc[name] = require(path.join(DATA_FOLDER, source));
+          }
+
+          return acc;
+        },
+        {}
+      );
+    }
+
+    const getComponents = (ast) => {
+      const ignoreNames = ['var', 'data', 'meta', 'derived'];
+      const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
+
+      return componentNodes.reduce(
+        (acc, node) => {
+          const name = changeCase.paramCase(node[0]);
+
+          if (!acc[name]) {
+            if (inputConfig.components[name]) {
+              const compPath = path.parse(path.join(inputDirectory, inputConfig.components[name]));
+              acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
+            } else if (customComponents.indexOf(name + '.js') > -1) {
+              acc[name] = path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
+            } else if (components.indexOf(name + '.js') > -1) {
+              acc[name] = path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
+            } else {
+              try {
+                // npm modules are required via relative paths to support working with a locally linked idyll
+                const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
+                acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
+              } catch (err) {
+                if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
+                  throw new Error(`Component named ${node[0]} could not be found.`)
+                }
+              }
+            }
+          }
+
+          return acc;
+        },
+        {}
+      )
+    }
+
+    return {
+      ast,
+      components: getComponents(ast),
+      data: getData(ast),
+      meta: getMeta(ast)
+    }
   };
 
-  const writeTemplates = (ast) => {
-    const outputComponents = [];
-    const outputData = {};
-    const checkedComponents = [];
-    const ignoreNames = ['var', 'data', 'meta', 'derived'];
+  const browserifyOpts = {
+    transform: [
+      [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
+      [ brfs ]
+    ],
+    plugin: [
+      (b) => b.require([
+        {file: AST_FILE, expose: '__IDYLL_AST__'},
+        {file: COMPONENT_FILE, expose: '__IDYLL_COMPONENTS__'},
+        {file: DATA_FILE, expose: '__IDYLL_DATA__'}
+      ])
+    ]
+  };
 
-    const handleNode = (node) => {
-      if (typeof node === 'string') {
-        return;
-      }
-      const name = changeCase.paramCase(node[0]);
-      const props = node[1];
-      const children = node[2] || [];
-      if (ignoreNames.indexOf(name) === -1 && checkedComponents.indexOf(name) === -1) {
-        if (inputConfig.components[name]) {
-          const compPath = path.parse(path.join(inputDirectory, inputConfig.components[name]));
-          outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/')}')`);
-        } else if (customComponents.indexOf(name + '.js') > -1) {
-          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/')}')`);
-        } else if (components.indexOf(name + '.js') > -1) {
-          outputComponents.push(`'${name}': require('${path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/')}')`);
-        } else {
-          try {
-            // npm modules are required via relative paths to support working with a locally linked idyll
-            const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
-            outputComponents.push(`'${name}': require('${path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/')}')`);
-          } catch (err) {
-            if (node[0].toLowerCase() !== node[0]) throw new Error(`Component named ${node[0]} could not be found.`)
-          }
-        }
-        checkedComponents.push(name);
-      } else if (ignoreNames.indexOf(name) > -1) {
-        switch(name) {
-          case 'data':
-            let key, source, data;
-            props.forEach((p) => {
-              const name = p[0];
-              const type = p[1][0];
-              const value = p[1][1];
-              switch(name) {
-                case 'name':
-                  if (type === 'value') {
-                    key = value;
-                  }
-                  break;
-                case 'source':
-                  if (type === 'value') {
-                    source = value;
-                  }
-                  break;
-              };
-            })
-            if (source.endsWith('.csv')) {
-              parsed = Baby.parseFiles(path.join(DATA_FOLDER, source), { header: true });
-              data = parsed.data;
-            } else {
-              data = require(path.join(DATA_FOLDER, source));
-            }
-            outputData[key] = data;
-            break;
-          case 'meta':
-            templateContext = {}
-            props.forEach((p) => {
-              templateContext[p[0]] = p[1][1];
-            })
-            break;
-        }
-      }
-      children.map(handleNode);
-    }
-    ast.map(handleNode);
-
-    fs.writeFileSync(COMPONENT_FILE, `module.exports = {\n${outputComponents.join(',\n')}\n} `);
-    fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(outputData)}`);
-  }
-
-
-  const build = (cb) => {
+  const build = (callback) => {
     process.env['NODE_ENV'] = 'production';
-    handleHTML();
-    // this path stuff is pretty ugly but necessary until client files don't rely on env vars
-    const clientDir = path.join(__dirname, 'client');
-    const visitorsDir = path.join(clientDir, 'visitors');
-    var b = browserify(path.join(clientDir, 'build.js'), {
-      transform: [
-        [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-        [ envify, {
-          AST_FILE: path.join(path.relative(clientDir, TMP_PATH), path.parse(AST_FILE).base),
-          COMPONENT_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(COMPONENT_FILE).base),
-          DATA_FILE: path.join(path.relative(visitorsDir, TMP_PATH), path.parse(DATA_FILE).base),
-          IDYLL_PATH
-        } ],
-        [ brfs ]
-      ]
-    });
+    var b = browserify(path.join(__dirname, 'client', 'build.js'), browserifyOpts);
     b.bundle(function(err, buff) {
       if (err) {
-        console.log(err);
-        return;
+        console.error('Error creating index.js bundle:');
+        console.error(err);
+        process.exit(1);
       }
-      const jsOutput = UglifyJS.minify(buff.toString('utf8'), {
-        fromString: true
-      });
-      fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
-      cb && cb();
+      callback(buff.toString('utf8'));
     });
   }
 
   const start = () => {
+    const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
     const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
     watch(watchedFiles, (filename) => {
       if (filename.indexOf('.css') !== -1) {
-        writeCSS();
+        writeCSS(css(options));
       } else {
-        fs.readFile(IDL_FILE, 'utf8', function(err, data) {
-          if (err) {
-            return;
-          }
-          try {
-            const ast = compile(data, options.compilerOptions);
-            writeAST(ast);
-            writeTemplates(ast);
-          } catch(err) {
-            console.log(err.message);
-          }
-        })
+        compileAndWriteFiles();
       }
-
     });
 
     budo(path.resolve(path.join(__dirname, 'client', 'live.js')), {
@@ -252,32 +255,37 @@ const idyll = (inputPath, opts, cb) => {
       css: path.join(options.output, 'styles.css'),
       middleware: compression(),
       watchGlob: '**/*.{html,css,json,js}',
-      browserify: {
-        transform: [
-          [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-          [ envify, {
-            AST_FILE,
-            COMPONENT_FILE,
-            DATA_FILE,
-            IDYLL_PATH } ],
-          [ brfs ]
-        ]
-      }
+      browserify: browserifyOpts
     });
+    compileAndWriteFiles();
   }
 
-  const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
-  try {
-    const ast = compile(idlInput, options.compilerOptions);
-    writeAST(ast);
-    writeTemplates(ast);
-    writeCSS();
-  } catch(err) {
-    console.log(err.message);
+  const compileAndWriteFiles = () => {
+    const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
+    try {
+      const ast = compile(idlInput, options.compilerOptions);
+      const tree = interpretAST(ast);
+      tree.css = css(options);
+
+      writeAST(ast);
+      writeComponents(tree.components);
+      writeData(tree.data);
+      writeHTML(tree.meta);
+      writeCSS(tree.css);
+      return tree;
+    } catch(err) {
+      console.error('Error writing artifacts to disk:');
+      console.error(err.message);
+    }
   }
 
   if (options.build) {
-    build(cb);
+    const tree = compileAndWriteFiles();
+    build(function (js) {
+      const jsOutput = UglifyJS.minify(js, {fromString: true});
+      fs.writeFileSync(JAVASCRIPT_OUTPUT, jsOutput.code);
+      if (cb) cb(tree);
+    });
   } else {
     start();
   }

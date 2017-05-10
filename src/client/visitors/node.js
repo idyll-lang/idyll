@@ -1,7 +1,7 @@
 const React = require('react');
 const htmlTags = require('html-tags');
 const changeCase = require('change-case');
-const componentClasses = require(process.env.COMPONENT_FILE);
+const componentClasses = require('__IDYLL_COMPONENTS__');
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
 const processComponent = (component, name, id) => {
@@ -11,11 +11,8 @@ const processComponent = (component, name, id) => {
   if (componentClasses[paramCaseName]) {
     componentClass = componentClasses[paramCaseName];
     extraProps.__handleUpdateProps = component.handleUpdateProps(id);
-  } else if (htmlTags.indexOf(paramCaseName) > -1) {
-    componentClass = paramCaseName;
-  } else {
-    componentClass = 'div';
-    extraProps.className = name.toLowerCase();
+  } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
+    componentClass = name.toLowerCase();
   }
 
   return {
