@@ -59,7 +59,7 @@ beforeAll(done => {
     defaultComponents: join(PROJECT_DIR, 'components', 'default'),
     dataFolder: join(PROJECT_DIR, 'data'),
     layout: 'centered',
-    theme: 'github',
+    theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
     compilerOptions: {
       spellcheck: false
