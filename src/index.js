@@ -4,7 +4,7 @@ const babelify = require('babelify');
 const path = require('path');
 const compile = require('idyll-compiler');
 const fs = require('fs');
-const watch = require('node-watch');
+const chokidar = require('chokidar');
 const changeCase = require('change-case');
 const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
@@ -72,12 +72,14 @@ const idyll = (inputPath, opts, cb) => {
   const DEFAULT_COMPONENTS_FOLDER = path.resolve(options.defaultComponents);
   const DATA_FOLDER = path.resolve(options.dataFolder);
 
-  const components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
+  let components = [];
   let customComponents = [];
-  try {
+  const readComponents = () => {
+    components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);try {
     customComponents = fs.readdirSync(CUSTOM_COMPONENTS_FOLDER);
-  } catch(e) {
-    console.log(e);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   const writeAST = (ast) => {
@@ -247,13 +249,19 @@ const idyll = (inputPath, opts, cb) => {
   const start = () => {
     const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
     const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
-    watch(watchedFiles, (filename) => {
-      if (filename.indexOf('.css') !== -1) {
+    chokidar.watch(watchedFiles).on('all', (event, path) => {
+      if (path.indexOf('.css') !== -1) {
         writeCSS(css(options));
       } else {
         compileAndWriteFiles();
       }
     });
+    const watchedComponentFolders = [DEFAULT_COMPONENTS_FOLDER, CUSTOM_COMPONENTS_FOLDER];
+    const handleComponentAddRemove = () => {
+      readComponents();
+      compileAndWriteFiles();
+    };
+    chokidar.watch(watchedComponentFolders).on('add', handleComponentAddRemove).on('unlink', handleComponentAddRemove);
 
     budo(path.resolve(path.join(__dirname, 'client', 'live.js')), {
       live: true,
@@ -286,6 +294,7 @@ const idyll = (inputPath, opts, cb) => {
     }
   }
 
+  readComponents();
   if (options.build) {
     const tree = compileAndWriteFiles();
     build(function (js) {
