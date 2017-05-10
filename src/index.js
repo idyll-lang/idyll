@@ -129,10 +129,13 @@ const idyll = (inputPath, opts, cb) => {
 
     const getMeta = (ast) => {
       // there should only be one meta node
-      const metaNode = getNodesByName('meta', ast)[0];
+      const metaNodes = getNodesByName('meta', ast);
 
+      if (!metaNodes.length) {
+        return {};
+      }
       // data is stored in props, hence [1]
-      return metaNode[1].reduce(
+      return metaNodes[0][1].reduce(
         (acc, prop) => {
           acc[prop[0]] = prop[1][1];
           return acc;
