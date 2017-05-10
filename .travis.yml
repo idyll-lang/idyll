@@ -1,6 +1,5 @@
 language: node_js
 install:
-  - npm run init
   - npm install
 node_js:
   - "6"
