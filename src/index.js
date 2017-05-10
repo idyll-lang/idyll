@@ -52,12 +52,16 @@ const idyll = (inputPath, opts, cb) => {
 
   const IDL_FILE = inputPath;
   const TMP_PATH = path.resolve(path.join(inputDirectory, '.idyll'));
+  const BUILD_PATH = path.resolve(options.output);
 
   if (!fs.existsSync(TMP_PATH)){
     fs.mkdirSync(TMP_PATH);
   }
 
-  const BUILD_PATH = path.resolve(options.output);
+  if (!fs.existsSync(BUILD_PATH)){
+    fs.mkdirSync(BUILD_PATH);
+  }
+
   const HTML_TEMPLATE = path.resolve(options.htmlTemplate);
   const JAVASCRIPT_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.js'));
   const HTML_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.html'));

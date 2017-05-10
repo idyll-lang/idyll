@@ -47,6 +47,7 @@
     "uglify-js": "^2.8.22"
   },
   "devDependencies": {
-    "jest": "19.0.2"
+    "jest": "19.0.2",
+    "rimraf": "2.6.1"
   }
 }
