@@ -101,7 +101,7 @@ const idyll = (options = {}, cb) => {
   }
 
   const writeAST = (ast) => {
-    fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
+    fs.writeFileSync(AST_FILE, ast);
   };
 
   const writeCSS = (css) => {
@@ -109,23 +109,15 @@ const idyll = (options = {}, cb) => {
   };
 
   const writeData = (data) => {
-    fs.writeFileSync(DATA_FILE, `module.exports = ${JSON.stringify(data)}`);
+    fs.writeFileSync(DATA_FILE, data);
   };
 
   const writeComponents = (components) => {
-    const src = Object.keys(components)
-      .map((key) => {
-        return `'${key}': require('${components[key]}')`;
-      })
-      .join(',\n\t');
-    fs.writeFileSync(COMPONENTS_FILE, `module.exports = {\n\t${src}\n}\n`);
+    fs.writeFileSync(COMPONENTS_FILE, components);
   };
 
-  const writeHTML = (meta) => {
-    // const InteractiveDocument = require('./client/component');
-    // tree.meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
-    const output = Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), meta);
-    fs.writeFileSync(HTML_OUTPUT, output);
+  const writeHTML = (html) => {
+    fs.writeFileSync(HTML_OUTPUT, html);
   };
 
   const interpretAST = (ast) => {
@@ -147,21 +139,22 @@ const idyll = (options = {}, cb) => {
       )
     }
 
-    const getMeta = (ast) => {
+    const getHTML = (ast) => {
       // there should only be one meta node
       const metaNodes = getNodesByName('meta', ast);
 
-      if (!metaNodes.length) {
-        return {};
-      }
       // data is stored in props, hence [1]
-      return metaNodes[0][1].reduce(
+      const meta = metaNodes.length && metaNodes[0][1].reduce(
         (acc, prop) => {
           acc[prop[0]] = prop[1][1];
           return acc;
         },
         {}
       )
+
+      // const InteractiveDocument = require('./client/component');
+      // meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
+      return Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), meta || {});
     }
 
     const getData = (ast) => {
@@ -171,7 +164,7 @@ const idyll = (options = {}, cb) => {
       // turn each data node into a field on an object
       // whose key is the name prop
       // and whose value is the parsed data
-      return dataNodes.reduce(
+      const data = dataNodes.reduce(
         (acc, dataNode) => {
           const props = dataNode[1];
           const { name, source } = props.reduce(
@@ -192,13 +185,15 @@ const idyll = (options = {}, cb) => {
         },
         {}
       );
+
+      return `module.exports = ${JSON.stringify(data)}`;
     }
 
     const getComponents = (ast) => {
       const ignoreNames = ['var', 'data', 'meta', 'derived'];
       const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
 
-      return componentNodes.reduce(
+      const components = componentNodes.reduce(
         (acc, node) => {
           const name = changeCase.paramCase(node[0].split('.')[0]);
 
@@ -226,14 +221,22 @@ const idyll = (options = {}, cb) => {
           return acc;
         },
         {}
-      )
+      );
+
+      const src = Object.keys(components)
+        .map((key) => {
+          return `'${key}': require('${components[key]}')`;
+        })
+        .join(',\n\t');
+
+      return `module.exports = {\n\t${src}\n}\n`;
     }
 
     return {
-      ast,
+      ast: filterAST(ast),
       components: getComponents(ast),
       data: getData(ast),
-      meta: getMeta(ast)
+      html: getHTML(ast)
     }
   };
 
@@ -305,10 +308,10 @@ const idyll = (options = {}, cb) => {
       const tree = interpretAST(ast);
       tree.css = css(opts);
 
-      writeAST(ast);
+      writeAST(JSON.stringify(tree.ast));
       writeComponents(tree.components);
       writeData(tree.data);
-      writeHTML(tree.meta);
+      writeHTML(tree.html);
       writeCSS(tree.css);
       return tree;
     } catch(err) {
