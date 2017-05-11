@@ -91,10 +91,14 @@ const idyll = (options = {}, cb) => {
   const COMPONENTS_FILE = join(TMP_PATH, 'components.js');
   const DATA_FILE = join(TMP_PATH, 'data.js');
 
-  const componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
-  const customComponentFiles = CUSTOM_COMPONENTS_FOLDER
-    ? fs.readdirSync(CUSTOM_COMPONENTS_FOLDER)
-    : [];
+  let componentFiles = [];
+  let customComponentFiles = [];
+  const readComponents = () => {
+    componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
+    customComponentFiles = CUSTOM_COMPONENTS_FOLDER
+      ? fs.readdirSync(CUSTOM_COMPONENTS_FOLDER)
+      : [];
+  }
 
   const writeAST = (ast) => {
     fs.writeFileSync(AST_FILE, JSON.stringify(filterAST(ast)));
