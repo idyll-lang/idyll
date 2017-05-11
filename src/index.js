@@ -66,7 +66,6 @@ const idyll = (options = {}, cb) => {
         spellcheck: true
       },
     },
-    inputCfg,
     options
   );
 
