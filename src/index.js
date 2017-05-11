@@ -1,4 +1,3 @@
-const browserify = require('browserify');
 const budo = require('budo');
 const babelify = require('babelify');
 const path = require('path');
@@ -16,16 +15,10 @@ const brfs = require('brfs');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const compression = require('compression');
-const resolve = require('resolve');
-const Mustache = require('mustache');
 const ReactDOMServer = require('react-dom/server');
 const React = require('react');
-const Baby = require('babyparse');
-const UglifyJS = require("uglify-js");
-const htmlTags = require('html-tags');
 
-const css = require('./assets/css');
-const filterAST = require('./assets/ast');
+const pipeline = require('./pipeline');
 
 require('babel-core/register')({
     presets: ['react']
@@ -100,146 +93,6 @@ const idyll = (options = {}, cb) => {
       : [];
   }
 
-  const writeAST = (ast) => {
-    fs.writeFileSync(AST_FILE, ast);
-  };
-
-  const writeCSS = (css) => {
-    fs.writeFileSync(CSS_OUTPUT, css);
-  };
-
-  const writeData = (data) => {
-    fs.writeFileSync(DATA_FILE, data);
-  };
-
-  const writeComponents = (components) => {
-    fs.writeFileSync(COMPONENTS_FILE, components);
-  };
-
-  const writeHTML = (html) => {
-    fs.writeFileSync(HTML_OUTPUT, html);
-  };
-
-  const interpretAST = (ast) => {
-    const getNodesByName = (name, tree) => {
-      const predicate = typeof name === 'string' ? (s) => s === name : name;
-
-      const byName = (acc, val) => {
-        if (typeof val === 'string') return acc;
-        if (predicate(val[0])) acc.push(val);
-
-        if (val[2] && typeof val[2] !== 'string') acc = val[2].reduce(byName, acc);
-
-        return acc;
-      }
-
-      return tree.reduce(
-        byName,
-        []
-      )
-    }
-
-    const getHTML = (ast) => {
-      // there should only be one meta node
-      const metaNodes = getNodesByName('meta', ast);
-
-      // data is stored in props, hence [1]
-      const meta = metaNodes.length && metaNodes[0][1].reduce(
-        (acc, prop) => {
-          acc[prop[0]] = prop[1][1];
-          return acc;
-        },
-        {}
-      )
-
-      // const InteractiveDocument = require('./client/component');
-      // meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
-      return Mustache.render(fs.readFileSync(HTML_TEMPLATE, 'utf8'), meta || {});
-    }
-
-    const getData = (ast) => {
-      // can be multiple data nodes
-      const dataNodes = getNodesByName('data', ast);
-
-      // turn each data node into a field on an object
-      // whose key is the name prop
-      // and whose value is the parsed data
-      const data = dataNodes.reduce(
-        (acc, dataNode) => {
-          const props = dataNode[1];
-          const { name, source } = props.reduce(
-            (hash, val) => {
-              hash[val[0]] = val[1][1];
-              return hash;
-            },
-            {}
-          );
-
-          if (source.endsWith('.csv')) {
-            acc[name] = Baby.parseFiles(path.join(DATA_FOLDER, source), { header: true }).data;
-          } else {
-            acc[name] = require(path.join(DATA_FOLDER, source));
-          }
-
-          return acc;
-        },
-        {}
-      );
-
-      return `module.exports = ${JSON.stringify(data)}`;
-    }
-
-    const getComponents = (ast) => {
-      const ignoreNames = ['var', 'data', 'meta', 'derived'];
-      const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
-
-      const components = componentNodes.reduce(
-        (acc, node) => {
-          const name = changeCase.paramCase(node[0].split('.')[0]);
-
-          if (!acc[name]) {
-            if (inputConfig.components[name]) {
-              const compPath = path.parse(path.join(inputDir, inputConfig.components[name]));
-              acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
-            } else if (customComponentFiles.indexOf(name + '.js') > -1) {
-              acc[name] = path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
-            } else if (componentFiles.indexOf(name + '.js') > -1) {
-              acc[name] = path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
-            } else {
-              try {
-                // npm modules are required via relative paths to support working with a locally linked idyll
-                const compPath = path.parse(resolve.sync(name, {basedir: inputDir}));
-                acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
-              } catch (err) {
-                if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
-                  throw new Error(`Component named ${node[0]} could not be found.`)
-                }
-              }
-            }
-          }
-
-          return acc;
-        },
-        {}
-      );
-
-      const src = Object.keys(components)
-        .map((key) => {
-          return `'${key}': require('${components[key]}')`;
-        })
-        .join(',\n\t');
-
-      return `module.exports = {\n\t${src}\n}\n`;
-    }
-
-    return {
-      ast: filterAST(ast),
-      components: getComponents(ast),
-      data: getData(ast),
-      html: getHTML(ast)
-    }
-  };
-
   const browserifyOpts = {
     transform: [
       [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
@@ -253,19 +106,6 @@ const idyll = (options = {}, cb) => {
       ])
     ]
   };
-
-  const build = (callback) => {
-    process.env['NODE_ENV'] = 'production';
-    var b = browserify(path.join(__dirname, 'client', 'build.js'), browserifyOpts);
-    b.bundle(function(err, buff) {
-      if (err) {
-        console.error('Error creating index.js bundle:');
-        console.error(err);
-        process.exit(1);
-      }
-      callback(buff.toString('utf8'));
-    });
-  }
 
   const start = () => {
     let watchedFiles = [];
@@ -299,21 +139,23 @@ const idyll = (options = {}, cb) => {
   }
 
   const compileAndWriteFiles = () => {
-    const idlInput = IDL_FILE
-      ? fs.readFileSync(IDL_FILE, 'utf8')
-      : opts.inputString;
+    opts.inputString = opts.inputString || fs.readFileSync(IDL_FILE, 'utf8')
 
     try {
-      const ast = compile(idlInput, opts.compilerOptions);
-      const tree = interpretAST(ast);
-      tree.css = css(opts);
-
-      writeAST(JSON.stringify(tree.ast));
-      writeComponents(tree.components);
-      writeData(tree.data);
-      writeHTML(tree.html);
-      writeCSS(tree.css);
-      return tree;
+      const paths = {
+        AST_FILE,
+        COMPONENTS_FILE,
+        CSS_OUTPUT,
+        DATA_FILE,
+        DATA_FOLDER,
+        HTML_TEMPLATE,
+        HTML_OUTPUT,
+        JAVASCRIPT_OUTPUT,
+        TMP_PATH,
+        CUSTOM_COMPONENTS_FOLDER,
+        DEFAULT_COMPONENTS_FOLDER
+      };
+      return pipeline(opts, inputDir, inputCfg, customComponentFiles, componentFiles, paths, browserifyOpts)
     } catch(err) {
       console.error('Error writing artifacts to disk:');
       console.error(err.message);
@@ -324,12 +166,10 @@ const idyll = (options = {}, cb) => {
   if (opts.watch) {
     start();
   } else {
-    const tree = compileAndWriteFiles();
-    build(function (js) {
-      tree.js = opts.minify ? UglifyJS.minify(js, {fromString: true}).code : js;
-      fs.writeFileSync(JAVASCRIPT_OUTPUT, tree.js);
-      if (cb) cb(tree);
-    });
+    compileAndWriteFiles()
+      .then((artifacts) => {
+        if (cb) cb(artifacts);
+      });
   }
 };
 

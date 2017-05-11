@@ -27,6 +27,7 @@
     "babel-preset-react": "^6.22.0",
     "babelify": "^7.3.0",
     "babyparse": "^0.4.6",
+    "bluebird": "^3.5.0",
     "brfs": "^1.4.3",
     "browserify-css": "^0.10.0",
     "budo": "^9.4.7",
