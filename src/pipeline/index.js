@@ -34,7 +34,7 @@ const build = (opts, paths, browserifyOpts) => {
     .then((src) => {
       // add and write JS bundle
       outputs.js = src;
-      return writeJS(src, paths.JS_OUTPUT_FILE, opts.debug);
+      return writeJS(src, paths.JS_OUTPUT_FILE, opts.minify);
     })
     .then(() => {
       return outputs;
