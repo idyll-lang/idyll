@@ -4,10 +4,10 @@ const writeFile = Promise.promisify(fs.writeFile);
 
 module.exports = function (artifacts, paths) {
   return Promise.all([
-    writeFile(paths.AST_FILE, artifacts.ast),
-    writeFile(paths.COMPONENTS_FILE, artifacts.components),
-    writeFile(paths.CSS_OUTPUT, artifacts.css),
-    writeFile(paths.DATA_FILE, artifacts.data),
-    writeFile(paths.HTML_OUTPUT, artifacts.html),
+    writeFile(paths.AST_OUTPUT_FILE, artifacts.ast),
+    writeFile(paths.COMPONENTS_OUTPUT_FILE, artifacts.components),
+    writeFile(paths.CSS_OUTPUT_FILE, artifacts.css),
+    writeFile(paths.DATA_OUTPUT_FILE, artifacts.data),
+    writeFile(paths.HTML_OUTPUT_FILE, artifacts.html),
   ]);
 }

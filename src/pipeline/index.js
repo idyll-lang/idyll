@@ -7,16 +7,17 @@ const write = require('./write-artifacts');
 const bundle = require('./bundle-js');
 const writeJS = require('./write-js');
 
-module.exports = function (options, inputDir, inputCfg, customComponentFiles, componentFiles, paths, browserifyOpts) {
-  let outputs;
+let outputs;
 
-  return Promise.resolve(compile(options.inputString, options.compilerOptions))
+const preBundle = (opts, inputCfg, customComponentFiles, componentFiles, paths, browserifyOpts) => {
+  return Promise
+    .resolve(compile(opts.inputString, opts.compilerOptions))
     .then((ast) => {
-      return parse(ast, inputDir, inputCfg, customComponentFiles, componentFiles, paths)
+      return parse(ast, inputCfg, customComponentFiles, componentFiles, paths)
     })
     .then((artifacts) => {
       // assemble and add css
-      outputs = Object.assign({}, artifacts, {css: css(options)});
+      outputs = Object.assign({}, artifacts, {css: css(opts)});
       return outputs;
     })
     .then((artifacts) => {
@@ -24,15 +25,23 @@ module.exports = function (options, inputDir, inputCfg, customComponentFiles, co
       return write(artifacts, paths);
     })
     .then(() => {
-      // create the JS bundle
-      return bundle(browserifyOpts);
-    })
+      return outputs;
+    });
+}
+
+const build = (opts, paths, browserifyOpts) => {
+  return bundle(browserifyOpts)
     .then((src) => {
       // add and write JS bundle
       outputs.js = src;
-      return writeJS(src, paths.JAVASCRIPT_OUTPUT, options.debug);
+      return writeJS(src, paths.JS_OUTPUT_FILE, opts.debug);
     })
     .then(() => {
       return outputs;
     });
+}
+
+module.exports = {
+  preBundle,
+  build
 }

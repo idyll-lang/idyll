@@ -24,9 +24,15 @@ const getNodesByName = (name, tree) => {
   )
 }
 
-const getComponents = (ast, inputDir, inputCfg, customComponentFiles, componentFiles, TMP_PATH, CUSTOM_COMPONENTS_FOLDER, DEFAULT_COMPONENTS_FOLDER) => {
+const getComponents = (ast, inputCfg, customComponentFiles, componentFiles, paths) => {
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
   const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
+  const {
+    COMPONENTS_DIR,
+    DEFAULT_COMPONENTS_DIR,
+    INPUT_DIR,
+    TMP_DIR
+  } = paths;
 
   const components = componentNodes.reduce(
     (acc, node) => {
@@ -34,17 +40,17 @@ const getComponents = (ast, inputDir, inputCfg, customComponentFiles, componentF
 
       if (!acc[name]) {
         if (inputCfg.components[name]) {
-          const compPath = path.parse(path.join(inputDir, inputCfg.components[name]));
-          acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
+          const compPath = path.parse(path.join(INPUT_DIR, inputCfg.components[name]));
+          acc[name] = path.join(path.relative(TMP_DIR, compPath.dir), compPath.base).replace(/\\/g, '/');
         } else if (customComponentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
+          acc[name] = path.relative(TMP_DIR, path.join(COMPONENTS_DIR, name)).replace(/\\/g, '/');
         } else if (componentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
+          acc[name] = path.relative(TMP_DIR, path.join(DEFAULT_COMPONENTS_DIR, name)).replace(/\\/g, '/');
         } else {
           try {
             // npm modules are required via relative paths to support working with a locally linked idyll
-            const compPath = path.parse(resolve.sync(name, {basedir: inputDir}));
-            acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
+            const compPath = path.parse(resolve.sync(name, {basedir: INPUT_DIR}));
+            acc[name] = path.join(path.relative(TMP_DIR, compPath.dir), compPath.base).replace(/\\/g, '/');
           } catch (err) {
             if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
               throw new Error(`Component named ${node[0]} could not be found.`)
@@ -67,7 +73,7 @@ const getComponents = (ast, inputDir, inputCfg, customComponentFiles, componentF
   return `module.exports = {\n\t${src}\n}\n`;
 }
 
-const getData = (ast, DATA_FOLDER) => {
+const getData = (ast, DATA_DIR) => {
   // can be multiple data nodes
   const dataNodes = getNodesByName('data', ast);
 
@@ -86,9 +92,9 @@ const getData = (ast, DATA_FOLDER) => {
       );
 
       if (source.endsWith('.csv')) {
-        acc[name] = Baby.parseFiles(path.join(DATA_FOLDER, source), { header: true }).data;
+        acc[name] = Baby.parseFiles(path.join(DATA_DIR, source), { header: true }).data;
       } else {
-        acc[name] = require(path.join(DATA_FOLDER, source));
+        acc[name] = require(path.join(DATA_DIR, source));
       }
 
       return acc;
@@ -127,11 +133,11 @@ const filterAST = (ast) => {
   );
 };
 
-module.exports = function (ast, inputDir, inputCfg, customComponentFiles, componentFiles, {HTML_TEMPLATE, DATA_FOLDER, TMP_PATH, CUSTOM_COMPONENTS_FOLDER, DEFAULT_COMPONENTS_FOLDER}) {
+module.exports = function (ast, inputCfg, customComponentFiles, componentFiles, paths) {
   return {
     ast: JSON.stringify(filterAST(ast)),
-    components: getComponents(ast, inputDir, inputCfg, customComponentFiles, componentFiles, TMP_PATH, CUSTOM_COMPONENTS_FOLDER, DEFAULT_COMPONENTS_FOLDER),
-    data: getData(ast, DATA_FOLDER),
-    html: getHTML(ast, fs.readFileSync(HTML_TEMPLATE, 'utf8'))
+    components: getComponents(ast, inputCfg, customComponentFiles, componentFiles, paths),
+    data: getData(ast, paths.DATA_DIR),
+    html: getHTML(ast, fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8'))
   }
 }
