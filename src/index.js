@@ -57,7 +57,7 @@ const idyll = (options = {}, cb) => {
       watch: false,
       components: 'components',
       datasets: 'data',
-      debug: false,
+      minify: true,
       defaultComponents: path.join('components', 'default'),
       layout: 'blog',
       output: 'build',
@@ -323,7 +323,7 @@ const idyll = (options = {}, cb) => {
   } else {
     const tree = compileAndWriteFiles();
     build(function (js) {
-      tree.js = opts.debug ? js : UglifyJS.minify(js, {fromString: true}).code;
+      tree.js = opts.minify ? UglifyJS.minify(js, {fromString: true}).code : js;
       fs.writeFileSync(JAVASCRIPT_OUTPUT, tree.js);
       if (cb) cb(tree);
     });
