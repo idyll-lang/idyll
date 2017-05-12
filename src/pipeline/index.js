@@ -10,7 +10,7 @@ const writeJS = require('./write-js');
 
 let outputs;
 
-const build = (opts, inputConfig, paths, browserifyOpts) => {
+const build = (opts, inputConfig, paths) => {
   // always store source in opts.inputString
   if (paths.IDYLL_INPUT_FILE) {
     opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
@@ -31,7 +31,7 @@ const build = (opts, inputConfig, paths, browserifyOpts) => {
       return write(artifacts, paths);
     })
     .then(() => {
-      return bundle(browserifyOpts);
+      return bundle(paths);
     })
     .then((src) => {
       // add and write JS bundle
