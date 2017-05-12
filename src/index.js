@@ -287,7 +287,7 @@ const idyll = (options = {}, cb) => {
       live: true,
       open: true,
       forceDefaultIndex: true,
-      css: CSS_OUTPUT,
+      css: path.parse(CSS_OUTPUT).base,
       middleware: compression(),
       watchGlob: '**/*.{html,css,json,js}',
       browserify: browserifyOpts
