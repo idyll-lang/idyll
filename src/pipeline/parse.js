@@ -24,7 +24,7 @@ const getNodesByName = (name, tree) => {
   )
 }
 
-const getComponents = (ast, inputCfg, customComponentFiles, componentFiles, paths) => {
+const getComponents = (ast, inputConfig, paths) => {
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
   const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
   const {
@@ -34,13 +34,16 @@ const getComponents = (ast, inputCfg, customComponentFiles, componentFiles, path
     TMP_DIR
   } = paths;
 
+  const componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_DIR);
+  const customComponentFiles = COMPONENTS_DIR ? fs.readdirSync(COMPONENTS_DIR) : [];
+
   const components = componentNodes.reduce(
     (acc, node) => {
       const name = paramCase(node[0].split('.')[0]);
 
       if (!acc[name]) {
-        if (inputCfg.components[name]) {
-          const compPath = path.parse(path.join(INPUT_DIR, inputCfg.components[name]));
+        if (inputConfig.components[name]) {
+          const compPath = path.parse(path.join(INPUT_DIR, inputConfig.components[name]));
           acc[name] = path.join(path.relative(TMP_DIR, compPath.dir), compPath.base).replace(/\\/g, '/');
         } else if (customComponentFiles.indexOf(name + '.js') > -1) {
           acc[name] = path.relative(TMP_DIR, path.join(COMPONENTS_DIR, name)).replace(/\\/g, '/');
@@ -133,10 +136,10 @@ const filterAST = (ast) => {
   );
 };
 
-module.exports = function (ast, inputCfg, customComponentFiles, componentFiles, paths) {
+module.exports = function (ast, inputConfig, paths) {
   return {
     ast: JSON.stringify(filterAST(ast)),
-    components: getComponents(ast, inputCfg, customComponentFiles, componentFiles, paths),
+    components: getComponents(ast, inputConfig, paths),
     data: getData(ast, paths.DATA_DIR),
     html: getHTML(ast, fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8'))
   }

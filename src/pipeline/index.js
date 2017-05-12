@@ -1,3 +1,4 @@
+const fs = require('fs');
 const Promise = require('bluebird');
 
 const compile = require('./compile');
@@ -9,11 +10,16 @@ const writeJS = require('./write-js');
 
 let outputs;
 
-const preBundle = (opts, inputCfg, customComponentFiles, componentFiles, paths, browserifyOpts) => {
+const build = (opts, inputConfig, paths, browserifyOpts) => {
+  // always store source in opts.inputString
+  if (paths.IDYLL_INPUT_FILE) {
+    opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
+  }
+
   return Promise
     .resolve(compile(opts.inputString, opts.compilerOptions))
     .then((ast) => {
-      return parse(ast, inputCfg, customComponentFiles, componentFiles, paths)
+      return parse(ast, inputConfig, paths)
     })
     .then((artifacts) => {
       // assemble and add css
@@ -25,12 +31,8 @@ const preBundle = (opts, inputCfg, customComponentFiles, componentFiles, paths, 
       return write(artifacts, paths);
     })
     .then(() => {
-      return outputs;
-    });
-}
-
-const build = (opts, paths, browserifyOpts) => {
-  return bundle(browserifyOpts)
+      return bundle(browserifyOpts);
+    })
     .then((src) => {
       // add and write JS bundle
       outputs.js = src;
@@ -42,6 +44,5 @@ const build = (opts, paths, browserifyOpts) => {
 }
 
 module.exports = {
-  preBundle,
   build
 }
