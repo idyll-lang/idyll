@@ -269,27 +269,35 @@ const idyll = (options = {}, cb) => {
     if (CSS_INPUT) watchedFiles.push(CSS_INPUT);
     if (IDL_FILE) watchedFiles.push(IDL_FILE);
 
-    chokidar.watch(watchedFiles).on('all', (event, path) => {
-      if (path.indexOf('.css') !== -1) {
-        writeCSS(css(options));
-      } else {
-        compileAndWriteFiles();
-      }
-    });
+    const srcWatcher = chokidar.watch(watchedFiles);
+      srcWatcher.on('ready', () => {
+        srcWatcher.on('all', (egvent, path) => {
+          if (path.indexOf('.css') !== -1) {
+            writeCSS(css(options));
+          } else {
+            compileAndWriteFiles();
+          }
+        });
+      });
+
     const watchedComponentFolders = [DEFAULT_COMPONENTS_FOLDER, CUSTOM_COMPONENTS_FOLDER];
     const handleComponentAddRemove = () => {
       readComponents();
       compileAndWriteFiles();
     };
-    chokidar.watch(watchedComponentFolders).on('add', handleComponentAddRemove).on('unlink', handleComponentAddRemove);
+
+    const componentWatcher = chokidar.watch(watchedComponentFolders);
+    componentWatcher.on('ready', () => {
+      componentWatcher.on('add', handleComponentAddRemove).on('unlink', handleComponentAddRemove);
+    });
 
     budo(path.resolve(path.join(__dirname, 'client', 'live.js')), {
       live: true,
       open: true,
       forceDefaultIndex: true,
-      css: path.parse(CSS_OUTPUT).base,
+      css: path.relative('.', path.resolve(CSS_OUTPUT)),
       middleware: compression(),
-      watchGlob: '**/*.{html,css,json,js}',
+      watchGlob: `${BUILD_PATH}/**/*.{html,css,js}`,
       browserify: browserifyOpts
     });
     compileAndWriteFiles();
