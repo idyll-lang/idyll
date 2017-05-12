@@ -54,7 +54,7 @@ const idyll = (options = {}, cb) => {
   const opts = Object.assign(
     {},
     {
-      build: false,
+      watch: false,
       components: 'components',
       datasets: 'data',
       debug: false,
@@ -318,15 +318,15 @@ const idyll = (options = {}, cb) => {
   }
 
   readComponents();
-  if (opts.build) {
+  if (opts.watch) {
+    start();
+  } else {
     const tree = compileAndWriteFiles();
     build(function (js) {
       tree.js = opts.debug ? js : UglifyJS.minify(js, {fromString: true}).code;
       fs.writeFileSync(JAVASCRIPT_OUTPUT, tree.js);
       if (cb) cb(tree);
     });
-  } else {
-    start();
   }
 };
 

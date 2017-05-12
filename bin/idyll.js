@@ -4,10 +4,9 @@ const idyll = require('../src/');
 
 var argv = require('yargs')
   .usage('Usage: idyll index.idl')
-  .example('$0 index.idl --build', 'Turn index.idl into output')
+  .example('$0 index.idl', 'Turn index.idl into output')
   .demandCommand(1)
   .alias({
-    b: 'build',
     m: 'components',
     c: 'css',
     d: 'datasets',
@@ -19,11 +18,9 @@ var argv = require('yargs')
     o: 'output',
     k: 'spellcheck',
     t: 'template',
-    e: 'theme'
+    e: 'theme',
+    w: 'watch'
   })
-  .boolean('build')
-  .describe('build', 'Generate output files and exit')
-  .default('build', false)
   .describe('components', 'Directory where components are located')
   .default('components', 'components')
   .describe('css', 'Custom CSS file to include in output')
@@ -47,6 +44,9 @@ var argv = require('yargs')
   .default('template', '_index.html')
   .describe('theme', 'Name of (or path to) the theme to use')
   .default('theme', 'idyll')
+  .boolean('watch')
+  .describe('watch', 'Monitor input files and rebuild on changes')
+  .default('watch', false)
   .alias('h', 'help')
   .argv;
 
