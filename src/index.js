@@ -2,6 +2,12 @@ const browserify = require('browserify');
 const budo = require('budo');
 const babelify = require('babelify');
 const path = require('path');
+const {
+  dirname,
+  isAbsolute,
+  join,
+  parse,
+} = path;
 const compile = require('idyll-compiler');
 const fs = require('fs');
 const chokidar = require('chokidar');
@@ -25,61 +31,73 @@ require('babel-core/register')({
     presets: ['react']
 });
 
-const idyll = (inputPath, opts, cb) => {
-  options = Object.assign({}, {
-    output: 'build',
-    htmlTemplate: '_index.html',
-    componentFolder: 'components',
-    defaultComponents: path.join('components', 'default'),
-    dataFolder: 'data',
-    layout: 'blog',
-    theme: 'idyll',
-    compilerOptions: {
-      spellcheck: true
-    },
-    build: true
-  }, opts || {});
+const getPathFactory = (basedir) => (p) => {
+  if (!p) return undefined;
+  if (isAbsolute(p)) return p;
+  return join(basedir, p);
+}
 
-  const inputDirectory = path.dirname(inputPath);
-  // Expose an "idyll" field on package.json
-  const inputPackage = require(path.join(inputDirectory, 'package.json'));
-  const inputConfig = Object.assign({}, {
-    components: {}
-  }, inputPackage.idyll || {});
-  Object.keys(inputConfig.components).forEach(key => {
+const idyll = (options = {}, cb) => {
+  const inputDir = options.inputFile
+    ? isAbsolute(options.inputFile)
+      ? dirname(options.inputFile)
+      : dirname(join(process.cwd(), options.inputFile))
+    : process.cwd();
+  const getPath = getPathFactory(inputDir);
+  const inputPkg = require(getPath('package.json'));
+  const inputConfig = (inputPkg.idyll || {components: {}});
+  for (let key in inputConfig.components) {
     inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
-  });
+    delete inputConfig.components[key];
+  };
 
-  const IDL_FILE = inputPath;
-  const TMP_PATH = path.resolve(path.join(inputDirectory, '.idyll'));
-  const BUILD_PATH = path.resolve(options.output);
+  const opts = Object.assign(
+    {},
+    {
+      watch: false,
+      components: 'components',
+      datasets: 'data',
+      minify: true,
+      defaultComponents: path.join('components', 'default'),
+      layout: 'blog',
+      output: 'build',
+      template: '_index.html',
+      theme: 'idyll',
+      compilerOptions: {
+        spellcheck: true
+      },
+    },
+    options
+  );
 
-  if (!fs.existsSync(TMP_PATH)){
-    fs.mkdirSync(TMP_PATH);
-  }
+  // input paths
+  const IDL_FILE = getPath(opts.inputFile);
+  const HTML_TEMPLATE = getPath(opts.template);
+  const CSS_INPUT = getPath(opts.css);
+  const CUSTOM_COMPONENTS_FOLDER = getPath(opts.components);
+  const DEFAULT_COMPONENTS_FOLDER = getPath(opts.defaultComponents);
+  const DATA_FOLDER = getPath(opts.datasets);
 
-  if (!fs.existsSync(BUILD_PATH)){
-    fs.mkdirSync(BUILD_PATH);
-  }
+  // output paths
+  const BUILD_PATH = getPath(opts.output);
+  if (!fs.existsSync(BUILD_PATH)) fs.mkdirSync(BUILD_PATH);
+  const HTML_OUTPUT = join(BUILD_PATH, 'index.html');
+  const CSS_OUTPUT = join(BUILD_PATH, 'styles.css');
+  const JAVASCRIPT_OUTPUT = join(BUILD_PATH, 'index.js');
 
-  const HTML_TEMPLATE = path.resolve(options.htmlTemplate);
-  const JAVASCRIPT_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.js'));
-  const HTML_OUTPUT = path.resolve(path.join(BUILD_PATH, 'index.html'));
-  const AST_FILE = path.resolve(path.join(TMP_PATH, 'ast.json'));
-  const COMPONENT_FILE = path.resolve(path.join(TMP_PATH, 'components.js'));
-  const DATA_FILE = path.resolve(path.join(TMP_PATH, 'data.js'));
-  const CUSTOM_COMPONENTS_FOLDER = path.resolve(options.componentFolder);
-  const DEFAULT_COMPONENTS_FOLDER = path.resolve(options.defaultComponents);
-  const DATA_FOLDER = path.resolve(options.dataFolder);
+  const TMP_PATH = getPath('.idyll');
+  if (!fs.existsSync(TMP_PATH)) fs.mkdirSync(TMP_PATH);
+  const AST_FILE = join(TMP_PATH, 'ast.json');
+  const COMPONENTS_FILE = join(TMP_PATH, 'components.js');
+  const DATA_FILE = join(TMP_PATH, 'data.js');
 
-  let components = [];
-  let customComponents = [];
+  let componentFiles = [];
+  let customComponentFiles = [];
   const readComponents = () => {
-    components = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);try {
-    customComponents = fs.readdirSync(CUSTOM_COMPONENTS_FOLDER);
-    } catch(e) {
-      console.log(e);
-    }
+    componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_FOLDER);
+    customComponentFiles = CUSTOM_COMPONENTS_FOLDER
+      ? fs.readdirSync(CUSTOM_COMPONENTS_FOLDER)
+      : [];
   }
 
   const writeAST = (ast) => {
@@ -87,7 +105,7 @@ const idyll = (inputPath, opts, cb) => {
   };
 
   const writeCSS = (css) => {
-    fs.writeFileSync(path.join(BUILD_PATH, 'styles.css'), css);
+    fs.writeFileSync(CSS_OUTPUT, css);
   };
 
   const writeData = (data) => {
@@ -100,7 +118,7 @@ const idyll = (inputPath, opts, cb) => {
         return `'${key}': require('${components[key]}')`;
       })
       .join(',\n\t');
-    fs.writeFileSync(COMPONENT_FILE, `module.exports = {\n\t${src}\n}\n`);
+    fs.writeFileSync(COMPONENTS_FILE, `module.exports = {\n\t${src}\n}\n`);
   };
 
   const writeHTML = (meta) => {
@@ -186,16 +204,16 @@ const idyll = (inputPath, opts, cb) => {
 
           if (!acc[name]) {
             if (inputConfig.components[name]) {
-              const compPath = path.parse(path.join(inputDirectory, inputConfig.components[name]));
+              const compPath = path.parse(path.join(inputDir, inputConfig.components[name]));
               acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
-            } else if (customComponents.indexOf(name + '.js') > -1) {
+            } else if (customComponentFiles.indexOf(name + '.js') > -1) {
               acc[name] = path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
-            } else if (components.indexOf(name + '.js') > -1) {
+            } else if (componentFiles.indexOf(name + '.js') > -1) {
               acc[name] = path.relative(TMP_PATH, path.join(DEFAULT_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
             } else {
               try {
                 // npm modules are required via relative paths to support working with a locally linked idyll
-                const compPath = path.parse(resolve.sync(name, {basedir: inputDirectory}));
+                const compPath = path.parse(resolve.sync(name, {basedir: inputDir}));
                 acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
               } catch (err) {
                 if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
@@ -227,7 +245,7 @@ const idyll = (inputPath, opts, cb) => {
     plugin: [
       (b) => b.require([
         {file: AST_FILE, expose: '__IDYLL_AST__'},
-        {file: COMPONENT_FILE, expose: '__IDYLL_COMPONENTS__'},
+        {file: COMPONENTS_FILE, expose: '__IDYLL_COMPONENTS__'},
         {file: DATA_FILE, expose: '__IDYLL_DATA__'}
       ])
     ]
@@ -247,8 +265,10 @@ const idyll = (inputPath, opts, cb) => {
   }
 
   const start = () => {
-    const CSS_INPUT = (options.css) ?  path.resolve(options.css) : false;
-    const watchedFiles = CSS_INPUT ? [IDL_FILE, CSS_INPUT] : [IDL_FILE];
+    let watchedFiles = [];
+    if (CSS_INPUT) watchedFiles.push(CSS_INPUT);
+    if (IDL_FILE) watchedFiles.push(IDL_FILE);
+
     chokidar.watch(watchedFiles).on('all', (event, path) => {
       if (path.indexOf('.css') !== -1) {
         writeCSS(css(options));
@@ -267,7 +287,7 @@ const idyll = (inputPath, opts, cb) => {
       live: true,
       open: true,
       forceDefaultIndex: true,
-      css: path.join(options.output, 'styles.css'),
+      css: path.parse(CSS_OUTPUT).base,
       middleware: compression(),
       watchGlob: '**/*.{html,css,json,js}',
       browserify: browserifyOpts
@@ -276,11 +296,14 @@ const idyll = (inputPath, opts, cb) => {
   }
 
   const compileAndWriteFiles = () => {
-    const idlInput = fs.readFileSync(IDL_FILE, 'utf8');
+    const idlInput = IDL_FILE
+      ? fs.readFileSync(IDL_FILE, 'utf8')
+      : opts.inputString;
+
     try {
-      const ast = compile(idlInput, options.compilerOptions);
+      const ast = compile(idlInput, opts.compilerOptions);
       const tree = interpretAST(ast);
-      tree.css = css(options);
+      tree.css = css(opts);
 
       writeAST(ast);
       writeComponents(tree.components);
@@ -295,16 +318,15 @@ const idyll = (inputPath, opts, cb) => {
   }
 
   readComponents();
-  if (options.build) {
+  if (opts.watch) {
+    start();
+  } else {
     const tree = compileAndWriteFiles();
     build(function (js) {
-      const jsOutput = UglifyJS.minify(js, {fromString: true});
-      tree.js = jsOutput.code;
+      tree.js = opts.minify ? UglifyJS.minify(js, {fromString: true}).code : js;
       fs.writeFileSync(JAVASCRIPT_OUTPUT, tree.js);
       if (cb) cb(tree);
     });
-  } else {
-    start();
   }
 };
 

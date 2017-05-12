@@ -52,12 +52,13 @@ beforeAll(() => {
 })
 
 beforeAll(done => {
-  idyll(join(PROJECT_DIR, 'index.idl'), {
+  idyll({
+    inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
     htmlTemplate: join(PROJECT_DIR, '_index.html'),
-    componentFolder: join(PROJECT_DIR, 'components'),
+    components: join(PROJECT_DIR, 'components'),
     defaultComponents: join(PROJECT_DIR, 'components', 'default'),
-    dataFolder: join(PROJECT_DIR, 'data'),
+    datasets: join(PROJECT_DIR, 'data'),
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
