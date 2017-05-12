@@ -45,10 +45,10 @@ const idyll = (options = {}, cb) => {
     : process.cwd();
   const getPath = getPathFactory(inputDir);
   const inputPkg = require(getPath('package.json'));
-  const inputCfg = (inputPkg.idyll || {components: {}});
-  for (let key in inputCfg.components) {
-    inputCfg.components[changeCase.paramCase(key)] = inputCfg.components[key];
-    delete inputCfg.components[key];
+  const inputConfig = (inputPkg.idyll || {components: {}});
+  for (let key in inputConfig.components) {
+    inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
+    delete inputConfig.components[key];
   };
 
   const opts = Object.assign(
@@ -203,8 +203,8 @@ const idyll = (options = {}, cb) => {
           const name = changeCase.paramCase(node[0].split('.')[0]);
 
           if (!acc[name]) {
-            if (inputCfg.components[name]) {
-              const compPath = path.parse(path.join(inputDir, inputCfg.components[name]));
+            if (inputConfig.components[name]) {
+              const compPath = path.parse(path.join(inputDir, inputConfig.components[name]));
               acc[name] = path.join(path.relative(TMP_PATH, compPath.dir), compPath.base).replace(/\\/g, '/');
             } else if (customComponentFiles.indexOf(name + '.js') > -1) {
               acc[name] = path.relative(TMP_PATH, path.join(CUSTOM_COMPONENTS_FOLDER, name)).replace(/\\/g, '/');
