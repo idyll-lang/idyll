@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Promise = require('bluebird');
-
+const writeFile = Promise.promisify(fs.writeFile);
 const compile = require('./compile');
 const parse = require('./parse');
 const css = require('./css');
@@ -43,6 +43,12 @@ const build = (opts, inputConfig, paths) => {
     });
 }
 
+const updateCSS = (opts, paths) => {
+  outputs.css = css(opts);
+  return writeFile(paths.CSS_OUTPUT_FILE, outputs.css);
+}
+
 module.exports = {
-  build
+  build,
+  updateCSS
 }

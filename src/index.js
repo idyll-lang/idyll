@@ -52,10 +52,17 @@ const idyll = (options = {}, cb) => {
         pipeline.build(opts, inputConfig, paths).then(bs.reload);
       };
 
+      const updateCSS = () => {
+        pipeline.updateCSS(opts, paths).then(() => {
+          bs.reload('styles.css')
+        });
+      }
+
       const bs = require('browser-sync').create();
       bs.watch(paths.COMPONENTS_DIR, {ignoreInitial: true}, buildAndReload);
       bs.watch(paths.DEFAULT_COMPONENTS_DIR, {ignoreInitial: true}, buildAndReload);
       bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, buildAndReload);
+      bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, updateCSS);
       bs.init({server: paths.OUTPUT_DIR});
     });
 };
