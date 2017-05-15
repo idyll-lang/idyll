@@ -48,8 +48,8 @@ const idyll = (options = {}, cb) => {
     .then(() => {
       if (!opts.watch) return;
 
-      const buildAndReload = () => {
-        pipeline.build(opts, inputConfig, paths).then(bs.reload);
+      const preBundle = () => {
+        pipeline.preBundle(opts, inputConfig, paths);
       };
 
       const updateCSS = () => {
@@ -59,9 +59,16 @@ const idyll = (options = {}, cb) => {
       }
 
       const bs = require('browser-sync').create();
-      bs.watch(paths.COMPONENTS_DIR, {ignoreInitial: true}, buildAndReload);
-      bs.watch(paths.DEFAULT_COMPONENTS_DIR, {ignoreInitial: true}, buildAndReload);
-      bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, buildAndReload);
+      // any time an input files changes we will recompile .idl source
+      // and write ast.json, components.js, and data.js to disk
+      bs.watch(paths.COMPONENTS_DIR, {ignoreInitial: true}, preBundle);
+      bs.watch(paths.DEFAULT_COMPONENTS_DIR, {ignoreInitial: true}, preBundle);
+      bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, preBundle);
+      // that will cause watchify to rebuild
+      // so we just watch the output bundle file
+      // and reload when it is updated
+      bs.watch(paths.JS_OUTPUT_FILE, bs.reload);
+      // when CSS changes we reassemble and inject it
       bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, updateCSS);
       bs.init({server: paths.OUTPUT_DIR});
     });

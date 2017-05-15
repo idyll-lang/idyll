@@ -10,7 +10,7 @@ const writeJS = require('./write-js');
 
 let outputs;
 
-const build = (opts, inputConfig, paths) => {
+const preBundle = (opts, inputConfig, paths) => {
   // always store source in opts.inputString
   if (paths.IDYLL_INPUT_FILE) {
     opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
@@ -29,9 +29,13 @@ const build = (opts, inputConfig, paths) => {
     .then((artifacts) => {
       // write everything but the JS bundle to disk
       return write(artifacts, paths);
-    })
+    });
+}
+
+const build = (opts, inputConfig, paths) => {
+  return preBundle(opts, inputConfig, paths)
     .then(() => {
-      return bundle(paths);
+      return bundle(paths, opts.watch);
     })
     .then((src) => {
       // add and write JS bundle
@@ -50,5 +54,6 @@ const updateCSS = (opts, paths) => {
 
 module.exports = {
   build,
+  preBundle,
   updateCSS
 }
