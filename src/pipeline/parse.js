@@ -24,7 +24,7 @@ const getNodesByName = (name, tree) => {
   )
 }
 
-const getComponents = (ast, inputConfig, paths) => {
+const getComponents = (ast, paths, inputConfig) => {
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
   const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
   const {
@@ -136,10 +136,10 @@ const filterAST = (ast) => {
   );
 };
 
-module.exports = function (ast, inputConfig, paths) {
+module.exports = function (ast, paths, inputConfig) {
   return {
     ast: JSON.stringify(filterAST(ast)),
-    components: getComponents(ast, inputConfig, paths),
+    components: getComponents(ast, paths, inputConfig),
     data: getData(ast, paths.DATA_DIR),
     html: getHTML(ast, fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8'))
   }
