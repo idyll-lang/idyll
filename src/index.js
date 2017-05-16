@@ -70,7 +70,7 @@ const idyll = (options = {}, cb) => {
       bs.watch(paths.JS_OUTPUT_FILE, bs.reload);
       // when CSS changes we reassemble and inject it
       bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, updateCSS);
-      bs.init({server: paths.OUTPUT_DIR});
+      bs.init({server: paths.OUTPUT_DIR, notify: false});
     });
 };
 
