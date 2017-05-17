@@ -16,8 +16,7 @@ const preBundle = (opts, paths, inputConfig) => {
     opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
   }
 
-  return Promise
-    .resolve(compile(opts.inputString, opts.compilerOptions))
+  return compile(opts.inputString, opts.compilerOptions)
     .then((ast) => {
       return parse(ast, paths, inputConfig)
     })

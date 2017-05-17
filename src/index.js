@@ -45,6 +45,9 @@ const idyll = (options = {}, cb) => {
     .then(pipeline.watch.bind(null, opts, paths, inputConfig, cb))
     .then((artifacts) => {
       if (cb) cb(artifacts);
+    })
+    .catch((error) => {
+      console.log(error.message || error);
     });
 };
 
