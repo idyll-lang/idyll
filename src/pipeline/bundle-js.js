@@ -1,13 +1,13 @@
 const path = require('path');
 const fs = require('fs');
-const browserify = require('browserify');
+const browserifyInc = require('browserify-incremental');
 const babelify = require('babelify');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const brfs = require('brfs');
 const Promise = require('bluebird');
 
-let b, doBundle;
+let b;
 
 module.exports = function ({ watch }, paths) {
   process.env['NODE_ENV'] = 'production';
@@ -17,6 +17,8 @@ module.exports = function ({ watch }, paths) {
       entries: [path.join(__dirname, '..', 'client', 'build.js')],
       cache: {},
       packageCache: {},
+      fullPaths: true,
+      cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
       transform: [
         [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
         [ brfs ]
@@ -30,20 +32,12 @@ module.exports = function ({ watch }, paths) {
       ]
     };
 
-    if (watch) config.plugin.push(require('watchify'));
-
-    b = browserify(config);
-    const bundlePromise = Promise.promisify(b.bundle, {context: b});
-
-    doBundle = () => {
-      return bundlePromise().then(src => {
-        return src.toString('utf8');
-      });
-    };
+    b = browserifyInc(config);
   }
 
-  return {
-    b,
-    doBundle
-  };
+  return new Promise((resolve, reject) => {
+    b.bundle((err, src) => {
+      resolve(src.toString('utf8'));
+    }).pipe(fs.createWriteStream(path.join(paths.TMP_DIR, 'bundle.js')));
+  })
 }

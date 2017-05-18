@@ -69,4 +69,4 @@ delete argv['no-minify'];
 delete argv.k;
 delete argv.spellcheck;
 
-idyll(argv);
+idyll(argv).build();

@@ -45,67 +45,10 @@ const postBundle = (opts, paths, js) => {
 const build = (opts, paths, inputConfig) => {
   return preBundle(opts, paths, inputConfig)
     .then(bundle.bind(null, opts, paths))
-    .then(({ doBundle }) => doBundle())
     .then(postBundle.bind(null, opts, paths))
     .then(() => {
       return outputs;
     });
-}
-
-const watch = (opts, paths, inputConfig, cb, outputs) => {
-  if (!opts.watch) return outputs;
-
-  let hasUpdated;
-  const {b, doBundle} = bundleJS(opts, paths);
-  const bundleAndWrite = () => {
-    hasUpdated = true;
-    return doBundle()
-      .then(postBundle.bind(null, opts, paths))
-      .then(res => {
-        if (cb) cb(res);
-        return res;
-      });
-  }
-
-  // listen for bundle dependency changes
-  b.on('update', bundleAndWrite)
-
-  // this will trigger watchify to rebuild
-  const onDependencyChange = () => {
-    preBundle(opts, paths, inputConfig)
-      .catch((error) => {
-        bs.notify(`<h2>${error.message}</h2>`, 30000);
-      });
-  };
-
-  const bs = require('browser-sync').create();
-  // any time an input files changes we will recompile .idl source
-  // and write ast.json, components.js, and data.js to disk
-  bs.watch(paths.COMPONENTS_DIR, {ignoreInitial: true}, onDependencyChange);
-  bs.watch(paths.DEFAULT_COMPONENTS_DIR, {ignoreInitial: true}, onDependencyChange);
-  bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, onDependencyChange);
-  // that will cause watchify to rebuild
-  // so we just watch the output bundle file
-  // and reload when it is updated
-  bs.watch(paths.JS_OUTPUT_FILE, bs.reload);
-  // when CSS changes we reassemble and inject it
-  bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, () => {
-    pipeline.updateCSS(opts, paths).then(() => {
-      bs.reload('styles.css')
-    });
-  });
-
-  bs.init({
-    cors: true,
-    logLevel: 'warn',
-    logPrefix: 'Idyll',
-    notify: false,
-    server: paths.OUTPUT_DIR,
-    ui: false
-  });
-
-  if (hasUpdated) return bundleAndWrite();
-  return outputs;
 }
 
 const updateCSS = (opts, paths) => {
@@ -118,6 +61,5 @@ module.exports = {
   bundle,
   postBundle,
   build,
-  watch,
   updateCSS
 }
