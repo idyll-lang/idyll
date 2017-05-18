@@ -34,18 +34,15 @@ const preBundle = (opts, paths, inputConfig) => {
 const bundle = bundleJS;
 
 const postBundle = (opts, paths, js) => {
-  // add and write JS bundle
+  // add JS bundle to output
   outputs.js = js;
 
-  return writeJS(js, paths.JS_OUTPUT_FILE, opts.minify).then(() => {
-    return outputs;
-  });
+  return outputs;
 }
 
 const build = (opts, paths, inputConfig) => {
   return preBundle(opts, paths, inputConfig)
     .then(bundle.bind(null, opts, paths))
-    .then(({ doBundle }) => doBundle())
     .then(postBundle.bind(null, opts, paths))
     .then(() => {
       return outputs;
