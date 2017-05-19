@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
+const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
 const {
   getASTJSON,
