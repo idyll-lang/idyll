@@ -2,7 +2,6 @@ const fs = require('fs');
 const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const UglifyJS = require('uglify-js');
-const compile = require('./compile');
 const {
   getASTJSON,
   getComponentsJS,
@@ -12,7 +11,7 @@ const {
 const css = require('./css');
 const bundleJS = require('./bundle-js');
 
-let tree;
+let output;
 
 const build = (opts, paths, inputConfig) => {
   // always store source in opts.inputString
@@ -25,7 +24,7 @@ const build = (opts, paths, inputConfig) => {
     // to start a Promise chain and turn any synchronous exceptions into a rejection
     () => {
       const ast = compile(opts.inputString, opts.compilerOptions);
-      tree = {
+      output = {
         ast: getASTJSON(ast),
         components: getComponentsJS(ast, paths, inputConfig),
         css: css(opts),
@@ -37,11 +36,11 @@ const build = (opts, paths, inputConfig) => {
   .then(() => {
     // write everything but JS to disk
     return Promise.all([
-      writeFile(paths.AST_OUTPUT_FILE, tree.ast),
-      writeFile(paths.COMPONENTS_OUTPUT_FILE, tree.components),
-      writeFile(paths.CSS_OUTPUT_FILE, tree.css),
-      writeFile(paths.DATA_OUTPUT_FILE, tree.data),
-      writeFile(paths.HTML_OUTPUT_FILE, tree.html),
+      writeFile(paths.AST_OUTPUT_FILE, output.ast),
+      writeFile(paths.COMPONENTS_OUTPUT_FILE, output.components),
+      writeFile(paths.CSS_OUTPUT_FILE, output.css),
+      writeFile(paths.DATA_OUTPUT_FILE, output.data),
+      writeFile(paths.HTML_OUTPUT_FILE, output.html),
     ]);
   })
   .then(() => {
@@ -52,19 +51,22 @@ const build = (opts, paths, inputConfig) => {
     if (opts.minify) {
       js = UglifyJS.minify(js, {fromString: true}).code;
     }
-    tree.js = js;
+    output.js = js;
   })
   .then(() => {
-    writeFile(paths.JS_OUTPUT_FILE, tree.js); // write JS to disk
+    writeFile(paths.JS_OUTPUT_FILE, output.js); // write JS to disk
   })
   .then(() => {
-    return tree; // return all results
+    return output; // return all results
   });
 }
 
 const updateCSS = (opts, paths) => {
-  tree.css = css(opts);
-  return writeFile(paths.CSS_OUTPUT_FILE, tree.css);
+  output.css = css(opts);
+  return writeFile(paths.CSS_OUTPUT_FILE, output.css)
+    .then(() => {
+      return output; // return all results
+    });
 }
 
 module.exports = {
