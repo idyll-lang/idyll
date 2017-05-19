@@ -9,7 +9,7 @@ const Promise = require('bluebird');
 
 let b;
 
-module.exports = function ({ watch }, paths) {
+module.exports = function (paths) {
   process.env['NODE_ENV'] = 'production';
 
   if (!b) {

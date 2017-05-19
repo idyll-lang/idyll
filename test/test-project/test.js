@@ -65,7 +65,7 @@ beforeAll(done => {
     compilerOptions: {
       spellcheck: false
     },
-    build: true
+    minify: false
   }).on('update', () => {
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);

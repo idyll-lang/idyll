@@ -24,7 +24,7 @@ const getNodesByName = (name, tree) => {
   )
 }
 
-const getComponents = (ast, paths, inputConfig) => {
+exports.getComponentsJS = (ast, paths, inputConfig) => {
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
   const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
   const {
@@ -76,7 +76,7 @@ const getComponents = (ast, paths, inputConfig) => {
   return `module.exports = {\n\t${src}\n}\n`;
 }
 
-const getData = (ast, DATA_DIR) => {
+exports.getDataJS = (ast, DATA_DIR) => {
   // can be multiple data nodes
   const dataNodes = getNodesByName('data', ast);
 
@@ -108,7 +108,7 @@ const getData = (ast, DATA_DIR) => {
   return `module.exports = ${JSON.stringify(data)}`;
 }
 
-const getHTML = (ast, template) => {
+exports.getHTML = (ast, template) => {
   // there should only be one meta node
   const metaNodes = getNodesByName('meta', ast);
 
@@ -126,21 +126,12 @@ const getHTML = (ast, template) => {
   return mustache.render(template, meta || {});
 }
 
-const filterAST = (ast) => {
+exports.getASTJSON = (ast) => {
   const ignoreNames = ['meta'];
 
-  return ast.filter(
-    (node) => {
+  return JSON.stringify(
+    ast.filter((node) => {
       return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
-    }
+    })
   );
-};
-
-module.exports = function (ast, paths, inputConfig) {
-  return {
-    ast: JSON.stringify(filterAST(ast)),
-    components: getComponents(ast, paths, inputConfig),
-    data: getData(ast, paths.DATA_DIR),
-    html: getHTML(ast, fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8'))
-  }
 }

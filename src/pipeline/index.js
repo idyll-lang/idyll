@@ -1,53 +1,49 @@
 const fs = require('fs');
 const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
+const UglifyJS = require('uglify-js');
 const compile = require('./compile');
-const parse = require('./parse');
+const {
+  getASTJSON,
+  getComponentsJS,
+  getDataJS,
+  getHTML
+} = require('./parse');
 const css = require('./css');
 const write = require('./write-artifacts');
 const bundleJS = require('./bundle-js');
 const writeJS = require('./write-js');
 
-let outputs;
+let outputs = {};
 
-const preBundle = (opts, paths, inputConfig) => {
+const build = (opts, paths, inputConfig) => {
   // always store source in opts.inputString
   if (paths.IDYLL_INPUT_FILE) {
     opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
   }
 
-  return compile(opts.inputString, opts.compilerOptions)
-    .then((ast) => {
-      return parse(ast, paths, inputConfig)
-    })
-    .then((artifacts) => {
-      // assemble and add css
-      outputs = Object.assign({}, artifacts, {css: css(opts)});
-      return outputs;
-    })
-    .then((artifacts) => {
-      // write everything but the JS bundle to disk
-      return write(artifacts, paths);
-    });
-}
+  const ast = compile(opts.inputString, opts.compilerOptions);
+  const tree = {
+    ast: getASTJSON(ast),
+    components: getComponentsJS(ast, paths, inputConfig),
+    css: css(opts),
+    data: getDataJS(ast, paths.DATA_DIR),
+    html: getHTML(ast, fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8'))
+  };
 
-const bundle = bundleJS;
-
-const postBundle = (opts, paths, js) => {
-  // add and write JS bundle
-  outputs.js = js;
-
-  return writeJS(js, paths.JS_OUTPUT_FILE, opts.minify).then(() => {
-    return outputs;
-  });
-}
-
-const build = (opts, paths, inputConfig) => {
-  return preBundle(opts, paths, inputConfig)
-    .then(bundle.bind(null, opts, paths))
-    .then(postBundle.bind(null, opts, paths))
+  return write(tree, paths)
     .then(() => {
-      return outputs;
+      return bundleJS(paths);
+    })
+    .then((js) => {
+      if (opts.minify) {
+        js = UglifyJS.minify(js, {fromString: true}).code;
+      }
+      tree.js = js;
+      return writeFile(paths.JS_OUTPUT_FILE, tree.js);
+    })
+    .then(() => {
+      return tree;
     });
 }
 
@@ -57,9 +53,6 @@ const updateCSS = (opts, paths) => {
 }
 
 module.exports = {
-  preBundle,
-  bundle,
-  postBundle,
   build,
   updateCSS
 }
