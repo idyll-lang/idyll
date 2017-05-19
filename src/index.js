@@ -82,9 +82,7 @@ const idyll = (options = {}, cb) => {
             });
           }
         })
-        .catch((error) => {
-          console.log(error.message || error);
-        });
+        .catch(console.error.bind(console));
       return this;
     }
   }
