@@ -30,6 +30,12 @@ describe('compiler', function() {
       expect(results.tokens.split(' ')).to.eql(['WORDS', 'TOKEN_VALUE_START', '\"text\"', 'TOKEN_VALUE_END', 'EOF']);
     });
 
+    it('should handle markdown formatging in a list element', function() {
+      var lex = Lexer();
+      var results = lex("- **test**");
+      expect(results.tokens).to.eql('BREAK UNORDERED_LIST STRONG TOKEN_VALUE_START "test" TOKEN_VALUE_END EOF');
+    });
+
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
       var results = lex("regular text and stuff, then some `code`");
