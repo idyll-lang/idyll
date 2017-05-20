@@ -30,6 +30,12 @@ describe('compiler', function() {
       expect(results.tokens.split(' ')).to.eql(['WORDS', 'TOKEN_VALUE_START', '\"text\"', 'TOKEN_VALUE_END', 'EOF']);
     });
 
+    it('should handle equations', function () {
+      var lex = Lexer();
+      var results = lex("[Equation]\\alpha = 0[/Equation]");
+      expect(results.tokens).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "\\alpha = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+    });
+
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
       var results = lex("regular text and stuff, then some `code`");
