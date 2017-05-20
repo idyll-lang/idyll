@@ -32,8 +32,8 @@ describe('compiler', function() {
 
     it('should handle equations', function () {
       var lex = Lexer();
-      var results = lex("[Equation]\\alpha = 0[/Equation]");
-      expect(results.tokens).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "\\alpha = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+      var results = lex("[Equation]y = 0[/Equation]");
+      expect(results.tokens).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
     });
 
     it('should handle backticks in a paragraph', function() {
