@@ -321,6 +321,14 @@ describe('compiler', function() {
       var output = parse(input, lexResults.tokens, lexResults.positions);
       expect(output).to.eql([["p",[],["This component name has a period separator ",["component.val.v",[],[]],"."]]]);
     })
+
+    it('should handle strong text with a p', function() {
+      const input = "**p a**";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens, lexResults.positions);
+      expect(output).to.eql([['strong', [], ['p a']]]);
+    })
   });
 
   describe('error handling', function() {
