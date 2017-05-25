@@ -36,6 +36,12 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('BREAK UNORDERED_LIST LIST_ITEM STRONG TOKEN_VALUE_START "test" TOKEN_VALUE_END LIST_END EOF');
     });
 
+    it('should handle equations', function () {
+      var lex = Lexer();
+      var results = lex("[Equation]y = 0[/Equation]");
+      expect(results.tokens.join(' ')).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+    });
+
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
       var results = lex("regular text and stuff, then some `code`");
@@ -334,6 +340,14 @@ describe('compiler', function() {
       var lexResults = lex(input);
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
       expect(output).to.eql([['strong', [], ['p a']]]);
+    })
+
+    it('should merge consecutive word blocks', function() {
+      const input = "[Equation]y = 0[/Equation]";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([['Equation', [], ['y = 0']]]);
     })
   });
 
