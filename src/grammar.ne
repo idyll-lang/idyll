@@ -87,6 +87,25 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
       children.push(child[0]);
     });
     children.push(data[1]);
+    var lastWasString = false;
+
+    // If there are multiple strings split across
+    // children merge them to avoid issues with
+    // Equation and other components that
+    // consume their children programatically.
+    children = children.reduce((acc, c) => {
+      if (typeof c === 'string' && lastWasString) {
+        acc[acc.length - 1] += c;
+        lastWasString = true;
+      } else if (typeof c === 'string') {
+        acc.push(c);
+        lastWasString = true;
+      } else {
+        acc.push(c);
+        lastWasString = false;
+      }
+      return acc;
+    }, [])
     if (children.length === 1 && typeof children[0] !== 'string') {
       return children[0];
     } else if (children.filter(function (c) { return typeof c === 'string' }).length === 0) {
@@ -103,14 +122,9 @@ ParagraphItem -> (Text | ClosedComponent | OpenComponent | TextInline) {%
   }
 %}
 
-Text -> ("WORDS" __ TokenValue __):* ("WORDS" __ TokenValue) {%
+Text -> "WORDS" __ TokenValue {%
   function(data, location, reject) {
-    let str = '';
-    data[0].forEach((d) => {
-      str += d[2];
-    })
-    str += data[1][2];
-    return str;
+    return data[2];
   }
 %}
 
