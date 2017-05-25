@@ -37,6 +37,7 @@ module.exports = function(input, tokens, positions, options) {
 
     if (node[0] !== 'p'
       && node[2].length === 1
+      && typeof node[2][0] !== 'string'
       && node[2][0][0] === 'p'
       && node[2][0][2]
       && node[2][0][2].length === 1
@@ -71,11 +72,13 @@ module.exports = function(input, tokens, positions, options) {
     if (options.spellcheck && Spellcheck) {
       console.log('\n\nSpellcheck:');
     }
+    // console.log(JSON.stringify(results[0]));
     const ret = results[0].map(cleanResults);
     if (options.spellcheck && Spellcheck && misspellings === 0) {
       console.log('No misspellings found.');
     }
     return ret;
   }
+
   throw new Error('No parse results');
 }

@@ -44,23 +44,33 @@ Header -> "HEADER_" [1-6] __ TokenValue {%
   }
 %}
 
-UnorderedList -> "UNORDERED_LIST" (__ TokenValue):+  {%
+UnorderedList -> "UNORDERED_LIST" (__ ListItem):+ __ "LIST_END"  {%
   function(data, location, reject) {
     var children = [];
     data[1].map(function (child) {
-      children.push(["li", [], [child[1]]]);
+      children.push(["li", [], child[1]]);
     });
     return ["ul", [], children];
   }
 %}
 
-OrderedList -> "ORDERED_LIST" (__ TokenValue):+  {%
+OrderedList -> "ORDERED_LIST" (__ ListItem):+ __ "LIST_END" {%
   function(data, location, reject) {
     var children = [];
     data[1].map(function (child) {
-      children.push(["li", [], [child[1]]]);
+      children.push(["li", [], child[1]]);
     });
     return ["ol", [], children];
+  }
+%}
+
+ListItem -> "LIST_ITEM" (__ ParagraphItem):+ {%
+  function(data, location, reject) {
+    var children = [];
+    data[1].map(function (child) {
+      children.push(child[1]);
+    });
+    return children;
   }
 %}
 

@@ -11,12 +11,19 @@ const formatToken = (text) => {
 }
 
 
-module.exports = function() {
+const lex = function(options) {
+  let { row, column, outer } = Object.assign({}, {
+    row: 1,
+    column: 1,
+    outer: true
+  }, options || {});
   var lexer = new Lexer();
   var inComponent = false;
   var gotName = false;
-  var column = 1;
-  var row = 1;
+
+  const recurse = (str) => {
+    return lex({row, column, outer: false})(str).tokens;
+  };
 
   var updatePosition = function(lexeme) {
     var lines = lexeme.split('\n');
@@ -97,9 +104,9 @@ module.exports = function() {
     const matches = items.map((item) => /[\-\*]\s*([^\n]*)/.exec(item)[1]);
     let output = ['BREAK', 'UNORDERED_LIST'];
     matches.forEach((item) => {
-      output = output.concat(formatToken(item));
+      output = output.concat(['LIST_ITEM']).concat(recurse(item));
     });
-    return output;
+    return output.concat(['LIST_END']);
   });
 
   lexer.addRule(/^\s*(\d+\.\s*([^\n]*)\n)*(\d+\.\s*([^\n]*)\n?)/gm, function(lexeme) {
@@ -110,9 +117,9 @@ module.exports = function() {
     const matches = items.map((item) => /\d+\.\s*([^\n]*)/.exec(item)[1]);
     let output = ['BREAK', 'ORDERED_LIST'];
     matches.forEach((item) => {
-      output = output.concat(formatToken(item));
+      output = output.concat(['LIST_ITEM']).concat(recurse(item));
     });
-    return output;
+    return output.concat(['LIST_END']);
   });
 
   lexer.addRule(/!\[([^\]]*)\]\(([^\)]*)\)/, function(lexeme, text, link) {
@@ -232,6 +239,7 @@ module.exports = function() {
   });
 
   lexer.addRule(/\s*$/, function(lexeme) {
+    this.reject = !outer;
     if (this.reject) return;
     updatePosition(lexeme);
     return ['EOF'];
@@ -250,8 +258,10 @@ module.exports = function() {
       token = lexer.lex();
     }
     return {
-      tokens: output.join(' '),
+      tokens: output,
       positions: positions
     };
   }
 }
+
+module.exports = lex;
