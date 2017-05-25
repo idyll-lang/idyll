@@ -37,6 +37,8 @@ module.exports = function (paths) {
 
   return new Promise((resolve, reject) => {
     b.bundle((err, src) => {
+      if (err) return reject(err);
+
       resolve(src.toString('utf8'));
     }).pipe(fs.createWriteStream(path.join(paths.TMP_DIR, 'bundle.js')));
   })
