@@ -103,9 +103,14 @@ ParagraphItem -> (Text | ClosedComponent | OpenComponent | TextInline) {%
   }
 %}
 
-Text -> ("WORDS" __ TokenValue) {%
+Text -> ("WORDS" __ TokenValue __):* ("WORDS" __ TokenValue) {%
   function(data, location, reject) {
-    return data[0][2];
+    let str = '';
+    data[0].forEach((d) => {
+      str += d[2];
+    })
+    str += data[1][2];
+    return str;
   }
 %}
 
