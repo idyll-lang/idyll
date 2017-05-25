@@ -72,6 +72,7 @@ module.exports = function(input, tokens, positions, options) {
     if (options.spellcheck && Spellcheck) {
       console.log('\n\nSpellcheck:');
     }
+    // console.log(JSON.stringify(results[0]));
     const ret = results[0].map(cleanResults);
     if (options.spellcheck && Spellcheck && misspellings === 0) {
       console.log('No misspellings found.');
