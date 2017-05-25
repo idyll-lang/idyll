@@ -103,9 +103,14 @@ class Equation extends IdyllComponent {
     const latexChar = '$';
     const latexString = latexChar + this.getLatex()  + latexChar;
 
-    const style = Object.assign({
-      display: this.props.display ? "block" : "inline-block"
-    }, this.props.style);
+    let style;
+    if (this.state.showRange) {
+      style = this.props.style;
+    } else {
+      style = Object.assign({
+        display: this.props.display ? "block" : "inline-block"
+      }, this.props.style);
+    }
 
     return (
       <span style={style}>
