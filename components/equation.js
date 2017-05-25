@@ -102,8 +102,13 @@ class Equation extends IdyllComponent {
   render() {
     const latexChar = '$';
     const latexString = latexChar + this.getLatex()  + latexChar;
+
+    const style = Object.assign({
+      display: this.props.display ? "block" : "inline-block"
+    }, this.props.style);
+
     return (
-      <span>
+      <span style={style}>
           <Latex displayMode={this.props.display}>{latexString}</Latex>
           {this.renderEditing()}
       </span>
