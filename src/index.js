@@ -46,7 +46,7 @@ const idyll = (options = {}, cb) => {
   };
 
   // Handle options that can be provided via options or via package.json
-  opts.transform = options.transform || inputConfig || opts.transform;
+  opts.transform = options.transform || inputConfig.transform || opts.transform;
 
   let bs;
 

@@ -9,9 +9,9 @@ const Promise = require('bluebird');
 
 let b;
 
-const getTransform = (inputConfig) => {
+const getTransform = (opts) => {
   const _getTransform = (name) => {
-    return (inputConfig[name] || []).map(d => require(d));
+    return (opts[name] || []).map(d => require(d));
   };
 
   return [[ babelify, { presets: [ reactPreset, es2015Preset ] } ]]
