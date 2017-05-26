@@ -11,9 +11,7 @@
     }
   },
   "dependencies": {
-    "idyll-default-components": "1.0.3",
     "react-micro-bar-chart": "1.1.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

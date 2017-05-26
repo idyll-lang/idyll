@@ -1,8 +1,0 @@
-{
-  "data": {"url": "data/cars.json"},
-  "mark": "bar",
-  "encoding": {
-    "x": {"field": "Cylinders", "type": "ordinal"},
-    "y": {"aggregate": "mean", "field": "Acceleration", "type": "quantitative"}
-  }
-}
