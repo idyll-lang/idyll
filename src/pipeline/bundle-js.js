@@ -25,6 +25,7 @@ module.exports = function (paths) {
       ],
       plugin: [
         (b) => b.require([
+          {file: paths.SYNTAX_OUTPUT_FILE, expose: '__IDYLL_SYNTAX_HIGHLIGHT__'},
           {file: paths.AST_OUTPUT_FILE, expose: '__IDYLL_AST__'},
           {file: paths.COMPONENTS_OUTPUT_FILE, expose: '__IDYLL_COMPONENTS__'},
           {file: paths.DATA_OUTPUT_FILE, expose: '__IDYLL_DATA__'}

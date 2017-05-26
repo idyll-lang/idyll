@@ -2,6 +2,7 @@ const React = require('react');
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 
+require('__IDYLL_SYNTAX_HIGHLIGHT__');
 let results = require('__IDYLL_AST__');
 
 const transformRefs = (refs) => {

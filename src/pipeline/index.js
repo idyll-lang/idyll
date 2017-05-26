@@ -7,6 +7,7 @@ const {
   getASTJSON,
   getComponentsJS,
   getDataJS,
+  getHighlightJS,
   getHTML
 } = require('./parse');
 const css = require('./css');
@@ -30,6 +31,7 @@ const build = (opts, paths, inputConfig) => {
         components: getComponentsJS(ast, paths, inputConfig),
         css: css(opts),
         data: getDataJS(ast, paths.DATA_DIR),
+        syntaxHighlighting: getHighlightJS(ast),
         html: getHTML(ast, fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8'))
       };
     }
@@ -41,6 +43,7 @@ const build = (opts, paths, inputConfig) => {
       writeFile(paths.COMPONENTS_OUTPUT_FILE, output.components),
       writeFile(paths.CSS_OUTPUT_FILE, output.css),
       writeFile(paths.DATA_OUTPUT_FILE, output.data),
+      writeFile(paths.SYNTAX_OUTPUT_FILE, output.syntaxHighlighting),
       writeFile(paths.HTML_OUTPUT_FILE, output.html),
     ]);
   })

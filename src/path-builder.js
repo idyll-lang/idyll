@@ -42,6 +42,7 @@ module.exports = function (opts) {
     TMP_DIR,
     AST_OUTPUT_FILE: join(TMP_DIR, 'ast.json'),
     COMPONENTS_OUTPUT_FILE: join(TMP_DIR, 'components.js'),
+    SYNTAX_OUTPUT_FILE: join(TMP_DIR, 'syntax-highlighters.js'),
     DATA_OUTPUT_FILE: join(TMP_DIR, 'data.js')
   };
 }
