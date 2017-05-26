@@ -1,6 +1,9 @@
-
+body {
+  margin: 0;
+}
 
 .idyll-root {
+  box-sizing: border-box;
   max-width: 600px;
   margin: 0 auto;
   padding: 60px 0;
