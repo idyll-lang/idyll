@@ -4,7 +4,8 @@
   "description": "Components that ship by default in new idyll projects",
   "main": "index.js",
   "scripts": {
-    "prepublish": "node prepublish.js",
+    "prepublish": "node scripts/prepublish.js",
+    "postpublish": "node scripts/postpublish.js",
     "test": "jest"
   },
   "jest": {

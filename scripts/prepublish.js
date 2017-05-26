@@ -6,10 +6,8 @@ const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const brfs = require('brfs');
 
-const componentsDir = path.join(__dirname, 'components');
-const libDir = path.join(__dirname, 'lib');
-
-if (!fs.existsSync(libDir)) fs.mkdirSync(libDir);
+const componentsDir = path.join(__dirname, '..', 'components');
+const outputDir = path.join(__dirname, '..');
 
 fs.readdirSync(componentsDir).forEach((file) => {
   if (!file.endsWith('.js')) return;
@@ -22,5 +20,5 @@ fs.readdirSync(componentsDir).forEach((file) => {
     ]
   });
   b.external([ 'react', 'react-dom' ]);
-  b.bundle().pipe(fs.createWriteStream(path.join(libDir, file)));
+  b.bundle().pipe(fs.createWriteStream(path.join(outputDir, file)));
 })
