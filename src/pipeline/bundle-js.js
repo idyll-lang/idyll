@@ -9,8 +9,18 @@ const Promise = require('bluebird');
 
 let b;
 
-module.exports = function (paths) {
-  process.env['NODE_ENV'] = 'production';
+const getTransform = (opts) => {
+  const _getTransform = (name) => {
+    return (opts[name] || []).map(d => require(d));
+  };
+
+  return [[ babelify, { presets: [ reactPreset, es2015Preset ] } ]]
+    .concat(_getTransform('transform'))
+    .concat([[ brfs ]]);
+};
+
+module.exports = function (opts, paths) {
+  process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
 
   if (!b) {
     const config = {
@@ -19,10 +29,7 @@ module.exports = function (paths) {
       packageCache: {},
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
-      transform: [
-        [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-        [ brfs ]
-      ],
+      transform: getTransform(opts),
       plugin: [
         (b) => b.require([
           {file: paths.SYNTAX_OUTPUT_FILE, expose: '__IDYLL_SYNTAX_HIGHLIGHT__'},
@@ -39,7 +46,6 @@ module.exports = function (paths) {
   return new Promise((resolve, reject) => {
     b.bundle((err, src) => {
       if (err) return reject(err);
-
       resolve(src.toString('utf8'));
     }).pipe(fs.createWriteStream(path.join(paths.TMP_DIR, 'bundle.js')));
   })
