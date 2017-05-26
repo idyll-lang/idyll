@@ -14,11 +14,12 @@ const getTransform = (inputConfig) => {
     return (inputConfig[name] || []).map(d => require(d));
   };
 
-  return _getTransform('pretransform').concat([
-    [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-    [ brfs ]
-  ]).concat(_getTransform('transform')).concat(_getTransform('posttransform'));
-}
+  return _getTransform('pretransform')
+    .concat([[ babelify, { presets: [ reactPreset, es2015Preset ] } ]])
+    .concat(_getTransform('transform'))
+    .concat([[ brfs ]])
+    .concat(_getTransform('posttransform'));
+};
 
 module.exports = function (opts, paths, inputConfig) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
