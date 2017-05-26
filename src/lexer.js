@@ -34,13 +34,13 @@ const lex = function(options) {
     column += lines[lines.length - 1].length;
   }
 
-  lexer.addRule(/`{4}(\S*)\n([\s\S]+)`{4}/g, function(lexeme, language, text) {
+  lexer.addRule(/`{4}(\S*)\n(((?!````)[\s\S])+)`{4}/g, function(lexeme, language, text) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
     return ['MULTILINE_CODE'].concat(formatToken(language)).concat(formatToken(text.trim()));
   });
-  lexer.addRule(/`{3}(\S*)\n([\s\S]+)`{3}/g, function(lexeme, language, text) {
+  lexer.addRule(/`{3}(\S*)\n(((?!```)[\s\S])+)`{3}/g, function(lexeme, language, text) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);

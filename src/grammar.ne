@@ -74,9 +74,13 @@ ListItem -> "LIST_ITEM" (__ ParagraphItem):+ {%
   }
 %}
 
-MultilineCode -> "MULTILINE_CODE" __ TokenValue __ TokenValue {%
+MultilineCode -> "MULTILINE_CODE" (__ TokenValue):+ {%
   function(data, location, reject) {
-    return ["pre", [], [["code", [], [data[4]]]]];
+    if (data[1].length > 1 && data[1][0][1].trim() !== '') {
+      return ["CodeHighlight", [['language', ['value', data[1][0][1]]]], [data[1][1][1]]];
+    } else {
+      return ["pre", [], [["code", [], [data[1][data[1].length - 1][1]]]]];
+    }
   }
 %}
 

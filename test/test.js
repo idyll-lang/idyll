@@ -357,6 +357,13 @@ describe('compiler', function() {
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
       expect(output).to.eql([['code', [], ["Why 'hello' there"]]]);
     })
+    it('should handle a language in a codeblock ', function() {
+      const input = "```json\n{}\n```";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([['CodeHighlight', [['language', ['value', 'json']]], ["{}"]]]);
+    })
   });
 
   describe('error handling', function() {
