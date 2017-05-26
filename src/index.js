@@ -77,7 +77,7 @@ const idyll = (options = {}, cb) => {
               logLevel: 'warn',
               logPrefix: 'Idyll',
               notify: false,
-              server: paths.OUTPUT_DIR,
+              server: [paths.OUTPUT_DIR, paths.INPUT_DIR],
               ui: false
             });
           }
