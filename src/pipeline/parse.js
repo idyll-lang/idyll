@@ -108,6 +108,49 @@ exports.getDataJS = (ast, DATA_DIR) => {
   return `module.exports = ${JSON.stringify(data)}`;
 }
 
+
+exports.getHighlightJS = (ast) => {
+
+  const languageMap = {
+    js: 'javascript'
+  };
+  // can be multiple data nodes
+  const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
+
+  const languages = codeHighlightNodes.reduce(
+    (acc, dataNode) => {
+      const props = dataNode[1];
+      const { language } = props.reduce(
+        (hash, val) => {
+          hash[val[0]] = val[1][1];
+          return hash;
+        },
+        {}
+      );
+
+      acc[language] = true;
+      return acc;
+    },
+    {}
+  );
+
+  let js = `
+    import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/dist/light"
+  `;
+
+  Object.keys(languages).forEach((language) => {
+    if (languageMap[language]) {
+      language = languageMap[language];
+    }
+    js += `
+      import ${language} from 'react-syntax-highlighter/dist/languages/${language}';
+      registerLanguage('${language}', ${language});
+    `
+  });
+
+  return js;
+}
+
 exports.getHTML = (ast, template) => {
   // there should only be one meta node
   const metaNodes = getNodesByName('meta', ast);
