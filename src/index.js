@@ -24,6 +24,7 @@ const idyll = (options = {}, cb) => {
       output: 'build',
       template: '_index.html',
       theme: 'idyll',
+      transform: [],
       compilerOptions: {
         spellcheck: true
       },
@@ -36,12 +37,16 @@ const idyll = (options = {}, cb) => {
 
   const inputPackage = require(paths.PACKAGE_FILE);
   const inputConfig = Object.assign({
-    components: {}
+    components: {},
+    transform: []
   }, inputPackage.idyll || {});
   for (let key in inputConfig.components) {
     inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
     delete inputConfig.components[key];
   };
+
+  // Handle options that can be provided via options or via package.json
+  opts.transform = options.transform || inputConfig || opts.transform;
 
   let bs;
 

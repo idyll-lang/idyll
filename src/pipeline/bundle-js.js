@@ -14,14 +14,12 @@ const getTransform = (inputConfig) => {
     return (inputConfig[name] || []).map(d => require(d));
   };
 
-  return _getTransform('pretransform')
-    .concat([[ babelify, { presets: [ reactPreset, es2015Preset ] } ]])
+  return [[ babelify, { presets: [ reactPreset, es2015Preset ] } ]]
     .concat(_getTransform('transform'))
-    .concat([[ brfs ]])
-    .concat(_getTransform('posttransform'));
+    .concat([[ brfs ]]);
 };
 
-module.exports = function (opts, paths, inputConfig) {
+module.exports = function (opts, paths) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
 
   if (!b) {
@@ -31,7 +29,7 @@ module.exports = function (opts, paths, inputConfig) {
       packageCache: {},
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
-      transform: getTransform(inputConfig),
+      transform: getTransform(opts),
       plugin: [
         (b) => b.require([
           {file: paths.AST_OUTPUT_FILE, expose: '__IDYLL_AST__'},
