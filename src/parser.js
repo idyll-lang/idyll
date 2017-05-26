@@ -44,6 +44,11 @@ module.exports = function(input, tokens, positions, options) {
       && typeof node[2][0][2][0] === 'string') {
         return [node[0], node[1], node[2][0][2]];
     }
+
+    // don't apply cleaning to codeblocks
+    if (['pre', 'code'].indexOf(node[0].toLowerCase()) > -1) {
+      return node;
+    }
     return [node[0], node[1], node[2].map(cleanResults)];
   };
 

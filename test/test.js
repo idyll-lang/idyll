@@ -349,6 +349,14 @@ describe('compiler', function() {
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
       expect(output).to.eql([['Equation', [], ['y = 0']]]);
     })
+
+    it('should not put smartquotes in code blocks', function() {
+      const input = "`Why 'hello' there`";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([['code', [], ["Why 'hello' there"]]]);
+    })
   });
 
   describe('error handling', function() {
