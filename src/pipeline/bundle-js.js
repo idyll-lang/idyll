@@ -9,8 +9,19 @@ const Promise = require('bluebird');
 
 let b;
 
-module.exports = function (paths) {
-  process.env['NODE_ENV'] = 'production';
+const getTransform = (inputConfig) => {
+  const _getTransform = (name) => {
+    return (inputConfig[name] || []).map(d => require(d));
+  };
+
+  return _getTransform('pretransform').concat([
+    [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
+    [ brfs ]
+  ]).concat(_getTransform('transform')).concat(_getTransform('posttransform'));
+}
+
+module.exports = function (opts, paths, inputConfig) {
+  process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
 
   if (!b) {
     const config = {
@@ -19,10 +30,7 @@ module.exports = function (paths) {
       packageCache: {},
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
-      transform: [
-        [ babelify, { presets: [ reactPreset, es2015Preset ] } ],
-        [ brfs ]
-      ],
+      transform: getTransform(inputConfig),
       plugin: [
         (b) => b.require([
           {file: paths.AST_OUTPUT_FILE, expose: '__IDYLL_AST__'},

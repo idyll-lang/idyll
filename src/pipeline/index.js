@@ -45,7 +45,7 @@ const build = (opts, paths, inputConfig) => {
     ]);
   })
   .then(() => {
-    return bundleJS(paths); // create index.js bundle
+    return bundleJS(opts, paths, inputConfig); // create index.js bundle
   })
   .then((js) => {
     // minify bundle if necessary and store it

@@ -34,8 +34,8 @@ const idyll = (options = {}, cb) => {
 
   const paths = pathBuilder(opts);
 
-  const inputPkg = require(paths.PKG_FILE);
-  const inputConfig = (inputPkg.idyll || {components: {}});
+  const inputPackage = require(paths.PACKAGE_FILE);
+  const inputConfig = (inputPackage.idyll || {components: {}});
   for (let key in inputConfig.components) {
     inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
     delete inputConfig.components[key];
