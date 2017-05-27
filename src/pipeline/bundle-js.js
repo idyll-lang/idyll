@@ -14,7 +14,7 @@ const getTransform = (opts, paths) => {
     return (opts[name] || []).map(d => require(d));
   };
 
-  return [[ babelify, { presets: [ reactPreset, es2015Preset ], ignore: ['node_modules/!(idyll)/**/*'] } ]]
+  return [[ babelify, { presets: [ reactPreset, es2015Preset ] } ]]
     .concat(_getTransform('transform'))
     .concat([[ brfs ]]);
 };
