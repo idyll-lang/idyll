@@ -4,7 +4,6 @@ const htmlTags = require('html-tags');
 const mustache = require('mustache');
 const resolve = require('resolve');
 const Baby = require('babyparse');
-const slash = require('slash');
 const { paramCase } = require('change-case');
 
 const getNodesByName = (name, tree) => {
@@ -116,7 +115,10 @@ exports.getHighlightJS = (ast, paths) => {
     TMP_DIR
   } = paths;
   // load react-syntax-highlighter from idyll's node_modules directory
-  const rshPath = slash(path.join(paths.IDYLL_DIR, 'node_modules', 'react-syntax-highlighter'));
+  const rshPath = slash(path.relative(
+    TMP_DIR,
+    path.join(DEFAULT_COMPONENTS_DIR, '..', 'react-syntax-highlighter')
+  ));
 
   const languageMap = {
     js: 'javascript'
