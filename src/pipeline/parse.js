@@ -45,16 +45,16 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
       if (!acc[name]) {
         if (inputConfig.components[name]) {
           const compPath = path.parse(path.join(INPUT_DIR, inputConfig.components[name]));
-          acc[name] = path.join(path.relative(TMP_DIR, compPath.dir), compPath.base).replace(/\\/g, '/');
+          acc[name] = slash(path.join(path.relative(TMP_DIR, compPath.dir), compPath.base));
         } else if (customComponentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = path.relative(TMP_DIR, path.join(COMPONENTS_DIR, name)).replace(/\\/g, '/');
+          acc[name] = slash(path.relative(TMP_DIR, path.join(COMPONENTS_DIR, name)));
         } else if (componentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = path.relative(TMP_DIR, path.join(DEFAULT_COMPONENTS_DIR, name)).replace(/\\/g, '/');
+          acc[name] = slash(path.relative(TMP_DIR, path.join(DEFAULT_COMPONENTS_DIR, name)));
         } else {
           try {
             // npm modules are required via relative paths to support working with a locally linked idyll
             const compPath = path.parse(resolve.sync(name, {basedir: INPUT_DIR}));
-            acc[name] = path.join(path.relative(TMP_DIR, compPath.dir), compPath.base).replace(/\\/g, '/');
+            acc[name] = slash(path.join(path.relative(TMP_DIR, compPath.dir), compPath.base));
           } catch (err) {
             if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
               throw new Error(`Component named ${node[0]} could not be found.`)
