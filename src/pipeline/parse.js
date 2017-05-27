@@ -115,7 +115,7 @@ exports.getHighlightJS = (ast, paths) => {
     TMP_DIR
   } = paths;
   // load react-syntax-highlighter from idyll's node_modules directory
-  const rshPath = path.join(paths.IDYLL_DIR, 'node_modules', 'react-syntax-highlighter');
+  const rshPath = path.join(paths.IDYLL_DIR, 'node_modules', 'react-syntax-highlighter').replace(/\\/g, '/');
 
   const languageMap = {
     js: 'javascript'
