@@ -34,7 +34,7 @@
     "browserify-incremental": "^3.1.1",
     "change-case": "^3.0.1",
     "html-tags": "^1.1.1",
-    "idyll-compiler": "^1.3.0",
+    "idyll-compiler": "^1.4.4",
     "idyll-default-components": "^1.2.0",
     "insert-css": "^2.0.0",
     "mustache": "^2.3.0",

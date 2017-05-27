@@ -109,11 +109,20 @@ exports.getDataJS = (ast, DATA_DIR) => {
 }
 
 
-exports.getHighlightJS = (ast) => {
-
+exports.getHighlightJS = (ast, paths) => {
+  const {
+    DEFAULT_COMPONENTS_DIR,
+    TMP_DIR
+  } = paths;
+  // load react-syntax-highlighter from idyll's node_modules directory
+  const rshPath = path.relative(
+    TMP_DIR,
+    path.join(DEFAULT_COMPONENTS_DIR, '..', 'react-syntax-highlighter')
+  ).replace(/\\/g, '/');
   const languageMap = {
     js: 'javascript'
   };
+
   // can be multiple data nodes
   const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
 
@@ -134,18 +143,13 @@ exports.getHighlightJS = (ast) => {
     {}
   );
 
-  let js = `
-    import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/dist/light"
-  `;
+  let js = `const rsh = require('${path.join(rshPath, 'dist', 'light')}');`
 
   Object.keys(languages).forEach((language) => {
     if (languageMap[language]) {
       language = languageMap[language];
     }
-    js += `
-      import ${language} from 'react-syntax-highlighter/dist/languages/${language}';
-      registerLanguage('${language}', ${language});
-    `
+    js += `\nrsh.registerLanguage('${language}', require('${path.join(rshPath, 'dist', 'languages', language)}').default);`
   });
 
   return js;
