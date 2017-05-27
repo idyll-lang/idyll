@@ -120,9 +120,6 @@ exports.getHighlightJS = (ast, paths) => {
     TMP_DIR,
     path.join(DEFAULT_COMPONENTS_DIR, '..', 'react-syntax-highlighter')
   ));
-
-  console.log(rshPath);
-
   const languageMap = {
     js: 'javascript'
   };
@@ -148,8 +145,6 @@ exports.getHighlightJS = (ast, paths) => {
   );
 
   let js = `const rsh = require('${slash(path.join(rshPath, 'dist', 'light'))}');`
-
-  console.log(js);
 
   Object.keys(languages).forEach((language) => {
     if (languageMap[language]) {
