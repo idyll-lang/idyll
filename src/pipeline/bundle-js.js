@@ -14,7 +14,7 @@ const getTransform = (opts) => {
     return (opts[name] || []).map(d => require(d));
   };
 
-  return [[ babelify, { presets: [ reactPreset, es2015Preset ], ignore: ['node_modules/**/*'] } ]]
+  return [[ babelify, { presets: [ reactPreset, es2015Preset ], babelrc: false } ]]
     .concat(_getTransform('transform'))
     .concat([[ brfs ]]);
 };
