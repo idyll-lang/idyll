@@ -53,6 +53,7 @@ describe('compiler', function() {
       var results = lex("regular text and stuff, then a [link](https://idyll-lang.github.io/).");
       expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "regular text and stuff, then a " TOKEN_VALUE_END LINK TOKEN_VALUE_START "link" TOKEN_VALUE_END TOKEN_VALUE_START "https://idyll-lang.github.io/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
     });
+
     it('should handle a markdown-style image', function() {
       var lex = Lexer();
       var results = lex("This is an image inline ![image](https://idyll-lang.github.io/logo-text.svg).");
@@ -64,6 +65,7 @@ describe('compiler', function() {
       var results = lex("This component name has a period separator [component.val /].");
       expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"component.val\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
     });
+
     it('should handle a component name with multiple periods', function() {
       var lex = Lexer();
       var results = lex("This component name has a period separator [component.val.v /].");
@@ -340,6 +342,22 @@ describe('compiler', function() {
       var lexResults = lex(input);
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
       expect(output).to.eql([['strong', [], ['p a']]]);
+    })
+
+    it('should handle strong emphasized text using asterisks', function() {
+      const input = "***test***";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([['strong', [], [['em', [], ['test']]]]]);
+    })
+
+    it('should handle strong emphasized text using underscores', function() {
+      const input = "___test___";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([['strong', [], [['em', [], ['test']]]]]);
     })
 
     it('should merge consecutive word blocks', function() {

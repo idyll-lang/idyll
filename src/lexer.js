@@ -89,11 +89,23 @@ const lex = function(options) {
     updatePosition(lexeme);
     return ['STRONG'].concat(formatToken(text));
   });
+  lexer.addRule(/\*\*\*([^\s\n\*][^\*]*[^\s\n\*])\*\*\*/g, function(lexeme, text) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['STRONGEM'].concat(formatToken(text));
+  });
   lexer.addRule(/__([^\s\n_][^_]*[^\s\n_])__/g, function(lexeme, text) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
     return ['STRONG'].concat(formatToken(text));
+  });
+  lexer.addRule(/___([^\s\n_][^_]*[^\s\n_])___/g, function(lexeme, text) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['STRONGEM'].concat(formatToken(text));
   });
 
   lexer.addRule(/^\s*([\-\*]\s*([^\n]*)\n)*([\-\*]\s*([^\n]*)\n?)/gm, function(lexeme) {
