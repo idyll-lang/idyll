@@ -147,7 +147,7 @@ exports.getHighlightJS = (ast, paths) => {
     {}
   );
 
-  let js = `const rsh = require('${path.join(rshPath, 'dist', 'light')}');`
+  let js = `const rsh = require('${slash(path.join(rshPath, 'dist', 'light'))}');`
 
   console.log(js);
 
@@ -155,7 +155,7 @@ exports.getHighlightJS = (ast, paths) => {
     if (languageMap[language]) {
       language = languageMap[language];
     }
-    js += `\nrsh.registerLanguage('${language}', require('${path.join(rshPath, 'dist', 'languages', language)}').default);`
+    js += `\nrsh.registerLanguage('${language}', require('${slash(path.join(rshPath, 'dist', 'languages', language))}').default);`
   });
 
   return js;
