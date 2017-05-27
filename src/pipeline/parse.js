@@ -35,7 +35,7 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
   } = paths;
 
   const componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_DIR);
-  const customComponentFiles = COMPONENTS_DIR ? fs.readdirSync(COMPONENTS_DIR) : [];
+  const customComponentFiles = fs.existsSync(COMPONENTS_DIR) ? fs.readdirSync(COMPONENTS_DIR) : [];
 
   const components = componentNodes.reduce(
     (acc, node) => {

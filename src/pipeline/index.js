@@ -31,7 +31,7 @@ const build = (opts, paths, inputConfig) => {
         components: getComponentsJS(ast, paths, inputConfig),
         css: css(opts),
         data: getDataJS(ast, paths.DATA_DIR),
-        syntaxHighlighting: getHighlightJS(ast),
+        syntaxHighlighting: getHighlightJS(ast, paths),
         html: getHTML(ast, fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8'))
       };
     }

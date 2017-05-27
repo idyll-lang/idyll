@@ -16,13 +16,22 @@ require('babel-core/register')({
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
       watch: false,
-      components: 'components',
       datasets: 'data',
       minify: true,
-      defaultComponents: join('components', 'default'),
+      components: 'components',
+      defaultComponents: join(
+        __dirname,
+        '..',
+        'node_modules',
+        'idyll-default-components'
+      ),
       layout: 'blog',
       output: 'build',
-      template: '_index.html',
+      template: join(
+        __dirname,
+        'client',
+        '_index.html'
+      ),
       theme: 'idyll',
       transform: [],
       compilerOptions: {
