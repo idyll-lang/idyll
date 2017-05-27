@@ -4,6 +4,7 @@ const htmlTags = require('html-tags');
 const mustache = require('mustache');
 const resolve = require('resolve');
 const Baby = require('babyparse');
+const slash = require('slash');
 const { paramCase } = require('change-case');
 
 const getNodesByName = (name, tree) => {
