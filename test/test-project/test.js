@@ -57,7 +57,6 @@ beforeAll(done => {
     output: PROJECT_BUILD_DIR,
     htmlTemplate: join(PROJECT_DIR, '_index.html'),
     components: join(PROJECT_DIR, 'components'),
-    defaultComponents: join(PROJECT_DIR, 'components', 'default'),
     datasets: join(PROJECT_DIR, 'data'),
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
