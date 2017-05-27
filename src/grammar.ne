@@ -132,7 +132,7 @@ Text -> "WORDS" __ TokenValue {%
   }
 %}
 
-TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | ImageInline) {%
+TextInline -> (CodeInline | BoldInline | EmInline | BoldEmInline | LinkInline | ImageInline) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -147,6 +147,12 @@ BoldInline -> "STRONG" __ TokenValue {%
 EmInline -> "EM" __ TokenValue {%
   function(data, location, reject) {
     return ['em', [], [data[2]]];
+  }
+%}
+
+BoldEmInline -> "STRONGEM" __ TokenValue {%
+  function(data, location, reject) {
+    return ['strong', [], [['em', [], [data[2]]]]];
   }
 %}
 
