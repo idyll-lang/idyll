@@ -1,6 +1,7 @@
 const React = require('react');
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
+const utils = require('./utils');
 
 require('__IDYLL_SYNTAX_HIGHLIGHT__');
 let results = require('__IDYLL_AST__');
@@ -14,7 +15,7 @@ const transformRefs = (refs) => {
       if (val === null || val === undefined) {
         return;
       }
-      const results = flattenObject(key, val[key]);
+      const results = utils.flattenObject(key, val[key]);
       Object.keys(results).forEach((result) => {
         output['_idyllRefs' + ref + result] = results[result];
       });

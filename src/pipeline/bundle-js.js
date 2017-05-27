@@ -9,7 +9,7 @@ const Promise = require('bluebird');
 
 let b;
 
-const getTransform = (opts) => {
+const getTransform = (opts, paths) => {
   const _getTransform = (name) => {
     return (opts[name] || []).map(d => require(d));
   };
@@ -29,7 +29,7 @@ module.exports = function (opts, paths) {
       packageCache: {},
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
-      transform: getTransform(opts),
+      transform: getTransform(opts, paths),
       plugin: [
         (b) => b.require([
           {file: paths.SYNTAX_OUTPUT_FILE, expose: '__IDYLL_SYNTAX_HIGHLIGHT__'},
