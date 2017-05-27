@@ -1,3 +1,4 @@
+const fs = require('fs');
 const {
   dirname,
   isAbsolute,
@@ -44,7 +45,7 @@ const idyll = (options = {}, cb) => {
 
   const paths = pathBuilder(opts);
 
-  const inputPackage = require(paths.PACKAGE_FILE);
+  const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
   const inputConfig = Object.assign({
     components: {},
     transform: []
