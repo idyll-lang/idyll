@@ -34,7 +34,6 @@ module.exports = function (opts) {
     HTML_TEMPLATE_FILE: getPath(opts.template),
     IDYLL_INPUT_FILE: getPath(opts.inputFile),
     INPUT_DIR: basedir,
-    IDYLL_DIR: resolve(join(__dirname, '..')),
     PACKAGE_FILE: getPath('package.json'),
 
     OUTPUT_DIR,
