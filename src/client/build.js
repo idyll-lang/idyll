@@ -2,6 +2,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const InteractiveDocument = require('./component');
-var mountNode = document.getElementById('idyll-mount');
+const mountNode = document.getElementById('idyll-mount');
+const ast = require('__IDYLL_AST__');
 
-ReactDOM.render(<InteractiveDocument />, mountNode);
+ReactDOM.render(<InteractiveDocument ast={ast}/>, mountNode);

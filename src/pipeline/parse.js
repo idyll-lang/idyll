@@ -5,6 +5,8 @@ const mustache = require('mustache');
 const resolve = require('resolve');
 const Baby = require('babyparse');
 const { paramCase } = require('change-case');
+const ReactDOMServer = require('react-dom/server');
+const React = require('react');
 
 const getNodesByName = (name, tree) => {
   const predicate = typeof name === 'string' ? (s) => s === name : name;
@@ -119,10 +121,11 @@ exports.getHTML = (ast, template) => {
       return acc;
     },
     {}
-  )
+  ) || {};
 
-  // const InteractiveDocument = require('./client/component');
-  // meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
+  const InteractiveDocument = require('../client/component');
+  meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument, {ast: ast}));
+
   return mustache.render(template, meta || {});
 }
 
