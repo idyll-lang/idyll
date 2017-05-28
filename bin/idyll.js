@@ -27,7 +27,6 @@ var argv = require('yargs')
   .describe('datasets', 'Directory where data files are located')
   .default('datasets', 'data')
   .describe('defaultComponents', 'Directory where default set of components are located')
-  .default('defaultComponents', 'components/default')
   .describe('inputFile', 'File containing Idyll source')
   .describe('inputString', 'Idyll source as a string')
   .describe('layout', 'Name of (or path to) the layout to use')
@@ -41,7 +40,6 @@ var argv = require('yargs')
   .default('spellcheck', true)
   .describe('spellcheck', 'Check spelling of Idyll source input')
   .describe('template', 'Path to HTML template')
-  .default('template', '_index.html')
   .array('transform')
   .describe('transform', 'Custom browserify transforms to apply.')
   .default('transform', [])
@@ -71,5 +69,10 @@ delete argv.n;
 delete argv['no-minify'];
 delete argv.k;
 delete argv.spellcheck;
+
+// delete undefined keys so Object.assign won't use them
+Object.keys(argv).forEach((key) => {
+  if (argv[key] === undefined) delete argv[key];
+})
 
 idyll(argv).build();

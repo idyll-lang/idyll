@@ -2407,9 +2407,9 @@ iconv-lite@0.4, iconv-lite@0.4.13, iconv-lite@~0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
-idyll-compiler@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/idyll-compiler/-/idyll-compiler-1.3.0.tgz#5e682d8c1ed0bfe631749a8df1c3974cc0530d3c"
+idyll-compiler@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/idyll-compiler/-/idyll-compiler-1.4.4.tgz#aafe5dead091befa9d03ae0c7e03595f315f920a"
   dependencies:
     lex "^1.7.9"
     nearley "^2.7.12"
@@ -3702,6 +3702,10 @@ path-exists@^3.0.0:
 path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
+
+path-is-inside@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/path-is-inside/-/path-is-inside-1.0.2.tgz#365417dede44430d1c11af61027facf074bdfc53"
 
 path-key@^2.0.0:
   version "2.0.1"

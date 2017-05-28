@@ -4,6 +4,7 @@ const htmlTags = require('html-tags');
 const mustache = require('mustache');
 const resolve = require('resolve');
 const Baby = require('babyparse');
+const slash = require('slash');
 const { paramCase } = require('change-case');
 
 const getNodesByName = (name, tree) => {
@@ -35,7 +36,7 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
   } = paths;
 
   const componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_DIR);
-  const customComponentFiles = COMPONENTS_DIR ? fs.readdirSync(COMPONENTS_DIR) : [];
+  const customComponentFiles = fs.existsSync(COMPONENTS_DIR) ? fs.readdirSync(COMPONENTS_DIR) : [];
 
   const components = componentNodes.reduce(
     (acc, node) => {
@@ -44,16 +45,16 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
       if (!acc[name]) {
         if (inputConfig.components[name]) {
           const compPath = path.parse(path.join(INPUT_DIR, inputConfig.components[name]));
-          acc[name] = path.join(path.relative(TMP_DIR, compPath.dir), compPath.base).replace(/\\/g, '/');
+          acc[name] = slash(path.join(path.relative(TMP_DIR, compPath.dir), compPath.base));
         } else if (customComponentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = path.relative(TMP_DIR, path.join(COMPONENTS_DIR, name)).replace(/\\/g, '/');
+          acc[name] = slash(path.relative(TMP_DIR, path.join(COMPONENTS_DIR, name)));
         } else if (componentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = path.relative(TMP_DIR, path.join(DEFAULT_COMPONENTS_DIR, name)).replace(/\\/g, '/');
+          acc[name] = slash(path.relative(TMP_DIR, path.join(DEFAULT_COMPONENTS_DIR, name)));
         } else {
           try {
             // npm modules are required via relative paths to support working with a locally linked idyll
             const compPath = path.parse(resolve.sync(name, {basedir: INPUT_DIR}));
-            acc[name] = path.join(path.relative(TMP_DIR, compPath.dir), compPath.base).replace(/\\/g, '/');
+            acc[name] = slash(path.join(path.relative(TMP_DIR, compPath.dir), compPath.base));
           } catch (err) {
             if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
               throw new Error(`Component named ${node[0]} could not be found.`)
@@ -109,11 +110,20 @@ exports.getDataJS = (ast, DATA_DIR) => {
 }
 
 
-exports.getHighlightJS = (ast) => {
-
+exports.getHighlightJS = (ast, paths) => {
+  const {
+    DEFAULT_COMPONENTS_DIR,
+    TMP_DIR
+  } = paths;
+  // load react-syntax-highlighter from idyll's node_modules directory
+  const rshPath = slash(path.relative(
+    TMP_DIR,
+    path.join(paths.NODE_MODULES, 'react-syntax-highlighter')
+  ));
   const languageMap = {
     js: 'javascript'
   };
+
   // can be multiple data nodes
   const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
 
@@ -134,18 +144,13 @@ exports.getHighlightJS = (ast) => {
     {}
   );
 
-  let js = `
-    import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/dist/light"
-  `;
+  let js = `const rsh = require('${slash(path.join(rshPath, 'dist', 'light'))}');`
 
   Object.keys(languages).forEach((language) => {
     if (languageMap[language]) {
       language = languageMap[language];
     }
-    js += `
-      import ${language} from 'react-syntax-highlighter/dist/languages/${language}';
-      registerLanguage('${language}', ${language});
-    `
+    js += `\nrsh.registerLanguage('${language}', require('${slash(path.join(rshPath, 'dist', 'languages', language))}').default);`
   });
 
   return js;

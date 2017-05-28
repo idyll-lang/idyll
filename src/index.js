@@ -1,3 +1,4 @@
+const fs = require('fs');
 const {
   dirname,
   isAbsolute,
@@ -16,13 +17,22 @@ require('babel-core/register')({
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
       watch: false,
-      components: 'components',
       datasets: 'data',
       minify: true,
-      defaultComponents: join('components', 'default'),
+      components: 'components',
+      defaultComponents: join(
+        __dirname,
+        '..',
+        'node_modules',
+        'idyll-default-components'
+      ),
       layout: 'blog',
       output: 'build',
-      template: '_index.html',
+      template: join(
+        __dirname,
+        'client',
+        '_index.html'
+      ),
       theme: 'idyll',
       transform: [],
       compilerOptions: {
@@ -35,7 +45,7 @@ const idyll = (options = {}, cb) => {
 
   const paths = pathBuilder(opts);
 
-  const inputPackage = require(paths.PACKAGE_FILE);
+  const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
   const inputConfig = Object.assign({
     components: {},
     transform: []

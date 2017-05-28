@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    {{#title}}
+      <title>
+        {{title}}
+      </title>
+      <meta property="og:title" content="{{title}}">
+    {{/title}}
+    {{^title}}
+      <title>Idyll</title>
+      <meta property="og:title" content="Idyll Project">
+    {{/title}}
+    <meta charset="utf-8">
+    {{#shareImageUrl}}
+      <meta property="og:image" content="{{shareImageUrl}}">
+      <meta name="twitter:image:src" content="{{shareImageUrl}}">
+      <meta name="twitter:card" content="summary_large_image">
+    {{/shareImageUrl}}
+    {{#shareImageWidth}}
+      <meta property="og:image:width" content="{{shareImageWidth}}">
+    {{/shareImageWidth}}
+    {{#shareImageHeight}}
+      <meta property="og:image:width" content="{{shareImageHeight}}">
+    {{/shareImageHeight}}
+    <meta property="og:type" content="article">
+
+    {{#description}}
+      <meta property="og:description" content="{{description}}">
+      <meta property="description" content="{{description}}">
+    {{/description}}
+    {{#url}}
+      <meta property="og:url" content="{{url}}">
+    {{/url}}
+    {{#twitterHandle}}
+      <meta property="twitter:creator" content="{{twitterHandle}}">
+    {{/twitterHandle}}
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="idyll-mount">
+      {{{idyllContent}}}
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
