@@ -38,7 +38,7 @@
     "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
     "react-inlinesvg": "^0.5.5",
-    "react-latex": "0.0.8",
+    "react-latex": "^1.0.1",
     "react-syntax-highlighter": "^5.6.1",
     "react-vega-lite": "^1.0.1",
     "reactable": "^0.14.1",
