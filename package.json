@@ -40,7 +40,6 @@
     "react-inlinesvg": "^0.5.5",
     "react-latex": "^1.0.1",
     "react-syntax-highlighter": "^5.6.1",
-    "react-vega-lite": "^1.0.1",
     "reactable": "^0.14.1",
     "victory": "^0.18.4"
   },
