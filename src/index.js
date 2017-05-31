@@ -7,6 +7,7 @@ const {
 } = require('path');
 const EventEmitter = require('events');
 const changeCase = require('change-case');
+const findup = require('findup-sync');
 const pathBuilder = require('./path-builder');
 const pipeline = require('./pipeline');
 
@@ -20,12 +21,7 @@ const idyll = (options = {}, cb) => {
       datasets: 'data',
       minify: true,
       components: 'components',
-      defaultComponents: join(
-        __dirname,
-        '..',
-        'node_modules',
-        'idyll-default-components'
-      ),
+      defaultComponents: findup(join('node_modules', 'idyll-default-components')),
       layout: 'blog',
       output: 'build',
       template: join(

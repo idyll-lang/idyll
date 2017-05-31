@@ -1,5 +1,4 @@
 const fs = require('fs');
-const pathIsInside = require('path-is-inside');
 const {
   dirname,
   isAbsolute,
@@ -35,7 +34,6 @@ module.exports = function (opts) {
     HTML_TEMPLATE_FILE: getPath(opts.template),
     IDYLL_INPUT_FILE: getPath(opts.inputFile),
     INPUT_DIR: basedir,
-    NODE_MODULES: pathIsInside(__dirname, basedir) ? join(basedir, 'node_modules') : join(__dirname, '..', 'node_modules'),
     PACKAGE_FILE: getPath('package.json'),
 
     OUTPUT_DIR,
