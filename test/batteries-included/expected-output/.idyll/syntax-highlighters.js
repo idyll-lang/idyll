@@ -1,0 +1,1 @@
+const rsh = require('../../../node_modules/react-syntax-highlighter/dist/light');
