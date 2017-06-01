@@ -1,12 +1,10 @@
-const fs = require('fs');
-const pathIsInside = require('path-is-inside');
 const {
   dirname,
   isAbsolute,
   join,
-  parse,
-  resolve
+  parse
 } = require('path');
+const mkdirp = require('mkdirp');
 
 module.exports = function (opts) {
   const basedir = opts.inputFile
@@ -22,10 +20,10 @@ module.exports = function (opts) {
   }
 
   const OUTPUT_DIR = getPath(opts.output);
-  const TMP_DIR = getPath('.idyll');
+  const TMP_DIR = getPath(opts.temp);
 
-  if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
-  if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR);
+  mkdirp.sync(OUTPUT_DIR);
+  mkdirp.sync(TMP_DIR);
 
   return {
     CSS_INPUT_FILE: getPath(opts.css),
@@ -35,7 +33,6 @@ module.exports = function (opts) {
     HTML_TEMPLATE_FILE: getPath(opts.template),
     IDYLL_INPUT_FILE: getPath(opts.inputFile),
     INPUT_DIR: basedir,
-    NODE_MODULES: pathIsInside(__dirname, basedir) ? join(basedir, 'node_modules') : join(__dirname, '..', 'node_modules'),
     PACKAGE_FILE: getPath('package.json'),
 
     OUTPUT_DIR,

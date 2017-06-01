@@ -20,14 +20,10 @@ const idyll = (options = {}, cb) => {
       datasets: 'data',
       minify: true,
       components: 'components',
-      defaultComponents: join(
-        __dirname,
-        '..',
-        'node_modules',
-        'idyll-default-components'
-      ),
+      defaultComponents: dirname(require.resolve('idyll-default-components')),
       layout: 'blog',
       output: 'build',
+      temp: '.idyll',
       template: join(
         __dirname,
         'client',
