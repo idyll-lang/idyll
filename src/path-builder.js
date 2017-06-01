@@ -2,8 +2,7 @@ const {
   dirname,
   isAbsolute,
   join,
-  parse,
-  resolve
+  parse
 } = require('path');
 const mkdirp = require('mkdirp');
 

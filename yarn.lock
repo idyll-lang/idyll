@@ -2820,8 +2820,8 @@ jest-resolve@^19.0.2:
     resolve "^1.2.0"
 
 jest-runtime@^19.0.2:
-  version "19.0.3"
-  resolved "https://registry.yarnpkg.com/jest-runtime/-/jest-runtime-19.0.3.tgz#a163354ace46910ee33f0282b6bff6b0b87d4330"
+  version "19.0.4"
+  resolved "https://registry.yarnpkg.com/jest-runtime/-/jest-runtime-19.0.4.tgz#f167d9f1347752f2027361067926485349fcc245"
   dependencies:
     babel-core "^6.0.0"
     babel-jest "^19.0.0"
@@ -4105,7 +4105,7 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@1.3.3, resolve@^1.1.3, resolve@^1.1.4, resolve@^1.1.5, resolve@^1.2.0:
+resolve@^1.1.3, resolve@^1.1.4, resolve@^1.1.5, resolve@^1.2.0:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.3.3.tgz#655907c3469a8680dc2de3a275a8fdd69691f0e5"
   dependencies:
@@ -4282,8 +4282,8 @@ slash@^1.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
 smartquotes@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/smartquotes/-/smartquotes-2.1.0.tgz#04460127a7973f8c921a4ea7150b4d5b57c65a4f"
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/smartquotes/-/smartquotes-2.1.1.tgz#26242f8fa2732ca8d63807b643cd11f9b0d98c35"
 
 snake-case@^2.1.0:
   version "2.1.0"
