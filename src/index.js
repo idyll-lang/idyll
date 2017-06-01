@@ -24,6 +24,7 @@ const idyll = (options = {}, cb) => {
       defaultComponents: findup(join('node_modules', 'idyll-default-components')),
       layout: 'blog',
       output: 'build',
+      temp: '.idyll',
       template: join(
         __dirname,
         'client',

@@ -1,4 +1,3 @@
-const fs = require('fs');
 const {
   dirname,
   isAbsolute,
@@ -6,6 +5,7 @@ const {
   parse,
   resolve
 } = require('path');
+const mkdirp = require('mkdirp');
 
 module.exports = function (opts) {
   const basedir = opts.inputFile
@@ -21,10 +21,10 @@ module.exports = function (opts) {
   }
 
   const OUTPUT_DIR = getPath(opts.output);
-  const TMP_DIR = getPath('.idyll');
+  const TMP_DIR = getPath(opts.temp);
 
-  if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
-  if (!fs.existsSync(TMP_DIR)) fs.mkdirSync(TMP_DIR);
+  mkdirp.sync(OUTPUT_DIR);
+  mkdirp.sync(TMP_DIR);
 
   return {
     CSS_INPUT_FILE: getPath(opts.css),
