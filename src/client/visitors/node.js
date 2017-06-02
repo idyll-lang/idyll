@@ -1,10 +1,9 @@
 const React = require('react');
 const htmlTags = require('html-tags');
 const changeCase = require('change-case');
-const componentClasses = require('__IDYLL_COMPONENTS__');
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
-const processComponent = (component, name, id) => {
+const processComponent = (component, name, id, componentClasses) => {
   const split = name.split('.');
   const paramCaseName = changeCase.paramCase(split[0]);
   let componentClass;
@@ -14,6 +13,7 @@ const processComponent = (component, name, id) => {
     for (var i = 1; i < split.length; i++) {
       componentClass = componentClass[split[i]];
     }
+    componentClass = componentClass.substr(componentClass.indexOf('idyll-default-components'));
     extraProps.__handleUpdateProps = component.handleUpdateProps(id);
   } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
     componentClass = name.toLowerCase();
@@ -46,7 +46,7 @@ const filterPropsByComponentName = {
   p: []
 };
 
-module.exports = function(component) {
+module.exports = function(component, componentClasses) {
   let nodeID = -1;
   const walkNode = function (node) {
     nodeID++;
@@ -124,7 +124,7 @@ module.exports = function(component) {
         }
       });
 
-      const results = processComponent(component, componentName, nodeID);
+      const results = processComponent(component, componentName, nodeID, componentClasses);
 
       const inputProps = Object.assign({}, results.extraProps, propsObj);
       if (children) {

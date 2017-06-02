@@ -25,7 +25,7 @@ const getNodesByName = (name, tree) => {
   )
 }
 
-exports.getComponentsJS = (ast, paths, inputConfig) => {
+exports.getComponentsJS = (ast, paths, inputConfig, o) => {
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
   const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
   const {
@@ -66,6 +66,8 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
     {}
   );
 
+  if (o) return components;
+
   const src = Object.keys(components)
     .map((key) => {
       return `'${key}': require('${components[key]}')`;
@@ -75,7 +77,7 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
   return `module.exports = {\n\t${src}\n}\n`;
 }
 
-exports.getDataJS = (ast, DATA_DIR) => {
+exports.getDataJS = (ast, DATA_DIR, o) => {
   // can be multiple data nodes
   const dataNodes = getNodesByName('data', ast);
 
@@ -103,6 +105,8 @@ exports.getDataJS = (ast, DATA_DIR) => {
     },
     {}
   );
+
+  if (o) return data;
 
   return `module.exports = ${JSON.stringify(data)}`;
 }
@@ -147,7 +151,7 @@ exports.getHighlightJS = (ast, paths) => {
   return js;
 }
 
-exports.getHTML = (ast, template) => {
+exports.getHTML = (ast, components, datasets, template) => {
   // there should only be one meta node
   const metaNodes = getNodesByName('meta', ast);
 
@@ -160,8 +164,17 @@ exports.getHTML = (ast, template) => {
     {}
   )
 
-  // const InteractiveDocument = require('./client/component');
-  // meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
+  const ReactDOMServer = require('react-dom/server');
+  const React = require('react');
+  const InteractiveDocument = require('../client/component');
+  meta.idyllContent = ReactDOMServer.renderToString(
+    React.createElement(InteractiveDocument, {
+      ast: ast,
+      componentClasses: components,
+      datasets: datasets
+    })
+  );
+  console.log(meta.idyllContent);
   return mustache.render(template, meta || {});
 }
 

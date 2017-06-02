@@ -1,4 +1,46 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/mathisonian/projects/idyll/idyll/node_modules/camel-case/camel-case.js":[function(require,module,exports){
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/core-js/object/assign.js":[function(require,module,exports){
+module.exports = { "default": require("core-js/library/fn/object/assign"), __esModule: true };
+},{"core-js/library/fn/object/assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/fn/object/assign.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/helpers/extends.js":[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+
+var _assign = require("../core-js/object/assign");
+
+var _assign2 = _interopRequireDefault(_assign);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _assign2.default || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+},{"../core-js/object/assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/core-js/object/assign.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/helpers/objectWithoutProperties.js":[function(require,module,exports){
+"use strict";
+
+exports.__esModule = true;
+
+exports.default = function (obj, keys) {
+  var target = {};
+
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/camel-case/camel-case.js":[function(require,module,exports){
 var upperCase = require('upper-case')
 var noCase = require('no-case')
 
@@ -23,7 +65,7 @@ module.exports = function (value, locale, mergeNumbers) {
   })
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/change-case/change-case.js":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/change-case/change-case.js":[function(require,module,exports){
 exports.no = exports.noCase = require('no-case')
 exports.dot = exports.dotCase = require('dot-case')
 exports.swap = exports.swapCase = require('swap-case')
@@ -43,7 +85,7 @@ exports.isLower = exports.isLowerCase = require('is-lower-case')
 exports.ucFirst = exports.upperCaseFirst = require('upper-case-first')
 exports.lcFirst = exports.lowerCaseFirst = require('lower-case-first')
 
-},{"camel-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/camel-case/camel-case.js","constant-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/constant-case/constant-case.js","dot-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/dot-case/dot-case.js","header-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/header-case/header-case.js","is-lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/is-lower-case/is-lower-case.js","is-upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/is-upper-case/is-upper-case.js","lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js","lower-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case-first/lower-case-first.js","no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","param-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/param-case/param-case.js","pascal-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/pascal-case/pascal-case.js","path-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/path-case/path-case.js","sentence-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/sentence-case/sentence-case.js","snake-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/snake-case/snake-case.js","swap-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/swap-case/swap-case.js","title-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/title-case/title-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js","upper-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/constant-case/constant-case.js":[function(require,module,exports){
+},{"camel-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/camel-case/camel-case.js","constant-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/constant-case/constant-case.js","dot-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/dot-case/dot-case.js","header-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/header-case/header-case.js","is-lower-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/is-lower-case/is-lower-case.js","is-upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/is-upper-case/is-upper-case.js","lower-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case/lower-case.js","lower-case-first":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case-first/lower-case-first.js","no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js","param-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/param-case/param-case.js","pascal-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/pascal-case/pascal-case.js","path-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/path-case/path-case.js","sentence-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/sentence-case/sentence-case.js","snake-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/snake-case/snake-case.js","swap-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/swap-case/swap-case.js","title-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/title-case/title-case.js","upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js","upper-case-first":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/constant-case/constant-case.js":[function(require,module,exports){
 var upperCase = require('upper-case')
 var snakeCase = require('snake-case')
 
@@ -58,7 +100,362 @@ module.exports = function (value, locale) {
   return upperCase(snakeCase(value, locale), locale)
 }
 
-},{"snake-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/snake-case/snake-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/dot-case/dot-case.js":[function(require,module,exports){
+},{"snake-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/snake-case/snake-case.js","upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/fn/object/assign.js":[function(require,module,exports){
+require('../../modules/es6.object.assign');
+module.exports = require('../../modules/_core').Object.assign;
+},{"../../modules/_core":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_core.js","../../modules/es6.object.assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/es6.object.assign.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_a-function.js":[function(require,module,exports){
+module.exports = function(it){
+  if(typeof it != 'function')throw TypeError(it + ' is not a function!');
+  return it;
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_an-object.js":[function(require,module,exports){
+var isObject = require('./_is-object');
+module.exports = function(it){
+  if(!isObject(it))throw TypeError(it + ' is not an object!');
+  return it;
+};
+},{"./_is-object":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_is-object.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_array-includes.js":[function(require,module,exports){
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject = require('./_to-iobject')
+  , toLength  = require('./_to-length')
+  , toIndex   = require('./_to-index');
+module.exports = function(IS_INCLUDES){
+  return function($this, el, fromIndex){
+    var O      = toIObject($this)
+      , length = toLength(O.length)
+      , index  = toIndex(fromIndex, length)
+      , value;
+    // Array#includes uses SameValueZero equality algorithm
+    if(IS_INCLUDES && el != el)while(length > index){
+      value = O[index++];
+      if(value != value)return true;
+    // Array#toIndex ignores holes, Array#includes - not
+    } else for(;length > index; index++)if(IS_INCLUDES || index in O){
+      if(O[index] === el)return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+},{"./_to-index":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-index.js","./_to-iobject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-iobject.js","./_to-length":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-length.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_cof.js":[function(require,module,exports){
+var toString = {}.toString;
+
+module.exports = function(it){
+  return toString.call(it).slice(8, -1);
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_core.js":[function(require,module,exports){
+var core = module.exports = {version: '2.4.0'};
+if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_ctx.js":[function(require,module,exports){
+// optional / simple context binding
+var aFunction = require('./_a-function');
+module.exports = function(fn, that, length){
+  aFunction(fn);
+  if(that === undefined)return fn;
+  switch(length){
+    case 1: return function(a){
+      return fn.call(that, a);
+    };
+    case 2: return function(a, b){
+      return fn.call(that, a, b);
+    };
+    case 3: return function(a, b, c){
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function(/* ...args */){
+    return fn.apply(that, arguments);
+  };
+};
+},{"./_a-function":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_a-function.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_defined.js":[function(require,module,exports){
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function(it){
+  if(it == undefined)throw TypeError("Can't call method on  " + it);
+  return it;
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_descriptors.js":[function(require,module,exports){
+// Thank's IE8 for his funny defineProperty
+module.exports = !require('./_fails')(function(){
+  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
+});
+},{"./_fails":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_fails.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_dom-create.js":[function(require,module,exports){
+var isObject = require('./_is-object')
+  , document = require('./_global').document
+  // in old IE typeof document.createElement is 'object'
+  , is = isObject(document) && isObject(document.createElement);
+module.exports = function(it){
+  return is ? document.createElement(it) : {};
+};
+},{"./_global":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_global.js","./_is-object":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_is-object.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_enum-bug-keys.js":[function(require,module,exports){
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_export.js":[function(require,module,exports){
+var global    = require('./_global')
+  , core      = require('./_core')
+  , ctx       = require('./_ctx')
+  , hide      = require('./_hide')
+  , PROTOTYPE = 'prototype';
+
+var $export = function(type, name, source){
+  var IS_FORCED = type & $export.F
+    , IS_GLOBAL = type & $export.G
+    , IS_STATIC = type & $export.S
+    , IS_PROTO  = type & $export.P
+    , IS_BIND   = type & $export.B
+    , IS_WRAP   = type & $export.W
+    , exports   = IS_GLOBAL ? core : core[name] || (core[name] = {})
+    , expProto  = exports[PROTOTYPE]
+    , target    = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE]
+    , key, own, out;
+  if(IS_GLOBAL)source = name;
+  for(key in source){
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if(own && key in exports)continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function(C){
+      var F = function(a, b, c){
+        if(this instanceof C){
+          switch(arguments.length){
+            case 0: return new C;
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if(IS_PROTO){
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if(type & $export.R && expProto && !expProto[key])hide(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export.F = 1;   // forced
+$export.G = 2;   // global
+$export.S = 4;   // static
+$export.P = 8;   // proto
+$export.B = 16;  // bind
+$export.W = 32;  // wrap
+$export.U = 64;  // safe
+$export.R = 128; // real proto method for `library` 
+module.exports = $export;
+},{"./_core":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_core.js","./_ctx":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_ctx.js","./_global":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_global.js","./_hide":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_hide.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_fails.js":[function(require,module,exports){
+module.exports = function(exec){
+  try {
+    return !!exec();
+  } catch(e){
+    return true;
+  }
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_global.js":[function(require,module,exports){
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_has.js":[function(require,module,exports){
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function(it, key){
+  return hasOwnProperty.call(it, key);
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_hide.js":[function(require,module,exports){
+var dP         = require('./_object-dp')
+  , createDesc = require('./_property-desc');
+module.exports = require('./_descriptors') ? function(object, key, value){
+  return dP.f(object, key, createDesc(1, value));
+} : function(object, key, value){
+  object[key] = value;
+  return object;
+};
+},{"./_descriptors":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_descriptors.js","./_object-dp":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-dp.js","./_property-desc":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_property-desc.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_ie8-dom-define.js":[function(require,module,exports){
+module.exports = !require('./_descriptors') && !require('./_fails')(function(){
+  return Object.defineProperty(require('./_dom-create')('div'), 'a', {get: function(){ return 7; }}).a != 7;
+});
+},{"./_descriptors":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_descriptors.js","./_dom-create":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_dom-create.js","./_fails":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_fails.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_iobject.js":[function(require,module,exports){
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+var cof = require('./_cof');
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+},{"./_cof":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_cof.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_is-object.js":[function(require,module,exports){
+module.exports = function(it){
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-assign.js":[function(require,module,exports){
+'use strict';
+// 19.1.2.1 Object.assign(target, source, ...)
+var getKeys  = require('./_object-keys')
+  , gOPS     = require('./_object-gops')
+  , pIE      = require('./_object-pie')
+  , toObject = require('./_to-object')
+  , IObject  = require('./_iobject')
+  , $assign  = Object.assign;
+
+// should work with symbols and should have deterministic property order (V8 bug)
+module.exports = !$assign || require('./_fails')(function(){
+  var A = {}
+    , B = {}
+    , S = Symbol()
+    , K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function(k){ B[k] = k; });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+  var T     = toObject(target)
+    , aLen  = arguments.length
+    , index = 1
+    , getSymbols = gOPS.f
+    , isEnum     = pIE.f;
+  while(aLen > index){
+    var S      = IObject(arguments[index++])
+      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+      , length = keys.length
+      , j      = 0
+      , key;
+    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+  } return T;
+} : $assign;
+},{"./_fails":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_fails.js","./_iobject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_iobject.js","./_object-gops":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-gops.js","./_object-keys":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-keys.js","./_object-pie":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-pie.js","./_to-object":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-object.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-dp.js":[function(require,module,exports){
+var anObject       = require('./_an-object')
+  , IE8_DOM_DEFINE = require('./_ie8-dom-define')
+  , toPrimitive    = require('./_to-primitive')
+  , dP             = Object.defineProperty;
+
+exports.f = require('./_descriptors') ? Object.defineProperty : function defineProperty(O, P, Attributes){
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if(IE8_DOM_DEFINE)try {
+    return dP(O, P, Attributes);
+  } catch(e){ /* empty */ }
+  if('get' in Attributes || 'set' in Attributes)throw TypeError('Accessors not supported!');
+  if('value' in Attributes)O[P] = Attributes.value;
+  return O;
+};
+},{"./_an-object":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_an-object.js","./_descriptors":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_descriptors.js","./_ie8-dom-define":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_ie8-dom-define.js","./_to-primitive":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-primitive.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-gops.js":[function(require,module,exports){
+exports.f = Object.getOwnPropertySymbols;
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-keys-internal.js":[function(require,module,exports){
+var has          = require('./_has')
+  , toIObject    = require('./_to-iobject')
+  , arrayIndexOf = require('./_array-includes')(false)
+  , IE_PROTO     = require('./_shared-key')('IE_PROTO');
+
+module.exports = function(object, names){
+  var O      = toIObject(object)
+    , i      = 0
+    , result = []
+    , key;
+  for(key in O)if(key != IE_PROTO)has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while(names.length > i)if(has(O, key = names[i++])){
+    ~arrayIndexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+},{"./_array-includes":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_array-includes.js","./_has":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_has.js","./_shared-key":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_shared-key.js","./_to-iobject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-iobject.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-keys.js":[function(require,module,exports){
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys       = require('./_object-keys-internal')
+  , enumBugKeys = require('./_enum-bug-keys');
+
+module.exports = Object.keys || function keys(O){
+  return $keys(O, enumBugKeys);
+};
+},{"./_enum-bug-keys":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_enum-bug-keys.js","./_object-keys-internal":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-keys-internal.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-pie.js":[function(require,module,exports){
+exports.f = {}.propertyIsEnumerable;
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_property-desc.js":[function(require,module,exports){
+module.exports = function(bitmap, value){
+  return {
+    enumerable  : !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable    : !(bitmap & 4),
+    value       : value
+  };
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_shared-key.js":[function(require,module,exports){
+var shared = require('./_shared')('keys')
+  , uid    = require('./_uid');
+module.exports = function(key){
+  return shared[key] || (shared[key] = uid(key));
+};
+},{"./_shared":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_shared.js","./_uid":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_uid.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_shared.js":[function(require,module,exports){
+var global = require('./_global')
+  , SHARED = '__core-js_shared__'
+  , store  = global[SHARED] || (global[SHARED] = {});
+module.exports = function(key){
+  return store[key] || (store[key] = {});
+};
+},{"./_global":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_global.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-index.js":[function(require,module,exports){
+var toInteger = require('./_to-integer')
+  , max       = Math.max
+  , min       = Math.min;
+module.exports = function(index, length){
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+},{"./_to-integer":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-integer.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-integer.js":[function(require,module,exports){
+// 7.1.4 ToInteger
+var ceil  = Math.ceil
+  , floor = Math.floor;
+module.exports = function(it){
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-iobject.js":[function(require,module,exports){
+// to indexed object, toObject with fallback for non-array-like ES3 strings
+var IObject = require('./_iobject')
+  , defined = require('./_defined');
+module.exports = function(it){
+  return IObject(defined(it));
+};
+},{"./_defined":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_defined.js","./_iobject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_iobject.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-length.js":[function(require,module,exports){
+// 7.1.15 ToLength
+var toInteger = require('./_to-integer')
+  , min       = Math.min;
+module.exports = function(it){
+  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
+};
+},{"./_to-integer":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-integer.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-object.js":[function(require,module,exports){
+// 7.1.13 ToObject(argument)
+var defined = require('./_defined');
+module.exports = function(it){
+  return Object(defined(it));
+};
+},{"./_defined":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_defined.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_to-primitive.js":[function(require,module,exports){
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = require('./_is-object');
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function(it, S){
+  if(!isObject(it))return it;
+  var fn, val;
+  if(S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it)))return val;
+  if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+},{"./_is-object":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_is-object.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_uid.js":[function(require,module,exports){
+var id = 0
+  , px = Math.random();
+module.exports = function(key){
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/es6.object.assign.js":[function(require,module,exports){
+// 19.1.3.1 Object.assign(target, source)
+var $export = require('./_export');
+
+$export($export.S + $export.F, 'Object', {assign: require('./_object-assign')});
+},{"./_export":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_export.js","./_object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/core-js/library/modules/_object-assign.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/dot-case/dot-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 
 /**
@@ -72,7 +469,7 @@ module.exports = function (value, locale) {
   return noCase(value, locale, '.')
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/EventListener.js":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/EventListener.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -156,7 +553,7 @@ var EventListener = {
 };
 
 module.exports = EventListener;
-},{"./emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -192,7 +589,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelize.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/camelize.js":[function(require,module,exports){
 "use strict";
 
 /**
@@ -224,7 +621,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelizeStyleName.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/camelizeStyleName.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -264,7 +661,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelize.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/containsNode.js":[function(require,module,exports){
+},{"./camelize":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/camelize.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/containsNode.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -304,7 +701,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isTextNode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createArrayFromMixed.js":[function(require,module,exports){
+},{"./isTextNode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/isTextNode.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/createArrayFromMixed.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -431,7 +828,7 @@ function createArrayFromMixed(obj) {
 }
 
 module.exports = createArrayFromMixed;
-},{"./invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js":[function(require,module,exports){
+},{"./invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -515,7 +912,7 @@ function createNodesFromMarkup(markup, handleScript) {
 }
 
 module.exports = createNodesFromMarkup;
-},{"./ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./createArrayFromMixed":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createArrayFromMixed.js","./getMarkupWrap":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getMarkupWrap.js","./invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./createArrayFromMixed":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/createArrayFromMixed.js","./getMarkupWrap":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/getMarkupWrap.js","./invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js":[function(require,module,exports){
 "use strict";
 
 /**
@@ -554,7 +951,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -574,7 +971,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = emptyObject;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/focusNode.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/focusNode.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -601,7 +998,7 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getActiveElement.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/getActiveElement.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -640,7 +1037,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getMarkupWrap.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/getMarkupWrap.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -735,7 +1132,7 @@ function getMarkupWrap(nodeName) {
 }
 
 module.exports = getMarkupWrap;
-},{"./ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -774,7 +1171,7 @@ function getUnboundedScrollPosition(scrollable) {
 }
 
 module.exports = getUnboundedScrollPosition;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenate.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/hyphenate.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -807,7 +1204,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenateStyleName.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/hyphenateStyleName.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -846,7 +1243,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenate.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js":[function(require,module,exports){
+},{"./hyphenate":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/hyphenate.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -902,7 +1299,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isNode.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/isNode.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -927,7 +1324,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isTextNode.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/isTextNode.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -952,7 +1349,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isNode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/memoizeStringOnly.js":[function(require,module,exports){
+},{"./isNode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/isNode.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/memoizeStringOnly.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -982,7 +1379,7 @@ function memoizeStringOnly(callback) {
 }
 
 module.exports = memoizeStringOnly;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performance.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/performance.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1005,7 +1402,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = performance || {};
-},{"./ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performanceNow.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/performanceNow.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -1039,7 +1436,7 @@ if (performance.now) {
 }
 
 module.exports = performanceNow;
-},{"./performance":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performance.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js":[function(require,module,exports){
+},{"./performance":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/performance.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1107,7 +1504,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js":[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -1174,7 +1571,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = warning;
-},{"./emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/header-case/header-case.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/header-case/header-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 var upperCase = require('upper-case')
 
@@ -1191,7 +1588,7 @@ module.exports = function (value, locale) {
   })
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/html-tags.json":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/html-tags/html-tags.json":[function(require,module,exports){
 module.exports=[
 	"a",
 	"abbr",
@@ -1311,10 +1708,10 @@ module.exports=[
 	"wbr"
 ]
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/index.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/html-tags/index.js":[function(require,module,exports){
 module.exports = require('./html-tags.json');
 
-},{"./html-tags.json":"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/html-tags.json"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/is-lower-case/is-lower-case.js":[function(require,module,exports){
+},{"./html-tags.json":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/html-tags/html-tags.json"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/is-lower-case/is-lower-case.js":[function(require,module,exports){
 var lowerCase = require('lower-case')
 
 /**
@@ -1328,7 +1725,7 @@ module.exports = function (string, locale) {
   return lowerCase(string, locale) === string
 }
 
-},{"lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/is-upper-case/is-upper-case.js":[function(require,module,exports){
+},{"lower-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case/lower-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/is-upper-case/is-upper-case.js":[function(require,module,exports){
 var upperCase = require('upper-case')
 
 /**
@@ -1342,7 +1739,7 @@ module.exports = function (string, locale) {
   return upperCase(string, locale) === string
 }
 
-},{"upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case-first/lower-case-first.js":[function(require,module,exports){
+},{"upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case-first/lower-case-first.js":[function(require,module,exports){
 var lowerCase = require('lower-case')
 
 /**
@@ -1361,7 +1758,7 @@ module.exports = function (str, locale) {
   return lowerCase(str.charAt(0), locale) + str.substr(1)
 }
 
-},{"lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js":[function(require,module,exports){
+},{"lower-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case/lower-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case/lower-case.js":[function(require,module,exports){
 /**
  * Special language-specific overrides.
  *
@@ -1417,7 +1814,1545 @@ module.exports = function (str, locale) {
   return str.toLowerCase()
 }
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lowlight/lib/core.js":[function(require,module,exports){
+/**
+ * @author Titus Wormer
+ * @copyright 2016 Titus Wormer
+ * @license MIT
+ * @module lowlight:lowlight
+ * @fileoverview Virtual syntax highlighting for virtual
+ *   DOMs and non-HTML things.
+ */
+
+'use strict';
+
+/* Dependencies. */
+var high = require('highlight.js/lib/highlight.js');
+
+/* The lowlight interface, which has to be compatible
+ * with highlight.js, as this object is passed to
+ * highlight.js syntaxes. */
+
+/** High constructor. */
+function High() {}
+
+High.prototype = high;
+
+/* Expose. */
+var low = new High(); // Ha!
+
+module.exports = low;
+
+low.highlight = highlight;
+low.highlightAuto = autoHighlight;
+low.registerLanguage = registerLanguage;
+low.getLanguage = getLanguage;
+
+/* Methods. */
+var inherit = high.inherit;
+
+/* Constants. */
+var DEFAULT_PREFIX = 'hljs-';
+var KEY_INSENSITIVE = 'case_insensitive';
+var KEY_CACHED_VARIANTS = 'cached_variants';
+var EMPTY = '';
+
+/* Constant characters. */
+var C_SPACE = ' ';
+var C_PIPE = '|';
+
+/* Constant types. */
+var T_ELEMENT = 'element';
+var T_TEXT = 'text';
+var T_SPAN = 'span';
+
+/* Maps of syntaxes. */
+var languageNames = [];
+var languages = {};
+var aliases = {};
+
+/* Methods. */
+var own = {}.hasOwnProperty;
+
+/**
+ * Highlighting with language detection.  Accepts a string
+ * with the code to highlight.  Returns an object with the
+ * following properties:
+ *
+ * - language (detected language)
+ * - relevance (int)
+ * - value (an HTML string with highlighting markup)
+ * - secondBest (object with the same structure for
+ *   second-best heuristically detected language, may
+ *   be absent).
+ *
+ * @param {string} value - Source to highlight.
+ * @param {Object?} [options={}] - Configuration.
+ * @param {string} [options.prefix='hljs-'] - Highlight
+ *   prefix.
+ * @param {Array.<string>} [options.subset] - List of
+ *   allowed languages.
+ * @return {Object} - Highlighted `value`.
+ */
+function autoHighlight(value, options) {
+  var settings = options || {};
+  var prefix = settings.prefix;
+  var subset = settings.subset || languageNames;
+  var length = subset.length;
+  var index = -1;
+  var result;
+  var secondBest;
+  var current;
+  var name;
+
+  if (prefix === null || prefix === undefined) {
+    prefix = DEFAULT_PREFIX;
+  }
+
+  if (typeof value !== 'string') {
+    throw new Error('Expected `string` for value, got `' + value + '`');
+  }
+
+  secondBest = normalize({});
+  result = normalize({});
+
+  while (++index < length) {
+    name = subset[index];
+
+    if (!getLanguage(name)) {
+      continue;
+    }
+
+    current = normalize(coreHighlight(name, value, false, prefix));
+
+    current.language = name;
+
+    if (current.relevance > secondBest.relevance) {
+      secondBest = current;
+    }
+
+    if (current.relevance > result.relevance) {
+      secondBest = result;
+      result = current;
+    }
+  }
+
+  if (secondBest.language) {
+    result.secondBest = secondBest;
+  }
+
+  return result;
+}
+
+/**
+ * Highlighting `value` in the language `language`.
+ *
+ * @param {string} language - Language name.
+ * @param {string} value - Source to highlight.
+ * @param {Object?} [options={}] - Configuration.
+ * @param {string} [options.prefix='hljs-'] - Highlight
+ *   prefix.
+ * @return {Object} - Highlighted `value`.
+*/
+function highlight(language, value, options) {
+  var settings = options || {};
+  var prefix = settings.prefix;
+
+  if (prefix === null || prefix === undefined) {
+    prefix = DEFAULT_PREFIX;
+  }
+
+  return normalize(coreHighlight(language, value, true, prefix));
+}
+
+/**
+ * Register a language.
+ *
+ * @param {string} name - Name of language.
+ * @param {Function} syntax - Syntax constructor.
+ */
+function registerLanguage(name, syntax) {
+  var lang = languages[name] = syntax(low);
+  var values = lang.aliases;
+  var length = values && values.length;
+  var index = -1;
+
+  languageNames.push(name);
+
+  while (++index < length) {
+    aliases[values[index]] = name;
+  }
+}
+
+/**
+ * Core highlighting function.  Accepts a language name, or
+ * an alias, and a string with the code to highlight.
+ * Returns an object with the following properties:
+ *
+ * @param {string} name - Language name.
+ * @param {string} value - Source to highlight.
+ * @param {boolean} [ignore=false] - Whether to ignore
+ *   illegals.
+ * @param {string?} [prefix] - Highlight prefix.
+ * @param {boolean} [continuation] - Whether to continue
+ *   processing with `continuation`.
+ * @return {Object} - Highlighted `value`.
+*/
+function coreHighlight(name, value, ignore, prefix, continuation) {
+  var continuations = {};
+  var stack = [];
+  var modeBuffer = EMPTY;
+  var relevance = 0;
+  var language;
+  var top;
+  var current;
+  var currentChildren;
+  var offset;
+  var count;
+  var match;
+  var children;
+
+  if (typeof name !== 'string') {
+    throw new Error('Expected `string` for name, got `' + name + '`');
+  }
+
+  if (typeof value !== 'string') {
+    throw new Error('Expected `string` for value, got `' + value + '`');
+  }
+
+  language = getLanguage(name);
+  current = top = continuation || language;
+  currentChildren = children = [];
+
+  if (!language) {
+    throw new Error('Unknown language: `' + name + '` is not registered');
+  }
+
+  compileLanguage(language);
+
+  try {
+    offset = top.terminators.lastIndex = 0;
+    match = top.terminators.exec(value);
+
+    while (match) {
+      count = processLexeme(value.substring(offset, match.index), match[0]);
+      offset = top.terminators.lastIndex = match.index + count;
+      match = top.terminators.exec(value);
+    }
+
+    processLexeme(value.substr(offset));
+    current = top;
+
+    while (current.parent) {
+      if (current.className) {
+        pop();
+      }
+
+      current = current.parent;
+    }
+
+    return {
+      relevance: relevance,
+      value: currentChildren,
+      language: name,
+      top: top
+    };
+  } catch (err) {
+    /* istanbul ignore if - Catch-all  */
+    if (err.message.indexOf('Illegal') === -1) {
+      throw err;
+    }
+
+    return {relevance: 0, value: addText(value, [])};
+  }
+
+  /* Process a lexeme.  Returns next position. */
+  function processLexeme(buffer, lexeme) {
+    var newMode;
+    var endMode;
+    var origin;
+
+    modeBuffer += buffer;
+
+    if (lexeme === undefined) {
+      addSiblings(processBuffer(), currentChildren);
+
+      return 0;
+    }
+
+    newMode = subMode(lexeme, top);
+
+    if (newMode) {
+      addSiblings(processBuffer(), currentChildren);
+
+      startNewMode(newMode, lexeme);
+
+      return newMode.returnBegin ? 0 : lexeme.length;
+    }
+
+    endMode = endOfMode(top, lexeme);
+
+    if (endMode) {
+      origin = top;
+
+      if (!(origin.returnEnd || origin.excludeEnd)) {
+        modeBuffer += lexeme;
+      }
+
+      addSiblings(processBuffer(), currentChildren);
+
+      /* Close open modes. */
+      do {
+        if (top.className) {
+          pop();
+        }
+
+        relevance += top.relevance;
+        top = top.parent;
+      } while (top !== endMode.parent);
+
+      if (origin.excludeEnd) {
+        addText(lexeme, currentChildren);
+      }
+
+      modeBuffer = EMPTY;
+
+      if (endMode.starts) {
+        startNewMode(endMode.starts, EMPTY);
+      }
+
+      return origin.returnEnd ? 0 : lexeme.length;
+    }
+
+    if (isIllegal(lexeme, top)) {
+      throw new Error(
+        'Illegal lexeme "' + lexeme + '" for mode "' +
+        (top.className || '<unnamed>') + '"'
+      );
+    }
+
+    /* Parser should not reach this point as all
+     * types of lexemes should be caught earlier,
+     * but if it does due to some bug make sure it
+     * advances at least one character forward to
+     * prevent infinite looping. */
+    modeBuffer += lexeme;
+
+    return lexeme.length || /* istanbul ignore next */ 1;
+  }
+
+  /* Start a new mode with a `lexeme` to process. */
+  function startNewMode(mode, lexeme) {
+    var node;
+
+    if (mode.className) {
+      node = build(mode.className, []);
+    }
+
+    if (mode.returnBegin) {
+      modeBuffer = EMPTY;
+    } else if (mode.excludeBegin) {
+      addText(lexeme, currentChildren);
+
+      modeBuffer = EMPTY;
+    } else {
+      modeBuffer = lexeme;
+    }
+
+    /* Enter a new mode. */
+    if (node) {
+      currentChildren.push(node);
+      stack.push(currentChildren);
+      currentChildren = node.children;
+    }
+
+    top = Object.create(mode, {parent: {value: top}});
+  }
+
+  /* Process the buffer. */
+  function processBuffer() {
+    var result = top.subLanguage === undefined ? processKeywords() : processSubLanguage();
+    modeBuffer = EMPTY;
+    return result;
+  }
+
+  /* Process a sublanguage (returns a list of nodes). */
+  function processSubLanguage() {
+    var explicit = typeof top.subLanguage === 'string';
+    var subvalue;
+
+    /* istanbul ignore if - support non-loaded sublanguages */
+    if (explicit && !languages[top.subLanguage]) {
+      return addText(modeBuffer, []);
+    }
+
+    if (explicit) {
+      subvalue = coreHighlight(
+        top.subLanguage,
+        modeBuffer,
+        true,
+        prefix,
+        continuations[top.subLanguage]
+      );
+    } else {
+      subvalue = autoHighlight(modeBuffer, {
+        subset: top.subLanguage.length ? top.subLanguage : undefined,
+        prefix: prefix
+      });
+    }
+
+    /* Counting embedded language score towards the
+     * host language may be disabled with zeroing the
+     * containing mode relevance.  Usecase in point is
+     * Markdown that allows XML everywhere and makes
+     * every XML snippet to have a much larger Markdown
+     * score. */
+    if (top.relevance > 0) {
+      relevance += subvalue.relevance;
+    }
+
+    if (explicit) {
+      continuations[top.subLanguage] = subvalue.top;
+    }
+
+    return [build(subvalue.language, subvalue.value, true)];
+  }
+
+  /* Process keywords. Returns nodes. */
+  function processKeywords() {
+    var nodes = [];
+    var lastIndex;
+    var keyword;
+    var node;
+    var submatch;
+
+    if (!top.keywords) {
+      return addText(modeBuffer, nodes);
+    }
+
+    lastIndex = 0;
+
+    top.lexemesRe.lastIndex = 0;
+
+    keyword = top.lexemesRe.exec(modeBuffer);
+
+    while (keyword) {
+      addText(modeBuffer.substring(lastIndex, keyword.index), nodes);
+
+      submatch = keywordMatch(top, keyword);
+
+      if (submatch) {
+        relevance += submatch[1];
+
+        node = build(submatch[0], []);
+
+        nodes.push(node);
+
+        addText(keyword[0], node.children);
+      } else {
+        addText(keyword[0], nodes);
+      }
+
+      lastIndex = top.lexemesRe.lastIndex;
+      keyword = top.lexemesRe.exec(modeBuffer);
+    }
+
+    addText(modeBuffer.substr(lastIndex), nodes);
+
+    return nodes;
+  }
+
+  /* Add siblings. */
+  function addSiblings(siblings, nodes) {
+    var length = siblings.length;
+    var index = -1;
+    var sibling;
+
+    while (++index < length) {
+      sibling = siblings[index];
+
+      if (sibling.type === T_TEXT) {
+        addText(sibling.value, nodes);
+      } else {
+        nodes.push(sibling);
+      }
+    }
+  }
+
+  /* Add a text. */
+  function addText(value, nodes) {
+    var tail;
+
+    if (value) {
+      tail = nodes[nodes.length - 1];
+
+      if (tail && tail.type === T_TEXT) {
+        tail.value += value;
+      } else {
+        nodes.push(buildText(value));
+      }
+    }
+
+    return nodes;
+  }
+
+  /* Build a text. */
+  function buildText(value) {
+    return {type: T_TEXT, value: value};
+  }
+
+  /* Build a span. */
+  function build(name, contents, noPrefix) {
+    return {
+      type: T_ELEMENT,
+      tagName: T_SPAN,
+      properties: {
+        className: [(noPrefix ? EMPTY : prefix) + name]
+      },
+      children: contents
+    };
+  }
+
+  /* Check if the first word in `keywords` is a keyword. */
+  function keywordMatch(mode, keywords) {
+    var keyword = keywords[0];
+
+    if (language[KEY_INSENSITIVE]) {
+      keyword = keyword.toLowerCase();
+    }
+
+    return own.call(mode.keywords, keyword) && mode.keywords[keyword];
+  }
+
+  /* Check if `lexeme` is illegal according to `mode`. */
+  function isIllegal(lexeme, mode) {
+    return !ignore && test(mode.illegalRe, lexeme);
+  }
+
+  /* Check if `lexeme` ends `mode`. */
+  function endOfMode(mode, lexeme) {
+    if (test(mode.endRe, lexeme)) {
+      while (mode.endsParent && mode.parent) {
+        mode = mode.parent;
+      }
+      return mode;
+    }
+
+    if (mode.endsWithParent) {
+      return endOfMode(mode.parent, lexeme);
+    }
+  }
+
+  /* Check a sub-mode. */
+  function subMode(lexeme, mode) {
+    var values = mode.contains;
+    var length = values.length;
+    var index = -1;
+
+    while (++index < length) {
+      if (test(values[index].beginRe, lexeme)) {
+        return values[index];
+      }
+    }
+  }
+
+  /* Exit the current context. */
+  function pop() {
+    /* istanbul ignore next - removed in hljs 9.3 */
+    currentChildren = stack.pop() || children;
+  }
+}
+
+function expandMode(mode) {
+  if (mode.variants && !mode[KEY_CACHED_VARIANTS]) {
+    mode[KEY_CACHED_VARIANTS] = mode.variants.map(function (variant) {
+      return inherit(mode, {variants: null}, variant);
+    });
+  }
+
+  return mode[KEY_CACHED_VARIANTS] || (mode.endsWithParent && [inherit(mode)]) || [mode];
+}
+
+/* Compile a language. */
+function compileLanguage(language) {
+  compileMode(language);
+
+  /* Compile a language mode, optionally with a parent. */
+  function compileMode(mode, parent) {
+    var compiledKeywords = {};
+    var terminators;
+
+    if (mode.compiled) {
+      return;
+    }
+
+    mode.compiled = true;
+
+    mode.keywords = mode.keywords || mode.beginKeywords;
+
+    if (mode.keywords) {
+      if (typeof mode.keywords === 'string') {
+        flatten('keyword', mode.keywords);
+      } else {
+        Object.keys(mode.keywords).forEach(function (className) {
+          flatten(className, mode.keywords[className]);
+        });
+      }
+
+      mode.keywords = compiledKeywords;
+    }
+
+    mode.lexemesRe = langRe(mode.lexemes || /\w+/, true);
+
+    if (parent) {
+      if (mode.beginKeywords) {
+        mode.begin = '\\b(' + mode.beginKeywords.split(C_SPACE).join(C_PIPE) + ')\\b';
+      }
+
+      if (!mode.begin) {
+        mode.begin = /\B|\b/;
+      }
+
+      mode.beginRe = langRe(mode.begin);
+
+      if (!mode.end && !mode.endsWithParent) {
+        mode.end = /\B|\b/;
+      }
+
+      if (mode.end) {
+        mode.endRe = langRe(mode.end);
+      }
+
+      mode.terminatorEnd = source(mode.end) || EMPTY;
+
+      if (mode.endsWithParent && parent.terminatorEnd) {
+        mode.terminatorEnd += (mode.end ? C_PIPE : EMPTY) + parent.terminatorEnd;
+      }
+    }
+
+    if (mode.illegal) {
+      mode.illegalRe = langRe(mode.illegal);
+    }
+
+    if (mode.relevance === undefined) {
+      mode.relevance = 1;
+    }
+
+    if (!mode.contains) {
+      mode.contains = [];
+    }
+
+    mode.contains = Array.prototype.concat.apply([], mode.contains.map(function (c) {
+      return expandMode(c === 'self' ? mode : c);
+    }));
+
+    mode.contains.forEach(function (c) {
+      compileMode(c, mode);
+    });
+
+    if (mode.starts) {
+      compileMode(mode.starts, parent);
+    }
+
+    terminators =
+      mode.contains.map(function (c) {
+        return c.beginKeywords ? '\\.?(' + c.begin + ')\\.?' : c.begin;
+      })
+      .concat([mode.terminatorEnd, mode.illegal])
+      .map(source)
+      .filter(Boolean);
+
+    mode.terminators = terminators.length ?
+      langRe(terminators.join(C_PIPE), true) :
+      {exec: execNoop};
+
+    /* Flatten a classname. */
+    function flatten(className, value) {
+      var pairs;
+      var pair;
+      var index;
+      var length;
+
+      if (language[KEY_INSENSITIVE]) {
+        value = value.toLowerCase();
+      }
+
+      pairs = value.split(C_SPACE);
+      length = pairs.length;
+      index = -1;
+
+      while (++index < length) {
+        pair = pairs[index].split(C_PIPE);
+
+        compiledKeywords[pair[0]] = [
+          className,
+          pair[1] ? Number(pair[1]) : 1
+        ];
+      }
+    }
+  }
+
+  /* Create a regex for `value`. */
+  function langRe(value, global) {
+    return new RegExp(
+      source(value),
+      'm' + (language[KEY_INSENSITIVE] ? 'i' : '') +
+      (global ? 'g' : '')
+    );
+  }
+
+  /* Get the source of an expression or string. */
+  function source(re) {
+    return (re && re.source) || re;
+  }
+}
+
+/* Normalize a syntax result. */
+function normalize(result) {
+  return {
+    relevance: result.relevance || 0,
+    language: result.language || null,
+    value: result.value || []
+  };
+}
+
+/* Check if `expression` matches `lexeme`. */
+function test(expression, lexeme) {
+  var match = expression && expression.exec(lexeme);
+  return match && match.index === 0;
+}
+
+/* No-op exec. */
+function execNoop() {
+  return null;
+}
+
+/* Get a language by `name`. */
+function getLanguage(name) {
+  name = name.toLowerCase();
+
+  return languages[name] || languages[aliases[name]];
+}
+
+},{"highlight.js/lib/highlight.js":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lowlight/node_modules/highlight.js/lib/highlight.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lowlight/node_modules/highlight.js/lib/highlight.js":[function(require,module,exports){
+/*
+Syntax highlighting with language autodetection.
+https://highlightjs.org/
+*/
+
+(function(factory) {
+
+  // Find the global object for export to both the browser and web workers.
+  var globalObject = typeof window === 'object' && window ||
+                     typeof self === 'object' && self;
+
+  // Setup highlight.js for different environments. First is Node.js or
+  // CommonJS.
+  if(typeof exports !== 'undefined') {
+    factory(exports);
+  } else if(globalObject) {
+    // Export hljs globally even when using AMD for cases when this script
+    // is loaded with others that may still expect a global hljs.
+    globalObject.hljs = factory({});
+
+    // Finally register the global hljs with AMD.
+    if(typeof define === 'function' && define.amd) {
+      define([], function() {
+        return globalObject.hljs;
+      });
+    }
+  }
+
+}(function(hljs) {
+  // Convenience variables for build-in objects
+  var ArrayProto = [],
+      objectKeys = Object.keys;
+
+  // Global internal variables used within the highlight.js library.
+  var languages = {},
+      aliases   = {};
+
+  // Regular expressions used throughout the highlight.js library.
+  var noHighlightRe    = /^(no-?highlight|plain|text)$/i,
+      languagePrefixRe = /\blang(?:uage)?-([\w-]+)\b/i,
+      fixMarkupRe      = /((^(<[^>]+>|\t|)+|(?:\n)))/gm;
+
+  var spanEndTag = '</span>';
+
+  // Global options used when within external APIs. This is modified when
+  // calling the `hljs.configure` function.
+  var options = {
+    classPrefix: 'hljs-',
+    tabReplace: null,
+    useBR: false,
+    languages: undefined
+  };
+
+
+  /* Utility functions */
+
+  function escape(value) {
+    return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function tag(node) {
+    return node.nodeName.toLowerCase();
+  }
+
+  function testRe(re, lexeme) {
+    var match = re && re.exec(lexeme);
+    return match && match.index === 0;
+  }
+
+  function isNotHighlighted(language) {
+    return noHighlightRe.test(language);
+  }
+
+  function blockLanguage(block) {
+    var i, match, length, _class;
+    var classes = block.className + ' ';
+
+    classes += block.parentNode ? block.parentNode.className : '';
+
+    // language-* takes precedence over non-prefixed class names.
+    match = languagePrefixRe.exec(classes);
+    if (match) {
+      return getLanguage(match[1]) ? match[1] : 'no-highlight';
+    }
+
+    classes = classes.split(/\s+/);
+
+    for (i = 0, length = classes.length; i < length; i++) {
+      _class = classes[i]
+
+      if (isNotHighlighted(_class) || getLanguage(_class)) {
+        return _class;
+      }
+    }
+  }
+
+  function inherit(parent) {  // inherit(parent, override_obj, override_obj, ...)
+    var key;
+    var result = {};
+    var objects = Array.prototype.slice.call(arguments, 1);
+
+    for (key in parent)
+      result[key] = parent[key];
+    objects.forEach(function(obj) {
+      for (key in obj)
+        result[key] = obj[key];
+    });
+    return result;
+  }
+
+  /* Stream merging */
+
+  function nodeStream(node) {
+    var result = [];
+    (function _nodeStream(node, offset) {
+      for (var child = node.firstChild; child; child = child.nextSibling) {
+        if (child.nodeType === 3)
+          offset += child.nodeValue.length;
+        else if (child.nodeType === 1) {
+          result.push({
+            event: 'start',
+            offset: offset,
+            node: child
+          });
+          offset = _nodeStream(child, offset);
+          // Prevent void elements from having an end tag that would actually
+          // double them in the output. There are more void elements in HTML
+          // but we list only those realistically expected in code display.
+          if (!tag(child).match(/br|hr|img|input/)) {
+            result.push({
+              event: 'stop',
+              offset: offset,
+              node: child
+            });
+          }
+        }
+      }
+      return offset;
+    })(node, 0);
+    return result;
+  }
+
+  function mergeStreams(original, highlighted, value) {
+    var processed = 0;
+    var result = '';
+    var nodeStack = [];
+
+    function selectStream() {
+      if (!original.length || !highlighted.length) {
+        return original.length ? original : highlighted;
+      }
+      if (original[0].offset !== highlighted[0].offset) {
+        return (original[0].offset < highlighted[0].offset) ? original : highlighted;
+      }
+
+      /*
+      To avoid starting the stream just before it should stop the order is
+      ensured that original always starts first and closes last:
+
+      if (event1 == 'start' && event2 == 'start')
+        return original;
+      if (event1 == 'start' && event2 == 'stop')
+        return highlighted;
+      if (event1 == 'stop' && event2 == 'start')
+        return original;
+      if (event1 == 'stop' && event2 == 'stop')
+        return highlighted;
+
+      ... which is collapsed to:
+      */
+      return highlighted[0].event === 'start' ? original : highlighted;
+    }
+
+    function open(node) {
+      function attr_str(a) {return ' ' + a.nodeName + '="' + escape(a.value).replace('"', '&quot;') + '"';}
+      result += '<' + tag(node) + ArrayProto.map.call(node.attributes, attr_str).join('') + '>';
+    }
+
+    function close(node) {
+      result += '</' + tag(node) + '>';
+    }
+
+    function render(event) {
+      (event.event === 'start' ? open : close)(event.node);
+    }
+
+    while (original.length || highlighted.length) {
+      var stream = selectStream();
+      result += escape(value.substring(processed, stream[0].offset));
+      processed = stream[0].offset;
+      if (stream === original) {
+        /*
+        On any opening or closing tag of the original markup we first close
+        the entire highlighted node stack, then render the original tag along
+        with all the following original tags at the same offset and then
+        reopen all the tags on the highlighted stack.
+        */
+        nodeStack.reverse().forEach(close);
+        do {
+          render(stream.splice(0, 1)[0]);
+          stream = selectStream();
+        } while (stream === original && stream.length && stream[0].offset === processed);
+        nodeStack.reverse().forEach(open);
+      } else {
+        if (stream[0].event === 'start') {
+          nodeStack.push(stream[0].node);
+        } else {
+          nodeStack.pop();
+        }
+        render(stream.splice(0, 1)[0]);
+      }
+    }
+    return result + escape(value.substr(processed));
+  }
+
+  /* Initialization */
+
+  function expand_mode(mode) {
+    if (mode.variants && !mode.cached_variants) {
+      mode.cached_variants = mode.variants.map(function(variant) {
+        return inherit(mode, {variants: null}, variant);
+      });
+    }
+    return mode.cached_variants || (mode.endsWithParent && [inherit(mode)]) || [mode];
+  }
+
+  function compileLanguage(language) {
+
+    function reStr(re) {
+        return (re && re.source) || re;
+    }
+
+    function langRe(value, global) {
+      return new RegExp(
+        reStr(value),
+        'm' + (language.case_insensitive ? 'i' : '') + (global ? 'g' : '')
+      );
+    }
+
+    function compileMode(mode, parent) {
+      if (mode.compiled)
+        return;
+      mode.compiled = true;
+
+      mode.keywords = mode.keywords || mode.beginKeywords;
+      if (mode.keywords) {
+        var compiled_keywords = {};
+
+        var flatten = function(className, str) {
+          if (language.case_insensitive) {
+            str = str.toLowerCase();
+          }
+          str.split(' ').forEach(function(kw) {
+            var pair = kw.split('|');
+            compiled_keywords[pair[0]] = [className, pair[1] ? Number(pair[1]) : 1];
+          });
+        };
+
+        if (typeof mode.keywords === 'string') { // string
+          flatten('keyword', mode.keywords);
+        } else {
+          objectKeys(mode.keywords).forEach(function (className) {
+            flatten(className, mode.keywords[className]);
+          });
+        }
+        mode.keywords = compiled_keywords;
+      }
+      mode.lexemesRe = langRe(mode.lexemes || /\w+/, true);
+
+      if (parent) {
+        if (mode.beginKeywords) {
+          mode.begin = '\\b(' + mode.beginKeywords.split(' ').join('|') + ')\\b';
+        }
+        if (!mode.begin)
+          mode.begin = /\B|\b/;
+        mode.beginRe = langRe(mode.begin);
+        if (!mode.end && !mode.endsWithParent)
+          mode.end = /\B|\b/;
+        if (mode.end)
+          mode.endRe = langRe(mode.end);
+        mode.terminator_end = reStr(mode.end) || '';
+        if (mode.endsWithParent && parent.terminator_end)
+          mode.terminator_end += (mode.end ? '|' : '') + parent.terminator_end;
+      }
+      if (mode.illegal)
+        mode.illegalRe = langRe(mode.illegal);
+      if (mode.relevance == null)
+        mode.relevance = 1;
+      if (!mode.contains) {
+        mode.contains = [];
+      }
+      mode.contains = Array.prototype.concat.apply([], mode.contains.map(function(c) {
+        return expand_mode(c === 'self' ? mode : c)
+      }));
+      mode.contains.forEach(function(c) {compileMode(c, mode);});
+
+      if (mode.starts) {
+        compileMode(mode.starts, parent);
+      }
+
+      var terminators =
+        mode.contains.map(function(c) {
+          return c.beginKeywords ? '\\.?(' + c.begin + ')\\.?' : c.begin;
+        })
+        .concat([mode.terminator_end, mode.illegal])
+        .map(reStr)
+        .filter(Boolean);
+      mode.terminators = terminators.length ? langRe(terminators.join('|'), true) : {exec: function(/*s*/) {return null;}};
+    }
+
+    compileMode(language);
+  }
+
+  /*
+  Core highlighting function. Accepts a language name, or an alias, and a
+  string with the code to highlight. Returns an object with the following
+  properties:
+
+  - relevance (int)
+  - value (an HTML string with highlighting markup)
+
+  */
+  function highlight(name, value, ignore_illegals, continuation) {
+
+    function subMode(lexeme, mode) {
+      var i, length;
+
+      for (i = 0, length = mode.contains.length; i < length; i++) {
+        if (testRe(mode.contains[i].beginRe, lexeme)) {
+          return mode.contains[i];
+        }
+      }
+    }
+
+    function endOfMode(mode, lexeme) {
+      if (testRe(mode.endRe, lexeme)) {
+        while (mode.endsParent && mode.parent) {
+          mode = mode.parent;
+        }
+        return mode;
+      }
+      if (mode.endsWithParent) {
+        return endOfMode(mode.parent, lexeme);
+      }
+    }
+
+    function isIllegal(lexeme, mode) {
+      return !ignore_illegals && testRe(mode.illegalRe, lexeme);
+    }
+
+    function keywordMatch(mode, match) {
+      var match_str = language.case_insensitive ? match[0].toLowerCase() : match[0];
+      return mode.keywords.hasOwnProperty(match_str) && mode.keywords[match_str];
+    }
+
+    function buildSpan(classname, insideSpan, leaveOpen, noPrefix) {
+      var classPrefix = noPrefix ? '' : options.classPrefix,
+          openSpan    = '<span class="' + classPrefix,
+          closeSpan   = leaveOpen ? '' : spanEndTag
+
+      openSpan += classname + '">';
+
+      return openSpan + insideSpan + closeSpan;
+    }
+
+    function processKeywords() {
+      var keyword_match, last_index, match, result;
+
+      if (!top.keywords)
+        return escape(mode_buffer);
+
+      result = '';
+      last_index = 0;
+      top.lexemesRe.lastIndex = 0;
+      match = top.lexemesRe.exec(mode_buffer);
+
+      while (match) {
+        result += escape(mode_buffer.substring(last_index, match.index));
+        keyword_match = keywordMatch(top, match);
+        if (keyword_match) {
+          relevance += keyword_match[1];
+          result += buildSpan(keyword_match[0], escape(match[0]));
+        } else {
+          result += escape(match[0]);
+        }
+        last_index = top.lexemesRe.lastIndex;
+        match = top.lexemesRe.exec(mode_buffer);
+      }
+      return result + escape(mode_buffer.substr(last_index));
+    }
+
+    function processSubLanguage() {
+      var explicit = typeof top.subLanguage === 'string';
+      if (explicit && !languages[top.subLanguage]) {
+        return escape(mode_buffer);
+      }
+
+      var result = explicit ?
+                   highlight(top.subLanguage, mode_buffer, true, continuations[top.subLanguage]) :
+                   highlightAuto(mode_buffer, top.subLanguage.length ? top.subLanguage : undefined);
+
+      // Counting embedded language score towards the host language may be disabled
+      // with zeroing the containing mode relevance. Usecase in point is Markdown that
+      // allows XML everywhere and makes every XML snippet to have a much larger Markdown
+      // score.
+      if (top.relevance > 0) {
+        relevance += result.relevance;
+      }
+      if (explicit) {
+        continuations[top.subLanguage] = result.top;
+      }
+      return buildSpan(result.language, result.value, false, true);
+    }
+
+    function processBuffer() {
+      result += (top.subLanguage != null ? processSubLanguage() : processKeywords());
+      mode_buffer = '';
+    }
+
+    function startNewMode(mode) {
+      result += mode.className? buildSpan(mode.className, '', true): '';
+      top = Object.create(mode, {parent: {value: top}});
+    }
+
+    function processLexeme(buffer, lexeme) {
+
+      mode_buffer += buffer;
+
+      if (lexeme == null) {
+        processBuffer();
+        return 0;
+      }
+
+      var new_mode = subMode(lexeme, top);
+      if (new_mode) {
+        if (new_mode.skip) {
+          mode_buffer += lexeme;
+        } else {
+          if (new_mode.excludeBegin) {
+            mode_buffer += lexeme;
+          }
+          processBuffer();
+          if (!new_mode.returnBegin && !new_mode.excludeBegin) {
+            mode_buffer = lexeme;
+          }
+        }
+        startNewMode(new_mode, lexeme);
+        return new_mode.returnBegin ? 0 : lexeme.length;
+      }
+
+      var end_mode = endOfMode(top, lexeme);
+      if (end_mode) {
+        var origin = top;
+        if (origin.skip) {
+          mode_buffer += lexeme;
+        } else {
+          if (!(origin.returnEnd || origin.excludeEnd)) {
+            mode_buffer += lexeme;
+          }
+          processBuffer();
+          if (origin.excludeEnd) {
+            mode_buffer = lexeme;
+          }
+        }
+        do {
+          if (top.className) {
+            result += spanEndTag;
+          }
+          if (!top.skip) {
+            relevance += top.relevance;
+          }
+          top = top.parent;
+        } while (top !== end_mode.parent);
+        if (end_mode.starts) {
+          startNewMode(end_mode.starts, '');
+        }
+        return origin.returnEnd ? 0 : lexeme.length;
+      }
+
+      if (isIllegal(lexeme, top))
+        throw new Error('Illegal lexeme "' + lexeme + '" for mode "' + (top.className || '<unnamed>') + '"');
+
+      /*
+      Parser should not reach this point as all types of lexemes should be caught
+      earlier, but if it does due to some bug make sure it advances at least one
+      character forward to prevent infinite looping.
+      */
+      mode_buffer += lexeme;
+      return lexeme.length || 1;
+    }
+
+    var language = getLanguage(name);
+    if (!language) {
+      throw new Error('Unknown language: "' + name + '"');
+    }
+
+    compileLanguage(language);
+    var top = continuation || language;
+    var continuations = {}; // keep continuations for sub-languages
+    var result = '', current;
+    for(current = top; current !== language; current = current.parent) {
+      if (current.className) {
+        result = buildSpan(current.className, '', true) + result;
+      }
+    }
+    var mode_buffer = '';
+    var relevance = 0;
+    try {
+      var match, count, index = 0;
+      while (true) {
+        top.terminators.lastIndex = index;
+        match = top.terminators.exec(value);
+        if (!match)
+          break;
+        count = processLexeme(value.substring(index, match.index), match[0]);
+        index = match.index + count;
+      }
+      processLexeme(value.substr(index));
+      for(current = top; current.parent; current = current.parent) { // close dangling modes
+        if (current.className) {
+          result += spanEndTag;
+        }
+      }
+      return {
+        relevance: relevance,
+        value: result,
+        language: name,
+        top: top
+      };
+    } catch (e) {
+      if (e.message && e.message.indexOf('Illegal') !== -1) {
+        return {
+          relevance: 0,
+          value: escape(value)
+        };
+      } else {
+        throw e;
+      }
+    }
+  }
+
+  /*
+  Highlighting with language detection. Accepts a string with the code to
+  highlight. Returns an object with the following properties:
+
+  - language (detected language)
+  - relevance (int)
+  - value (an HTML string with highlighting markup)
+  - second_best (object with the same structure for second-best heuristically
+    detected language, may be absent)
+
+  */
+  function highlightAuto(text, languageSubset) {
+    languageSubset = languageSubset || options.languages || objectKeys(languages);
+    var result = {
+      relevance: 0,
+      value: escape(text)
+    };
+    var second_best = result;
+    languageSubset.filter(getLanguage).forEach(function(name) {
+      var current = highlight(name, text, false);
+      current.language = name;
+      if (current.relevance > second_best.relevance) {
+        second_best = current;
+      }
+      if (current.relevance > result.relevance) {
+        second_best = result;
+        result = current;
+      }
+    });
+    if (second_best.language) {
+      result.second_best = second_best;
+    }
+    return result;
+  }
+
+  /*
+  Post-processing of the highlighted markup:
+
+  - replace TABs with something more useful
+  - replace real line-breaks with '<br>' for non-pre containers
+
+  */
+  function fixMarkup(value) {
+    return !(options.tabReplace || options.useBR)
+      ? value
+      : value.replace(fixMarkupRe, function(match, p1) {
+          if (options.useBR && match === '\n') {
+            return '<br>';
+          } else if (options.tabReplace) {
+            return p1.replace(/\t/g, options.tabReplace);
+          }
+          return '';
+      });
+  }
+
+  function buildClassName(prevClassName, currentLang, resultLang) {
+    var language = currentLang ? aliases[currentLang] : resultLang,
+        result   = [prevClassName.trim()];
+
+    if (!prevClassName.match(/\bhljs\b/)) {
+      result.push('hljs');
+    }
+
+    if (prevClassName.indexOf(language) === -1) {
+      result.push(language);
+    }
+
+    return result.join(' ').trim();
+  }
+
+  /*
+  Applies highlighting to a DOM node containing code. Accepts a DOM node and
+  two optional parameters for fixMarkup.
+  */
+  function highlightBlock(block) {
+    var node, originalStream, result, resultNode, text;
+    var language = blockLanguage(block);
+
+    if (isNotHighlighted(language))
+        return;
+
+    if (options.useBR) {
+      node = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+      node.innerHTML = block.innerHTML.replace(/\n/g, '').replace(/<br[ \/]*>/g, '\n');
+    } else {
+      node = block;
+    }
+    text = node.textContent;
+    result = language ? highlight(language, text, true) : highlightAuto(text);
+
+    originalStream = nodeStream(node);
+    if (originalStream.length) {
+      resultNode = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
+      resultNode.innerHTML = result.value;
+      result.value = mergeStreams(originalStream, nodeStream(resultNode), text);
+    }
+    result.value = fixMarkup(result.value);
+
+    block.innerHTML = result.value;
+    block.className = buildClassName(block.className, language, result.language);
+    block.result = {
+      language: result.language,
+      re: result.relevance
+    };
+    if (result.second_best) {
+      block.second_best = {
+        language: result.second_best.language,
+        re: result.second_best.relevance
+      };
+    }
+  }
+
+  /*
+  Updates highlight.js global options with values passed in the form of an object.
+  */
+  function configure(user_options) {
+    options = inherit(options, user_options);
+  }
+
+  /*
+  Applies highlighting to all <pre><code>..</code></pre> blocks on a page.
+  */
+  function initHighlighting() {
+    if (initHighlighting.called)
+      return;
+    initHighlighting.called = true;
+
+    var blocks = document.querySelectorAll('pre code');
+    ArrayProto.forEach.call(blocks, highlightBlock);
+  }
+
+  /*
+  Attaches highlighting to the page load event.
+  */
+  function initHighlightingOnLoad() {
+    addEventListener('DOMContentLoaded', initHighlighting, false);
+    addEventListener('load', initHighlighting, false);
+  }
+
+  function registerLanguage(name, language) {
+    var lang = languages[name] = language(hljs);
+    if (lang.aliases) {
+      lang.aliases.forEach(function(alias) {aliases[alias] = name;});
+    }
+  }
+
+  function listLanguages() {
+    return objectKeys(languages);
+  }
+
+  function getLanguage(name) {
+    name = (name || '').toLowerCase();
+    return languages[name] || languages[aliases[name]];
+  }
+
+  /* Interface definition */
+
+  hljs.highlight = highlight;
+  hljs.highlightAuto = highlightAuto;
+  hljs.fixMarkup = fixMarkup;
+  hljs.highlightBlock = highlightBlock;
+  hljs.configure = configure;
+  hljs.initHighlighting = initHighlighting;
+  hljs.initHighlightingOnLoad = initHighlightingOnLoad;
+  hljs.registerLanguage = registerLanguage;
+  hljs.listLanguages = listLanguages;
+  hljs.getLanguage = getLanguage;
+  hljs.inherit = inherit;
+
+  // Common regexps
+  hljs.IDENT_RE = '[a-zA-Z]\\w*';
+  hljs.UNDERSCORE_IDENT_RE = '[a-zA-Z_]\\w*';
+  hljs.NUMBER_RE = '\\b\\d+(\\.\\d+)?';
+  hljs.C_NUMBER_RE = '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)'; // 0x..., 0..., decimal, float
+  hljs.BINARY_NUMBER_RE = '\\b(0b[01]+)'; // 0b...
+  hljs.RE_STARTERS_RE = '!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|-|-=|/=|/|:|;|<<|<<=|<=|<|===|==|=|>>>=|>>=|>=|>>>|>>|>|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~';
+
+  // Common modes
+  hljs.BACKSLASH_ESCAPE = {
+    begin: '\\\\[\\s\\S]', relevance: 0
+  };
+  hljs.APOS_STRING_MODE = {
+    className: 'string',
+    begin: '\'', end: '\'',
+    illegal: '\\n',
+    contains: [hljs.BACKSLASH_ESCAPE]
+  };
+  hljs.QUOTE_STRING_MODE = {
+    className: 'string',
+    begin: '"', end: '"',
+    illegal: '\\n',
+    contains: [hljs.BACKSLASH_ESCAPE]
+  };
+  hljs.PHRASAL_WORDS_MODE = {
+    begin: /\b(a|an|the|are|I'm|isn't|don't|doesn't|won't|but|just|should|pretty|simply|enough|gonna|going|wtf|so|such|will|you|your|they|like|more)\b/
+  };
+  hljs.COMMENT = function (begin, end, inherits) {
+    var mode = hljs.inherit(
+      {
+        className: 'comment',
+        begin: begin, end: end,
+        contains: []
+      },
+      inherits || {}
+    );
+    mode.contains.push(hljs.PHRASAL_WORDS_MODE);
+    mode.contains.push({
+      className: 'doctag',
+      begin: '(?:TODO|FIXME|NOTE|BUG|XXX):',
+      relevance: 0
+    });
+    return mode;
+  };
+  hljs.C_LINE_COMMENT_MODE = hljs.COMMENT('//', '$');
+  hljs.C_BLOCK_COMMENT_MODE = hljs.COMMENT('/\\*', '\\*/');
+  hljs.HASH_COMMENT_MODE = hljs.COMMENT('#', '$');
+  hljs.NUMBER_MODE = {
+    className: 'number',
+    begin: hljs.NUMBER_RE,
+    relevance: 0
+  };
+  hljs.C_NUMBER_MODE = {
+    className: 'number',
+    begin: hljs.C_NUMBER_RE,
+    relevance: 0
+  };
+  hljs.BINARY_NUMBER_MODE = {
+    className: 'number',
+    begin: hljs.BINARY_NUMBER_RE,
+    relevance: 0
+  };
+  hljs.CSS_NUMBER_MODE = {
+    className: 'number',
+    begin: hljs.NUMBER_RE + '(' +
+      '%|em|ex|ch|rem'  +
+      '|vw|vh|vmin|vmax' +
+      '|cm|mm|in|pt|pc|px' +
+      '|deg|grad|rad|turn' +
+      '|s|ms' +
+      '|Hz|kHz' +
+      '|dpi|dpcm|dppx' +
+      ')?',
+    relevance: 0
+  };
+  hljs.REGEXP_MODE = {
+    className: 'regexp',
+    begin: /\//, end: /\/[gimuy]*/,
+    illegal: /\n/,
+    contains: [
+      hljs.BACKSLASH_ESCAPE,
+      {
+        begin: /\[/, end: /\]/,
+        relevance: 0,
+        contains: [hljs.BACKSLASH_ESCAPE]
+      }
+    ]
+  };
+  hljs.TITLE_MODE = {
+    className: 'title',
+    begin: hljs.IDENT_RE,
+    relevance: 0
+  };
+  hljs.UNDERSCORE_TITLE_MODE = {
+    className: 'title',
+    begin: hljs.UNDERSCORE_IDENT_RE,
+    relevance: 0
+  };
+  hljs.METHOD_GUARD = {
+    // excludes method names from keyword processing
+    begin: '\\.\\s*' + hljs.UNDERSCORE_IDENT_RE,
+    relevance: 0
+  };
+
+  return hljs;
+}));
+
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js":[function(require,module,exports){
 var lowerCase = require('lower-case')
 
 var NON_WORD_REGEXP = require('./vendor/non-word-regexp')
@@ -1459,16 +3394,16 @@ module.exports = function (str, locale, replacement) {
   return lowerCase(str, locale)
 }
 
-},{"./vendor/camel-case-regexp":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-regexp.js","./vendor/camel-case-upper-regexp":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js","./vendor/non-word-regexp":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/non-word-regexp.js","lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-regexp.js":[function(require,module,exports){
+},{"./vendor/camel-case-regexp":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-regexp.js","./vendor/camel-case-upper-regexp":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js","./vendor/non-word-regexp":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/vendor/non-word-regexp.js","lower-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case/lower-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-regexp.js":[function(require,module,exports){
 module.exports = /([a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0529\u052B\u052D\u052F\u0561-\u0587\u13F8-\u13FD\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA699\uA69B\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793-\uA795\uA797\uA799\uA79B\uA79D\uA79F\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7B5\uA7B7\uA7FA\uAB30-\uAB5A\uAB60-\uAB65\uAB70-\uABBF\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A0-9\xB2\xB3\xB9\xBC-\xBE\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u09F4-\u09F9\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0B72-\u0B77\u0BE6-\u0BF2\u0C66-\u0C6F\u0C78-\u0C7E\u0CE6-\u0CEF\u0D66-\u0D75\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F33\u1040-\u1049\u1090-\u1099\u1369-\u137C\u16EE-\u16F0\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1946-\u194F\u19D0-\u19DA\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\u2070\u2074-\u2079\u2080-\u2089\u2150-\u2182\u2185-\u2189\u2460-\u249B\u24EA-\u24FF\u2776-\u2793\u2CFD\u3007\u3021-\u3029\u3038-\u303A\u3192-\u3195\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\uA620-\uA629\uA6E6-\uA6EF\uA830-\uA835\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19])([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A])/g
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js":[function(require,module,exports){
 module.exports = /([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A]+)([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A][a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0529\u052B\u052D\u052F\u0561-\u0587\u13F8-\u13FD\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA699\uA69B\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793-\uA795\uA797\uA799\uA79B\uA79D\uA79F\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7B5\uA7B7\uA7FA\uAB30-\uAB5A\uAB60-\uAB65\uAB70-\uABBF\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A])/g
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/non-word-regexp.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/vendor/non-word-regexp.js":[function(require,module,exports){
 module.exports = /[^A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B4\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FD5\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AD\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC0-9\xB2\xB3\xB9\xBC-\xBE\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u09F4-\u09F9\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0B72-\u0B77\u0BE6-\u0BF2\u0C66-\u0C6F\u0C78-\u0C7E\u0CE6-\u0CEF\u0D66-\u0D75\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F33\u1040-\u1049\u1090-\u1099\u1369-\u137C\u16EE-\u16F0\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1946-\u194F\u19D0-\u19DA\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\u2070\u2074-\u2079\u2080-\u2089\u2150-\u2182\u2185-\u2189\u2460-\u249B\u24EA-\u24FF\u2776-\u2793\u2CFD\u3007\u3021-\u3029\u3038-\u303A\u3192-\u3195\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\uA620-\uA629\uA6E6-\uA6EF\uA830-\uA835\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19]+/g
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js":[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -1560,7 +3495,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/param-case/param-case.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/param-case/param-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 
 /**
@@ -1574,7 +3509,7 @@ module.exports = function (value, locale) {
   return noCase(value, locale, '-')
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/pascal-case/pascal-case.js":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/pascal-case/pascal-case.js":[function(require,module,exports){
 var camelCase = require('camel-case')
 var upperCaseFirst = require('upper-case-first')
 
@@ -1590,7 +3525,7 @@ module.exports = function (value, locale, mergeNumbers) {
   return upperCaseFirst(camelCase(value, locale, mergeNumbers), locale)
 }
 
-},{"camel-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/camel-case/camel-case.js","upper-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/path-case/path-case.js":[function(require,module,exports){
+},{"camel-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/camel-case/camel-case.js","upper-case-first":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/path-case/path-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 
 /**
@@ -1604,7 +3539,7 @@ module.exports = function (value, locale) {
   return noCase(value, locale, '/')
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/process/browser.js":[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -1790,7 +3725,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/checkPropTypes.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/checkPropTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1853,7 +3788,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-},{"./lib/ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factory.js":[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/factory.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1876,7 +3811,7 @@ module.exports = function(isValidElement) {
   return factory(isValidElement, throwOnDirectAccess);
 };
 
-},{"./factoryWithTypeCheckers":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factoryWithTypeCheckers.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factoryWithTypeCheckers.js":[function(require,module,exports){
+},{"./factoryWithTypeCheckers":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/factoryWithTypeCheckers.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/factoryWithTypeCheckers.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -2390,7 +4325,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
-},{"./checkPropTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/checkPropTypes.js","./lib/ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+},{"./checkPropTypes":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/checkPropTypes.js","./lib/ReactPropTypesSecret":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -2406,12 +4341,12 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/index.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/index.js":[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/ReactDOM');
 
-},{"./lib/ReactDOM":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOM.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js":[function(require,module,exports){
+},{"./lib/ReactDOM":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOM.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -2485,7 +4420,7 @@ var ARIADOMPropertyConfig = {
 };
 
 module.exports = ARIADOMPropertyConfig;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/AutoFocusUtils.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/AutoFocusUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -2509,7 +4444,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","fbjs/lib/focusNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/focusNode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","fbjs/lib/focusNode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/focusNode.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present Facebook, Inc.
  * All rights reserved.
@@ -2894,7 +4829,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./FallbackCompositionState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/FallbackCompositionState.js","./SyntheticCompositionEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js","./SyntheticInputEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSProperty.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./FallbackCompositionState":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/FallbackCompositionState.js","./SyntheticCompositionEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js","./SyntheticInputEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CSSProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3042,7 +4977,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3251,7 +5186,7 @@ var CSSPropertyOperations = {
 };
 
 module.exports = CSSPropertyOperations;
-},{"./CSSProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSProperty.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./dangerousStyleValue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/dangerousStyleValue.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/camelizeStyleName":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelizeStyleName.js","fbjs/lib/hyphenateStyleName":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenateStyleName.js","fbjs/lib/memoizeStringOnly":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/memoizeStringOnly.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CallbackQueue.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CSSProperty.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./dangerousStyleValue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/dangerousStyleValue.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/camelizeStyleName":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/camelizeStyleName.js","fbjs/lib/hyphenateStyleName":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/hyphenateStyleName.js","fbjs/lib/memoizeStringOnly":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/memoizeStringOnly.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CallbackQueue.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3370,7 +5305,7 @@ var CallbackQueue = function () {
 }();
 
 module.exports = PooledClass.addPoolingTo(CallbackQueue);
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3716,7 +5651,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js","./isEventSupported":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js","./isTextInputElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPropagators":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js","./isEventSupported":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js","./isTextInputElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3941,7 +5876,7 @@ var DOMChildrenOperations = {
 };
 
 module.exports = DOMChildrenOperations;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./Danger":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Danger.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./createMicrosoftUnsafeLocalFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./Danger":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/Danger.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./createMicrosoftUnsafeLocalFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -4059,7 +5994,7 @@ DOMLazyTree.queueHTML = queueHTML;
 DOMLazyTree.queueText = queueText;
 
 module.exports = DOMLazyTree;
-},{"./DOMNamespaces":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js":[function(require,module,exports){
+},{"./DOMNamespaces":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4079,7 +6014,7 @@ var DOMNamespaces = {
 };
 
 module.exports = DOMNamespaces;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4289,7 +6224,7 @@ var DOMProperty = {
 };
 
 module.exports = DOMProperty;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4526,7 +6461,7 @@ var DOMPropertyOperations = {
 };
 
 module.exports = DOMPropertyOperations;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./quoteAttributeValueForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Danger.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./quoteAttributeValueForBrowser":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/Danger.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4574,7 +6509,7 @@ var Danger = {
 };
 
 module.exports = Danger;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/createNodesFromMarkup":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/createNodesFromMarkup":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4600,7 +6535,7 @@ module.exports = Danger;
 var DefaultEventPluginOrder = ['ResponderEventPlugin', 'SimpleEventPlugin', 'TapEventPlugin', 'EnterLeaveEventPlugin', 'ChangeEventPlugin', 'SelectEventPlugin', 'BeforeInputEventPlugin'];
 
 module.exports = DefaultEventPluginOrder;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4700,7 +6635,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticMouseEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4978,7 +6913,7 @@ var EventPluginHub = {
 };
 
 module.exports = EventPluginHub;
-},{"./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactErrorUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./accumulateInto":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/forEachAccumulated.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js":[function(require,module,exports){
+},{"./EventPluginRegistry":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactErrorUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./accumulateInto":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/forEachAccumulated.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5233,7 +7168,7 @@ var EventPluginRegistry = {
 };
 
 module.exports = EventPluginRegistry;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5459,7 +7394,7 @@ var EventPluginUtils = {
 };
 
 module.exports = EventPluginUtils;
-},{"./ReactErrorUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js":[function(require,module,exports){
+},{"./ReactErrorUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5593,7 +7528,7 @@ var EventPropagators = {
 };
 
 module.exports = EventPropagators;
-},{"./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./accumulateInto":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/forEachAccumulated.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/FallbackCompositionState.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./accumulateInto":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/forEachAccumulated.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/FallbackCompositionState.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5688,7 +7623,7 @@ _assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./getTextContentAccessor":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./getTextContentAccessor":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5924,7 +7859,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5983,7 +7918,7 @@ var KeyEscapeUtils = {
 };
 
 module.exports = KeyEscapeUtils;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -6121,7 +8056,7 @@ var LinkedValueUtils = {
 };
 
 module.exports = LinkedValueUtils;
-},{"./ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","prop-types/factory":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factory.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js":[function(require,module,exports){
+},{"./ReactPropTypesSecret":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","prop-types/factory":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/factory.js","react/lib/React":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -6233,7 +8168,7 @@ var PooledClass = {
 };
 
 module.exports = PooledClass;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -6561,7 +8496,7 @@ var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactEventEmitterMixin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getVendorPrefixedEventName":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js","./isEventSupported":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactChildReconciler.js":[function(require,module,exports){
+},{"./EventPluginRegistry":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactEventEmitterMixin":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getVendorPrefixedEventName":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js","./isEventSupported":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactChildReconciler.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -6717,7 +8652,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./instantiateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","./traverseAllChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
+},{"./KeyEscapeUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactReconciler":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./instantiateReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","./traverseAllChildren":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -6747,7 +8682,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./DOMChildrenOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMIDOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js":[function(require,module,exports){
+},{"./DOMChildrenOperations":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMIDOperations":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -6793,7 +8728,7 @@ var ReactComponentEnvironment = {
 };
 
 module.exports = ReactComponentEnvironment;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -7695,7 +9630,7 @@ var ReactCompositeComponent = {
 };
 
 module.exports = ReactCompositeComponent;
-},{"./ReactComponentEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactErrorUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactNodeTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactNodeTypes.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./checkReactTypeSpec":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./shouldUpdateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOM.js":[function(require,module,exports){
+},{"./ReactComponentEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactErrorUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./ReactInstanceMap":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactNodeTypes":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactNodeTypes.js","./ReactReconciler":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./checkReactTypeSpec":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./shouldUpdateReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOM.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -7806,7 +9741,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactDOM;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInvalidARIAHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js","./ReactDOMNullInputValuePropHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js","./ReactDOMUnknownPropertyHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js","./ReactDefaultInjection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMount":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMount.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./ReactVersion":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactVersion.js","./findDOMNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/findDOMNode.js","./getHostComponentFromComposite":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./renderSubtreeIntoContainer":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponent.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInvalidARIAHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js","./ReactDOMNullInputValuePropHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js","./ReactDOMUnknownPropertyHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js","./ReactDefaultInjection":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMount":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactMount.js","./ReactReconciler":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./ReactVersion":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactVersion.js","./findDOMNode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/findDOMNode.js","./getHostComponentFromComposite":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./renderSubtreeIntoContainer":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -8807,7 +10742,7 @@ ReactDOMComponent.Mixin = {
 _assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mixin);
 
 module.exports = ReactDOMComponent;
-},{"./AutoFocusUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/AutoFocusUtils.js","./CSSPropertyOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js","./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMNamespaces":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInput":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMultiChild":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMultiChild.js","./ReactServerRenderingTransaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js","./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./isEventSupported":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js":[function(require,module,exports){
+},{"./AutoFocusUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/AutoFocusUtils.js","./CSSPropertyOperations":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js","./DOMLazyTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMNamespaces":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./EventPluginHub":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactBrowserEventEmitter":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentFlags":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInput":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMultiChild":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactMultiChild.js","./ReactServerRenderingTransaction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js","./escapeTextContentForBrowser":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./isEventSupported":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -8825,7 +10760,7 @@ var ReactDOMComponentFlags = {
 };
 
 module.exports = ReactDOMComponentFlags;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9020,7 +10955,7 @@ var ReactDOMComponentTree = {
 };
 
 module.exports = ReactDOMComponentTree;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentFlags":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9053,7 +10988,7 @@ function ReactDOMContainerInfo(topLevelWrapper, node) {
 }
 
 module.exports = ReactDOMContainerInfo;
-},{"./validateDOMNesting":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js":[function(require,module,exports){
+},{"./validateDOMNesting":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -9113,7 +11048,7 @@ _assign(ReactDOMEmptyComponent.prototype, {
 });
 
 module.exports = ReactDOMEmptyComponent;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9132,7 +11067,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9166,7 +11101,7 @@ var ReactDOMIDOperations = {
 };
 
 module.exports = ReactDOMIDOperations;
-},{"./DOMChildrenOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInput.js":[function(require,module,exports){
+},{"./DOMChildrenOperations":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInput.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9451,7 +11386,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMInput;
-},{"./DOMPropertyOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js":[function(require,module,exports){
+},{"./DOMPropertyOperations":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9544,7 +11479,7 @@ var ReactDOMInvalidARIAHook = {
 };
 
 module.exports = ReactDOMInvalidARIAHook;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9587,7 +11522,7 @@ var ReactDOMNullInputValuePropHook = {
 };
 
 module.exports = ReactDOMNullInputValuePropHook;
-},{"fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMOption.js":[function(require,module,exports){
+},{"fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMOption.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9710,7 +11645,7 @@ var ReactDOMOption = {
 };
 
 module.exports = ReactDOMOption;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMSelect":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelect.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMSelect":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelect.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9910,7 +11845,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMSelect;
-},{"./LinkedValueUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelection.js":[function(require,module,exports){
+},{"./LinkedValueUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10122,7 +12057,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js":[function(require,module,exports){
+},{"./getNodeForCharacterOffset":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10286,7 +12221,7 @@ _assign(ReactDOMTextComponent.prototype, {
 });
 
 module.exports = ReactDOMTextComponent;
-},{"./DOMChildrenOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js":[function(require,module,exports){
+},{"./DOMChildrenOperations":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./DOMLazyTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./escapeTextContentForBrowser":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10446,7 +12381,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMTextarea;
-},{"./LinkedValueUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js":[function(require,module,exports){
+},{"./LinkedValueUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -10582,7 +12517,7 @@ module.exports = {
   traverseTwoPhase: traverseTwoPhase,
   traverseEnterLeave: traverseEnterLeave
 };
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10694,7 +12629,7 @@ var ReactDOMUnknownPropertyHook = {
 };
 
 module.exports = ReactDOMUnknownPropertyHook;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDebugTool.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginRegistry":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDebugTool.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -11053,7 +12988,7 @@ if (/[?&]react_perf\b/.test(url)) {
 }
 
 module.exports = ReactDebugTool;
-},{"./ReactHostOperationHistoryHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js","./ReactInvalidSetStateWarningHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/performanceNow":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performanceNow.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
+},{"./ReactHostOperationHistoryHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js","./ReactInvalidSetStateWarningHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/performanceNow":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/performanceNow.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11121,7 +13056,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js":[function(require,module,exports){
+},{"./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./Transaction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11207,7 +13142,7 @@ function inject() {
 module.exports = {
   inject: inject
 };
-},{"./ARIADOMPropertyConfig":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js","./BeforeInputEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js","./DefaultEventPluginOrder":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js","./HTMLDOMPropertyConfig":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js","./ReactComponentBrowserEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js","./ReactDOMComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponent.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMEmptyComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js","./ReactDOMTextComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js","./ReactDOMTreeTraversal":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js","./ReactDefaultBatchingStrategy":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js","./ReactEventListener":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventListener.js","./ReactInjection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInjection.js","./ReactReconcileTransaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js","./SVGDOMPropertyConfig":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SelectEventPlugin.js","./SimpleEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactElementSymbol.js":[function(require,module,exports){
+},{"./ARIADOMPropertyConfig":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js","./BeforeInputEventPlugin":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js","./DefaultEventPluginOrder":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js","./HTMLDOMPropertyConfig":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js","./ReactComponentBrowserEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js","./ReactDOMComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponent.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMEmptyComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js","./ReactDOMTextComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js","./ReactDOMTreeTraversal":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js","./ReactDefaultBatchingStrategy":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js","./ReactEventListener":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventListener.js","./ReactInjection":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInjection.js","./ReactReconcileTransaction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js","./SVGDOMPropertyConfig":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SelectEventPlugin.js","./SimpleEventPlugin":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactElementSymbol.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -11227,7 +13162,7 @@ module.exports = {
 var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol['for']('react.element') || 0xeac7;
 
 module.exports = REACT_ELEMENT_TYPE;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -11257,7 +13192,7 @@ var ReactEmptyComponent = {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11333,7 +13268,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactErrorUtils;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11366,7 +13301,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventListener.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventListener.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11521,7 +13456,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./getEventTarget":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js","fbjs/lib/EventListener":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getUnboundedScrollPosition":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./getEventTarget":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js","fbjs/lib/EventListener":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getUnboundedScrollPosition":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11543,7 +13478,7 @@ var ReactFeatureFlags = {
 };
 
 module.exports = ReactFeatureFlags;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostComponent.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostComponent.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -11611,7 +13546,7 @@ var ReactHostComponent = {
 };
 
 module.exports = ReactHostComponent;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -11645,7 +13580,7 @@ var ReactHostOperationHistoryHook = {
 };
 
 module.exports = ReactHostOperationHistoryHook;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInjection.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInjection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11679,7 +13614,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactComponentEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactEmptyComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInputSelection.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginHub":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactBrowserEventEmitter":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactComponentEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactEmptyComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInputSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11803,7 +13738,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelection.js","fbjs/lib/containsNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/containsNode.js","fbjs/lib/focusNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/focusNode.js","fbjs/lib/getActiveElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getActiveElement.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js":[function(require,module,exports){
+},{"./ReactDOMSelection":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelection.js","fbjs/lib/containsNode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/containsNode.js","fbjs/lib/focusNode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/focusNode.js","fbjs/lib/getActiveElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/getActiveElement.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11851,7 +13786,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -11875,7 +13810,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = { debugTool: debugTool };
-},{"./ReactDebugTool":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDebugTool.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js":[function(require,module,exports){
+},{"./ReactDebugTool":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDebugTool.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -11912,7 +13847,7 @@ var ReactInvalidSetStateWarningHook = {
 };
 
 module.exports = ReactInvalidSetStateWarningHook;
-},{"fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js":[function(require,module,exports){
+},{"fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11962,7 +13897,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/adler32.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMount.js":[function(require,module,exports){
+},{"./adler32":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/adler32.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactMount.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -12500,7 +14435,7 @@ var ReactMount = {
 };
 
 module.exports = ReactMount;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMContainerInfo":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js","./ReactDOMFeatureFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js","./ReactFeatureFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMarkupChecksum":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","./shouldUpdateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMultiChild.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMContainerInfo":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js","./ReactDOMFeatureFlags":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js","./ReactFeatureFlags":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactInstanceMap":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMarkupChecksum":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js","./ReactReconciler":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdateQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./setInnerHTML":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","./shouldUpdateReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/React":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactMultiChild.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -12950,7 +14885,7 @@ var ReactMultiChild = {
 };
 
 module.exports = ReactMultiChild;
-},{"./ReactChildReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactChildReconciler.js","./ReactComponentEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./flattenChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/flattenChildren.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactNodeTypes.js":[function(require,module,exports){
+},{"./ReactChildReconciler":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactChildReconciler.js","./ReactComponentEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactInstanceMap":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactReconciler":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./flattenChildren":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/flattenChildren.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","react/lib/ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactNodeTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -12990,7 +14925,7 @@ var ReactNodeTypes = {
 };
 
 module.exports = ReactNodeTypes;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactOwner.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","react/lib/React":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactOwner.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13084,7 +15019,7 @@ var ReactOwner = {
 };
 
 module.exports = ReactOwner;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13109,7 +15044,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactPropTypeLocationNames;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13126,7 +15061,7 @@ module.exports = ReactPropTypeLocationNames;
 var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13304,7 +15239,7 @@ _assign(ReactReconcileTransaction.prototype, Transaction, Mixin);
 PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
-},{"./CallbackQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdateQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./Transaction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13472,7 +15407,7 @@ var ReactReconciler = {
 };
 
 module.exports = ReactReconciler;
-},{"./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactRef":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactRef.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactRef.js":[function(require,module,exports){
+},{"./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactRef":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactRef.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactRef.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13561,7 +15496,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
+},{"./ReactOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactOwner.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -13651,7 +15586,7 @@ _assign(ReactServerRenderingTransaction.prototype, Transaction, Mixin);
 PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactServerUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactServerUpdateQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js","./Transaction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -13790,7 +15725,7 @@ var ReactServerUpdateQueue = function () {
 }();
 
 module.exports = ReactServerUpdateQueue;
-},{"./ReactUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js":[function(require,module,exports){
+},{"./ReactUpdateQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -14026,7 +15961,7 @@ var ReactUpdateQueue = {
 };
 
 module.exports = ReactUpdateQueue;
-},{"./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js":[function(require,module,exports){
+},{"./ReactInstanceMap":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdates":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14277,7 +16212,7 @@ var ReactUpdates = {
 };
 
 module.exports = ReactUpdates;
-},{"./CallbackQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactFeatureFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactVersion.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactFeatureFlags":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactReconciler":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./Transaction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactVersion.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14291,7 +16226,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '15.5.4';
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14593,7 +16528,7 @@ Object.keys(ATTRS).forEach(function (key) {
 });
 
 module.exports = SVGDOMPropertyConfig;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SelectEventPlugin.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SelectEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14784,7 +16719,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInputSelection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./isTextInputElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getActiveElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getActiveElement.js","fbjs/lib/shallowEqual":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInputSelection":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./isTextInputElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getActiveElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/getActiveElement.js","fbjs/lib/shallowEqual":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15012,7 +16947,7 @@ var SimpleEventPlugin = {
 };
 
 module.exports = SimpleEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticAnimationEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js","./SyntheticClipboardEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js","./SyntheticTransitionEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js","./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/EventListener":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticAnimationEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js","./SyntheticClipboardEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js","./SyntheticTransitionEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js","./SyntheticUIEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/EventListener":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15051,7 +16986,7 @@ function SyntheticAnimationEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticAnimationEvent, AnimationEventInterface);
 
 module.exports = SyntheticAnimationEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15089,7 +17024,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15125,7 +17060,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15161,7 +17096,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15429,7 +17364,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
     "production" !== 'production' ? warning(warningCondition, 'This synthetic event is reused for performance reasons. If you\'re seeing this, ' + 'you\'re %s `%s` on a released/nullified synthetic event. %s. ' + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result) : void 0;
   }
 }
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15465,7 +17400,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15502,7 +17437,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15586,7 +17521,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js","./getEventKey":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventKey.js","./getEventModifierState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js","./getEventKey":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventKey.js","./getEventModifierState":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15658,7 +17593,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getEventModifierState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getEventModifierState":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15703,7 +17638,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15742,7 +17677,7 @@ function SyntheticTransitionEvent(dispatchConfig, dispatchMarker, nativeEvent, n
 SyntheticEvent.augmentClass(SyntheticTransitionEvent, TransitionEventInterface);
 
 module.exports = SyntheticTransitionEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15801,7 +17736,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15855,7 +17790,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16080,7 +18015,7 @@ var TransactionImpl = {
 };
 
 module.exports = TransactionImpl;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ViewportMetrics.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ViewportMetrics.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16107,7 +18042,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/accumulateInto.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/accumulateInto.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -16165,7 +18100,7 @@ function accumulateInto(current, next) {
 }
 
 module.exports = accumulateInto;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/adler32.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/adler32.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16209,7 +18144,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -16298,7 +18233,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
 module.exports = checkReactTypeSpec;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocationNames":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js":[function(require,module,exports){
+},{"./ReactPropTypeLocationNames":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","_process":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16330,7 +18265,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 };
 
 module.exports = createMicrosoftUnsafeLocalFunction;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/dangerousStyleValue.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/dangerousStyleValue.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16409,7 +18344,7 @@ function dangerousStyleValue(name, value, component) {
 }
 
 module.exports = dangerousStyleValue;
-},{"./CSSProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSProperty.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/CSSProperty.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -16532,7 +18467,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/findDOMNode.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/findDOMNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16592,7 +18527,7 @@ function findDOMNode(componentOrElement) {
 }
 
 module.exports = findDOMNode;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./getHostComponentFromComposite":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/flattenChildren.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstanceMap":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./getHostComponentFromComposite":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/flattenChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -16670,7 +18605,7 @@ function flattenChildren(children, selfDebugID) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./traverseAllChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/forEachAccumulated.js":[function(require,module,exports){
+},{"./KeyEscapeUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./traverseAllChildren":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/forEachAccumulated.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16701,7 +18636,7 @@ function forEachAccumulated(arr, cb, scope) {
 }
 
 module.exports = forEachAccumulated;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16751,7 +18686,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventKey.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventKey.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16853,7 +18788,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js":[function(require,module,exports){
+},{"./getEventCharCode":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16896,7 +18831,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16931,7 +18866,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16961,7 +18896,7 @@ function getHostComponentFromComposite(inst) {
 }
 
 module.exports = getHostComponentFromComposite;
-},{"./ReactNodeTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactNodeTypes.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getIteratorFn.js":[function(require,module,exports){
+},{"./ReactNodeTypes":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactNodeTypes.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getIteratorFn.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17002,7 +18937,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17076,7 +19011,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getTextContentAccessor.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getTextContentAccessor.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17109,7 +19044,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js":[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17210,7 +19145,7 @@ function getVendorPrefixedEventName(eventName) {
 }
 
 module.exports = getVendorPrefixedEventName;
-},{"fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/instantiateReactComponent.js":[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/instantiateReactComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17339,7 +19274,7 @@ _assign(ReactCompositeComponentWrapper.prototype, ReactCompositeComponent, {
 });
 
 module.exports = instantiateReactComponent;
-},{"./ReactCompositeComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js","react/lib/getNextDebugID":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getNextDebugID.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js":[function(require,module,exports){
+},{"./ReactCompositeComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js","react/lib/getNextDebugID":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/getNextDebugID.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17399,7 +19334,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isTextInputElement.js":[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/isTextInputElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17450,7 +19385,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17476,7 +19411,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js":[function(require,module,exports){
+},{"./escapeTextContentForBrowser":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17515,7 +19450,7 @@ function reactProdInvariant(code) {
 }
 
 module.exports = reactProdInvariant;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17531,7 +19466,7 @@ module.exports = reactProdInvariant;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMount.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js":[function(require,module,exports){
+},{"./ReactMount":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactMount.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17629,7 +19564,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"./DOMNamespaces":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setTextContent.js":[function(require,module,exports){
+},{"./DOMNamespaces":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setTextContent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17681,7 +19616,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
+},{"./escapeTextContentForBrowser":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./setInnerHTML":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","fbjs/lib/ExecutionEnvironment":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17723,7 +19658,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/traverseAllChildren.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/traverseAllChildren.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17899,7 +19834,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 }
 
 module.exports = traverseAllChildren;
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactElementSymbol":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getIteratorFn.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js":[function(require,module,exports){
+},{"./KeyEscapeUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactElementSymbol":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getIteratorFn.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -18276,11 +20211,342 @@ if ("production" !== 'production') {
 }
 
 module.exports = validateDOMNesting;
-},{"fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/KeyEscapeUtils.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js"][0].apply(exports,arguments)
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js":[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-syntax-highlighter/dist/create-element.js":[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+exports.createStyleObject = createStyleObject;
+exports.createClassNameString = createClassNameString;
+exports.createChildren = createChildren;
+exports.default = createElement;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function createStyleObject(classNames) {
+  var elementStyle = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var stylesheet = arguments[2];
+
+  return classNames.reduce(function (styleObject, className) {
+    return (0, _extends3.default)({}, styleObject, stylesheet[className]);
+  }, elementStyle);
+}
+
+function createClassNameString(classNames) {
+  return classNames.join(' ');
+}
+
+function createChildren(stylesheet, useInlineStyles) {
+  var childrenCount = 0;
+  return function (children) {
+    childrenCount += 1;
+    return children.map(function (child, i) {
+      return createElement({
+        node: child,
+        stylesheet: stylesheet,
+        useInlineStyles: useInlineStyles,
+        key: 'code-segment-' + childrenCount + '-' + i
+      });
+    });
+  };
+}
+
+function createElement(_ref) {
+  var node = _ref.node,
+      stylesheet = _ref.stylesheet,
+      _ref$style = _ref.style,
+      style = _ref$style === undefined ? {} : _ref$style,
+      useInlineStyles = _ref.useInlineStyles,
+      key = _ref.key;
+  var properties = node.properties,
+      type = node.type,
+      TagName = node.tagName,
+      value = node.value;
+
+  if (type === 'text') {
+    return value;
+  } else if (TagName) {
+    var childrenCreator = createChildren(stylesheet, useInlineStyles);
+    var props = useInlineStyles ? {
+      style: createStyleObject(properties.className, (0, _assign2.default)({}, properties.style, style), stylesheet)
+    } : { className: createClassNameString(properties.className) };
+    var children = childrenCreator(node.children);
+    return _react2.default.createElement(
+      TagName,
+      (0, _extends3.default)({ key: key }, props),
+      children
+    );
+  }
+}
+},{"babel-runtime/core-js/object/assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/core-js/object/assign.js","babel-runtime/helpers/extends":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/helpers/extends.js","react":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-syntax-highlighter/dist/highlight.js":[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+exports.default = function (lowlight, defaultStyle) {
+  return function SyntaxHighlighter(_ref5) {
+    var language = _ref5.language,
+        children = _ref5.children,
+        _ref5$style = _ref5.style,
+        style = _ref5$style === undefined ? defaultStyle : _ref5$style,
+        _ref5$customStyle = _ref5.customStyle,
+        customStyle = _ref5$customStyle === undefined ? {} : _ref5$customStyle,
+        _ref5$codeTagProps = _ref5.codeTagProps,
+        codeTagProps = _ref5$codeTagProps === undefined ? {} : _ref5$codeTagProps,
+        _ref5$useInlineStyles = _ref5.useInlineStyles,
+        useInlineStyles = _ref5$useInlineStyles === undefined ? true : _ref5$useInlineStyles,
+        _ref5$showLineNumbers = _ref5.showLineNumbers,
+        showLineNumbers = _ref5$showLineNumbers === undefined ? false : _ref5$showLineNumbers,
+        _ref5$startingLineNum = _ref5.startingLineNumber,
+        startingLineNumber = _ref5$startingLineNum === undefined ? 1 : _ref5$startingLineNum,
+        lineNumberContainerStyle = _ref5.lineNumberContainerStyle,
+        lineNumberStyle = _ref5.lineNumberStyle,
+        wrapLines = _ref5.wrapLines,
+        _ref5$lineStyle = _ref5.lineStyle,
+        lineStyle = _ref5$lineStyle === undefined ? {} : _ref5$lineStyle,
+        renderer = _ref5.renderer,
+        _ref5$PreTag = _ref5.PreTag,
+        PreTag = _ref5$PreTag === undefined ? 'pre' : _ref5$PreTag,
+        _ref5$CodeTag = _ref5.CodeTag,
+        CodeTag = _ref5$CodeTag === undefined ? 'code' : _ref5$CodeTag,
+        rest = (0, _objectWithoutProperties3.default)(_ref5, ['language', 'children', 'style', 'customStyle', 'codeTagProps', 'useInlineStyles', 'showLineNumbers', 'startingLineNumber', 'lineNumberContainerStyle', 'lineNumberStyle', 'wrapLines', 'lineStyle', 'renderer', 'PreTag', 'CodeTag']);
+
+    /* 
+     * some custom renderers rely on individual row elements so we need to turn wrapLines on 
+     * if renderer is provided and wrapLines is undefined
+    */
+    wrapLines = renderer && wrapLines === undefined ? true : wrapLines;
+    renderer = renderer || defaultRenderer;
+    var codeTree = language ? lowlight.highlight(language, children) : lowlight.highlightAuto(children);
+    if (codeTree.language === null) {
+      codeTree.value = [{ type: 'text', value: children }];
+    }
+    var defaultPreStyle = style.hljs || { backgroundColor: '#fff' };
+    var preProps = useInlineStyles ? (0, _assign2.default)({}, rest, { style: (0, _assign2.default)({}, defaultPreStyle, customStyle) }) : (0, _assign2.default)({}, rest, { className: 'hljs' });
+
+    var tree = wrapLines ? wrapLinesInSpan(codeTree, lineStyle) : codeTree.value;
+    var lineNumbers = showLineNumbers ? _react2.default.createElement(LineNumbers, {
+      containerStyle: lineNumberContainerStyle,
+      numberStyle: lineNumberStyle,
+      startingLineNumber: startingLineNumber,
+      codeString: children
+    }) : null;
+    return _react2.default.createElement(
+      PreTag,
+      preProps,
+      lineNumbers,
+      _react2.default.createElement(
+        CodeTag,
+        codeTagProps,
+        renderer({ rows: tree, stylesheet: style, useInlineStyles: useInlineStyles })
+      )
+    );
+  };
+};
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _createElement = require('./create-element');
+
+var _createElement2 = _interopRequireDefault(_createElement);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var newLineRegex = /\n/g;
+function getNewLines(str) {
+  return str.match(newLineRegex);
+}
+
+function getLineNumbers(_ref) {
+  var lines = _ref.lines,
+      startingLineNumber = _ref.startingLineNumber,
+      style = _ref.style;
+
+  return lines.map(function (_, i) {
+    var number = i + startingLineNumber;
+    return _react2.default.createElement(
+      'span',
+      {
+        key: 'line-' + i,
+        className: 'react-syntax-highlighter-line-number',
+        style: typeof style === 'function' ? style(number) : style
+      },
+      number + '\n'
+    );
+  });
+}
+
+function LineNumbers(_ref2) {
+  var codeString = _ref2.codeString,
+      _ref2$containerStyle = _ref2.containerStyle,
+      containerStyle = _ref2$containerStyle === undefined ? { float: 'left', paddingRight: '10px' } : _ref2$containerStyle,
+      _ref2$numberStyle = _ref2.numberStyle,
+      numberStyle = _ref2$numberStyle === undefined ? {} : _ref2$numberStyle,
+      startingLineNumber = _ref2.startingLineNumber;
+
+  return _react2.default.createElement(
+    'code',
+    { style: containerStyle },
+    getLineNumbers({
+      lines: codeString.replace(/\n$/, '').split('\n'),
+      style: numberStyle,
+      startingLineNumber: startingLineNumber
+    })
+  );
+}
+
+function createLineElement(_ref3) {
+  var children = _ref3.children,
+      lineNumber = _ref3.lineNumber,
+      lineStyle = _ref3.lineStyle,
+      _ref3$className = _ref3.className,
+      className = _ref3$className === undefined ? [] : _ref3$className;
+
+  return {
+    type: 'element',
+    tagName: 'span',
+    properties: {
+      className: className,
+      style: typeof lineStyle === 'function' ? lineStyle(lineNumber) : lineStyle
+    },
+    children: children
+  };
+}
+
+function flattenCodeTree(tree) {
+  var className = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var newTree = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+
+  for (var i = 0; i < tree.length; i++) {
+    var node = tree[i];
+    if (node.type === 'text') {
+      newTree.push(createLineElement({
+        children: [node],
+        className: className
+      }));
+    } else if (node.children) {
+      var classNames = className.concat(node.properties.className);
+      newTree = newTree.concat(flattenCodeTree(node.children, classNames));
+    }
+  }
+  return newTree;
+}
+
+function wrapLinesInSpan(codeTree, lineStyle) {
+  var tree = flattenCodeTree(codeTree.value);
+  var newTree = [];
+  var lastLineBreakIndex = -1;
+  var index = 0;
+
+  var _loop = function _loop() {
+    var node = tree[index];
+    var value = node.children[0].value;
+    var newLines = getNewLines(value);
+    if (newLines) {
+      (function () {
+        var splitValue = value.split('\n');
+        splitValue.forEach(function (text, i) {
+          var lineNumber = newTree.length + 1;
+          var newChild = { type: 'text', value: text + '\n' };
+          if (i === 0) {
+            var _children = tree.slice(lastLineBreakIndex + 1, index).concat(createLineElement({ children: [newChild], className: node.properties.className }));
+            newTree.push(createLineElement({ children: _children, lineNumber: lineNumber, lineStyle: lineStyle }));
+          } else if (i === splitValue.length - 1) {
+            var stringChild = tree[index + 1] && tree[index + 1].children && tree[index + 1].children[0];
+            if (stringChild) {
+              var lastLineInPreviousSpan = { type: 'text', value: '' + text };
+              var newElem = createLineElement({ children: [lastLineInPreviousSpan], className: node.properties.className });
+              tree.splice(index + 1, 0, newElem);
+            } else {
+              newTree.push(createLineElement({ children: [newChild], lineNumber: lineNumber, lineStyle: lineStyle }));
+            }
+          } else {
+            newTree.push(createLineElement({ children: [newChild], lineNumber: lineNumber, lineStyle: lineStyle }));
+          }
+        });
+        lastLineBreakIndex = index;
+      })();
+    }
+    index++;
+  };
+
+  while (index < tree.length) {
+    _loop();
+  }
+  if (lastLineBreakIndex !== tree.length - 1) {
+    var children = tree.slice(lastLineBreakIndex + 1, tree.length);
+    if (children && children.length) {
+      newTree.push(createLineElement({ children: children, lineNumber: newTree.length + 1, lineStyle: lineStyle }));
+    }
+  }
+  return newTree;
+}
+
+function defaultRenderer(_ref4) {
+  var rows = _ref4.rows,
+      stylesheet = _ref4.stylesheet,
+      useInlineStyles = _ref4.useInlineStyles;
+
+  return rows.map(function (node, i) {
+    return (0, _createElement2.default)({
+      node: node,
+      stylesheet: stylesheet,
+      useInlineStyles: useInlineStyles,
+      key: 'code-segement' + i
+    });
+  });
+}
+},{"./create-element":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-syntax-highlighter/dist/create-element.js","babel-runtime/core-js/object/assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/core-js/object/assign.js","babel-runtime/helpers/objectWithoutProperties":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/babel-runtime/helpers/objectWithoutProperties.js","react":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-syntax-highlighter/dist/light.js":[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.registerLanguage = undefined;
+
+var _highlight = require('./highlight');
+
+var _highlight2 = _interopRequireDefault(_highlight);
+
+var _core = require('lowlight/lib/core');
+
+var _core2 = _interopRequireDefault(_core);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var registerLanguage = exports.registerLanguage = _core2.default.registerLanguage;
+exports.default = (0, _highlight2.default)(_core2.default, {});
+},{"./highlight":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-syntax-highlighter/dist/highlight.js","lowlight/lib/core":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lowlight/lib/core.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/KeyEscapeUtils.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js"][0].apply(exports,arguments)
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/React.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -18384,7 +20650,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = React;
-},{"./ReactChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactChildren.js","./ReactClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactClass.js","./ReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js","./ReactDOMFactories":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactDOMFactories.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementValidator.js","./ReactPropTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypes.js","./ReactPureComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPureComponent.js","./ReactVersion":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactVersion.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","./onlyChild":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/onlyChild.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
+},{"./ReactChildren":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactChildren.js","./ReactClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactClass.js","./ReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js","./ReactDOMFactories":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactDOMFactories.js","./ReactElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElementValidator.js","./ReactPropTypes":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPropTypes.js","./ReactPureComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPureComponent.js","./ReactVersion":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactVersion.js","./canDefineProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","./onlyChild":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/onlyChild.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -18575,7 +20841,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/PooledClass.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./traverseAllChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/traverseAllChildren.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactClass.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/PooledClass.js","./ReactElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./traverseAllChildren":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/traverseAllChildren.js","fbjs/lib/emptyFunction":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactClass.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -19298,7 +21564,7 @@ var ReactClass = {
 };
 
 module.exports = ReactClass;
-},{"./ReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./ReactNoopUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./ReactPropTypeLocationNames":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
+},{"./ReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./ReactNoopUpdateQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./ReactPropTypeLocationNames":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -19416,7 +21682,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactComponent;
-},{"./ReactNoopUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js":[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./canDefineProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -19750,7 +22016,7 @@ var ReactComponentTreeHook = {
 };
 
 module.exports = ReactComponentTreeHook;
-},{"./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -19781,7 +22047,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactDOMFactories.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactDOMFactories.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -19951,7 +22217,7 @@ var ReactDOMFactories = {
 };
 
 module.exports = ReactDOMFactories;
-},{"./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementValidator.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElementValidator.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -20292,9 +22558,9 @@ ReactElement.isValidElement = function (object) {
 };
 
 module.exports = ReactElement;
-},{"./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementSymbol.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementSymbol.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactElementSymbol.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
+},{"./ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElementSymbol.js","./canDefineProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElementSymbol.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactElementSymbol.js"][0].apply(exports,arguments)
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -20547,7 +22813,7 @@ var ReactElementValidator = {
 };
 
 module.exports = ReactElementValidator;
-},{"./ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","./checkReactTypeSpec":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/checkReactTypeSpec.js","./getIteratorFn":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getIteratorFn.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js":[function(require,module,exports){
+},{"./ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./canDefineProperty":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","./checkReactTypeSpec":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/checkReactTypeSpec.js","./getIteratorFn":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/getIteratorFn.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -20643,9 +22909,9 @@ var ReactNoopUpdateQueue = {
 };
 
 module.exports = ReactNoopUpdateQueue;
-},{"fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
+},{"fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js"][0].apply(exports,arguments)
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -20664,9 +22930,9 @@ var _require = require('./ReactElement'),
 var factory = require('prop-types/factory');
 
 module.exports = factory(isValidElement);
-},{"./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","prop-types/factory":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factory.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypesSecret.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPureComponent.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","prop-types/factory":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/prop-types/factory.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js"][0].apply(exports,arguments)
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPureComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -20708,9 +22974,9 @@ _assign(ReactPureComponent.prototype, ReactComponent.prototype);
 ReactPureComponent.prototype.isPureReactComponent = true;
 
 module.exports = ReactPureComponent;
-},{"./ReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js","./ReactNoopUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactVersion.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactVersion.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js":[function(require,module,exports){
+},{"./ReactComponent":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js","./ReactNoopUpdateQueue":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","fbjs/lib/emptyObject":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","object-assign":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactVersion.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/ReactVersion.js"][0].apply(exports,arguments)
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -20736,7 +23002,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = canDefineProperty;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/checkReactTypeSpec.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/checkReactTypeSpec.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -20825,9 +23091,9 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
 module.exports = checkReactTypeSpec;
 }).call(this,require('_process'))
-},{"./ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactPropTypeLocationNames":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getIteratorFn.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getIteratorFn.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getNextDebugID.js":[function(require,module,exports){
+},{"./ReactComponentTreeHook":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactPropTypeLocationNames":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","_process":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/getIteratorFn.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/getIteratorFn.js"][0].apply(exports,arguments)
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/getNextDebugID.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -20848,7 +23114,7 @@ function getNextDebugID() {
 }
 
 module.exports = getNextDebugID;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -20886,9 +23152,9 @@ function onlyChild(children) {
 }
 
 module.exports = onlyChild;
-},{"./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js":[function(require,module,exports){
+arguments[4]["/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js"][0].apply(exports,arguments)
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -21064,12 +23330,12 @@ function traverseAllChildren(children, callback, traverseContext) {
 }
 
 module.exports = traverseAllChildren;
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/KeyEscapeUtils.js","./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getIteratorFn.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js":[function(require,module,exports){
+},{"./KeyEscapeUtils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/KeyEscapeUtils.js","./ReactCurrentOwner":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/getIteratorFn.js","./reactProdInvariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/react.js":[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/sentence-case/sentence-case.js":[function(require,module,exports){
+},{"./lib/React":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/sentence-case/sentence-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 var upperCaseFirst = require('upper-case-first')
 
@@ -21084,7 +23350,7 @@ module.exports = function (value, locale) {
   return upperCaseFirst(noCase(value, locale), locale)
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/snake-case/snake-case.js":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case-first":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/snake-case/snake-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 
 /**
@@ -21098,7 +23364,7 @@ module.exports = function (value, locale) {
   return noCase(value, locale, '_')
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/swap-case/swap-case.js":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/swap-case/swap-case.js":[function(require,module,exports){
 var upperCase = require('upper-case')
 var lowerCase = require('lower-case')
 
@@ -21127,7 +23393,7 @@ module.exports = function (str, locale) {
   return result
 }
 
-},{"lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/title-case/title-case.js":[function(require,module,exports){
+},{"lower-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/lower-case/lower-case.js","upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/title-case/title-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 var upperCase = require('upper-case')
 
@@ -21144,7 +23410,7 @@ module.exports = function (value, locale) {
   })
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js":[function(require,module,exports){
+},{"no-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js":[function(require,module,exports){
 var upperCase = require('upper-case')
 
 /**
@@ -21163,7 +23429,7 @@ module.exports = function (str, locale) {
   return upperCase(str.charAt(0), locale) + str.substr(1)
 }
 
-},{"upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js":[function(require,module,exports){
+},{"upper-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/upper-case/upper-case.js":[function(require,module,exports){
 /**
  * Special language-specific overrides.
  *
@@ -21215,7 +23481,7 @@ module.exports = function (str, locale) {
   return str.toUpperCase()
 }
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/src/client/build.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/build.js":[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -21224,9 +23490,17 @@ var ReactDOM = require('react-dom');
 var InteractiveDocument = require('./component');
 var mountNode = document.getElementById('idyll-mount');
 
-ReactDOM.render(React.createElement(InteractiveDocument, null), mountNode);
+var ast = require('__IDYLL_AST__');
+var componentClasses = require('__IDYLL_COMPONENTS__');
+var datasets = require('__IDYLL_DATA__');
 
-},{"./component":"/Users/mathisonian/projects/idyll/idyll/src/client/component.js","react":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js","react-dom":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/index.js"}],"/Users/mathisonian/projects/idyll/idyll/src/client/component.js":[function(require,module,exports){
+ReactDOM.render(React.createElement(InteractiveDocument, {
+  ast: ast,
+  componentClasses: componentClasses,
+  datasets: datasets
+}), mountNode);
+
+},{"./component":"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/component.js","__IDYLL_AST__":"__IDYLL_AST__","__IDYLL_COMPONENTS__":"__IDYLL_COMPONENTS__","__IDYLL_DATA__":"__IDYLL_DATA__","react":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/react.js","react-dom":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/index.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/component.js":[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21242,8 +23516,7 @@ var walkVars = require('./visitors/vars');
 var walkNode = require('./visitors/node');
 var utils = require('./utils');
 
-require('__IDYLL_SYNTAX_HIGHLIGHT__');
-var results = require('__IDYLL_AST__');
+// require('__IDYLL_SYNTAX_HIGHLIGHT__');
 
 var transformRefs = function transformRefs(refs) {
   var output = {};
@@ -21279,12 +23552,12 @@ var InteractiveDocument = function (_React$PureComponent) {
     _this.derivedVars = {};
     _this.initialState = {};
 
-    results.map(walkVars(_this));
+    props.ast.map(walkVars(_this, props.datasets));
 
     _this.state = _this.initialState;
 
     _this.getChildren = function () {
-      return results.map(walkNode(_this));
+      return props.ast.map(walkNode(_this, props.componentClasses));
     };
     return _this;
   }
@@ -21416,7 +23689,7 @@ var InteractiveDocument = function (_React$PureComponent) {
 
 module.exports = InteractiveDocument;
 
-},{"./utils":"/Users/mathisonian/projects/idyll/idyll/src/client/utils.js","./visitors/node":"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/node.js","./visitors/vars":"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/vars.js","__IDYLL_AST__":"__IDYLL_AST__","__IDYLL_SYNTAX_HIGHLIGHT__":"__IDYLL_SYNTAX_HIGHLIGHT__","react":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js"}],"/Users/mathisonian/projects/idyll/idyll/src/client/constants.js":[function(require,module,exports){
+},{"./utils":"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/utils.js","./visitors/node":"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/visitors/node.js","./visitors/vars":"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/visitors/vars.js","react":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/constants.js":[function(require,module,exports){
 'use strict';
 
 var COMPONENTS = {
@@ -21455,7 +23728,7 @@ module.exports = {
   DATASET: DATASET
 };
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/src/client/utils.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/utils.js":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -21483,19 +23756,18 @@ module.exports = {
   flattenObject: flattenObject
 };
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/node.js":[function(require,module,exports){
+},{}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/visitors/node.js":[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var htmlTags = require('html-tags');
 var changeCase = require('change-case');
-var componentClasses = require('__IDYLL_COMPONENTS__');
 
 var _require = require('../constants'),
     COMPONENTS = _require.COMPONENTS,
     PROPERTIES = _require.PROPERTIES;
 
-var processComponent = function processComponent(component, name, id) {
+var processComponent = function processComponent(component, name, id, componentClasses) {
   var split = name.split('.');
   var paramCaseName = changeCase.paramCase(split[0]);
   var componentClass = void 0;
@@ -21537,7 +23809,7 @@ var filterPropsByComponentName = {
   p: []
 };
 
-module.exports = function (component) {
+module.exports = function (component, componentClasses) {
   var nodeID = -1;
   var walkNode = function walkNode(node) {
     nodeID++;
@@ -21615,19 +23887,19 @@ module.exports = function (component) {
         }
       });
 
-      var results = processComponent(component, componentName, nodeID);
+      var results = processComponent(component, componentName, nodeID, componentClasses);
 
       var inputProps = Object.assign({}, results.extraProps, propsObj);
       if (children) {
         return React.createElement(results.componentClass, inputProps, children.length ? children.map(walkNode) : null);
       }
-      return React.createElement(results.componentClass, inputProps);
+      return React.createElement(getComponentClass(componentName), inputProps);
     }
   };
   return walkNode;
 };
 
-},{"../constants":"/Users/mathisonian/projects/idyll/idyll/src/client/constants.js","__IDYLL_COMPONENTS__":"__IDYLL_COMPONENTS__","change-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/change-case/change-case.js","html-tags":"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/index.js","react":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js"}],"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/vars.js":[function(require,module,exports){
+},{"../constants":"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/constants.js","change-case":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/change-case/change-case.js","html-tags":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/html-tags/index.js","react":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/visitors/vars.js":[function(require,module,exports){
 'use strict';
 
 var ReactDOM = require('react-dom');
@@ -21639,8 +23911,7 @@ var _require = require('../constants'),
     DERIVED = _require.DERIVED,
     VARIABLE = _require.VARIABLE;
 
-var datasets = require('__IDYLL_DATA__');
-module.exports = function (component) {
+module.exports = function (component, datasets) {
   var nodeID = -1;
   var walkVars = function walkVars(node) {
     var _this = this;
@@ -21780,11 +24051,8 @@ module.exports = function (component) {
   return walkVars.bind(component);
 };
 
-},{"../constants":"/Users/mathisonian/projects/idyll/idyll/src/client/constants.js","__IDYLL_DATA__":"__IDYLL_DATA__","react-dom":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/index.js"}],"__IDYLL_AST__":[function(require,module,exports){
-"use strict";
-
-module.exports = [["h1", [], ["Hello World"]]];
-
+},{"../constants":"/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/constants.js","react-dom":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-dom/index.js"}],"__IDYLL_AST__":[function(require,module,exports){
+module.exports=[["h1",[],["Hello World"]]]
 },{}],"__IDYLL_COMPONENTS__":[function(require,module,exports){
 "use strict";
 
@@ -21796,6 +24064,8 @@ module.exports = {};
 module.exports = {};
 
 },{}],"__IDYLL_SYNTAX_HIGHLIGHT__":[function(require,module,exports){
-"use strict";
+'use strict';
 
-},{}]},{},["/Users/mathisonian/projects/idyll/idyll/src/client/build.js"]);
+var rsh = require('../../../node_modules/react-syntax-highlighter/dist/light');
+
+},{"../../../node_modules/react-syntax-highlighter/dist/light":"/Users/bclinkinbeard/Code/idyll-lang/idyll/node_modules/react-syntax-highlighter/dist/light.js"}]},{},["/Users/bclinkinbeard/Code/idyll-lang/idyll/src/client/build.js"]);

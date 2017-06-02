@@ -3,8 +3,7 @@ const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 const utils = require('./utils');
 
-require('__IDYLL_SYNTAX_HIGHLIGHT__');
-let results = require('__IDYLL_AST__');
+// require('__IDYLL_SYNTAX_HIGHLIGHT__');
 
 const transformRefs = (refs) => {
   const output = {};
@@ -35,12 +34,12 @@ class InteractiveDocument extends React.PureComponent {
     this.derivedVars = {};
     this.initialState = {};
 
-    results.map(walkVars(this));
+    props.ast.map(walkVars(this, props.datasets));
 
     this.state = this.initialState;
 
     this.getChildren = () => {
-      return results.map(walkNode(this));
+      return props.ast.map(walkNode(this, props.componentClasses));
     }
   }
 
