@@ -13,7 +13,6 @@ const processComponent = (component, name, id, componentClasses) => {
     for (var i = 1; i < split.length; i++) {
       componentClass = componentClass[split[i]];
     }
-    componentClass = componentClass.substr(componentClass.indexOf('idyll-default-components'));
     extraProps.__handleUpdateProps = component.handleUpdateProps(id);
   } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
     componentClass = name.toLowerCase();

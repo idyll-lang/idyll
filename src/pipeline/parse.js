@@ -66,7 +66,13 @@ exports.getComponentsJS = (ast, paths, inputConfig, o) => {
     {}
   );
 
-  if (o) return components;
+  if (o) {
+    const obj = {};
+    Object.keys(components).forEach(key => {
+      obj[key] = require(components[key])
+    })
+    return obj;
+  }
 
   const src = Object.keys(components)
     .map((key) => {
@@ -174,7 +180,6 @@ exports.getHTML = (ast, components, datasets, template) => {
       datasets: datasets
     })
   );
-  console.log(meta.idyllContent);
   return mustache.render(template, meta || {});
 }
 
