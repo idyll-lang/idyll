@@ -118,7 +118,7 @@ exports.getHighlightJS = (ast, paths) => {
 
   const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
   if (!codeHighlightNodes.length) {
-    return '';
+    return ' ';
   }
 
   const languages = codeHighlightNodes.reduce(
