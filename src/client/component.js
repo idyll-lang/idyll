@@ -5,6 +5,7 @@ const utils = require('./utils');
 
 require('__IDYLL_SYNTAX_HIGHLIGHT__');
 let results = require('__IDYLL_AST__');
+console.log(results);
 
 const transformRefs = (refs) => {
   const output = {};

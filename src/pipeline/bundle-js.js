@@ -6,8 +6,18 @@ const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const brfs = require('brfs');
 const Promise = require('bluebird');
+const stream = require('stream');
 
 let b;
+
+const toStream = (str) => {
+  const Readable = stream.Readable;
+  const s = new Readable;
+  s.push(str);
+  s.push(null);
+
+  return s;
+};
 
 const getTransform = (opts, paths) => {
   const _getTransform = (name) => {
@@ -19,7 +29,7 @@ const getTransform = (opts, paths) => {
     .concat([[ brfs ]]);
 };
 
-module.exports = function (opts, paths) {
+module.exports = function (opts, paths, output) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
 
   if (!b) {
@@ -31,12 +41,29 @@ module.exports = function (opts, paths) {
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
       transform: getTransform(opts, paths),
       plugin: [
-        (b) => b.require([
-          {file: paths.SYNTAX_OUTPUT_FILE, expose: '__IDYLL_SYNTAX_HIGHLIGHT__'},
-          {file: paths.AST_OUTPUT_FILE, expose: '__IDYLL_AST__'},
-          {file: paths.COMPONENTS_OUTPUT_FILE, expose: '__IDYLL_COMPONENTS__'},
-          {file: paths.DATA_OUTPUT_FILE, expose: '__IDYLL_DATA__'}
-        ])
+        (b) => {
+          const requires = [{
+            key: 'syntaxHighlighting',
+            requireName: '__IDYLL_SYNTAX_HIGHLIGHT__'
+          }, {
+            key: 'data',
+            requireName: '__IDYLL_DATA__'
+          }, {
+            key: 'components',
+            requireName: '__IDYLL_COMPONENTS__'
+          }, {
+            key: 'ast',
+            requireName: '__IDYLL_AST__'
+          }];
+          requires.forEach((obj) => {
+            b.exclude(obj.requireName);
+
+            b.require(toStream(output[obj.key]), {
+              expose: obj.requireName,
+              basedir: paths.TMP_DIR
+            })
+          });
+        }
       ]
     };
 
