@@ -37,10 +37,6 @@ const EXPECTED_BUILD_DIR = join(EXPECTED_DIR, 'build');
 const EXPECTED_BUILD_FILENAMES = getFilenames(EXPECTED_BUILD_DIR);
 const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
-const EXPECTED_IDYLL_DIR = join(EXPECTED_DIR, '.idyll');
-const EXPECTED_IDYLL_FILENAMES = getFilenames(EXPECTED_IDYLL_DIR);
-const EXPECTED_IDYLL_RESULTS = dirToHash(EXPECTED_IDYLL_DIR);
-
 beforeAll(() => {
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_DIR);
@@ -65,10 +61,4 @@ beforeAll(done => {
 
 test('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
-})
-
-test('creates the expected build artifacts', () => {
-  Object.keys(EXPECTED_IDYLL_RESULTS).forEach((key) => {
-    expect(projectIdyllResults[key]).toEqual(EXPECTED_IDYLL_RESULTS[key]);
-  })
 })
