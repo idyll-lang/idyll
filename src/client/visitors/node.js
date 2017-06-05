@@ -130,7 +130,7 @@ module.exports = function(component) {
       if (children) {
         return React.createElement(results.componentClass, inputProps, children.length ? children.map(walkNode) : null);
       }
-      return React.createElement(getComponentClass(componentName), inputProps);
+      return React.createElement(results.componentClass, inputProps);
     }
   };
   return walkNode;
