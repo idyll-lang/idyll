@@ -43,6 +43,8 @@ beforeAll(() => {
 })
 
 
+let output;
+
 beforeAll(done => {
   idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
@@ -50,7 +52,8 @@ beforeAll(done => {
       spellcheck: false
     },
     minify: false
-  }).on('update', (output) => {
+  }).on('update', (o) => {
+    output = o;
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
     projectIdyllFilenames = getFilenames(PROJECT_IDYLL_DIR);
@@ -62,3 +65,8 @@ beforeAll(done => {
 test('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 })
+test('should construct the AST properly', () => {
+  const ast = [["h1",[],["Hello World"]]];
+
+  expect(output.ast).toEqual('module.exports = ' + JSON.stringify(ast));
+});
