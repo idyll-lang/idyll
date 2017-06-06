@@ -39,6 +39,10 @@ module.exports = function (opts, paths, output) {
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
       transform: getTransform(opts),
+      paths: [
+        path.join(paths.INPUT_DIR, 'node_modules'),
+        path.resolve(__dirname, '..', '..', 'node_modules')
+      ],
       plugin: [
         (b) => {
           const aliases = {
