@@ -5,14 +5,33 @@ const babelify = require('babelify');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const brfs = require('brfs');
+const Baby = require('babyparse');
 const Promise = require('bluebird');
 const stream = require('stream');
 
 let b;
 
-const toStream = (str) => {
+const toStream = (k, o) => {
+  let src;
+
+  if (k === 'ast') {
+    src = `module.exports = ${JSON.stringify(o)}`;
+  } else if (k === 'syntaxHighlighting') {
+    src = `module.exports = (function (){${o}})()`;
+  } else {
+    src = Object.keys(o)
+      .map((key) => {
+        if (k === 'data' && o[key].endsWith('.csv')) {
+          return `'${key}': ` + JSON.stringify(Baby.parseFiles(o[key], { header: true }).data);
+        }
+        return `'${key}': require('${o[key]}')`;
+      })
+      .join(',\n\t');
+    src = `module.exports = {\n\t${src}\n}\n`;
+  }
+
   const s = new stream.Readable;
-  s.push(str);
+  s.push(src);
   s.push(null);
 
   return s;
@@ -57,7 +76,7 @@ module.exports = function (opts, paths, output) {
           for (const key in output) {
             if (!aliases[key]) continue;
             b.exclude(aliases[key]);
-            b.require(toStream(output[key]), {
+            b.require(toStream(key, output[key]), {
               expose: aliases[key],
               basedir: paths.TMP_DIR
             })

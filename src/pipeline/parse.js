@@ -3,7 +3,6 @@ const path = require('path');
 const htmlTags = require('html-tags');
 const mustache = require('mustache');
 const resolve = require('resolve');
-const Baby = require('babyparse');
 const slash = require('slash');
 const { paramCase } = require('change-case');
 
@@ -32,7 +31,7 @@ const getNodesByName = (name, tree) => {
   )
 }
 
-exports.getComponentsJS = (ast, paths, inputConfig, o) => {
+exports.getComponentsJS = (ast, paths, inputConfig) => {
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
   const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
   const {
@@ -73,21 +72,7 @@ exports.getComponentsJS = (ast, paths, inputConfig, o) => {
     {}
   );
 
-  if (o) {
-    const obj = {};
-    Object.keys(components).forEach(key => {
-      obj[key] = require(components[key])
-    })
-    return obj;
-  }
-
-  const src = Object.keys(components)
-    .map((key) => {
-      return `'${key}': require('${components[key]}')`;
-    })
-    .join(',\n\t');
-
-  return `module.exports = {\n\t${src}\n}\n`;
+  return components;
 }
 
 exports.getDataJS = (ast, DATA_DIR, o) => {
@@ -108,20 +93,14 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
         {}
       );
 
-      if (source.endsWith('.csv')) {
-        acc[name] = Baby.parseFiles(path.join(DATA_DIR, source), { header: true }).data;
-      } else {
-        acc[name] = require(path.join(DATA_DIR, source));
-      }
+      acc[name] = path.join(DATA_DIR, source);
 
       return acc;
     },
     {}
   );
 
-  if (o) return data;
-
-  return `module.exports = ${JSON.stringify(data)}`;
+  return data;
 }
 
 
@@ -177,20 +156,26 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
     {}
   ) : {};
 
+  const componentClasses = {};
+  Object.keys(components).forEach(key => {
+    componentClasses[key] = require(components[key])
+  })
+
   require(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR }));
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
   const InteractiveDocument = require('../client/component');
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(InteractiveDocument, {
-      ast: getFilteredAST(ast),
-      componentClasses: components,
-      datasets: datasets
+      ast,
+      componentClasses,
+      datasets
     })
   ).trim();
+
   return mustache.render(template, meta);
 }
 
 exports.getASTJSON = (ast) => {
-  return `module.exports = ${JSON.stringify(getFilteredAST(ast))}`;
+  return getFilteredAST(ast);
 }
