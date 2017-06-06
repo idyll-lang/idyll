@@ -83,13 +83,13 @@ test('creates the expected files', () => {
 test('should construct the AST properly', () => {
   const ast = [["Header",[["title",["value","Welcome to Idyll"]],["subtitle",["value","Open index.idl to start writing"]],["author",["value","Your Name Here"]],["authorLink",["value","https://idyll-lang.github.io"]]],[]],["p",[],["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]],["div",[],[["data",[["name",["value","myData"]],["source",["value","example-data.json"]]],[]],["Table",[["data",["variable","myData"]]],[]]]],["p",[],["Here is how you can use a variable:"]],["var",[["name",["value","exampleVar"]],["value",["value",5]]],[]],["div",[],[["Range",[["min",["value",0]],["max",["value",10]],["value",["variable","exampleVar"]]],[]],["DisplayVar",[["var",["variable","exampleVar"]]],[]]]],["pre",[],[["code",[],["var code = true;"]]]],["p",[],["And here is a custom component:"]],["CustomComponent",[],[]],["p",[],["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]],["ReactMicroBarChart",[["data",["expression","[4, 1, 3, 2]"]]],[]],["PackageJsonComponentTest",[],[]],["p",[],["This adds support for indexed components: ",["CustomComponent.IndexedComponent",[],[]]]]];
 
-  expect(output.ast).toEqual('module.exports = ' + JSON.stringify(ast));
+  expect(output.ast).toEqual(ast);
 });
 
 test('should include npm components', () => {
-  expect(output.components).toContain('react-micro-bar-chart');
+  expect(Object.keys(output.components)).toContain('react-micro-bar-chart');
 })
 
 test('should include components configured in package.json', () => {
-  expect(output.components).toContain('package-json-component-test');
+  expect(Object.keys(output.components)).toContain('package-json-component-test');
 })
