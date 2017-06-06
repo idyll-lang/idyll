@@ -7,6 +7,13 @@ const Baby = require('babyparse');
 const slash = require('slash');
 const { paramCase } = require('change-case');
 
+const getFilteredAST = (ast) => {
+  const ignoreNames = ['meta'];
+  return ast.filter((node) => {
+    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
+  });
+}
+
 const getNodesByName = (name, tree) => {
   const predicate = typeof name === 'string' ? (s) => s === name : name;
 
@@ -118,7 +125,7 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
 }
 
 
-exports.getHighlightJS = (ast, paths) => {
+exports.getHighlightJS = (ast) => {
   // load react-syntax-highlighter from idyll's node_modules directory
   const languageMap = {
     js: 'javascript'
@@ -157,7 +164,7 @@ exports.getHighlightJS = (ast, paths) => {
   return js;
 }
 
-exports.getHTML = (ast, components, datasets, template) => {
+exports.getHTML = (paths, ast, components, datasets, template) => {
   // there should only be one meta node
   const metaNodes = getNodesByName('meta', ast);
 
@@ -170,24 +177,20 @@ exports.getHTML = (ast, components, datasets, template) => {
     {}
   )
 
+  require(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR }));
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
   const InteractiveDocument = require('../client/component');
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(InteractiveDocument, {
-      ast: ast,
+      ast: getFilteredAST(ast),
       componentClasses: components,
       datasets: datasets
     })
-  );
+  ).trim();
   return mustache.render(template, meta || {});
 }
 
 exports.getASTJSON = (ast) => {
-  const ignoreNames = ['meta'];
-  const filtered = ast.filter((node) => {
-    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
-  });
-
-  return `module.exports = ${JSON.stringify(filtered)}`;
+  return `module.exports = ${JSON.stringify(getFilteredAST(ast))}`;
 }

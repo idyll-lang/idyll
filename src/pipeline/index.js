@@ -34,6 +34,7 @@ const build = (opts, paths, inputConfig) => {
         syntaxHighlighting: getHighlightJS(ast, paths)
       };
       output.html = getHTML(
+        paths,
         ast,
         getComponentsJS(ast, paths, inputConfig, true),
         getDataJS(ast, paths.DATA_DIR),

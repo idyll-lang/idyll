@@ -3,7 +3,11 @@ const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 const utils = require('./utils');
 
-// require('__IDYLL_SYNTAX_HIGHLIGHT__');
+try {
+  require('__IDYLL_SYNTAX_HIGHLIGHT__');
+} catch (e) {
+
+}
 
 const transformRefs = (refs) => {
   const output = {};
