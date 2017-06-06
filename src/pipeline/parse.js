@@ -169,13 +169,13 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
   const metaNodes = getNodesByName('meta', ast);
 
   // data is stored in props, hence [1]
-  const meta = metaNodes.length && metaNodes[0][1].reduce(
+  const meta = metaNodes.length ? metaNodes[0][1].reduce(
     (acc, prop) => {
       acc[prop[0]] = prop[1][1];
       return acc;
     },
     {}
-  )
+  ) : {};
 
   require(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR }));
   const ReactDOMServer = require('react-dom/server');
@@ -188,7 +188,7 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
       datasets: datasets
     })
   ).trim();
-  return mustache.render(template, meta || {});
+  return mustache.render(template, meta);
 }
 
 exports.getASTJSON = (ast) => {

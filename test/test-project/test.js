@@ -32,10 +32,6 @@ const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build');
 let projectBuildFilenames;
 let projectBuildResults;
 
-const PROJECT_IDYLL_DIR = join(PROJECT_DIR, '.idyll');
-let projectIdyllFilenames;
-let projectIdyllResults;
-
 const EXPECTED_DIR = join(__dirname, 'expected-output');
 // build output to test against
 const EXPECTED_BUILD_DIR = join(EXPECTED_DIR, 'build');
@@ -44,7 +40,6 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
 beforeAll(() => {
   rimraf.sync(PROJECT_BUILD_DIR);
-  rimraf.sync(PROJECT_IDYLL_DIR);
 })
 
 let output;
@@ -54,6 +49,7 @@ beforeAll(done => {
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
     htmlTemplate: join(PROJECT_DIR, '_index.html'),
+    defaultComponents: join(PROJECT_DIR, 'components', 'default'),
     components: join(PROJECT_DIR, 'components'),
     datasets: join(PROJECT_DIR, 'data'),
     layout: 'centered',
@@ -67,8 +63,6 @@ beforeAll(done => {
     output = o;
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
-    projectIdyllFilenames = getFilenames(PROJECT_IDYLL_DIR);
-    projectIdyllResults = dirToHash(PROJECT_IDYLL_DIR);
     done();
   }).build();
 })
