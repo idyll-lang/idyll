@@ -37,18 +37,7 @@ const build = (opts, paths, inputConfig) => {
     }
   )
   .then(() => {
-    // write everything but JS to disk
-    return Promise.all([
-      writeFile(paths.AST_OUTPUT_FILE, output.ast),
-      writeFile(paths.COMPONENTS_OUTPUT_FILE, output.components),
-      writeFile(paths.CSS_OUTPUT_FILE, output.css),
-      writeFile(paths.DATA_OUTPUT_FILE, output.data),
-      writeFile(paths.SYNTAX_OUTPUT_FILE, output.syntaxHighlighting),
-      writeFile(paths.HTML_OUTPUT_FILE, output.html),
-    ]);
-  })
-  .then(() => {
-    return bundleJS(opts, paths); // create index.js bundle
+    return bundleJS(opts, paths, output); // create index.js bundle
   })
   .then((js) => {
     // minify bundle if necessary and store it
@@ -58,7 +47,11 @@ const build = (opts, paths, inputConfig) => {
     output.js = js;
   })
   .then(() => {
-    writeFile(paths.JS_OUTPUT_FILE, output.js); // write JS to disk
+    return Promise.all([
+      writeFile(paths.JS_OUTPUT_FILE, output.js),
+      writeFile(paths.CSS_OUTPUT_FILE, output.css),
+      writeFile(paths.HTML_OUTPUT_FILE, output.html),
+    ]);
   })
   .then(() => {
     return output; // return all results

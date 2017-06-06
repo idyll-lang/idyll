@@ -2,7 +2,8 @@ const {
   dirname,
   isAbsolute,
   join,
-  parse
+  parse,
+  resolve
 } = require('path');
 const mkdirp = require('mkdirp');
 
@@ -26,6 +27,7 @@ module.exports = function (opts) {
   mkdirp.sync(TMP_DIR);
 
   return {
+    APP_PATH: resolve(__dirname, '..'),
     CSS_INPUT_FILE: getPath(opts.css),
     COMPONENTS_DIR: getPath(opts.components),
     DATA_DIR: getPath(opts.datasets),
@@ -39,10 +41,6 @@ module.exports = function (opts) {
     CSS_OUTPUT_FILE: join(OUTPUT_DIR, 'styles.css'),
     HTML_OUTPUT_FILE: join(OUTPUT_DIR, 'index.html'),
     JS_OUTPUT_FILE: join(OUTPUT_DIR, 'index.js'),
-    TMP_DIR,
-    AST_OUTPUT_FILE: join(TMP_DIR, 'ast.json'),
-    COMPONENTS_OUTPUT_FILE: join(TMP_DIR, 'components.js'),
-    SYNTAX_OUTPUT_FILE: join(TMP_DIR, 'syntax-highlighters.js'),
-    DATA_OUTPUT_FILE: join(TMP_DIR, 'data.js')
+    TMP_DIR
   };
 }

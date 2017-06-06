@@ -37,15 +37,13 @@ const EXPECTED_BUILD_DIR = join(EXPECTED_DIR, 'build');
 const EXPECTED_BUILD_FILENAMES = getFilenames(EXPECTED_BUILD_DIR);
 const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
-const EXPECTED_IDYLL_DIR = join(EXPECTED_DIR, '.idyll');
-const EXPECTED_IDYLL_FILENAMES = getFilenames(EXPECTED_IDYLL_DIR);
-const EXPECTED_IDYLL_RESULTS = dirToHash(EXPECTED_IDYLL_DIR);
-
 beforeAll(() => {
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_DIR);
 })
 
+
+let output;
 
 beforeAll(done => {
   idyll({
@@ -54,7 +52,8 @@ beforeAll(done => {
       spellcheck: false
     },
     minify: false
-  }).on('update', (output) => {
+  }).on('update', (o) => {
+    output = o;
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
     projectIdyllFilenames = getFilenames(PROJECT_IDYLL_DIR);
@@ -66,9 +65,8 @@ beforeAll(done => {
 test('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 })
+test('should construct the AST properly', () => {
+  const ast = [["h1",[],["Hello World"]]];
 
-test('creates the expected build artifacts', () => {
-  Object.keys(EXPECTED_IDYLL_RESULTS).forEach((key) => {
-    expect(projectIdyllResults[key]).toEqual(EXPECTED_IDYLL_RESULTS[key]);
-  })
-})
+  expect(output.ast).toEqual('module.exports = ' + JSON.stringify(ast));
+});

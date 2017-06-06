@@ -44,17 +44,15 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
 
       if (!acc[name]) {
         if (inputConfig.components[name]) {
-          const compPath = path.parse(path.join(INPUT_DIR, inputConfig.components[name]));
-          acc[name] = slash(path.join(path.relative(TMP_DIR, compPath.dir), compPath.base));
+          acc[name] = slash(path.join(INPUT_DIR, inputConfig.components[name]));
         } else if (customComponentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = slash(path.relative(TMP_DIR, path.join(COMPONENTS_DIR, name)));
+          acc[name] = slash(path.join(COMPONENTS_DIR, name));
         } else if (componentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = slash(path.relative(TMP_DIR, path.join(DEFAULT_COMPONENTS_DIR, name)));
+          acc[name] = slash(path.join(DEFAULT_COMPONENTS_DIR, name));
         } else {
           try {
             // npm modules are required via relative paths to support working with a locally linked idyll
-            const compPath = path.parse(resolve.sync(name, {basedir: INPUT_DIR}));
-            acc[name] = slash(path.join(path.relative(TMP_DIR, compPath.dir), compPath.base));
+            acc[name] = slash(resolve.sync(name, {basedir: INPUT_DIR}));
           } catch (err) {
             if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
               throw new Error(`Component named ${node[0]} could not be found.`)
@@ -111,21 +109,15 @@ exports.getDataJS = (ast, DATA_DIR) => {
 
 
 exports.getHighlightJS = (ast, paths) => {
-  const {
-    DEFAULT_COMPONENTS_DIR,
-    TMP_DIR
-  } = paths;
   // load react-syntax-highlighter from idyll's node_modules directory
-  const rshPath = slash(path.relative(
-    TMP_DIR,
-    path.dirname(require.resolve('react-syntax-highlighter'))
-  ));
   const languageMap = {
     js: 'javascript'
   };
 
-  // can be multiple data nodes
   const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
+  if (!codeHighlightNodes.length) {
+    return ' ';
+  }
 
   const languages = codeHighlightNodes.reduce(
     (acc, dataNode) => {
@@ -144,13 +136,12 @@ exports.getHighlightJS = (ast, paths) => {
     {}
   );
 
-  let js = `const rsh = require('${slash(path.join(rshPath, 'light'))}');`
-
+  let js = `var rsh = require('react-syntax-highlighter/dist/light');`
   Object.keys(languages).forEach((language) => {
     if (languageMap[language]) {
       language = languageMap[language];
     }
-    js += `\nrsh.registerLanguage('${language}', require('${slash(path.join(rshPath, 'languages', language))}').default);`
+    js += `\nrsh.registerLanguage('${language}', require('react-syntax-highlighter/dist/languages/${language}').default);`
   });
 
   return js;
@@ -176,10 +167,9 @@ exports.getHTML = (ast, template) => {
 
 exports.getASTJSON = (ast) => {
   const ignoreNames = ['meta'];
+  const filtered = ast.filter((node) => {
+    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
+  });
 
-  return JSON.stringify(
-    ast.filter((node) => {
-      return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
-    })
-  );
+  return `module.exports = ${JSON.stringify(filtered)}`;
 }

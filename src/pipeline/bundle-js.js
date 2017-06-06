@@ -6,10 +6,19 @@ const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const brfs = require('brfs');
 const Promise = require('bluebird');
+const stream = require('stream');
 
 let b;
 
-const getTransform = (opts, paths) => {
+const toStream = (str) => {
+  const s = new stream.Readable;
+  s.push(str);
+  s.push(null);
+
+  return s;
+};
+
+const getTransform = (opts) => {
   const _getTransform = (name) => {
     return (opts[name] || []).map(d => require(d));
   };
@@ -19,7 +28,7 @@ const getTransform = (opts, paths) => {
     .concat([[ brfs ]]);
 };
 
-module.exports = function (opts, paths) {
+module.exports = function (opts, paths, output) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
 
   if (!b) {
@@ -29,14 +38,31 @@ module.exports = function (opts, paths) {
       packageCache: {},
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
-      transform: getTransform(opts, paths),
+      transform: getTransform(opts),
+      paths: [
+        // Input package's NODE_MODULES
+        path.join(paths.INPUT_DIR, 'node_modules'),
+        // Idyll's NODE_MODULES
+        path.resolve(paths.APP_PATH, 'node_modules')
+      ],
       plugin: [
-        (b) => b.require([
-          {file: paths.SYNTAX_OUTPUT_FILE, expose: '__IDYLL_SYNTAX_HIGHLIGHT__'},
-          {file: paths.AST_OUTPUT_FILE, expose: '__IDYLL_AST__'},
-          {file: paths.COMPONENTS_OUTPUT_FILE, expose: '__IDYLL_COMPONENTS__'},
-          {file: paths.DATA_OUTPUT_FILE, expose: '__IDYLL_DATA__'}
-        ])
+        (b) => {
+          const aliases = {
+            ast: '__IDYLL_AST__',
+            components: '__IDYLL_COMPONENTS__',
+            data: '__IDYLL_DATA__',
+            syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__'
+          };
+
+          for (const key in output) {
+            if (!aliases[key]) continue;
+            b.exclude(aliases[key]);
+            b.require(toStream(output[key]), {
+              expose: aliases[key],
+              basedir: paths.TMP_DIR
+            })
+          }
+        }
       ]
     };
 

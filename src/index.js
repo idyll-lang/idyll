@@ -40,7 +40,6 @@ const idyll = (options = {}, cb) => {
   if (opts.watch) opts.minify = false; // speed!
 
   const paths = pathBuilder(opts);
-
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
   const inputConfig = Object.assign({
     components: {},
