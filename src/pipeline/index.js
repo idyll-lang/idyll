@@ -27,7 +27,7 @@ const build = (opts, paths, inputConfig) => {
     () => {
       const ast = compile(opts.inputString, opts.compilerOptions);
       output = {
-        ast: `module.exports = ${getASTJSON(ast)}`,
+        ast: getASTJSON(ast),
         components: getComponentsJS(ast, paths, inputConfig),
         css: css(opts),
         data: getDataJS(ast, paths.DATA_DIR),

@@ -169,10 +169,9 @@ exports.getHTML = (ast, template) => {
 
 exports.getASTJSON = (ast) => {
   const ignoreNames = ['meta'];
+  const filtered = ast.filter((node) => {
+    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
+  });
 
-  return JSON.stringify(
-    ast.filter((node) => {
-      return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
-    })
-  );
+  return `module.exports = ${JSON.stringify(filtered)}`;
 }
