@@ -40,8 +40,10 @@ module.exports = function (opts, paths, output) {
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
       transform: getTransform(opts),
       paths: [
+        // Input package's NODE_MODULES
         path.join(paths.INPUT_DIR, 'node_modules'),
-        path.resolve(__dirname, '..', '..', 'node_modules')
+        // Idyll's NODE_MODULES
+        path.resolve(path.dirname(require.main.filename), 'node_modules')
       ],
       plugin: [
         (b) => {
