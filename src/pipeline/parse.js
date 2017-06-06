@@ -93,7 +93,7 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
         {}
       );
 
-      acc[name] = path.join(DATA_DIR, source);
+      acc[name] = slash(path.join(DATA_DIR, source));
 
       return acc;
     },
