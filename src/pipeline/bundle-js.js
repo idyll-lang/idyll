@@ -43,7 +43,7 @@ module.exports = function (opts, paths, output) {
         // Input package's NODE_MODULES
         path.join(paths.INPUT_DIR, 'node_modules'),
         // Idyll's NODE_MODULES
-        path.resolve(path.dirname(require.main.filename), 'node_modules')
+        path.resolve(paths.APP_PATH, 'node_modules')
       ],
       plugin: [
         (b) => {

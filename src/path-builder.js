@@ -2,7 +2,8 @@ const {
   dirname,
   isAbsolute,
   join,
-  parse
+  parse,
+  resolve
 } = require('path');
 const mkdirp = require('mkdirp');
 
@@ -26,6 +27,7 @@ module.exports = function (opts) {
   mkdirp.sync(TMP_DIR);
 
   return {
+    APP_PATH: resolve(__dirname, '..'),
     CSS_INPUT_FILE: getPath(opts.css),
     COMPONENTS_DIR: getPath(opts.components),
     DATA_DIR: getPath(opts.datasets),
