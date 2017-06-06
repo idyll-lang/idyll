@@ -44,8 +44,7 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
 
       if (!acc[name]) {
         if (inputConfig.components[name]) {
-          const compPath = path.parse(path.join(INPUT_DIR, inputConfig.components[name]));
-          acc[name] = slash(path.join(compPath.dir, compPath.base));
+          acc[name] = slash(path.join(INPUT_DIR, inputConfig.components[name]));
         } else if (customComponentFiles.indexOf(name + '.js') > -1) {
           acc[name] = slash(path.join(COMPONENTS_DIR, name));
         } else if (componentFiles.indexOf(name + '.js') > -1) {
@@ -53,8 +52,7 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
         } else {
           try {
             // npm modules are required via relative paths to support working with a locally linked idyll
-            const compPath = path.parse(resolve.sync(name, {basedir: INPUT_DIR}));
-            acc[name] = slash(path.join(compPath.dir, compPath.base));
+            acc[name] = slash(resolve.sync(name, {basedir: INPUT_DIR}));
           } catch (err) {
             if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
               throw new Error(`Component named ${node[0]} could not be found.`)
