@@ -11,15 +11,14 @@ const stream = require('stream');
 let b;
 
 const toStream = (str) => {
-  const Readable = stream.Readable;
-  const s = new Readable;
+  const s = new stream.Readable;
   s.push(str);
   s.push(null);
 
   return s;
 };
 
-const getTransform = (opts, paths) => {
+const getTransform = (opts) => {
   const _getTransform = (name) => {
     return (opts[name] || []).map(d => require(d));
   };
@@ -39,30 +38,24 @@ module.exports = function (opts, paths, output) {
       packageCache: {},
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
-      transform: getTransform(opts, paths),
+      transform: getTransform(opts),
       plugin: [
         (b) => {
-          const requires = [{
-            key: 'syntaxHighlighting',
-            requireName: '__IDYLL_SYNTAX_HIGHLIGHT__'
-          }, {
-            key: 'data',
-            requireName: '__IDYLL_DATA__'
-          }, {
-            key: 'components',
-            requireName: '__IDYLL_COMPONENTS__'
-          }, {
-            key: 'ast',
-            requireName: '__IDYLL_AST__'
-          }];
-          requires.forEach((obj) => {
-            b.exclude(obj.requireName);
+          const aliases = {
+            ast: '__IDYLL_AST__',
+            components: '__IDYLL_COMPONENTS__',
+            data: '__IDYLL_DATA__',
+            syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__'
+          };
 
-            b.require(toStream(output[obj.key]), {
-              expose: obj.requireName,
+          for (const key in output) {
+            if (!aliases[key]) continue;
+            b.exclude(aliases[key]);
+            b.require(toStream(output[key]), {
+              expose: aliases[key],
               basedir: paths.TMP_DIR
             })
-          });
+          }
         }
       ]
     };
