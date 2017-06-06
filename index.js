@@ -1,6 +1,5 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const ScrollWatch = require('scrollwatch');
 
 //http://stackoverflow.com/questions/4588119/get-elements-css-selector-when-it-doesnt-have-an-id
 function fullPath(el){
@@ -28,6 +27,7 @@ class IdyllComponent extends React.PureComponent {
     if (props.onEnteredView || props.onExitView) {
       this.componentDidMount = () => {
         const dom = ReactDOM.findDOMNode(this);
+        const ScrollWatch = require('scrollwatch');
         var sw = new ScrollWatch({
           watch: fullPath(dom),
           onElementInView: props.onEnteredView,

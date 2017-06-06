@@ -10,7 +10,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ScrollWatch = require('scrollwatch');
 
 //http://stackoverflow.com/questions/4588119/get-elements-css-selector-when-it-doesnt-have-an-id
 function fullPath(el) {
@@ -38,12 +37,14 @@ var IdyllComponent = function (_React$PureComponent) {
 
     var _this = _possibleConstructorReturn(this, (IdyllComponent.__proto__ || Object.getPrototypeOf(IdyllComponent)).call(this, props));
 
-    if (props.onEnteredView) {
+    if (props.onEnteredView || props.onExitView) {
       _this.componentDidMount = function () {
         var dom = ReactDOM.findDOMNode(_this);
+        var ScrollWatch = require('scrollwatch');
         var sw = new ScrollWatch({
           watch: fullPath(dom),
-          onElementInView: _this.props.onEnteredView,
+          onElementInView: props.onEnteredView,
+          onElementOutOfView: props.onExitView,
           watchOnce: false
         });
       };
