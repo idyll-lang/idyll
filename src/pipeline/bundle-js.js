@@ -39,6 +39,12 @@ module.exports = function (opts, paths, output) {
       fullPaths: true,
       cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
       transform: getTransform(opts),
+      paths: [
+        // Input package's NODE_MODULES
+        path.join(paths.INPUT_DIR, 'node_modules'),
+        // Idyll's NODE_MODULES
+        path.resolve(paths.APP_PATH, 'node_modules')
+      ],
       plugin: [
         (b) => {
           const aliases = {
