@@ -27289,4 +27289,6 @@ module.exports = {};
 },{}],"__IDYLL_SYNTAX_HIGHLIGHT__":[function(require,module,exports){
 "use strict";
 
+module.exports = function () {}();
+
 },{}]},{},["/Users/conlenm/projects/idyll-lang/idyll/src/client/build.js"]);
