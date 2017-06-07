@@ -26707,6 +26707,7 @@ var mountNode = document.getElementById('idyll-mount');
 var ast = require('__IDYLL_AST__');
 var componentClasses = require('__IDYLL_COMPONENTS__');
 var datasets = require('__IDYLL_DATA__');
+require('__IDYLL_SYNTAX_HIGHLIGHT__');
 
 ReactDOM.render(React.createElement(InteractiveDocument, {
   ast: ast,
@@ -26714,7 +26715,7 @@ ReactDOM.render(React.createElement(InteractiveDocument, {
   datasets: datasets
 }), mountNode);
 
-},{"./component":"/Users/conlenm/projects/idyll-lang/idyll/src/client/component.js","__IDYLL_AST__":"__IDYLL_AST__","__IDYLL_COMPONENTS__":"__IDYLL_COMPONENTS__","__IDYLL_DATA__":"__IDYLL_DATA__","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js","react-dom":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/component.js":[function(require,module,exports){
+},{"./component":"/Users/conlenm/projects/idyll-lang/idyll/src/client/component.js","__IDYLL_AST__":"__IDYLL_AST__","__IDYLL_COMPONENTS__":"__IDYLL_COMPONENTS__","__IDYLL_DATA__":"__IDYLL_DATA__","__IDYLL_SYNTAX_HIGHLIGHT__":"__IDYLL_SYNTAX_HIGHLIGHT__","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js","react-dom":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/component.js":[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -26729,10 +26730,6 @@ var React = require('react');
 var walkVars = require('./visitors/vars');
 var walkNode = require('./visitors/node');
 var utils = require('./utils');
-
-try {
-  require('__IDYLL_SYNTAX_HIGHLIGHT__');
-} catch (e) {}
 
 var transformRefs = function transformRefs(refs) {
   var output = {};
@@ -26905,7 +26902,7 @@ var InteractiveDocument = function (_React$PureComponent) {
 
 module.exports = InteractiveDocument;
 
-},{"./utils":"/Users/conlenm/projects/idyll-lang/idyll/src/client/utils.js","./visitors/node":"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/node.js","./visitors/vars":"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/vars.js","__IDYLL_SYNTAX_HIGHLIGHT__":"__IDYLL_SYNTAX_HIGHLIGHT__","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/constants.js":[function(require,module,exports){
+},{"./utils":"/Users/conlenm/projects/idyll-lang/idyll/src/client/utils.js","./visitors/node":"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/node.js","./visitors/vars":"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/vars.js","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/constants.js":[function(require,module,exports){
 'use strict';
 
 var COMPONENTS = {
