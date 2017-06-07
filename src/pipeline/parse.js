@@ -104,10 +104,11 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
 }
 
 
-exports.getHighlightJS = (ast) => {
+exports.getHighlightJS = (ast, paths) => {
   // load react-syntax-highlighter from idyll's node_modules directory
   const languageMap = {
-    js: 'javascript'
+    js: 'javascript',
+    html: 'htmlbars'
   };
 
   const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
@@ -132,12 +133,15 @@ exports.getHighlightJS = (ast) => {
     {}
   );
 
-  let js = `var rsh = require('react-syntax-highlighter/dist/light');`
+  const rshPath = path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR }));
+
+  let js = `var rsh = require('${path.join(rshPath, 'light')}')`
   Object.keys(languages).forEach((language) => {
+    let cleanedLanguage = language;
     if (languageMap[language]) {
-      language = languageMap[language];
+      cleanedLanguage = languageMap[language];
     }
-    js += `\nrsh.registerLanguage('${language}', require('react-syntax-highlighter/dist/languages/${language}').default);`
+    js += `\nrsh.registerLanguage('${language}', require('${path.join(rshPath, 'languages', cleanedLanguage)}').default);`
   });
 
   return js;
