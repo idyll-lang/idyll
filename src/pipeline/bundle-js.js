@@ -48,7 +48,7 @@ module.exports = function (opts, paths, output) {
       cache: {},
       packageCache: {},
       fullPaths: true,
-      cacheFile: path.join(paths.TMP_DIR, `browserify-cache-${opts.watch ? 'watch' : 'build'}.json`),
+      cacheFile: path.join(paths.TMP_DIR, `browserify-cache${opts.minify ? '-min' : ''}.json`),
       transform: getTransform(opts),
       paths: [
         // Input package's NODE_MODULES
