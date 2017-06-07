@@ -111,7 +111,7 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
 }
 
 
-exports.getHighlightJS = (ast, paths) => {
+exports.getHighlightJS = (ast, paths, server) => {
   // load react-syntax-highlighter from idyll's node_modules directory
   const languageMap = {
     js: 'javascript',
@@ -140,6 +140,18 @@ exports.getHighlightJS = (ast, paths) => {
     {}
   );
 
+  if (server) {
+    const rshPath = slash(path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR })));
+    const rsh = require(slash(path.join(rshPath, 'light')));
+    Object.keys(languages).forEach((language) => {
+      let cleanedLanguage = language;
+      if (languageMap[language]) {
+        cleanedLanguage = languageMap[language];
+      }
+      rsh.registerLanguage(language, require(slash(path.join(rshPath, 'languages', cleanedLanguage))).default);
+    });
+    return;
+  }
   const rshPath = slash(path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR })));
 
   let js = `var rsh = require('${slash(path.join(rshPath, 'light'))}')`
@@ -152,6 +164,10 @@ exports.getHighlightJS = (ast, paths) => {
   });
 
   return js;
+}
+
+const requireHighlightJS = (ast, paths) => {
+  exports.getHighlightJS(ast, paths, true);
 }
 
 exports.getHTML = (paths, ast, components, datasets, template) => {
@@ -172,7 +188,7 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
     componentClasses[key] = require(components[key])
   })
 
-  require(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR }));
+  requireHighlightJS(ast, paths);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
   const InteractiveDocument = require('../client/component');
