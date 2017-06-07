@@ -92,6 +92,7 @@ module.exports = function (opts, paths, output) {
     b.bundle((err, src) => {
       if (err) return reject(err);
       resolve(src.toString('utf8'));
-    }).pipe(fs.createWriteStream(path.join(paths.TMP_DIR, 'bundle.js')));
+      // browserify-incremental has to be piped but we don't need the output
+    }).pipe(require('dev-null')());
   })
 }
