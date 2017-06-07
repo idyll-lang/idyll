@@ -133,7 +133,7 @@ exports.getHighlightJS = (ast, paths) => {
     {}
   );
 
-  const rshPath = path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR }));
+  const rshPath = slash(path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR })));
 
   let js = `var rsh = require('${path.join(rshPath, 'light')}')`
   Object.keys(languages).forEach((language) => {
