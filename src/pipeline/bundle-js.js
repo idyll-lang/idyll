@@ -17,6 +17,9 @@ const toStream = (k, o) => {
     src = `module.exports = ${JSON.stringify(o)}`;
   } else if (k === 'syntaxHighlighting') {
     src = `module.exports = (function (){${o}})()`;
+  } else {
+    src = Object.keys(o).map((key) => `'${key}': require('${o[key]}')`).join(',\n\t');
+    src = `module.exports = {\n\t${src}\n}\n`;
   }
 
   const s = new stream.Readable;
@@ -62,8 +65,7 @@ module.exports = function (opts, paths, output) {
             syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__'
           };
 
-          for (const key in output) {
-            if (!aliases[key]) continue;
+          for (const key in aliases) {
             b.exclude(aliases[key]);
             b.require(toStream(key, output[key]), {
               expose: aliases[key],
