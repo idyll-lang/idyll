@@ -42,7 +42,7 @@ const getTransform = (opts) => {
 module.exports = function (opts, paths, output) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
   if (!config) {
-    const config = {
+    config = {
       entries: [path.join(__dirname, '..', 'client', 'build.js')],
       cache: {},
       packageCache: {},
