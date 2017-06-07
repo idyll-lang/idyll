@@ -33,7 +33,6 @@ var argv = require('yargs')
   .default('layout', 'blog')
   .boolean('no-minify')
   .describe('no-minify', 'Skip JS minification')
-  .default('no-minify', true)
   .describe('output', 'Directory where built files should be written')
   .default('output', 'build')
   .boolean('spellcheck')
@@ -66,6 +65,7 @@ argv.compilerOptions = {
 delete argv._;
 delete argv['$0'];
 delete argv.n;
+delete argv.noMinify;
 delete argv['no-minify'];
 delete argv.k;
 delete argv.spellcheck;
