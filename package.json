@@ -35,7 +35,6 @@
     "d3-selection": "^1.0.5",
     "idyll-component": "^1.1.0",
     "react": "^15.5.4",
-    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
     "react-inlinesvg": "^0.5.5",
     "react-latex": "^1.0.1",

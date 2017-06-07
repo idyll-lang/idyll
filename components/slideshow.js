@@ -1,6 +1,5 @@
 const React = require('react');
 const IdyllComponent = require('idyll-component');
-const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 class Slideshow extends IdyllComponent {
 
