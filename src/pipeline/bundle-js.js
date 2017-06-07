@@ -48,7 +48,7 @@ module.exports = function (opts, paths, output) {
       cache: {},
       packageCache: {},
       fullPaths: true,
-      cacheFile: path.join(paths.TMP_DIR, 'browserify-cache.json'),
+      cacheFile: path.join(paths.TMP_DIR, `browserify-cache-${opts.watch ? 'watch' : 'build'}.json`),
       transform: getTransform(opts),
       paths: [
         // Input package's NODE_MODULES
@@ -58,6 +58,10 @@ module.exports = function (opts, paths, output) {
       ],
       plugin: [
         (b) => {
+          if (opts.minify) {
+            b.require('react/dist/react.min.js', { expose: 'react' });
+            b.require('react-dom/dist/react-dom.min.js', { expose: 'react-dom' });
+          }
           const aliases = {
             ast: '__IDYLL_AST__',
             components: '__IDYLL_COMPONENTS__',
