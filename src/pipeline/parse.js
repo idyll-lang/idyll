@@ -3,9 +3,15 @@ const path = require('path');
 const htmlTags = require('html-tags');
 const mustache = require('mustache');
 const resolve = require('resolve');
-const Baby = require('babyparse');
 const slash = require('slash');
 const { paramCase } = require('change-case');
+
+const getFilteredAST = (ast) => {
+  const ignoreNames = ['meta'];
+  return ast.filter((node) => {
+    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
+  });
+}
 
 const getNodesByName = (name, tree) => {
   const predicate = typeof name === 'string' ? (s) => s === name : name;
@@ -66,16 +72,10 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
     {}
   );
 
-  const src = Object.keys(components)
-    .map((key) => {
-      return `'${key}': require('${components[key]}')`;
-    })
-    .join(',\n\t');
-
-  return `module.exports = {\n\t${src}\n}\n`;
+  return components;
 }
 
-exports.getDataJS = (ast, DATA_DIR) => {
+exports.getDataJS = (ast, DATA_DIR, o) => {
   // can be multiple data nodes
   const dataNodes = getNodesByName('data', ast);
 
@@ -93,25 +93,22 @@ exports.getDataJS = (ast, DATA_DIR) => {
         {}
       );
 
-      if (source.endsWith('.csv')) {
-        acc[name] = Baby.parseFiles(path.join(DATA_DIR, source), { header: true }).data;
-      } else {
-        acc[name] = require(path.join(DATA_DIR, source));
-      }
+      acc[name] = slash(path.join(DATA_DIR, source));
 
       return acc;
     },
     {}
   );
 
-  return `module.exports = ${JSON.stringify(data)}`;
+  return data;
 }
 
 
 exports.getHighlightJS = (ast, paths) => {
   // load react-syntax-highlighter from idyll's node_modules directory
   const languageMap = {
-    js: 'javascript'
+    js: 'javascript',
+    html: 'htmlbars'
   };
 
   const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
@@ -136,40 +133,53 @@ exports.getHighlightJS = (ast, paths) => {
     {}
   );
 
-  let js = `var rsh = require('react-syntax-highlighter/dist/light');`
+  const rshPath = slash(path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR })));
+
+  let js = `var rsh = require('${slash(path.join(rshPath, 'light'))}')`
   Object.keys(languages).forEach((language) => {
+    let cleanedLanguage = language;
     if (languageMap[language]) {
-      language = languageMap[language];
+      cleanedLanguage = languageMap[language];
     }
-    js += `\nrsh.registerLanguage('${language}', require('react-syntax-highlighter/dist/languages/${language}').default);`
+    js += `\nrsh.registerLanguage('${language}', require('${slash(path.join(rshPath, 'languages', cleanedLanguage))}').default);`
   });
 
   return js;
 }
 
-exports.getHTML = (ast, template) => {
+exports.getHTML = (paths, ast, components, datasets, template) => {
   // there should only be one meta node
   const metaNodes = getNodesByName('meta', ast);
 
   // data is stored in props, hence [1]
-  const meta = metaNodes.length && metaNodes[0][1].reduce(
+  const meta = metaNodes.length ? metaNodes[0][1].reduce(
     (acc, prop) => {
       acc[prop[0]] = prop[1][1];
       return acc;
     },
     {}
-  )
+  ) : {};
 
-  // const InteractiveDocument = require('./client/component');
-  // meta.idyllContent = ReactDOMServer.renderToString(React.createElement(InteractiveDocument));
-  return mustache.render(template, meta || {});
+  const componentClasses = {};
+  Object.keys(components).forEach(key => {
+    componentClasses[key] = require(components[key])
+  })
+
+  require(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR }));
+  const ReactDOMServer = require('react-dom/server');
+  const React = require('react');
+  const InteractiveDocument = require('../client/component');
+  meta.idyllContent = ReactDOMServer.renderToString(
+    React.createElement(InteractiveDocument, {
+      ast,
+      componentClasses,
+      datasets
+    })
+  ).trim();
+
+  return mustache.render(template, meta);
 }
 
 exports.getASTJSON = (ast) => {
-  const ignoreNames = ['meta'];
-  const filtered = ast.filter((node) => {
-    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
-  });
-
-  return `module.exports = ${JSON.stringify(filtered)}`;
+  return getFilteredAST(ast);
 }

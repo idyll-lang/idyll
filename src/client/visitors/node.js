@@ -1,10 +1,9 @@
 const React = require('react');
 const htmlTags = require('html-tags');
 const changeCase = require('change-case');
-const componentClasses = require('__IDYLL_COMPONENTS__');
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
-const processComponent = (component, name, id) => {
+const processComponent = (component, name, id, componentClasses) => {
   const split = name.split('.');
   const paramCaseName = changeCase.paramCase(split[0]);
   let componentClass;
@@ -46,7 +45,7 @@ const filterPropsByComponentName = {
   p: []
 };
 
-module.exports = function(component) {
+module.exports = function(component, componentClasses) {
   let nodeID = -1;
   const walkNode = function (node) {
     nodeID++;
@@ -124,7 +123,7 @@ module.exports = function(component) {
         }
       });
 
-      const results = processComponent(component, componentName, nodeID);
+      const results = processComponent(component, componentName, nodeID, componentClasses);
 
       const inputProps = Object.assign({}, results.extraProps, propsObj);
       if (children) {

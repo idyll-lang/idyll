@@ -2,6 +2,18 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const InteractiveDocument = require('./component');
-var mountNode = document.getElementById('idyll-mount');
+const mountNode = document.getElementById('idyll-mount');
 
-ReactDOM.render(<InteractiveDocument />, mountNode);
+const ast = require('__IDYLL_AST__');
+const componentClasses = require('__IDYLL_COMPONENTS__');
+const datasets = require('__IDYLL_DATA__');
+require('__IDYLL_SYNTAX_HIGHLIGHT__');
+
+ReactDOM.render(
+  <InteractiveDocument
+    ast={ast}
+    componentClasses={componentClasses}
+    datasets={datasets}
+  />,
+  mountNode
+);

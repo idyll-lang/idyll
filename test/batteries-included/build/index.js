@@ -1,78 +1,71 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/mathisonian/projects/idyll/idyll/node_modules/camel-case/camel-case.js":[function(require,module,exports){
-var upperCase = require('upper-case')
-var noCase = require('no-case')
+require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({"/Users/conlenm/projects/idyll-lang/idyll-component/lib.js":[function(require,module,exports){
+'use strict';
 
-/**
- * Camel case a string.
- *
- * @param  {string} value
- * @param  {string} [locale]
- * @return {string}
- */
-module.exports = function (value, locale, mergeNumbers) {
-  var result = noCase(value, locale)
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-  // Replace periods between numeric entities with an underscore.
-  if (!mergeNumbers) {
-    result = result.replace(/ (?=\d)/g, '_')
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+//http://stackoverflow.com/questions/4588119/get-elements-css-selector-when-it-doesnt-have-an-id
+function fullPath(el) {
+  var names = [];
+  while (el.parentNode) {
+    if (el.id) {
+      names.unshift('#' + el.id);
+      break;
+    } else {
+      if (el == el.ownerDocument.documentElement) names.unshift(el.tagName);else {
+        for (var c = 1, e = el; e.previousElementSibling; e = e.previousElementSibling, c++) {}
+        names.unshift(el.tagName + ":nth-child(" + c + ")");
+      }
+      el = el.parentNode;
+    }
+  }
+  return names.join(" > ");
+}
+
+var IdyllComponent = function (_React$PureComponent) {
+  _inherits(IdyllComponent, _React$PureComponent);
+
+  function IdyllComponent(props) {
+    _classCallCheck(this, IdyllComponent);
+
+    var _this = _possibleConstructorReturn(this, (IdyllComponent.__proto__ || Object.getPrototypeOf(IdyllComponent)).call(this, props));
+
+    if (props.onEnteredView || props.onExitView) {
+      _this.componentDidMount = function () {
+        var dom = ReactDOM.findDOMNode(_this);
+        var ScrollWatch = require('scrollwatch');
+        var sw = new ScrollWatch({
+          watch: fullPath(dom),
+          onElementInView: props.onEnteredView,
+          onElementOutOfView: props.onExitView,
+          watchOnce: false
+        });
+      };
+    }
+    return _this;
   }
 
-  // Replace spaces between words with an upper cased character.
-  return result.replace(/ (.)/g, function (m, $1) {
-    return upperCase($1, locale)
-  })
-}
+  _createClass(IdyllComponent, [{
+    key: 'updateProps',
+    value: function updateProps(newProps) {
+      this.props.__handleUpdateProps(newProps);
+    }
+  }]);
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/change-case/change-case.js":[function(require,module,exports){
-exports.no = exports.noCase = require('no-case')
-exports.dot = exports.dotCase = require('dot-case')
-exports.swap = exports.swapCase = require('swap-case')
-exports.path = exports.pathCase = require('path-case')
-exports.upper = exports.upperCase = require('upper-case')
-exports.lower = exports.lowerCase = require('lower-case')
-exports.camel = exports.camelCase = require('camel-case')
-exports.snake = exports.snakeCase = require('snake-case')
-exports.title = exports.titleCase = require('title-case')
-exports.param = exports.paramCase = require('param-case')
-exports.header = exports.headerCase = require('header-case')
-exports.pascal = exports.pascalCase = require('pascal-case')
-exports.constant = exports.constantCase = require('constant-case')
-exports.sentence = exports.sentenceCase = require('sentence-case')
-exports.isUpper = exports.isUpperCase = require('is-upper-case')
-exports.isLower = exports.isLowerCase = require('is-lower-case')
-exports.ucFirst = exports.upperCaseFirst = require('upper-case-first')
-exports.lcFirst = exports.lowerCaseFirst = require('lower-case-first')
+  return IdyllComponent;
+}(React.PureComponent);
 
-},{"camel-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/camel-case/camel-case.js","constant-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/constant-case/constant-case.js","dot-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/dot-case/dot-case.js","header-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/header-case/header-case.js","is-lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/is-lower-case/is-lower-case.js","is-upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/is-upper-case/is-upper-case.js","lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js","lower-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case-first/lower-case-first.js","no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","param-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/param-case/param-case.js","pascal-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/pascal-case/pascal-case.js","path-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/path-case/path-case.js","sentence-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/sentence-case/sentence-case.js","snake-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/snake-case/snake-case.js","swap-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/swap-case/swap-case.js","title-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/title-case/title-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js","upper-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/constant-case/constant-case.js":[function(require,module,exports){
-var upperCase = require('upper-case')
-var snakeCase = require('snake-case')
+module.exports = IdyllComponent;
 
-/**
- * Constant case a string.
- *
- * @param  {string} value
- * @param  {string} [locale]
- * @return {string}
- */
-module.exports = function (value, locale) {
-  return upperCase(snakeCase(value, locale), locale)
-}
-
-},{"snake-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/snake-case/snake-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/dot-case/dot-case.js":[function(require,module,exports){
-var noCase = require('no-case')
-
-/**
- * Dot case a string.
- *
- * @param  {string} value
- * @param  {string} [locale]
- * @return {string}
- */
-module.exports = function (value, locale) {
-  return noCase(value, locale, '.')
-}
-
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/EventListener.js":[function(require,module,exports){
+},{"react":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/react.js","react-dom":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/index.js","scrollwatch":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/scrollwatch/dist/ScrollWatch-1.2.0.min.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/EventListener.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -156,7 +149,7 @@ var EventListener = {
 };
 
 module.exports = EventListener;
-},{"./emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -192,7 +185,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelize.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/camelize.js":[function(require,module,exports){
 "use strict";
 
 /**
@@ -224,7 +217,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelizeStyleName.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/camelizeStyleName.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -264,7 +257,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelize.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/containsNode.js":[function(require,module,exports){
+},{"./camelize":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/camelize.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/containsNode.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -304,7 +297,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isTextNode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createArrayFromMixed.js":[function(require,module,exports){
+},{"./isTextNode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/isTextNode.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/createArrayFromMixed.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -431,7 +424,7 @@ function createArrayFromMixed(obj) {
 }
 
 module.exports = createArrayFromMixed;
-},{"./invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js":[function(require,module,exports){
+},{"./invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/createNodesFromMarkup.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -515,7 +508,7 @@ function createNodesFromMarkup(markup, handleScript) {
 }
 
 module.exports = createNodesFromMarkup;
-},{"./ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./createArrayFromMixed":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createArrayFromMixed.js","./getMarkupWrap":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getMarkupWrap.js","./invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","./createArrayFromMixed":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/createArrayFromMixed.js","./getMarkupWrap":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getMarkupWrap.js","./invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js":[function(require,module,exports){
 "use strict";
 
 /**
@@ -554,7 +547,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyObject.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -574,7 +567,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = emptyObject;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/focusNode.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/focusNode.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -601,7 +594,7 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getActiveElement.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getActiveElement.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -623,24 +616,20 @@ module.exports = focusNode;
  *
  * The activeElement will be null only if the document or document body is not
  * yet defined.
- *
- * @param {?DOMDocument} doc Defaults to current document.
- * @return {?DOMElement}
  */
-function getActiveElement(doc) /*?DOMElement*/{
-  doc = doc || (typeof document !== 'undefined' ? document : undefined);
-  if (typeof doc === 'undefined') {
+function getActiveElement() /*?DOMElement*/{
+  if (typeof document === 'undefined') {
     return null;
   }
   try {
-    return doc.activeElement || doc.body;
+    return document.activeElement || document.body;
   } catch (e) {
-    return doc.body;
+    return document.body;
   }
 }
 
 module.exports = getActiveElement;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getMarkupWrap.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getMarkupWrap.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -735,7 +724,7 @@ function getMarkupWrap(nodeName) {
 }
 
 module.exports = getMarkupWrap;
-},{"./ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","./invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -761,10 +750,10 @@ module.exports = getMarkupWrap;
  */
 
 function getUnboundedScrollPosition(scrollable) {
-  if (scrollable.Window && scrollable instanceof scrollable.Window) {
+  if (scrollable === window) {
     return {
-      x: scrollable.pageXOffset || scrollable.document.documentElement.scrollLeft,
-      y: scrollable.pageYOffset || scrollable.document.documentElement.scrollTop
+      x: window.pageXOffset || document.documentElement.scrollLeft,
+      y: window.pageYOffset || document.documentElement.scrollTop
     };
   }
   return {
@@ -774,7 +763,7 @@ function getUnboundedScrollPosition(scrollable) {
 }
 
 module.exports = getUnboundedScrollPosition;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenate.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/hyphenate.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -807,7 +796,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenateStyleName.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/hyphenateStyleName.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -846,7 +835,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenate.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js":[function(require,module,exports){
+},{"./hyphenate":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/hyphenate.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -902,7 +891,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isNode.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/isNode.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -921,13 +910,11 @@ module.exports = invariant;
  * @return {boolean} Whether or not the object is a DOM node.
  */
 function isNode(object) {
-  var doc = object ? object.ownerDocument || object : document;
-  var defaultView = doc.defaultView || window;
-  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+  return !!(object && (typeof Node === 'function' ? object instanceof Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
 }
 
 module.exports = isNode;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isTextNode.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/isTextNode.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -952,7 +939,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/isNode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/memoizeStringOnly.js":[function(require,module,exports){
+},{"./isNode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/isNode.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/memoizeStringOnly.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -982,7 +969,7 @@ function memoizeStringOnly(callback) {
 }
 
 module.exports = memoizeStringOnly;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performance.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/performance.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1005,7 +992,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = performance || {};
-},{"./ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performanceNow.js":[function(require,module,exports){
+},{"./ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/performanceNow.js":[function(require,module,exports){
 'use strict';
 
 /**
@@ -1039,7 +1026,7 @@ if (performance.now) {
 }
 
 module.exports = performanceNow;
-},{"./performance":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performance.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js":[function(require,module,exports){
+},{"./performance":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/performance.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/shallowEqual.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1107,7 +1094,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js":[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -1174,301 +1161,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = warning;
-},{"./emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/header-case/header-case.js":[function(require,module,exports){
-var noCase = require('no-case')
-var upperCase = require('upper-case')
-
-/**
- * Header case a string.
- *
- * @param  {string} value
- * @param  {string} [locale]
- * @return {string}
- */
-module.exports = function (value, locale) {
-  return noCase(value, locale, '-').replace(/^.|-./g, function (m) {
-    return upperCase(m, locale)
-  })
-}
-
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/html-tags.json":[function(require,module,exports){
-module.exports=[
-	"a",
-	"abbr",
-	"address",
-	"area",
-	"article",
-	"aside",
-	"audio",
-	"b",
-	"base",
-	"bdi",
-	"bdo",
-	"blockquote",
-	"body",
-	"br",
-	"button",
-	"canvas",
-	"caption",
-	"cite",
-	"code",
-	"col",
-	"colgroup",
-	"data",
-	"datalist",
-	"dd",
-	"del",
-	"details",
-	"dfn",
-	"dialog",
-	"div",
-	"dl",
-	"dt",
-	"em",
-	"embed",
-	"fieldset",
-	"figcaption",
-	"figure",
-	"footer",
-	"form",
-	"h1",
-	"h2",
-	"h3",
-	"h4",
-	"h5",
-	"h6",
-	"head",
-	"header",
-	"hr",
-	"html",
-	"i",
-	"iframe",
-	"img",
-	"input",
-	"ins",
-	"kbd",
-	"keygen",
-	"label",
-	"legend",
-	"li",
-	"link",
-	"main",
-	"map",
-	"mark",
-	"math",
-	"menu",
-	"menuitem",
-	"meta",
-	"meter",
-	"nav",
-	"noscript",
-	"object",
-	"ol",
-	"optgroup",
-	"option",
-	"output",
-	"p",
-	"param",
-	"picture",
-	"pre",
-	"progress",
-	"q",
-	"rb",
-	"rp",
-	"rt",
-	"rtc",
-	"ruby",
-	"s",
-	"samp",
-	"script",
-	"section",
-	"select",
-	"small",
-	"source",
-	"span",
-	"strong",
-	"style",
-	"sub",
-	"summary",
-	"sup",
-	"svg",
-	"table",
-	"tbody",
-	"td",
-	"template",
-	"textarea",
-	"tfoot",
-	"th",
-	"thead",
-	"time",
-	"title",
-	"tr",
-	"track",
-	"u",
-	"ul",
-	"var",
-	"video",
-	"wbr"
-]
-
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/index.js":[function(require,module,exports){
-module.exports = require('./html-tags.json');
-
-},{"./html-tags.json":"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/html-tags.json"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/is-lower-case/is-lower-case.js":[function(require,module,exports){
-var lowerCase = require('lower-case')
-
-/**
- * Check if a string is lower case.
- *
- * @param  {String}  string
- * @param  {String}  [locale]
- * @return {Boolean}
- */
-module.exports = function (string, locale) {
-  return lowerCase(string, locale) === string
-}
-
-},{"lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/is-upper-case/is-upper-case.js":[function(require,module,exports){
-var upperCase = require('upper-case')
-
-/**
- * Check if a string is upper case.
- *
- * @param  {String}  string
- * @param  {String}  [locale]
- * @return {Boolean}
- */
-module.exports = function (string, locale) {
-  return upperCase(string, locale) === string
-}
-
-},{"upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case-first/lower-case-first.js":[function(require,module,exports){
-var lowerCase = require('lower-case')
-
-/**
- * Lower case the first character of a string.
- *
- * @param  {String} str
- * @return {String}
- */
-module.exports = function (str, locale) {
-  if (str == null) {
-    return ''
-  }
-
-  str = String(str)
-
-  return lowerCase(str.charAt(0), locale) + str.substr(1)
-}
-
-},{"lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js":[function(require,module,exports){
-/**
- * Special language-specific overrides.
- *
- * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
- *
- * @type {Object}
- */
-var LANGUAGES = {
-  tr: {
-    regexp: /\u0130|\u0049|\u0049\u0307/g,
-    map: {
-      '\u0130': '\u0069',
-      '\u0049': '\u0131',
-      '\u0049\u0307': '\u0069'
-    }
-  },
-  az: {
-    regexp: /[\u0130]/g,
-    map: {
-      '\u0130': '\u0069',
-      '\u0049': '\u0131',
-      '\u0049\u0307': '\u0069'
-    }
-  },
-  lt: {
-    regexp: /[\u0049\u004A\u012E\u00CC\u00CD\u0128]/g,
-    map: {
-      '\u0049': '\u0069\u0307',
-      '\u004A': '\u006A\u0307',
-      '\u012E': '\u012F\u0307',
-      '\u00CC': '\u0069\u0307\u0300',
-      '\u00CD': '\u0069\u0307\u0301',
-      '\u0128': '\u0069\u0307\u0303'
-    }
-  }
-}
-
-/**
- * Lowercase a string.
- *
- * @param  {String} str
- * @return {String}
- */
-module.exports = function (str, locale) {
-  var lang = LANGUAGES[locale]
-
-  str = str == null ? '' : String(str)
-
-  if (lang) {
-    str = str.replace(lang.regexp, function (m) { return lang.map[m] })
-  }
-
-  return str.toLowerCase()
-}
-
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js":[function(require,module,exports){
-var lowerCase = require('lower-case')
-
-var NON_WORD_REGEXP = require('./vendor/non-word-regexp')
-var CAMEL_CASE_REGEXP = require('./vendor/camel-case-regexp')
-var CAMEL_CASE_UPPER_REGEXP = require('./vendor/camel-case-upper-regexp')
-
-/**
- * Sentence case a string.
- *
- * @param  {string} str
- * @param  {string} locale
- * @param  {string} replacement
- * @return {string}
- */
-module.exports = function (str, locale, replacement) {
-  if (str == null) {
-    return ''
-  }
-
-  replacement = typeof replacement !== 'string' ? ' ' : replacement
-
-  function replace (match, index, value) {
-    if (index === 0 || index === (value.length - match.length)) {
-      return ''
-    }
-
-    return replacement
-  }
-
-  str = String(str)
-    // Support camel case ("camelCase" -> "camel Case").
-    .replace(CAMEL_CASE_REGEXP, '$1 $2')
-    // Support odd camel case ("CAMELCase" -> "CAMEL Case").
-    .replace(CAMEL_CASE_UPPER_REGEXP, '$1 $2')
-    // Remove all non-word characters and replace with a single space.
-    .replace(NON_WORD_REGEXP, replace)
-
-  // Lower case the entire string.
-  return lowerCase(str, locale)
-}
-
-},{"./vendor/camel-case-regexp":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-regexp.js","./vendor/camel-case-upper-regexp":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js","./vendor/non-word-regexp":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/non-word-regexp.js","lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-regexp.js":[function(require,module,exports){
-module.exports = /([a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0529\u052B\u052D\u052F\u0561-\u0587\u13F8-\u13FD\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA699\uA69B\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793-\uA795\uA797\uA799\uA79B\uA79D\uA79F\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7B5\uA7B7\uA7FA\uAB30-\uAB5A\uAB60-\uAB65\uAB70-\uABBF\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A0-9\xB2\xB3\xB9\xBC-\xBE\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u09F4-\u09F9\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0B72-\u0B77\u0BE6-\u0BF2\u0C66-\u0C6F\u0C78-\u0C7E\u0CE6-\u0CEF\u0D66-\u0D75\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F33\u1040-\u1049\u1090-\u1099\u1369-\u137C\u16EE-\u16F0\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1946-\u194F\u19D0-\u19DA\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\u2070\u2074-\u2079\u2080-\u2089\u2150-\u2182\u2185-\u2189\u2460-\u249B\u24EA-\u24FF\u2776-\u2793\u2CFD\u3007\u3021-\u3029\u3038-\u303A\u3192-\u3195\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\uA620-\uA629\uA6E6-\uA6EF\uA830-\uA835\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19])([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A])/g
-
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js":[function(require,module,exports){
-module.exports = /([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A]+)([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A][a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0529\u052B\u052D\u052F\u0561-\u0587\u13F8-\u13FD\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA699\uA69B\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793-\uA795\uA797\uA799\uA79B\uA79D\uA79F\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7B5\uA7B7\uA7FA\uAB30-\uAB5A\uAB60-\uAB65\uAB70-\uABBF\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A])/g
-
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/vendor/non-word-regexp.js":[function(require,module,exports){
-module.exports = /[^A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B4\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FD5\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AD\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC0-9\xB2\xB3\xB9\xBC-\xBE\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u09F4-\u09F9\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0B72-\u0B77\u0BE6-\u0BF2\u0C66-\u0C6F\u0C78-\u0C7E\u0CE6-\u0CEF\u0D66-\u0D75\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F33\u1040-\u1049\u1090-\u1099\u1369-\u137C\u16EE-\u16F0\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1946-\u194F\u19D0-\u19DA\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\u2070\u2074-\u2079\u2080-\u2089\u2150-\u2182\u2185-\u2189\u2460-\u249B\u24EA-\u24FF\u2776-\u2793\u2CFD\u3007\u3021-\u3029\u3038-\u303A\u3192-\u3195\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\uA620-\uA629\uA6E6-\uA6EF\uA830-\uA835\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19]+/g
-
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js":[function(require,module,exports){
+},{"./emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js":[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -1560,858 +1253,12 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/param-case/param-case.js":[function(require,module,exports){
-var noCase = require('no-case')
-
-/**
- * Param case a string.
- *
- * @param  {string} value
- * @param  {string} [locale]
- * @return {string}
- */
-module.exports = function (value, locale) {
-  return noCase(value, locale, '-')
-}
-
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/pascal-case/pascal-case.js":[function(require,module,exports){
-var camelCase = require('camel-case')
-var upperCaseFirst = require('upper-case-first')
-
-/**
- * Pascal case a string.
- *
- * @param  {string}  value
- * @param  {string}  [locale]
- * @param  {boolean} [mergeNumbers]
- * @return {string}
- */
-module.exports = function (value, locale, mergeNumbers) {
-  return upperCaseFirst(camelCase(value, locale, mergeNumbers), locale)
-}
-
-},{"camel-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/camel-case/camel-case.js","upper-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/path-case/path-case.js":[function(require,module,exports){
-var noCase = require('no-case')
-
-/**
- * Path case a string.
- *
- * @param  {string} value
- * @param  {string} [locale]
- * @return {string}
- */
-module.exports = function (value, locale) {
-  return noCase(value, locale, '/')
-}
-
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js":[function(require,module,exports){
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/checkPropTypes.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-'use strict';
-
-if ("production" !== 'production') {
-  var invariant = require('fbjs/lib/invariant');
-  var warning = require('fbjs/lib/warning');
-  var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
-  var loggedTypeFailures = {};
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if ("production" !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
-        }
-      }
-    }
-  }
-}
-
-module.exports = checkPropTypes;
-
-},{"./lib/ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factory.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-'use strict';
-
-// React 15.5 references this module, and assumes PropTypes are still callable in production.
-// Therefore we re-export development-only version with all the PropTypes checks here.
-// However if one is migrating to the `prop-types` npm library, they will go through the
-// `index.js` entry point, and it will branch depending on the environment.
-var factory = require('./factoryWithTypeCheckers');
-module.exports = function(isValidElement) {
-  // It is still allowed in 15.5.
-  var throwOnDirectAccess = false;
-  return factory(isValidElement, throwOnDirectAccess);
-};
-
-},{"./factoryWithTypeCheckers":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factoryWithTypeCheckers.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factoryWithTypeCheckers.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-'use strict';
-
-var emptyFunction = require('fbjs/lib/emptyFunction');
-var invariant = require('fbjs/lib/invariant');
-var warning = require('fbjs/lib/warning');
-
-var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
-var checkPropTypes = require('./checkPropTypes');
-
-module.exports = function(isValidElement, throwOnDirectAccess) {
-  /* global Symbol */
-  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-  /**
-   * Returns the iterator method function contained on the iterable object.
-   *
-   * Be sure to invoke the function with the iterable as context:
-   *
-   *     var iteratorFn = getIteratorFn(myIterable);
-   *     if (iteratorFn) {
-   *       var iterator = iteratorFn.call(myIterable);
-   *       ...
-   *     }
-   *
-   * @param {?object} maybeIterable
-   * @return {?function}
-   */
-  function getIteratorFn(maybeIterable) {
-    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-    if (typeof iteratorFn === 'function') {
-      return iteratorFn;
-    }
-  }
-
-  /**
-   * Collection of methods that allow declaration and validation of props that are
-   * supplied to React components. Example usage:
-   *
-   *   var Props = require('ReactPropTypes');
-   *   var MyArticle = React.createClass({
-   *     propTypes: {
-   *       // An optional string prop named "description".
-   *       description: Props.string,
-   *
-   *       // A required enum prop named "category".
-   *       category: Props.oneOf(['News','Photos']).isRequired,
-   *
-   *       // A prop named "dialog" that requires an instance of Dialog.
-   *       dialog: Props.instanceOf(Dialog).isRequired
-   *     },
-   *     render: function() { ... }
-   *   });
-   *
-   * A more formal specification of how these methods are used:
-   *
-   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-   *   decl := ReactPropTypes.{type}(.isRequired)?
-   *
-   * Each and every declaration produces a function with the same signature. This
-   * allows the creation of custom validation functions. For example:
-   *
-   *  var MyLink = React.createClass({
-   *    propTypes: {
-   *      // An optional string or URI prop named "href".
-   *      href: function(props, propName, componentName) {
-   *        var propValue = props[propName];
-   *        if (propValue != null && typeof propValue !== 'string' &&
-   *            !(propValue instanceof URI)) {
-   *          return new Error(
-   *            'Expected a string or an URI for ' + propName + ' in ' +
-   *            componentName
-   *          );
-   *        }
-   *      }
-   *    },
-   *    render: function() {...}
-   *  });
-   *
-   * @internal
-   */
-
-  var ANONYMOUS = '<<anonymous>>';
-
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
-  var ReactPropTypes = {
-    array: createPrimitiveTypeChecker('array'),
-    bool: createPrimitiveTypeChecker('boolean'),
-    func: createPrimitiveTypeChecker('function'),
-    number: createPrimitiveTypeChecker('number'),
-    object: createPrimitiveTypeChecker('object'),
-    string: createPrimitiveTypeChecker('string'),
-    symbol: createPrimitiveTypeChecker('symbol'),
-
-    any: createAnyTypeChecker(),
-    arrayOf: createArrayOfTypeChecker,
-    element: createElementTypeChecker(),
-    instanceOf: createInstanceTypeChecker,
-    node: createNodeChecker(),
-    objectOf: createObjectOfTypeChecker,
-    oneOf: createEnumTypeChecker,
-    oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker
-  };
-
-  /**
-   * inlined Object.is polyfill to avoid requiring consumers ship their own
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-   */
-  /*eslint-disable no-self-compare*/
-  function is(x, y) {
-    // SameValue algorithm
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      return x !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-  /*eslint-enable no-self-compare*/
-
-  /**
-   * We use an Error-like object for backward compatibility as people may call
-   * PropTypes directly and inspect their output. However, we don't use real
-   * Errors anymore. We don't inspect their stack anyway, and creating them
-   * is prohibitively expensive if they are created too often, such as what
-   * happens in oneOfType() for any type before the one that matched.
-   */
-  function PropTypeError(message) {
-    this.message = message;
-    this.stack = '';
-  }
-  // Make `instanceof Error` still work for returned errors.
-  PropTypeError.prototype = Error.prototype;
-
-  function createChainableTypeChecker(validate) {
-    if ("production" !== 'production') {
-      var manualPropTypeCallCache = {};
-      var manualPropTypeWarningCount = 0;
-    }
-    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-      componentName = componentName || ANONYMOUS;
-      propFullName = propFullName || propName;
-
-      if (secret !== ReactPropTypesSecret) {
-        if (throwOnDirectAccess) {
-          // New behavior only for users of `prop-types` package
-          invariant(
-            false,
-            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-            'Use `PropTypes.checkPropTypes()` to call them. ' +
-            'Read more at http://fb.me/use-check-prop-types'
-          );
-        } else if ("production" !== 'production' && typeof console !== 'undefined') {
-          // Old behavior for people using React.PropTypes
-          var cacheKey = componentName + ':' + propName;
-          if (
-            !manualPropTypeCallCache[cacheKey] &&
-            // Avoid spamming the console because they are often not actionable except for lib authors
-            manualPropTypeWarningCount < 3
-          ) {
-            warning(
-              false,
-              'You are manually calling a React.PropTypes validation ' +
-              'function for the `%s` prop on `%s`. This is deprecated ' +
-              'and will throw in the standalone `prop-types` package. ' +
-              'You may be seeing this warning due to a third-party PropTypes ' +
-              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
-              propFullName,
-              componentName
-            );
-            manualPropTypeCallCache[cacheKey] = true;
-            manualPropTypeWarningCount++;
-          }
-        }
-      }
-      if (props[propName] == null) {
-        if (isRequired) {
-          if (props[propName] === null) {
-            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-          }
-          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-        }
-        return null;
-      } else {
-        return validate(props, propName, componentName, location, propFullName);
-      }
-    }
-
-    var chainedCheckType = checkType.bind(null, false);
-    chainedCheckType.isRequired = checkType.bind(null, true);
-
-    return chainedCheckType;
-  }
-
-  function createPrimitiveTypeChecker(expectedType) {
-    function validate(props, propName, componentName, location, propFullName, secret) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== expectedType) {
-        // `propValue` being instance of, say, date/regexp, pass the 'object'
-        // check, but we can offer a more precise error message here rather than
-        // 'of type `object`'.
-        var preciseType = getPreciseType(propValue);
-
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createAnyTypeChecker() {
-    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
-  }
-
-  function createArrayOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-      }
-      var propValue = props[propName];
-      if (!Array.isArray(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-      }
-      for (var i = 0; i < propValue.length; i++) {
-        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
-        if (error instanceof Error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!isValidElement(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createInstanceTypeChecker(expectedClass) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!(props[propName] instanceof expectedClass)) {
-        var expectedClassName = expectedClass.name || ANONYMOUS;
-        var actualClassName = getClassName(props[propName]);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createEnumTypeChecker(expectedValues) {
-    if (!Array.isArray(expectedValues)) {
-      "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
-      return emptyFunction.thatReturnsNull;
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      for (var i = 0; i < expectedValues.length; i++) {
-        if (is(propValue, expectedValues[i])) {
-          return null;
-        }
-      }
-
-      var valuesString = JSON.stringify(expectedValues);
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createObjectOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-      }
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-      }
-      for (var key in propValue) {
-        if (propValue.hasOwnProperty(key)) {
-          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-          if (error instanceof Error) {
-            return error;
-          }
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createUnionTypeChecker(arrayOfTypeCheckers) {
-    if (!Array.isArray(arrayOfTypeCheckers)) {
-      "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
-      return emptyFunction.thatReturnsNull;
-    }
-
-    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-      var checker = arrayOfTypeCheckers[i];
-      if (typeof checker !== 'function') {
-        warning(
-          false,
-          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
-          'received %s at index %s.',
-          getPostfixForTypeWarning(checker),
-          i
-        );
-        return emptyFunction.thatReturnsNull;
-      }
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-        var checker = arrayOfTypeCheckers[i];
-        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
-          return null;
-        }
-      }
-
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createNodeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!isNode(props[propName])) {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      for (var key in shapeTypes) {
-        var checker = shapeTypes[key];
-        if (!checker) {
-          continue;
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function isNode(propValue) {
-    switch (typeof propValue) {
-      case 'number':
-      case 'string':
-      case 'undefined':
-        return true;
-      case 'boolean':
-        return !propValue;
-      case 'object':
-        if (Array.isArray(propValue)) {
-          return propValue.every(isNode);
-        }
-        if (propValue === null || isValidElement(propValue)) {
-          return true;
-        }
-
-        var iteratorFn = getIteratorFn(propValue);
-        if (iteratorFn) {
-          var iterator = iteratorFn.call(propValue);
-          var step;
-          if (iteratorFn !== propValue.entries) {
-            while (!(step = iterator.next()).done) {
-              if (!isNode(step.value)) {
-                return false;
-              }
-            }
-          } else {
-            // Iterator will provide entry [k,v] tuples rather than values.
-            while (!(step = iterator.next()).done) {
-              var entry = step.value;
-              if (entry) {
-                if (!isNode(entry[1])) {
-                  return false;
-                }
-              }
-            }
-          }
-        } else {
-          return false;
-        }
-
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  function isSymbol(propType, propValue) {
-    // Native Symbol.
-    if (propType === 'symbol') {
-      return true;
-    }
-
-    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-    if (propValue['@@toStringTag'] === 'Symbol') {
-      return true;
-    }
-
-    // Fallback for non-spec compliant Symbols which are polyfilled.
-    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-      return true;
-    }
-
-    return false;
-  }
-
-  // Equivalent of `typeof` but with special handling for array and regexp.
-  function getPropType(propValue) {
-    var propType = typeof propValue;
-    if (Array.isArray(propValue)) {
-      return 'array';
-    }
-    if (propValue instanceof RegExp) {
-      // Old webkits (at least until Android 4.0) return 'function' rather than
-      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-      // passes PropTypes.object.
-      return 'object';
-    }
-    if (isSymbol(propType, propValue)) {
-      return 'symbol';
-    }
-    return propType;
-  }
-
-  // This handles more types than `getPropType`. Only used for error messages.
-  // See `createPrimitiveTypeChecker`.
-  function getPreciseType(propValue) {
-    if (typeof propValue === 'undefined' || propValue === null) {
-      return '' + propValue;
-    }
-    var propType = getPropType(propValue);
-    if (propType === 'object') {
-      if (propValue instanceof Date) {
-        return 'date';
-      } else if (propValue instanceof RegExp) {
-        return 'regexp';
-      }
-    }
-    return propType;
-  }
-
-  // Returns a string that is postfixed to a warning about an invalid type.
-  // For example, "undefined" or "of type array"
-  function getPostfixForTypeWarning(value) {
-    var type = getPreciseType(value);
-    switch (type) {
-      case 'array':
-      case 'object':
-        return 'an ' + type;
-      case 'boolean':
-      case 'date':
-      case 'regexp':
-        return 'a ' + type;
-      default:
-        return type;
-    }
-  }
-
-  // Returns class name of the object, if any.
-  function getClassName(propValue) {
-    if (!propValue.constructor || !propValue.constructor.name) {
-      return ANONYMOUS;
-    }
-    return propValue.constructor.name;
-  }
-
-  ReactPropTypes.checkPropTypes = checkPropTypes;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
-
-},{"./checkPropTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/checkPropTypes.js","./lib/ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-'use strict';
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/index.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/index.js":[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/ReactDOM');
 
-},{"./lib/ReactDOM":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOM.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js":[function(require,module,exports){
+},{"./lib/ReactDOM":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOM.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ARIADOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -2485,7 +1332,7 @@ var ARIADOMPropertyConfig = {
 };
 
 module.exports = ARIADOMPropertyConfig;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/AutoFocusUtils.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/AutoFocusUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -2509,7 +1356,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","fbjs/lib/focusNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/focusNode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","fbjs/lib/focusNode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/focusNode.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present Facebook, Inc.
  * All rights reserved.
@@ -2894,7 +1741,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./FallbackCompositionState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/FallbackCompositionState.js","./SyntheticCompositionEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js","./SyntheticInputEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSProperty.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPropagators.js","./FallbackCompositionState":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/FallbackCompositionState.js","./SyntheticCompositionEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticCompositionEvent.js","./SyntheticInputEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticInputEvent.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CSSProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3042,7 +1889,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CSSPropertyOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3251,7 +2098,7 @@ var CSSPropertyOperations = {
 };
 
 module.exports = CSSPropertyOperations;
-},{"./CSSProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSProperty.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./dangerousStyleValue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/dangerousStyleValue.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/camelizeStyleName":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/camelizeStyleName.js","fbjs/lib/hyphenateStyleName":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/hyphenateStyleName.js","fbjs/lib/memoizeStringOnly":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/memoizeStringOnly.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CallbackQueue.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CSSProperty.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./dangerousStyleValue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/dangerousStyleValue.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/camelizeStyleName":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/camelizeStyleName.js","fbjs/lib/hyphenateStyleName":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/hyphenateStyleName.js","fbjs/lib/memoizeStringOnly":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/memoizeStringOnly.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CallbackQueue.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3370,7 +2217,7 @@ var CallbackQueue = function () {
 }();
 
 module.exports = PooledClass.addPoolingTo(CallbackQueue);
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ChangeEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3638,26 +2485,6 @@ function getTargetInstForClickEvent(topLevelType, targetInst) {
   }
 }
 
-function handleControlledInputBlur(inst, node) {
-  // TODO: In IE, inst is occasionally null. Why?
-  if (inst == null) {
-    return;
-  }
-
-  // Fiber and ReactDOM keep wrapper state in separate places
-  var state = inst._wrapperState || node._wrapperState;
-
-  if (!state || !state.controlled || node.type !== 'number') {
-    return;
-  }
-
-  // If controlled, assign the value attribute to the current value on blur
-  var value = '' + node.value;
-  if (node.getAttribute('value') !== value) {
-    node.setAttribute('value', value);
-  }
-}
-
 /**
  * This plugin creates an `onChange` event that normalizes change events
  * across form elements. This event fires at a time when it's possible to
@@ -3706,17 +2533,12 @@ var ChangeEventPlugin = {
     if (handleEventFunc) {
       handleEventFunc(topLevelType, targetNode, targetInst);
     }
-
-    // When blurring, set the value attribute for number inputs
-    if (topLevelType === 'topBlur') {
-      handleControlledInputBlur(targetInst, targetNode);
-    }
   }
 
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js","./isEventSupported":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js","./isTextInputElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginHub.js","./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventTarget.js","./isEventSupported":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isEventSupported.js","./isTextInputElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMChildrenOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3941,7 +2763,7 @@ var DOMChildrenOperations = {
 };
 
 module.exports = DOMChildrenOperations;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./Danger":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Danger.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./createMicrosoftUnsafeLocalFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js","./Danger":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Danger.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./createMicrosoftUnsafeLocalFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setTextContent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -4059,7 +2881,7 @@ DOMLazyTree.queueHTML = queueHTML;
 DOMLazyTree.queueText = queueText;
 
 module.exports = DOMLazyTree;
-},{"./DOMNamespaces":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js":[function(require,module,exports){
+},{"./DOMNamespaces":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setTextContent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMNamespaces.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4079,7 +2901,7 @@ var DOMNamespaces = {
 };
 
 module.exports = DOMNamespaces;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4289,7 +3111,7 @@ var DOMProperty = {
 };
 
 module.exports = DOMProperty;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMPropertyOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4526,7 +3348,7 @@ var DOMPropertyOperations = {
 };
 
 module.exports = DOMPropertyOperations;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./quoteAttributeValueForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Danger.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./quoteAttributeValueForBrowser":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Danger.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4574,7 +3396,7 @@ var Danger = {
 };
 
 module.exports = Danger;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/createNodesFromMarkup":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/createNodesFromMarkup":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/createNodesFromMarkup.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4600,7 +3422,7 @@ module.exports = Danger;
 var DefaultEventPluginOrder = ['ResponderEventPlugin', 'SimpleEventPlugin', 'TapEventPlugin', 'EnterLeaveEventPlugin', 'ChangeEventPlugin', 'SelectEventPlugin', 'BeforeInputEventPlugin'];
 
 module.exports = DefaultEventPluginOrder;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4700,7 +3522,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginHub.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -4978,7 +3800,7 @@ var EventPluginHub = {
 };
 
 module.exports = EventPluginHub;
-},{"./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactErrorUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./accumulateInto":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/forEachAccumulated.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js":[function(require,module,exports){
+},{"./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginUtils.js","./ReactErrorUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactErrorUtils.js","./accumulateInto":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/forEachAccumulated.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginRegistry.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5233,7 +4055,7 @@ var EventPluginRegistry = {
 };
 
 module.exports = EventPluginRegistry;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5459,7 +4281,7 @@ var EventPluginUtils = {
 };
 
 module.exports = EventPluginUtils;
-},{"./ReactErrorUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js":[function(require,module,exports){
+},{"./ReactErrorUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactErrorUtils.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPropagators.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5593,7 +4415,7 @@ var EventPropagators = {
 };
 
 module.exports = EventPropagators;
-},{"./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./accumulateInto":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/forEachAccumulated.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/FallbackCompositionState.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginUtils.js","./accumulateInto":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/forEachAccumulated.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/FallbackCompositionState.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5688,7 +4510,7 @@ _assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./getTextContentAccessor":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js","./getTextContentAccessor":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getTextContentAccessor.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5896,35 +4718,11 @@ var HTMLDOMPropertyConfig = {
     htmlFor: 'for',
     httpEquiv: 'http-equiv'
   },
-  DOMPropertyNames: {},
-  DOMMutationMethods: {
-    value: function (node, value) {
-      if (value == null) {
-        return node.removeAttribute('value');
-      }
-
-      // Number inputs get special treatment due to some edge cases in
-      // Chrome. Let everything else assign the value attribute as normal.
-      // https://github.com/facebook/react/issues/7253#issuecomment-236074326
-      if (node.type !== 'number' || node.hasAttribute('value') === false) {
-        node.setAttribute('value', '' + value);
-      } else if (node.validity && !node.validity.badInput && node.ownerDocument.activeElement !== node) {
-        // Don't assign an attribute if validation reports bad
-        // input. Chrome will clear the value. Additionally, don't
-        // operate on inputs that have focus, otherwise Chrome might
-        // strip off trailing decimal places and cause the user's
-        // cursor position to jump to the beginning of the input.
-        //
-        // In ReactDOMInput, we have an onBlur event that will trigger
-        // this function again when focus is lost.
-        node.setAttribute('value', '' + value);
-      }
-    }
-  }
+  DOMPropertyNames: {}
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/KeyEscapeUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5983,7 +4781,7 @@ var KeyEscapeUtils = {
 };
 
 module.exports = KeyEscapeUtils;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/LinkedValueUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -5998,11 +4796,8 @@ module.exports = KeyEscapeUtils;
 
 var _prodInvariant = require('./reactProdInvariant');
 
-var ReactPropTypesSecret = require('./ReactPropTypesSecret');
-var propTypesFactory = require('prop-types/factory');
-
 var React = require('react/lib/React');
-var PropTypes = propTypesFactory(React.isValidElement);
+var ReactPropTypesSecret = require('./ReactPropTypesSecret');
 
 var invariant = require('fbjs/lib/invariant');
 var warning = require('fbjs/lib/warning');
@@ -6043,7 +4838,7 @@ var propTypes = {
     }
     return new Error('You provided a `checked` prop to a form field without an ' + '`onChange` handler. This will render a read-only field. If ' + 'the field should be mutable use `defaultChecked`. Otherwise, ' + 'set either `onChange` or `readOnly`.');
   },
-  onChange: PropTypes.func
+  onChange: React.PropTypes.func
 };
 
 var loggedTypeFailures = {};
@@ -6121,7 +4916,7 @@ var LinkedValueUtils = {
 };
 
 module.exports = LinkedValueUtils;
-},{"./ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","prop-types/factory":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factory.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js":[function(require,module,exports){
+},{"./ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -6233,7 +5028,7 @@ var PooledClass = {
 };
 
 module.exports = PooledClass;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -6561,7 +5356,7 @@ var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactEventEmitterMixin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getVendorPrefixedEventName":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js","./isEventSupported":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactChildReconciler.js":[function(require,module,exports){
+},{"./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactEventEmitterMixin":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ViewportMetrics.js","./getVendorPrefixedEventName":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getVendorPrefixedEventName.js","./isEventSupported":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isEventSupported.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactChildReconciler.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -6717,7 +5512,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./instantiateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","./traverseAllChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js","./instantiateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/shouldUpdateReactComponent.js","./traverseAllChildren":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -6747,7 +5542,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./DOMChildrenOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMIDOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js":[function(require,module,exports){
+},{"./DOMChildrenOperations":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMIDOperations":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMIDOperations.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentEnvironment.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -6793,7 +5588,7 @@ var ReactComponentEnvironment = {
 };
 
 module.exports = ReactComponentEnvironment;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactCompositeComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -7310,7 +6105,7 @@ var ReactCompositeComponent = {
     if (childContext) {
       !(typeof Component.childContextTypes === 'object') ? "production" !== 'production' ? invariant(false, '%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().', this.getName() || 'ReactCompositeComponent') : _prodInvariant('107', this.getName() || 'ReactCompositeComponent') : void 0;
       if ("production" !== 'production') {
-        this._checkContextTypes(Component.childContextTypes, childContext, 'child context');
+        this._checkContextTypes(Component.childContextTypes, childContext, 'childContext');
       }
       for (var name in childContext) {
         !(name in Component.childContextTypes) ? "production" !== 'production' ? invariant(false, '%s.getChildContext(): key "%s" is not defined in childContextTypes.', this.getName() || 'ReactCompositeComponent', name) : _prodInvariant('108', this.getName() || 'ReactCompositeComponent', name) : void 0;
@@ -7695,7 +6490,7 @@ var ReactCompositeComponent = {
 };
 
 module.exports = ReactCompositeComponent;
-},{"./ReactComponentEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactErrorUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactNodeTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactNodeTypes.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./checkReactTypeSpec":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./shouldUpdateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOM.js":[function(require,module,exports){
+},{"./ReactComponentEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactErrorUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactErrorUtils.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactNodeTypes":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactNodeTypes.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js","./checkReactTypeSpec":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/checkReactTypeSpec.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","./shouldUpdateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOM.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -7806,7 +6601,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactDOM;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInvalidARIAHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js","./ReactDOMNullInputValuePropHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js","./ReactDOMUnknownPropertyHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js","./ReactDefaultInjection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMount":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMount.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./ReactVersion":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactVersion.js","./findDOMNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/findDOMNode.js","./getHostComponentFromComposite":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./renderSubtreeIntoContainer":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponent.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInvalidARIAHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js","./ReactDOMNullInputValuePropHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js","./ReactDOMUnknownPropertyHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js","./ReactDefaultInjection":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDefaultInjection.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMount":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMount.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./ReactVersion":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactVersion.js","./findDOMNode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/findDOMNode.js","./getHostComponentFromComposite":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getHostComponentFromComposite.js","./renderSubtreeIntoContainer":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/renderSubtreeIntoContainer.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -8807,7 +7602,7 @@ ReactDOMComponent.Mixin = {
 _assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mixin);
 
 module.exports = ReactDOMComponent;
-},{"./AutoFocusUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/AutoFocusUtils.js","./CSSPropertyOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js","./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMNamespaces":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInput":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMultiChild":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMultiChild.js","./ReactServerRenderingTransaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js","./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./isEventSupported":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js":[function(require,module,exports){
+},{"./AutoFocusUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/AutoFocusUtils.js","./CSSPropertyOperations":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CSSPropertyOperations.js","./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js","./DOMNamespaces":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMNamespaces.js","./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMPropertyOperations.js","./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentFlags":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInput":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTextarea.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMultiChild":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMultiChild.js","./ReactServerRenderingTransaction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactServerRenderingTransaction.js","./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./isEventSupported":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isEventSupported.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentFlags.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -8825,7 +7620,7 @@ var ReactDOMComponentFlags = {
 };
 
 module.exports = ReactDOMComponentFlags;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9020,7 +7815,7 @@ var ReactDOMComponentTree = {
 };
 
 module.exports = ReactDOMComponentTree;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentFlags":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMContainerInfo.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9053,7 +7848,7 @@ function ReactDOMContainerInfo(topLevelWrapper, node) {
 }
 
 module.exports = ReactDOMContainerInfo;
-},{"./validateDOMNesting":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js":[function(require,module,exports){
+},{"./validateDOMNesting":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/validateDOMNesting.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMEmptyComponent.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -9113,7 +7908,7 @@ _assign(ReactDOMEmptyComponent.prototype, {
 });
 
 module.exports = ReactDOMEmptyComponent;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMFeatureFlags.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9132,7 +7927,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMIDOperations.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9166,7 +7961,7 @@ var ReactDOMIDOperations = {
 };
 
 module.exports = ReactDOMIDOperations;
-},{"./DOMChildrenOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInput.js":[function(require,module,exports){
+},{"./DOMChildrenOperations":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMInput.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9281,9 +8076,12 @@ var ReactDOMInput = {
       initialChecked: props.checked != null ? props.checked : props.defaultChecked,
       initialValue: props.value != null ? props.value : defaultValue,
       listeners: null,
-      onChange: _handleChange.bind(inst),
-      controlled: isControlled(props)
+      onChange: _handleChange.bind(inst)
     };
+
+    if ("production" !== 'production') {
+      inst._wrapperState.controlled = isControlled(props);
+    }
   },
 
   updateWrapper: function (inst) {
@@ -9312,24 +8110,14 @@ var ReactDOMInput = {
     var node = ReactDOMComponentTree.getNodeFromInstance(inst);
     var value = LinkedValueUtils.getValue(props);
     if (value != null) {
-      if (value === 0 && node.value === '') {
-        node.value = '0';
-        // Note: IE9 reports a number inputs as 'text', so check props instead.
-      } else if (props.type === 'number') {
-        // Simulate `input.valueAsNumber`. IE9 does not support it
-        var valueAsNumber = parseFloat(node.value, 10) || 0;
 
-        // eslint-disable-next-line
-        if (value != valueAsNumber) {
-          // Cast `value` to a string to ensure the value is set correctly. While
-          // browsers typically do this as necessary, jsdom doesn't.
-          node.value = '' + value;
-        }
-        // eslint-disable-next-line
-      } else if (value != node.value) {
-        // Cast `value` to a string to ensure the value is set correctly. While
-        // browsers typically do this as necessary, jsdom doesn't.
-        node.value = '' + value;
+      // Cast `value` to a string to ensure the value is set correctly. While
+      // browsers typically do this as necessary, jsdom doesn't.
+      var newValue = '' + value;
+
+      // To avoid side effects (such as losing text selection), only set value if changed
+      if (newValue !== node.value) {
+        node.value = newValue;
       }
     } else {
       if (props.value == null && props.defaultValue != null) {
@@ -9451,7 +8239,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMInput;
-},{"./DOMPropertyOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js":[function(require,module,exports){
+},{"./DOMPropertyOperations":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9544,7 +8332,7 @@ var ReactDOMInvalidARIAHook = {
 };
 
 module.exports = ReactDOMInvalidARIAHook;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9587,7 +8375,7 @@ var ReactDOMNullInputValuePropHook = {
 };
 
 module.exports = ReactDOMNullInputValuePropHook;
-},{"fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMOption.js":[function(require,module,exports){
+},{"fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMOption.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9710,7 +8498,7 @@ var ReactDOMOption = {
 };
 
 module.exports = ReactDOMOption;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMSelect":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelect.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMSelect":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMSelect.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMSelect.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -9910,7 +8698,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMSelect;
-},{"./LinkedValueUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelection.js":[function(require,module,exports){
+},{"./LinkedValueUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10122,7 +8910,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js":[function(require,module,exports){
+},{"./getNodeForCharacterOffset":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getTextContentAccessor.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTextComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10286,7 +9074,7 @@ _assign(ReactDOMTextComponent.prototype, {
 });
 
 module.exports = ReactDOMTextComponent;
-},{"./DOMChildrenOperations":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js":[function(require,module,exports){
+},{"./DOMChildrenOperations":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMChildrenOperations.js","./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTextarea.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10446,7 +9234,7 @@ function _handleChange(event) {
 }
 
 module.exports = ReactDOMTextarea;
-},{"./LinkedValueUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js":[function(require,module,exports){
+},{"./LinkedValueUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTreeTraversal.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -10582,7 +9370,7 @@ module.exports = {
   traverseTwoPhase: traverseTwoPhase,
   traverseEnterLeave: traverseEnterLeave
 };
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -10694,7 +9482,7 @@ var ReactDOMUnknownPropertyHook = {
 };
 
 module.exports = ReactDOMUnknownPropertyHook;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginRegistry":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDebugTool.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js","./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginRegistry.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDebugTool.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -10875,7 +9663,9 @@ function resumeCurrentLifeCycleTimer() {
 }
 
 var lastMarkTimeStamp = 0;
-var canUsePerformanceMeasure = typeof performance !== 'undefined' && typeof performance.mark === 'function' && typeof performance.clearMarks === 'function' && typeof performance.measure === 'function' && typeof performance.clearMeasures === 'function';
+var canUsePerformanceMeasure =
+// $FlowFixMe https://github.com/facebook/flow/issues/2345
+typeof performance !== 'undefined' && typeof performance.mark === 'function' && typeof performance.clearMarks === 'function' && typeof performance.measure === 'function' && typeof performance.clearMeasures === 'function';
 
 function shouldMark(debugID) {
   if (!isProfiling || !canUsePerformanceMeasure) {
@@ -11053,7 +9843,7 @@ if (/[?&]react_perf\b/.test(url)) {
 }
 
 module.exports = ReactDebugTool;
-},{"./ReactHostOperationHistoryHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js","./ReactInvalidSetStateWarningHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/performanceNow":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/performanceNow.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
+},{"./ReactHostOperationHistoryHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js","./ReactInvalidSetStateWarningHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/performanceNow":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/performanceNow.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11121,7 +9911,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js":[function(require,module,exports){
+},{"./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Transaction.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDefaultInjection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11207,7 +9997,7 @@ function inject() {
 module.exports = {
   inject: inject
 };
-},{"./ARIADOMPropertyConfig":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js","./BeforeInputEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js","./DefaultEventPluginOrder":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js","./HTMLDOMPropertyConfig":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js","./ReactComponentBrowserEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js","./ReactDOMComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponent.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMEmptyComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js","./ReactDOMTextComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js","./ReactDOMTreeTraversal":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js","./ReactDefaultBatchingStrategy":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js","./ReactEventListener":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventListener.js","./ReactInjection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInjection.js","./ReactReconcileTransaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js","./SVGDOMPropertyConfig":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SelectEventPlugin.js","./SimpleEventPlugin":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactElementSymbol.js":[function(require,module,exports){
+},{"./ARIADOMPropertyConfig":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ARIADOMPropertyConfig.js","./BeforeInputEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ChangeEventPlugin.js","./DefaultEventPluginOrder":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EnterLeaveEventPlugin.js","./HTMLDOMPropertyConfig":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js","./ReactComponentBrowserEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js","./ReactDOMComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponent.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMEmptyComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMEmptyComponent.js","./ReactDOMTextComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTextComponent.js","./ReactDOMTreeTraversal":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTreeTraversal.js","./ReactDefaultBatchingStrategy":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js","./ReactEventListener":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEventListener.js","./ReactInjection":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInjection.js","./ReactReconcileTransaction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconcileTransaction.js","./SVGDOMPropertyConfig":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SelectEventPlugin.js","./SimpleEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SimpleEventPlugin.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactElementSymbol.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -11227,7 +10017,7 @@ module.exports = {
 var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol['for']('react.element') || 0xeac7;
 
 module.exports = REACT_ELEMENT_TYPE;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEmptyComponent.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -11257,7 +10047,7 @@ var ReactEmptyComponent = {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactErrorUtils.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactErrorUtils.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11325,6 +10115,7 @@ if ("production" !== 'production') {
       var evtType = 'react-' + name;
       fakeNode.addEventListener(evtType, boundFunc, false);
       var evt = document.createEvent('Event');
+      // $FlowFixMe https://github.com/facebook/flow/issues/2336
       evt.initEvent(evtType, false, false);
       fakeNode.dispatchEvent(evt);
       fakeNode.removeEventListener(evtType, boundFunc, false);
@@ -11333,7 +10124,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactErrorUtils;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11366,7 +10157,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEventListener.js":[function(require,module,exports){
+},{"./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginHub.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEventListener.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11521,7 +10312,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./getEventTarget":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js","fbjs/lib/EventListener":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getUnboundedScrollPosition":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./getEventTarget":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventTarget.js","fbjs/lib/EventListener":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/EventListener.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getUnboundedScrollPosition":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getUnboundedScrollPosition.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactFeatureFlags.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11543,7 +10334,7 @@ var ReactFeatureFlags = {
 };
 
 module.exports = ReactFeatureFlags;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostComponent.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactHostComponent.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -11611,7 +10402,7 @@ var ReactHostComponent = {
 };
 
 module.exports = ReactHostComponent;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -11645,7 +10436,7 @@ var ReactHostOperationHistoryHook = {
 };
 
 module.exports = ReactHostOperationHistoryHook;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInjection.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInjection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11679,7 +10470,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginHub":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactComponentEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactEmptyComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInputSelection.js":[function(require,module,exports){
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js","./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginUtils.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactComponentEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactEmptyComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactHostComponent.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInputSelection.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11803,7 +10594,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMSelection.js","fbjs/lib/containsNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/containsNode.js","fbjs/lib/focusNode":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/focusNode.js","fbjs/lib/getActiveElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getActiveElement.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js":[function(require,module,exports){
+},{"./ReactDOMSelection":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMSelection.js","fbjs/lib/containsNode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/containsNode.js","fbjs/lib/focusNode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/focusNode.js","fbjs/lib/getActiveElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getActiveElement.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstanceMap.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11851,7 +10642,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -11875,7 +10666,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = { debugTool: debugTool };
-},{"./ReactDebugTool":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDebugTool.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js":[function(require,module,exports){
+},{"./ReactDebugTool":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDebugTool.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -11912,7 +10703,7 @@ var ReactInvalidSetStateWarningHook = {
 };
 
 module.exports = ReactInvalidSetStateWarningHook;
-},{"fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js":[function(require,module,exports){
+},{"fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMarkupChecksum.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -11962,7 +10753,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/adler32.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMount.js":[function(require,module,exports){
+},{"./adler32":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/adler32.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMount.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -12500,7 +11291,7 @@ var ReactMount = {
 };
 
 module.exports = ReactMount;
-},{"./DOMLazyTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMContainerInfo":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js","./ReactDOMFeatureFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js","./ReactFeatureFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMarkupChecksum":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","./shouldUpdateReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMultiChild.js":[function(require,module,exports){
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js","./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMContainerInfo":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMContainerInfo.js","./ReactDOMFeatureFlags":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMFeatureFlags.js","./ReactFeatureFlags":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMarkupChecksum":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMarkupChecksum.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdateQueue.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/instantiateReactComponent.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setInnerHTML.js","./shouldUpdateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMultiChild.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -12950,7 +11741,7 @@ var ReactMultiChild = {
 };
 
 module.exports = ReactMultiChild;
-},{"./ReactChildReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactChildReconciler.js","./ReactComponentEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./flattenChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/flattenChildren.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactNodeTypes.js":[function(require,module,exports){
+},{"./ReactChildReconciler":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactChildReconciler.js","./ReactComponentEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js","./flattenChildren":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/flattenChildren.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactNodeTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -12990,7 +11781,7 @@ var ReactNodeTypes = {
 };
 
 module.exports = ReactNodeTypes;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","react/lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactOwner.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactOwner.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13084,7 +11875,7 @@ var ReactOwner = {
 };
 
 module.exports = ReactOwner;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13109,7 +11900,7 @@ if ("production" !== 'production') {
 }
 
 module.exports = ReactPropTypeLocationNames;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypesSecret.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13126,7 +11917,7 @@ module.exports = ReactPropTypeLocationNames;
 var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconcileTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13304,7 +12095,7 @@ _assign(ReactReconcileTransaction.prototype, Transaction, Mixin);
 PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
-},{"./CallbackQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInputSelection.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdateQueue.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13472,7 +12263,7 @@ var ReactReconciler = {
 };
 
 module.exports = ReactReconciler;
-},{"./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactRef":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactRef.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactRef.js":[function(require,module,exports){
+},{"./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactRef":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactRef.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactRef.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -13561,7 +12352,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
+},{"./ReactOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -13651,7 +12442,7 @@ _assign(ReactServerRenderingTransaction.prototype, Transaction, Mixin);
 PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactServerUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactServerUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactServerUpdateQueue.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactServerUpdateQueue.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -13790,7 +12581,7 @@ var ReactServerUpdateQueue = function () {
 }();
 
 module.exports = ReactServerUpdateQueue;
-},{"./ReactUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js":[function(require,module,exports){
+},{"./ReactUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdateQueue.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdateQueue.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -13961,7 +12752,7 @@ var ReactUpdateQueue = {
    * @param {object} completeState Next state.
    * @internal
    */
-  enqueueReplaceState: function (publicInstance, completeState, callback) {
+  enqueueReplaceState: function (publicInstance, completeState) {
     var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'replaceState');
 
     if (!internalInstance) {
@@ -13970,16 +12761,6 @@ var ReactUpdateQueue = {
 
     internalInstance._pendingStateQueue = [completeState];
     internalInstance._pendingReplaceState = true;
-
-    // Future-proof 15.5
-    if (callback !== undefined && callback !== null) {
-      ReactUpdateQueue.validateCallback(callback, 'replaceState');
-      if (internalInstance._pendingCallbacks) {
-        internalInstance._pendingCallbacks.push(callback);
-      } else {
-        internalInstance._pendingCallbacks = [callback];
-      }
-    }
 
     enqueueUpdate(internalInstance);
   },
@@ -14026,7 +12807,7 @@ var ReactUpdateQueue = {
 };
 
 module.exports = ReactUpdateQueue;
-},{"./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdates":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactUpdates.js":[function(require,module,exports){
+},{"./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14277,7 +13058,7 @@ var ReactUpdates = {
 };
 
 module.exports = ReactUpdates;
-},{"./CallbackQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactFeatureFlags":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactReconciler":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactReconciler.js","./Transaction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactVersion.js":[function(require,module,exports){
+},{"./CallbackQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js","./ReactFeatureFlags":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Transaction.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactVersion.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14290,8 +13071,8 @@ module.exports = ReactUpdates;
 
 'use strict';
 
-module.exports = '15.5.4';
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
+module.exports = '15.4.2';
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14593,7 +13374,7 @@ Object.keys(ATTRS).forEach(function (key) {
 });
 
 module.exports = SVGDOMPropertyConfig;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SelectEventPlugin.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SelectEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14784,7 +13565,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInputSelection":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./isTextInputElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getActiveElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/getActiveElement.js","fbjs/lib/shallowEqual":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/shallowEqual.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInputSelection":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js","./isTextInputElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getActiveElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getActiveElement.js","fbjs/lib/shallowEqual":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/shallowEqual.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SimpleEventPlugin.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15012,7 +13793,7 @@ var SimpleEventPlugin = {
 };
 
 module.exports = SimpleEventPlugin;
-},{"./EventPropagators":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticAnimationEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js","./SyntheticClipboardEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js","./SyntheticTransitionEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js","./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/EventListener":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js":[function(require,module,exports){
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticAnimationEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticAnimationEvent.js","./SyntheticClipboardEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticTouchEvent.js","./SyntheticTransitionEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticTransitionEvent.js","./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventCharCode.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/EventListener":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/EventListener.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticAnimationEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15051,7 +13832,7 @@ function SyntheticAnimationEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticAnimationEvent, AnimationEventInterface);
 
 module.exports = SyntheticAnimationEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15089,7 +13870,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15125,7 +13906,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticDragEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15161,7 +13942,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15429,7 +14210,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
     "production" !== 'production' ? warning(warningCondition, 'This synthetic event is reused for performance reasons. If you\'re seeing this, ' + 'you\'re %s `%s` on a released/nullified synthetic event. %s. ' + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result) : void 0;
   }
 }
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js":[function(require,module,exports){
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticFocusEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15465,7 +14246,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticUIEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticInputEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15502,7 +14283,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15586,7 +14367,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js","./getEventKey":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventKey.js","./getEventModifierState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventCharCode.js","./getEventKey":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventKey.js","./getEventModifierState":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticMouseEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15658,7 +14439,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getEventModifierState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ViewportMetrics.js","./getEventModifierState":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticTouchEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15703,7 +14484,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js":[function(require,module,exports){
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticTransitionEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15742,7 +14523,7 @@ function SyntheticTransitionEvent(dispatchConfig, dispatchMarker, nativeEvent, n
 SyntheticEvent.augmentClass(SyntheticTransitionEvent, TransitionEventInterface);
 
 module.exports = SyntheticTransitionEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticUIEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15801,7 +14582,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js":[function(require,module,exports){
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventTarget.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticWheelEvent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -15855,7 +14636,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/Transaction.js":[function(require,module,exports){
+},{"./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Transaction.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16080,7 +14861,7 @@ var TransactionImpl = {
 };
 
 module.exports = TransactionImpl;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ViewportMetrics.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ViewportMetrics.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16107,7 +14888,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/accumulateInto.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/accumulateInto.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -16165,7 +14946,7 @@ function accumulateInto(current, next) {
 }
 
 module.exports = accumulateInto;
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/adler32.js":[function(require,module,exports){
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/adler32.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16209,7 +14990,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/checkReactTypeSpec.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -16298,7 +15079,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
 module.exports = checkReactTypeSpec;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocationNames":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js":[function(require,module,exports){
+},{"./ReactPropTypeLocationNames":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16330,7 +15111,7 @@ var createMicrosoftUnsafeLocalFunction = function (func) {
 };
 
 module.exports = createMicrosoftUnsafeLocalFunction;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/dangerousStyleValue.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/dangerousStyleValue.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16409,7 +15190,7 @@ function dangerousStyleValue(name, value, component) {
 }
 
 module.exports = dangerousStyleValue;
-},{"./CSSProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/CSSProperty.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js":[function(require,module,exports){
+},{"./CSSProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CSSProperty.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/escapeTextContentForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -16532,7 +15313,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/findDOMNode.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/findDOMNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16592,7 +15373,7 @@ function findDOMNode(componentOrElement) {
 }
 
 module.exports = findDOMNode;
-},{"./ReactDOMComponentTree":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstanceMap":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./getHostComponentFromComposite":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/flattenChildren.js":[function(require,module,exports){
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstanceMap.js","./getHostComponentFromComposite":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getHostComponentFromComposite.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/flattenChildren.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -16670,7 +15451,7 @@ function flattenChildren(children, selfDebugID) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./traverseAllChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/forEachAccumulated.js":[function(require,module,exports){
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/KeyEscapeUtils.js","./traverseAllChildren":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/forEachAccumulated.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16701,7 +15482,7 @@ function forEachAccumulated(arr, cb, scope) {
 }
 
 module.exports = forEachAccumulated;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventCharCode.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16751,7 +15532,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventKey.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventKey.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16853,7 +15634,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventCharCode.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventModifierState.js":[function(require,module,exports){
+},{"./getEventCharCode":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventCharCode.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventModifierState.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16896,7 +15677,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getEventTarget.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventTarget.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16931,7 +15712,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getHostComponentFromComposite.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -16961,7 +15742,7 @@ function getHostComponentFromComposite(inst) {
 }
 
 module.exports = getHostComponentFromComposite;
-},{"./ReactNodeTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactNodeTypes.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getIteratorFn.js":[function(require,module,exports){
+},{"./ReactNodeTypes":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactNodeTypes.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getIteratorFn.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17002,7 +15783,28 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getNextDebugID.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+'use strict';
+
+var nextDebugID = 1;
+
+function getNextDebugID() {
+  return nextDebugID++;
+}
+
+module.exports = getNextDebugID;
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17076,7 +15878,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getTextContentAccessor.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getTextContentAccessor.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17109,7 +15911,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js":[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getVendorPrefixedEventName.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17210,7 +16012,7 @@ function getVendorPrefixedEventName(eventName) {
 }
 
 module.exports = getVendorPrefixedEventName;
-},{"fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/instantiateReactComponent.js":[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/instantiateReactComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17230,7 +16032,7 @@ var ReactCompositeComponent = require('./ReactCompositeComponent');
 var ReactEmptyComponent = require('./ReactEmptyComponent');
 var ReactHostComponent = require('./ReactHostComponent');
 
-var getNextDebugID = require('react/lib/getNextDebugID');
+var getNextDebugID = require('./getNextDebugID');
 var invariant = require('fbjs/lib/invariant');
 var warning = require('fbjs/lib/warning');
 
@@ -17238,6 +16040,9 @@ var warning = require('fbjs/lib/warning');
 var ReactCompositeComponentWrapper = function (element) {
   this.construct(element);
 };
+_assign(ReactCompositeComponentWrapper.prototype, ReactCompositeComponent, {
+  _instantiateReactComponent: instantiateReactComponent
+});
 
 function getDeclarationErrorAddendum(owner) {
   if (owner) {
@@ -17334,12 +16139,8 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
   return instance;
 }
 
-_assign(ReactCompositeComponentWrapper.prototype, ReactCompositeComponent, {
-  _instantiateReactComponent: instantiateReactComponent
-});
-
 module.exports = instantiateReactComponent;
-},{"./ReactCompositeComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js","react/lib/getNextDebugID":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getNextDebugID.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isEventSupported.js":[function(require,module,exports){
+},{"./ReactCompositeComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactHostComponent.js","./getNextDebugID":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getNextDebugID.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isEventSupported.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17399,7 +16200,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/isTextInputElement.js":[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isTextInputElement.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17450,7 +16251,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17476,7 +16277,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js":[function(require,module,exports){
+},{"./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/escapeTextContentForBrowser.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js":[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17515,7 +16316,7 @@ function reactProdInvariant(code) {
 }
 
 module.exports = reactProdInvariant;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/renderSubtreeIntoContainer.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17531,7 +16332,7 @@ module.exports = reactProdInvariant;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactMount.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js":[function(require,module,exports){
+},{"./ReactMount":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMount.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setInnerHTML.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17629,7 +16430,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"./DOMNamespaces":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setTextContent.js":[function(require,module,exports){
+},{"./DOMNamespaces":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setTextContent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17681,7 +16482,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./setInnerHTML":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/setInnerHTML.js","fbjs/lib/ExecutionEnvironment":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
+},{"./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setInnerHTML.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17723,7 +16524,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/traverseAllChildren.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/traverseAllChildren.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -17899,7 +16700,8336 @@ function traverseAllChildren(children, callback, traverseContext) {
 }
 
 module.exports = traverseAllChildren;
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactElementSymbol":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getIteratorFn.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/validateDOMNesting.js":[function(require,module,exports){
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactElementSymbol":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getIteratorFn.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/validateDOMNesting.js":[function(require,module,exports){
+/**
+ * Copyright 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _assign = require('object-assign');
+
+var emptyFunction = require('fbjs/lib/emptyFunction');
+var warning = require('fbjs/lib/warning');
+
+var validateDOMNesting = emptyFunction;
+
+if ("production" !== 'production') {
+  // This validation code was written based on the HTML5 parsing spec:
+  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
+  //
+  // Note: this does not catch all invalid nesting, nor does it try to (as it's
+  // not clear what practical benefit doing so provides); instead, we warn only
+  // for cases where the parser will give a parse tree differing from what React
+  // intended. For example, <b><div></div></b> is invalid but we don't warn
+  // because it still parses correctly; we do warn for other cases like nested
+  // <p> tags where the beginning of the second element implicitly closes the
+  // first, causing a confusing mess.
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#special
+  var specialTags = ['address', 'applet', 'area', 'article', 'aside', 'base', 'basefont', 'bgsound', 'blockquote', 'body', 'br', 'button', 'caption', 'center', 'col', 'colgroup', 'dd', 'details', 'dir', 'div', 'dl', 'dt', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'iframe', 'img', 'input', 'isindex', 'li', 'link', 'listing', 'main', 'marquee', 'menu', 'menuitem', 'meta', 'nav', 'noembed', 'noframes', 'noscript', 'object', 'ol', 'p', 'param', 'plaintext', 'pre', 'script', 'section', 'select', 'source', 'style', 'summary', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr', 'track', 'ul', 'wbr', 'xmp'];
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
+  var inScopeTags = ['applet', 'caption', 'html', 'table', 'td', 'th', 'marquee', 'object', 'template',
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#html-integration-point
+  // TODO: Distinguish by namespace here -- for <title>, including it here
+  // errs on the side of fewer warnings
+  'foreignObject', 'desc', 'title'];
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-button-scope
+  var buttonScopeTags = inScopeTags.concat(['button']);
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#generate-implied-end-tags
+  var impliedEndTags = ['dd', 'dt', 'li', 'option', 'optgroup', 'p', 'rp', 'rt'];
+
+  var emptyAncestorInfo = {
+    current: null,
+
+    formTag: null,
+    aTagInScope: null,
+    buttonTagInScope: null,
+    nobrTagInScope: null,
+    pTagInButtonScope: null,
+
+    listItemTagAutoclosing: null,
+    dlItemTagAutoclosing: null
+  };
+
+  var updatedAncestorInfo = function (oldInfo, tag, instance) {
+    var ancestorInfo = _assign({}, oldInfo || emptyAncestorInfo);
+    var info = { tag: tag, instance: instance };
+
+    if (inScopeTags.indexOf(tag) !== -1) {
+      ancestorInfo.aTagInScope = null;
+      ancestorInfo.buttonTagInScope = null;
+      ancestorInfo.nobrTagInScope = null;
+    }
+    if (buttonScopeTags.indexOf(tag) !== -1) {
+      ancestorInfo.pTagInButtonScope = null;
+    }
+
+    // See rules for 'li', 'dd', 'dt' start tags in
+    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
+    if (specialTags.indexOf(tag) !== -1 && tag !== 'address' && tag !== 'div' && tag !== 'p') {
+      ancestorInfo.listItemTagAutoclosing = null;
+      ancestorInfo.dlItemTagAutoclosing = null;
+    }
+
+    ancestorInfo.current = info;
+
+    if (tag === 'form') {
+      ancestorInfo.formTag = info;
+    }
+    if (tag === 'a') {
+      ancestorInfo.aTagInScope = info;
+    }
+    if (tag === 'button') {
+      ancestorInfo.buttonTagInScope = info;
+    }
+    if (tag === 'nobr') {
+      ancestorInfo.nobrTagInScope = info;
+    }
+    if (tag === 'p') {
+      ancestorInfo.pTagInButtonScope = info;
+    }
+    if (tag === 'li') {
+      ancestorInfo.listItemTagAutoclosing = info;
+    }
+    if (tag === 'dd' || tag === 'dt') {
+      ancestorInfo.dlItemTagAutoclosing = info;
+    }
+
+    return ancestorInfo;
+  };
+
+  /**
+   * Returns whether
+   */
+  var isTagValidWithParent = function (tag, parentTag) {
+    // First, let's check if we're in an unusual parsing mode...
+    switch (parentTag) {
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inselect
+      case 'select':
+        return tag === 'option' || tag === 'optgroup' || tag === '#text';
+      case 'optgroup':
+        return tag === 'option' || tag === '#text';
+      // Strictly speaking, seeing an <option> doesn't mean we're in a <select>
+      // but
+      case 'option':
+        return tag === '#text';
+
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intd
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incaption
+      // No special behavior since these rules fall back to "in body" mode for
+      // all except special table nodes which cause bad parsing behavior anyway.
+
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intr
+      case 'tr':
+        return tag === 'th' || tag === 'td' || tag === 'style' || tag === 'script' || tag === 'template';
+
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intbody
+      case 'tbody':
+      case 'thead':
+      case 'tfoot':
+        return tag === 'tr' || tag === 'style' || tag === 'script' || tag === 'template';
+
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incolgroup
+      case 'colgroup':
+        return tag === 'col' || tag === 'template';
+
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intable
+      case 'table':
+        return tag === 'caption' || tag === 'colgroup' || tag === 'tbody' || tag === 'tfoot' || tag === 'thead' || tag === 'style' || tag === 'script' || tag === 'template';
+
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inhead
+      case 'head':
+        return tag === 'base' || tag === 'basefont' || tag === 'bgsound' || tag === 'link' || tag === 'meta' || tag === 'title' || tag === 'noscript' || tag === 'noframes' || tag === 'style' || tag === 'script' || tag === 'template';
+
+      // https://html.spec.whatwg.org/multipage/semantics.html#the-html-element
+      case 'html':
+        return tag === 'head' || tag === 'body';
+      case '#document':
+        return tag === 'html';
+    }
+
+    // Probably in the "in body" parsing mode, so we outlaw only tag combos
+    // where the parsing rules cause implicit opens or closes to be added.
+    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
+    switch (tag) {
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
+        return parentTag !== 'h1' && parentTag !== 'h2' && parentTag !== 'h3' && parentTag !== 'h4' && parentTag !== 'h5' && parentTag !== 'h6';
+
+      case 'rp':
+      case 'rt':
+        return impliedEndTags.indexOf(parentTag) === -1;
+
+      case 'body':
+      case 'caption':
+      case 'col':
+      case 'colgroup':
+      case 'frame':
+      case 'head':
+      case 'html':
+      case 'tbody':
+      case 'td':
+      case 'tfoot':
+      case 'th':
+      case 'thead':
+      case 'tr':
+        // These tags are only valid with a few parents that have special child
+        // parsing rules -- if we're down here, then none of those matched and
+        // so we allow it only if we don't know what the parent is, as all other
+        // cases are invalid.
+        return parentTag == null;
+    }
+
+    return true;
+  };
+
+  /**
+   * Returns whether
+   */
+  var findInvalidAncestorForTag = function (tag, ancestorInfo) {
+    switch (tag) {
+      case 'address':
+      case 'article':
+      case 'aside':
+      case 'blockquote':
+      case 'center':
+      case 'details':
+      case 'dialog':
+      case 'dir':
+      case 'div':
+      case 'dl':
+      case 'fieldset':
+      case 'figcaption':
+      case 'figure':
+      case 'footer':
+      case 'header':
+      case 'hgroup':
+      case 'main':
+      case 'menu':
+      case 'nav':
+      case 'ol':
+      case 'p':
+      case 'section':
+      case 'summary':
+      case 'ul':
+
+      case 'pre':
+      case 'listing':
+
+      case 'table':
+
+      case 'hr':
+
+      case 'xmp':
+
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
+        return ancestorInfo.pTagInButtonScope;
+
+      case 'form':
+        return ancestorInfo.formTag || ancestorInfo.pTagInButtonScope;
+
+      case 'li':
+        return ancestorInfo.listItemTagAutoclosing;
+
+      case 'dd':
+      case 'dt':
+        return ancestorInfo.dlItemTagAutoclosing;
+
+      case 'button':
+        return ancestorInfo.buttonTagInScope;
+
+      case 'a':
+        // Spec says something about storing a list of markers, but it sounds
+        // equivalent to this check.
+        return ancestorInfo.aTagInScope;
+
+      case 'nobr':
+        return ancestorInfo.nobrTagInScope;
+    }
+
+    return null;
+  };
+
+  /**
+   * Given a ReactCompositeComponent instance, return a list of its recursive
+   * owners, starting at the root and ending with the instance itself.
+   */
+  var findOwnerStack = function (instance) {
+    if (!instance) {
+      return [];
+    }
+
+    var stack = [];
+    do {
+      stack.push(instance);
+    } while (instance = instance._currentElement._owner);
+    stack.reverse();
+    return stack;
+  };
+
+  var didWarn = {};
+
+  validateDOMNesting = function (childTag, childText, childInstance, ancestorInfo) {
+    ancestorInfo = ancestorInfo || emptyAncestorInfo;
+    var parentInfo = ancestorInfo.current;
+    var parentTag = parentInfo && parentInfo.tag;
+
+    if (childText != null) {
+      "production" !== 'production' ? warning(childTag == null, 'validateDOMNesting: when childText is passed, childTag should be null') : void 0;
+      childTag = '#text';
+    }
+
+    var invalidParent = isTagValidWithParent(childTag, parentTag) ? null : parentInfo;
+    var invalidAncestor = invalidParent ? null : findInvalidAncestorForTag(childTag, ancestorInfo);
+    var problematic = invalidParent || invalidAncestor;
+
+    if (problematic) {
+      var ancestorTag = problematic.tag;
+      var ancestorInstance = problematic.instance;
+
+      var childOwner = childInstance && childInstance._currentElement._owner;
+      var ancestorOwner = ancestorInstance && ancestorInstance._currentElement._owner;
+
+      var childOwners = findOwnerStack(childOwner);
+      var ancestorOwners = findOwnerStack(ancestorOwner);
+
+      var minStackLen = Math.min(childOwners.length, ancestorOwners.length);
+      var i;
+
+      var deepestCommon = -1;
+      for (i = 0; i < minStackLen; i++) {
+        if (childOwners[i] === ancestorOwners[i]) {
+          deepestCommon = i;
+        } else {
+          break;
+        }
+      }
+
+      var UNKNOWN = '(unknown)';
+      var childOwnerNames = childOwners.slice(deepestCommon + 1).map(function (inst) {
+        return inst.getName() || UNKNOWN;
+      });
+      var ancestorOwnerNames = ancestorOwners.slice(deepestCommon + 1).map(function (inst) {
+        return inst.getName() || UNKNOWN;
+      });
+      var ownerInfo = [].concat(
+      // If the parent and child instances have a common owner ancestor, start
+      // with that -- otherwise we just start with the parent's owners.
+      deepestCommon !== -1 ? childOwners[deepestCommon].getName() || UNKNOWN : [], ancestorOwnerNames, ancestorTag,
+      // If we're warning about an invalid (non-parent) ancestry, add '...'
+      invalidAncestor ? ['...'] : [], childOwnerNames, childTag).join(' > ');
+
+      var warnKey = !!invalidParent + '|' + childTag + '|' + ancestorTag + '|' + ownerInfo;
+      if (didWarn[warnKey]) {
+        return;
+      }
+      didWarn[warnKey] = true;
+
+      var tagDisplayName = childTag;
+      var whitespaceInfo = '';
+      if (childTag === '#text') {
+        if (/\S/.test(childText)) {
+          tagDisplayName = 'Text nodes';
+        } else {
+          tagDisplayName = 'Whitespace text nodes';
+          whitespaceInfo = ' Make sure you don\'t have any extra whitespace between tags on ' + 'each line of your source code.';
+        }
+      } else {
+        tagDisplayName = '<' + childTag + '>';
+      }
+
+      if (invalidParent) {
+        var info = '';
+        if (ancestorTag === 'table' && childTag === 'tr') {
+          info += ' Add a <tbody> to your code to match the DOM tree generated by ' + 'the browser.';
+        }
+        "production" !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>.%s ' + 'See %s.%s', tagDisplayName, ancestorTag, whitespaceInfo, ownerInfo, info) : void 0;
+      } else {
+        "production" !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a descendant of ' + '<%s>. See %s.', tagDisplayName, ancestorTag, ownerInfo) : void 0;
+      }
+    }
+  };
+
+  validateDOMNesting.updatedAncestorInfo = updatedAncestorInfo;
+
+  // For testing
+  validateDOMNesting.isTagValidInContext = function (tag, ancestorInfo) {
+    ancestorInfo = ancestorInfo || emptyAncestorInfo;
+    var parentInfo = ancestorInfo.current;
+    var parentTag = parentInfo && parentInfo.tag;
+    return isTagValidWithParent(tag, parentTag) && !findInvalidAncestorForTag(tag, ancestorInfo);
+  };
+}
+
+module.exports = validateDOMNesting;
+},{"fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/KeyEscapeUtils.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/KeyEscapeUtils.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/React.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _assign = require('object-assign');
+
+var ReactChildren = require('./ReactChildren');
+var ReactComponent = require('./ReactComponent');
+var ReactPureComponent = require('./ReactPureComponent');
+var ReactClass = require('./ReactClass');
+var ReactDOMFactories = require('./ReactDOMFactories');
+var ReactElement = require('./ReactElement');
+var ReactPropTypes = require('./ReactPropTypes');
+var ReactVersion = require('./ReactVersion');
+
+var onlyChild = require('./onlyChild');
+var warning = require('fbjs/lib/warning');
+
+var createElement = ReactElement.createElement;
+var createFactory = ReactElement.createFactory;
+var cloneElement = ReactElement.cloneElement;
+
+if ("production" !== 'production') {
+  var ReactElementValidator = require('./ReactElementValidator');
+  createElement = ReactElementValidator.createElement;
+  createFactory = ReactElementValidator.createFactory;
+  cloneElement = ReactElementValidator.cloneElement;
+}
+
+var __spread = _assign;
+
+if ("production" !== 'production') {
+  var warned = false;
+  __spread = function () {
+    "production" !== 'production' ? warning(warned, 'React.__spread is deprecated and should not be used. Use ' + 'Object.assign directly or another helper function with similar ' + 'semantics. You may be seeing this warning due to your compiler. ' + 'See https://fb.me/react-spread-deprecation for more details.') : void 0;
+    warned = true;
+    return _assign.apply(null, arguments);
+  };
+}
+
+var React = {
+
+  // Modern
+
+  Children: {
+    map: ReactChildren.map,
+    forEach: ReactChildren.forEach,
+    count: ReactChildren.count,
+    toArray: ReactChildren.toArray,
+    only: onlyChild
+  },
+
+  Component: ReactComponent,
+  PureComponent: ReactPureComponent,
+
+  createElement: createElement,
+  cloneElement: cloneElement,
+  isValidElement: ReactElement.isValidElement,
+
+  // Classic
+
+  PropTypes: ReactPropTypes,
+  createClass: ReactClass.createClass,
+  createFactory: createFactory,
+  createMixin: function (mixin) {
+    // Currently a noop. Will be used to validate and trace mixins.
+    return mixin;
+  },
+
+  // This looks DOM specific but these are actually isomorphic helpers
+  // since they are just generating DOM strings.
+  DOM: ReactDOMFactories,
+
+  version: ReactVersion,
+
+  // Deprecated hook for JSX spread, don't use this for anything.
+  __spread: __spread
+};
+
+module.exports = React;
+},{"./ReactChildren":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactChildren.js","./ReactClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactClass.js","./ReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponent.js","./ReactDOMFactories":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactDOMFactories.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElementValidator.js","./ReactPropTypes":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypes.js","./ReactPureComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPureComponent.js","./ReactVersion":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactVersion.js","./onlyChild":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/onlyChild.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var PooledClass = require('./PooledClass');
+var ReactElement = require('./ReactElement');
+
+var emptyFunction = require('fbjs/lib/emptyFunction');
+var traverseAllChildren = require('./traverseAllChildren');
+
+var twoArgumentPooler = PooledClass.twoArgumentPooler;
+var fourArgumentPooler = PooledClass.fourArgumentPooler;
+
+var userProvidedKeyEscapeRegex = /\/+/g;
+function escapeUserProvidedKey(text) {
+  return ('' + text).replace(userProvidedKeyEscapeRegex, '$&/');
+}
+
+/**
+ * PooledClass representing the bookkeeping associated with performing a child
+ * traversal. Allows avoiding binding callbacks.
+ *
+ * @constructor ForEachBookKeeping
+ * @param {!function} forEachFunction Function to perform traversal with.
+ * @param {?*} forEachContext Context to perform context with.
+ */
+function ForEachBookKeeping(forEachFunction, forEachContext) {
+  this.func = forEachFunction;
+  this.context = forEachContext;
+  this.count = 0;
+}
+ForEachBookKeeping.prototype.destructor = function () {
+  this.func = null;
+  this.context = null;
+  this.count = 0;
+};
+PooledClass.addPoolingTo(ForEachBookKeeping, twoArgumentPooler);
+
+function forEachSingleChild(bookKeeping, child, name) {
+  var func = bookKeeping.func,
+      context = bookKeeping.context;
+
+  func.call(context, child, bookKeeping.count++);
+}
+
+/**
+ * Iterates through children that are typically specified as `props.children`.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.children.foreach
+ *
+ * The provided forEachFunc(child, index) will be called for each
+ * leaf child.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} forEachFunc
+ * @param {*} forEachContext Context for forEachContext.
+ */
+function forEachChildren(children, forEachFunc, forEachContext) {
+  if (children == null) {
+    return children;
+  }
+  var traverseContext = ForEachBookKeeping.getPooled(forEachFunc, forEachContext);
+  traverseAllChildren(children, forEachSingleChild, traverseContext);
+  ForEachBookKeeping.release(traverseContext);
+}
+
+/**
+ * PooledClass representing the bookkeeping associated with performing a child
+ * mapping. Allows avoiding binding callbacks.
+ *
+ * @constructor MapBookKeeping
+ * @param {!*} mapResult Object containing the ordered map of results.
+ * @param {!function} mapFunction Function to perform mapping with.
+ * @param {?*} mapContext Context to perform mapping with.
+ */
+function MapBookKeeping(mapResult, keyPrefix, mapFunction, mapContext) {
+  this.result = mapResult;
+  this.keyPrefix = keyPrefix;
+  this.func = mapFunction;
+  this.context = mapContext;
+  this.count = 0;
+}
+MapBookKeeping.prototype.destructor = function () {
+  this.result = null;
+  this.keyPrefix = null;
+  this.func = null;
+  this.context = null;
+  this.count = 0;
+};
+PooledClass.addPoolingTo(MapBookKeeping, fourArgumentPooler);
+
+function mapSingleChildIntoContext(bookKeeping, child, childKey) {
+  var result = bookKeeping.result,
+      keyPrefix = bookKeeping.keyPrefix,
+      func = bookKeeping.func,
+      context = bookKeeping.context;
+
+
+  var mappedChild = func.call(context, child, bookKeeping.count++);
+  if (Array.isArray(mappedChild)) {
+    mapIntoWithKeyPrefixInternal(mappedChild, result, childKey, emptyFunction.thatReturnsArgument);
+  } else if (mappedChild != null) {
+    if (ReactElement.isValidElement(mappedChild)) {
+      mappedChild = ReactElement.cloneAndReplaceKey(mappedChild,
+      // Keep both the (mapped) and old keys if they differ, just as
+      // traverseAllChildren used to do for objects as children
+      keyPrefix + (mappedChild.key && (!child || child.key !== mappedChild.key) ? escapeUserProvidedKey(mappedChild.key) + '/' : '') + childKey);
+    }
+    result.push(mappedChild);
+  }
+}
+
+function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
+  var escapedPrefix = '';
+  if (prefix != null) {
+    escapedPrefix = escapeUserProvidedKey(prefix) + '/';
+  }
+  var traverseContext = MapBookKeeping.getPooled(array, escapedPrefix, func, context);
+  traverseAllChildren(children, mapSingleChildIntoContext, traverseContext);
+  MapBookKeeping.release(traverseContext);
+}
+
+/**
+ * Maps children that are typically specified as `props.children`.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.children.map
+ *
+ * The provided mapFunction(child, key, index) will be called for each
+ * leaf child.
+ *
+ * @param {?*} children Children tree container.
+ * @param {function(*, int)} func The map function.
+ * @param {*} context Context for mapFunction.
+ * @return {object} Object containing the ordered map of results.
+ */
+function mapChildren(children, func, context) {
+  if (children == null) {
+    return children;
+  }
+  var result = [];
+  mapIntoWithKeyPrefixInternal(children, result, null, func, context);
+  return result;
+}
+
+function forEachSingleChildDummy(traverseContext, child, name) {
+  return null;
+}
+
+/**
+ * Count the number of children that are typically specified as
+ * `props.children`.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.children.count
+ *
+ * @param {?*} children Children tree container.
+ * @return {number} The number of children.
+ */
+function countChildren(children, context) {
+  return traverseAllChildren(children, forEachSingleChildDummy, null);
+}
+
+/**
+ * Flatten a children object (typically specified as `props.children`) and
+ * return an array with appropriately re-keyed children.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.children.toarray
+ */
+function toArray(children) {
+  var result = [];
+  mapIntoWithKeyPrefixInternal(children, result, null, emptyFunction.thatReturnsArgument);
+  return result;
+}
+
+var ReactChildren = {
+  forEach: forEachChildren,
+  map: mapChildren,
+  mapIntoWithKeyPrefixInternal: mapIntoWithKeyPrefixInternal,
+  count: countChildren,
+  toArray: toArray
+};
+
+module.exports = ReactChildren;
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/PooledClass.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js","./traverseAllChildren":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/traverseAllChildren.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactClass.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant'),
+    _assign = require('object-assign');
+
+var ReactComponent = require('./ReactComponent');
+var ReactElement = require('./ReactElement');
+var ReactPropTypeLocationNames = require('./ReactPropTypeLocationNames');
+var ReactNoopUpdateQueue = require('./ReactNoopUpdateQueue');
+
+var emptyObject = require('fbjs/lib/emptyObject');
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+var MIXINS_KEY = 'mixins';
+
+// Helper function to allow the creation of anonymous functions which do not
+// have .name set to the name of the variable being assigned to.
+function identity(fn) {
+  return fn;
+}
+
+/**
+ * Policies that describe methods in `ReactClassInterface`.
+ */
+
+
+var injectedMixins = [];
+
+/**
+ * Composite components are higher-level components that compose other composite
+ * or host components.
+ *
+ * To create a new type of `ReactClass`, pass a specification of
+ * your new class to `React.createClass`. The only requirement of your class
+ * specification is that you implement a `render` method.
+ *
+ *   var MyComponent = React.createClass({
+ *     render: function() {
+ *       return <div>Hello World</div>;
+ *     }
+ *   });
+ *
+ * The class specification supports a specific protocol of methods that have
+ * special meaning (e.g. `render`). See `ReactClassInterface` for
+ * more the comprehensive protocol. Any other properties and methods in the
+ * class specification will be available on the prototype.
+ *
+ * @interface ReactClassInterface
+ * @internal
+ */
+var ReactClassInterface = {
+
+  /**
+   * An array of Mixin objects to include when defining your component.
+   *
+   * @type {array}
+   * @optional
+   */
+  mixins: 'DEFINE_MANY',
+
+  /**
+   * An object containing properties and methods that should be defined on
+   * the component's constructor instead of its prototype (static methods).
+   *
+   * @type {object}
+   * @optional
+   */
+  statics: 'DEFINE_MANY',
+
+  /**
+   * Definition of prop types for this component.
+   *
+   * @type {object}
+   * @optional
+   */
+  propTypes: 'DEFINE_MANY',
+
+  /**
+   * Definition of context types for this component.
+   *
+   * @type {object}
+   * @optional
+   */
+  contextTypes: 'DEFINE_MANY',
+
+  /**
+   * Definition of context types this component sets for its children.
+   *
+   * @type {object}
+   * @optional
+   */
+  childContextTypes: 'DEFINE_MANY',
+
+  // ==== Definition methods ====
+
+  /**
+   * Invoked when the component is mounted. Values in the mapping will be set on
+   * `this.props` if that prop is not specified (i.e. using an `in` check).
+   *
+   * This method is invoked before `getInitialState` and therefore cannot rely
+   * on `this.state` or use `this.setState`.
+   *
+   * @return {object}
+   * @optional
+   */
+  getDefaultProps: 'DEFINE_MANY_MERGED',
+
+  /**
+   * Invoked once before the component is mounted. The return value will be used
+   * as the initial value of `this.state`.
+   *
+   *   getInitialState: function() {
+   *     return {
+   *       isOn: false,
+   *       fooBaz: new BazFoo()
+   *     }
+   *   }
+   *
+   * @return {object}
+   * @optional
+   */
+  getInitialState: 'DEFINE_MANY_MERGED',
+
+  /**
+   * @return {object}
+   * @optional
+   */
+  getChildContext: 'DEFINE_MANY_MERGED',
+
+  /**
+   * Uses props from `this.props` and state from `this.state` to render the
+   * structure of the component.
+   *
+   * No guarantees are made about when or how often this method is invoked, so
+   * it must not have side effects.
+   *
+   *   render: function() {
+   *     var name = this.props.name;
+   *     return <div>Hello, {name}!</div>;
+   *   }
+   *
+   * @return {ReactComponent}
+   * @nosideeffects
+   * @required
+   */
+  render: 'DEFINE_ONCE',
+
+  // ==== Delegate methods ====
+
+  /**
+   * Invoked when the component is initially created and about to be mounted.
+   * This may have side effects, but any external subscriptions or data created
+   * by this method must be cleaned up in `componentWillUnmount`.
+   *
+   * @optional
+   */
+  componentWillMount: 'DEFINE_MANY',
+
+  /**
+   * Invoked when the component has been mounted and has a DOM representation.
+   * However, there is no guarantee that the DOM node is in the document.
+   *
+   * Use this as an opportunity to operate on the DOM when the component has
+   * been mounted (initialized and rendered) for the first time.
+   *
+   * @param {DOMElement} rootNode DOM element representing the component.
+   * @optional
+   */
+  componentDidMount: 'DEFINE_MANY',
+
+  /**
+   * Invoked before the component receives new props.
+   *
+   * Use this as an opportunity to react to a prop transition by updating the
+   * state using `this.setState`. Current props are accessed via `this.props`.
+   *
+   *   componentWillReceiveProps: function(nextProps, nextContext) {
+   *     this.setState({
+   *       likesIncreasing: nextProps.likeCount > this.props.likeCount
+   *     });
+   *   }
+   *
+   * NOTE: There is no equivalent `componentWillReceiveState`. An incoming prop
+   * transition may cause a state change, but the opposite is not true. If you
+   * need it, you are probably looking for `componentWillUpdate`.
+   *
+   * @param {object} nextProps
+   * @optional
+   */
+  componentWillReceiveProps: 'DEFINE_MANY',
+
+  /**
+   * Invoked while deciding if the component should be updated as a result of
+   * receiving new props, state and/or context.
+   *
+   * Use this as an opportunity to `return false` when you're certain that the
+   * transition to the new props/state/context will not require a component
+   * update.
+   *
+   *   shouldComponentUpdate: function(nextProps, nextState, nextContext) {
+   *     return !equal(nextProps, this.props) ||
+   *       !equal(nextState, this.state) ||
+   *       !equal(nextContext, this.context);
+   *   }
+   *
+   * @param {object} nextProps
+   * @param {?object} nextState
+   * @param {?object} nextContext
+   * @return {boolean} True if the component should update.
+   * @optional
+   */
+  shouldComponentUpdate: 'DEFINE_ONCE',
+
+  /**
+   * Invoked when the component is about to update due to a transition from
+   * `this.props`, `this.state` and `this.context` to `nextProps`, `nextState`
+   * and `nextContext`.
+   *
+   * Use this as an opportunity to perform preparation before an update occurs.
+   *
+   * NOTE: You **cannot** use `this.setState()` in this method.
+   *
+   * @param {object} nextProps
+   * @param {?object} nextState
+   * @param {?object} nextContext
+   * @param {ReactReconcileTransaction} transaction
+   * @optional
+   */
+  componentWillUpdate: 'DEFINE_MANY',
+
+  /**
+   * Invoked when the component's DOM representation has been updated.
+   *
+   * Use this as an opportunity to operate on the DOM when the component has
+   * been updated.
+   *
+   * @param {object} prevProps
+   * @param {?object} prevState
+   * @param {?object} prevContext
+   * @param {DOMElement} rootNode DOM element representing the component.
+   * @optional
+   */
+  componentDidUpdate: 'DEFINE_MANY',
+
+  /**
+   * Invoked when the component is about to be removed from its parent and have
+   * its DOM representation destroyed.
+   *
+   * Use this as an opportunity to deallocate any external resources.
+   *
+   * NOTE: There is no `componentDidUnmount` since your component will have been
+   * destroyed by that point.
+   *
+   * @optional
+   */
+  componentWillUnmount: 'DEFINE_MANY',
+
+  // ==== Advanced methods ====
+
+  /**
+   * Updates the component's currently mounted DOM representation.
+   *
+   * By default, this implements React's rendering and reconciliation algorithm.
+   * Sophisticated clients may wish to override this.
+   *
+   * @param {ReactReconcileTransaction} transaction
+   * @internal
+   * @overridable
+   */
+  updateComponent: 'OVERRIDE_BASE'
+
+};
+
+/**
+ * Mapping from class specification keys to special processing functions.
+ *
+ * Although these are declared like instance properties in the specification
+ * when defining classes using `React.createClass`, they are actually static
+ * and are accessible on the constructor instead of the prototype. Despite
+ * being static, they must be defined outside of the "statics" key under
+ * which all other static methods are defined.
+ */
+var RESERVED_SPEC_KEYS = {
+  displayName: function (Constructor, displayName) {
+    Constructor.displayName = displayName;
+  },
+  mixins: function (Constructor, mixins) {
+    if (mixins) {
+      for (var i = 0; i < mixins.length; i++) {
+        mixSpecIntoComponent(Constructor, mixins[i]);
+      }
+    }
+  },
+  childContextTypes: function (Constructor, childContextTypes) {
+    if ("production" !== 'production') {
+      validateTypeDef(Constructor, childContextTypes, 'childContext');
+    }
+    Constructor.childContextTypes = _assign({}, Constructor.childContextTypes, childContextTypes);
+  },
+  contextTypes: function (Constructor, contextTypes) {
+    if ("production" !== 'production') {
+      validateTypeDef(Constructor, contextTypes, 'context');
+    }
+    Constructor.contextTypes = _assign({}, Constructor.contextTypes, contextTypes);
+  },
+  /**
+   * Special case getDefaultProps which should move into statics but requires
+   * automatic merging.
+   */
+  getDefaultProps: function (Constructor, getDefaultProps) {
+    if (Constructor.getDefaultProps) {
+      Constructor.getDefaultProps = createMergedResultFunction(Constructor.getDefaultProps, getDefaultProps);
+    } else {
+      Constructor.getDefaultProps = getDefaultProps;
+    }
+  },
+  propTypes: function (Constructor, propTypes) {
+    if ("production" !== 'production') {
+      validateTypeDef(Constructor, propTypes, 'prop');
+    }
+    Constructor.propTypes = _assign({}, Constructor.propTypes, propTypes);
+  },
+  statics: function (Constructor, statics) {
+    mixStaticSpecIntoComponent(Constructor, statics);
+  },
+  autobind: function () {} };
+
+function validateTypeDef(Constructor, typeDef, location) {
+  for (var propName in typeDef) {
+    if (typeDef.hasOwnProperty(propName)) {
+      // use a warning instead of an invariant so components
+      // don't show up in prod but only in __DEV__
+      "production" !== 'production' ? warning(typeof typeDef[propName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', Constructor.displayName || 'ReactClass', ReactPropTypeLocationNames[location], propName) : void 0;
+    }
+  }
+}
+
+function validateMethodOverride(isAlreadyDefined, name) {
+  var specPolicy = ReactClassInterface.hasOwnProperty(name) ? ReactClassInterface[name] : null;
+
+  // Disallow overriding of base class methods unless explicitly allowed.
+  if (ReactClassMixin.hasOwnProperty(name)) {
+    !(specPolicy === 'OVERRIDE_BASE') ? "production" !== 'production' ? invariant(false, 'ReactClassInterface: You are attempting to override `%s` from your class specification. Ensure that your method names do not overlap with React methods.', name) : _prodInvariant('73', name) : void 0;
+  }
+
+  // Disallow defining methods more than once unless explicitly allowed.
+  if (isAlreadyDefined) {
+    !(specPolicy === 'DEFINE_MANY' || specPolicy === 'DEFINE_MANY_MERGED') ? "production" !== 'production' ? invariant(false, 'ReactClassInterface: You are attempting to define `%s` on your component more than once. This conflict may be due to a mixin.', name) : _prodInvariant('74', name) : void 0;
+  }
+}
+
+/**
+ * Mixin helper which handles policy validation and reserved
+ * specification keys when building React classes.
+ */
+function mixSpecIntoComponent(Constructor, spec) {
+  if (!spec) {
+    if ("production" !== 'production') {
+      var typeofSpec = typeof spec;
+      var isMixinValid = typeofSpec === 'object' && spec !== null;
+
+      "production" !== 'production' ? warning(isMixinValid, '%s: You\'re attempting to include a mixin that is either null ' + 'or not an object. Check the mixins included by the component, ' + 'as well as any mixins they include themselves. ' + 'Expected object but got %s.', Constructor.displayName || 'ReactClass', spec === null ? null : typeofSpec) : void 0;
+    }
+
+    return;
+  }
+
+  !(typeof spec !== 'function') ? "production" !== 'production' ? invariant(false, 'ReactClass: You\'re attempting to use a component class or function as a mixin. Instead, just use a regular object.') : _prodInvariant('75') : void 0;
+  !!ReactElement.isValidElement(spec) ? "production" !== 'production' ? invariant(false, 'ReactClass: You\'re attempting to use a component as a mixin. Instead, just use a regular object.') : _prodInvariant('76') : void 0;
+
+  var proto = Constructor.prototype;
+  var autoBindPairs = proto.__reactAutoBindPairs;
+
+  // By handling mixins before any other properties, we ensure the same
+  // chaining order is applied to methods with DEFINE_MANY policy, whether
+  // mixins are listed before or after these methods in the spec.
+  if (spec.hasOwnProperty(MIXINS_KEY)) {
+    RESERVED_SPEC_KEYS.mixins(Constructor, spec.mixins);
+  }
+
+  for (var name in spec) {
+    if (!spec.hasOwnProperty(name)) {
+      continue;
+    }
+
+    if (name === MIXINS_KEY) {
+      // We have already handled mixins in a special case above.
+      continue;
+    }
+
+    var property = spec[name];
+    var isAlreadyDefined = proto.hasOwnProperty(name);
+    validateMethodOverride(isAlreadyDefined, name);
+
+    if (RESERVED_SPEC_KEYS.hasOwnProperty(name)) {
+      RESERVED_SPEC_KEYS[name](Constructor, property);
+    } else {
+      // Setup methods on prototype:
+      // The following member methods should not be automatically bound:
+      // 1. Expected ReactClass methods (in the "interface").
+      // 2. Overridden methods (that were mixed in).
+      var isReactClassMethod = ReactClassInterface.hasOwnProperty(name);
+      var isFunction = typeof property === 'function';
+      var shouldAutoBind = isFunction && !isReactClassMethod && !isAlreadyDefined && spec.autobind !== false;
+
+      if (shouldAutoBind) {
+        autoBindPairs.push(name, property);
+        proto[name] = property;
+      } else {
+        if (isAlreadyDefined) {
+          var specPolicy = ReactClassInterface[name];
+
+          // These cases should already be caught by validateMethodOverride.
+          !(isReactClassMethod && (specPolicy === 'DEFINE_MANY_MERGED' || specPolicy === 'DEFINE_MANY')) ? "production" !== 'production' ? invariant(false, 'ReactClass: Unexpected spec policy %s for key %s when mixing in component specs.', specPolicy, name) : _prodInvariant('77', specPolicy, name) : void 0;
+
+          // For methods which are defined more than once, call the existing
+          // methods before calling the new property, merging if appropriate.
+          if (specPolicy === 'DEFINE_MANY_MERGED') {
+            proto[name] = createMergedResultFunction(proto[name], property);
+          } else if (specPolicy === 'DEFINE_MANY') {
+            proto[name] = createChainedFunction(proto[name], property);
+          }
+        } else {
+          proto[name] = property;
+          if ("production" !== 'production') {
+            // Add verbose displayName to the function, which helps when looking
+            // at profiling tools.
+            if (typeof property === 'function' && spec.displayName) {
+              proto[name].displayName = spec.displayName + '_' + name;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+function mixStaticSpecIntoComponent(Constructor, statics) {
+  if (!statics) {
+    return;
+  }
+  for (var name in statics) {
+    var property = statics[name];
+    if (!statics.hasOwnProperty(name)) {
+      continue;
+    }
+
+    var isReserved = name in RESERVED_SPEC_KEYS;
+    !!isReserved ? "production" !== 'production' ? invariant(false, 'ReactClass: You are attempting to define a reserved property, `%s`, that shouldn\'t be on the "statics" key. Define it as an instance property instead; it will still be accessible on the constructor.', name) : _prodInvariant('78', name) : void 0;
+
+    var isInherited = name in Constructor;
+    !!isInherited ? "production" !== 'production' ? invariant(false, 'ReactClass: You are attempting to define `%s` on your component more than once. This conflict may be due to a mixin.', name) : _prodInvariant('79', name) : void 0;
+    Constructor[name] = property;
+  }
+}
+
+/**
+ * Merge two objects, but throw if both contain the same key.
+ *
+ * @param {object} one The first object, which is mutated.
+ * @param {object} two The second object
+ * @return {object} one after it has been mutated to contain everything in two.
+ */
+function mergeIntoWithNoDuplicateKeys(one, two) {
+  !(one && two && typeof one === 'object' && typeof two === 'object') ? "production" !== 'production' ? invariant(false, 'mergeIntoWithNoDuplicateKeys(): Cannot merge non-objects.') : _prodInvariant('80') : void 0;
+
+  for (var key in two) {
+    if (two.hasOwnProperty(key)) {
+      !(one[key] === undefined) ? "production" !== 'production' ? invariant(false, 'mergeIntoWithNoDuplicateKeys(): Tried to merge two objects with the same key: `%s`. This conflict may be due to a mixin; in particular, this may be caused by two getInitialState() or getDefaultProps() methods returning objects with clashing keys.', key) : _prodInvariant('81', key) : void 0;
+      one[key] = two[key];
+    }
+  }
+  return one;
+}
+
+/**
+ * Creates a function that invokes two functions and merges their return values.
+ *
+ * @param {function} one Function to invoke first.
+ * @param {function} two Function to invoke second.
+ * @return {function} Function that invokes the two argument functions.
+ * @private
+ */
+function createMergedResultFunction(one, two) {
+  return function mergedResult() {
+    var a = one.apply(this, arguments);
+    var b = two.apply(this, arguments);
+    if (a == null) {
+      return b;
+    } else if (b == null) {
+      return a;
+    }
+    var c = {};
+    mergeIntoWithNoDuplicateKeys(c, a);
+    mergeIntoWithNoDuplicateKeys(c, b);
+    return c;
+  };
+}
+
+/**
+ * Creates a function that invokes two functions and ignores their return vales.
+ *
+ * @param {function} one Function to invoke first.
+ * @param {function} two Function to invoke second.
+ * @return {function} Function that invokes the two argument functions.
+ * @private
+ */
+function createChainedFunction(one, two) {
+  return function chainedFunction() {
+    one.apply(this, arguments);
+    two.apply(this, arguments);
+  };
+}
+
+/**
+ * Binds a method to the component.
+ *
+ * @param {object} component Component whose method is going to be bound.
+ * @param {function} method Method to be bound.
+ * @return {function} The bound method.
+ */
+function bindAutoBindMethod(component, method) {
+  var boundMethod = method.bind(component);
+  if ("production" !== 'production') {
+    boundMethod.__reactBoundContext = component;
+    boundMethod.__reactBoundMethod = method;
+    boundMethod.__reactBoundArguments = null;
+    var componentName = component.constructor.displayName;
+    var _bind = boundMethod.bind;
+    boundMethod.bind = function (newThis) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      // User is trying to bind() an autobound method; we effectively will
+      // ignore the value of "this" that the user is trying to use, so
+      // let's warn.
+      if (newThis !== component && newThis !== null) {
+        "production" !== 'production' ? warning(false, 'bind(): React component methods may only be bound to the ' + 'component instance. See %s', componentName) : void 0;
+      } else if (!args.length) {
+        "production" !== 'production' ? warning(false, 'bind(): You are binding a component method to the component. ' + 'React does this for you automatically in a high-performance ' + 'way, so you can safely remove this call. See %s', componentName) : void 0;
+        return boundMethod;
+      }
+      var reboundMethod = _bind.apply(boundMethod, arguments);
+      reboundMethod.__reactBoundContext = component;
+      reboundMethod.__reactBoundMethod = method;
+      reboundMethod.__reactBoundArguments = args;
+      return reboundMethod;
+    };
+  }
+  return boundMethod;
+}
+
+/**
+ * Binds all auto-bound methods in a component.
+ *
+ * @param {object} component Component whose method is going to be bound.
+ */
+function bindAutoBindMethods(component) {
+  var pairs = component.__reactAutoBindPairs;
+  for (var i = 0; i < pairs.length; i += 2) {
+    var autoBindKey = pairs[i];
+    var method = pairs[i + 1];
+    component[autoBindKey] = bindAutoBindMethod(component, method);
+  }
+}
+
+/**
+ * Add more to the ReactClass base class. These are all legacy features and
+ * therefore not already part of the modern ReactComponent.
+ */
+var ReactClassMixin = {
+
+  /**
+   * TODO: This will be deprecated because state should always keep a consistent
+   * type signature and the only use case for this, is to avoid that.
+   */
+  replaceState: function (newState, callback) {
+    this.updater.enqueueReplaceState(this, newState);
+    if (callback) {
+      this.updater.enqueueCallback(this, callback, 'replaceState');
+    }
+  },
+
+  /**
+   * Checks whether or not this composite component is mounted.
+   * @return {boolean} True if mounted, false otherwise.
+   * @protected
+   * @final
+   */
+  isMounted: function () {
+    return this.updater.isMounted(this);
+  }
+};
+
+var ReactClassComponent = function () {};
+_assign(ReactClassComponent.prototype, ReactComponent.prototype, ReactClassMixin);
+
+/**
+ * Module for creating composite components.
+ *
+ * @class ReactClass
+ */
+var ReactClass = {
+
+  /**
+   * Creates a composite component class given a class specification.
+   * See https://facebook.github.io/react/docs/top-level-api.html#react.createclass
+   *
+   * @param {object} spec Class specification (which must define `render`).
+   * @return {function} Component constructor function.
+   * @public
+   */
+  createClass: function (spec) {
+    // To keep our warnings more understandable, we'll use a little hack here to
+    // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
+    // unnecessarily identify a class without displayName as 'Constructor'.
+    var Constructor = identity(function (props, context, updater) {
+      // This constructor gets overridden by mocks. The argument is used
+      // by mocks to assert on what gets mounted.
+
+      if ("production" !== 'production') {
+        "production" !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory') : void 0;
+      }
+
+      // Wire up auto-binding
+      if (this.__reactAutoBindPairs.length) {
+        bindAutoBindMethods(this);
+      }
+
+      this.props = props;
+      this.context = context;
+      this.refs = emptyObject;
+      this.updater = updater || ReactNoopUpdateQueue;
+
+      this.state = null;
+
+      // ReactClasses doesn't have constructors. Instead, they use the
+      // getInitialState and componentWillMount methods for initialization.
+
+      var initialState = this.getInitialState ? this.getInitialState() : null;
+      if ("production" !== 'production') {
+        // We allow auto-mocks to proceed as if they're returning null.
+        if (initialState === undefined && this.getInitialState._isMockFunction) {
+          // This is probably bad practice. Consider warning here and
+          // deprecating this convenience.
+          initialState = null;
+        }
+      }
+      !(typeof initialState === 'object' && !Array.isArray(initialState)) ? "production" !== 'production' ? invariant(false, '%s.getInitialState(): must return an object or null', Constructor.displayName || 'ReactCompositeComponent') : _prodInvariant('82', Constructor.displayName || 'ReactCompositeComponent') : void 0;
+
+      this.state = initialState;
+    });
+    Constructor.prototype = new ReactClassComponent();
+    Constructor.prototype.constructor = Constructor;
+    Constructor.prototype.__reactAutoBindPairs = [];
+
+    injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
+
+    mixSpecIntoComponent(Constructor, spec);
+
+    // Initialize the defaultProps property after all mixins have been merged.
+    if (Constructor.getDefaultProps) {
+      Constructor.defaultProps = Constructor.getDefaultProps();
+    }
+
+    if ("production" !== 'production') {
+      // This is a tag to indicate that the use of these method names is ok,
+      // since it's used with createClass. If it's not, then it's likely a
+      // mistake so we'll warn you to use the static property, property
+      // initializer or constructor respectively.
+      if (Constructor.getDefaultProps) {
+        Constructor.getDefaultProps.isReactClassApproved = {};
+      }
+      if (Constructor.prototype.getInitialState) {
+        Constructor.prototype.getInitialState.isReactClassApproved = {};
+      }
+    }
+
+    !Constructor.prototype.render ? "production" !== 'production' ? invariant(false, 'createClass(...): Class specification must implement a `render` method.') : _prodInvariant('83') : void 0;
+
+    if ("production" !== 'production') {
+      "production" !== 'production' ? warning(!Constructor.prototype.componentShouldUpdate, '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', spec.displayName || 'A component') : void 0;
+      "production" !== 'production' ? warning(!Constructor.prototype.componentWillRecieveProps, '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', spec.displayName || 'A component') : void 0;
+    }
+
+    // Reduce time spent doing lookups by setting these on the prototype.
+    for (var methodName in ReactClassInterface) {
+      if (!Constructor.prototype[methodName]) {
+        Constructor.prototype[methodName] = null;
+      }
+    }
+
+    return Constructor;
+  },
+
+  injection: {
+    injectMixin: function (mixin) {
+      injectedMixins.push(mixin);
+    }
+  }
+
+};
+
+module.exports = ReactClass;
+},{"./ReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js","./ReactNoopUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactNoopUpdateQueue.js","./ReactPropTypeLocationNames":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypeLocationNames.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant');
+
+var ReactNoopUpdateQueue = require('./ReactNoopUpdateQueue');
+
+var canDefineProperty = require('./canDefineProperty');
+var emptyObject = require('fbjs/lib/emptyObject');
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+/**
+ * Base class helpers for the updating state of a component.
+ */
+function ReactComponent(props, context, updater) {
+  this.props = props;
+  this.context = context;
+  this.refs = emptyObject;
+  // We initialize the default updater but the real one gets injected by the
+  // renderer.
+  this.updater = updater || ReactNoopUpdateQueue;
+}
+
+ReactComponent.prototype.isReactComponent = {};
+
+/**
+ * Sets a subset of the state. Always use this to mutate
+ * state. You should treat `this.state` as immutable.
+ *
+ * There is no guarantee that `this.state` will be immediately updated, so
+ * accessing `this.state` after calling this method may return the old value.
+ *
+ * There is no guarantee that calls to `setState` will run synchronously,
+ * as they may eventually be batched together.  You can provide an optional
+ * callback that will be executed when the call to setState is actually
+ * completed.
+ *
+ * When a function is provided to setState, it will be called at some point in
+ * the future (not synchronously). It will be called with the up to date
+ * component arguments (state, props, context). These values can be different
+ * from this.* because your function may be called after receiveProps but before
+ * shouldComponentUpdate, and this new state, props, and context will not yet be
+ * assigned to this.
+ *
+ * @param {object|function} partialState Next partial state or function to
+ *        produce next partial state to be merged with current state.
+ * @param {?function} callback Called after state is updated.
+ * @final
+ * @protected
+ */
+ReactComponent.prototype.setState = function (partialState, callback) {
+  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? "production" !== 'production' ? invariant(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : _prodInvariant('85') : void 0;
+  this.updater.enqueueSetState(this, partialState);
+  if (callback) {
+    this.updater.enqueueCallback(this, callback, 'setState');
+  }
+};
+
+/**
+ * Forces an update. This should only be invoked when it is known with
+ * certainty that we are **not** in a DOM transaction.
+ *
+ * You may want to call this when you know that some deeper aspect of the
+ * component's state has changed but `setState` was not called.
+ *
+ * This will not invoke `shouldComponentUpdate`, but it will invoke
+ * `componentWillUpdate` and `componentDidUpdate`.
+ *
+ * @param {?function} callback Called after update is complete.
+ * @final
+ * @protected
+ */
+ReactComponent.prototype.forceUpdate = function (callback) {
+  this.updater.enqueueForceUpdate(this);
+  if (callback) {
+    this.updater.enqueueCallback(this, callback, 'forceUpdate');
+  }
+};
+
+/**
+ * Deprecated APIs. These APIs used to exist on classic React classes but since
+ * we would like to deprecate them, we're not going to move them over to this
+ * modern base class. Instead, we define a getter that warns if it's accessed.
+ */
+if ("production" !== 'production') {
+  var deprecatedAPIs = {
+    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
+    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
+  };
+  var defineDeprecationWarning = function (methodName, info) {
+    if (canDefineProperty) {
+      Object.defineProperty(ReactComponent.prototype, methodName, {
+        get: function () {
+          "production" !== 'production' ? warning(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]) : void 0;
+          return undefined;
+        }
+      });
+    }
+  };
+  for (var fnName in deprecatedAPIs) {
+    if (deprecatedAPIs.hasOwnProperty(fnName)) {
+      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
+    }
+  }
+}
+
+module.exports = ReactComponent;
+},{"./ReactNoopUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactNoopUpdateQueue.js","./canDefineProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/canDefineProperty.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js":[function(require,module,exports){
+/**
+ * Copyright 2016-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant');
+
+var ReactCurrentOwner = require('./ReactCurrentOwner');
+
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+function isNative(fn) {
+  // Based on isNative() from Lodash
+  var funcToString = Function.prototype.toString;
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
+  var reIsNative = RegExp('^' + funcToString
+  // Take an example native function source for comparison
+  .call(hasOwnProperty)
+  // Strip regex characters so we can use it for regex
+  .replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+  // Remove hasOwnProperty from the template to make it generic
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  try {
+    var source = funcToString.call(fn);
+    return reIsNative.test(source);
+  } catch (err) {
+    return false;
+  }
+}
+
+var canUseCollections =
+// Array.from
+typeof Array.from === 'function' &&
+// Map
+typeof Map === 'function' && isNative(Map) &&
+// Map.prototype.keys
+Map.prototype != null && typeof Map.prototype.keys === 'function' && isNative(Map.prototype.keys) &&
+// Set
+typeof Set === 'function' && isNative(Set) &&
+// Set.prototype.keys
+Set.prototype != null && typeof Set.prototype.keys === 'function' && isNative(Set.prototype.keys);
+
+var setItem;
+var getItem;
+var removeItem;
+var getItemIDs;
+var addRoot;
+var removeRoot;
+var getRootIDs;
+
+if (canUseCollections) {
+  var itemMap = new Map();
+  var rootIDSet = new Set();
+
+  setItem = function (id, item) {
+    itemMap.set(id, item);
+  };
+  getItem = function (id) {
+    return itemMap.get(id);
+  };
+  removeItem = function (id) {
+    itemMap['delete'](id);
+  };
+  getItemIDs = function () {
+    return Array.from(itemMap.keys());
+  };
+
+  addRoot = function (id) {
+    rootIDSet.add(id);
+  };
+  removeRoot = function (id) {
+    rootIDSet['delete'](id);
+  };
+  getRootIDs = function () {
+    return Array.from(rootIDSet.keys());
+  };
+} else {
+  var itemByKey = {};
+  var rootByKey = {};
+
+  // Use non-numeric keys to prevent V8 performance issues:
+  // https://github.com/facebook/react/pull/7232
+  var getKeyFromID = function (id) {
+    return '.' + id;
+  };
+  var getIDFromKey = function (key) {
+    return parseInt(key.substr(1), 10);
+  };
+
+  setItem = function (id, item) {
+    var key = getKeyFromID(id);
+    itemByKey[key] = item;
+  };
+  getItem = function (id) {
+    var key = getKeyFromID(id);
+    return itemByKey[key];
+  };
+  removeItem = function (id) {
+    var key = getKeyFromID(id);
+    delete itemByKey[key];
+  };
+  getItemIDs = function () {
+    return Object.keys(itemByKey).map(getIDFromKey);
+  };
+
+  addRoot = function (id) {
+    var key = getKeyFromID(id);
+    rootByKey[key] = true;
+  };
+  removeRoot = function (id) {
+    var key = getKeyFromID(id);
+    delete rootByKey[key];
+  };
+  getRootIDs = function () {
+    return Object.keys(rootByKey).map(getIDFromKey);
+  };
+}
+
+var unmountedIDs = [];
+
+function purgeDeep(id) {
+  var item = getItem(id);
+  if (item) {
+    var childIDs = item.childIDs;
+
+    removeItem(id);
+    childIDs.forEach(purgeDeep);
+  }
+}
+
+function describeComponentFrame(name, source, ownerName) {
+  return '\n    in ' + (name || 'Unknown') + (source ? ' (at ' + source.fileName.replace(/^.*[\\\/]/, '') + ':' + source.lineNumber + ')' : ownerName ? ' (created by ' + ownerName + ')' : '');
+}
+
+function getDisplayName(element) {
+  if (element == null) {
+    return '#empty';
+  } else if (typeof element === 'string' || typeof element === 'number') {
+    return '#text';
+  } else if (typeof element.type === 'string') {
+    return element.type;
+  } else {
+    return element.type.displayName || element.type.name || 'Unknown';
+  }
+}
+
+function describeID(id) {
+  var name = ReactComponentTreeHook.getDisplayName(id);
+  var element = ReactComponentTreeHook.getElement(id);
+  var ownerID = ReactComponentTreeHook.getOwnerID(id);
+  var ownerName;
+  if (ownerID) {
+    ownerName = ReactComponentTreeHook.getDisplayName(ownerID);
+  }
+  "production" !== 'production' ? warning(element, 'ReactComponentTreeHook: Missing React element for debugID %s when ' + 'building stack', id) : void 0;
+  return describeComponentFrame(name, element && element._source, ownerName);
+}
+
+var ReactComponentTreeHook = {
+  onSetChildren: function (id, nextChildIDs) {
+    var item = getItem(id);
+    !item ? "production" !== 'production' ? invariant(false, 'Item must have been set') : _prodInvariant('144') : void 0;
+    item.childIDs = nextChildIDs;
+
+    for (var i = 0; i < nextChildIDs.length; i++) {
+      var nextChildID = nextChildIDs[i];
+      var nextChild = getItem(nextChildID);
+      !nextChild ? "production" !== 'production' ? invariant(false, 'Expected hook events to fire for the child before its parent includes it in onSetChildren().') : _prodInvariant('140') : void 0;
+      !(nextChild.childIDs != null || typeof nextChild.element !== 'object' || nextChild.element == null) ? "production" !== 'production' ? invariant(false, 'Expected onSetChildren() to fire for a container child before its parent includes it in onSetChildren().') : _prodInvariant('141') : void 0;
+      !nextChild.isMounted ? "production" !== 'production' ? invariant(false, 'Expected onMountComponent() to fire for the child before its parent includes it in onSetChildren().') : _prodInvariant('71') : void 0;
+      if (nextChild.parentID == null) {
+        nextChild.parentID = id;
+        // TODO: This shouldn't be necessary but mounting a new root during in
+        // componentWillMount currently causes not-yet-mounted components to
+        // be purged from our tree data so their parent id is missing.
+      }
+      !(nextChild.parentID === id) ? "production" !== 'production' ? invariant(false, 'Expected onBeforeMountComponent() parent and onSetChildren() to be consistent (%s has parents %s and %s).', nextChildID, nextChild.parentID, id) : _prodInvariant('142', nextChildID, nextChild.parentID, id) : void 0;
+    }
+  },
+  onBeforeMountComponent: function (id, element, parentID) {
+    var item = {
+      element: element,
+      parentID: parentID,
+      text: null,
+      childIDs: [],
+      isMounted: false,
+      updateCount: 0
+    };
+    setItem(id, item);
+  },
+  onBeforeUpdateComponent: function (id, element) {
+    var item = getItem(id);
+    if (!item || !item.isMounted) {
+      // We may end up here as a result of setState() in componentWillUnmount().
+      // In this case, ignore the element.
+      return;
+    }
+    item.element = element;
+  },
+  onMountComponent: function (id) {
+    var item = getItem(id);
+    !item ? "production" !== 'production' ? invariant(false, 'Item must have been set') : _prodInvariant('144') : void 0;
+    item.isMounted = true;
+    var isRoot = item.parentID === 0;
+    if (isRoot) {
+      addRoot(id);
+    }
+  },
+  onUpdateComponent: function (id) {
+    var item = getItem(id);
+    if (!item || !item.isMounted) {
+      // We may end up here as a result of setState() in componentWillUnmount().
+      // In this case, ignore the element.
+      return;
+    }
+    item.updateCount++;
+  },
+  onUnmountComponent: function (id) {
+    var item = getItem(id);
+    if (item) {
+      // We need to check if it exists.
+      // `item` might not exist if it is inside an error boundary, and a sibling
+      // error boundary child threw while mounting. Then this instance never
+      // got a chance to mount, but it still gets an unmounting event during
+      // the error boundary cleanup.
+      item.isMounted = false;
+      var isRoot = item.parentID === 0;
+      if (isRoot) {
+        removeRoot(id);
+      }
+    }
+    unmountedIDs.push(id);
+  },
+  purgeUnmountedComponents: function () {
+    if (ReactComponentTreeHook._preventPurging) {
+      // Should only be used for testing.
+      return;
+    }
+
+    for (var i = 0; i < unmountedIDs.length; i++) {
+      var id = unmountedIDs[i];
+      purgeDeep(id);
+    }
+    unmountedIDs.length = 0;
+  },
+  isMounted: function (id) {
+    var item = getItem(id);
+    return item ? item.isMounted : false;
+  },
+  getCurrentStackAddendum: function (topElement) {
+    var info = '';
+    if (topElement) {
+      var name = getDisplayName(topElement);
+      var owner = topElement._owner;
+      info += describeComponentFrame(name, topElement._source, owner && owner.getName());
+    }
+
+    var currentOwner = ReactCurrentOwner.current;
+    var id = currentOwner && currentOwner._debugID;
+
+    info += ReactComponentTreeHook.getStackAddendumByID(id);
+    return info;
+  },
+  getStackAddendumByID: function (id) {
+    var info = '';
+    while (id) {
+      info += describeID(id);
+      id = ReactComponentTreeHook.getParentID(id);
+    }
+    return info;
+  },
+  getChildIDs: function (id) {
+    var item = getItem(id);
+    return item ? item.childIDs : [];
+  },
+  getDisplayName: function (id) {
+    var element = ReactComponentTreeHook.getElement(id);
+    if (!element) {
+      return null;
+    }
+    return getDisplayName(element);
+  },
+  getElement: function (id) {
+    var item = getItem(id);
+    return item ? item.element : null;
+  },
+  getOwnerID: function (id) {
+    var element = ReactComponentTreeHook.getElement(id);
+    if (!element || !element._owner) {
+      return null;
+    }
+    return element._owner._debugID;
+  },
+  getParentID: function (id) {
+    var item = getItem(id);
+    return item ? item.parentID : null;
+  },
+  getSource: function (id) {
+    var item = getItem(id);
+    var element = item ? item.element : null;
+    var source = element != null ? element._source : null;
+    return source;
+  },
+  getText: function (id) {
+    var element = ReactComponentTreeHook.getElement(id);
+    if (typeof element === 'string') {
+      return element;
+    } else if (typeof element === 'number') {
+      return '' + element;
+    } else {
+      return null;
+    }
+  },
+  getUpdateCount: function (id) {
+    var item = getItem(id);
+    return item ? item.updateCount : 0;
+  },
+
+
+  getRootIDs: getRootIDs,
+  getRegisteredIDs: getItemIDs
+};
+
+module.exports = ReactComponentTreeHook;
+},{"./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+'use strict';
+
+/**
+ * Keeps track of the current owner.
+ *
+ * The current owner is the component who should own any components that are
+ * currently being constructed.
+ */
+var ReactCurrentOwner = {
+
+  /**
+   * @internal
+   * @type {ReactComponent}
+   */
+  current: null
+
+};
+
+module.exports = ReactCurrentOwner;
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactDOMFactories.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var ReactElement = require('./ReactElement');
+
+/**
+ * Create a factory that creates HTML tag elements.
+ *
+ * @private
+ */
+var createDOMFactory = ReactElement.createFactory;
+if ("production" !== 'production') {
+  var ReactElementValidator = require('./ReactElementValidator');
+  createDOMFactory = ReactElementValidator.createFactory;
+}
+
+/**
+ * Creates a mapping from supported HTML tags to `ReactDOMComponent` classes.
+ * This is also accessible via `React.DOM`.
+ *
+ * @public
+ */
+var ReactDOMFactories = {
+  a: createDOMFactory('a'),
+  abbr: createDOMFactory('abbr'),
+  address: createDOMFactory('address'),
+  area: createDOMFactory('area'),
+  article: createDOMFactory('article'),
+  aside: createDOMFactory('aside'),
+  audio: createDOMFactory('audio'),
+  b: createDOMFactory('b'),
+  base: createDOMFactory('base'),
+  bdi: createDOMFactory('bdi'),
+  bdo: createDOMFactory('bdo'),
+  big: createDOMFactory('big'),
+  blockquote: createDOMFactory('blockquote'),
+  body: createDOMFactory('body'),
+  br: createDOMFactory('br'),
+  button: createDOMFactory('button'),
+  canvas: createDOMFactory('canvas'),
+  caption: createDOMFactory('caption'),
+  cite: createDOMFactory('cite'),
+  code: createDOMFactory('code'),
+  col: createDOMFactory('col'),
+  colgroup: createDOMFactory('colgroup'),
+  data: createDOMFactory('data'),
+  datalist: createDOMFactory('datalist'),
+  dd: createDOMFactory('dd'),
+  del: createDOMFactory('del'),
+  details: createDOMFactory('details'),
+  dfn: createDOMFactory('dfn'),
+  dialog: createDOMFactory('dialog'),
+  div: createDOMFactory('div'),
+  dl: createDOMFactory('dl'),
+  dt: createDOMFactory('dt'),
+  em: createDOMFactory('em'),
+  embed: createDOMFactory('embed'),
+  fieldset: createDOMFactory('fieldset'),
+  figcaption: createDOMFactory('figcaption'),
+  figure: createDOMFactory('figure'),
+  footer: createDOMFactory('footer'),
+  form: createDOMFactory('form'),
+  h1: createDOMFactory('h1'),
+  h2: createDOMFactory('h2'),
+  h3: createDOMFactory('h3'),
+  h4: createDOMFactory('h4'),
+  h5: createDOMFactory('h5'),
+  h6: createDOMFactory('h6'),
+  head: createDOMFactory('head'),
+  header: createDOMFactory('header'),
+  hgroup: createDOMFactory('hgroup'),
+  hr: createDOMFactory('hr'),
+  html: createDOMFactory('html'),
+  i: createDOMFactory('i'),
+  iframe: createDOMFactory('iframe'),
+  img: createDOMFactory('img'),
+  input: createDOMFactory('input'),
+  ins: createDOMFactory('ins'),
+  kbd: createDOMFactory('kbd'),
+  keygen: createDOMFactory('keygen'),
+  label: createDOMFactory('label'),
+  legend: createDOMFactory('legend'),
+  li: createDOMFactory('li'),
+  link: createDOMFactory('link'),
+  main: createDOMFactory('main'),
+  map: createDOMFactory('map'),
+  mark: createDOMFactory('mark'),
+  menu: createDOMFactory('menu'),
+  menuitem: createDOMFactory('menuitem'),
+  meta: createDOMFactory('meta'),
+  meter: createDOMFactory('meter'),
+  nav: createDOMFactory('nav'),
+  noscript: createDOMFactory('noscript'),
+  object: createDOMFactory('object'),
+  ol: createDOMFactory('ol'),
+  optgroup: createDOMFactory('optgroup'),
+  option: createDOMFactory('option'),
+  output: createDOMFactory('output'),
+  p: createDOMFactory('p'),
+  param: createDOMFactory('param'),
+  picture: createDOMFactory('picture'),
+  pre: createDOMFactory('pre'),
+  progress: createDOMFactory('progress'),
+  q: createDOMFactory('q'),
+  rp: createDOMFactory('rp'),
+  rt: createDOMFactory('rt'),
+  ruby: createDOMFactory('ruby'),
+  s: createDOMFactory('s'),
+  samp: createDOMFactory('samp'),
+  script: createDOMFactory('script'),
+  section: createDOMFactory('section'),
+  select: createDOMFactory('select'),
+  small: createDOMFactory('small'),
+  source: createDOMFactory('source'),
+  span: createDOMFactory('span'),
+  strong: createDOMFactory('strong'),
+  style: createDOMFactory('style'),
+  sub: createDOMFactory('sub'),
+  summary: createDOMFactory('summary'),
+  sup: createDOMFactory('sup'),
+  table: createDOMFactory('table'),
+  tbody: createDOMFactory('tbody'),
+  td: createDOMFactory('td'),
+  textarea: createDOMFactory('textarea'),
+  tfoot: createDOMFactory('tfoot'),
+  th: createDOMFactory('th'),
+  thead: createDOMFactory('thead'),
+  time: createDOMFactory('time'),
+  title: createDOMFactory('title'),
+  tr: createDOMFactory('tr'),
+  track: createDOMFactory('track'),
+  u: createDOMFactory('u'),
+  ul: createDOMFactory('ul'),
+  'var': createDOMFactory('var'),
+  video: createDOMFactory('video'),
+  wbr: createDOMFactory('wbr'),
+
+  // SVG
+  circle: createDOMFactory('circle'),
+  clipPath: createDOMFactory('clipPath'),
+  defs: createDOMFactory('defs'),
+  ellipse: createDOMFactory('ellipse'),
+  g: createDOMFactory('g'),
+  image: createDOMFactory('image'),
+  line: createDOMFactory('line'),
+  linearGradient: createDOMFactory('linearGradient'),
+  mask: createDOMFactory('mask'),
+  path: createDOMFactory('path'),
+  pattern: createDOMFactory('pattern'),
+  polygon: createDOMFactory('polygon'),
+  polyline: createDOMFactory('polyline'),
+  radialGradient: createDOMFactory('radialGradient'),
+  rect: createDOMFactory('rect'),
+  stop: createDOMFactory('stop'),
+  svg: createDOMFactory('svg'),
+  text: createDOMFactory('text'),
+  tspan: createDOMFactory('tspan')
+};
+
+module.exports = ReactDOMFactories;
+},{"./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElementValidator.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
+/**
+ * Copyright 2014-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _assign = require('object-assign');
+
+var ReactCurrentOwner = require('./ReactCurrentOwner');
+
+var warning = require('fbjs/lib/warning');
+var canDefineProperty = require('./canDefineProperty');
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+var REACT_ELEMENT_TYPE = require('./ReactElementSymbol');
+
+var RESERVED_PROPS = {
+  key: true,
+  ref: true,
+  __self: true,
+  __source: true
+};
+
+var specialPropKeyWarningShown, specialPropRefWarningShown;
+
+function hasValidRef(config) {
+  if ("production" !== 'production') {
+    if (hasOwnProperty.call(config, 'ref')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+  return config.ref !== undefined;
+}
+
+function hasValidKey(config) {
+  if ("production" !== 'production') {
+    if (hasOwnProperty.call(config, 'key')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'key').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
+  return config.key !== undefined;
+}
+
+function defineKeyPropWarningGetter(props, displayName) {
+  var warnAboutAccessingKey = function () {
+    if (!specialPropKeyWarningShown) {
+      specialPropKeyWarningShown = true;
+      "production" !== 'production' ? warning(false, '%s: `key` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName) : void 0;
+    }
+  };
+  warnAboutAccessingKey.isReactWarning = true;
+  Object.defineProperty(props, 'key', {
+    get: warnAboutAccessingKey,
+    configurable: true
+  });
+}
+
+function defineRefPropWarningGetter(props, displayName) {
+  var warnAboutAccessingRef = function () {
+    if (!specialPropRefWarningShown) {
+      specialPropRefWarningShown = true;
+      "production" !== 'production' ? warning(false, '%s: `ref` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName) : void 0;
+    }
+  };
+  warnAboutAccessingRef.isReactWarning = true;
+  Object.defineProperty(props, 'ref', {
+    get: warnAboutAccessingRef,
+    configurable: true
+  });
+}
+
+/**
+ * Factory method to create a new React element. This no longer adheres to
+ * the class pattern, so do not use new to call it. Also, no instanceof check
+ * will work. Instead test $$typeof field against Symbol.for('react.element') to check
+ * if something is a React Element.
+ *
+ * @param {*} type
+ * @param {*} key
+ * @param {string|object} ref
+ * @param {*} self A *temporary* helper to detect places where `this` is
+ * different from the `owner` when React.createElement is called, so that we
+ * can warn. We want to get rid of owner and replace string `ref`s with arrow
+ * functions, and as long as `this` and owner are the same, there will be no
+ * change in behavior.
+ * @param {*} source An annotation object (added by a transpiler or otherwise)
+ * indicating filename, line number, and/or other information.
+ * @param {*} owner
+ * @param {*} props
+ * @internal
+ */
+var ReactElement = function (type, key, ref, self, source, owner, props) {
+  var element = {
+    // This tag allow us to uniquely identify this as a React Element
+    $$typeof: REACT_ELEMENT_TYPE,
+
+    // Built-in properties that belong on the element
+    type: type,
+    key: key,
+    ref: ref,
+    props: props,
+
+    // Record the component responsible for creating this element.
+    _owner: owner
+  };
+
+  if ("production" !== 'production') {
+    // The validation flag is currently mutative. We put it on
+    // an external backing store so that we can freeze the whole object.
+    // This can be replaced with a WeakMap once they are implemented in
+    // commonly used development environments.
+    element._store = {};
+
+    // To make comparing ReactElements easier for testing purposes, we make
+    // the validation flag non-enumerable (where possible, which should
+    // include every environment we run tests in), so the test framework
+    // ignores it.
+    if (canDefineProperty) {
+      Object.defineProperty(element._store, 'validated', {
+        configurable: false,
+        enumerable: false,
+        writable: true,
+        value: false
+      });
+      // self and source are DEV only properties.
+      Object.defineProperty(element, '_self', {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: self
+      });
+      // Two elements created in two different places should be considered
+      // equal for testing purposes and therefore we hide it from enumeration.
+      Object.defineProperty(element, '_source', {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: source
+      });
+    } else {
+      element._store.validated = false;
+      element._self = self;
+      element._source = source;
+    }
+    if (Object.freeze) {
+      Object.freeze(element.props);
+      Object.freeze(element);
+    }
+  }
+
+  return element;
+};
+
+/**
+ * Create and return a new ReactElement of the given type.
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.createelement
+ */
+ReactElement.createElement = function (type, config, children) {
+  var propName;
+
+  // Reserved names are extracted
+  var props = {};
+
+  var key = null;
+  var ref = null;
+  var self = null;
+  var source = null;
+
+  if (config != null) {
+    if (hasValidRef(config)) {
+      ref = config.ref;
+    }
+    if (hasValidKey(config)) {
+      key = '' + config.key;
+    }
+
+    self = config.__self === undefined ? null : config.__self;
+    source = config.__source === undefined ? null : config.__source;
+    // Remaining properties are added to a new props object
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        props[propName] = config[propName];
+      }
+    }
+  }
+
+  // Children can be more than one argument, and those are transferred onto
+  // the newly allocated props object.
+  var childrenLength = arguments.length - 2;
+  if (childrenLength === 1) {
+    props.children = children;
+  } else if (childrenLength > 1) {
+    var childArray = Array(childrenLength);
+    for (var i = 0; i < childrenLength; i++) {
+      childArray[i] = arguments[i + 2];
+    }
+    if ("production" !== 'production') {
+      if (Object.freeze) {
+        Object.freeze(childArray);
+      }
+    }
+    props.children = childArray;
+  }
+
+  // Resolve default props
+  if (type && type.defaultProps) {
+    var defaultProps = type.defaultProps;
+    for (propName in defaultProps) {
+      if (props[propName] === undefined) {
+        props[propName] = defaultProps[propName];
+      }
+    }
+  }
+  if ("production" !== 'production') {
+    if (key || ref) {
+      if (typeof props.$$typeof === 'undefined' || props.$$typeof !== REACT_ELEMENT_TYPE) {
+        var displayName = typeof type === 'function' ? type.displayName || type.name || 'Unknown' : type;
+        if (key) {
+          defineKeyPropWarningGetter(props, displayName);
+        }
+        if (ref) {
+          defineRefPropWarningGetter(props, displayName);
+        }
+      }
+    }
+  }
+  return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
+};
+
+/**
+ * Return a function that produces ReactElements of a given type.
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.createfactory
+ */
+ReactElement.createFactory = function (type) {
+  var factory = ReactElement.createElement.bind(null, type);
+  // Expose the type on the factory and the prototype so that it can be
+  // easily accessed on elements. E.g. `<Foo />.type === Foo`.
+  // This should not be named `constructor` since this may not be the function
+  // that created the element, and it may not even be a constructor.
+  // Legacy hook TODO: Warn if this is accessed
+  factory.type = type;
+  return factory;
+};
+
+ReactElement.cloneAndReplaceKey = function (oldElement, newKey) {
+  var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
+
+  return newElement;
+};
+
+/**
+ * Clone and return a new ReactElement using element as the starting point.
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.cloneelement
+ */
+ReactElement.cloneElement = function (element, config, children) {
+  var propName;
+
+  // Original props are copied
+  var props = _assign({}, element.props);
+
+  // Reserved names are extracted
+  var key = element.key;
+  var ref = element.ref;
+  // Self is preserved since the owner is preserved.
+  var self = element._self;
+  // Source is preserved since cloneElement is unlikely to be targeted by a
+  // transpiler, and the original source is probably a better indicator of the
+  // true owner.
+  var source = element._source;
+
+  // Owner will be preserved, unless ref is overridden
+  var owner = element._owner;
+
+  if (config != null) {
+    if (hasValidRef(config)) {
+      // Silently steal the ref from the parent.
+      ref = config.ref;
+      owner = ReactCurrentOwner.current;
+    }
+    if (hasValidKey(config)) {
+      key = '' + config.key;
+    }
+
+    // Remaining properties override existing props
+    var defaultProps;
+    if (element.type && element.type.defaultProps) {
+      defaultProps = element.type.defaultProps;
+    }
+    for (propName in config) {
+      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
+        if (config[propName] === undefined && defaultProps !== undefined) {
+          // Resolve default props
+          props[propName] = defaultProps[propName];
+        } else {
+          props[propName] = config[propName];
+        }
+      }
+    }
+  }
+
+  // Children can be more than one argument, and those are transferred onto
+  // the newly allocated props object.
+  var childrenLength = arguments.length - 2;
+  if (childrenLength === 1) {
+    props.children = children;
+  } else if (childrenLength > 1) {
+    var childArray = Array(childrenLength);
+    for (var i = 0; i < childrenLength; i++) {
+      childArray[i] = arguments[i + 2];
+    }
+    props.children = childArray;
+  }
+
+  return ReactElement(element.type, key, ref, self, source, owner, props);
+};
+
+/**
+ * Verifies the object is a ReactElement.
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.isvalidelement
+ * @param {?object} object
+ * @return {boolean} True if `object` is a valid component.
+ * @final
+ */
+ReactElement.isValidElement = function (object) {
+  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+};
+
+module.exports = ReactElement;
+},{"./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElementSymbol.js","./canDefineProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/canDefineProperty.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElementSymbol.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactElementSymbol.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
+/**
+ * Copyright 2014-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+/**
+ * ReactElementValidator provides a wrapper around a element factory
+ * which validates the props passed to the element. This is intended to be
+ * used only in DEV and could be replaced by a static type checker for languages
+ * that support it.
+ */
+
+'use strict';
+
+var ReactCurrentOwner = require('./ReactCurrentOwner');
+var ReactComponentTreeHook = require('./ReactComponentTreeHook');
+var ReactElement = require('./ReactElement');
+
+var checkReactTypeSpec = require('./checkReactTypeSpec');
+
+var canDefineProperty = require('./canDefineProperty');
+var getIteratorFn = require('./getIteratorFn');
+var warning = require('fbjs/lib/warning');
+
+function getDeclarationErrorAddendum() {
+  if (ReactCurrentOwner.current) {
+    var name = ReactCurrentOwner.current.getName();
+    if (name) {
+      return ' Check the render method of `' + name + '`.';
+    }
+  }
+  return '';
+}
+
+/**
+ * Warn if there's no key explicitly set on dynamic arrays of children or
+ * object keys are not valid. This allows us to keep track of children between
+ * updates.
+ */
+var ownerHasKeyUseWarning = {};
+
+function getCurrentComponentErrorInfo(parentType) {
+  var info = getDeclarationErrorAddendum();
+
+  if (!info) {
+    var parentName = typeof parentType === 'string' ? parentType : parentType.displayName || parentType.name;
+    if (parentName) {
+      info = ' Check the top-level render call using <' + parentName + '>.';
+    }
+  }
+  return info;
+}
+
+/**
+ * Warn if the element doesn't have an explicit key assigned to it.
+ * This element is in an array. The array could grow and shrink or be
+ * reordered. All children that haven't already been validated are required to
+ * have a "key" property assigned to it. Error statuses are cached so a warning
+ * will only be shown once.
+ *
+ * @internal
+ * @param {ReactElement} element Element that requires a key.
+ * @param {*} parentType element's parent's type.
+ */
+function validateExplicitKey(element, parentType) {
+  if (!element._store || element._store.validated || element.key != null) {
+    return;
+  }
+  element._store.validated = true;
+
+  var memoizer = ownerHasKeyUseWarning.uniqueKey || (ownerHasKeyUseWarning.uniqueKey = {});
+
+  var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+  if (memoizer[currentComponentErrorInfo]) {
+    return;
+  }
+  memoizer[currentComponentErrorInfo] = true;
+
+  // Usually the current owner is the offender, but if it accepts children as a
+  // property, it may be the creator of the child that's responsible for
+  // assigning it a key.
+  var childOwner = '';
+  if (element && element._owner && element._owner !== ReactCurrentOwner.current) {
+    // Give the component that originally created this child.
+    childOwner = ' It was passed a child from ' + element._owner.getName() + '.';
+  }
+
+  "production" !== 'production' ? warning(false, 'Each child in an array or iterator should have a unique "key" prop.' + '%s%s See https://fb.me/react-warning-keys for more information.%s', currentComponentErrorInfo, childOwner, ReactComponentTreeHook.getCurrentStackAddendum(element)) : void 0;
+}
+
+/**
+ * Ensure that every element either is passed in a static location, in an
+ * array with an explicit keys property defined, or in an object literal
+ * with valid key property.
+ *
+ * @internal
+ * @param {ReactNode} node Statically passed child of any type.
+ * @param {*} parentType node's parent's type.
+ */
+function validateChildKeys(node, parentType) {
+  if (typeof node !== 'object') {
+    return;
+  }
+  if (Array.isArray(node)) {
+    for (var i = 0; i < node.length; i++) {
+      var child = node[i];
+      if (ReactElement.isValidElement(child)) {
+        validateExplicitKey(child, parentType);
+      }
+    }
+  } else if (ReactElement.isValidElement(node)) {
+    // This element was passed in a valid location.
+    if (node._store) {
+      node._store.validated = true;
+    }
+  } else if (node) {
+    var iteratorFn = getIteratorFn(node);
+    // Entry iterators provide implicit keys.
+    if (iteratorFn) {
+      if (iteratorFn !== node.entries) {
+        var iterator = iteratorFn.call(node);
+        var step;
+        while (!(step = iterator.next()).done) {
+          if (ReactElement.isValidElement(step.value)) {
+            validateExplicitKey(step.value, parentType);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Given an element, validate that its props follow the propTypes definition,
+ * provided by the type.
+ *
+ * @param {ReactElement} element
+ */
+function validatePropTypes(element) {
+  var componentClass = element.type;
+  if (typeof componentClass !== 'function') {
+    return;
+  }
+  var name = componentClass.displayName || componentClass.name;
+  if (componentClass.propTypes) {
+    checkReactTypeSpec(componentClass.propTypes, element.props, 'prop', name, element, null);
+  }
+  if (typeof componentClass.getDefaultProps === 'function') {
+    "production" !== 'production' ? warning(componentClass.getDefaultProps.isReactClassApproved, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
+  }
+}
+
+var ReactElementValidator = {
+
+  createElement: function (type, props, children) {
+    var validType = typeof type === 'string' || typeof type === 'function';
+    // We warn in this case but don't throw. We expect the element creation to
+    // succeed and there will likely be errors in render.
+    if (!validType) {
+      if (typeof type !== 'function' && typeof type !== 'string') {
+        var info = '';
+        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+        }
+        info += getDeclarationErrorAddendum();
+        "production" !== 'production' ? warning(false, 'React.createElement: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', type == null ? type : typeof type, info) : void 0;
+      }
+    }
+
+    var element = ReactElement.createElement.apply(this, arguments);
+
+    // The result can be nullish if a mock or a custom function is used.
+    // TODO: Drop this when these are no longer allowed as the type argument.
+    if (element == null) {
+      return element;
+    }
+
+    // Skip key warning if the type isn't valid since our key validation logic
+    // doesn't expect a non-string/function type and can throw confusing errors.
+    // We don't want exception behavior to differ between dev and prod.
+    // (Rendering will throw with a helpful message and as soon as the type is
+    // fixed, the key warnings will appear.)
+    if (validType) {
+      for (var i = 2; i < arguments.length; i++) {
+        validateChildKeys(arguments[i], type);
+      }
+    }
+
+    validatePropTypes(element);
+
+    return element;
+  },
+
+  createFactory: function (type) {
+    var validatedFactory = ReactElementValidator.createElement.bind(null, type);
+    // Legacy hook TODO: Warn if this is accessed
+    validatedFactory.type = type;
+
+    if ("production" !== 'production') {
+      if (canDefineProperty) {
+        Object.defineProperty(validatedFactory, 'type', {
+          enumerable: false,
+          get: function () {
+            "production" !== 'production' ? warning(false, 'Factory.type is deprecated. Access the class directly ' + 'before passing it to createFactory.') : void 0;
+            Object.defineProperty(this, 'type', {
+              value: type
+            });
+            return type;
+          }
+        });
+      }
+    }
+
+    return validatedFactory;
+  },
+
+  cloneElement: function (element, props, children) {
+    var newElement = ReactElement.cloneElement.apply(this, arguments);
+    for (var i = 2; i < arguments.length; i++) {
+      validateChildKeys(arguments[i], newElement.type);
+    }
+    validatePropTypes(newElement);
+    return newElement;
+  }
+
+};
+
+module.exports = ReactElementValidator;
+},{"./ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js","./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js","./canDefineProperty":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/canDefineProperty.js","./checkReactTypeSpec":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/checkReactTypeSpec.js","./getIteratorFn":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/getIteratorFn.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactNoopUpdateQueue.js":[function(require,module,exports){
+/**
+ * Copyright 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var warning = require('fbjs/lib/warning');
+
+function warnNoop(publicInstance, callerName) {
+  if ("production" !== 'production') {
+    var constructor = publicInstance.constructor;
+    "production" !== 'production' ? warning(false, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass') : void 0;
+  }
+}
+
+/**
+ * This is the abstract API for an update queue.
+ */
+var ReactNoopUpdateQueue = {
+
+  /**
+   * Checks whether or not this composite component is mounted.
+   * @param {ReactClass} publicInstance The instance we want to test.
+   * @return {boolean} True if mounted, false otherwise.
+   * @protected
+   * @final
+   */
+  isMounted: function (publicInstance) {
+    return false;
+  },
+
+  /**
+   * Enqueue a callback that will be executed after all the pending updates
+   * have processed.
+   *
+   * @param {ReactClass} publicInstance The instance to use as `this` context.
+   * @param {?function} callback Called after state is updated.
+   * @internal
+   */
+  enqueueCallback: function (publicInstance, callback) {},
+
+  /**
+   * Forces an update. This should only be invoked when it is known with
+   * certainty that we are **not** in a DOM transaction.
+   *
+   * You may want to call this when you know that some deeper aspect of the
+   * component's state has changed but `setState` was not called.
+   *
+   * This will not invoke `shouldComponentUpdate`, but it will invoke
+   * `componentWillUpdate` and `componentDidUpdate`.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @internal
+   */
+  enqueueForceUpdate: function (publicInstance) {
+    warnNoop(publicInstance, 'forceUpdate');
+  },
+
+  /**
+   * Replaces all of the state. Always use this or `setState` to mutate state.
+   * You should treat `this.state` as immutable.
+   *
+   * There is no guarantee that `this.state` will be immediately updated, so
+   * accessing `this.state` after calling this method may return the old value.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} completeState Next state.
+   * @internal
+   */
+  enqueueReplaceState: function (publicInstance, completeState) {
+    warnNoop(publicInstance, 'replaceState');
+  },
+
+  /**
+   * Sets a subset of the state. This only exists because _pendingState is
+   * internal. This provides a merging strategy that is not available to deep
+   * properties which is confusing. TODO: Expose pendingState or don't use it
+   * during the merge.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} partialState Next partial state to be merged with state.
+   * @internal
+   */
+  enqueueSetState: function (publicInstance, partialState) {
+    warnNoop(publicInstance, 'setState');
+  }
+};
+
+module.exports = ReactNoopUpdateQueue;
+},{"fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypeLocationNames.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var ReactElement = require('./ReactElement');
+var ReactPropTypeLocationNames = require('./ReactPropTypeLocationNames');
+var ReactPropTypesSecret = require('./ReactPropTypesSecret');
+
+var emptyFunction = require('fbjs/lib/emptyFunction');
+var getIteratorFn = require('./getIteratorFn');
+var warning = require('fbjs/lib/warning');
+
+/**
+ * Collection of methods that allow declaration and validation of props that are
+ * supplied to React components. Example usage:
+ *
+ *   var Props = require('ReactPropTypes');
+ *   var MyArticle = React.createClass({
+ *     propTypes: {
+ *       // An optional string prop named "description".
+ *       description: Props.string,
+ *
+ *       // A required enum prop named "category".
+ *       category: Props.oneOf(['News','Photos']).isRequired,
+ *
+ *       // A prop named "dialog" that requires an instance of Dialog.
+ *       dialog: Props.instanceOf(Dialog).isRequired
+ *     },
+ *     render: function() { ... }
+ *   });
+ *
+ * A more formal specification of how these methods are used:
+ *
+ *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+ *   decl := ReactPropTypes.{type}(.isRequired)?
+ *
+ * Each and every declaration produces a function with the same signature. This
+ * allows the creation of custom validation functions. For example:
+ *
+ *  var MyLink = React.createClass({
+ *    propTypes: {
+ *      // An optional string or URI prop named "href".
+ *      href: function(props, propName, componentName) {
+ *        var propValue = props[propName];
+ *        if (propValue != null && typeof propValue !== 'string' &&
+ *            !(propValue instanceof URI)) {
+ *          return new Error(
+ *            'Expected a string or an URI for ' + propName + ' in ' +
+ *            componentName
+ *          );
+ *        }
+ *      }
+ *    },
+ *    render: function() {...}
+ *  });
+ *
+ * @internal
+ */
+
+var ANONYMOUS = '<<anonymous>>';
+
+var ReactPropTypes = {
+  array: createPrimitiveTypeChecker('array'),
+  bool: createPrimitiveTypeChecker('boolean'),
+  func: createPrimitiveTypeChecker('function'),
+  number: createPrimitiveTypeChecker('number'),
+  object: createPrimitiveTypeChecker('object'),
+  string: createPrimitiveTypeChecker('string'),
+  symbol: createPrimitiveTypeChecker('symbol'),
+
+  any: createAnyTypeChecker(),
+  arrayOf: createArrayOfTypeChecker,
+  element: createElementTypeChecker(),
+  instanceOf: createInstanceTypeChecker,
+  node: createNodeChecker(),
+  objectOf: createObjectOfTypeChecker,
+  oneOf: createEnumTypeChecker,
+  oneOfType: createUnionTypeChecker,
+  shape: createShapeTypeChecker
+};
+
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+/*eslint-disable no-self-compare*/
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    return x !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+/*eslint-enable no-self-compare*/
+
+/**
+ * We use an Error-like object for backward compatibility as people may call
+ * PropTypes directly and inspect their output. However we don't use real
+ * Errors anymore. We don't inspect their stack anyway, and creating them
+ * is prohibitively expensive if they are created too often, such as what
+ * happens in oneOfType() for any type before the one that matched.
+ */
+function PropTypeError(message) {
+  this.message = message;
+  this.stack = '';
+}
+// Make `instanceof Error` still work for returned errors.
+PropTypeError.prototype = Error.prototype;
+
+function createChainableTypeChecker(validate) {
+  if ("production" !== 'production') {
+    var manualPropTypeCallCache = {};
+  }
+  function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+    componentName = componentName || ANONYMOUS;
+    propFullName = propFullName || propName;
+    if ("production" !== 'production') {
+      if (secret !== ReactPropTypesSecret && typeof console !== 'undefined') {
+        var cacheKey = componentName + ':' + propName;
+        if (!manualPropTypeCallCache[cacheKey]) {
+          "production" !== 'production' ? warning(false, 'You are manually calling a React.PropTypes validation ' + 'function for the `%s` prop on `%s`. This is deprecated ' + 'and will not work in production with the next major version. ' + 'You may be seeing this warning due to a third-party PropTypes ' + 'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.', propFullName, componentName) : void 0;
+          manualPropTypeCallCache[cacheKey] = true;
+        }
+      }
+    }
+    if (props[propName] == null) {
+      var locationName = ReactPropTypeLocationNames[location];
+      if (isRequired) {
+        if (props[propName] === null) {
+          return new PropTypeError('The ' + locationName + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+        }
+        return new PropTypeError('The ' + locationName + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+      }
+      return null;
+    } else {
+      return validate(props, propName, componentName, location, propFullName);
+    }
+  }
+
+  var chainedCheckType = checkType.bind(null, false);
+  chainedCheckType.isRequired = checkType.bind(null, true);
+
+  return chainedCheckType;
+}
+
+function createPrimitiveTypeChecker(expectedType) {
+  function validate(props, propName, componentName, location, propFullName, secret) {
+    var propValue = props[propName];
+    var propType = getPropType(propValue);
+    if (propType !== expectedType) {
+      var locationName = ReactPropTypeLocationNames[location];
+      // `propValue` being instance of, say, date/regexp, pass the 'object'
+      // check, but we can offer a more precise error message here rather than
+      // 'of type `object`'.
+      var preciseType = getPreciseType(propValue);
+
+      return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+    }
+    return null;
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createAnyTypeChecker() {
+  return createChainableTypeChecker(emptyFunction.thatReturns(null));
+}
+
+function createArrayOfTypeChecker(typeChecker) {
+  function validate(props, propName, componentName, location, propFullName) {
+    if (typeof typeChecker !== 'function') {
+      return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+    }
+    var propValue = props[propName];
+    if (!Array.isArray(propValue)) {
+      var locationName = ReactPropTypeLocationNames[location];
+      var propType = getPropType(propValue);
+      return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+    }
+    for (var i = 0; i < propValue.length; i++) {
+      var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+      if (error instanceof Error) {
+        return error;
+      }
+    }
+    return null;
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createElementTypeChecker() {
+  function validate(props, propName, componentName, location, propFullName) {
+    var propValue = props[propName];
+    if (!ReactElement.isValidElement(propValue)) {
+      var locationName = ReactPropTypeLocationNames[location];
+      var propType = getPropType(propValue);
+      return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+    }
+    return null;
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createInstanceTypeChecker(expectedClass) {
+  function validate(props, propName, componentName, location, propFullName) {
+    if (!(props[propName] instanceof expectedClass)) {
+      var locationName = ReactPropTypeLocationNames[location];
+      var expectedClassName = expectedClass.name || ANONYMOUS;
+      var actualClassName = getClassName(props[propName]);
+      return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+    }
+    return null;
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createEnumTypeChecker(expectedValues) {
+  if (!Array.isArray(expectedValues)) {
+    "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+    return emptyFunction.thatReturnsNull;
+  }
+
+  function validate(props, propName, componentName, location, propFullName) {
+    var propValue = props[propName];
+    for (var i = 0; i < expectedValues.length; i++) {
+      if (is(propValue, expectedValues[i])) {
+        return null;
+      }
+    }
+
+    var locationName = ReactPropTypeLocationNames[location];
+    var valuesString = JSON.stringify(expectedValues);
+    return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createObjectOfTypeChecker(typeChecker) {
+  function validate(props, propName, componentName, location, propFullName) {
+    if (typeof typeChecker !== 'function') {
+      return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+    }
+    var propValue = props[propName];
+    var propType = getPropType(propValue);
+    if (propType !== 'object') {
+      var locationName = ReactPropTypeLocationNames[location];
+      return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+    }
+    for (var key in propValue) {
+      if (propValue.hasOwnProperty(key)) {
+        var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+    }
+    return null;
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createUnionTypeChecker(arrayOfTypeCheckers) {
+  if (!Array.isArray(arrayOfTypeCheckers)) {
+    "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+    return emptyFunction.thatReturnsNull;
+  }
+
+  function validate(props, propName, componentName, location, propFullName) {
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+        return null;
+      }
+    }
+
+    var locationName = ReactPropTypeLocationNames[location];
+    return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createNodeChecker() {
+  function validate(props, propName, componentName, location, propFullName) {
+    if (!isNode(props[propName])) {
+      var locationName = ReactPropTypeLocationNames[location];
+      return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+    }
+    return null;
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function createShapeTypeChecker(shapeTypes) {
+  function validate(props, propName, componentName, location, propFullName) {
+    var propValue = props[propName];
+    var propType = getPropType(propValue);
+    if (propType !== 'object') {
+      var locationName = ReactPropTypeLocationNames[location];
+      return new PropTypeError('Invalid ' + locationName + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+    }
+    for (var key in shapeTypes) {
+      var checker = shapeTypes[key];
+      if (!checker) {
+        continue;
+      }
+      var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+      if (error) {
+        return error;
+      }
+    }
+    return null;
+  }
+  return createChainableTypeChecker(validate);
+}
+
+function isNode(propValue) {
+  switch (typeof propValue) {
+    case 'number':
+    case 'string':
+    case 'undefined':
+      return true;
+    case 'boolean':
+      return !propValue;
+    case 'object':
+      if (Array.isArray(propValue)) {
+        return propValue.every(isNode);
+      }
+      if (propValue === null || ReactElement.isValidElement(propValue)) {
+        return true;
+      }
+
+      var iteratorFn = getIteratorFn(propValue);
+      if (iteratorFn) {
+        var iterator = iteratorFn.call(propValue);
+        var step;
+        if (iteratorFn !== propValue.entries) {
+          while (!(step = iterator.next()).done) {
+            if (!isNode(step.value)) {
+              return false;
+            }
+          }
+        } else {
+          // Iterator will provide entry [k,v] tuples rather than values.
+          while (!(step = iterator.next()).done) {
+            var entry = step.value;
+            if (entry) {
+              if (!isNode(entry[1])) {
+                return false;
+              }
+            }
+          }
+        }
+      } else {
+        return false;
+      }
+
+      return true;
+    default:
+      return false;
+  }
+}
+
+function isSymbol(propType, propValue) {
+  // Native Symbol.
+  if (propType === 'symbol') {
+    return true;
+  }
+
+  // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+  if (propValue['@@toStringTag'] === 'Symbol') {
+    return true;
+  }
+
+  // Fallback for non-spec compliant Symbols which are polyfilled.
+  if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+    return true;
+  }
+
+  return false;
+}
+
+// Equivalent of `typeof` but with special handling for array and regexp.
+function getPropType(propValue) {
+  var propType = typeof propValue;
+  if (Array.isArray(propValue)) {
+    return 'array';
+  }
+  if (propValue instanceof RegExp) {
+    // Old webkits (at least until Android 4.0) return 'function' rather than
+    // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+    // passes PropTypes.object.
+    return 'object';
+  }
+  if (isSymbol(propType, propValue)) {
+    return 'symbol';
+  }
+  return propType;
+}
+
+// This handles more types than `getPropType`. Only used for error messages.
+// See `createPrimitiveTypeChecker`.
+function getPreciseType(propValue) {
+  var propType = getPropType(propValue);
+  if (propType === 'object') {
+    if (propValue instanceof Date) {
+      return 'date';
+    } else if (propValue instanceof RegExp) {
+      return 'regexp';
+    }
+  }
+  return propType;
+}
+
+// Returns class name of the object, if any.
+function getClassName(propValue) {
+  if (!propValue.constructor || !propValue.constructor.name) {
+    return ANONYMOUS;
+  }
+  return propValue.constructor.name;
+}
+
+module.exports = ReactPropTypes;
+},{"./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js","./ReactPropTypeLocationNames":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypesSecret.js","./getIteratorFn":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/getIteratorFn.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypesSecret.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPureComponent.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _assign = require('object-assign');
+
+var ReactComponent = require('./ReactComponent');
+var ReactNoopUpdateQueue = require('./ReactNoopUpdateQueue');
+
+var emptyObject = require('fbjs/lib/emptyObject');
+
+/**
+ * Base class helpers for the updating state of a component.
+ */
+function ReactPureComponent(props, context, updater) {
+  // Duplicated from ReactComponent.
+  this.props = props;
+  this.context = context;
+  this.refs = emptyObject;
+  // We initialize the default updater but the real one gets injected by the
+  // renderer.
+  this.updater = updater || ReactNoopUpdateQueue;
+}
+
+function ComponentDummy() {}
+ComponentDummy.prototype = ReactComponent.prototype;
+ReactPureComponent.prototype = new ComponentDummy();
+ReactPureComponent.prototype.constructor = ReactPureComponent;
+// Avoid an extra prototype jump for these methods.
+_assign(ReactPureComponent.prototype, ReactComponent.prototype);
+ReactPureComponent.prototype.isPureReactComponent = true;
+
+module.exports = ReactPureComponent;
+},{"./ReactComponent":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponent.js","./ReactNoopUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactNoopUpdateQueue.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyObject.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactVersion.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactVersion.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/canDefineProperty.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+'use strict';
+
+var canDefineProperty = false;
+if ("production" !== 'production') {
+  try {
+    // $FlowFixMe https://github.com/facebook/flow/issues/285
+    Object.defineProperty({}, 'x', { get: function () {} });
+    canDefineProperty = true;
+  } catch (x) {
+    // IE will fail on defineProperty
+  }
+}
+
+module.exports = canDefineProperty;
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/checkReactTypeSpec.js":[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant');
+
+var ReactPropTypeLocationNames = require('./ReactPropTypeLocationNames');
+var ReactPropTypesSecret = require('./ReactPropTypesSecret');
+
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+var ReactComponentTreeHook;
+
+if (typeof process !== 'undefined' && process.env && "production" === 'test') {
+  // Temporary hack.
+  // Inline requires don't work well with Jest:
+  // https://github.com/facebook/react/issues/7240
+  // Remove the inline requires when we don't need them anymore:
+  // https://github.com/facebook/react/pull/7178
+  ReactComponentTreeHook = require('./ReactComponentTreeHook');
+}
+
+var loggedTypeFailures = {};
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?object} element The React element that is being type-checked
+ * @param {?number} debugID The React component instance that is being type-checked
+ * @private
+ */
+function checkReactTypeSpec(typeSpecs, values, location, componentName, element, debugID) {
+  for (var typeSpecName in typeSpecs) {
+    if (typeSpecs.hasOwnProperty(typeSpecName)) {
+      var error;
+      // Prop type validation may throw. In case they do, we don't want to
+      // fail the render phase where it didn't fail before. So we log it.
+      // After these have been cleaned up, we'll let them throw.
+      try {
+        // This is intentionally an invariant that gets caught. It's the same
+        // behavior as without this statement except with a better message.
+        !(typeof typeSpecs[typeSpecName] === 'function') ? "production" !== 'production' ? invariant(false, '%s: %s type `%s` is invalid; it must be a function, usually from React.PropTypes.', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName) : _prodInvariant('84', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName) : void 0;
+        error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+      } catch (ex) {
+        error = ex;
+      }
+      "production" !== 'production' ? warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName, typeof error) : void 0;
+      if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+        // Only monitor this failure once because there tends to be a lot of the
+        // same error.
+        loggedTypeFailures[error.message] = true;
+
+        var componentStackInfo = '';
+
+        if ("production" !== 'production') {
+          if (!ReactComponentTreeHook) {
+            ReactComponentTreeHook = require('./ReactComponentTreeHook');
+          }
+          if (debugID !== null) {
+            componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
+          } else if (element !== null) {
+            componentStackInfo = ReactComponentTreeHook.getCurrentStackAddendum(element);
+          }
+        }
+
+        "production" !== 'production' ? warning(false, 'Failed %s type: %s%s', location, error.message, componentStackInfo) : void 0;
+      }
+    }
+  }
+}
+
+module.exports = checkReactTypeSpec;
+}).call(this,require('_process'))
+},{"./ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js","./ReactPropTypeLocationNames":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/getIteratorFn.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getIteratorFn.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant');
+
+var ReactElement = require('./ReactElement');
+
+var invariant = require('fbjs/lib/invariant');
+
+/**
+ * Returns the first child in a collection of children and verifies that there
+ * is only one child in the collection.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.children.only
+ *
+ * The current implementation of this function assumes that a single child gets
+ * passed without a wrapper, but the purpose of this helper function is to
+ * abstract away the particular structure of children.
+ *
+ * @param {?object} children Child collection structure.
+ * @return {ReactElement} The first and only `ReactElement` contained in the
+ * structure.
+ */
+function onlyChild(children) {
+  !ReactElement.isValidElement(children) ? "production" !== 'production' ? invariant(false, 'React.Children.only expected to receive a single React element child.') : _prodInvariant('143') : void 0;
+  return children;
+}
+
+module.exports = onlyChild;
+},{"./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant');
+
+var ReactCurrentOwner = require('./ReactCurrentOwner');
+var REACT_ELEMENT_TYPE = require('./ReactElementSymbol');
+
+var getIteratorFn = require('./getIteratorFn');
+var invariant = require('fbjs/lib/invariant');
+var KeyEscapeUtils = require('./KeyEscapeUtils');
+var warning = require('fbjs/lib/warning');
+
+var SEPARATOR = '.';
+var SUBSEPARATOR = ':';
+
+/**
+ * This is inlined from ReactElement since this file is shared between
+ * isomorphic and renderers. We could extract this to a
+ *
+ */
+
+/**
+ * TODO: Test that a single child and an array with one item have the same key
+ * pattern.
+ */
+
+var didWarnAboutMaps = false;
+
+/**
+ * Generate a key string that identifies a component within a set.
+ *
+ * @param {*} component A component that could contain a manual key.
+ * @param {number} index Index that is used if a manual key is not provided.
+ * @return {string}
+ */
+function getComponentKey(component, index) {
+  // Do some typechecking here since we call this blindly. We want to ensure
+  // that we don't block potential future ES APIs.
+  if (component && typeof component === 'object' && component.key != null) {
+    // Explicit key
+    return KeyEscapeUtils.escape(component.key);
+  }
+  // Implicit key determined by the index in the set
+  return index.toString(36);
+}
+
+/**
+ * @param {?*} children Children tree container.
+ * @param {!string} nameSoFar Name of the key path so far.
+ * @param {!function} callback Callback to invoke with each child found.
+ * @param {?*} traverseContext Used to pass information throughout the traversal
+ * process.
+ * @return {!number} The number of children in this subtree.
+ */
+function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext) {
+  var type = typeof children;
+
+  if (type === 'undefined' || type === 'boolean') {
+    // All of the above are perceived as null.
+    children = null;
+  }
+
+  if (children === null || type === 'string' || type === 'number' ||
+  // The following is inlined from ReactElement. This means we can optimize
+  // some checks. React Fiber also inlines this logic for similar purposes.
+  type === 'object' && children.$$typeof === REACT_ELEMENT_TYPE) {
+    callback(traverseContext, children,
+    // If it's the only child, treat the name as if it was wrapped in an array
+    // so that it's consistent if the number of children grows.
+    nameSoFar === '' ? SEPARATOR + getComponentKey(children, 0) : nameSoFar);
+    return 1;
+  }
+
+  var child;
+  var nextName;
+  var subtreeCount = 0; // Count of children found in the current subtree.
+  var nextNamePrefix = nameSoFar === '' ? SEPARATOR : nameSoFar + SUBSEPARATOR;
+
+  if (Array.isArray(children)) {
+    for (var i = 0; i < children.length; i++) {
+      child = children[i];
+      nextName = nextNamePrefix + getComponentKey(child, i);
+      subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
+    }
+  } else {
+    var iteratorFn = getIteratorFn(children);
+    if (iteratorFn) {
+      var iterator = iteratorFn.call(children);
+      var step;
+      if (iteratorFn !== children.entries) {
+        var ii = 0;
+        while (!(step = iterator.next()).done) {
+          child = step.value;
+          nextName = nextNamePrefix + getComponentKey(child, ii++);
+          subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
+        }
+      } else {
+        if ("production" !== 'production') {
+          var mapsAsChildrenAddendum = '';
+          if (ReactCurrentOwner.current) {
+            var mapsAsChildrenOwnerName = ReactCurrentOwner.current.getName();
+            if (mapsAsChildrenOwnerName) {
+              mapsAsChildrenAddendum = ' Check the render method of `' + mapsAsChildrenOwnerName + '`.';
+            }
+          }
+          "production" !== 'production' ? warning(didWarnAboutMaps, 'Using Maps as children is not yet fully supported. It is an ' + 'experimental feature that might be removed. Convert it to a ' + 'sequence / iterable of keyed ReactElements instead.%s', mapsAsChildrenAddendum) : void 0;
+          didWarnAboutMaps = true;
+        }
+        // Iterator will provide entry [k,v] tuples rather than values.
+        while (!(step = iterator.next()).done) {
+          var entry = step.value;
+          if (entry) {
+            child = entry[1];
+            nextName = nextNamePrefix + KeyEscapeUtils.escape(entry[0]) + SUBSEPARATOR + getComponentKey(child, 0);
+            subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
+          }
+        }
+      }
+    } else if (type === 'object') {
+      var addendum = '';
+      if ("production" !== 'production') {
+        addendum = ' If you meant to render a collection of children, use an array ' + 'instead or wrap the object using createFragment(object) from the ' + 'React add-ons.';
+        if (children._isReactElement) {
+          addendum = ' It looks like you\'re using an element created by a different ' + 'version of React. Make sure to use only one copy of React.';
+        }
+        if (ReactCurrentOwner.current) {
+          var name = ReactCurrentOwner.current.getName();
+          if (name) {
+            addendum += ' Check the render method of `' + name + '`.';
+          }
+        }
+      }
+      var childrenString = String(children);
+      !false ? "production" !== 'production' ? invariant(false, 'Objects are not valid as a React child (found: %s).%s', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum) : _prodInvariant('31', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum) : void 0;
+    }
+  }
+
+  return subtreeCount;
+}
+
+/**
+ * Traverses children that are typically specified as `props.children`, but
+ * might also be specified through attributes:
+ *
+ * - `traverseAllChildren(this.props.children, ...)`
+ * - `traverseAllChildren(this.props.leftPanelChildren, ...)`
+ *
+ * The `traverseContext` is an optional argument that is passed through the
+ * entire traversal. It can be used to store accumulations or anything else that
+ * the callback might find relevant.
+ *
+ * @param {?*} children Children tree object.
+ * @param {!function} callback To invoke upon traversing each child.
+ * @param {?*} traverseContext Context for traversal.
+ * @return {!number} The number of children in this subtree.
+ */
+function traverseAllChildren(children, callback, traverseContext) {
+  if (children == null) {
+    return 0;
+  }
+
+  return traverseAllChildrenImpl(children, '', callback, traverseContext);
+}
+
+module.exports = traverseAllChildren;
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/KeyEscapeUtils.js","./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/getIteratorFn.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/react.js":[function(require,module,exports){
+'use strict';
+
+module.exports = require('./lib/React');
+
+},{"./lib/React":"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/scrollwatch/dist/ScrollWatch-1.2.0.min.js":[function(require,module,exports){
+/*! scrollwatch v1.2.0 | (c) Wed Dec 07 2016 15:19:41 GMT-0500 (EST) Evan Dull <evandull@gmail.com> | License: MIT | https://github.com/edull24/ScrollWatch.git*/
+!function(t,i){"function"==typeof define&&define.amd?define([],i):"object"==typeof exports?module.exports=i():t.ScrollWatch=i()}(this,function(){"use strict";var t=0,i={},n={container:window.document.documentElement,watch:"[data-scroll-watch]",watchOnce:!0,inViewClass:"scroll-watch-in-view",ignoreClass:"scroll-watch-ignore",debounce:!1,debounceTriggerLeading:!1,scrollDebounce:250,resizeDebounce:250,scrollThrottle:250,resizeThrottle:250,watchOffset:0,infiniteScroll:!1,infiniteOffset:0,onElementInView:function(){},onElementOutOfView:function(){},onInfiniteXInView:function(){},onInfiniteYInView:function(){}},e="scrollwatchinit",l=function(t){var i,n,e,l=arguments.length;for(t=t||{},i=1;l>i;i++)if(e=arguments[i])for(n in e)e.hasOwnProperty(n)&&(t[n]=e[n]);return t},s=function(t,i,n){var e,l;return i=i||250,function(){var s=n||this,r=+new Date,o=arguments;e&&e+i>r?(window.clearTimeout(l),l=setTimeout(function(){e=r,t.apply(s,o)},i)):(e=r,t.apply(s,o))}},r=function(t,i,n){var e,l,s,r,o,c=function(){var a=(new Date).getTime()-r;i>a&&a>=0?e=setTimeout(c,i-a):(e=null,n||(o=t.apply(s,l),e||(s=l=null)))};return function(){var a=n&&!e;return s=this,l=arguments,r=(new Date).getTime(),e||(e=setTimeout(c,i)),a&&(o=t.apply(s,l),s=l=null),o}},o=function(){S.call(this)||(i[this._id].config.container=document.querySelector(i[this._id].config.container))},c=function(){i[this._id].elements=Array.prototype.slice.call(document.querySelectorAll(i[this._id].config.watch+":not(."+i[this._id].config.ignoreClass+")"))},a=function(){i[this._id].lastScrollPosition=p.call(this)},f=function(t){h.call(this,t),d.call(this,t),t!==e&&a.call(this)},h=function(t){var n,e,l=i[this._id],s=l.elements.length,r=l.config,o=r.inViewClass,c={eventType:t};for(e=0;s>e;e++)n=l.elements[e],c.el=n,"scroll"===t&&(c.direction=_.call(this,x.call(this))),z.call(this,n)?n.classList.contains(o)||(n.classList.add(o),r.onElementInView.call(this,c),r.watchOnce&&(l.elements.splice(e,1),s--,e--,n.classList.add(r.ignoreClass))):n.classList.contains(o)&&(n.classList.remove(o),r.onElementOutOfView.call(this,c))},d=function(t){var n,l,s,r,o,c,a,f=i[this._id],h=f.config;if(h.infiniteScroll&&!f.isInfiniteScrollPaused)for(l=["x","y"],c=["onInfiniteXInView","onInfiniteYInView"],s=h.container,r=m.call(this),o=[s.scrollWidth,s.scrollHeight],a={},n=0;2>n;n++)("scroll"===t&&b.call(this,l[n])||"resize"===t||"refresh"===t||t===e)&&r[l[n]].end+h.infiniteOffset>=o[n]&&(a.eventType=t,"scroll"===t&&(a.direction=_.call(this,l[n])),h[c[n]].call(this,a))},u=function(){var t=i[this._id],n=y.call(this);n.addEventListener("scroll",t.scrollHandler,!1),n.addEventListener("resize",t.resizeHandler,!1)},g=function(){var t=i[this._id],n=y.call(this);n.removeEventListener("scroll",t.scrollHandler),n.removeEventListener("resize",t.resizeHandler)},y=function(){return S.call(this)?window:i[this._id].config.container},w=function(){var t={w:i[this._id].config.container.clientWidth,h:i[this._id].config.container.clientHeight};return t},p=function(){var t,n={};return S.call(this)?(n.left=window.pageXOffset,n.top=window.pageYOffset):(t=i[this._id].config.container,n.left=t.scrollLeft,n.top=t.scrollTop),n},m=function(){var t={x:{},y:{}},i=p.call(this),n=w.call(this);return t.x.start=i.left,t.x.end=t.x.start+n.w,t.x.size=t.x.end-t.x.start,t.y.start=i.top,t.y.end=t.y.start+n.h,t.y.size=t.y.end-t.y.start,t},v=function(t){var n,e={x:{},y:{}},l=m.call(this),s=t.getBoundingClientRect();return S.call(this)?(e.x.start=s.left+l.x.start,e.x.end=s.right+l.x.start,e.y.start=s.top+l.y.start,e.y.end=s.bottom+l.y.start):(n=i[this._id].config.container.getBoundingClientRect(),e.x.start=s.left-n.left+l.x.start,e.x.end=e.x.start+s.width,e.y.start=s.top-n.top+l.y.start,e.y.end=e.y.start+s.height),e.x.size=e.x.end-e.x.start,e.y.size=e.y.end-e.y.start,e},x=function(){return b.call(this,"x")?"x":b.call(this,"y")?"y":void 0},_=function(t){var n={x:["right","left"],y:["down","up"]},e={x:"left",y:"top"},l=i[this._id].lastScrollPosition,s=p.call(this);return s[e[t]]>l[e[t]]?n[t][0]:n[t][1]},b=function(t){var n={x:"left",y:"top"},e=i[this._id].lastScrollPosition,l=p.call(this);return l[n[t]]!==e[n[t]]},z=function(t){var n=m.call(this),e=v.call(this,t),l=i[this._id].config.watchOffset;return I(e,n,l)&&T(e,n,l)},I=function(t,i,n){return t.y.start<i.y.end+n&&t.y.end>i.y.start-n},T=function(t,i,n){return t.x.start<i.x.end+n&&t.x.end>i.x.start-n},S=function(){return i[this._id].config.container===window.document.documentElement},O=function(t){l(i[this._id].config,n,t)},L=function(t){var i=t.type;("resize"===i||b.call(this,"x")||b.call(this,"y"))&&f.call(this,i)},E=function(n){if(!(this instanceof E))return new E(n);var l;Object.defineProperty(this,"_id",{value:t++}),l=i[this._id]={config:{},elements:[],lastScrollPosition:{top:0,left:0},isInfiniteScrollPaused:!1},O.call(this,n),l.config.debounce?(l.scrollHandler=r(L.bind(this),l.config.scrollDebounce,l.config.debounceTriggerLeading),l.resizeHandler=r(L.bind(this),l.config.resizeDebounce,l.config.debounceTriggerLeading)):(l.scrollHandler=s(L.bind(this),l.config.scrollThrottle,this),l.resizeHandler=s(L.bind(this),l.config.resizeThrottle,this)),o.call(this),u.call(this),c.call(this),f.call(this,e)};return E.prototype={refresh:function(){c.call(this),f.call(this,"refresh")},destroy:function(){g.call(this),delete i[this._id]},pauseInfiniteScroll:function(){i[this._id].isInfiniteScrollPaused=!0},resumeInfiniteScroll:function(){i[this._id].isInfiniteScrollPaused=!1}},E});
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/camel-case/camel-case.js":[function(require,module,exports){
+var upperCase = require('upper-case')
+var noCase = require('no-case')
+
+/**
+ * Camel case a string.
+ *
+ * @param  {string} value
+ * @param  {string} [locale]
+ * @return {string}
+ */
+module.exports = function (value, locale, mergeNumbers) {
+  var result = noCase(value, locale)
+
+  // Replace periods between numeric entities with an underscore.
+  if (!mergeNumbers) {
+    result = result.replace(/ (?=\d)/g, '_')
+  }
+
+  // Replace spaces between words with an upper cased character.
+  return result.replace(/ (.)/g, function (m, $1) {
+    return upperCase($1, locale)
+  })
+}
+
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/change-case/change-case.js":[function(require,module,exports){
+exports.no = exports.noCase = require('no-case')
+exports.dot = exports.dotCase = require('dot-case')
+exports.swap = exports.swapCase = require('swap-case')
+exports.path = exports.pathCase = require('path-case')
+exports.upper = exports.upperCase = require('upper-case')
+exports.lower = exports.lowerCase = require('lower-case')
+exports.camel = exports.camelCase = require('camel-case')
+exports.snake = exports.snakeCase = require('snake-case')
+exports.title = exports.titleCase = require('title-case')
+exports.param = exports.paramCase = require('param-case')
+exports.header = exports.headerCase = require('header-case')
+exports.pascal = exports.pascalCase = require('pascal-case')
+exports.constant = exports.constantCase = require('constant-case')
+exports.sentence = exports.sentenceCase = require('sentence-case')
+exports.isUpper = exports.isUpperCase = require('is-upper-case')
+exports.isLower = exports.isLowerCase = require('is-lower-case')
+exports.ucFirst = exports.upperCaseFirst = require('upper-case-first')
+exports.lcFirst = exports.lowerCaseFirst = require('lower-case-first')
+
+},{"camel-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/camel-case/camel-case.js","constant-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/constant-case/constant-case.js","dot-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/dot-case/dot-case.js","header-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/header-case/header-case.js","is-lower-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/is-lower-case/is-lower-case.js","is-upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/is-upper-case/is-upper-case.js","lower-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case/lower-case.js","lower-case-first":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case-first/lower-case-first.js","no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js","param-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/param-case/param-case.js","pascal-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/pascal-case/pascal-case.js","path-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/path-case/path-case.js","sentence-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/sentence-case/sentence-case.js","snake-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/snake-case/snake-case.js","swap-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/swap-case/swap-case.js","title-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/title-case/title-case.js","upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js","upper-case-first":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/constant-case/constant-case.js":[function(require,module,exports){
+var upperCase = require('upper-case')
+var snakeCase = require('snake-case')
+
+/**
+ * Constant case a string.
+ *
+ * @param  {string} value
+ * @param  {string} [locale]
+ * @return {string}
+ */
+module.exports = function (value, locale) {
+  return upperCase(snakeCase(value, locale), locale)
+}
+
+},{"snake-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/snake-case/snake-case.js","upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/d3-format/build/d3-format.js":[function(require,module,exports){
+// https://d3js.org/d3-format/ Version 1.2.0. Copyright 2017 Mike Bostock.
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.d3 = global.d3 || {})));
+}(this, (function (exports) { 'use strict';
+
+// Computes the decimal coefficient and exponent of the specified number x with
+// significant digits p, where x is positive and p is in [1, 21] or undefined.
+// For example, formatDecimal(1.23) returns ["123", 0].
+var formatDecimal = function(x, p) {
+  if ((i = (x = p ? x.toExponential(p - 1) : x.toExponential()).indexOf("e")) < 0) return null; // NaN, ±Infinity
+  var i, coefficient = x.slice(0, i);
+
+  // The string returned by toExponential either has the form \d\.\d+e[-+]\d+
+  // (e.g., 1.2e+3) or the form \de[-+]\d+ (e.g., 1e+3).
+  return [
+    coefficient.length > 1 ? coefficient[0] + coefficient.slice(2) : coefficient,
+    +x.slice(i + 1)
+  ];
+};
+
+var exponent = function(x) {
+  return x = formatDecimal(Math.abs(x)), x ? x[1] : NaN;
+};
+
+var formatGroup = function(grouping, thousands) {
+  return function(value, width) {
+    var i = value.length,
+        t = [],
+        j = 0,
+        g = grouping[0],
+        length = 0;
+
+    while (i > 0 && g > 0) {
+      if (length + g + 1 > width) g = Math.max(1, width - length);
+      t.push(value.substring(i -= g, i + g));
+      if ((length += g + 1) > width) break;
+      g = grouping[j = (j + 1) % grouping.length];
+    }
+
+    return t.reverse().join(thousands);
+  };
+};
+
+var formatNumerals = function(numerals) {
+  return function(value) {
+    return value.replace(/[0-9]/g, function(i) {
+      return numerals[+i];
+    });
+  };
+};
+
+var formatDefault = function(x, p) {
+  x = x.toPrecision(p);
+
+  out: for (var n = x.length, i = 1, i0 = -1, i1; i < n; ++i) {
+    switch (x[i]) {
+      case ".": i0 = i1 = i; break;
+      case "0": if (i0 === 0) i0 = i; i1 = i; break;
+      case "e": break out;
+      default: if (i0 > 0) i0 = 0; break;
+    }
+  }
+
+  return i0 > 0 ? x.slice(0, i0) + x.slice(i1 + 1) : x;
+};
+
+var prefixExponent;
+
+var formatPrefixAuto = function(x, p) {
+  var d = formatDecimal(x, p);
+  if (!d) return x + "";
+  var coefficient = d[0],
+      exponent = d[1],
+      i = exponent - (prefixExponent = Math.max(-8, Math.min(8, Math.floor(exponent / 3))) * 3) + 1,
+      n = coefficient.length;
+  return i === n ? coefficient
+      : i > n ? coefficient + new Array(i - n + 1).join("0")
+      : i > 0 ? coefficient.slice(0, i) + "." + coefficient.slice(i)
+      : "0." + new Array(1 - i).join("0") + formatDecimal(x, Math.max(0, p + i - 1))[0]; // less than 1y!
+};
+
+var formatRounded = function(x, p) {
+  var d = formatDecimal(x, p);
+  if (!d) return x + "";
+  var coefficient = d[0],
+      exponent = d[1];
+  return exponent < 0 ? "0." + new Array(-exponent).join("0") + coefficient
+      : coefficient.length > exponent + 1 ? coefficient.slice(0, exponent + 1) + "." + coefficient.slice(exponent + 1)
+      : coefficient + new Array(exponent - coefficient.length + 2).join("0");
+};
+
+var formatTypes = {
+  "": formatDefault,
+  "%": function(x, p) { return (x * 100).toFixed(p); },
+  "b": function(x) { return Math.round(x).toString(2); },
+  "c": function(x) { return x + ""; },
+  "d": function(x) { return Math.round(x).toString(10); },
+  "e": function(x, p) { return x.toExponential(p); },
+  "f": function(x, p) { return x.toFixed(p); },
+  "g": function(x, p) { return x.toPrecision(p); },
+  "o": function(x) { return Math.round(x).toString(8); },
+  "p": function(x, p) { return formatRounded(x * 100, p); },
+  "r": formatRounded,
+  "s": formatPrefixAuto,
+  "X": function(x) { return Math.round(x).toString(16).toUpperCase(); },
+  "x": function(x) { return Math.round(x).toString(16); }
+};
+
+// [[fill]align][sign][symbol][0][width][,][.precision][type]
+var re = /^(?:(.)?([<>=^]))?([+\-\( ])?([$#])?(0)?(\d+)?(,)?(\.\d+)?([a-z%])?$/i;
+
+function formatSpecifier(specifier) {
+  return new FormatSpecifier(specifier);
+}
+
+formatSpecifier.prototype = FormatSpecifier.prototype; // instanceof
+
+function FormatSpecifier(specifier) {
+  if (!(match = re.exec(specifier))) throw new Error("invalid format: " + specifier);
+
+  var match,
+      fill = match[1] || " ",
+      align = match[2] || ">",
+      sign = match[3] || "-",
+      symbol = match[4] || "",
+      zero = !!match[5],
+      width = match[6] && +match[6],
+      comma = !!match[7],
+      precision = match[8] && +match[8].slice(1),
+      type = match[9] || "";
+
+  // The "n" type is an alias for ",g".
+  if (type === "n") comma = true, type = "g";
+
+  // Map invalid types to the default format.
+  else if (!formatTypes[type]) type = "";
+
+  // If zero fill is specified, padding goes after sign and before digits.
+  if (zero || (fill === "0" && align === "=")) zero = true, fill = "0", align = "=";
+
+  this.fill = fill;
+  this.align = align;
+  this.sign = sign;
+  this.symbol = symbol;
+  this.zero = zero;
+  this.width = width;
+  this.comma = comma;
+  this.precision = precision;
+  this.type = type;
+}
+
+FormatSpecifier.prototype.toString = function() {
+  return this.fill
+      + this.align
+      + this.sign
+      + this.symbol
+      + (this.zero ? "0" : "")
+      + (this.width == null ? "" : Math.max(1, this.width | 0))
+      + (this.comma ? "," : "")
+      + (this.precision == null ? "" : "." + Math.max(0, this.precision | 0))
+      + this.type;
+};
+
+var identity = function(x) {
+  return x;
+};
+
+var prefixes = ["y","z","a","f","p","n","µ","m","","k","M","G","T","P","E","Z","Y"];
+
+var formatLocale = function(locale) {
+  var group = locale.grouping && locale.thousands ? formatGroup(locale.grouping, locale.thousands) : identity,
+      currency = locale.currency,
+      decimal = locale.decimal,
+      numerals = locale.numerals ? formatNumerals(locale.numerals) : identity,
+      percent = locale.percent || "%";
+
+  function newFormat(specifier) {
+    specifier = formatSpecifier(specifier);
+
+    var fill = specifier.fill,
+        align = specifier.align,
+        sign = specifier.sign,
+        symbol = specifier.symbol,
+        zero = specifier.zero,
+        width = specifier.width,
+        comma = specifier.comma,
+        precision = specifier.precision,
+        type = specifier.type;
+
+    // Compute the prefix and suffix.
+    // For SI-prefix, the suffix is lazily computed.
+    var prefix = symbol === "$" ? currency[0] : symbol === "#" && /[boxX]/.test(type) ? "0" + type.toLowerCase() : "",
+        suffix = symbol === "$" ? currency[1] : /[%p]/.test(type) ? percent : "";
+
+    // What format function should we use?
+    // Is this an integer type?
+    // Can this type generate exponential notation?
+    var formatType = formatTypes[type],
+        maybeSuffix = !type || /[defgprs%]/.test(type);
+
+    // Set the default precision if not specified,
+    // or clamp the specified precision to the supported range.
+    // For significant precision, it must be in [1, 21].
+    // For fixed precision, it must be in [0, 20].
+    precision = precision == null ? (type ? 6 : 12)
+        : /[gprs]/.test(type) ? Math.max(1, Math.min(21, precision))
+        : Math.max(0, Math.min(20, precision));
+
+    function format(value) {
+      var valuePrefix = prefix,
+          valueSuffix = suffix,
+          i, n, c;
+
+      if (type === "c") {
+        valueSuffix = formatType(value) + valueSuffix;
+        value = "";
+      } else {
+        value = +value;
+
+        // Perform the initial formatting.
+        var valueNegative = value < 0;
+        value = formatType(Math.abs(value), precision);
+
+        // If a negative value rounds to zero during formatting, treat as positive.
+        if (valueNegative && +value === 0) valueNegative = false;
+
+        // Compute the prefix and suffix.
+        valuePrefix = (valueNegative ? (sign === "(" ? sign : "-") : sign === "-" || sign === "(" ? "" : sign) + valuePrefix;
+        valueSuffix = valueSuffix + (type === "s" ? prefixes[8 + prefixExponent / 3] : "") + (valueNegative && sign === "(" ? ")" : "");
+
+        // Break the formatted value into the integer “value” part that can be
+        // grouped, and fractional or exponential “suffix” part that is not.
+        if (maybeSuffix) {
+          i = -1, n = value.length;
+          while (++i < n) {
+            if (c = value.charCodeAt(i), 48 > c || c > 57) {
+              valueSuffix = (c === 46 ? decimal + value.slice(i + 1) : value.slice(i)) + valueSuffix;
+              value = value.slice(0, i);
+              break;
+            }
+          }
+        }
+      }
+
+      // If the fill character is not "0", grouping is applied before padding.
+      if (comma && !zero) value = group(value, Infinity);
+
+      // Compute the padding.
+      var length = valuePrefix.length + value.length + valueSuffix.length,
+          padding = length < width ? new Array(width - length + 1).join(fill) : "";
+
+      // If the fill character is "0", grouping is applied after padding.
+      if (comma && zero) value = group(padding + value, padding.length ? width - valueSuffix.length : Infinity), padding = "";
+
+      // Reconstruct the final output based on the desired alignment.
+      switch (align) {
+        case "<": value = valuePrefix + value + valueSuffix + padding; break;
+        case "=": value = valuePrefix + padding + value + valueSuffix; break;
+        case "^": value = padding.slice(0, length = padding.length >> 1) + valuePrefix + value + valueSuffix + padding.slice(length); break;
+        default: value = padding + valuePrefix + value + valueSuffix; break;
+      }
+
+      return numerals(value);
+    }
+
+    format.toString = function() {
+      return specifier + "";
+    };
+
+    return format;
+  }
+
+  function formatPrefix(specifier, value) {
+    var f = newFormat((specifier = formatSpecifier(specifier), specifier.type = "f", specifier)),
+        e = Math.max(-8, Math.min(8, Math.floor(exponent(value) / 3))) * 3,
+        k = Math.pow(10, -e),
+        prefix = prefixes[8 + e / 3];
+    return function(value) {
+      return f(k * value) + prefix;
+    };
+  }
+
+  return {
+    format: newFormat,
+    formatPrefix: formatPrefix
+  };
+};
+
+var locale;
+
+
+
+defaultLocale({
+  decimal: ".",
+  thousands: ",",
+  grouping: [3],
+  currency: ["$", ""]
+});
+
+function defaultLocale(definition) {
+  locale = formatLocale(definition);
+  exports.format = locale.format;
+  exports.formatPrefix = locale.formatPrefix;
+  return locale;
+}
+
+var precisionFixed = function(step) {
+  return Math.max(0, -exponent(Math.abs(step)));
+};
+
+var precisionPrefix = function(step, value) {
+  return Math.max(0, Math.max(-8, Math.min(8, Math.floor(exponent(value) / 3))) * 3 - exponent(Math.abs(step)));
+};
+
+var precisionRound = function(step, max) {
+  step = Math.abs(step), max = Math.abs(max) - step;
+  return Math.max(0, exponent(max) - exponent(step)) + 1;
+};
+
+exports.formatDefaultLocale = defaultLocale;
+exports.formatLocale = formatLocale;
+exports.formatSpecifier = formatSpecifier;
+exports.precisionFixed = precisionFixed;
+exports.precisionPrefix = precisionPrefix;
+exports.precisionRound = precisionRound;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/dot-case/dot-case.js":[function(require,module,exports){
+var noCase = require('no-case')
+
+/**
+ * Dot case a string.
+ *
+ * @param  {string} value
+ * @param  {string} [locale]
+ * @return {string}
+ */
+module.exports = function (value, locale) {
+  return noCase(value, locale, '.')
+}
+
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/EventListener.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/EventListener.js"][0].apply(exports,arguments)
+},{"./emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/ExecutionEnvironment.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/camelize.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/camelize.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/camelizeStyleName.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/camelizeStyleName.js"][0].apply(exports,arguments)
+},{"./camelize":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/camelize.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/containsNode.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/containsNode.js"][0].apply(exports,arguments)
+},{"./isTextNode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/isTextNode.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/createArrayFromMixed.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/createArrayFromMixed.js"][0].apply(exports,arguments)
+},{"./invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/createNodesFromMarkup.js"][0].apply(exports,arguments)
+},{"./ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./createArrayFromMixed":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/createArrayFromMixed.js","./getMarkupWrap":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/getMarkupWrap.js","./invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyFunction.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/emptyObject.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/focusNode.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/focusNode.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/getActiveElement.js":[function(require,module,exports){
+'use strict';
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/* eslint-disable fb-www/typeof-undefined */
+
+/**
+ * Same as document.activeElement but wraps in a try-catch block. In IE it is
+ * not safe to call document.activeElement if there is nothing focused.
+ *
+ * The activeElement will be null only if the document or document body is not
+ * yet defined.
+ *
+ * @param {?DOMDocument} doc Defaults to current document.
+ * @return {?DOMElement}
+ */
+function getActiveElement(doc) /*?DOMElement*/{
+  doc = doc || (typeof document !== 'undefined' ? document : undefined);
+  if (typeof doc === 'undefined') {
+    return null;
+  }
+  try {
+    return doc.activeElement || doc.body;
+  } catch (e) {
+    return doc.body;
+  }
+}
+
+module.exports = getActiveElement;
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/getMarkupWrap.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/getMarkupWrap.js"][0].apply(exports,arguments)
+},{"./ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","./invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js":[function(require,module,exports){
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+'use strict';
+
+/**
+ * Gets the scroll position of the supplied element or window.
+ *
+ * The return values are unbounded, unlike `getScrollPosition`. This means they
+ * may be negative or exceed the element boundaries (which is possible using
+ * inertial scrolling).
+ *
+ * @param {DOMWindow|DOMElement} scrollable
+ * @return {object} Map with `x` and `y` keys.
+ */
+
+function getUnboundedScrollPosition(scrollable) {
+  if (scrollable.Window && scrollable instanceof scrollable.Window) {
+    return {
+      x: scrollable.pageXOffset || scrollable.document.documentElement.scrollLeft,
+      y: scrollable.pageYOffset || scrollable.document.documentElement.scrollTop
+    };
+  }
+  return {
+    x: scrollable.scrollLeft,
+    y: scrollable.scrollTop
+  };
+}
+
+module.exports = getUnboundedScrollPosition;
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/hyphenate.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/hyphenate.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/hyphenateStyleName.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/hyphenateStyleName.js"][0].apply(exports,arguments)
+},{"./hyphenate":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/hyphenate.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/invariant.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/isNode.js":[function(require,module,exports){
+'use strict';
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/**
+ * @param {*} object The object to check.
+ * @return {boolean} Whether or not the object is a DOM node.
+ */
+function isNode(object) {
+  var doc = object ? object.ownerDocument || object : document;
+  var defaultView = doc.defaultView || window;
+  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+}
+
+module.exports = isNode;
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/isTextNode.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/isTextNode.js"][0].apply(exports,arguments)
+},{"./isNode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/isNode.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/memoizeStringOnly.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/memoizeStringOnly.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/performance.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/performance.js"][0].apply(exports,arguments)
+},{"./ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/performanceNow.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/performanceNow.js"][0].apply(exports,arguments)
+},{"./performance":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/performance.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/shallowEqual.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/fbjs/lib/warning.js"][0].apply(exports,arguments)
+},{"./emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/header-case/header-case.js":[function(require,module,exports){
+var noCase = require('no-case')
+var upperCase = require('upper-case')
+
+/**
+ * Header case a string.
+ *
+ * @param  {string} value
+ * @param  {string} [locale]
+ * @return {string}
+ */
+module.exports = function (value, locale) {
+  return noCase(value, locale, '-').replace(/^.|-./g, function (m) {
+    return upperCase(m, locale)
+  })
+}
+
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/html-tags/html-tags.json":[function(require,module,exports){
+module.exports=[
+	"a",
+	"abbr",
+	"address",
+	"area",
+	"article",
+	"aside",
+	"audio",
+	"b",
+	"base",
+	"bdi",
+	"bdo",
+	"blockquote",
+	"body",
+	"br",
+	"button",
+	"canvas",
+	"caption",
+	"cite",
+	"code",
+	"col",
+	"colgroup",
+	"data",
+	"datalist",
+	"dd",
+	"del",
+	"details",
+	"dfn",
+	"dialog",
+	"div",
+	"dl",
+	"dt",
+	"em",
+	"embed",
+	"fieldset",
+	"figcaption",
+	"figure",
+	"footer",
+	"form",
+	"h1",
+	"h2",
+	"h3",
+	"h4",
+	"h5",
+	"h6",
+	"head",
+	"header",
+	"hr",
+	"html",
+	"i",
+	"iframe",
+	"img",
+	"input",
+	"ins",
+	"kbd",
+	"keygen",
+	"label",
+	"legend",
+	"li",
+	"link",
+	"main",
+	"map",
+	"mark",
+	"math",
+	"menu",
+	"menuitem",
+	"meta",
+	"meter",
+	"nav",
+	"noscript",
+	"object",
+	"ol",
+	"optgroup",
+	"option",
+	"output",
+	"p",
+	"param",
+	"picture",
+	"pre",
+	"progress",
+	"q",
+	"rb",
+	"rp",
+	"rt",
+	"rtc",
+	"ruby",
+	"s",
+	"samp",
+	"script",
+	"section",
+	"select",
+	"small",
+	"source",
+	"span",
+	"strong",
+	"style",
+	"sub",
+	"summary",
+	"sup",
+	"svg",
+	"table",
+	"tbody",
+	"td",
+	"template",
+	"textarea",
+	"tfoot",
+	"th",
+	"thead",
+	"time",
+	"title",
+	"tr",
+	"track",
+	"u",
+	"ul",
+	"var",
+	"video",
+	"wbr"
+]
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/html-tags/index.js":[function(require,module,exports){
+module.exports = require('./html-tags.json');
+
+},{"./html-tags.json":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/html-tags/html-tags.json"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/display-var.js":[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var IdyllComponent = require('idyll-component');
+var Format = require('d3-format');
+
+var DisplayVar = function (_IdyllComponent) {
+  _inherits(DisplayVar, _IdyllComponent);
+
+  function DisplayVar(props) {
+    _classCallCheck(this, DisplayVar);
+
+    var _this = _possibleConstructorReturn(this, (DisplayVar.__proto__ || Object.getPrototypeOf(DisplayVar)).call(this, props));
+
+    _this.format = Format.format(props.format || '0.2f');
+    return _this;
+  }
+
+  _createClass(DisplayVar, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'span',
+        null,
+        this.format(this.props.var)
+      );
+    }
+  }]);
+
+  return DisplayVar;
+}(IdyllComponent);
+
+module.exports = DisplayVar;
+},{"d3-format":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/d3-format/build/d3-format.js","idyll-component":"/Users/conlenm/projects/idyll-lang/idyll-component/lib.js","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/header.js":[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var IdyllComponent = require('idyll-component');
+
+var Header = function (_IdyllComponent) {
+  _inherits(Header, _IdyllComponent);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: 'article-header' },
+        React.createElement(
+          'h1',
+          { className: 'hed' },
+          this.props.title
+        ),
+        this.props.subtitle && React.createElement(
+          'h2',
+          { className: 'dek' },
+          this.props.subtitle
+        ),
+        React.createElement(
+          'div',
+          { className: 'byline' },
+          'By: ',
+          React.createElement(
+            'a',
+            { href: this.props.authorLink },
+            this.props.author
+          )
+        )
+      );
+    }
+  }]);
+
+  return Header;
+}(IdyllComponent);
+
+module.exports = Header;
+},{"idyll-component":"/Users/conlenm/projects/idyll-lang/idyll-component/lib.js","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/range.js":[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = require('react');
+var IdyllComponent = require('idyll-component');
+
+var Range = function (_IdyllComponent) {
+  _inherits(Range, _IdyllComponent);
+
+  function Range(props) {
+    _classCallCheck(this, Range);
+
+    return _possibleConstructorReturn(this, (Range.__proto__ || Object.getPrototypeOf(Range)).call(this, props));
+  }
+
+  _createClass(Range, [{
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.updateProps({
+        value: +event.target.value
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          value = _props.value,
+          min = _props.min,
+          max = _props.max,
+          step = _props.step;
+
+      return React.createElement('input', { type: 'range', onChange: this.handleChange.bind(this), value: value, min: min, max: max, step: step });
+    }
+  }]);
+
+  return Range;
+}(IdyllComponent);
+
+Range.defaultProps = {
+  value: 0,
+  min: 0,
+  max: 1,
+  step: 1
+};
+
+module.exports = Range;
+},{"idyll-component":"/Users/conlenm/projects/idyll-lang/idyll-component/lib.js","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/is-lower-case/is-lower-case.js":[function(require,module,exports){
+var lowerCase = require('lower-case')
+
+/**
+ * Check if a string is lower case.
+ *
+ * @param  {String}  string
+ * @param  {String}  [locale]
+ * @return {Boolean}
+ */
+module.exports = function (string, locale) {
+  return lowerCase(string, locale) === string
+}
+
+},{"lower-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case/lower-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/is-upper-case/is-upper-case.js":[function(require,module,exports){
+var upperCase = require('upper-case')
+
+/**
+ * Check if a string is upper case.
+ *
+ * @param  {String}  string
+ * @param  {String}  [locale]
+ * @return {Boolean}
+ */
+module.exports = function (string, locale) {
+  return upperCase(string, locale) === string
+}
+
+},{"upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case-first/lower-case-first.js":[function(require,module,exports){
+var lowerCase = require('lower-case')
+
+/**
+ * Lower case the first character of a string.
+ *
+ * @param  {String} str
+ * @return {String}
+ */
+module.exports = function (str, locale) {
+  if (str == null) {
+    return ''
+  }
+
+  str = String(str)
+
+  return lowerCase(str.charAt(0), locale) + str.substr(1)
+}
+
+},{"lower-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case/lower-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case/lower-case.js":[function(require,module,exports){
+/**
+ * Special language-specific overrides.
+ *
+ * Source: ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
+ *
+ * @type {Object}
+ */
+var LANGUAGES = {
+  tr: {
+    regexp: /\u0130|\u0049|\u0049\u0307/g,
+    map: {
+      '\u0130': '\u0069',
+      '\u0049': '\u0131',
+      '\u0049\u0307': '\u0069'
+    }
+  },
+  az: {
+    regexp: /[\u0130]/g,
+    map: {
+      '\u0130': '\u0069',
+      '\u0049': '\u0131',
+      '\u0049\u0307': '\u0069'
+    }
+  },
+  lt: {
+    regexp: /[\u0049\u004A\u012E\u00CC\u00CD\u0128]/g,
+    map: {
+      '\u0049': '\u0069\u0307',
+      '\u004A': '\u006A\u0307',
+      '\u012E': '\u012F\u0307',
+      '\u00CC': '\u0069\u0307\u0300',
+      '\u00CD': '\u0069\u0307\u0301',
+      '\u0128': '\u0069\u0307\u0303'
+    }
+  }
+}
+
+/**
+ * Lowercase a string.
+ *
+ * @param  {String} str
+ * @return {String}
+ */
+module.exports = function (str, locale) {
+  var lang = LANGUAGES[locale]
+
+  str = str == null ? '' : String(str)
+
+  if (lang) {
+    str = str.replace(lang.regexp, function (m) { return lang.map[m] })
+  }
+
+  return str.toLowerCase()
+}
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js":[function(require,module,exports){
+var lowerCase = require('lower-case')
+
+var NON_WORD_REGEXP = require('./vendor/non-word-regexp')
+var CAMEL_CASE_REGEXP = require('./vendor/camel-case-regexp')
+var CAMEL_CASE_UPPER_REGEXP = require('./vendor/camel-case-upper-regexp')
+
+/**
+ * Sentence case a string.
+ *
+ * @param  {string} str
+ * @param  {string} locale
+ * @param  {string} replacement
+ * @return {string}
+ */
+module.exports = function (str, locale, replacement) {
+  if (str == null) {
+    return ''
+  }
+
+  replacement = typeof replacement !== 'string' ? ' ' : replacement
+
+  function replace (match, index, value) {
+    if (index === 0 || index === (value.length - match.length)) {
+      return ''
+    }
+
+    return replacement
+  }
+
+  str = String(str)
+    // Support camel case ("camelCase" -> "camel Case").
+    .replace(CAMEL_CASE_REGEXP, '$1 $2')
+    // Support odd camel case ("CAMELCase" -> "CAMEL Case").
+    .replace(CAMEL_CASE_UPPER_REGEXP, '$1 $2')
+    // Remove all non-word characters and replace with a single space.
+    .replace(NON_WORD_REGEXP, replace)
+
+  // Lower case the entire string.
+  return lowerCase(str, locale)
+}
+
+},{"./vendor/camel-case-regexp":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-regexp.js","./vendor/camel-case-upper-regexp":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js","./vendor/non-word-regexp":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/vendor/non-word-regexp.js","lower-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case/lower-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-regexp.js":[function(require,module,exports){
+module.exports = /([a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0529\u052B\u052D\u052F\u0561-\u0587\u13F8-\u13FD\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA699\uA69B\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793-\uA795\uA797\uA799\uA79B\uA79D\uA79F\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7B5\uA7B7\uA7FA\uAB30-\uAB5A\uAB60-\uAB65\uAB70-\uABBF\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A0-9\xB2\xB3\xB9\xBC-\xBE\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u09F4-\u09F9\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0B72-\u0B77\u0BE6-\u0BF2\u0C66-\u0C6F\u0C78-\u0C7E\u0CE6-\u0CEF\u0D66-\u0D75\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F33\u1040-\u1049\u1090-\u1099\u1369-\u137C\u16EE-\u16F0\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1946-\u194F\u19D0-\u19DA\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\u2070\u2074-\u2079\u2080-\u2089\u2150-\u2182\u2185-\u2189\u2460-\u249B\u24EA-\u24FF\u2776-\u2793\u2CFD\u3007\u3021-\u3029\u3038-\u303A\u3192-\u3195\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\uA620-\uA629\uA6E6-\uA6EF\uA830-\uA835\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19])([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A])/g
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/vendor/camel-case-upper-regexp.js":[function(require,module,exports){
+module.exports = /([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A]+)([A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u037F\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0528\u052A\u052C\u052E\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u13A0-\u13F5\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA698\uA69A\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA796\uA798\uA79A\uA79C\uA79E\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA-\uA7AD\uA7B0-\uA7B4\uA7B6\uFF21-\uFF3A][a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0529\u052B\u052D\u052F\u0561-\u0587\u13F8-\u13FD\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA699\uA69B\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793-\uA795\uA797\uA799\uA79B\uA79D\uA79F\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7B5\uA7B7\uA7FA\uAB30-\uAB5A\uAB60-\uAB65\uAB70-\uABBF\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A])/g
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/vendor/non-word-regexp.js":[function(require,module,exports){
+module.exports = /[^A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0-\u08B4\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FD5\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AD\uA7B0-\uA7B7\uA7F7-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC0-9\xB2\xB3\xB9\xBC-\xBE\u0660-\u0669\u06F0-\u06F9\u07C0-\u07C9\u0966-\u096F\u09E6-\u09EF\u09F4-\u09F9\u0A66-\u0A6F\u0AE6-\u0AEF\u0B66-\u0B6F\u0B72-\u0B77\u0BE6-\u0BF2\u0C66-\u0C6F\u0C78-\u0C7E\u0CE6-\u0CEF\u0D66-\u0D75\u0DE6-\u0DEF\u0E50-\u0E59\u0ED0-\u0ED9\u0F20-\u0F33\u1040-\u1049\u1090-\u1099\u1369-\u137C\u16EE-\u16F0\u17E0-\u17E9\u17F0-\u17F9\u1810-\u1819\u1946-\u194F\u19D0-\u19DA\u1A80-\u1A89\u1A90-\u1A99\u1B50-\u1B59\u1BB0-\u1BB9\u1C40-\u1C49\u1C50-\u1C59\u2070\u2074-\u2079\u2080-\u2089\u2150-\u2182\u2185-\u2189\u2460-\u249B\u24EA-\u24FF\u2776-\u2793\u2CFD\u3007\u3021-\u3029\u3038-\u303A\u3192-\u3195\u3220-\u3229\u3248-\u324F\u3251-\u325F\u3280-\u3289\u32B1-\u32BF\uA620-\uA629\uA6E6-\uA6EF\uA830-\uA835\uA8D0-\uA8D9\uA900-\uA909\uA9D0-\uA9D9\uA9F0-\uA9F9\uAA50-\uAA59\uABF0-\uABF9\uFF10-\uFF19]+/g
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/object-assign/index.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/param-case/param-case.js":[function(require,module,exports){
+var noCase = require('no-case')
+
+/**
+ * Param case a string.
+ *
+ * @param  {string} value
+ * @param  {string} [locale]
+ * @return {string}
+ */
+module.exports = function (value, locale) {
+  return noCase(value, locale, '-')
+}
+
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/pascal-case/pascal-case.js":[function(require,module,exports){
+var camelCase = require('camel-case')
+var upperCaseFirst = require('upper-case-first')
+
+/**
+ * Pascal case a string.
+ *
+ * @param  {string}  value
+ * @param  {string}  [locale]
+ * @param  {boolean} [mergeNumbers]
+ * @return {string}
+ */
+module.exports = function (value, locale, mergeNumbers) {
+  return upperCaseFirst(camelCase(value, locale, mergeNumbers), locale)
+}
+
+},{"camel-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/camel-case/camel-case.js","upper-case-first":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/path-case/path-case.js":[function(require,module,exports){
+var noCase = require('no-case')
+
+/**
+ * Path case a string.
+ *
+ * @param  {string} value
+ * @param  {string} [locale]
+ * @return {string}
+ */
+module.exports = function (value, locale) {
+  return noCase(value, locale, '/')
+}
+
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js":[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/checkPropTypes.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
+if ("production" !== 'production') {
+  var invariant = require('fbjs/lib/invariant');
+  var warning = require('fbjs/lib/warning');
+  var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
+  var loggedTypeFailures = {};
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if ("production" !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+},{"./lib/ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/factory.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
+// React 15.5 references this module, and assumes PropTypes are still callable in production.
+// Therefore we re-export development-only version with all the PropTypes checks here.
+// However if one is migrating to the `prop-types` npm library, they will go through the
+// `index.js` entry point, and it will branch depending on the environment.
+var factory = require('./factoryWithTypeCheckers');
+module.exports = function(isValidElement) {
+  // It is still allowed in 15.5.
+  var throwOnDirectAccess = false;
+  return factory(isValidElement, throwOnDirectAccess);
+};
+
+},{"./factoryWithTypeCheckers":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/factoryWithTypeCheckers.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/factoryWithTypeCheckers.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
+var emptyFunction = require('fbjs/lib/emptyFunction');
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
+var checkPropTypes = require('./checkPropTypes');
+
+module.exports = function(isValidElement, throwOnDirectAccess) {
+  /* global Symbol */
+  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+  /**
+   * Returns the iterator method function contained on the iterable object.
+   *
+   * Be sure to invoke the function with the iterable as context:
+   *
+   *     var iteratorFn = getIteratorFn(myIterable);
+   *     if (iteratorFn) {
+   *       var iterator = iteratorFn.call(myIterable);
+   *       ...
+   *     }
+   *
+   * @param {?object} maybeIterable
+   * @return {?function}
+   */
+  function getIteratorFn(maybeIterable) {
+    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+    if (typeof iteratorFn === 'function') {
+      return iteratorFn;
+    }
+  }
+
+  /**
+   * Collection of methods that allow declaration and validation of props that are
+   * supplied to React components. Example usage:
+   *
+   *   var Props = require('ReactPropTypes');
+   *   var MyArticle = React.createClass({
+   *     propTypes: {
+   *       // An optional string prop named "description".
+   *       description: Props.string,
+   *
+   *       // A required enum prop named "category".
+   *       category: Props.oneOf(['News','Photos']).isRequired,
+   *
+   *       // A prop named "dialog" that requires an instance of Dialog.
+   *       dialog: Props.instanceOf(Dialog).isRequired
+   *     },
+   *     render: function() { ... }
+   *   });
+   *
+   * A more formal specification of how these methods are used:
+   *
+   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+   *   decl := ReactPropTypes.{type}(.isRequired)?
+   *
+   * Each and every declaration produces a function with the same signature. This
+   * allows the creation of custom validation functions. For example:
+   *
+   *  var MyLink = React.createClass({
+   *    propTypes: {
+   *      // An optional string or URI prop named "href".
+   *      href: function(props, propName, componentName) {
+   *        var propValue = props[propName];
+   *        if (propValue != null && typeof propValue !== 'string' &&
+   *            !(propValue instanceof URI)) {
+   *          return new Error(
+   *            'Expected a string or an URI for ' + propName + ' in ' +
+   *            componentName
+   *          );
+   *        }
+   *      }
+   *    },
+   *    render: function() {...}
+   *  });
+   *
+   * @internal
+   */
+
+  var ANONYMOUS = '<<anonymous>>';
+
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+  var ReactPropTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    string: createPrimitiveTypeChecker('string'),
+    symbol: createPrimitiveTypeChecker('symbol'),
+
+    any: createAnyTypeChecker(),
+    arrayOf: createArrayOfTypeChecker,
+    element: createElementTypeChecker(),
+    instanceOf: createInstanceTypeChecker,
+    node: createNodeChecker(),
+    objectOf: createObjectOfTypeChecker,
+    oneOf: createEnumTypeChecker,
+    oneOfType: createUnionTypeChecker,
+    shape: createShapeTypeChecker
+  };
+
+  /**
+   * inlined Object.is polyfill to avoid requiring consumers ship their own
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+   */
+  /*eslint-disable no-self-compare*/
+  function is(x, y) {
+    // SameValue algorithm
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+  /*eslint-enable no-self-compare*/
+
+  /**
+   * We use an Error-like object for backward compatibility as people may call
+   * PropTypes directly and inspect their output. However, we don't use real
+   * Errors anymore. We don't inspect their stack anyway, and creating them
+   * is prohibitively expensive if they are created too often, such as what
+   * happens in oneOfType() for any type before the one that matched.
+   */
+  function PropTypeError(message) {
+    this.message = message;
+    this.stack = '';
+  }
+  // Make `instanceof Error` still work for returned errors.
+  PropTypeError.prototype = Error.prototype;
+
+  function createChainableTypeChecker(validate) {
+    if ("production" !== 'production') {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      componentName = componentName || ANONYMOUS;
+      propFullName = propFullName || propName;
+
+      if (secret !== ReactPropTypesSecret) {
+        if (throwOnDirectAccess) {
+          // New behavior only for users of `prop-types` package
+          invariant(
+            false,
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
+        } else if ("production" !== 'production' && typeof console !== 'undefined') {
+          // Old behavior for people using React.PropTypes
+          var cacheKey = componentName + ':' + propName;
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            warning(
+              false,
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `%s` prop on `%s`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.',
+              propFullName,
+              componentName
+            );
+            manualPropTypeCallCache[cacheKey] = true;
+            manualPropTypeWarningCount++;
+          }
+        }
+      }
+      if (props[propName] == null) {
+        if (isRequired) {
+          if (props[propName] === null) {
+            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+          }
+          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+        }
+        return null;
+      } else {
+        return validate(props, propName, componentName, location, propFullName);
+      }
+    }
+
+    var chainedCheckType = checkType.bind(null, false);
+    chainedCheckType.isRequired = checkType.bind(null, true);
+
+    return chainedCheckType;
+  }
+
+  function createPrimitiveTypeChecker(expectedType) {
+    function validate(props, propName, componentName, location, propFullName, secret) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== expectedType) {
+        // `propValue` being instance of, say, date/regexp, pass the 'object'
+        // check, but we can offer a more precise error message here rather than
+        // 'of type `object`'.
+        var preciseType = getPreciseType(propValue);
+
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createAnyTypeChecker() {
+    return createChainableTypeChecker(emptyFunction.thatReturnsNull);
+  }
+
+  function createArrayOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+      }
+      var propValue = props[propName];
+      if (!Array.isArray(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+      }
+      for (var i = 0; i < propValue.length; i++) {
+        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!isValidElement(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createInstanceTypeChecker(expectedClass) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!(props[propName] instanceof expectedClass)) {
+        var expectedClassName = expectedClass.name || ANONYMOUS;
+        var actualClassName = getClassName(props[propName]);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createEnumTypeChecker(expectedValues) {
+    if (!Array.isArray(expectedValues)) {
+      "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
+      return emptyFunction.thatReturnsNull;
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      for (var i = 0; i < expectedValues.length; i++) {
+        if (is(propValue, expectedValues[i])) {
+          return null;
+        }
+      }
+
+      var valuesString = JSON.stringify(expectedValues);
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createObjectOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+      }
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+      }
+      for (var key in propValue) {
+        if (propValue.hasOwnProperty(key)) {
+          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+          if (error instanceof Error) {
+            return error;
+          }
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createUnionTypeChecker(arrayOfTypeCheckers) {
+    if (!Array.isArray(arrayOfTypeCheckers)) {
+      "production" !== 'production' ? warning(false, 'Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      return emptyFunction.thatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        warning(
+          false,
+          'Invalid argument supplid to oneOfType. Expected an array of check functions, but ' +
+          'received %s at index %s.',
+          getPostfixForTypeWarning(checker),
+          i
+        );
+        return emptyFunction.thatReturnsNull;
+      }
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+        var checker = arrayOfTypeCheckers[i];
+        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret) == null) {
+          return null;
+        }
+      }
+
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createNodeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!isNode(props[propName])) {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      for (var key in shapeTypes) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          continue;
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function isNode(propValue) {
+    switch (typeof propValue) {
+      case 'number':
+      case 'string':
+      case 'undefined':
+        return true;
+      case 'boolean':
+        return !propValue;
+      case 'object':
+        if (Array.isArray(propValue)) {
+          return propValue.every(isNode);
+        }
+        if (propValue === null || isValidElement(propValue)) {
+          return true;
+        }
+
+        var iteratorFn = getIteratorFn(propValue);
+        if (iteratorFn) {
+          var iterator = iteratorFn.call(propValue);
+          var step;
+          if (iteratorFn !== propValue.entries) {
+            while (!(step = iterator.next()).done) {
+              if (!isNode(step.value)) {
+                return false;
+              }
+            }
+          } else {
+            // Iterator will provide entry [k,v] tuples rather than values.
+            while (!(step = iterator.next()).done) {
+              var entry = step.value;
+              if (entry) {
+                if (!isNode(entry[1])) {
+                  return false;
+                }
+              }
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  function isSymbol(propType, propValue) {
+    // Native Symbol.
+    if (propType === 'symbol') {
+      return true;
+    }
+
+    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+    if (propValue['@@toStringTag'] === 'Symbol') {
+      return true;
+    }
+
+    // Fallback for non-spec compliant Symbols which are polyfilled.
+    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Equivalent of `typeof` but with special handling for array and regexp.
+  function getPropType(propValue) {
+    var propType = typeof propValue;
+    if (Array.isArray(propValue)) {
+      return 'array';
+    }
+    if (propValue instanceof RegExp) {
+      // Old webkits (at least until Android 4.0) return 'function' rather than
+      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+      // passes PropTypes.object.
+      return 'object';
+    }
+    if (isSymbol(propType, propValue)) {
+      return 'symbol';
+    }
+    return propType;
+  }
+
+  // This handles more types than `getPropType`. Only used for error messages.
+  // See `createPrimitiveTypeChecker`.
+  function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
+    var propType = getPropType(propValue);
+    if (propType === 'object') {
+      if (propValue instanceof Date) {
+        return 'date';
+      } else if (propValue instanceof RegExp) {
+        return 'regexp';
+      }
+    }
+    return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
+  }
+
+  // Returns class name of the object, if any.
+  function getClassName(propValue) {
+    if (!propValue.constructor || !propValue.constructor.name) {
+      return ANONYMOUS;
+    }
+    return propValue.constructor.name;
+  }
+
+  ReactPropTypes.checkPropTypes = checkPropTypes;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+},{"./checkPropTypes":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/checkPropTypes.js","./lib/ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+'use strict';
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/index.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/index.js"][0].apply(exports,arguments)
+},{"./lib/ReactDOM":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOM.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ARIADOMPropertyConfig.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/AutoFocusUtils.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/AutoFocusUtils.js"][0].apply(exports,arguments)
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","fbjs/lib/focusNode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/focusNode.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/BeforeInputEventPlugin.js"][0].apply(exports,arguments)
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./FallbackCompositionState":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/FallbackCompositionState.js","./SyntheticCompositionEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js","./SyntheticInputEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CSSProperty.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CSSProperty.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CSSPropertyOperations.js"][0].apply(exports,arguments)
+},{"./CSSProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CSSProperty.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./dangerousStyleValue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/dangerousStyleValue.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/camelizeStyleName":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/camelizeStyleName.js","fbjs/lib/hyphenateStyleName":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/hyphenateStyleName.js","fbjs/lib/memoizeStringOnly":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/memoizeStringOnly.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CallbackQueue.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/CallbackQueue.js"][0].apply(exports,arguments)
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var EventPluginHub = require('./EventPluginHub');
+var EventPropagators = require('./EventPropagators');
+var ExecutionEnvironment = require('fbjs/lib/ExecutionEnvironment');
+var ReactDOMComponentTree = require('./ReactDOMComponentTree');
+var ReactUpdates = require('./ReactUpdates');
+var SyntheticEvent = require('./SyntheticEvent');
+
+var getEventTarget = require('./getEventTarget');
+var isEventSupported = require('./isEventSupported');
+var isTextInputElement = require('./isTextInputElement');
+
+var eventTypes = {
+  change: {
+    phasedRegistrationNames: {
+      bubbled: 'onChange',
+      captured: 'onChangeCapture'
+    },
+    dependencies: ['topBlur', 'topChange', 'topClick', 'topFocus', 'topInput', 'topKeyDown', 'topKeyUp', 'topSelectionChange']
+  }
+};
+
+/**
+ * For IE shims
+ */
+var activeElement = null;
+var activeElementInst = null;
+var activeElementValue = null;
+var activeElementValueProp = null;
+
+/**
+ * SECTION: handle `change` event
+ */
+function shouldUseChangeEvent(elem) {
+  var nodeName = elem.nodeName && elem.nodeName.toLowerCase();
+  return nodeName === 'select' || nodeName === 'input' && elem.type === 'file';
+}
+
+var doesChangeEventBubble = false;
+if (ExecutionEnvironment.canUseDOM) {
+  // See `handleChange` comment below
+  doesChangeEventBubble = isEventSupported('change') && (!document.documentMode || document.documentMode > 8);
+}
+
+function manualDispatchChangeEvent(nativeEvent) {
+  var event = SyntheticEvent.getPooled(eventTypes.change, activeElementInst, nativeEvent, getEventTarget(nativeEvent));
+  EventPropagators.accumulateTwoPhaseDispatches(event);
+
+  // If change and propertychange bubbled, we'd just bind to it like all the
+  // other events and have it go through ReactBrowserEventEmitter. Since it
+  // doesn't, we manually listen for the events and so we have to enqueue and
+  // process the abstract event manually.
+  //
+  // Batching is necessary here in order to ensure that all event handlers run
+  // before the next rerender (including event handlers attached to ancestor
+  // elements instead of directly on the input). Without this, controlled
+  // components don't work properly in conjunction with event bubbling because
+  // the component is rerendered and the value reverted before all the event
+  // handlers can run. See https://github.com/facebook/react/issues/708.
+  ReactUpdates.batchedUpdates(runEventInBatch, event);
+}
+
+function runEventInBatch(event) {
+  EventPluginHub.enqueueEvents(event);
+  EventPluginHub.processEventQueue(false);
+}
+
+function startWatchingForChangeEventIE8(target, targetInst) {
+  activeElement = target;
+  activeElementInst = targetInst;
+  activeElement.attachEvent('onchange', manualDispatchChangeEvent);
+}
+
+function stopWatchingForChangeEventIE8() {
+  if (!activeElement) {
+    return;
+  }
+  activeElement.detachEvent('onchange', manualDispatchChangeEvent);
+  activeElement = null;
+  activeElementInst = null;
+}
+
+function getTargetInstForChangeEvent(topLevelType, targetInst) {
+  if (topLevelType === 'topChange') {
+    return targetInst;
+  }
+}
+function handleEventsForChangeEventIE8(topLevelType, target, targetInst) {
+  if (topLevelType === 'topFocus') {
+    // stopWatching() should be a noop here but we call it just in case we
+    // missed a blur event somehow.
+    stopWatchingForChangeEventIE8();
+    startWatchingForChangeEventIE8(target, targetInst);
+  } else if (topLevelType === 'topBlur') {
+    stopWatchingForChangeEventIE8();
+  }
+}
+
+/**
+ * SECTION: handle `input` event
+ */
+var isInputEventSupported = false;
+if (ExecutionEnvironment.canUseDOM) {
+  // IE9 claims to support the input event but fails to trigger it when
+  // deleting text, so we ignore its input events.
+  // IE10+ fire input events to often, such when a placeholder
+  // changes or when an input with a placeholder is focused.
+  isInputEventSupported = isEventSupported('input') && (!document.documentMode || document.documentMode > 11);
+}
+
+/**
+ * (For IE <=11) Replacement getter/setter for the `value` property that gets
+ * set on the active element.
+ */
+var newValueProp = {
+  get: function () {
+    return activeElementValueProp.get.call(this);
+  },
+  set: function (val) {
+    // Cast to a string so we can do equality checks.
+    activeElementValue = '' + val;
+    activeElementValueProp.set.call(this, val);
+  }
+};
+
+/**
+ * (For IE <=11) Starts tracking propertychange events on the passed-in element
+ * and override the value property so that we can distinguish user events from
+ * value changes in JS.
+ */
+function startWatchingForValueChange(target, targetInst) {
+  activeElement = target;
+  activeElementInst = targetInst;
+  activeElementValue = target.value;
+  activeElementValueProp = Object.getOwnPropertyDescriptor(target.constructor.prototype, 'value');
+
+  // Not guarded in a canDefineProperty check: IE8 supports defineProperty only
+  // on DOM elements
+  Object.defineProperty(activeElement, 'value', newValueProp);
+  if (activeElement.attachEvent) {
+    activeElement.attachEvent('onpropertychange', handlePropertyChange);
+  } else {
+    activeElement.addEventListener('propertychange', handlePropertyChange, false);
+  }
+}
+
+/**
+ * (For IE <=11) Removes the event listeners from the currently-tracked element,
+ * if any exists.
+ */
+function stopWatchingForValueChange() {
+  if (!activeElement) {
+    return;
+  }
+
+  // delete restores the original property definition
+  delete activeElement.value;
+
+  if (activeElement.detachEvent) {
+    activeElement.detachEvent('onpropertychange', handlePropertyChange);
+  } else {
+    activeElement.removeEventListener('propertychange', handlePropertyChange, false);
+  }
+
+  activeElement = null;
+  activeElementInst = null;
+  activeElementValue = null;
+  activeElementValueProp = null;
+}
+
+/**
+ * (For IE <=11) Handles a propertychange event, sending a `change` event if
+ * the value of the active element has changed.
+ */
+function handlePropertyChange(nativeEvent) {
+  if (nativeEvent.propertyName !== 'value') {
+    return;
+  }
+  var value = nativeEvent.srcElement.value;
+  if (value === activeElementValue) {
+    return;
+  }
+  activeElementValue = value;
+
+  manualDispatchChangeEvent(nativeEvent);
+}
+
+/**
+ * If a `change` event should be fired, returns the target's ID.
+ */
+function getTargetInstForInputEvent(topLevelType, targetInst) {
+  if (topLevelType === 'topInput') {
+    // In modern browsers (i.e., not IE8 or IE9), the input event is exactly
+    // what we want so fall through here and trigger an abstract event
+    return targetInst;
+  }
+}
+
+function handleEventsForInputEventIE(topLevelType, target, targetInst) {
+  if (topLevelType === 'topFocus') {
+    // In IE8, we can capture almost all .value changes by adding a
+    // propertychange handler and looking for events with propertyName
+    // equal to 'value'
+    // In IE9-11, propertychange fires for most input events but is buggy and
+    // doesn't fire when text is deleted, but conveniently, selectionchange
+    // appears to fire in all of the remaining cases so we catch those and
+    // forward the event if the value has changed
+    // In either case, we don't want to call the event handler if the value
+    // is changed from JS so we redefine a setter for `.value` that updates
+    // our activeElementValue variable, allowing us to ignore those changes
+    //
+    // stopWatching() should be a noop here but we call it just in case we
+    // missed a blur event somehow.
+    stopWatchingForValueChange();
+    startWatchingForValueChange(target, targetInst);
+  } else if (topLevelType === 'topBlur') {
+    stopWatchingForValueChange();
+  }
+}
+
+// For IE8 and IE9.
+function getTargetInstForInputEventIE(topLevelType, targetInst) {
+  if (topLevelType === 'topSelectionChange' || topLevelType === 'topKeyUp' || topLevelType === 'topKeyDown') {
+    // On the selectionchange event, the target is just document which isn't
+    // helpful for us so just check activeElement instead.
+    //
+    // 99% of the time, keydown and keyup aren't necessary. IE8 fails to fire
+    // propertychange on the first input event after setting `value` from a
+    // script and fires only keydown, keypress, keyup. Catching keyup usually
+    // gets it and catching keydown lets us fire an event for the first
+    // keystroke if user does a key repeat (it'll be a little delayed: right
+    // before the second keystroke). Other input methods (e.g., paste) seem to
+    // fire selectionchange normally.
+    if (activeElement && activeElement.value !== activeElementValue) {
+      activeElementValue = activeElement.value;
+      return activeElementInst;
+    }
+  }
+}
+
+/**
+ * SECTION: handle `click` event
+ */
+function shouldUseClickEvent(elem) {
+  // Use the `click` event to detect changes to checkbox and radio inputs.
+  // This approach works across all browsers, whereas `change` does not fire
+  // until `blur` in IE8.
+  return elem.nodeName && elem.nodeName.toLowerCase() === 'input' && (elem.type === 'checkbox' || elem.type === 'radio');
+}
+
+function getTargetInstForClickEvent(topLevelType, targetInst) {
+  if (topLevelType === 'topClick') {
+    return targetInst;
+  }
+}
+
+function handleControlledInputBlur(inst, node) {
+  // TODO: In IE, inst is occasionally null. Why?
+  if (inst == null) {
+    return;
+  }
+
+  // Fiber and ReactDOM keep wrapper state in separate places
+  var state = inst._wrapperState || node._wrapperState;
+
+  if (!state || !state.controlled || node.type !== 'number') {
+    return;
+  }
+
+  // If controlled, assign the value attribute to the current value on blur
+  var value = '' + node.value;
+  if (node.getAttribute('value') !== value) {
+    node.setAttribute('value', value);
+  }
+}
+
+/**
+ * This plugin creates an `onChange` event that normalizes change events
+ * across form elements. This event fires at a time when it's possible to
+ * change the element's value without seeing a flicker.
+ *
+ * Supported elements are:
+ * - input (see `isTextInputElement`)
+ * - textarea
+ * - select
+ */
+var ChangeEventPlugin = {
+
+  eventTypes: eventTypes,
+
+  extractEvents: function (topLevelType, targetInst, nativeEvent, nativeEventTarget) {
+    var targetNode = targetInst ? ReactDOMComponentTree.getNodeFromInstance(targetInst) : window;
+
+    var getTargetInstFunc, handleEventFunc;
+    if (shouldUseChangeEvent(targetNode)) {
+      if (doesChangeEventBubble) {
+        getTargetInstFunc = getTargetInstForChangeEvent;
+      } else {
+        handleEventFunc = handleEventsForChangeEventIE8;
+      }
+    } else if (isTextInputElement(targetNode)) {
+      if (isInputEventSupported) {
+        getTargetInstFunc = getTargetInstForInputEvent;
+      } else {
+        getTargetInstFunc = getTargetInstForInputEventIE;
+        handleEventFunc = handleEventsForInputEventIE;
+      }
+    } else if (shouldUseClickEvent(targetNode)) {
+      getTargetInstFunc = getTargetInstForClickEvent;
+    }
+
+    if (getTargetInstFunc) {
+      var inst = getTargetInstFunc(topLevelType, targetInst);
+      if (inst) {
+        var event = SyntheticEvent.getPooled(eventTypes.change, inst, nativeEvent, nativeEventTarget);
+        event.type = 'change';
+        EventPropagators.accumulateTwoPhaseDispatches(event);
+        return event;
+      }
+    }
+
+    if (handleEventFunc) {
+      handleEventFunc(topLevelType, targetNode, targetInst);
+    }
+
+    // When blurring, set the value attribute for number inputs
+    if (topLevelType === 'topBlur') {
+      handleControlledInputBlur(targetInst, targetNode);
+    }
+  }
+
+};
+
+module.exports = ChangeEventPlugin;
+},{"./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js","./isEventSupported":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js","./isTextInputElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMChildrenOperations.js"][0].apply(exports,arguments)
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./Danger":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/Danger.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./createMicrosoftUnsafeLocalFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMLazyTree.js"][0].apply(exports,arguments)
+},{"./DOMNamespaces":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","./setTextContent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setTextContent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMNamespaces.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMProperty.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DOMPropertyOperations.js"][0].apply(exports,arguments)
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./quoteAttributeValueForBrowser":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/Danger.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Danger.js"][0].apply(exports,arguments)
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/createNodesFromMarkup":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/createNodesFromMarkup.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/DefaultEventPluginOrder.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EnterLeaveEventPlugin.js"][0].apply(exports,arguments)
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginHub.js"][0].apply(exports,arguments)
+},{"./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./EventPluginUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactErrorUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./accumulateInto":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/forEachAccumulated.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginRegistry.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPluginUtils.js"][0].apply(exports,arguments)
+},{"./ReactErrorUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/EventPropagators.js"][0].apply(exports,arguments)
+},{"./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./accumulateInto":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/accumulateInto.js","./forEachAccumulated":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/forEachAccumulated.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/FallbackCompositionState.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/FallbackCompositionState.js"][0].apply(exports,arguments)
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./getTextContentAccessor":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var DOMProperty = require('./DOMProperty');
+
+var MUST_USE_PROPERTY = DOMProperty.injection.MUST_USE_PROPERTY;
+var HAS_BOOLEAN_VALUE = DOMProperty.injection.HAS_BOOLEAN_VALUE;
+var HAS_NUMERIC_VALUE = DOMProperty.injection.HAS_NUMERIC_VALUE;
+var HAS_POSITIVE_NUMERIC_VALUE = DOMProperty.injection.HAS_POSITIVE_NUMERIC_VALUE;
+var HAS_OVERLOADED_BOOLEAN_VALUE = DOMProperty.injection.HAS_OVERLOADED_BOOLEAN_VALUE;
+
+var HTMLDOMPropertyConfig = {
+  isCustomAttribute: RegExp.prototype.test.bind(new RegExp('^(data|aria)-[' + DOMProperty.ATTRIBUTE_NAME_CHAR + ']*$')),
+  Properties: {
+    /**
+     * Standard Properties
+     */
+    accept: 0,
+    acceptCharset: 0,
+    accessKey: 0,
+    action: 0,
+    allowFullScreen: HAS_BOOLEAN_VALUE,
+    allowTransparency: 0,
+    alt: 0,
+    // specifies target context for links with `preload` type
+    as: 0,
+    async: HAS_BOOLEAN_VALUE,
+    autoComplete: 0,
+    // autoFocus is polyfilled/normalized by AutoFocusUtils
+    // autoFocus: HAS_BOOLEAN_VALUE,
+    autoPlay: HAS_BOOLEAN_VALUE,
+    capture: HAS_BOOLEAN_VALUE,
+    cellPadding: 0,
+    cellSpacing: 0,
+    charSet: 0,
+    challenge: 0,
+    checked: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    cite: 0,
+    classID: 0,
+    className: 0,
+    cols: HAS_POSITIVE_NUMERIC_VALUE,
+    colSpan: 0,
+    content: 0,
+    contentEditable: 0,
+    contextMenu: 0,
+    controls: HAS_BOOLEAN_VALUE,
+    coords: 0,
+    crossOrigin: 0,
+    data: 0, // For `<object />` acts as `src`.
+    dateTime: 0,
+    'default': HAS_BOOLEAN_VALUE,
+    defer: HAS_BOOLEAN_VALUE,
+    dir: 0,
+    disabled: HAS_BOOLEAN_VALUE,
+    download: HAS_OVERLOADED_BOOLEAN_VALUE,
+    draggable: 0,
+    encType: 0,
+    form: 0,
+    formAction: 0,
+    formEncType: 0,
+    formMethod: 0,
+    formNoValidate: HAS_BOOLEAN_VALUE,
+    formTarget: 0,
+    frameBorder: 0,
+    headers: 0,
+    height: 0,
+    hidden: HAS_BOOLEAN_VALUE,
+    high: 0,
+    href: 0,
+    hrefLang: 0,
+    htmlFor: 0,
+    httpEquiv: 0,
+    icon: 0,
+    id: 0,
+    inputMode: 0,
+    integrity: 0,
+    is: 0,
+    keyParams: 0,
+    keyType: 0,
+    kind: 0,
+    label: 0,
+    lang: 0,
+    list: 0,
+    loop: HAS_BOOLEAN_VALUE,
+    low: 0,
+    manifest: 0,
+    marginHeight: 0,
+    marginWidth: 0,
+    max: 0,
+    maxLength: 0,
+    media: 0,
+    mediaGroup: 0,
+    method: 0,
+    min: 0,
+    minLength: 0,
+    // Caution; `option.selected` is not updated if `select.multiple` is
+    // disabled with `removeAttribute`.
+    multiple: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    name: 0,
+    nonce: 0,
+    noValidate: HAS_BOOLEAN_VALUE,
+    open: HAS_BOOLEAN_VALUE,
+    optimum: 0,
+    pattern: 0,
+    placeholder: 0,
+    playsInline: HAS_BOOLEAN_VALUE,
+    poster: 0,
+    preload: 0,
+    profile: 0,
+    radioGroup: 0,
+    readOnly: HAS_BOOLEAN_VALUE,
+    referrerPolicy: 0,
+    rel: 0,
+    required: HAS_BOOLEAN_VALUE,
+    reversed: HAS_BOOLEAN_VALUE,
+    role: 0,
+    rows: HAS_POSITIVE_NUMERIC_VALUE,
+    rowSpan: HAS_NUMERIC_VALUE,
+    sandbox: 0,
+    scope: 0,
+    scoped: HAS_BOOLEAN_VALUE,
+    scrolling: 0,
+    seamless: HAS_BOOLEAN_VALUE,
+    selected: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
+    shape: 0,
+    size: HAS_POSITIVE_NUMERIC_VALUE,
+    sizes: 0,
+    span: HAS_POSITIVE_NUMERIC_VALUE,
+    spellCheck: 0,
+    src: 0,
+    srcDoc: 0,
+    srcLang: 0,
+    srcSet: 0,
+    start: HAS_NUMERIC_VALUE,
+    step: 0,
+    style: 0,
+    summary: 0,
+    tabIndex: 0,
+    target: 0,
+    title: 0,
+    // Setting .type throws on non-<input> tags
+    type: 0,
+    useMap: 0,
+    value: 0,
+    width: 0,
+    wmode: 0,
+    wrap: 0,
+
+    /**
+     * RDFa Properties
+     */
+    about: 0,
+    datatype: 0,
+    inlist: 0,
+    prefix: 0,
+    // property is also supported for OpenGraph in meta tags.
+    property: 0,
+    resource: 0,
+    'typeof': 0,
+    vocab: 0,
+
+    /**
+     * Non-standard Properties
+     */
+    // autoCapitalize and autoCorrect are supported in Mobile Safari for
+    // keyboard hints.
+    autoCapitalize: 0,
+    autoCorrect: 0,
+    // autoSave allows WebKit/Blink to persist values of input fields on page reloads
+    autoSave: 0,
+    // color is for Safari mask-icon link
+    color: 0,
+    // itemProp, itemScope, itemType are for
+    // Microdata support. See http://schema.org/docs/gs.html
+    itemProp: 0,
+    itemScope: HAS_BOOLEAN_VALUE,
+    itemType: 0,
+    // itemID and itemRef are for Microdata support as well but
+    // only specified in the WHATWG spec document. See
+    // https://html.spec.whatwg.org/multipage/microdata.html#microdata-dom-api
+    itemID: 0,
+    itemRef: 0,
+    // results show looking glass icon and recent searches on input
+    // search fields in WebKit/Blink
+    results: 0,
+    // IE-only attribute that specifies security restrictions on an iframe
+    // as an alternative to the sandbox attribute on IE<10
+    security: 0,
+    // IE-only attribute that controls focus behavior
+    unselectable: 0
+  },
+  DOMAttributeNames: {
+    acceptCharset: 'accept-charset',
+    className: 'class',
+    htmlFor: 'for',
+    httpEquiv: 'http-equiv'
+  },
+  DOMPropertyNames: {},
+  DOMMutationMethods: {
+    value: function (node, value) {
+      if (value == null) {
+        return node.removeAttribute('value');
+      }
+
+      // Number inputs get special treatment due to some edge cases in
+      // Chrome. Let everything else assign the value attribute as normal.
+      // https://github.com/facebook/react/issues/7253#issuecomment-236074326
+      if (node.type !== 'number' || node.hasAttribute('value') === false) {
+        node.setAttribute('value', '' + value);
+      } else if (node.validity && !node.validity.badInput && node.ownerDocument.activeElement !== node) {
+        // Don't assign an attribute if validation reports bad
+        // input. Chrome will clear the value. Additionally, don't
+        // operate on inputs that have focus, otherwise Chrome might
+        // strip off trailing decimal places and cause the user's
+        // cursor position to jump to the beginning of the input.
+        //
+        // In ReactDOMInput, we have an onBlur event that will trigger
+        // this function again when focus is lost.
+        node.setAttribute('value', '' + value);
+      }
+    }
+  }
+};
+
+module.exports = HTMLDOMPropertyConfig;
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/KeyEscapeUtils.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant');
+
+var ReactPropTypesSecret = require('./ReactPropTypesSecret');
+var propTypesFactory = require('prop-types/factory');
+
+var React = require('react/lib/React');
+var PropTypes = propTypesFactory(React.isValidElement);
+
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+var hasReadOnlyValue = {
+  'button': true,
+  'checkbox': true,
+  'image': true,
+  'hidden': true,
+  'radio': true,
+  'reset': true,
+  'submit': true
+};
+
+function _assertSingleLink(inputProps) {
+  !(inputProps.checkedLink == null || inputProps.valueLink == null) ? "production" !== 'production' ? invariant(false, 'Cannot provide a checkedLink and a valueLink. If you want to use checkedLink, you probably don\'t want to use valueLink and vice versa.') : _prodInvariant('87') : void 0;
+}
+function _assertValueLink(inputProps) {
+  _assertSingleLink(inputProps);
+  !(inputProps.value == null && inputProps.onChange == null) ? "production" !== 'production' ? invariant(false, 'Cannot provide a valueLink and a value or onChange event. If you want to use value or onChange, you probably don\'t want to use valueLink.') : _prodInvariant('88') : void 0;
+}
+
+function _assertCheckedLink(inputProps) {
+  _assertSingleLink(inputProps);
+  !(inputProps.checked == null && inputProps.onChange == null) ? "production" !== 'production' ? invariant(false, 'Cannot provide a checkedLink and a checked property or onChange event. If you want to use checked or onChange, you probably don\'t want to use checkedLink') : _prodInvariant('89') : void 0;
+}
+
+var propTypes = {
+  value: function (props, propName, componentName) {
+    if (!props[propName] || hasReadOnlyValue[props.type] || props.onChange || props.readOnly || props.disabled) {
+      return null;
+    }
+    return new Error('You provided a `value` prop to a form field without an ' + '`onChange` handler. This will render a read-only field. If ' + 'the field should be mutable use `defaultValue`. Otherwise, ' + 'set either `onChange` or `readOnly`.');
+  },
+  checked: function (props, propName, componentName) {
+    if (!props[propName] || props.onChange || props.readOnly || props.disabled) {
+      return null;
+    }
+    return new Error('You provided a `checked` prop to a form field without an ' + '`onChange` handler. This will render a read-only field. If ' + 'the field should be mutable use `defaultChecked`. Otherwise, ' + 'set either `onChange` or `readOnly`.');
+  },
+  onChange: PropTypes.func
+};
+
+var loggedTypeFailures = {};
+function getDeclarationErrorAddendum(owner) {
+  if (owner) {
+    var name = owner.getName();
+    if (name) {
+      return ' Check the render method of `' + name + '`.';
+    }
+  }
+  return '';
+}
+
+/**
+ * Provide a linked `value` attribute for controlled forms. You should not use
+ * this outside of the ReactDOM controlled form components.
+ */
+var LinkedValueUtils = {
+  checkPropTypes: function (tagName, props, owner) {
+    for (var propName in propTypes) {
+      if (propTypes.hasOwnProperty(propName)) {
+        var error = propTypes[propName](props, propName, tagName, 'prop', null, ReactPropTypesSecret);
+      }
+      if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+        // Only monitor this failure once because there tends to be a lot of the
+        // same error.
+        loggedTypeFailures[error.message] = true;
+
+        var addendum = getDeclarationErrorAddendum(owner);
+        "production" !== 'production' ? warning(false, 'Failed form propType: %s%s', error.message, addendum) : void 0;
+      }
+    }
+  },
+
+  /**
+   * @param {object} inputProps Props for form component
+   * @return {*} current value of the input either from value prop or link.
+   */
+  getValue: function (inputProps) {
+    if (inputProps.valueLink) {
+      _assertValueLink(inputProps);
+      return inputProps.valueLink.value;
+    }
+    return inputProps.value;
+  },
+
+  /**
+   * @param {object} inputProps Props for form component
+   * @return {*} current checked status of the input either from checked prop
+   *             or link.
+   */
+  getChecked: function (inputProps) {
+    if (inputProps.checkedLink) {
+      _assertCheckedLink(inputProps);
+      return inputProps.checkedLink.value;
+    }
+    return inputProps.checked;
+  },
+
+  /**
+   * @param {object} inputProps Props for form component
+   * @param {SyntheticEvent} event change event to handle
+   */
+  executeOnChange: function (inputProps, event) {
+    if (inputProps.valueLink) {
+      _assertValueLink(inputProps);
+      return inputProps.valueLink.requestChange(event.target.value);
+    } else if (inputProps.checkedLink) {
+      _assertCheckedLink(inputProps);
+      return inputProps.checkedLink.requestChange(event.target.checked);
+    } else if (inputProps.onChange) {
+      return inputProps.onChange.call(undefined, event);
+    }
+  }
+};
+
+module.exports = LinkedValueUtils;
+},{"./ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","prop-types/factory":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/factory.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactBrowserEventEmitter.js"][0].apply(exports,arguments)
+},{"./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactEventEmitterMixin":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js","./ViewportMetrics":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getVendorPrefixedEventName":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js","./isEventSupported":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactChildReconciler.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactChildReconciler.js"][0].apply(exports,arguments)
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./instantiateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./shouldUpdateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","./traverseAllChildren":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js"][0].apply(exports,arguments)
+},{"./DOMChildrenOperations":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMIDOperations":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactComponentEnvironment.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant'),
+    _assign = require('object-assign');
+
+var React = require('react/lib/React');
+var ReactComponentEnvironment = require('./ReactComponentEnvironment');
+var ReactCurrentOwner = require('react/lib/ReactCurrentOwner');
+var ReactErrorUtils = require('./ReactErrorUtils');
+var ReactInstanceMap = require('./ReactInstanceMap');
+var ReactInstrumentation = require('./ReactInstrumentation');
+var ReactNodeTypes = require('./ReactNodeTypes');
+var ReactReconciler = require('./ReactReconciler');
+
+if ("production" !== 'production') {
+  var checkReactTypeSpec = require('./checkReactTypeSpec');
+}
+
+var emptyObject = require('fbjs/lib/emptyObject');
+var invariant = require('fbjs/lib/invariant');
+var shallowEqual = require('fbjs/lib/shallowEqual');
+var shouldUpdateReactComponent = require('./shouldUpdateReactComponent');
+var warning = require('fbjs/lib/warning');
+
+var CompositeTypes = {
+  ImpureClass: 0,
+  PureClass: 1,
+  StatelessFunctional: 2
+};
+
+function StatelessComponent(Component) {}
+StatelessComponent.prototype.render = function () {
+  var Component = ReactInstanceMap.get(this)._currentElement.type;
+  var element = Component(this.props, this.context, this.updater);
+  warnIfInvalidElement(Component, element);
+  return element;
+};
+
+function warnIfInvalidElement(Component, element) {
+  if ("production" !== 'production') {
+    "production" !== 'production' ? warning(element === null || element === false || React.isValidElement(element), '%s(...): A valid React element (or null) must be returned. You may have ' + 'returned undefined, an array or some other invalid object.', Component.displayName || Component.name || 'Component') : void 0;
+    "production" !== 'production' ? warning(!Component.childContextTypes, '%s(...): childContextTypes cannot be defined on a functional component.', Component.displayName || Component.name || 'Component') : void 0;
+  }
+}
+
+function shouldConstruct(Component) {
+  return !!(Component.prototype && Component.prototype.isReactComponent);
+}
+
+function isPureComponent(Component) {
+  return !!(Component.prototype && Component.prototype.isPureReactComponent);
+}
+
+// Separated into a function to contain deoptimizations caused by try/finally.
+function measureLifeCyclePerf(fn, debugID, timerType) {
+  if (debugID === 0) {
+    // Top-level wrappers (see ReactMount) and empty components (see
+    // ReactDOMEmptyComponent) are invisible to hooks and devtools.
+    // Both are implementation details that should go away in the future.
+    return fn();
+  }
+
+  ReactInstrumentation.debugTool.onBeginLifeCycleTimer(debugID, timerType);
+  try {
+    return fn();
+  } finally {
+    ReactInstrumentation.debugTool.onEndLifeCycleTimer(debugID, timerType);
+  }
+}
+
+/**
+ * ------------------ The Life-Cycle of a Composite Component ------------------
+ *
+ * - constructor: Initialization of state. The instance is now retained.
+ *   - componentWillMount
+ *   - render
+ *   - [children's constructors]
+ *     - [children's componentWillMount and render]
+ *     - [children's componentDidMount]
+ *     - componentDidMount
+ *
+ *       Update Phases:
+ *       - componentWillReceiveProps (only called if parent updated)
+ *       - shouldComponentUpdate
+ *         - componentWillUpdate
+ *           - render
+ *           - [children's constructors or receive props phases]
+ *         - componentDidUpdate
+ *
+ *     - componentWillUnmount
+ *     - [children's componentWillUnmount]
+ *   - [children destroyed]
+ * - (destroyed): The instance is now blank, released by React and ready for GC.
+ *
+ * -----------------------------------------------------------------------------
+ */
+
+/**
+ * An incrementing ID assigned to each component when it is mounted. This is
+ * used to enforce the order in which `ReactUpdates` updates dirty components.
+ *
+ * @private
+ */
+var nextMountID = 1;
+
+/**
+ * @lends {ReactCompositeComponent.prototype}
+ */
+var ReactCompositeComponent = {
+
+  /**
+   * Base constructor for all composite component.
+   *
+   * @param {ReactElement} element
+   * @final
+   * @internal
+   */
+  construct: function (element) {
+    this._currentElement = element;
+    this._rootNodeID = 0;
+    this._compositeType = null;
+    this._instance = null;
+    this._hostParent = null;
+    this._hostContainerInfo = null;
+
+    // See ReactUpdateQueue
+    this._updateBatchNumber = null;
+    this._pendingElement = null;
+    this._pendingStateQueue = null;
+    this._pendingReplaceState = false;
+    this._pendingForceUpdate = false;
+
+    this._renderedNodeType = null;
+    this._renderedComponent = null;
+    this._context = null;
+    this._mountOrder = 0;
+    this._topLevelWrapper = null;
+
+    // See ReactUpdates and ReactUpdateQueue.
+    this._pendingCallbacks = null;
+
+    // ComponentWillUnmount shall only be called once
+    this._calledComponentWillUnmount = false;
+
+    if ("production" !== 'production') {
+      this._warnedAboutRefsInRender = false;
+    }
+  },
+
+  /**
+   * Initializes the component, renders markup, and registers event listeners.
+   *
+   * @param {ReactReconcileTransaction|ReactServerRenderingTransaction} transaction
+   * @param {?object} hostParent
+   * @param {?object} hostContainerInfo
+   * @param {?object} context
+   * @return {?string} Rendered markup to be inserted into the DOM.
+   * @final
+   * @internal
+   */
+  mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
+    var _this = this;
+
+    this._context = context;
+    this._mountOrder = nextMountID++;
+    this._hostParent = hostParent;
+    this._hostContainerInfo = hostContainerInfo;
+
+    var publicProps = this._currentElement.props;
+    var publicContext = this._processContext(context);
+
+    var Component = this._currentElement.type;
+
+    var updateQueue = transaction.getUpdateQueue();
+
+    // Initialize the public class
+    var doConstruct = shouldConstruct(Component);
+    var inst = this._constructComponent(doConstruct, publicProps, publicContext, updateQueue);
+    var renderedElement;
+
+    // Support functional components
+    if (!doConstruct && (inst == null || inst.render == null)) {
+      renderedElement = inst;
+      warnIfInvalidElement(Component, renderedElement);
+      !(inst === null || inst === false || React.isValidElement(inst)) ? "production" !== 'production' ? invariant(false, '%s(...): A valid React element (or null) must be returned. You may have returned undefined, an array or some other invalid object.', Component.displayName || Component.name || 'Component') : _prodInvariant('105', Component.displayName || Component.name || 'Component') : void 0;
+      inst = new StatelessComponent(Component);
+      this._compositeType = CompositeTypes.StatelessFunctional;
+    } else {
+      if (isPureComponent(Component)) {
+        this._compositeType = CompositeTypes.PureClass;
+      } else {
+        this._compositeType = CompositeTypes.ImpureClass;
+      }
+    }
+
+    if ("production" !== 'production') {
+      // This will throw later in _renderValidatedComponent, but add an early
+      // warning now to help debugging
+      if (inst.render == null) {
+        "production" !== 'production' ? warning(false, '%s(...): No `render` method found on the returned component ' + 'instance: you may have forgotten to define `render`.', Component.displayName || Component.name || 'Component') : void 0;
+      }
+
+      var propsMutated = inst.props !== publicProps;
+      var componentName = Component.displayName || Component.name || 'Component';
+
+      "production" !== 'production' ? warning(inst.props === undefined || !propsMutated, '%s(...): When calling super() in `%s`, make sure to pass ' + 'up the same props that your component\'s constructor was passed.', componentName, componentName) : void 0;
+    }
+
+    // These should be set up in the constructor, but as a convenience for
+    // simpler class abstractions, we set them up after the fact.
+    inst.props = publicProps;
+    inst.context = publicContext;
+    inst.refs = emptyObject;
+    inst.updater = updateQueue;
+
+    this._instance = inst;
+
+    // Store a reference from the instance back to the internal representation
+    ReactInstanceMap.set(inst, this);
+
+    if ("production" !== 'production') {
+      // Since plain JS classes are defined without any special initialization
+      // logic, we can not catch common errors early. Therefore, we have to
+      // catch them here, at initialization time, instead.
+      "production" !== 'production' ? warning(!inst.getInitialState || inst.getInitialState.isReactClassApproved || inst.state, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component') : void 0;
+      "production" !== 'production' ? warning(!inst.getDefaultProps || inst.getDefaultProps.isReactClassApproved, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a static property to define defaultProps instead.', this.getName() || 'a component') : void 0;
+      "production" !== 'production' ? warning(!inst.propTypes, 'propTypes was defined as an instance property on %s. Use a static ' + 'property to define propTypes instead.', this.getName() || 'a component') : void 0;
+      "production" !== 'production' ? warning(!inst.contextTypes, 'contextTypes was defined as an instance property on %s. Use a ' + 'static property to define contextTypes instead.', this.getName() || 'a component') : void 0;
+      "production" !== 'production' ? warning(typeof inst.componentShouldUpdate !== 'function', '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', this.getName() || 'A component') : void 0;
+      "production" !== 'production' ? warning(typeof inst.componentDidUnmount !== 'function', '%s has a method called ' + 'componentDidUnmount(). But there is no such lifecycle method. ' + 'Did you mean componentWillUnmount()?', this.getName() || 'A component') : void 0;
+      "production" !== 'production' ? warning(typeof inst.componentWillRecieveProps !== 'function', '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', this.getName() || 'A component') : void 0;
+    }
+
+    var initialState = inst.state;
+    if (initialState === undefined) {
+      inst.state = initialState = null;
+    }
+    !(typeof initialState === 'object' && !Array.isArray(initialState)) ? "production" !== 'production' ? invariant(false, '%s.state: must be set to an object or null', this.getName() || 'ReactCompositeComponent') : _prodInvariant('106', this.getName() || 'ReactCompositeComponent') : void 0;
+
+    this._pendingStateQueue = null;
+    this._pendingReplaceState = false;
+    this._pendingForceUpdate = false;
+
+    var markup;
+    if (inst.unstable_handleError) {
+      markup = this.performInitialMountWithErrorHandling(renderedElement, hostParent, hostContainerInfo, transaction, context);
+    } else {
+      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
+    }
+
+    if (inst.componentDidMount) {
+      if ("production" !== 'production') {
+        transaction.getReactMountReady().enqueue(function () {
+          measureLifeCyclePerf(function () {
+            return inst.componentDidMount();
+          }, _this._debugID, 'componentDidMount');
+        });
+      } else {
+        transaction.getReactMountReady().enqueue(inst.componentDidMount, inst);
+      }
+    }
+
+    return markup;
+  },
+
+  _constructComponent: function (doConstruct, publicProps, publicContext, updateQueue) {
+    if ("production" !== 'production') {
+      ReactCurrentOwner.current = this;
+      try {
+        return this._constructComponentWithoutOwner(doConstruct, publicProps, publicContext, updateQueue);
+      } finally {
+        ReactCurrentOwner.current = null;
+      }
+    } else {
+      return this._constructComponentWithoutOwner(doConstruct, publicProps, publicContext, updateQueue);
+    }
+  },
+
+  _constructComponentWithoutOwner: function (doConstruct, publicProps, publicContext, updateQueue) {
+    var Component = this._currentElement.type;
+
+    if (doConstruct) {
+      if ("production" !== 'production') {
+        return measureLifeCyclePerf(function () {
+          return new Component(publicProps, publicContext, updateQueue);
+        }, this._debugID, 'ctor');
+      } else {
+        return new Component(publicProps, publicContext, updateQueue);
+      }
+    }
+
+    // This can still be an instance in case of factory components
+    // but we'll count this as time spent rendering as the more common case.
+    if ("production" !== 'production') {
+      return measureLifeCyclePerf(function () {
+        return Component(publicProps, publicContext, updateQueue);
+      }, this._debugID, 'render');
+    } else {
+      return Component(publicProps, publicContext, updateQueue);
+    }
+  },
+
+  performInitialMountWithErrorHandling: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
+    var markup;
+    var checkpoint = transaction.checkpoint();
+    try {
+      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
+    } catch (e) {
+      // Roll back to checkpoint, handle error (which may add items to the transaction), and take a new checkpoint
+      transaction.rollback(checkpoint);
+      this._instance.unstable_handleError(e);
+      if (this._pendingStateQueue) {
+        this._instance.state = this._processPendingState(this._instance.props, this._instance.context);
+      }
+      checkpoint = transaction.checkpoint();
+
+      this._renderedComponent.unmountComponent(true);
+      transaction.rollback(checkpoint);
+
+      // Try again - we've informed the component about the error, so they can render an error message this time.
+      // If this throws again, the error will bubble up (and can be caught by a higher error boundary).
+      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
+    }
+    return markup;
+  },
+
+  performInitialMount: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
+    var inst = this._instance;
+
+    var debugID = 0;
+    if ("production" !== 'production') {
+      debugID = this._debugID;
+    }
+
+    if (inst.componentWillMount) {
+      if ("production" !== 'production') {
+        measureLifeCyclePerf(function () {
+          return inst.componentWillMount();
+        }, debugID, 'componentWillMount');
+      } else {
+        inst.componentWillMount();
+      }
+      // When mounting, calls to `setState` by `componentWillMount` will set
+      // `this._pendingStateQueue` without triggering a re-render.
+      if (this._pendingStateQueue) {
+        inst.state = this._processPendingState(inst.props, inst.context);
+      }
+    }
+
+    // If not a stateless component, we now render
+    if (renderedElement === undefined) {
+      renderedElement = this._renderValidatedComponent();
+    }
+
+    var nodeType = ReactNodeTypes.getType(renderedElement);
+    this._renderedNodeType = nodeType;
+    var child = this._instantiateReactComponent(renderedElement, nodeType !== ReactNodeTypes.EMPTY /* shouldHaveDebugID */
+    );
+    this._renderedComponent = child;
+
+    var markup = ReactReconciler.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), debugID);
+
+    if ("production" !== 'production') {
+      if (debugID !== 0) {
+        var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+        ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
+      }
+    }
+
+    return markup;
+  },
+
+  getHostNode: function () {
+    return ReactReconciler.getHostNode(this._renderedComponent);
+  },
+
+  /**
+   * Releases any resources allocated by `mountComponent`.
+   *
+   * @final
+   * @internal
+   */
+  unmountComponent: function (safely) {
+    if (!this._renderedComponent) {
+      return;
+    }
+
+    var inst = this._instance;
+
+    if (inst.componentWillUnmount && !inst._calledComponentWillUnmount) {
+      inst._calledComponentWillUnmount = true;
+
+      if (safely) {
+        var name = this.getName() + '.componentWillUnmount()';
+        ReactErrorUtils.invokeGuardedCallback(name, inst.componentWillUnmount.bind(inst));
+      } else {
+        if ("production" !== 'production') {
+          measureLifeCyclePerf(function () {
+            return inst.componentWillUnmount();
+          }, this._debugID, 'componentWillUnmount');
+        } else {
+          inst.componentWillUnmount();
+        }
+      }
+    }
+
+    if (this._renderedComponent) {
+      ReactReconciler.unmountComponent(this._renderedComponent, safely);
+      this._renderedNodeType = null;
+      this._renderedComponent = null;
+      this._instance = null;
+    }
+
+    // Reset pending fields
+    // Even if this component is scheduled for another update in ReactUpdates,
+    // it would still be ignored because these fields are reset.
+    this._pendingStateQueue = null;
+    this._pendingReplaceState = false;
+    this._pendingForceUpdate = false;
+    this._pendingCallbacks = null;
+    this._pendingElement = null;
+
+    // These fields do not really need to be reset since this object is no
+    // longer accessible.
+    this._context = null;
+    this._rootNodeID = 0;
+    this._topLevelWrapper = null;
+
+    // Delete the reference from the instance to this internal representation
+    // which allow the internals to be properly cleaned up even if the user
+    // leaks a reference to the public instance.
+    ReactInstanceMap.remove(inst);
+
+    // Some existing components rely on inst.props even after they've been
+    // destroyed (in event handlers).
+    // TODO: inst.props = null;
+    // TODO: inst.state = null;
+    // TODO: inst.context = null;
+  },
+
+  /**
+   * Filters the context object to only contain keys specified in
+   * `contextTypes`
+   *
+   * @param {object} context
+   * @return {?object}
+   * @private
+   */
+  _maskContext: function (context) {
+    var Component = this._currentElement.type;
+    var contextTypes = Component.contextTypes;
+    if (!contextTypes) {
+      return emptyObject;
+    }
+    var maskedContext = {};
+    for (var contextName in contextTypes) {
+      maskedContext[contextName] = context[contextName];
+    }
+    return maskedContext;
+  },
+
+  /**
+   * Filters the context object to only contain keys specified in
+   * `contextTypes`, and asserts that they are valid.
+   *
+   * @param {object} context
+   * @return {?object}
+   * @private
+   */
+  _processContext: function (context) {
+    var maskedContext = this._maskContext(context);
+    if ("production" !== 'production') {
+      var Component = this._currentElement.type;
+      if (Component.contextTypes) {
+        this._checkContextTypes(Component.contextTypes, maskedContext, 'context');
+      }
+    }
+    return maskedContext;
+  },
+
+  /**
+   * @param {object} currentContext
+   * @return {object}
+   * @private
+   */
+  _processChildContext: function (currentContext) {
+    var Component = this._currentElement.type;
+    var inst = this._instance;
+    var childContext;
+
+    if (inst.getChildContext) {
+      if ("production" !== 'production') {
+        ReactInstrumentation.debugTool.onBeginProcessingChildContext();
+        try {
+          childContext = inst.getChildContext();
+        } finally {
+          ReactInstrumentation.debugTool.onEndProcessingChildContext();
+        }
+      } else {
+        childContext = inst.getChildContext();
+      }
+    }
+
+    if (childContext) {
+      !(typeof Component.childContextTypes === 'object') ? "production" !== 'production' ? invariant(false, '%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().', this.getName() || 'ReactCompositeComponent') : _prodInvariant('107', this.getName() || 'ReactCompositeComponent') : void 0;
+      if ("production" !== 'production') {
+        this._checkContextTypes(Component.childContextTypes, childContext, 'child context');
+      }
+      for (var name in childContext) {
+        !(name in Component.childContextTypes) ? "production" !== 'production' ? invariant(false, '%s.getChildContext(): key "%s" is not defined in childContextTypes.', this.getName() || 'ReactCompositeComponent', name) : _prodInvariant('108', this.getName() || 'ReactCompositeComponent', name) : void 0;
+      }
+      return _assign({}, currentContext, childContext);
+    }
+    return currentContext;
+  },
+
+  /**
+   * Assert that the context types are valid
+   *
+   * @param {object} typeSpecs Map of context field to a ReactPropType
+   * @param {object} values Runtime values that need to be type-checked
+   * @param {string} location e.g. "prop", "context", "child context"
+   * @private
+   */
+  _checkContextTypes: function (typeSpecs, values, location) {
+    if ("production" !== 'production') {
+      checkReactTypeSpec(typeSpecs, values, location, this.getName(), null, this._debugID);
+    }
+  },
+
+  receiveComponent: function (nextElement, transaction, nextContext) {
+    var prevElement = this._currentElement;
+    var prevContext = this._context;
+
+    this._pendingElement = null;
+
+    this.updateComponent(transaction, prevElement, nextElement, prevContext, nextContext);
+  },
+
+  /**
+   * If any of `_pendingElement`, `_pendingStateQueue`, or `_pendingForceUpdate`
+   * is set, update the component.
+   *
+   * @param {ReactReconcileTransaction} transaction
+   * @internal
+   */
+  performUpdateIfNecessary: function (transaction) {
+    if (this._pendingElement != null) {
+      ReactReconciler.receiveComponent(this, this._pendingElement, transaction, this._context);
+    } else if (this._pendingStateQueue !== null || this._pendingForceUpdate) {
+      this.updateComponent(transaction, this._currentElement, this._currentElement, this._context, this._context);
+    } else {
+      this._updateBatchNumber = null;
+    }
+  },
+
+  /**
+   * Perform an update to a mounted component. The componentWillReceiveProps and
+   * shouldComponentUpdate methods are called, then (assuming the update isn't
+   * skipped) the remaining update lifecycle methods are called and the DOM
+   * representation is updated.
+   *
+   * By default, this implements React's rendering and reconciliation algorithm.
+   * Sophisticated clients may wish to override this.
+   *
+   * @param {ReactReconcileTransaction} transaction
+   * @param {ReactElement} prevParentElement
+   * @param {ReactElement} nextParentElement
+   * @internal
+   * @overridable
+   */
+  updateComponent: function (transaction, prevParentElement, nextParentElement, prevUnmaskedContext, nextUnmaskedContext) {
+    var inst = this._instance;
+    !(inst != null) ? "production" !== 'production' ? invariant(false, 'Attempted to update component `%s` that has already been unmounted (or failed to mount).', this.getName() || 'ReactCompositeComponent') : _prodInvariant('136', this.getName() || 'ReactCompositeComponent') : void 0;
+
+    var willReceive = false;
+    var nextContext;
+
+    // Determine if the context has changed or not
+    if (this._context === nextUnmaskedContext) {
+      nextContext = inst.context;
+    } else {
+      nextContext = this._processContext(nextUnmaskedContext);
+      willReceive = true;
+    }
+
+    var prevProps = prevParentElement.props;
+    var nextProps = nextParentElement.props;
+
+    // Not a simple state update but a props update
+    if (prevParentElement !== nextParentElement) {
+      willReceive = true;
+    }
+
+    // An update here will schedule an update but immediately set
+    // _pendingStateQueue which will ensure that any state updates gets
+    // immediately reconciled instead of waiting for the next batch.
+    if (willReceive && inst.componentWillReceiveProps) {
+      if ("production" !== 'production') {
+        measureLifeCyclePerf(function () {
+          return inst.componentWillReceiveProps(nextProps, nextContext);
+        }, this._debugID, 'componentWillReceiveProps');
+      } else {
+        inst.componentWillReceiveProps(nextProps, nextContext);
+      }
+    }
+
+    var nextState = this._processPendingState(nextProps, nextContext);
+    var shouldUpdate = true;
+
+    if (!this._pendingForceUpdate) {
+      if (inst.shouldComponentUpdate) {
+        if ("production" !== 'production') {
+          shouldUpdate = measureLifeCyclePerf(function () {
+            return inst.shouldComponentUpdate(nextProps, nextState, nextContext);
+          }, this._debugID, 'shouldComponentUpdate');
+        } else {
+          shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
+        }
+      } else {
+        if (this._compositeType === CompositeTypes.PureClass) {
+          shouldUpdate = !shallowEqual(prevProps, nextProps) || !shallowEqual(inst.state, nextState);
+        }
+      }
+    }
+
+    if ("production" !== 'production') {
+      "production" !== 'production' ? warning(shouldUpdate !== undefined, '%s.shouldComponentUpdate(): Returned undefined instead of a ' + 'boolean value. Make sure to return true or false.', this.getName() || 'ReactCompositeComponent') : void 0;
+    }
+
+    this._updateBatchNumber = null;
+    if (shouldUpdate) {
+      this._pendingForceUpdate = false;
+      // Will set `this.props`, `this.state` and `this.context`.
+      this._performComponentUpdate(nextParentElement, nextProps, nextState, nextContext, transaction, nextUnmaskedContext);
+    } else {
+      // If it's determined that a component should not update, we still want
+      // to set props and state but we shortcut the rest of the update.
+      this._currentElement = nextParentElement;
+      this._context = nextUnmaskedContext;
+      inst.props = nextProps;
+      inst.state = nextState;
+      inst.context = nextContext;
+    }
+  },
+
+  _processPendingState: function (props, context) {
+    var inst = this._instance;
+    var queue = this._pendingStateQueue;
+    var replace = this._pendingReplaceState;
+    this._pendingReplaceState = false;
+    this._pendingStateQueue = null;
+
+    if (!queue) {
+      return inst.state;
+    }
+
+    if (replace && queue.length === 1) {
+      return queue[0];
+    }
+
+    var nextState = _assign({}, replace ? queue[0] : inst.state);
+    for (var i = replace ? 1 : 0; i < queue.length; i++) {
+      var partial = queue[i];
+      _assign(nextState, typeof partial === 'function' ? partial.call(inst, nextState, props, context) : partial);
+    }
+
+    return nextState;
+  },
+
+  /**
+   * Merges new props and state, notifies delegate methods of update and
+   * performs update.
+   *
+   * @param {ReactElement} nextElement Next element
+   * @param {object} nextProps Next public object to set as properties.
+   * @param {?object} nextState Next object to set as state.
+   * @param {?object} nextContext Next public object to set as context.
+   * @param {ReactReconcileTransaction} transaction
+   * @param {?object} unmaskedContext
+   * @private
+   */
+  _performComponentUpdate: function (nextElement, nextProps, nextState, nextContext, transaction, unmaskedContext) {
+    var _this2 = this;
+
+    var inst = this._instance;
+
+    var hasComponentDidUpdate = Boolean(inst.componentDidUpdate);
+    var prevProps;
+    var prevState;
+    var prevContext;
+    if (hasComponentDidUpdate) {
+      prevProps = inst.props;
+      prevState = inst.state;
+      prevContext = inst.context;
+    }
+
+    if (inst.componentWillUpdate) {
+      if ("production" !== 'production') {
+        measureLifeCyclePerf(function () {
+          return inst.componentWillUpdate(nextProps, nextState, nextContext);
+        }, this._debugID, 'componentWillUpdate');
+      } else {
+        inst.componentWillUpdate(nextProps, nextState, nextContext);
+      }
+    }
+
+    this._currentElement = nextElement;
+    this._context = unmaskedContext;
+    inst.props = nextProps;
+    inst.state = nextState;
+    inst.context = nextContext;
+
+    this._updateRenderedComponent(transaction, unmaskedContext);
+
+    if (hasComponentDidUpdate) {
+      if ("production" !== 'production') {
+        transaction.getReactMountReady().enqueue(function () {
+          measureLifeCyclePerf(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), _this2._debugID, 'componentDidUpdate');
+        });
+      } else {
+        transaction.getReactMountReady().enqueue(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), inst);
+      }
+    }
+  },
+
+  /**
+   * Call the component's `render` method and update the DOM accordingly.
+   *
+   * @param {ReactReconcileTransaction} transaction
+   * @internal
+   */
+  _updateRenderedComponent: function (transaction, context) {
+    var prevComponentInstance = this._renderedComponent;
+    var prevRenderedElement = prevComponentInstance._currentElement;
+    var nextRenderedElement = this._renderValidatedComponent();
+
+    var debugID = 0;
+    if ("production" !== 'production') {
+      debugID = this._debugID;
+    }
+
+    if (shouldUpdateReactComponent(prevRenderedElement, nextRenderedElement)) {
+      ReactReconciler.receiveComponent(prevComponentInstance, nextRenderedElement, transaction, this._processChildContext(context));
+    } else {
+      var oldHostNode = ReactReconciler.getHostNode(prevComponentInstance);
+      ReactReconciler.unmountComponent(prevComponentInstance, false);
+
+      var nodeType = ReactNodeTypes.getType(nextRenderedElement);
+      this._renderedNodeType = nodeType;
+      var child = this._instantiateReactComponent(nextRenderedElement, nodeType !== ReactNodeTypes.EMPTY /* shouldHaveDebugID */
+      );
+      this._renderedComponent = child;
+
+      var nextMarkup = ReactReconciler.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), debugID);
+
+      if ("production" !== 'production') {
+        if (debugID !== 0) {
+          var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+          ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
+        }
+      }
+
+      this._replaceNodeWithMarkup(oldHostNode, nextMarkup, prevComponentInstance);
+    }
+  },
+
+  /**
+   * Overridden in shallow rendering.
+   *
+   * @protected
+   */
+  _replaceNodeWithMarkup: function (oldHostNode, nextMarkup, prevInstance) {
+    ReactComponentEnvironment.replaceNodeWithMarkup(oldHostNode, nextMarkup, prevInstance);
+  },
+
+  /**
+   * @protected
+   */
+  _renderValidatedComponentWithoutOwnerOrContext: function () {
+    var inst = this._instance;
+    var renderedElement;
+
+    if ("production" !== 'production') {
+      renderedElement = measureLifeCyclePerf(function () {
+        return inst.render();
+      }, this._debugID, 'render');
+    } else {
+      renderedElement = inst.render();
+    }
+
+    if ("production" !== 'production') {
+      // We allow auto-mocks to proceed as if they're returning null.
+      if (renderedElement === undefined && inst.render._isMockFunction) {
+        // This is probably bad practice. Consider warning here and
+        // deprecating this convenience.
+        renderedElement = null;
+      }
+    }
+
+    return renderedElement;
+  },
+
+  /**
+   * @private
+   */
+  _renderValidatedComponent: function () {
+    var renderedElement;
+    if ("production" !== 'production' || this._compositeType !== CompositeTypes.StatelessFunctional) {
+      ReactCurrentOwner.current = this;
+      try {
+        renderedElement = this._renderValidatedComponentWithoutOwnerOrContext();
+      } finally {
+        ReactCurrentOwner.current = null;
+      }
+    } else {
+      renderedElement = this._renderValidatedComponentWithoutOwnerOrContext();
+    }
+    !(
+    // TODO: An `isValidNode` function would probably be more appropriate
+    renderedElement === null || renderedElement === false || React.isValidElement(renderedElement)) ? "production" !== 'production' ? invariant(false, '%s.render(): A valid React element (or null) must be returned. You may have returned undefined, an array or some other invalid object.', this.getName() || 'ReactCompositeComponent') : _prodInvariant('109', this.getName() || 'ReactCompositeComponent') : void 0;
+
+    return renderedElement;
+  },
+
+  /**
+   * Lazily allocates the refs object and stores `component` as `ref`.
+   *
+   * @param {string} ref Reference name.
+   * @param {component} component Component to store as `ref`.
+   * @final
+   * @private
+   */
+  attachRef: function (ref, component) {
+    var inst = this.getPublicInstance();
+    !(inst != null) ? "production" !== 'production' ? invariant(false, 'Stateless function components cannot have refs.') : _prodInvariant('110') : void 0;
+    var publicComponentInstance = component.getPublicInstance();
+    if ("production" !== 'production') {
+      var componentName = component && component.getName ? component.getName() : 'a component';
+      "production" !== 'production' ? warning(publicComponentInstance != null || component._compositeType !== CompositeTypes.StatelessFunctional, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName()) : void 0;
+    }
+    var refs = inst.refs === emptyObject ? inst.refs = {} : inst.refs;
+    refs[ref] = publicComponentInstance;
+  },
+
+  /**
+   * Detaches a reference name.
+   *
+   * @param {string} ref Name to dereference.
+   * @final
+   * @private
+   */
+  detachRef: function (ref) {
+    var refs = this.getPublicInstance().refs;
+    delete refs[ref];
+  },
+
+  /**
+   * Get a text description of the component that can be used to identify it
+   * in error messages.
+   * @return {string} The name or null.
+   * @internal
+   */
+  getName: function () {
+    var type = this._currentElement.type;
+    var constructor = this._instance && this._instance.constructor;
+    return type.displayName || constructor && constructor.displayName || type.name || constructor && constructor.name || null;
+  },
+
+  /**
+   * Get the publicly accessible representation of this component - i.e. what
+   * is exposed by refs and returned by render. Can be null for stateless
+   * components.
+   *
+   * @return {ReactComponent} the public component instance.
+   * @internal
+   */
+  getPublicInstance: function () {
+    var inst = this._instance;
+    if (this._compositeType === CompositeTypes.StatelessFunctional) {
+      return null;
+    }
+    return inst;
+  },
+
+  // Stub
+  _instantiateReactComponent: null
+
+};
+
+module.exports = ReactCompositeComponent;
+},{"./ReactComponentEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactErrorUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactNodeTypes":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactNodeTypes.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./checkReactTypeSpec":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./shouldUpdateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOM.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOM.js"][0].apply(exports,arguments)
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInvalidARIAHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js","./ReactDOMNullInputValuePropHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js","./ReactDOMUnknownPropertyHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js","./ReactDefaultInjection":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMount":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactMount.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./ReactVersion":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactVersion.js","./findDOMNode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/findDOMNode.js","./getHostComponentFromComposite":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./renderSubtreeIntoContainer":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponent.js"][0].apply(exports,arguments)
+},{"./AutoFocusUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/AutoFocusUtils.js","./CSSPropertyOperations":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CSSPropertyOperations.js","./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMNamespaces":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./DOMPropertyOperations":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentFlags":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMInput":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInput.js","./ReactDOMOption":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMOption.js","./ReactDOMSelect":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","./ReactDOMTextarea":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMultiChild":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactMultiChild.js","./ReactServerRenderingTransaction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js","./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./isEventSupported":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/shallowEqual":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentFlags.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMComponentTree.js"][0].apply(exports,arguments)
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactDOMComponentFlags":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentFlags.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMContainerInfo.js"][0].apply(exports,arguments)
+},{"./validateDOMNesting":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMEmptyComponent.js"][0].apply(exports,arguments)
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMFeatureFlags.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMIDOperations.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMIDOperations.js"][0].apply(exports,arguments)
+},{"./DOMChildrenOperations":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInput.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant'),
+    _assign = require('object-assign');
+
+var DOMPropertyOperations = require('./DOMPropertyOperations');
+var LinkedValueUtils = require('./LinkedValueUtils');
+var ReactDOMComponentTree = require('./ReactDOMComponentTree');
+var ReactUpdates = require('./ReactUpdates');
+
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+var didWarnValueLink = false;
+var didWarnCheckedLink = false;
+var didWarnValueDefaultValue = false;
+var didWarnCheckedDefaultChecked = false;
+var didWarnControlledToUncontrolled = false;
+var didWarnUncontrolledToControlled = false;
+
+function forceUpdateIfMounted() {
+  if (this._rootNodeID) {
+    // DOM component is still mounted; update
+    ReactDOMInput.updateWrapper(this);
+  }
+}
+
+function isControlled(props) {
+  var usesChecked = props.type === 'checkbox' || props.type === 'radio';
+  return usesChecked ? props.checked != null : props.value != null;
+}
+
+/**
+ * Implements an <input> host component that allows setting these optional
+ * props: `checked`, `value`, `defaultChecked`, and `defaultValue`.
+ *
+ * If `checked` or `value` are not supplied (or null/undefined), user actions
+ * that affect the checked state or value will trigger updates to the element.
+ *
+ * If they are supplied (and not null/undefined), the rendered element will not
+ * trigger updates to the element. Instead, the props must change in order for
+ * the rendered element to be updated.
+ *
+ * The rendered element will be initialized as unchecked (or `defaultChecked`)
+ * with an empty value (or `defaultValue`).
+ *
+ * @see http://www.w3.org/TR/2012/WD-html5-20121025/the-input-element.html
+ */
+var ReactDOMInput = {
+  getHostProps: function (inst, props) {
+    var value = LinkedValueUtils.getValue(props);
+    var checked = LinkedValueUtils.getChecked(props);
+
+    var hostProps = _assign({
+      // Make sure we set .type before any other properties (setting .value
+      // before .type means .value is lost in IE11 and below)
+      type: undefined,
+      // Make sure we set .step before .value (setting .value before .step
+      // means .value is rounded on mount, based upon step precision)
+      step: undefined,
+      // Make sure we set .min & .max before .value (to ensure proper order
+      // in corner cases such as min or max deriving from value, e.g. Issue #7170)
+      min: undefined,
+      max: undefined
+    }, props, {
+      defaultChecked: undefined,
+      defaultValue: undefined,
+      value: value != null ? value : inst._wrapperState.initialValue,
+      checked: checked != null ? checked : inst._wrapperState.initialChecked,
+      onChange: inst._wrapperState.onChange
+    });
+
+    return hostProps;
+  },
+
+  mountWrapper: function (inst, props) {
+    if ("production" !== 'production') {
+      LinkedValueUtils.checkPropTypes('input', props, inst._currentElement._owner);
+
+      var owner = inst._currentElement._owner;
+
+      if (props.valueLink !== undefined && !didWarnValueLink) {
+        "production" !== 'production' ? warning(false, '`valueLink` prop on `input` is deprecated; set `value` and `onChange` instead.') : void 0;
+        didWarnValueLink = true;
+      }
+      if (props.checkedLink !== undefined && !didWarnCheckedLink) {
+        "production" !== 'production' ? warning(false, '`checkedLink` prop on `input` is deprecated; set `value` and `onChange` instead.') : void 0;
+        didWarnCheckedLink = true;
+      }
+      if (props.checked !== undefined && props.defaultChecked !== undefined && !didWarnCheckedDefaultChecked) {
+        "production" !== 'production' ? warning(false, '%s contains an input of type %s with both checked and defaultChecked props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the checked prop, or the defaultChecked prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type) : void 0;
+        didWarnCheckedDefaultChecked = true;
+      }
+      if (props.value !== undefined && props.defaultValue !== undefined && !didWarnValueDefaultValue) {
+        "production" !== 'production' ? warning(false, '%s contains an input of type %s with both value and defaultValue props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type) : void 0;
+        didWarnValueDefaultValue = true;
+      }
+    }
+
+    var defaultValue = props.defaultValue;
+    inst._wrapperState = {
+      initialChecked: props.checked != null ? props.checked : props.defaultChecked,
+      initialValue: props.value != null ? props.value : defaultValue,
+      listeners: null,
+      onChange: _handleChange.bind(inst),
+      controlled: isControlled(props)
+    };
+  },
+
+  updateWrapper: function (inst) {
+    var props = inst._currentElement.props;
+
+    if ("production" !== 'production') {
+      var controlled = isControlled(props);
+      var owner = inst._currentElement._owner;
+
+      if (!inst._wrapperState.controlled && controlled && !didWarnUncontrolledToControlled) {
+        "production" !== 'production' ? warning(false, '%s is changing an uncontrolled input of type %s to be controlled. ' + 'Input elements should not switch from uncontrolled to controlled (or vice versa). ' + 'Decide between using a controlled or uncontrolled input ' + 'element for the lifetime of the component. More info: https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type) : void 0;
+        didWarnUncontrolledToControlled = true;
+      }
+      if (inst._wrapperState.controlled && !controlled && !didWarnControlledToUncontrolled) {
+        "production" !== 'production' ? warning(false, '%s is changing a controlled input of type %s to be uncontrolled. ' + 'Input elements should not switch from controlled to uncontrolled (or vice versa). ' + 'Decide between using a controlled or uncontrolled input ' + 'element for the lifetime of the component. More info: https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type) : void 0;
+        didWarnControlledToUncontrolled = true;
+      }
+    }
+
+    // TODO: Shouldn't this be getChecked(props)?
+    var checked = props.checked;
+    if (checked != null) {
+      DOMPropertyOperations.setValueForProperty(ReactDOMComponentTree.getNodeFromInstance(inst), 'checked', checked || false);
+    }
+
+    var node = ReactDOMComponentTree.getNodeFromInstance(inst);
+    var value = LinkedValueUtils.getValue(props);
+    if (value != null) {
+      if (value === 0 && node.value === '') {
+        node.value = '0';
+        // Note: IE9 reports a number inputs as 'text', so check props instead.
+      } else if (props.type === 'number') {
+        // Simulate `input.valueAsNumber`. IE9 does not support it
+        var valueAsNumber = parseFloat(node.value, 10) || 0;
+
+        // eslint-disable-next-line
+        if (value != valueAsNumber) {
+          // Cast `value` to a string to ensure the value is set correctly. While
+          // browsers typically do this as necessary, jsdom doesn't.
+          node.value = '' + value;
+        }
+        // eslint-disable-next-line
+      } else if (value != node.value) {
+        // Cast `value` to a string to ensure the value is set correctly. While
+        // browsers typically do this as necessary, jsdom doesn't.
+        node.value = '' + value;
+      }
+    } else {
+      if (props.value == null && props.defaultValue != null) {
+        // In Chrome, assigning defaultValue to certain input types triggers input validation.
+        // For number inputs, the display value loses trailing decimal points. For email inputs,
+        // Chrome raises "The specified value <x> is not a valid email address".
+        //
+        // Here we check to see if the defaultValue has actually changed, avoiding these problems
+        // when the user is inputting text
+        //
+        // https://github.com/facebook/react/issues/7253
+        if (node.defaultValue !== '' + props.defaultValue) {
+          node.defaultValue = '' + props.defaultValue;
+        }
+      }
+      if (props.checked == null && props.defaultChecked != null) {
+        node.defaultChecked = !!props.defaultChecked;
+      }
+    }
+  },
+
+  postMountWrapper: function (inst) {
+    var props = inst._currentElement.props;
+
+    // This is in postMount because we need access to the DOM node, which is not
+    // available until after the component has mounted.
+    var node = ReactDOMComponentTree.getNodeFromInstance(inst);
+
+    // Detach value from defaultValue. We won't do anything if we're working on
+    // submit or reset inputs as those values & defaultValues are linked. They
+    // are not resetable nodes so this operation doesn't matter and actually
+    // removes browser-default values (eg "Submit Query") when no value is
+    // provided.
+
+    switch (props.type) {
+      case 'submit':
+      case 'reset':
+        break;
+      case 'color':
+      case 'date':
+      case 'datetime':
+      case 'datetime-local':
+      case 'month':
+      case 'time':
+      case 'week':
+        // This fixes the no-show issue on iOS Safari and Android Chrome:
+        // https://github.com/facebook/react/issues/7233
+        node.value = '';
+        node.value = node.defaultValue;
+        break;
+      default:
+        node.value = node.value;
+        break;
+    }
+
+    // Normally, we'd just do `node.checked = node.checked` upon initial mount, less this bug
+    // this is needed to work around a chrome bug where setting defaultChecked
+    // will sometimes influence the value of checked (even after detachment).
+    // Reference: https://bugs.chromium.org/p/chromium/issues/detail?id=608416
+    // We need to temporarily unset name to avoid disrupting radio button groups.
+    var name = node.name;
+    if (name !== '') {
+      node.name = '';
+    }
+    node.defaultChecked = !node.defaultChecked;
+    node.defaultChecked = !node.defaultChecked;
+    if (name !== '') {
+      node.name = name;
+    }
+  }
+};
+
+function _handleChange(event) {
+  var props = this._currentElement.props;
+
+  var returnValue = LinkedValueUtils.executeOnChange(props, event);
+
+  // Here we use asap to wait until all updates have propagated, which
+  // is important when using controlled components within layers:
+  // https://github.com/facebook/react/issues/1698
+  ReactUpdates.asap(forceUpdateIfMounted, this);
+
+  var name = props.name;
+  if (props.type === 'radio' && name != null) {
+    var rootNode = ReactDOMComponentTree.getNodeFromInstance(this);
+    var queryRoot = rootNode;
+
+    while (queryRoot.parentNode) {
+      queryRoot = queryRoot.parentNode;
+    }
+
+    // If `rootNode.form` was non-null, then we could try `form.elements`,
+    // but that sometimes behaves strangely in IE8. We could also try using
+    // `form.getElementsByName`, but that will only return direct children
+    // and won't include inputs that use the HTML5 `form=` attribute. Since
+    // the input might not even be in a form, let's just use the global
+    // `querySelectorAll` to ensure we don't miss anything.
+    var group = queryRoot.querySelectorAll('input[name=' + JSON.stringify('' + name) + '][type="radio"]');
+
+    for (var i = 0; i < group.length; i++) {
+      var otherNode = group[i];
+      if (otherNode === rootNode || otherNode.form !== rootNode.form) {
+        continue;
+      }
+      // This will throw if radio buttons rendered by different copies of React
+      // and the same name are rendered into the same form (same as #1939).
+      // That's probably okay; we don't support it just as we don't support
+      // mixing React radio buttons with non-React ones.
+      var otherInstance = ReactDOMComponentTree.getInstanceFromNode(otherNode);
+      !otherInstance ? "production" !== 'production' ? invariant(false, 'ReactDOMInput: Mixing React and non-React radio inputs with the same `name` is not supported.') : _prodInvariant('90') : void 0;
+      // If this is a controlled radio button group, forcing the input that
+      // was previously checked to update will cause it to be come re-checked
+      // as appropriate.
+      ReactUpdates.asap(forceUpdateIfMounted, otherInstance);
+    }
+  }
+
+  return returnValue;
+}
+
+module.exports = ReactDOMInput;
+},{"./DOMPropertyOperations":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMPropertyOperations.js","./LinkedValueUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMInvalidARIAHook.js"][0].apply(exports,arguments)
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMNullInputValuePropHook.js"][0].apply(exports,arguments)
+},{"fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMOption.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMOption.js"][0].apply(exports,arguments)
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMSelect":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelect.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelect.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMSelect.js"][0].apply(exports,arguments)
+},{"./LinkedValueUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelection.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMSelection.js"][0].apply(exports,arguments)
+},{"./getNodeForCharacterOffset":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js","./getTextContentAccessor":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getTextContentAccessor.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTextComponent.js"][0].apply(exports,arguments)
+},{"./DOMChildrenOperations":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMChildrenOperations.js","./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./validateDOMNesting":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextarea.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTextarea.js"][0].apply(exports,arguments)
+},{"./LinkedValueUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/LinkedValueUtils.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMTreeTraversal.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDOMUnknownPropertyHook.js"][0].apply(exports,arguments)
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginRegistry":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginRegistry.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDebugTool.js":[function(require,module,exports){
+/**
+ * Copyright 2016-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+'use strict';
+
+var ReactInvalidSetStateWarningHook = require('./ReactInvalidSetStateWarningHook');
+var ReactHostOperationHistoryHook = require('./ReactHostOperationHistoryHook');
+var ReactComponentTreeHook = require('react/lib/ReactComponentTreeHook');
+var ExecutionEnvironment = require('fbjs/lib/ExecutionEnvironment');
+
+var performanceNow = require('fbjs/lib/performanceNow');
+var warning = require('fbjs/lib/warning');
+
+var hooks = [];
+var didHookThrowForEvent = {};
+
+function callHook(event, fn, context, arg1, arg2, arg3, arg4, arg5) {
+  try {
+    fn.call(context, arg1, arg2, arg3, arg4, arg5);
+  } catch (e) {
+    "production" !== 'production' ? warning(didHookThrowForEvent[event], 'Exception thrown by hook while handling %s: %s', event, e + '\n' + e.stack) : void 0;
+    didHookThrowForEvent[event] = true;
+  }
+}
+
+function emitEvent(event, arg1, arg2, arg3, arg4, arg5) {
+  for (var i = 0; i < hooks.length; i++) {
+    var hook = hooks[i];
+    var fn = hook[event];
+    if (fn) {
+      callHook(event, fn, hook, arg1, arg2, arg3, arg4, arg5);
+    }
+  }
+}
+
+var isProfiling = false;
+var flushHistory = [];
+var lifeCycleTimerStack = [];
+var currentFlushNesting = 0;
+var currentFlushMeasurements = [];
+var currentFlushStartTime = 0;
+var currentTimerDebugID = null;
+var currentTimerStartTime = 0;
+var currentTimerNestedFlushDuration = 0;
+var currentTimerType = null;
+
+var lifeCycleTimerHasWarned = false;
+
+function clearHistory() {
+  ReactComponentTreeHook.purgeUnmountedComponents();
+  ReactHostOperationHistoryHook.clearHistory();
+}
+
+function getTreeSnapshot(registeredIDs) {
+  return registeredIDs.reduce(function (tree, id) {
+    var ownerID = ReactComponentTreeHook.getOwnerID(id);
+    var parentID = ReactComponentTreeHook.getParentID(id);
+    tree[id] = {
+      displayName: ReactComponentTreeHook.getDisplayName(id),
+      text: ReactComponentTreeHook.getText(id),
+      updateCount: ReactComponentTreeHook.getUpdateCount(id),
+      childIDs: ReactComponentTreeHook.getChildIDs(id),
+      // Text nodes don't have owners but this is close enough.
+      ownerID: ownerID || parentID && ReactComponentTreeHook.getOwnerID(parentID) || 0,
+      parentID: parentID
+    };
+    return tree;
+  }, {});
+}
+
+function resetMeasurements() {
+  var previousStartTime = currentFlushStartTime;
+  var previousMeasurements = currentFlushMeasurements;
+  var previousOperations = ReactHostOperationHistoryHook.getHistory();
+
+  if (currentFlushNesting === 0) {
+    currentFlushStartTime = 0;
+    currentFlushMeasurements = [];
+    clearHistory();
+    return;
+  }
+
+  if (previousMeasurements.length || previousOperations.length) {
+    var registeredIDs = ReactComponentTreeHook.getRegisteredIDs();
+    flushHistory.push({
+      duration: performanceNow() - previousStartTime,
+      measurements: previousMeasurements || [],
+      operations: previousOperations || [],
+      treeSnapshot: getTreeSnapshot(registeredIDs)
+    });
+  }
+
+  clearHistory();
+  currentFlushStartTime = performanceNow();
+  currentFlushMeasurements = [];
+}
+
+function checkDebugID(debugID) {
+  var allowRoot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  if (allowRoot && debugID === 0) {
+    return;
+  }
+  if (!debugID) {
+    "production" !== 'production' ? warning(false, 'ReactDebugTool: debugID may not be empty.') : void 0;
+  }
+}
+
+function beginLifeCycleTimer(debugID, timerType) {
+  if (currentFlushNesting === 0) {
+    return;
+  }
+  if (currentTimerType && !lifeCycleTimerHasWarned) {
+    "production" !== 'production' ? warning(false, 'There is an internal error in the React performance measurement code. ' + 'Did not expect %s timer to start while %s timer is still in ' + 'progress for %s instance.', timerType, currentTimerType || 'no', debugID === currentTimerDebugID ? 'the same' : 'another') : void 0;
+    lifeCycleTimerHasWarned = true;
+  }
+  currentTimerStartTime = performanceNow();
+  currentTimerNestedFlushDuration = 0;
+  currentTimerDebugID = debugID;
+  currentTimerType = timerType;
+}
+
+function endLifeCycleTimer(debugID, timerType) {
+  if (currentFlushNesting === 0) {
+    return;
+  }
+  if (currentTimerType !== timerType && !lifeCycleTimerHasWarned) {
+    "production" !== 'production' ? warning(false, 'There is an internal error in the React performance measurement code. ' + 'We did not expect %s timer to stop while %s timer is still in ' + 'progress for %s instance. Please report this as a bug in React.', timerType, currentTimerType || 'no', debugID === currentTimerDebugID ? 'the same' : 'another') : void 0;
+    lifeCycleTimerHasWarned = true;
+  }
+  if (isProfiling) {
+    currentFlushMeasurements.push({
+      timerType: timerType,
+      instanceID: debugID,
+      duration: performanceNow() - currentTimerStartTime - currentTimerNestedFlushDuration
+    });
+  }
+  currentTimerStartTime = 0;
+  currentTimerNestedFlushDuration = 0;
+  currentTimerDebugID = null;
+  currentTimerType = null;
+}
+
+function pauseCurrentLifeCycleTimer() {
+  var currentTimer = {
+    startTime: currentTimerStartTime,
+    nestedFlushStartTime: performanceNow(),
+    debugID: currentTimerDebugID,
+    timerType: currentTimerType
+  };
+  lifeCycleTimerStack.push(currentTimer);
+  currentTimerStartTime = 0;
+  currentTimerNestedFlushDuration = 0;
+  currentTimerDebugID = null;
+  currentTimerType = null;
+}
+
+function resumeCurrentLifeCycleTimer() {
+  var _lifeCycleTimerStack$ = lifeCycleTimerStack.pop(),
+      startTime = _lifeCycleTimerStack$.startTime,
+      nestedFlushStartTime = _lifeCycleTimerStack$.nestedFlushStartTime,
+      debugID = _lifeCycleTimerStack$.debugID,
+      timerType = _lifeCycleTimerStack$.timerType;
+
+  var nestedFlushDuration = performanceNow() - nestedFlushStartTime;
+  currentTimerStartTime = startTime;
+  currentTimerNestedFlushDuration += nestedFlushDuration;
+  currentTimerDebugID = debugID;
+  currentTimerType = timerType;
+}
+
+var lastMarkTimeStamp = 0;
+var canUsePerformanceMeasure = typeof performance !== 'undefined' && typeof performance.mark === 'function' && typeof performance.clearMarks === 'function' && typeof performance.measure === 'function' && typeof performance.clearMeasures === 'function';
+
+function shouldMark(debugID) {
+  if (!isProfiling || !canUsePerformanceMeasure) {
+    return false;
+  }
+  var element = ReactComponentTreeHook.getElement(debugID);
+  if (element == null || typeof element !== 'object') {
+    return false;
+  }
+  var isHostElement = typeof element.type === 'string';
+  if (isHostElement) {
+    return false;
+  }
+  return true;
+}
+
+function markBegin(debugID, markType) {
+  if (!shouldMark(debugID)) {
+    return;
+  }
+
+  var markName = debugID + '::' + markType;
+  lastMarkTimeStamp = performanceNow();
+  performance.mark(markName);
+}
+
+function markEnd(debugID, markType) {
+  if (!shouldMark(debugID)) {
+    return;
+  }
+
+  var markName = debugID + '::' + markType;
+  var displayName = ReactComponentTreeHook.getDisplayName(debugID) || 'Unknown';
+
+  // Chrome has an issue of dropping markers recorded too fast:
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=640652
+  // To work around this, we will not report very small measurements.
+  // I determined the magic number by tweaking it back and forth.
+  // 0.05ms was enough to prevent the issue, but I set it to 0.1ms to be safe.
+  // When the bug is fixed, we can `measure()` unconditionally if we want to.
+  var timeStamp = performanceNow();
+  if (timeStamp - lastMarkTimeStamp > 0.1) {
+    var measurementName = displayName + ' [' + markType + ']';
+    performance.measure(measurementName, markName);
+  }
+
+  performance.clearMarks(markName);
+  performance.clearMeasures(measurementName);
+}
+
+var ReactDebugTool = {
+  addHook: function (hook) {
+    hooks.push(hook);
+  },
+  removeHook: function (hook) {
+    for (var i = 0; i < hooks.length; i++) {
+      if (hooks[i] === hook) {
+        hooks.splice(i, 1);
+        i--;
+      }
+    }
+  },
+  isProfiling: function () {
+    return isProfiling;
+  },
+  beginProfiling: function () {
+    if (isProfiling) {
+      return;
+    }
+
+    isProfiling = true;
+    flushHistory.length = 0;
+    resetMeasurements();
+    ReactDebugTool.addHook(ReactHostOperationHistoryHook);
+  },
+  endProfiling: function () {
+    if (!isProfiling) {
+      return;
+    }
+
+    isProfiling = false;
+    resetMeasurements();
+    ReactDebugTool.removeHook(ReactHostOperationHistoryHook);
+  },
+  getFlushHistory: function () {
+    return flushHistory;
+  },
+  onBeginFlush: function () {
+    currentFlushNesting++;
+    resetMeasurements();
+    pauseCurrentLifeCycleTimer();
+    emitEvent('onBeginFlush');
+  },
+  onEndFlush: function () {
+    resetMeasurements();
+    currentFlushNesting--;
+    resumeCurrentLifeCycleTimer();
+    emitEvent('onEndFlush');
+  },
+  onBeginLifeCycleTimer: function (debugID, timerType) {
+    checkDebugID(debugID);
+    emitEvent('onBeginLifeCycleTimer', debugID, timerType);
+    markBegin(debugID, timerType);
+    beginLifeCycleTimer(debugID, timerType);
+  },
+  onEndLifeCycleTimer: function (debugID, timerType) {
+    checkDebugID(debugID);
+    endLifeCycleTimer(debugID, timerType);
+    markEnd(debugID, timerType);
+    emitEvent('onEndLifeCycleTimer', debugID, timerType);
+  },
+  onBeginProcessingChildContext: function () {
+    emitEvent('onBeginProcessingChildContext');
+  },
+  onEndProcessingChildContext: function () {
+    emitEvent('onEndProcessingChildContext');
+  },
+  onHostOperation: function (operation) {
+    checkDebugID(operation.instanceID);
+    emitEvent('onHostOperation', operation);
+  },
+  onSetState: function () {
+    emitEvent('onSetState');
+  },
+  onSetChildren: function (debugID, childDebugIDs) {
+    checkDebugID(debugID);
+    childDebugIDs.forEach(checkDebugID);
+    emitEvent('onSetChildren', debugID, childDebugIDs);
+  },
+  onBeforeMountComponent: function (debugID, element, parentDebugID) {
+    checkDebugID(debugID);
+    checkDebugID(parentDebugID, true);
+    emitEvent('onBeforeMountComponent', debugID, element, parentDebugID);
+    markBegin(debugID, 'mount');
+  },
+  onMountComponent: function (debugID) {
+    checkDebugID(debugID);
+    markEnd(debugID, 'mount');
+    emitEvent('onMountComponent', debugID);
+  },
+  onBeforeUpdateComponent: function (debugID, element) {
+    checkDebugID(debugID);
+    emitEvent('onBeforeUpdateComponent', debugID, element);
+    markBegin(debugID, 'update');
+  },
+  onUpdateComponent: function (debugID) {
+    checkDebugID(debugID);
+    markEnd(debugID, 'update');
+    emitEvent('onUpdateComponent', debugID);
+  },
+  onBeforeUnmountComponent: function (debugID) {
+    checkDebugID(debugID);
+    emitEvent('onBeforeUnmountComponent', debugID);
+    markBegin(debugID, 'unmount');
+  },
+  onUnmountComponent: function (debugID) {
+    checkDebugID(debugID);
+    markEnd(debugID, 'unmount');
+    emitEvent('onUnmountComponent', debugID);
+  },
+  onTestEvent: function () {
+    emitEvent('onTestEvent');
+  }
+};
+
+// TODO remove these when RN/www gets updated
+ReactDebugTool.addDevtool = ReactDebugTool.addHook;
+ReactDebugTool.removeDevtool = ReactDebugTool.removeHook;
+
+ReactDebugTool.addHook(ReactInvalidSetStateWarningHook);
+ReactDebugTool.addHook(ReactComponentTreeHook);
+var url = ExecutionEnvironment.canUseDOM && window.location.href || '';
+if (/[?&]react_perf\b/.test(url)) {
+  ReactDebugTool.beginProfiling();
+}
+
+module.exports = ReactDebugTool;
+},{"./ReactHostOperationHistoryHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js","./ReactInvalidSetStateWarningHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/performanceNow":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/performanceNow.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js"][0].apply(exports,arguments)
+},{"./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultInjection.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactDefaultInjection.js"][0].apply(exports,arguments)
+},{"./ARIADOMPropertyConfig":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ARIADOMPropertyConfig.js","./BeforeInputEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/BeforeInputEventPlugin.js","./ChangeEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ChangeEventPlugin.js","./DefaultEventPluginOrder":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DefaultEventPluginOrder.js","./EnterLeaveEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EnterLeaveEventPlugin.js","./HTMLDOMPropertyConfig":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/HTMLDOMPropertyConfig.js","./ReactComponentBrowserEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentBrowserEnvironment.js","./ReactDOMComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponent.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMEmptyComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMEmptyComponent.js","./ReactDOMTextComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTextComponent.js","./ReactDOMTreeTraversal":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMTreeTraversal.js","./ReactDefaultBatchingStrategy":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDefaultBatchingStrategy.js","./ReactEventListener":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventListener.js","./ReactInjection":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInjection.js","./ReactReconcileTransaction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js","./SVGDOMPropertyConfig":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js","./SelectEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SelectEventPlugin.js","./SimpleEventPlugin":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactElementSymbol.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactElementSymbol.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEmptyComponent.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactErrorUtils.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+'use strict';
+
+var caughtError = null;
+
+/**
+ * Call a function while guarding against errors that happens within it.
+ *
+ * @param {String} name of the guard to use for logging or debugging
+ * @param {Function} func The function to invoke
+ * @param {*} a First argument
+ * @param {*} b Second argument
+ */
+function invokeGuardedCallback(name, func, a) {
+  try {
+    func(a);
+  } catch (x) {
+    if (caughtError === null) {
+      caughtError = x;
+    }
+  }
+}
+
+var ReactErrorUtils = {
+  invokeGuardedCallback: invokeGuardedCallback,
+
+  /**
+   * Invoked by ReactTestUtils.Simulate so that any errors thrown by the event
+   * handler are sure to be rethrown by rethrowCaughtError.
+   */
+  invokeGuardedCallbackWithCatch: invokeGuardedCallback,
+
+  /**
+   * During execution of guarded functions we will capture the first error which
+   * we will rethrow to be handled by the top level error handler.
+   */
+  rethrowCaughtError: function () {
+    if (caughtError) {
+      var error = caughtError;
+      caughtError = null;
+      throw error;
+    }
+  }
+};
+
+if ("production" !== 'production') {
+  /**
+   * To help development we can get better devtools integration by simulating a
+   * real browser event.
+   */
+  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof document !== 'undefined' && typeof document.createEvent === 'function') {
+    var fakeNode = document.createElement('react');
+    ReactErrorUtils.invokeGuardedCallback = function (name, func, a) {
+      var boundFunc = func.bind(null, a);
+      var evtType = 'react-' + name;
+      fakeNode.addEventListener(evtType, boundFunc, false);
+      var evt = document.createEvent('Event');
+      evt.initEvent(evtType, false, false);
+      fakeNode.dispatchEvent(evt);
+      fakeNode.removeEventListener(evtType, boundFunc, false);
+    };
+  }
+}
+
+module.exports = ReactErrorUtils;
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventEmitterMixin.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEventEmitterMixin.js"][0].apply(exports,arguments)
+},{"./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactEventListener.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactEventListener.js"][0].apply(exports,arguments)
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./getEventTarget":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js","fbjs/lib/EventListener":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getUnboundedScrollPosition":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/getUnboundedScrollPosition.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactFeatureFlags.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactHostComponent.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactHostOperationHistoryHook.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInjection.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInjection.js"][0].apply(exports,arguments)
+},{"./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./EventPluginHub":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginHub.js","./EventPluginUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPluginUtils.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactComponentEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactEmptyComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInputSelection.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInputSelection.js"][0].apply(exports,arguments)
+},{"./ReactDOMSelection":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMSelection.js","fbjs/lib/containsNode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/containsNode.js","fbjs/lib/focusNode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/focusNode.js","fbjs/lib/getActiveElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/getActiveElement.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstanceMap.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInstrumentation.js"][0].apply(exports,arguments)
+},{"./ReactDebugTool":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDebugTool.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactInvalidSetStateWarningHook.js"][0].apply(exports,arguments)
+},{"fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMarkupChecksum.js"][0].apply(exports,arguments)
+},{"./adler32":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/adler32.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactMount.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMount.js"][0].apply(exports,arguments)
+},{"./DOMLazyTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMLazyTree.js","./DOMProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMProperty.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactDOMContainerInfo":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMContainerInfo.js","./ReactDOMFeatureFlags":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMFeatureFlags.js","./ReactFeatureFlags":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactMarkupChecksum":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactMarkupChecksum.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./ReactUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./instantiateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/instantiateReactComponent.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","./shouldUpdateReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/React.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactMultiChild.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactMultiChild.js"][0].apply(exports,arguments)
+},{"./ReactChildReconciler":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactChildReconciler.js","./ReactComponentEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactComponentEnvironment.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./flattenChildren":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/flattenChildren.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactNodeTypes.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactNodeTypes.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","react/lib/React":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactOwner.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactOwner.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypeLocationNames.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypesSecret.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconcileTransaction.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconcileTransaction.js"][0].apply(exports,arguments)
+},{"./CallbackQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactBrowserEventEmitter":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactBrowserEventEmitter.js","./ReactInputSelection":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactReconciler.js"][0].apply(exports,arguments)
+},{"./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactRef":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactRef.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactRef.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactRef.js"][0].apply(exports,arguments)
+},{"./ReactOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerRenderingTransaction.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactServerRenderingTransaction.js"][0].apply(exports,arguments)
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactServerUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactServerUpdateQueue.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactServerUpdateQueue.js"][0].apply(exports,arguments)
+},{"./ReactUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdateQueue.js":[function(require,module,exports){
+/**
+ * Copyright 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant');
+
+var ReactCurrentOwner = require('react/lib/ReactCurrentOwner');
+var ReactInstanceMap = require('./ReactInstanceMap');
+var ReactInstrumentation = require('./ReactInstrumentation');
+var ReactUpdates = require('./ReactUpdates');
+
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+function enqueueUpdate(internalInstance) {
+  ReactUpdates.enqueueUpdate(internalInstance);
+}
+
+function formatUnexpectedArgument(arg) {
+  var type = typeof arg;
+  if (type !== 'object') {
+    return type;
+  }
+  var displayName = arg.constructor && arg.constructor.name || type;
+  var keys = Object.keys(arg);
+  if (keys.length > 0 && keys.length < 20) {
+    return displayName + ' (keys: ' + keys.join(', ') + ')';
+  }
+  return displayName;
+}
+
+function getInternalInstanceReadyForUpdate(publicInstance, callerName) {
+  var internalInstance = ReactInstanceMap.get(publicInstance);
+  if (!internalInstance) {
+    if ("production" !== 'production') {
+      var ctor = publicInstance.constructor;
+      // Only warn when we have a callerName. Otherwise we should be silent.
+      // We're probably calling from enqueueCallback. We don't want to warn
+      // there because we already warned for the corresponding lifecycle method.
+      "production" !== 'production' ? warning(!callerName, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, ctor && (ctor.displayName || ctor.name) || 'ReactClass') : void 0;
+    }
+    return null;
+  }
+
+  if ("production" !== 'production') {
+    "production" !== 'production' ? warning(ReactCurrentOwner.current == null, '%s(...): Cannot update during an existing state transition (such as ' + 'within `render` or another component\'s constructor). Render methods ' + 'should be a pure function of props and state; constructor ' + 'side-effects are an anti-pattern, but can be moved to ' + '`componentWillMount`.', callerName) : void 0;
+  }
+
+  return internalInstance;
+}
+
+/**
+ * ReactUpdateQueue allows for state updates to be scheduled into a later
+ * reconciliation step.
+ */
+var ReactUpdateQueue = {
+
+  /**
+   * Checks whether or not this composite component is mounted.
+   * @param {ReactClass} publicInstance The instance we want to test.
+   * @return {boolean} True if mounted, false otherwise.
+   * @protected
+   * @final
+   */
+  isMounted: function (publicInstance) {
+    if ("production" !== 'production') {
+      var owner = ReactCurrentOwner.current;
+      if (owner !== null) {
+        "production" !== 'production' ? warning(owner._warnedAboutRefsInRender, '%s is accessing isMounted inside its render() function. ' + 'render() should be a pure function of props and state. It should ' + 'never access something that requires stale data from the previous ' + 'render, such as refs. Move this logic to componentDidMount and ' + 'componentDidUpdate instead.', owner.getName() || 'A component') : void 0;
+        owner._warnedAboutRefsInRender = true;
+      }
+    }
+    var internalInstance = ReactInstanceMap.get(publicInstance);
+    if (internalInstance) {
+      // During componentWillMount and render this will still be null but after
+      // that will always render to something. At least for now. So we can use
+      // this hack.
+      return !!internalInstance._renderedComponent;
+    } else {
+      return false;
+    }
+  },
+
+  /**
+   * Enqueue a callback that will be executed after all the pending updates
+   * have processed.
+   *
+   * @param {ReactClass} publicInstance The instance to use as `this` context.
+   * @param {?function} callback Called after state is updated.
+   * @param {string} callerName Name of the calling function in the public API.
+   * @internal
+   */
+  enqueueCallback: function (publicInstance, callback, callerName) {
+    ReactUpdateQueue.validateCallback(callback, callerName);
+    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance);
+
+    // Previously we would throw an error if we didn't have an internal
+    // instance. Since we want to make it a no-op instead, we mirror the same
+    // behavior we have in other enqueue* methods.
+    // We also need to ignore callbacks in componentWillMount. See
+    // enqueueUpdates.
+    if (!internalInstance) {
+      return null;
+    }
+
+    if (internalInstance._pendingCallbacks) {
+      internalInstance._pendingCallbacks.push(callback);
+    } else {
+      internalInstance._pendingCallbacks = [callback];
+    }
+    // TODO: The callback here is ignored when setState is called from
+    // componentWillMount. Either fix it or disallow doing so completely in
+    // favor of getInitialState. Alternatively, we can disallow
+    // componentWillMount during server-side rendering.
+    enqueueUpdate(internalInstance);
+  },
+
+  enqueueCallbackInternal: function (internalInstance, callback) {
+    if (internalInstance._pendingCallbacks) {
+      internalInstance._pendingCallbacks.push(callback);
+    } else {
+      internalInstance._pendingCallbacks = [callback];
+    }
+    enqueueUpdate(internalInstance);
+  },
+
+  /**
+   * Forces an update. This should only be invoked when it is known with
+   * certainty that we are **not** in a DOM transaction.
+   *
+   * You may want to call this when you know that some deeper aspect of the
+   * component's state has changed but `setState` was not called.
+   *
+   * This will not invoke `shouldComponentUpdate`, but it will invoke
+   * `componentWillUpdate` and `componentDidUpdate`.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @internal
+   */
+  enqueueForceUpdate: function (publicInstance) {
+    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'forceUpdate');
+
+    if (!internalInstance) {
+      return;
+    }
+
+    internalInstance._pendingForceUpdate = true;
+
+    enqueueUpdate(internalInstance);
+  },
+
+  /**
+   * Replaces all of the state. Always use this or `setState` to mutate state.
+   * You should treat `this.state` as immutable.
+   *
+   * There is no guarantee that `this.state` will be immediately updated, so
+   * accessing `this.state` after calling this method may return the old value.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} completeState Next state.
+   * @internal
+   */
+  enqueueReplaceState: function (publicInstance, completeState, callback) {
+    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'replaceState');
+
+    if (!internalInstance) {
+      return;
+    }
+
+    internalInstance._pendingStateQueue = [completeState];
+    internalInstance._pendingReplaceState = true;
+
+    // Future-proof 15.5
+    if (callback !== undefined && callback !== null) {
+      ReactUpdateQueue.validateCallback(callback, 'replaceState');
+      if (internalInstance._pendingCallbacks) {
+        internalInstance._pendingCallbacks.push(callback);
+      } else {
+        internalInstance._pendingCallbacks = [callback];
+      }
+    }
+
+    enqueueUpdate(internalInstance);
+  },
+
+  /**
+   * Sets a subset of the state. This only exists because _pendingState is
+   * internal. This provides a merging strategy that is not available to deep
+   * properties which is confusing. TODO: Expose pendingState or don't use it
+   * during the merge.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} partialState Next partial state to be merged with state.
+   * @internal
+   */
+  enqueueSetState: function (publicInstance, partialState) {
+    if ("production" !== 'production') {
+      ReactInstrumentation.debugTool.onSetState();
+      "production" !== 'production' ? warning(partialState != null, 'setState(...): You passed an undefined or null state object; ' + 'instead, use forceUpdate().') : void 0;
+    }
+
+    var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'setState');
+
+    if (!internalInstance) {
+      return;
+    }
+
+    var queue = internalInstance._pendingStateQueue || (internalInstance._pendingStateQueue = []);
+    queue.push(partialState);
+
+    enqueueUpdate(internalInstance);
+  },
+
+  enqueueElementInternal: function (internalInstance, nextElement, nextContext) {
+    internalInstance._pendingElement = nextElement;
+    // TODO: introduce _pendingContext instead of setting it directly.
+    internalInstance._context = nextContext;
+    enqueueUpdate(internalInstance);
+  },
+
+  validateCallback: function (callback, callerName) {
+    !(!callback || typeof callback === 'function') ? "production" !== 'production' ? invariant(false, '%s(...): Expected the last optional `callback` argument to be a function. Instead received: %s.', callerName, formatUnexpectedArgument(callback)) : _prodInvariant('122', callerName, formatUnexpectedArgument(callback)) : void 0;
+  }
+
+};
+
+module.exports = ReactUpdateQueue;
+},{"./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./ReactInstrumentation":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstrumentation.js","./ReactUpdates":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactUpdates.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactUpdates.js"][0].apply(exports,arguments)
+},{"./CallbackQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CallbackQueue.js","./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","./ReactFeatureFlags":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactFeatureFlags.js","./ReactReconciler":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactReconciler.js","./Transaction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactVersion.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+module.exports = '15.5.4';
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SVGDOMPropertyConfig.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SVGDOMPropertyConfig.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SelectEventPlugin.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SelectEventPlugin.js"][0].apply(exports,arguments)
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInputSelection":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInputSelection.js","./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./isTextInputElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/isTextInputElement.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js","fbjs/lib/getActiveElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/getActiveElement.js","fbjs/lib/shallowEqual":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/shallowEqual.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SimpleEventPlugin.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SimpleEventPlugin.js"][0].apply(exports,arguments)
+},{"./EventPropagators":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/EventPropagators.js","./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./SyntheticAnimationEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js","./SyntheticClipboardEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js","./SyntheticDragEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js","./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./SyntheticFocusEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js","./SyntheticKeyboardEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js","./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js","./SyntheticTouchEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js","./SyntheticTransitionEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js","./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./SyntheticWheelEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js","./getEventCharCode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/EventListener":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/EventListener.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticAnimationEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticAnimationEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticClipboardEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticClipboardEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticCompositionEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticCompositionEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticDragEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticDragEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticEvent.js"][0].apply(exports,arguments)
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/PooledClass.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticFocusEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticFocusEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticInputEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticInputEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticKeyboardEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticKeyboardEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventCharCode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js","./getEventKey":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventKey.js","./getEventModifierState":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticMouseEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./ViewportMetrics":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ViewportMetrics.js","./getEventModifierState":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTouchEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticTouchEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticUIEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js","./getEventModifierState":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticTransitionEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticTransitionEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticUIEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticUIEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticEvent.js","./getEventTarget":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticWheelEvent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/SyntheticWheelEvent.js"][0].apply(exports,arguments)
+},{"./SyntheticMouseEvent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/SyntheticMouseEvent.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/Transaction.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/Transaction.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ViewportMetrics.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ViewportMetrics.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/accumulateInto.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/accumulateInto.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/adler32.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/adler32.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/checkReactTypeSpec.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/checkReactTypeSpec.js"][0].apply(exports,arguments)
+},{"./ReactPropTypeLocationNames":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/dangerousStyleValue.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/dangerousStyleValue.js"][0].apply(exports,arguments)
+},{"./CSSProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/CSSProperty.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/escapeTextContentForBrowser.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/findDOMNode.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/findDOMNode.js"][0].apply(exports,arguments)
+},{"./ReactDOMComponentTree":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactDOMComponentTree.js","./ReactInstanceMap":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactInstanceMap.js","./getHostComponentFromComposite":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/flattenChildren.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/flattenChildren.js"][0].apply(exports,arguments)
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./traverseAllChildren":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/traverseAllChildren.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/forEachAccumulated.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/forEachAccumulated.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventCharCode.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventKey.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventKey.js"][0].apply(exports,arguments)
+},{"./getEventCharCode":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventCharCode.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventModifierState.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventModifierState.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getEventTarget.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getEventTarget.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getHostComponentFromComposite.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getHostComponentFromComposite.js"][0].apply(exports,arguments)
+},{"./ReactNodeTypes":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactNodeTypes.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getIteratorFn.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getIteratorFn.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getNodeForCharacterOffset.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getNodeForCharacterOffset.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getTextContentAccessor.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getTextContentAccessor.js"][0].apply(exports,arguments)
+},{"fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getVendorPrefixedEventName.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getVendorPrefixedEventName.js"][0].apply(exports,arguments)
+},{"fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/instantiateReactComponent.js":[function(require,module,exports){
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+'use strict';
+
+var _prodInvariant = require('./reactProdInvariant'),
+    _assign = require('object-assign');
+
+var ReactCompositeComponent = require('./ReactCompositeComponent');
+var ReactEmptyComponent = require('./ReactEmptyComponent');
+var ReactHostComponent = require('./ReactHostComponent');
+
+var getNextDebugID = require('react/lib/getNextDebugID');
+var invariant = require('fbjs/lib/invariant');
+var warning = require('fbjs/lib/warning');
+
+// To avoid a cyclic dependency, we create the final class in this module
+var ReactCompositeComponentWrapper = function (element) {
+  this.construct(element);
+};
+
+function getDeclarationErrorAddendum(owner) {
+  if (owner) {
+    var name = owner.getName();
+    if (name) {
+      return ' Check the render method of `' + name + '`.';
+    }
+  }
+  return '';
+}
+
+/**
+ * Check if the type reference is a known internal type. I.e. not a user
+ * provided composite type.
+ *
+ * @param {function} type
+ * @return {boolean} Returns true if this is a valid internal type.
+ */
+function isInternalComponentType(type) {
+  return typeof type === 'function' && typeof type.prototype !== 'undefined' && typeof type.prototype.mountComponent === 'function' && typeof type.prototype.receiveComponent === 'function';
+}
+
+/**
+ * Given a ReactNode, create an instance that will actually be mounted.
+ *
+ * @param {ReactNode} node
+ * @param {boolean} shouldHaveDebugID
+ * @return {object} A new instance of the element's constructor.
+ * @protected
+ */
+function instantiateReactComponent(node, shouldHaveDebugID) {
+  var instance;
+
+  if (node === null || node === false) {
+    instance = ReactEmptyComponent.create(instantiateReactComponent);
+  } else if (typeof node === 'object') {
+    var element = node;
+    var type = element.type;
+    if (typeof type !== 'function' && typeof type !== 'string') {
+      var info = '';
+      if ("production" !== 'production') {
+        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+        }
+      }
+      info += getDeclarationErrorAddendum(element._owner);
+      !false ? "production" !== 'production' ? invariant(false, 'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s', type == null ? type : typeof type, info) : _prodInvariant('130', type == null ? type : typeof type, info) : void 0;
+    }
+
+    // Special case string values
+    if (typeof element.type === 'string') {
+      instance = ReactHostComponent.createInternalComponent(element);
+    } else if (isInternalComponentType(element.type)) {
+      // This is temporarily available for custom components that are not string
+      // representations. I.e. ART. Once those are updated to use the string
+      // representation, we can drop this code path.
+      instance = new element.type(element);
+
+      // We renamed this. Allow the old name for compat. :(
+      if (!instance.getHostNode) {
+        instance.getHostNode = instance.getNativeNode;
+      }
+    } else {
+      instance = new ReactCompositeComponentWrapper(element);
+    }
+  } else if (typeof node === 'string' || typeof node === 'number') {
+    instance = ReactHostComponent.createInstanceForText(node);
+  } else {
+    !false ? "production" !== 'production' ? invariant(false, 'Encountered invalid React node of type %s', typeof node) : _prodInvariant('131', typeof node) : void 0;
+  }
+
+  if ("production" !== 'production') {
+    "production" !== 'production' ? warning(typeof instance.mountComponent === 'function' && typeof instance.receiveComponent === 'function' && typeof instance.getHostNode === 'function' && typeof instance.unmountComponent === 'function', 'Only React Components can be mounted.') : void 0;
+  }
+
+  // These two fields are used by the DOM and ART diffing algorithms
+  // respectively. Instead of using expandos on components, we should be
+  // storing the state needed by the diffing algorithms elsewhere.
+  instance._mountIndex = 0;
+  instance._mountImage = null;
+
+  if ("production" !== 'production') {
+    instance._debugID = shouldHaveDebugID ? getNextDebugID() : 0;
+  }
+
+  // Internal instances should fully constructed at this point, so they should
+  // not get any new fields added to them at this point.
+  if ("production" !== 'production') {
+    if (Object.preventExtensions) {
+      Object.preventExtensions(instance);
+    }
+  }
+
+  return instance;
+}
+
+_assign(ReactCompositeComponentWrapper.prototype, ReactCompositeComponent, {
+  _instantiateReactComponent: instantiateReactComponent
+});
+
+module.exports = instantiateReactComponent;
+},{"./ReactCompositeComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactCompositeComponent.js","./ReactEmptyComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactEmptyComponent.js","./ReactHostComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactHostComponent.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js","react/lib/getNextDebugID":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/getNextDebugID.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/isEventSupported.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isEventSupported.js"][0].apply(exports,arguments)
+},{"fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/isTextInputElement.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/isTextInputElement.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/quoteAttributeValueForBrowser.js"][0].apply(exports,arguments)
+},{"./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/renderSubtreeIntoContainer.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/renderSubtreeIntoContainer.js"][0].apply(exports,arguments)
+},{"./ReactMount":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactMount.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setInnerHTML.js"][0].apply(exports,arguments)
+},{"./DOMNamespaces":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/DOMNamespaces.js","./createMicrosoftUnsafeLocalFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setTextContent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/setTextContent.js"][0].apply(exports,arguments)
+},{"./escapeTextContentForBrowser":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/escapeTextContentForBrowser.js","./setInnerHTML":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/setInnerHTML.js","fbjs/lib/ExecutionEnvironment":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/ExecutionEnvironment.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/shouldUpdateReactComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/shouldUpdateReactComponent.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/traverseAllChildren.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/traverseAllChildren.js"][0].apply(exports,arguments)
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js","./ReactElementSymbol":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/getIteratorFn.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","react/lib/ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/validateDOMNesting.js":[function(require,module,exports){
 /**
  * Copyright 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -18276,11 +25406,11 @@ if ("production" !== 'production') {
 }
 
 module.exports = validateDOMNesting;
-},{"fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/KeyEscapeUtils.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/KeyEscapeUtils.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/PooledClass.js"][0].apply(exports,arguments)
-},{"./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js":[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/KeyEscapeUtils.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/KeyEscapeUtils.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/PooledClass.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/PooledClass.js"][0].apply(exports,arguments)
+},{"./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/React.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -18384,198 +25514,9 @@ if ("production" !== 'production') {
 }
 
 module.exports = React;
-},{"./ReactChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactChildren.js","./ReactClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactClass.js","./ReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js","./ReactDOMFactories":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactDOMFactories.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementValidator.js","./ReactPropTypes":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypes.js","./ReactPureComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPureComponent.js","./ReactVersion":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactVersion.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","./onlyChild":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/onlyChild.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var PooledClass = require('./PooledClass');
-var ReactElement = require('./ReactElement');
-
-var emptyFunction = require('fbjs/lib/emptyFunction');
-var traverseAllChildren = require('./traverseAllChildren');
-
-var twoArgumentPooler = PooledClass.twoArgumentPooler;
-var fourArgumentPooler = PooledClass.fourArgumentPooler;
-
-var userProvidedKeyEscapeRegex = /\/+/g;
-function escapeUserProvidedKey(text) {
-  return ('' + text).replace(userProvidedKeyEscapeRegex, '$&/');
-}
-
-/**
- * PooledClass representing the bookkeeping associated with performing a child
- * traversal. Allows avoiding binding callbacks.
- *
- * @constructor ForEachBookKeeping
- * @param {!function} forEachFunction Function to perform traversal with.
- * @param {?*} forEachContext Context to perform context with.
- */
-function ForEachBookKeeping(forEachFunction, forEachContext) {
-  this.func = forEachFunction;
-  this.context = forEachContext;
-  this.count = 0;
-}
-ForEachBookKeeping.prototype.destructor = function () {
-  this.func = null;
-  this.context = null;
-  this.count = 0;
-};
-PooledClass.addPoolingTo(ForEachBookKeeping, twoArgumentPooler);
-
-function forEachSingleChild(bookKeeping, child, name) {
-  var func = bookKeeping.func,
-      context = bookKeeping.context;
-
-  func.call(context, child, bookKeeping.count++);
-}
-
-/**
- * Iterates through children that are typically specified as `props.children`.
- *
- * See https://facebook.github.io/react/docs/top-level-api.html#react.children.foreach
- *
- * The provided forEachFunc(child, index) will be called for each
- * leaf child.
- *
- * @param {?*} children Children tree container.
- * @param {function(*, int)} forEachFunc
- * @param {*} forEachContext Context for forEachContext.
- */
-function forEachChildren(children, forEachFunc, forEachContext) {
-  if (children == null) {
-    return children;
-  }
-  var traverseContext = ForEachBookKeeping.getPooled(forEachFunc, forEachContext);
-  traverseAllChildren(children, forEachSingleChild, traverseContext);
-  ForEachBookKeeping.release(traverseContext);
-}
-
-/**
- * PooledClass representing the bookkeeping associated with performing a child
- * mapping. Allows avoiding binding callbacks.
- *
- * @constructor MapBookKeeping
- * @param {!*} mapResult Object containing the ordered map of results.
- * @param {!function} mapFunction Function to perform mapping with.
- * @param {?*} mapContext Context to perform mapping with.
- */
-function MapBookKeeping(mapResult, keyPrefix, mapFunction, mapContext) {
-  this.result = mapResult;
-  this.keyPrefix = keyPrefix;
-  this.func = mapFunction;
-  this.context = mapContext;
-  this.count = 0;
-}
-MapBookKeeping.prototype.destructor = function () {
-  this.result = null;
-  this.keyPrefix = null;
-  this.func = null;
-  this.context = null;
-  this.count = 0;
-};
-PooledClass.addPoolingTo(MapBookKeeping, fourArgumentPooler);
-
-function mapSingleChildIntoContext(bookKeeping, child, childKey) {
-  var result = bookKeeping.result,
-      keyPrefix = bookKeeping.keyPrefix,
-      func = bookKeeping.func,
-      context = bookKeeping.context;
-
-
-  var mappedChild = func.call(context, child, bookKeeping.count++);
-  if (Array.isArray(mappedChild)) {
-    mapIntoWithKeyPrefixInternal(mappedChild, result, childKey, emptyFunction.thatReturnsArgument);
-  } else if (mappedChild != null) {
-    if (ReactElement.isValidElement(mappedChild)) {
-      mappedChild = ReactElement.cloneAndReplaceKey(mappedChild,
-      // Keep both the (mapped) and old keys if they differ, just as
-      // traverseAllChildren used to do for objects as children
-      keyPrefix + (mappedChild.key && (!child || child.key !== mappedChild.key) ? escapeUserProvidedKey(mappedChild.key) + '/' : '') + childKey);
-    }
-    result.push(mappedChild);
-  }
-}
-
-function mapIntoWithKeyPrefixInternal(children, array, prefix, func, context) {
-  var escapedPrefix = '';
-  if (prefix != null) {
-    escapedPrefix = escapeUserProvidedKey(prefix) + '/';
-  }
-  var traverseContext = MapBookKeeping.getPooled(array, escapedPrefix, func, context);
-  traverseAllChildren(children, mapSingleChildIntoContext, traverseContext);
-  MapBookKeeping.release(traverseContext);
-}
-
-/**
- * Maps children that are typically specified as `props.children`.
- *
- * See https://facebook.github.io/react/docs/top-level-api.html#react.children.map
- *
- * The provided mapFunction(child, key, index) will be called for each
- * leaf child.
- *
- * @param {?*} children Children tree container.
- * @param {function(*, int)} func The map function.
- * @param {*} context Context for mapFunction.
- * @return {object} Object containing the ordered map of results.
- */
-function mapChildren(children, func, context) {
-  if (children == null) {
-    return children;
-  }
-  var result = [];
-  mapIntoWithKeyPrefixInternal(children, result, null, func, context);
-  return result;
-}
-
-function forEachSingleChildDummy(traverseContext, child, name) {
-  return null;
-}
-
-/**
- * Count the number of children that are typically specified as
- * `props.children`.
- *
- * See https://facebook.github.io/react/docs/top-level-api.html#react.children.count
- *
- * @param {?*} children Children tree container.
- * @return {number} The number of children.
- */
-function countChildren(children, context) {
-  return traverseAllChildren(children, forEachSingleChildDummy, null);
-}
-
-/**
- * Flatten a children object (typically specified as `props.children`) and
- * return an array with appropriately re-keyed children.
- *
- * See https://facebook.github.io/react/docs/top-level-api.html#react.children.toarray
- */
-function toArray(children) {
-  var result = [];
-  mapIntoWithKeyPrefixInternal(children, result, null, emptyFunction.thatReturnsArgument);
-  return result;
-}
-
-var ReactChildren = {
-  forEach: forEachChildren,
-  map: mapChildren,
-  mapIntoWithKeyPrefixInternal: mapIntoWithKeyPrefixInternal,
-  count: countChildren,
-  toArray: toArray
-};
-
-module.exports = ReactChildren;
-},{"./PooledClass":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/PooledClass.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./traverseAllChildren":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/traverseAllChildren.js","fbjs/lib/emptyFunction":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactClass.js":[function(require,module,exports){
+},{"./ReactChildren":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactChildren.js","./ReactClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactClass.js","./ReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js","./ReactDOMFactories":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactDOMFactories.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElementValidator.js","./ReactPropTypes":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPropTypes.js","./ReactPureComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPureComponent.js","./ReactVersion":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactVersion.js","./canDefineProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","./onlyChild":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/onlyChild.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactChildren.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactChildren.js"][0].apply(exports,arguments)
+},{"./PooledClass":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/PooledClass.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./traverseAllChildren":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/traverseAllChildren.js","fbjs/lib/emptyFunction":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyFunction.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactClass.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -19298,1003 +26239,19 @@ var ReactClass = {
 };
 
 module.exports = ReactClass;
-},{"./ReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./ReactNoopUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./ReactPropTypeLocationNames":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var _prodInvariant = require('./reactProdInvariant');
-
-var ReactNoopUpdateQueue = require('./ReactNoopUpdateQueue');
-
-var canDefineProperty = require('./canDefineProperty');
-var emptyObject = require('fbjs/lib/emptyObject');
-var invariant = require('fbjs/lib/invariant');
-var warning = require('fbjs/lib/warning');
-
-/**
- * Base class helpers for the updating state of a component.
- */
-function ReactComponent(props, context, updater) {
-  this.props = props;
-  this.context = context;
-  this.refs = emptyObject;
-  // We initialize the default updater but the real one gets injected by the
-  // renderer.
-  this.updater = updater || ReactNoopUpdateQueue;
-}
-
-ReactComponent.prototype.isReactComponent = {};
-
-/**
- * Sets a subset of the state. Always use this to mutate
- * state. You should treat `this.state` as immutable.
- *
- * There is no guarantee that `this.state` will be immediately updated, so
- * accessing `this.state` after calling this method may return the old value.
- *
- * There is no guarantee that calls to `setState` will run synchronously,
- * as they may eventually be batched together.  You can provide an optional
- * callback that will be executed when the call to setState is actually
- * completed.
- *
- * When a function is provided to setState, it will be called at some point in
- * the future (not synchronously). It will be called with the up to date
- * component arguments (state, props, context). These values can be different
- * from this.* because your function may be called after receiveProps but before
- * shouldComponentUpdate, and this new state, props, and context will not yet be
- * assigned to this.
- *
- * @param {object|function} partialState Next partial state or function to
- *        produce next partial state to be merged with current state.
- * @param {?function} callback Called after state is updated.
- * @final
- * @protected
- */
-ReactComponent.prototype.setState = function (partialState, callback) {
-  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? "production" !== 'production' ? invariant(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : _prodInvariant('85') : void 0;
-  this.updater.enqueueSetState(this, partialState);
-  if (callback) {
-    this.updater.enqueueCallback(this, callback, 'setState');
-  }
-};
-
-/**
- * Forces an update. This should only be invoked when it is known with
- * certainty that we are **not** in a DOM transaction.
- *
- * You may want to call this when you know that some deeper aspect of the
- * component's state has changed but `setState` was not called.
- *
- * This will not invoke `shouldComponentUpdate`, but it will invoke
- * `componentWillUpdate` and `componentDidUpdate`.
- *
- * @param {?function} callback Called after update is complete.
- * @final
- * @protected
- */
-ReactComponent.prototype.forceUpdate = function (callback) {
-  this.updater.enqueueForceUpdate(this);
-  if (callback) {
-    this.updater.enqueueCallback(this, callback, 'forceUpdate');
-  }
-};
-
-/**
- * Deprecated APIs. These APIs used to exist on classic React classes but since
- * we would like to deprecate them, we're not going to move them over to this
- * modern base class. Instead, we define a getter that warns if it's accessed.
- */
-if ("production" !== 'production') {
-  var deprecatedAPIs = {
-    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
-    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
-  };
-  var defineDeprecationWarning = function (methodName, info) {
-    if (canDefineProperty) {
-      Object.defineProperty(ReactComponent.prototype, methodName, {
-        get: function () {
-          "production" !== 'production' ? warning(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]) : void 0;
-          return undefined;
-        }
-      });
-    }
-  };
-  for (var fnName in deprecatedAPIs) {
-    if (deprecatedAPIs.hasOwnProperty(fnName)) {
-      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
-    }
-  }
-}
-
-module.exports = ReactComponent;
-},{"./ReactNoopUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js":[function(require,module,exports){
-/**
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-'use strict';
-
-var _prodInvariant = require('./reactProdInvariant');
-
-var ReactCurrentOwner = require('./ReactCurrentOwner');
-
-var invariant = require('fbjs/lib/invariant');
-var warning = require('fbjs/lib/warning');
-
-function isNative(fn) {
-  // Based on isNative() from Lodash
-  var funcToString = Function.prototype.toString;
-  var hasOwnProperty = Object.prototype.hasOwnProperty;
-  var reIsNative = RegExp('^' + funcToString
-  // Take an example native function source for comparison
-  .call(hasOwnProperty)
-  // Strip regex characters so we can use it for regex
-  .replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
-  // Remove hasOwnProperty from the template to make it generic
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
-  try {
-    var source = funcToString.call(fn);
-    return reIsNative.test(source);
-  } catch (err) {
-    return false;
-  }
-}
-
-var canUseCollections =
-// Array.from
-typeof Array.from === 'function' &&
-// Map
-typeof Map === 'function' && isNative(Map) &&
-// Map.prototype.keys
-Map.prototype != null && typeof Map.prototype.keys === 'function' && isNative(Map.prototype.keys) &&
-// Set
-typeof Set === 'function' && isNative(Set) &&
-// Set.prototype.keys
-Set.prototype != null && typeof Set.prototype.keys === 'function' && isNative(Set.prototype.keys);
-
-var setItem;
-var getItem;
-var removeItem;
-var getItemIDs;
-var addRoot;
-var removeRoot;
-var getRootIDs;
-
-if (canUseCollections) {
-  var itemMap = new Map();
-  var rootIDSet = new Set();
-
-  setItem = function (id, item) {
-    itemMap.set(id, item);
-  };
-  getItem = function (id) {
-    return itemMap.get(id);
-  };
-  removeItem = function (id) {
-    itemMap['delete'](id);
-  };
-  getItemIDs = function () {
-    return Array.from(itemMap.keys());
-  };
-
-  addRoot = function (id) {
-    rootIDSet.add(id);
-  };
-  removeRoot = function (id) {
-    rootIDSet['delete'](id);
-  };
-  getRootIDs = function () {
-    return Array.from(rootIDSet.keys());
-  };
-} else {
-  var itemByKey = {};
-  var rootByKey = {};
-
-  // Use non-numeric keys to prevent V8 performance issues:
-  // https://github.com/facebook/react/pull/7232
-  var getKeyFromID = function (id) {
-    return '.' + id;
-  };
-  var getIDFromKey = function (key) {
-    return parseInt(key.substr(1), 10);
-  };
-
-  setItem = function (id, item) {
-    var key = getKeyFromID(id);
-    itemByKey[key] = item;
-  };
-  getItem = function (id) {
-    var key = getKeyFromID(id);
-    return itemByKey[key];
-  };
-  removeItem = function (id) {
-    var key = getKeyFromID(id);
-    delete itemByKey[key];
-  };
-  getItemIDs = function () {
-    return Object.keys(itemByKey).map(getIDFromKey);
-  };
-
-  addRoot = function (id) {
-    var key = getKeyFromID(id);
-    rootByKey[key] = true;
-  };
-  removeRoot = function (id) {
-    var key = getKeyFromID(id);
-    delete rootByKey[key];
-  };
-  getRootIDs = function () {
-    return Object.keys(rootByKey).map(getIDFromKey);
-  };
-}
-
-var unmountedIDs = [];
-
-function purgeDeep(id) {
-  var item = getItem(id);
-  if (item) {
-    var childIDs = item.childIDs;
-
-    removeItem(id);
-    childIDs.forEach(purgeDeep);
-  }
-}
-
-function describeComponentFrame(name, source, ownerName) {
-  return '\n    in ' + (name || 'Unknown') + (source ? ' (at ' + source.fileName.replace(/^.*[\\\/]/, '') + ':' + source.lineNumber + ')' : ownerName ? ' (created by ' + ownerName + ')' : '');
-}
-
-function getDisplayName(element) {
-  if (element == null) {
-    return '#empty';
-  } else if (typeof element === 'string' || typeof element === 'number') {
-    return '#text';
-  } else if (typeof element.type === 'string') {
-    return element.type;
-  } else {
-    return element.type.displayName || element.type.name || 'Unknown';
-  }
-}
-
-function describeID(id) {
-  var name = ReactComponentTreeHook.getDisplayName(id);
-  var element = ReactComponentTreeHook.getElement(id);
-  var ownerID = ReactComponentTreeHook.getOwnerID(id);
-  var ownerName;
-  if (ownerID) {
-    ownerName = ReactComponentTreeHook.getDisplayName(ownerID);
-  }
-  "production" !== 'production' ? warning(element, 'ReactComponentTreeHook: Missing React element for debugID %s when ' + 'building stack', id) : void 0;
-  return describeComponentFrame(name, element && element._source, ownerName);
-}
-
-var ReactComponentTreeHook = {
-  onSetChildren: function (id, nextChildIDs) {
-    var item = getItem(id);
-    !item ? "production" !== 'production' ? invariant(false, 'Item must have been set') : _prodInvariant('144') : void 0;
-    item.childIDs = nextChildIDs;
-
-    for (var i = 0; i < nextChildIDs.length; i++) {
-      var nextChildID = nextChildIDs[i];
-      var nextChild = getItem(nextChildID);
-      !nextChild ? "production" !== 'production' ? invariant(false, 'Expected hook events to fire for the child before its parent includes it in onSetChildren().') : _prodInvariant('140') : void 0;
-      !(nextChild.childIDs != null || typeof nextChild.element !== 'object' || nextChild.element == null) ? "production" !== 'production' ? invariant(false, 'Expected onSetChildren() to fire for a container child before its parent includes it in onSetChildren().') : _prodInvariant('141') : void 0;
-      !nextChild.isMounted ? "production" !== 'production' ? invariant(false, 'Expected onMountComponent() to fire for the child before its parent includes it in onSetChildren().') : _prodInvariant('71') : void 0;
-      if (nextChild.parentID == null) {
-        nextChild.parentID = id;
-        // TODO: This shouldn't be necessary but mounting a new root during in
-        // componentWillMount currently causes not-yet-mounted components to
-        // be purged from our tree data so their parent id is missing.
-      }
-      !(nextChild.parentID === id) ? "production" !== 'production' ? invariant(false, 'Expected onBeforeMountComponent() parent and onSetChildren() to be consistent (%s has parents %s and %s).', nextChildID, nextChild.parentID, id) : _prodInvariant('142', nextChildID, nextChild.parentID, id) : void 0;
-    }
-  },
-  onBeforeMountComponent: function (id, element, parentID) {
-    var item = {
-      element: element,
-      parentID: parentID,
-      text: null,
-      childIDs: [],
-      isMounted: false,
-      updateCount: 0
-    };
-    setItem(id, item);
-  },
-  onBeforeUpdateComponent: function (id, element) {
-    var item = getItem(id);
-    if (!item || !item.isMounted) {
-      // We may end up here as a result of setState() in componentWillUnmount().
-      // In this case, ignore the element.
-      return;
-    }
-    item.element = element;
-  },
-  onMountComponent: function (id) {
-    var item = getItem(id);
-    !item ? "production" !== 'production' ? invariant(false, 'Item must have been set') : _prodInvariant('144') : void 0;
-    item.isMounted = true;
-    var isRoot = item.parentID === 0;
-    if (isRoot) {
-      addRoot(id);
-    }
-  },
-  onUpdateComponent: function (id) {
-    var item = getItem(id);
-    if (!item || !item.isMounted) {
-      // We may end up here as a result of setState() in componentWillUnmount().
-      // In this case, ignore the element.
-      return;
-    }
-    item.updateCount++;
-  },
-  onUnmountComponent: function (id) {
-    var item = getItem(id);
-    if (item) {
-      // We need to check if it exists.
-      // `item` might not exist if it is inside an error boundary, and a sibling
-      // error boundary child threw while mounting. Then this instance never
-      // got a chance to mount, but it still gets an unmounting event during
-      // the error boundary cleanup.
-      item.isMounted = false;
-      var isRoot = item.parentID === 0;
-      if (isRoot) {
-        removeRoot(id);
-      }
-    }
-    unmountedIDs.push(id);
-  },
-  purgeUnmountedComponents: function () {
-    if (ReactComponentTreeHook._preventPurging) {
-      // Should only be used for testing.
-      return;
-    }
-
-    for (var i = 0; i < unmountedIDs.length; i++) {
-      var id = unmountedIDs[i];
-      purgeDeep(id);
-    }
-    unmountedIDs.length = 0;
-  },
-  isMounted: function (id) {
-    var item = getItem(id);
-    return item ? item.isMounted : false;
-  },
-  getCurrentStackAddendum: function (topElement) {
-    var info = '';
-    if (topElement) {
-      var name = getDisplayName(topElement);
-      var owner = topElement._owner;
-      info += describeComponentFrame(name, topElement._source, owner && owner.getName());
-    }
-
-    var currentOwner = ReactCurrentOwner.current;
-    var id = currentOwner && currentOwner._debugID;
-
-    info += ReactComponentTreeHook.getStackAddendumByID(id);
-    return info;
-  },
-  getStackAddendumByID: function (id) {
-    var info = '';
-    while (id) {
-      info += describeID(id);
-      id = ReactComponentTreeHook.getParentID(id);
-    }
-    return info;
-  },
-  getChildIDs: function (id) {
-    var item = getItem(id);
-    return item ? item.childIDs : [];
-  },
-  getDisplayName: function (id) {
-    var element = ReactComponentTreeHook.getElement(id);
-    if (!element) {
-      return null;
-    }
-    return getDisplayName(element);
-  },
-  getElement: function (id) {
-    var item = getItem(id);
-    return item ? item.element : null;
-  },
-  getOwnerID: function (id) {
-    var element = ReactComponentTreeHook.getElement(id);
-    if (!element || !element._owner) {
-      return null;
-    }
-    return element._owner._debugID;
-  },
-  getParentID: function (id) {
-    var item = getItem(id);
-    return item ? item.parentID : null;
-  },
-  getSource: function (id) {
-    var item = getItem(id);
-    var element = item ? item.element : null;
-    var source = element != null ? element._source : null;
-    return source;
-  },
-  getText: function (id) {
-    var element = ReactComponentTreeHook.getElement(id);
-    if (typeof element === 'string') {
-      return element;
-    } else if (typeof element === 'number') {
-      return '' + element;
-    } else {
-      return null;
-    }
-  },
-  getUpdateCount: function (id) {
-    var item = getItem(id);
-    return item ? item.updateCount : 0;
-  },
-
-
-  getRootIDs: getRootIDs,
-  getRegisteredIDs: getItemIDs
-};
-
-module.exports = ReactComponentTreeHook;
-},{"./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-'use strict';
-
-/**
- * Keeps track of the current owner.
- *
- * The current owner is the component who should own any components that are
- * currently being constructed.
- */
-var ReactCurrentOwner = {
-
-  /**
-   * @internal
-   * @type {ReactComponent}
-   */
-  current: null
-
-};
-
-module.exports = ReactCurrentOwner;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactDOMFactories.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var ReactElement = require('./ReactElement');
-
-/**
- * Create a factory that creates HTML tag elements.
- *
- * @private
- */
-var createDOMFactory = ReactElement.createFactory;
-if ("production" !== 'production') {
-  var ReactElementValidator = require('./ReactElementValidator');
-  createDOMFactory = ReactElementValidator.createFactory;
-}
-
-/**
- * Creates a mapping from supported HTML tags to `ReactDOMComponent` classes.
- * This is also accessible via `React.DOM`.
- *
- * @public
- */
-var ReactDOMFactories = {
-  a: createDOMFactory('a'),
-  abbr: createDOMFactory('abbr'),
-  address: createDOMFactory('address'),
-  area: createDOMFactory('area'),
-  article: createDOMFactory('article'),
-  aside: createDOMFactory('aside'),
-  audio: createDOMFactory('audio'),
-  b: createDOMFactory('b'),
-  base: createDOMFactory('base'),
-  bdi: createDOMFactory('bdi'),
-  bdo: createDOMFactory('bdo'),
-  big: createDOMFactory('big'),
-  blockquote: createDOMFactory('blockquote'),
-  body: createDOMFactory('body'),
-  br: createDOMFactory('br'),
-  button: createDOMFactory('button'),
-  canvas: createDOMFactory('canvas'),
-  caption: createDOMFactory('caption'),
-  cite: createDOMFactory('cite'),
-  code: createDOMFactory('code'),
-  col: createDOMFactory('col'),
-  colgroup: createDOMFactory('colgroup'),
-  data: createDOMFactory('data'),
-  datalist: createDOMFactory('datalist'),
-  dd: createDOMFactory('dd'),
-  del: createDOMFactory('del'),
-  details: createDOMFactory('details'),
-  dfn: createDOMFactory('dfn'),
-  dialog: createDOMFactory('dialog'),
-  div: createDOMFactory('div'),
-  dl: createDOMFactory('dl'),
-  dt: createDOMFactory('dt'),
-  em: createDOMFactory('em'),
-  embed: createDOMFactory('embed'),
-  fieldset: createDOMFactory('fieldset'),
-  figcaption: createDOMFactory('figcaption'),
-  figure: createDOMFactory('figure'),
-  footer: createDOMFactory('footer'),
-  form: createDOMFactory('form'),
-  h1: createDOMFactory('h1'),
-  h2: createDOMFactory('h2'),
-  h3: createDOMFactory('h3'),
-  h4: createDOMFactory('h4'),
-  h5: createDOMFactory('h5'),
-  h6: createDOMFactory('h6'),
-  head: createDOMFactory('head'),
-  header: createDOMFactory('header'),
-  hgroup: createDOMFactory('hgroup'),
-  hr: createDOMFactory('hr'),
-  html: createDOMFactory('html'),
-  i: createDOMFactory('i'),
-  iframe: createDOMFactory('iframe'),
-  img: createDOMFactory('img'),
-  input: createDOMFactory('input'),
-  ins: createDOMFactory('ins'),
-  kbd: createDOMFactory('kbd'),
-  keygen: createDOMFactory('keygen'),
-  label: createDOMFactory('label'),
-  legend: createDOMFactory('legend'),
-  li: createDOMFactory('li'),
-  link: createDOMFactory('link'),
-  main: createDOMFactory('main'),
-  map: createDOMFactory('map'),
-  mark: createDOMFactory('mark'),
-  menu: createDOMFactory('menu'),
-  menuitem: createDOMFactory('menuitem'),
-  meta: createDOMFactory('meta'),
-  meter: createDOMFactory('meter'),
-  nav: createDOMFactory('nav'),
-  noscript: createDOMFactory('noscript'),
-  object: createDOMFactory('object'),
-  ol: createDOMFactory('ol'),
-  optgroup: createDOMFactory('optgroup'),
-  option: createDOMFactory('option'),
-  output: createDOMFactory('output'),
-  p: createDOMFactory('p'),
-  param: createDOMFactory('param'),
-  picture: createDOMFactory('picture'),
-  pre: createDOMFactory('pre'),
-  progress: createDOMFactory('progress'),
-  q: createDOMFactory('q'),
-  rp: createDOMFactory('rp'),
-  rt: createDOMFactory('rt'),
-  ruby: createDOMFactory('ruby'),
-  s: createDOMFactory('s'),
-  samp: createDOMFactory('samp'),
-  script: createDOMFactory('script'),
-  section: createDOMFactory('section'),
-  select: createDOMFactory('select'),
-  small: createDOMFactory('small'),
-  source: createDOMFactory('source'),
-  span: createDOMFactory('span'),
-  strong: createDOMFactory('strong'),
-  style: createDOMFactory('style'),
-  sub: createDOMFactory('sub'),
-  summary: createDOMFactory('summary'),
-  sup: createDOMFactory('sup'),
-  table: createDOMFactory('table'),
-  tbody: createDOMFactory('tbody'),
-  td: createDOMFactory('td'),
-  textarea: createDOMFactory('textarea'),
-  tfoot: createDOMFactory('tfoot'),
-  th: createDOMFactory('th'),
-  thead: createDOMFactory('thead'),
-  time: createDOMFactory('time'),
-  title: createDOMFactory('title'),
-  tr: createDOMFactory('tr'),
-  track: createDOMFactory('track'),
-  u: createDOMFactory('u'),
-  ul: createDOMFactory('ul'),
-  'var': createDOMFactory('var'),
-  video: createDOMFactory('video'),
-  wbr: createDOMFactory('wbr'),
-
-  // SVG
-  circle: createDOMFactory('circle'),
-  clipPath: createDOMFactory('clipPath'),
-  defs: createDOMFactory('defs'),
-  ellipse: createDOMFactory('ellipse'),
-  g: createDOMFactory('g'),
-  image: createDOMFactory('image'),
-  line: createDOMFactory('line'),
-  linearGradient: createDOMFactory('linearGradient'),
-  mask: createDOMFactory('mask'),
-  path: createDOMFactory('path'),
-  pattern: createDOMFactory('pattern'),
-  polygon: createDOMFactory('polygon'),
-  polyline: createDOMFactory('polyline'),
-  radialGradient: createDOMFactory('radialGradient'),
-  rect: createDOMFactory('rect'),
-  stop: createDOMFactory('stop'),
-  svg: createDOMFactory('svg'),
-  text: createDOMFactory('text'),
-  tspan: createDOMFactory('tspan')
-};
-
-module.exports = ReactDOMFactories;
-},{"./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementValidator.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
-/**
- * Copyright 2014-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var _assign = require('object-assign');
-
-var ReactCurrentOwner = require('./ReactCurrentOwner');
-
-var warning = require('fbjs/lib/warning');
-var canDefineProperty = require('./canDefineProperty');
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-var REACT_ELEMENT_TYPE = require('./ReactElementSymbol');
-
-var RESERVED_PROPS = {
-  key: true,
-  ref: true,
-  __self: true,
-  __source: true
-};
-
-var specialPropKeyWarningShown, specialPropRefWarningShown;
-
-function hasValidRef(config) {
-  if ("production" !== 'production') {
-    if (hasOwnProperty.call(config, 'ref')) {
-      var getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
-      if (getter && getter.isReactWarning) {
-        return false;
-      }
-    }
-  }
-  return config.ref !== undefined;
-}
-
-function hasValidKey(config) {
-  if ("production" !== 'production') {
-    if (hasOwnProperty.call(config, 'key')) {
-      var getter = Object.getOwnPropertyDescriptor(config, 'key').get;
-      if (getter && getter.isReactWarning) {
-        return false;
-      }
-    }
-  }
-  return config.key !== undefined;
-}
-
-function defineKeyPropWarningGetter(props, displayName) {
-  var warnAboutAccessingKey = function () {
-    if (!specialPropKeyWarningShown) {
-      specialPropKeyWarningShown = true;
-      "production" !== 'production' ? warning(false, '%s: `key` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName) : void 0;
-    }
-  };
-  warnAboutAccessingKey.isReactWarning = true;
-  Object.defineProperty(props, 'key', {
-    get: warnAboutAccessingKey,
-    configurable: true
-  });
-}
-
-function defineRefPropWarningGetter(props, displayName) {
-  var warnAboutAccessingRef = function () {
-    if (!specialPropRefWarningShown) {
-      specialPropRefWarningShown = true;
-      "production" !== 'production' ? warning(false, '%s: `ref` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName) : void 0;
-    }
-  };
-  warnAboutAccessingRef.isReactWarning = true;
-  Object.defineProperty(props, 'ref', {
-    get: warnAboutAccessingRef,
-    configurable: true
-  });
-}
-
-/**
- * Factory method to create a new React element. This no longer adheres to
- * the class pattern, so do not use new to call it. Also, no instanceof check
- * will work. Instead test $$typeof field against Symbol.for('react.element') to check
- * if something is a React Element.
- *
- * @param {*} type
- * @param {*} key
- * @param {string|object} ref
- * @param {*} self A *temporary* helper to detect places where `this` is
- * different from the `owner` when React.createElement is called, so that we
- * can warn. We want to get rid of owner and replace string `ref`s with arrow
- * functions, and as long as `this` and owner are the same, there will be no
- * change in behavior.
- * @param {*} source An annotation object (added by a transpiler or otherwise)
- * indicating filename, line number, and/or other information.
- * @param {*} owner
- * @param {*} props
- * @internal
- */
-var ReactElement = function (type, key, ref, self, source, owner, props) {
-  var element = {
-    // This tag allow us to uniquely identify this as a React Element
-    $$typeof: REACT_ELEMENT_TYPE,
-
-    // Built-in properties that belong on the element
-    type: type,
-    key: key,
-    ref: ref,
-    props: props,
-
-    // Record the component responsible for creating this element.
-    _owner: owner
-  };
-
-  if ("production" !== 'production') {
-    // The validation flag is currently mutative. We put it on
-    // an external backing store so that we can freeze the whole object.
-    // This can be replaced with a WeakMap once they are implemented in
-    // commonly used development environments.
-    element._store = {};
-
-    // To make comparing ReactElements easier for testing purposes, we make
-    // the validation flag non-enumerable (where possible, which should
-    // include every environment we run tests in), so the test framework
-    // ignores it.
-    if (canDefineProperty) {
-      Object.defineProperty(element._store, 'validated', {
-        configurable: false,
-        enumerable: false,
-        writable: true,
-        value: false
-      });
-      // self and source are DEV only properties.
-      Object.defineProperty(element, '_self', {
-        configurable: false,
-        enumerable: false,
-        writable: false,
-        value: self
-      });
-      // Two elements created in two different places should be considered
-      // equal for testing purposes and therefore we hide it from enumeration.
-      Object.defineProperty(element, '_source', {
-        configurable: false,
-        enumerable: false,
-        writable: false,
-        value: source
-      });
-    } else {
-      element._store.validated = false;
-      element._self = self;
-      element._source = source;
-    }
-    if (Object.freeze) {
-      Object.freeze(element.props);
-      Object.freeze(element);
-    }
-  }
-
-  return element;
-};
-
-/**
- * Create and return a new ReactElement of the given type.
- * See https://facebook.github.io/react/docs/top-level-api.html#react.createelement
- */
-ReactElement.createElement = function (type, config, children) {
-  var propName;
-
-  // Reserved names are extracted
-  var props = {};
-
-  var key = null;
-  var ref = null;
-  var self = null;
-  var source = null;
-
-  if (config != null) {
-    if (hasValidRef(config)) {
-      ref = config.ref;
-    }
-    if (hasValidKey(config)) {
-      key = '' + config.key;
-    }
-
-    self = config.__self === undefined ? null : config.__self;
-    source = config.__source === undefined ? null : config.__source;
-    // Remaining properties are added to a new props object
-    for (propName in config) {
-      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-        props[propName] = config[propName];
-      }
-    }
-  }
-
-  // Children can be more than one argument, and those are transferred onto
-  // the newly allocated props object.
-  var childrenLength = arguments.length - 2;
-  if (childrenLength === 1) {
-    props.children = children;
-  } else if (childrenLength > 1) {
-    var childArray = Array(childrenLength);
-    for (var i = 0; i < childrenLength; i++) {
-      childArray[i] = arguments[i + 2];
-    }
-    if ("production" !== 'production') {
-      if (Object.freeze) {
-        Object.freeze(childArray);
-      }
-    }
-    props.children = childArray;
-  }
-
-  // Resolve default props
-  if (type && type.defaultProps) {
-    var defaultProps = type.defaultProps;
-    for (propName in defaultProps) {
-      if (props[propName] === undefined) {
-        props[propName] = defaultProps[propName];
-      }
-    }
-  }
-  if ("production" !== 'production') {
-    if (key || ref) {
-      if (typeof props.$$typeof === 'undefined' || props.$$typeof !== REACT_ELEMENT_TYPE) {
-        var displayName = typeof type === 'function' ? type.displayName || type.name || 'Unknown' : type;
-        if (key) {
-          defineKeyPropWarningGetter(props, displayName);
-        }
-        if (ref) {
-          defineRefPropWarningGetter(props, displayName);
-        }
-      }
-    }
-  }
-  return ReactElement(type, key, ref, self, source, ReactCurrentOwner.current, props);
-};
-
-/**
- * Return a function that produces ReactElements of a given type.
- * See https://facebook.github.io/react/docs/top-level-api.html#react.createfactory
- */
-ReactElement.createFactory = function (type) {
-  var factory = ReactElement.createElement.bind(null, type);
-  // Expose the type on the factory and the prototype so that it can be
-  // easily accessed on elements. E.g. `<Foo />.type === Foo`.
-  // This should not be named `constructor` since this may not be the function
-  // that created the element, and it may not even be a constructor.
-  // Legacy hook TODO: Warn if this is accessed
-  factory.type = type;
-  return factory;
-};
-
-ReactElement.cloneAndReplaceKey = function (oldElement, newKey) {
-  var newElement = ReactElement(oldElement.type, newKey, oldElement.ref, oldElement._self, oldElement._source, oldElement._owner, oldElement.props);
-
-  return newElement;
-};
-
-/**
- * Clone and return a new ReactElement using element as the starting point.
- * See https://facebook.github.io/react/docs/top-level-api.html#react.cloneelement
- */
-ReactElement.cloneElement = function (element, config, children) {
-  var propName;
-
-  // Original props are copied
-  var props = _assign({}, element.props);
-
-  // Reserved names are extracted
-  var key = element.key;
-  var ref = element.ref;
-  // Self is preserved since the owner is preserved.
-  var self = element._self;
-  // Source is preserved since cloneElement is unlikely to be targeted by a
-  // transpiler, and the original source is probably a better indicator of the
-  // true owner.
-  var source = element._source;
-
-  // Owner will be preserved, unless ref is overridden
-  var owner = element._owner;
-
-  if (config != null) {
-    if (hasValidRef(config)) {
-      // Silently steal the ref from the parent.
-      ref = config.ref;
-      owner = ReactCurrentOwner.current;
-    }
-    if (hasValidKey(config)) {
-      key = '' + config.key;
-    }
-
-    // Remaining properties override existing props
-    var defaultProps;
-    if (element.type && element.type.defaultProps) {
-      defaultProps = element.type.defaultProps;
-    }
-    for (propName in config) {
-      if (hasOwnProperty.call(config, propName) && !RESERVED_PROPS.hasOwnProperty(propName)) {
-        if (config[propName] === undefined && defaultProps !== undefined) {
-          // Resolve default props
-          props[propName] = defaultProps[propName];
-        } else {
-          props[propName] = config[propName];
-        }
-      }
-    }
-  }
-
-  // Children can be more than one argument, and those are transferred onto
-  // the newly allocated props object.
-  var childrenLength = arguments.length - 2;
-  if (childrenLength === 1) {
-    props.children = children;
-  } else if (childrenLength > 1) {
-    var childArray = Array(childrenLength);
-    for (var i = 0; i < childrenLength; i++) {
-      childArray[i] = arguments[i + 2];
-    }
-    props.children = childArray;
-  }
-
-  return ReactElement(element.type, key, ref, self, source, owner, props);
-};
-
-/**
- * Verifies the object is a ReactElement.
- * See https://facebook.github.io/react/docs/top-level-api.html#react.isvalidelement
- * @param {?object} object
- * @return {boolean} True if `object` is a valid component.
- * @final
- */
-ReactElement.isValidElement = function (object) {
-  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
-};
-
-module.exports = ReactElement;
-},{"./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementSymbol.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementSymbol.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactElementSymbol.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
+},{"./ReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./ReactNoopUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./ReactPropTypeLocationNames":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponent.js"][0].apply(exports,arguments)
+},{"./ReactNoopUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","./canDefineProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactComponentTreeHook.js"][0].apply(exports,arguments)
+},{"./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactCurrentOwner.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactDOMFactories.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactDOMFactories.js"][0].apply(exports,arguments)
+},{"./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./ReactElementValidator":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElementValidator.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactElement.js"][0].apply(exports,arguments)
+},{"./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElementSymbol.js","./canDefineProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElementSymbol.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactElementSymbol.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElementValidator.js":[function(require,module,exports){
 /**
  * Copyright 2014-present, Facebook, Inc.
  * All rights reserved.
@@ -20547,105 +26504,11 @@ var ReactElementValidator = {
 };
 
 module.exports = ReactElementValidator;
-},{"./ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./canDefineProperty":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js","./checkReactTypeSpec":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/checkReactTypeSpec.js","./getIteratorFn":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getIteratorFn.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js":[function(require,module,exports){
-/**
- * Copyright 2015-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var warning = require('fbjs/lib/warning');
-
-function warnNoop(publicInstance, callerName) {
-  if ("production" !== 'production') {
-    var constructor = publicInstance.constructor;
-    "production" !== 'production' ? warning(false, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass') : void 0;
-  }
-}
-
-/**
- * This is the abstract API for an update queue.
- */
-var ReactNoopUpdateQueue = {
-
-  /**
-   * Checks whether or not this composite component is mounted.
-   * @param {ReactClass} publicInstance The instance we want to test.
-   * @return {boolean} True if mounted, false otherwise.
-   * @protected
-   * @final
-   */
-  isMounted: function (publicInstance) {
-    return false;
-  },
-
-  /**
-   * Enqueue a callback that will be executed after all the pending updates
-   * have processed.
-   *
-   * @param {ReactClass} publicInstance The instance to use as `this` context.
-   * @param {?function} callback Called after state is updated.
-   * @internal
-   */
-  enqueueCallback: function (publicInstance, callback) {},
-
-  /**
-   * Forces an update. This should only be invoked when it is known with
-   * certainty that we are **not** in a DOM transaction.
-   *
-   * You may want to call this when you know that some deeper aspect of the
-   * component's state has changed but `setState` was not called.
-   *
-   * This will not invoke `shouldComponentUpdate`, but it will invoke
-   * `componentWillUpdate` and `componentDidUpdate`.
-   *
-   * @param {ReactClass} publicInstance The instance that should rerender.
-   * @internal
-   */
-  enqueueForceUpdate: function (publicInstance) {
-    warnNoop(publicInstance, 'forceUpdate');
-  },
-
-  /**
-   * Replaces all of the state. Always use this or `setState` to mutate state.
-   * You should treat `this.state` as immutable.
-   *
-   * There is no guarantee that `this.state` will be immediately updated, so
-   * accessing `this.state` after calling this method may return the old value.
-   *
-   * @param {ReactClass} publicInstance The instance that should rerender.
-   * @param {object} completeState Next state.
-   * @internal
-   */
-  enqueueReplaceState: function (publicInstance, completeState) {
-    warnNoop(publicInstance, 'replaceState');
-  },
-
-  /**
-   * Sets a subset of the state. This only exists because _pendingState is
-   * internal. This provides a merging strategy that is not available to deep
-   * properties which is confusing. TODO: Expose pendingState or don't use it
-   * during the merge.
-   *
-   * @param {ReactClass} publicInstance The instance that should rerender.
-   * @param {object} partialState Next partial state to be merged with state.
-   * @internal
-   */
-  enqueueSetState: function (publicInstance, partialState) {
-    warnNoop(publicInstance, 'setState');
-  }
-};
-
-module.exports = ReactNoopUpdateQueue;
-},{"fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypeLocationNames.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
+},{"./ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./canDefineProperty":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js","./checkReactTypeSpec":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/checkReactTypeSpec.js","./getIteratorFn":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/getIteratorFn.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactNoopUpdateQueue.js"][0].apply(exports,arguments)
+},{"fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypeLocationNames.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPropTypes.js":[function(require,module,exports){
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -20664,412 +26527,29 @@ var _require = require('./ReactElement'),
 var factory = require('prop-types/factory');
 
 module.exports = factory(isValidElement);
-},{"./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","prop-types/factory":"/Users/mathisonian/projects/idyll/idyll/node_modules/prop-types/factory.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypesSecret.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactPropTypesSecret.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPureComponent.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var _assign = require('object-assign');
-
-var ReactComponent = require('./ReactComponent');
-var ReactNoopUpdateQueue = require('./ReactNoopUpdateQueue');
-
-var emptyObject = require('fbjs/lib/emptyObject');
-
-/**
- * Base class helpers for the updating state of a component.
- */
-function ReactPureComponent(props, context, updater) {
-  // Duplicated from ReactComponent.
-  this.props = props;
-  this.context = context;
-  this.refs = emptyObject;
-  // We initialize the default updater but the real one gets injected by the
-  // renderer.
-  this.updater = updater || ReactNoopUpdateQueue;
-}
-
-function ComponentDummy() {}
-ComponentDummy.prototype = ReactComponent.prototype;
-ReactPureComponent.prototype = new ComponentDummy();
-ReactPureComponent.prototype.constructor = ReactPureComponent;
-// Avoid an extra prototype jump for these methods.
-_assign(ReactPureComponent.prototype, ReactComponent.prototype);
-ReactPureComponent.prototype.isPureReactComponent = true;
-
-module.exports = ReactPureComponent;
-},{"./ReactComponent":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponent.js","./ReactNoopUpdateQueue":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","fbjs/lib/emptyObject":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/emptyObject.js","object-assign":"/Users/mathisonian/projects/idyll/idyll/node_modules/object-assign/index.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactVersion.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/ReactVersion.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/canDefineProperty.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-'use strict';
-
-var canDefineProperty = false;
-if ("production" !== 'production') {
-  try {
-    // $FlowFixMe https://github.com/facebook/flow/issues/285
-    Object.defineProperty({}, 'x', { get: function () {} });
-    canDefineProperty = true;
-  } catch (x) {
-    // IE will fail on defineProperty
-  }
-}
-
-module.exports = canDefineProperty;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/checkReactTypeSpec.js":[function(require,module,exports){
-(function (process){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var _prodInvariant = require('./reactProdInvariant');
-
-var ReactPropTypeLocationNames = require('./ReactPropTypeLocationNames');
-var ReactPropTypesSecret = require('./ReactPropTypesSecret');
-
-var invariant = require('fbjs/lib/invariant');
-var warning = require('fbjs/lib/warning');
-
-var ReactComponentTreeHook;
-
-if (typeof process !== 'undefined' && process.env && "production" === 'test') {
-  // Temporary hack.
-  // Inline requires don't work well with Jest:
-  // https://github.com/facebook/react/issues/7240
-  // Remove the inline requires when we don't need them anymore:
-  // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = require('./ReactComponentTreeHook');
-}
-
-var loggedTypeFailures = {};
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?object} element The React element that is being type-checked
- * @param {?number} debugID The React component instance that is being type-checked
- * @private
- */
-function checkReactTypeSpec(typeSpecs, values, location, componentName, element, debugID) {
-  for (var typeSpecName in typeSpecs) {
-    if (typeSpecs.hasOwnProperty(typeSpecName)) {
-      var error;
-      // Prop type validation may throw. In case they do, we don't want to
-      // fail the render phase where it didn't fail before. So we log it.
-      // After these have been cleaned up, we'll let them throw.
-      try {
-        // This is intentionally an invariant that gets caught. It's the same
-        // behavior as without this statement except with a better message.
-        !(typeof typeSpecs[typeSpecName] === 'function') ? "production" !== 'production' ? invariant(false, '%s: %s type `%s` is invalid; it must be a function, usually from React.PropTypes.', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName) : _prodInvariant('84', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName) : void 0;
-        error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-      } catch (ex) {
-        error = ex;
-      }
-      "production" !== 'production' ? warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', ReactPropTypeLocationNames[location], typeSpecName, typeof error) : void 0;
-      if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-        // Only monitor this failure once because there tends to be a lot of the
-        // same error.
-        loggedTypeFailures[error.message] = true;
-
-        var componentStackInfo = '';
-
-        if ("production" !== 'production') {
-          if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = require('./ReactComponentTreeHook');
-          }
-          if (debugID !== null) {
-            componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
-          } else if (element !== null) {
-            componentStackInfo = ReactComponentTreeHook.getCurrentStackAddendum(element);
-          }
-        }
-
-        "production" !== 'production' ? warning(false, 'Failed %s type: %s%s', location, error.message, componentStackInfo) : void 0;
-      }
-    }
-  }
-}
-
-module.exports = checkReactTypeSpec;
-}).call(this,require('_process'))
-},{"./ReactComponentTreeHook":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactPropTypeLocationNames":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","_process":"/Users/mathisonian/projects/idyll/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getIteratorFn.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/getIteratorFn.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getNextDebugID.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-'use strict';
-
-var nextDebugID = 1;
-
-function getNextDebugID() {
-  return nextDebugID++;
-}
-
-module.exports = getNextDebugID;
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-'use strict';
-
-var _prodInvariant = require('./reactProdInvariant');
-
-var ReactElement = require('./ReactElement');
-
-var invariant = require('fbjs/lib/invariant');
-
-/**
- * Returns the first child in a collection of children and verifies that there
- * is only one child in the collection.
- *
- * See https://facebook.github.io/react/docs/top-level-api.html#react.children.only
- *
- * The current implementation of this function assumes that a single child gets
- * passed without a wrapper, but the purpose of this helper function is to
- * abstract away the particular structure of children.
- *
- * @param {?object} children Child collection structure.
- * @return {ReactElement} The first and only `ReactElement` contained in the
- * structure.
- */
-function onlyChild(children) {
-  !ReactElement.isValidElement(children) ? "production" !== 'production' ? invariant(false, 'React.Children.only expected to receive a single React element child.') : _prodInvariant('143') : void 0;
-  return children;
-}
-
-module.exports = onlyChild;
-},{"./ReactElement":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElement.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js":[function(require,module,exports){
-arguments[4]["/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/lib/reactProdInvariant.js"][0].apply(exports,arguments)
-},{}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-'use strict';
-
-var _prodInvariant = require('./reactProdInvariant');
-
-var ReactCurrentOwner = require('./ReactCurrentOwner');
-var REACT_ELEMENT_TYPE = require('./ReactElementSymbol');
-
-var getIteratorFn = require('./getIteratorFn');
-var invariant = require('fbjs/lib/invariant');
-var KeyEscapeUtils = require('./KeyEscapeUtils');
-var warning = require('fbjs/lib/warning');
-
-var SEPARATOR = '.';
-var SUBSEPARATOR = ':';
-
-/**
- * This is inlined from ReactElement since this file is shared between
- * isomorphic and renderers. We could extract this to a
- *
- */
-
-/**
- * TODO: Test that a single child and an array with one item have the same key
- * pattern.
- */
-
-var didWarnAboutMaps = false;
-
-/**
- * Generate a key string that identifies a component within a set.
- *
- * @param {*} component A component that could contain a manual key.
- * @param {number} index Index that is used if a manual key is not provided.
- * @return {string}
- */
-function getComponentKey(component, index) {
-  // Do some typechecking here since we call this blindly. We want to ensure
-  // that we don't block potential future ES APIs.
-  if (component && typeof component === 'object' && component.key != null) {
-    // Explicit key
-    return KeyEscapeUtils.escape(component.key);
-  }
-  // Implicit key determined by the index in the set
-  return index.toString(36);
-}
-
-/**
- * @param {?*} children Children tree container.
- * @param {!string} nameSoFar Name of the key path so far.
- * @param {!function} callback Callback to invoke with each child found.
- * @param {?*} traverseContext Used to pass information throughout the traversal
- * process.
- * @return {!number} The number of children in this subtree.
- */
-function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext) {
-  var type = typeof children;
-
-  if (type === 'undefined' || type === 'boolean') {
-    // All of the above are perceived as null.
-    children = null;
-  }
-
-  if (children === null || type === 'string' || type === 'number' ||
-  // The following is inlined from ReactElement. This means we can optimize
-  // some checks. React Fiber also inlines this logic for similar purposes.
-  type === 'object' && children.$$typeof === REACT_ELEMENT_TYPE) {
-    callback(traverseContext, children,
-    // If it's the only child, treat the name as if it was wrapped in an array
-    // so that it's consistent if the number of children grows.
-    nameSoFar === '' ? SEPARATOR + getComponentKey(children, 0) : nameSoFar);
-    return 1;
-  }
-
-  var child;
-  var nextName;
-  var subtreeCount = 0; // Count of children found in the current subtree.
-  var nextNamePrefix = nameSoFar === '' ? SEPARATOR : nameSoFar + SUBSEPARATOR;
-
-  if (Array.isArray(children)) {
-    for (var i = 0; i < children.length; i++) {
-      child = children[i];
-      nextName = nextNamePrefix + getComponentKey(child, i);
-      subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
-    }
-  } else {
-    var iteratorFn = getIteratorFn(children);
-    if (iteratorFn) {
-      var iterator = iteratorFn.call(children);
-      var step;
-      if (iteratorFn !== children.entries) {
-        var ii = 0;
-        while (!(step = iterator.next()).done) {
-          child = step.value;
-          nextName = nextNamePrefix + getComponentKey(child, ii++);
-          subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
-        }
-      } else {
-        if ("production" !== 'production') {
-          var mapsAsChildrenAddendum = '';
-          if (ReactCurrentOwner.current) {
-            var mapsAsChildrenOwnerName = ReactCurrentOwner.current.getName();
-            if (mapsAsChildrenOwnerName) {
-              mapsAsChildrenAddendum = ' Check the render method of `' + mapsAsChildrenOwnerName + '`.';
-            }
-          }
-          "production" !== 'production' ? warning(didWarnAboutMaps, 'Using Maps as children is not yet fully supported. It is an ' + 'experimental feature that might be removed. Convert it to a ' + 'sequence / iterable of keyed ReactElements instead.%s', mapsAsChildrenAddendum) : void 0;
-          didWarnAboutMaps = true;
-        }
-        // Iterator will provide entry [k,v] tuples rather than values.
-        while (!(step = iterator.next()).done) {
-          var entry = step.value;
-          if (entry) {
-            child = entry[1];
-            nextName = nextNamePrefix + KeyEscapeUtils.escape(entry[0]) + SUBSEPARATOR + getComponentKey(child, 0);
-            subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
-          }
-        }
-      }
-    } else if (type === 'object') {
-      var addendum = '';
-      if ("production" !== 'production') {
-        addendum = ' If you meant to render a collection of children, use an array ' + 'instead or wrap the object using createFragment(object) from the ' + 'React add-ons.';
-        if (children._isReactElement) {
-          addendum = ' It looks like you\'re using an element created by a different ' + 'version of React. Make sure to use only one copy of React.';
-        }
-        if (ReactCurrentOwner.current) {
-          var name = ReactCurrentOwner.current.getName();
-          if (name) {
-            addendum += ' Check the render method of `' + name + '`.';
-          }
-        }
-      }
-      var childrenString = String(children);
-      !false ? "production" !== 'production' ? invariant(false, 'Objects are not valid as a React child (found: %s).%s', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum) : _prodInvariant('31', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum) : void 0;
-    }
-  }
-
-  return subtreeCount;
-}
-
-/**
- * Traverses children that are typically specified as `props.children`, but
- * might also be specified through attributes:
- *
- * - `traverseAllChildren(this.props.children, ...)`
- * - `traverseAllChildren(this.props.leftPanelChildren, ...)`
- *
- * The `traverseContext` is an optional argument that is passed through the
- * entire traversal. It can be used to store accumulations or anything else that
- * the callback might find relevant.
- *
- * @param {?*} children Children tree object.
- * @param {!function} callback To invoke upon traversing each child.
- * @param {?*} traverseContext Context for traversal.
- * @return {!number} The number of children in this subtree.
- */
-function traverseAllChildren(children, callback, traverseContext) {
-  if (children == null) {
-    return 0;
-  }
-
-  return traverseAllChildrenImpl(children, '', callback, traverseContext);
-}
-
-module.exports = traverseAllChildren;
-},{"./KeyEscapeUtils":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/KeyEscapeUtils.js","./ReactCurrentOwner":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/getIteratorFn.js","./reactProdInvariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/mathisonian/projects/idyll/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js":[function(require,module,exports){
-'use strict';
-
-module.exports = require('./lib/React');
-
-},{"./lib/React":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/lib/React.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/sentence-case/sentence-case.js":[function(require,module,exports){
+},{"./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","prop-types/factory":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/prop-types/factory.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPropTypesSecret.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/ReactPropTypesSecret.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPureComponent.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/ReactPureComponent.js"][0].apply(exports,arguments)
+},{"./ReactComponent":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponent.js","./ReactNoopUpdateQueue":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactNoopUpdateQueue.js","fbjs/lib/emptyObject":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/emptyObject.js","object-assign":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/object-assign/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactVersion.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/lib/ReactVersion.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/canDefineProperty.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/canDefineProperty.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/checkReactTypeSpec.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/checkReactTypeSpec.js"][0].apply(exports,arguments)
+},{"./ReactComponentTreeHook":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactComponentTreeHook.js","./ReactPropTypeLocationNames":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPropTypeLocationNames.js","./ReactPropTypesSecret":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactPropTypesSecret.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","_process":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/process/browser.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/getIteratorFn.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getIteratorFn.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/getNextDebugID.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/getNextDebugID.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/onlyChild.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/onlyChild.js"][0].apply(exports,arguments)
+},{"./ReactElement":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElement.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react-dom/lib/reactProdInvariant.js"][0].apply(exports,arguments)
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/traverseAllChildren.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/lib/traverseAllChildren.js"][0].apply(exports,arguments)
+},{"./KeyEscapeUtils":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/KeyEscapeUtils.js","./ReactCurrentOwner":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactCurrentOwner.js","./ReactElementSymbol":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/ReactElementSymbol.js","./getIteratorFn":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/getIteratorFn.js","./reactProdInvariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/reactProdInvariant.js","fbjs/lib/invariant":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/invariant.js","fbjs/lib/warning":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/fbjs/lib/warning.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js":[function(require,module,exports){
+arguments[4]["/Users/conlenm/projects/idyll-lang/idyll-component/node_modules/react/react.js"][0].apply(exports,arguments)
+},{"./lib/React":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/lib/React.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/sentence-case/sentence-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 var upperCaseFirst = require('upper-case-first')
 
@@ -21084,7 +26564,7 @@ module.exports = function (value, locale) {
   return upperCaseFirst(noCase(value, locale), locale)
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case-first":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/snake-case/snake-case.js":[function(require,module,exports){
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case-first":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/snake-case/snake-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 
 /**
@@ -21098,7 +26578,7 @@ module.exports = function (value, locale) {
   return noCase(value, locale, '_')
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/swap-case/swap-case.js":[function(require,module,exports){
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/swap-case/swap-case.js":[function(require,module,exports){
 var upperCase = require('upper-case')
 var lowerCase = require('lower-case')
 
@@ -21127,7 +26607,7 @@ module.exports = function (str, locale) {
   return result
 }
 
-},{"lower-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/lower-case/lower-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/title-case/title-case.js":[function(require,module,exports){
+},{"lower-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/lower-case/lower-case.js","upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/title-case/title-case.js":[function(require,module,exports){
 var noCase = require('no-case')
 var upperCase = require('upper-case')
 
@@ -21144,7 +26624,7 @@ module.exports = function (value, locale) {
   })
 }
 
-},{"no-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case-first/upper-case-first.js":[function(require,module,exports){
+},{"no-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/no-case/no-case.js","upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case-first/upper-case-first.js":[function(require,module,exports){
 var upperCase = require('upper-case')
 
 /**
@@ -21163,7 +26643,7 @@ module.exports = function (str, locale) {
   return upperCase(str.charAt(0), locale) + str.substr(1)
 }
 
-},{"upper-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js"}],"/Users/mathisonian/projects/idyll/idyll/node_modules/upper-case/upper-case.js":[function(require,module,exports){
+},{"upper-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js"}],"/Users/conlenm/projects/idyll-lang/idyll/node_modules/upper-case/upper-case.js":[function(require,module,exports){
 /**
  * Special language-specific overrides.
  *
@@ -21215,7 +26695,7 @@ module.exports = function (str, locale) {
   return str.toUpperCase()
 }
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/src/client/build.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/build.js":[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -21224,9 +26704,17 @@ var ReactDOM = require('react-dom');
 var InteractiveDocument = require('./component');
 var mountNode = document.getElementById('idyll-mount');
 
-ReactDOM.render(React.createElement(InteractiveDocument, null), mountNode);
+var ast = require('__IDYLL_AST__');
+var componentClasses = require('__IDYLL_COMPONENTS__');
+var datasets = require('__IDYLL_DATA__');
 
-},{"./component":"/Users/mathisonian/projects/idyll/idyll/src/client/component.js","react":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js","react-dom":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/index.js"}],"/Users/mathisonian/projects/idyll/idyll/src/client/component.js":[function(require,module,exports){
+ReactDOM.render(React.createElement(InteractiveDocument, {
+  ast: ast,
+  componentClasses: componentClasses,
+  datasets: datasets
+}), mountNode);
+
+},{"./component":"/Users/conlenm/projects/idyll-lang/idyll/src/client/component.js","__IDYLL_AST__":"__IDYLL_AST__","__IDYLL_COMPONENTS__":"__IDYLL_COMPONENTS__","__IDYLL_DATA__":"__IDYLL_DATA__","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js","react-dom":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/index.js"}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/component.js":[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21242,8 +26730,9 @@ var walkVars = require('./visitors/vars');
 var walkNode = require('./visitors/node');
 var utils = require('./utils');
 
-require('__IDYLL_SYNTAX_HIGHLIGHT__');
-var results = require('__IDYLL_AST__');
+try {
+  require('__IDYLL_SYNTAX_HIGHLIGHT__');
+} catch (e) {}
 
 var transformRefs = function transformRefs(refs) {
   var output = {};
@@ -21279,12 +26768,12 @@ var InteractiveDocument = function (_React$PureComponent) {
     _this.derivedVars = {};
     _this.initialState = {};
 
-    results.map(walkVars(_this));
+    props.ast.map(walkVars(_this, props.datasets));
 
     _this.state = _this.initialState;
 
     _this.getChildren = function () {
-      return results.map(walkNode(_this));
+      return props.ast.map(walkNode(_this, props.componentClasses));
     };
     return _this;
   }
@@ -21416,7 +26905,7 @@ var InteractiveDocument = function (_React$PureComponent) {
 
 module.exports = InteractiveDocument;
 
-},{"./utils":"/Users/mathisonian/projects/idyll/idyll/src/client/utils.js","./visitors/node":"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/node.js","./visitors/vars":"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/vars.js","__IDYLL_AST__":"__IDYLL_AST__","__IDYLL_SYNTAX_HIGHLIGHT__":"__IDYLL_SYNTAX_HIGHLIGHT__","react":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js"}],"/Users/mathisonian/projects/idyll/idyll/src/client/constants.js":[function(require,module,exports){
+},{"./utils":"/Users/conlenm/projects/idyll-lang/idyll/src/client/utils.js","./visitors/node":"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/node.js","./visitors/vars":"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/vars.js","__IDYLL_SYNTAX_HIGHLIGHT__":"__IDYLL_SYNTAX_HIGHLIGHT__","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/constants.js":[function(require,module,exports){
 'use strict';
 
 var COMPONENTS = {
@@ -21455,7 +26944,7 @@ module.exports = {
   DATASET: DATASET
 };
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/src/client/utils.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/utils.js":[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -21483,19 +26972,18 @@ module.exports = {
   flattenObject: flattenObject
 };
 
-},{}],"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/node.js":[function(require,module,exports){
+},{}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/node.js":[function(require,module,exports){
 'use strict';
 
 var React = require('react');
 var htmlTags = require('html-tags');
 var changeCase = require('change-case');
-var componentClasses = require('__IDYLL_COMPONENTS__');
 
 var _require = require('../constants'),
     COMPONENTS = _require.COMPONENTS,
     PROPERTIES = _require.PROPERTIES;
 
-var processComponent = function processComponent(component, name, id) {
+var processComponent = function processComponent(component, name, id, componentClasses) {
   var split = name.split('.');
   var paramCaseName = changeCase.paramCase(split[0]);
   var componentClass = void 0;
@@ -21537,7 +27025,7 @@ var filterPropsByComponentName = {
   p: []
 };
 
-module.exports = function (component) {
+module.exports = function (component, componentClasses) {
   var nodeID = -1;
   var walkNode = function walkNode(node) {
     nodeID++;
@@ -21615,7 +27103,7 @@ module.exports = function (component) {
         }
       });
 
-      var results = processComponent(component, componentName, nodeID);
+      var results = processComponent(component, componentName, nodeID, componentClasses);
 
       var inputProps = Object.assign({}, results.extraProps, propsObj);
       if (children) {
@@ -21627,7 +27115,7 @@ module.exports = function (component) {
   return walkNode;
 };
 
-},{"../constants":"/Users/mathisonian/projects/idyll/idyll/src/client/constants.js","__IDYLL_COMPONENTS__":"__IDYLL_COMPONENTS__","change-case":"/Users/mathisonian/projects/idyll/idyll/node_modules/change-case/change-case.js","html-tags":"/Users/mathisonian/projects/idyll/idyll/node_modules/html-tags/index.js","react":"/Users/mathisonian/projects/idyll/idyll/node_modules/react/react.js"}],"/Users/mathisonian/projects/idyll/idyll/src/client/visitors/vars.js":[function(require,module,exports){
+},{"../constants":"/Users/conlenm/projects/idyll-lang/idyll/src/client/constants.js","change-case":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/change-case/change-case.js","html-tags":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/html-tags/index.js","react":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react/react.js"}],"/Users/conlenm/projects/idyll-lang/idyll/src/client/visitors/vars.js":[function(require,module,exports){
 'use strict';
 
 var ReactDOM = require('react-dom');
@@ -21639,8 +27127,7 @@ var _require = require('../constants'),
     DERIVED = _require.DERIVED,
     VARIABLE = _require.VARIABLE;
 
-var datasets = require('__IDYLL_DATA__');
-module.exports = function (component) {
+module.exports = function (component, datasets) {
   var nodeID = -1;
   var walkVars = function walkVars(node) {
     var _this = this;
@@ -21780,17 +27267,21 @@ module.exports = function (component) {
   return walkVars.bind(component);
 };
 
-},{"../constants":"/Users/mathisonian/projects/idyll/idyll/src/client/constants.js","__IDYLL_DATA__":"__IDYLL_DATA__","react-dom":"/Users/mathisonian/projects/idyll/idyll/node_modules/react-dom/index.js"}],"__IDYLL_AST__":[function(require,module,exports){
+},{"../constants":"/Users/conlenm/projects/idyll-lang/idyll/src/client/constants.js","react-dom":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/react-dom/index.js"}],"__IDYLL_AST__":[function(require,module,exports){
 "use strict";
 
-module.exports = [["h1", [], ["Hello World"]]];
+module.exports = [["Header", [["title", ["value", "Welcome to Idyll"]], ["subtitle", ["value", "Open index.idl to start writing"]], ["author", ["value", "Your Name Here"]], ["authorLink", ["value", "https://idyll-lang.github.io"]]], []], ["p", [], ["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]], ["p", [], ["Here is how you can use a variable:"]], ["var", [["name", ["value", "exampleVar"]], ["value", ["value", 5]]], []], ["div", [], [["Range", [["min", ["value", 0]], ["max", ["value", 10]], ["value", ["variable", "exampleVar"]]], []], ["DisplayVar", [["var", ["variable", "exampleVar"]]], []]]], ["pre", [], [["code", [], ["var code = true;"]]]], ["p", [], ["And here is a custom component:"]], ["p", [], ["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]]];
 
 },{}],"__IDYLL_COMPONENTS__":[function(require,module,exports){
-"use strict";
+'use strict';
 
-module.exports = {};
+module.exports = {
+	'header': require('/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/header'),
+	'range': require('/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/range'),
+	'display-var': require('/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/display-var')
+};
 
-},{}],"__IDYLL_DATA__":[function(require,module,exports){
+},{"/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/display-var":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/display-var.js","/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/header":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/header.js","/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/range":"/Users/conlenm/projects/idyll-lang/idyll/node_modules/idyll-default-components/range.js"}],"__IDYLL_DATA__":[function(require,module,exports){
 "use strict";
 
 module.exports = {};
@@ -21798,4 +27289,6 @@ module.exports = {};
 },{}],"__IDYLL_SYNTAX_HIGHLIGHT__":[function(require,module,exports){
 "use strict";
 
-},{}]},{},["/Users/mathisonian/projects/idyll/idyll/src/client/build.js"]);
+module.exports = function () {}();
+
+},{}]},{},["/Users/conlenm/projects/idyll-lang/idyll/src/client/build.js"]);

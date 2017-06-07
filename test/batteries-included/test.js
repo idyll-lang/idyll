@@ -29,7 +29,6 @@ const dirToHash = (dir) => {
 
 const PROJECT_DIR = __dirname;
 const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build');
-const PROJECT_IDYLL_DIR = join(PROJECT_DIR, '.idyll');
 
 const EXPECTED_DIR = join(__dirname, 'expected-output');
 // build output to test against
@@ -39,11 +38,12 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
 beforeAll(() => {
   rimraf.sync(PROJECT_BUILD_DIR);
-  rimraf.sync(PROJECT_IDYLL_DIR);
 })
 
 
 let output;
+let projectBuildFilenames;
+let projectBuildResults;
 
 beforeAll(done => {
   idyll({
@@ -56,8 +56,6 @@ beforeAll(done => {
     output = o;
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
-    projectIdyllFilenames = getFilenames(PROJECT_IDYLL_DIR);
-    projectIdyllResults = dirToHash(PROJECT_IDYLL_DIR);
     done();
   }).build();
 })
@@ -66,7 +64,6 @@ test('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 })
 test('should construct the AST properly', () => {
-  const ast = [["h1",[],["Hello World"]]];
-
-  expect(output.ast).toEqual('module.exports = ' + JSON.stringify(ast));
+  const ast = [["Header",[["title",["value","Welcome to Idyll"]],["subtitle",["value","Open index.idl to start writing"]],["author",["value","Your Name Here"]],["authorLink",["value","https://idyll-lang.github.io"]]],[]],["p",[],["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]],["p",[],["Here is how you can use a variable:"]],["var",[["name",["value","exampleVar"]],["value",["value",5]]],[]],["div",[],[["Range",[["min",["value",0]],["max",["value",10]],["value",["variable","exampleVar"]]],[]],["DisplayVar",[["var",["variable","exampleVar"]]],[]]]],["pre",[],[["code",[],["var code = true;"]]]],["p",[],["And here is a custom component:"]],["p",[],["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]]];
+  expect(output.ast).toEqual(ast);
 });

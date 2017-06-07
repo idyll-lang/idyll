@@ -1,7 +1,7 @@
 const ReactDOM = require('react-dom');
 const { COMPONENTS, DATASET, PROPERTIES, DERIVED, VARIABLE } = require('../constants');
-const datasets = require('__IDYLL_DATA__');
-module.exports = function(component) {
+
+module.exports = function(component, datasets) {
   let nodeID = -1;
   const walkVars = function (node) {
     nodeID++;

@@ -11,7 +11,7 @@ const pathBuilder = require('./path-builder');
 const pipeline = require('./pipeline');
 
 require('babel-core/register')({
-    presets: ['react']
+    presets: ['react', 'es2015']
 });
 
 const idyll = (options = {}, cb) => {
