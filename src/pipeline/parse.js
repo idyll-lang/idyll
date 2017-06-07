@@ -166,10 +166,6 @@ exports.getHighlightJS = (ast, paths, server) => {
   return js;
 }
 
-const requireHighlightJS = (ast, paths) => {
-  exports.getHighlightJS(ast, paths, true);
-}
-
 exports.getHTML = (paths, ast, components, datasets, template) => {
   // there should only be one meta node
   const metaNodes = getNodesByName('meta', ast);
@@ -188,7 +184,7 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
     componentClasses[key] = require(components[key])
   })
 
-  requireHighlightJS(ast, paths);
+  exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
   const InteractiveDocument = require('../client/component');

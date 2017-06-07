@@ -8,7 +8,7 @@ const brfs = require('brfs');
 const Promise = require('bluebird');
 const stream = require('stream');
 
-let b;
+let config;
 
 const toStream = (k, o) => {
   let src;
@@ -41,8 +41,7 @@ const getTransform = (opts) => {
 
 module.exports = function (opts, paths, output) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
-
-  if (!b) {
+  if (!config) {
     const config = {
       entries: [path.join(__dirname, '..', 'client', 'build.js')],
       cache: {},
@@ -79,9 +78,9 @@ module.exports = function (opts, paths, output) {
         }
       ]
     };
-
-    b = browserifyInc(config);
   }
+
+  const b = browserifyInc(config);
 
   return new Promise((resolve, reject) => {
     b.bundle((err, src) => {
