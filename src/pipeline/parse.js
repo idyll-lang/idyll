@@ -135,13 +135,13 @@ exports.getHighlightJS = (ast, paths) => {
 
   const rshPath = slash(path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR })));
 
-  let js = `var rsh = require('${path.join(rshPath, 'light')}')`
+  let js = `var rsh = require('${slash(path.join(rshPath, 'light'))}')`
   Object.keys(languages).forEach((language) => {
     let cleanedLanguage = language;
     if (languageMap[language]) {
       cleanedLanguage = languageMap[language];
     }
-    js += `\nrsh.registerLanguage('${language}', require('${path.join(rshPath, 'languages', cleanedLanguage)}').default);`
+    js += `\nrsh.registerLanguage('${language}', require('${slash(path.join(rshPath, 'languages', cleanedLanguage))}').default);`
   });
 
   return js;
