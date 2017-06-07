@@ -5,6 +5,7 @@ const mustache = require('mustache');
 const resolve = require('resolve');
 const slash = require('slash');
 const { paramCase } = require('change-case');
+const Baby = require('babyparse');
 
 const getFilteredAST = (ast) => {
   const ignoreNames = ['meta'];
@@ -93,7 +94,13 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
         {}
       );
 
-      acc[name] = slash(path.join(DATA_DIR, source));
+      if (source.endsWith('.csv')) {
+        acc[name] = Baby.parseFiles(slash(path.join(DATA_DIR, source)), { header: true }).data;
+      } else if (source.endsWith('.json')) {
+        acc[name] = require(slash(path.join(DATA_DIR, source)));
+      } else {
+        throw new Error('Unknown data file type: ' + source);
+      }
 
       return acc;
     },

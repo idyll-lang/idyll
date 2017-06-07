@@ -5,7 +5,6 @@ const babelify = require('babelify');
 const reactPreset = require('babel-preset-react');
 const es2015Preset = require('babel-preset-es2015');
 const brfs = require('brfs');
-const Baby = require('babyparse');
 const Promise = require('bluebird');
 const stream = require('stream');
 
@@ -14,20 +13,10 @@ let b;
 const toStream = (k, o) => {
   let src;
 
-  if (k === 'ast') {
+  if (k === 'ast' || k === 'data') {
     src = `module.exports = ${JSON.stringify(o)}`;
   } else if (k === 'syntaxHighlighting') {
     src = `module.exports = (function (){${o}})()`;
-  } else {
-    src = Object.keys(o)
-      .map((key) => {
-        if (k === 'data' && o[key].endsWith('.csv')) {
-          return `'${key}': ` + JSON.stringify(Baby.parseFiles(o[key], { header: true }).data);
-        }
-        return `'${key}': require('${o[key]}')`;
-      })
-      .join(',\n\t');
-    src = `module.exports = {\n\t${src}\n}\n`;
   }
 
   const s = new stream.Readable;
