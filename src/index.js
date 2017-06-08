@@ -70,9 +70,9 @@ const idyll = (options = {}, cb) => {
             bs = require('browser-sync').create();
             // any time an input files changes we will recompile .idl source
             // and write ast.json, components.js, and data.js to disk
-            bs.watch(paths.COMPONENTS_DIR, {ignoreInitial: true}, inst.build);
-            bs.watch(paths.DEFAULT_COMPONENTS_DIR, {ignoreInitial: true}, inst.build);
-            bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, inst.build);
+            bs.watch(paths.COMPONENTS_DIR, {ignoreInitial: true}, () => inst.build());
+            bs.watch(paths.DEFAULT_COMPONENTS_DIR, {ignoreInitial: true}, () => inst.build());
+            bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, () => inst.build());
             // that will cause watchify to rebuild so we just watch the output bundle file
             // and reload when it is updated. Watch options are to prevent multiple change
             // events since the bundle file can be somewhat large
