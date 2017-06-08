@@ -5,7 +5,9 @@ const Latex = require('react-latex');
 const select = require('d3-selection').select;
 const format = require('d3-format').format;
 
-document.write('<link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css" rel="stylesheet">');
+if (typeof document !== 'undefined') {
+  document.write('<link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css" rel="stylesheet">');
+}
 
 const allowedProps = ['domain', 'step', 'children'];
 
