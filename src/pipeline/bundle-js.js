@@ -8,8 +8,6 @@ const brfs = require('brfs');
 const Promise = require('bluebird');
 const stream = require('stream');
 
-let config;
-
 const toStream = (k, o) => {
   let src;
 
@@ -41,46 +39,43 @@ const getTransform = (opts) => {
 
 module.exports = function (opts, paths, output) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
-  if (!config) {
-    config = {
-      entries: [path.join(__dirname, '..', 'client', 'build.js')],
-      cache: {},
-      packageCache: {},
-      fullPaths: true,
-      cacheFile: path.join(paths.TMP_DIR, `browserify-cache${opts.minify ? '-min' : ''}.json`),
-      transform: getTransform(opts),
-      paths: [
-        // Input package's NODE_MODULES
-        path.join(paths.INPUT_DIR, 'node_modules'),
-        // Idyll's NODE_MODULES
-        path.resolve(paths.APP_PATH, 'node_modules')
-      ],
-      plugin: [
-        (b) => {
-          if (opts.minify) {
-            b.require('react/dist/react.min.js', { expose: 'react' });
-            b.require('react-dom/dist/react-dom.min.js', { expose: 'react-dom' });
-          }
-          const aliases = {
-            ast: '__IDYLL_AST__',
-            components: '__IDYLL_COMPONENTS__',
-            data: '__IDYLL_DATA__',
-            syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__'
-          };
 
-          for (const key in aliases) {
-            b.exclude(aliases[key]);
-            b.require(toStream(key, output[key]), {
-              expose: aliases[key],
-              basedir: paths.TMP_DIR
-            })
-          }
+  const b = browserifyInc({
+    entries: [path.join(__dirname, '..', 'client', 'build.js')],
+    cache: {},
+    packageCache: {},
+    fullPaths: true,
+    cacheFile: path.join(paths.TMP_DIR, `browserify-cache${opts.minify ? '-min' : ''}.json`),
+    transform: getTransform(opts),
+    paths: [
+      // Input package's NODE_MODULES
+      path.join(paths.INPUT_DIR, 'node_modules'),
+      // Idyll's NODE_MODULES
+      path.resolve(paths.APP_PATH, 'node_modules')
+    ],
+    plugin: [
+      (b) => {
+        if (opts.minify) {
+          b.require('react/dist/react.min.js', { expose: 'react' });
+          b.require('react-dom/dist/react-dom.min.js', { expose: 'react-dom' });
         }
-      ]
-    };
-  }
+        const aliases = {
+          ast: '__IDYLL_AST__',
+          components: '__IDYLL_COMPONENTS__',
+          data: '__IDYLL_DATA__',
+          syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__'
+        };
 
-  const b = browserifyInc(config);
+        for (const key in aliases) {
+          b.exclude(aliases[key]);
+          b.require(toStream(key, output[key]), {
+            expose: aliases[key],
+            basedir: paths.TMP_DIR
+          })
+        }
+      }
+    ]
+  });
 
   return new Promise((resolve, reject) => {
     b.bundle((err, src) => {
