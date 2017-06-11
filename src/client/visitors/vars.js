@@ -96,8 +96,8 @@ module.exports = function(component, datasets) {
       });
       this.derivedVars[varName] = {
         value: eval(getFunc(Object.assign({}, this.initialState, this.getDerivedVars()))),
-        update: () => {
-          this.derivedVars[varName].value = eval(getFunc(Object.assign({}, this.state, this.getDerivedVars())));
+        update: (newState) => {
+          this.derivedVars[varName].value = eval(getFunc(Object.assign({}, this.state, newState, this.getDerivedVars())));
         }
       };
     } else {

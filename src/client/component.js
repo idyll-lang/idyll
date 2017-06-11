@@ -57,10 +57,10 @@ class InteractiveDocument extends React.PureComponent {
   }
 
   setStateAndDerived(newState) {
-    this.setState(newState);
     Object.keys(this.derivedVars).forEach((dv) => {
-      this.derivedVars[dv].update();
+      this.derivedVars[dv].update(newState);
     });
+    this.setState(newState);
   }
 
   getDerivedVars() {
