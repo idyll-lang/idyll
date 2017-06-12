@@ -35,7 +35,7 @@ const build = (opts, paths, inputConfig) => {
       };
       output.html = getHTML(
         paths,
-        output.ast,
+        ast,
         output.components,
         output.data,
         fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8')
