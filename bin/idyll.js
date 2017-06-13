@@ -16,7 +16,7 @@ var argv = require('yargs')
     l: 'layout',
     n: 'no-minify',
     o: 'output',
-    k: 'spellcheck',
+    k: 'no-spellcheck',
     r: 'no-ssr',
     t: 'template',
     e: 'theme',
@@ -36,9 +36,8 @@ var argv = require('yargs')
   .describe('no-minify', 'Skip JS minification')
   .describe('output', 'Directory where built files should be written')
   .default('output', 'build')
-  .boolean('spellcheck')
-  .default('spellcheck', true)
-  .describe('spellcheck', 'Check spelling of Idyll source input')
+  .boolean('no-spellcheck')
+  .describe('no-spellcheck', `Don't check spelling of Idyll source input`)
   .boolean('no-ssr')
   .describe('no-ssr', 'Do not pre-render HTML as part of the build')
   .describe('template', 'Path to HTML template')
@@ -60,9 +59,9 @@ if (argv._[0]) argv.f = argv.inputFile = argv._[0];
 argv.minify = !argv['no-minify'];
 argv.ssr = !argv['no-ssr'];
 
-// move spellcheck down a level
+// spellcheck lives down a level
 argv.compilerOptions = {
-  spellcheck: argv.spellcheck
+  spellcheck: !argv['no-spellcheck']
 };
 
 // delete stuff we don't need
@@ -72,7 +71,8 @@ delete argv.n;
 delete argv.noMinify;
 delete argv['no-minify'];
 delete argv.k;
-delete argv.spellcheck;
+delete argv.noSpellcheck;
+delete argv['no-spellcheck'];
 delete argv.r;
 delete argv.noSsr;
 delete argv['no-ssr'];
