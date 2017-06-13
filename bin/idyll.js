@@ -17,6 +17,7 @@ var argv = require('yargs')
     n: 'no-minify',
     o: 'output',
     k: 'spellcheck',
+    r: 'no-ssr',
     t: 'template',
     e: 'theme',
     w: 'watch'
@@ -38,6 +39,8 @@ var argv = require('yargs')
   .boolean('spellcheck')
   .default('spellcheck', true)
   .describe('spellcheck', 'Check spelling of Idyll source input')
+  .boolean('no-ssr')
+  .describe('no-ssr', 'Do not pre-render HTML as part of the build')
   .describe('template', 'Path to HTML template')
   .array('transform')
   .describe('transform', 'Custom browserify transforms to apply.')
@@ -55,6 +58,7 @@ if (argv._[0]) argv.f = argv.inputFile = argv._[0];
 
 // API checks the inverse
 argv.minify = !argv['no-minify'];
+argv.ssr = !argv['no-ssr'];
 
 // move spellcheck down a level
 argv.compilerOptions = {
@@ -69,6 +73,9 @@ delete argv.noMinify;
 delete argv['no-minify'];
 delete argv.k;
 delete argv.spellcheck;
+delete argv.r;
+delete argv.noSsr;
+delete argv['no-ssr'];
 
 // delete undefined keys so Object.assign won't use them
 Object.keys(argv).forEach((key) => {

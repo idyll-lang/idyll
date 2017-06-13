@@ -36,8 +36,7 @@ const build = (opts, paths, inputConfig) => {
         data: getDataJS(ast, paths.DATA_DIR),
         syntaxHighlighting: getHighlightJS(ast, paths)
       };
-      // avoid SSR unless minify is true, indicating a final build
-      if (!opts.minify) {
+      if (!opts.ssr) {
         output.html = getBaseHTML(ast, template);
       } else {
         output.html = getHTML(
