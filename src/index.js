@@ -19,6 +19,7 @@ const idyll = (options = {}, cb) => {
       watch: false,
       datasets: 'data',
       minify: true,
+      ssr: true,
       components: 'components',
       defaultComponents: dirname(require.resolve('idyll-default-components')),
       layout: 'blog',

@@ -8,6 +8,7 @@ const {
   getComponentsJS,
   getDataJS,
   getHighlightJS,
+  getBaseHTML,
   getHTML
 } = require('./parse');
 const css = require('./css');
@@ -26,6 +27,8 @@ const build = (opts, paths, inputConfig) => {
     // to start a Promise chain and turn any synchronous exceptions into a rejection
     () => {
       const ast = compile(opts.inputString, opts.compilerOptions);
+      const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
+
       output = {
         ast: getASTJSON(ast),
         components: getComponentsJS(ast, paths, inputConfig),
@@ -33,13 +36,17 @@ const build = (opts, paths, inputConfig) => {
         data: getDataJS(ast, paths.DATA_DIR),
         syntaxHighlighting: getHighlightJS(ast, paths)
       };
-      output.html = getHTML(
-        paths,
-        ast,
-        output.components,
-        output.data,
-        fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8')
-      )
+      if (!opts.ssr) {
+        output.html = getBaseHTML(ast, template);
+      } else {
+        output.html = getHTML(
+          paths,
+          ast,
+          output.components,
+          output.data,
+          template
+        );
+      }
     }
   )
   .then(() => {

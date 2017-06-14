@@ -166,19 +166,25 @@ exports.getHighlightJS = (ast, paths, server) => {
   return js;
 }
 
-exports.getHTML = (paths, ast, components, datasets, template) => {
+const parseMeta = (ast) => {
   // there should only be one meta node
   const metaNodes = getNodesByName('meta', ast);
 
   // data is stored in props, hence [1]
-  const meta = metaNodes.length ? metaNodes[0][1].reduce(
+  return metaNodes.length ? metaNodes[0][1].reduce(
     (acc, prop) => {
       acc[prop[0]] = prop[1][1];
       return acc;
     },
     {}
   ) : {};
+}
 
+exports.getBaseHTML = (ast, template) => {
+  return mustache.render(template, parseMeta(ast));
+}
+
+exports.getHTML = (paths, ast, components, datasets, template) => {
   const componentClasses = {};
   Object.keys(components).forEach(key => {
     componentClasses[key] = require(components[key])
@@ -188,6 +194,7 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
   const InteractiveDocument = require('../client/component');
+  const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(InteractiveDocument, {
       ast,
