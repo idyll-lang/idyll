@@ -59,6 +59,12 @@ module.exports = function (opts, paths, output) {
           b.require('react/dist/react.min.js', { expose: 'react' });
           b.require('react-dom/dist/react-dom.min.js', { expose: 'react-dom' });
         }
+
+        if (opts.dev) {
+          b.external('react');
+          b.external('react-dom');
+        }
+
         const aliases = {
           ast: '__IDYLL_AST__',
           components: '__IDYLL_COMPONENTS__',
