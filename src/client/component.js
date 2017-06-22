@@ -31,6 +31,7 @@ class InteractiveDocument extends React.PureComponent {
     this._idyllRefs = {};
     this.derivedVars = {};
     this.initialState = {};
+    this.updateFuncCache = {};
 
     props.ast.map(walkVars(this, props.datasets));
 
@@ -42,18 +43,22 @@ class InteractiveDocument extends React.PureComponent {
   }
 
   handleUpdateProps(nodeID) {
-    return (props) => {
-      if (this.bindings[nodeID]) {
-        const newState = {};
-        Object.keys(props).forEach((propName) => {
-          const val = props[propName];
-          if (this.bindings[nodeID][propName]) {
-            newState[this.bindings[nodeID][propName]] = val;
-          }
-        });
-        this.setStateAndDerived(newState);
-      }
-    };
+    if (!this.updateFuncCache[nodeID]) {
+      this.updateFuncCache[nodeID] = (props) => {
+        if (this.bindings[nodeID]) {
+          const newState = {};
+          Object.keys(props).forEach((propName) => {
+            const val = props[propName];
+            if (this.bindings[nodeID][propName]) {
+              newState[this.bindings[nodeID][propName]] = val;
+            }
+          });
+          this.setStateAndDerived(newState);
+        }
+      };
+    }
+
+    return this.updateFuncCache[nodeID];
   }
 
   setStateAndDerived(newState) {
