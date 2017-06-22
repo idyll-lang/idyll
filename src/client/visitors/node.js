@@ -3,6 +3,8 @@ const htmlTags = require('html-tags');
 const changeCase = require('change-case');
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
+const hupCache = {};
+
 const processComponent = (component, name, id, componentClasses) => {
   const split = name.split('.');
   const paramCaseName = changeCase.paramCase(split[0]);
@@ -13,7 +15,7 @@ const processComponent = (component, name, id, componentClasses) => {
     for (var i = 1; i < split.length; i++) {
       componentClass = componentClass[split[i]];
     }
-    extraProps.__handleUpdateProps = component.handleUpdateProps(id);
+    extraProps.__handleUpdateProps = hupCache[id] = hupCache[id] || component.handleUpdateProps(id);
   } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
     componentClass = name.toLowerCase();
   }
