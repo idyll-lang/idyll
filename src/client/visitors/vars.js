@@ -101,7 +101,6 @@ module.exports = function(component, datasets) {
         }
       };
     } else {
-      const propsObj = {key: nodeID, __handleUpdateProps: this.handleUpdateProps(nodeID)};
       props.forEach((propArr, i) => {
         const propName = propArr[0];
         const propValueArr = propArr[1];
