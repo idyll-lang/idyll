@@ -10,9 +10,6 @@ const changeCase = require('change-case');
 const pathBuilder = require('./path-builder');
 const pipeline = require('./pipeline');
 
-require('babel-core/register')({
-    presets: ['react', 'es2015']
-});
 
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
@@ -41,6 +38,12 @@ const idyll = (options = {}, cb) => {
   if (opts.watch) opts.minify = false; // speed!
 
   const paths = pathBuilder(opts);
+  const transformFolders = [paths.COMPONENTS_DIR, paths.DEFAULT_COMPONENTS_DIR];
+  require('babel-register')({
+      presets: ['react', 'es2015'],
+      only: new RegExp(`(${transformFolders.join('|')})`)
+  });
+
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
   const inputConfig = Object.assign({
     components: {},
