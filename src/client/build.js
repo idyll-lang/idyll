@@ -10,10 +10,6 @@ const datasets = require('__IDYLL_DATA__');
 require('__IDYLL_SYNTAX_HIGHLIGHT__');
 
 ReactDOM.render(
-  <InteractiveDocument
-    ast={ast}
-    componentClasses={componentClasses}
-    datasets={datasets}
-  />,
+  React.createElement(InteractiveDocument, { ast, componentClasses, datasets }),
   mountNode
 );
