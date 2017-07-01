@@ -1,28 +1,9 @@
 const React = require('react');
 const htmlTags = require('html-tags');
 const changeCase = require('change-case');
+const memoize = require('memoizee');
+
 const { COMPONENTS, PROPERTIES } = require('../constants');
-
-const processComponent = (component, name, id, componentClasses) => {
-  const split = name.split('.');
-  const paramCaseName = changeCase.paramCase(split[0]);
-  let componentClass;
-  const extraProps = {};
-  if (componentClasses[paramCaseName]) {
-    componentClass = componentClasses[paramCaseName];
-    for (var i = 1; i < split.length; i++) {
-      componentClass = componentClass[split[i]];
-    }
-    extraProps.__handleUpdateProps = component.handleUpdateProps(id);
-  } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
-    componentClass = name.toLowerCase();
-  }
-
-  return {
-    componentClass,
-    extraProps
-  };
-}
 
 const stringifyRefs = (refs) => {
   const output = {};
@@ -46,6 +27,32 @@ const filterPropsByComponentName = {
 };
 
 module.exports = function(component, componentClasses) {
+
+  const processComponent = memoize((name, id) => {
+    const split = name.split('.');
+    const paramCaseName = changeCase.paramCase(split[0]);
+    let componentClass;
+    if (componentClasses[paramCaseName]) {
+      componentClass = componentClasses[paramCaseName];
+      for (var i = 1; i < split.length; i++) {
+        componentClass = componentClass[split[i]];
+      }
+      if (typeof componentClass !== 'string') {
+        const update = component.handleUpdateProps(id);
+        class UpdatingClass extends componentClass {
+          updateProps(newProps) {
+            return update.call(this, newProps);
+          }
+        }
+        return UpdatingClass;
+      }
+    } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
+      componentClass = name.toLowerCase();
+    }
+
+    return componentClass;
+  });
+
   let nodeID = -1;
   const walkNode = function (node) {
     nodeID++;
@@ -123,14 +130,15 @@ module.exports = function(component, componentClasses) {
         }
       });
 
-      const results = processComponent(component, componentName, nodeID, componentClasses);
-
-      const inputProps = Object.assign({}, results.extraProps, propsObj);
-      if (children) {
-        return React.createElement(results.componentClass, inputProps, children.length ? children.map(walkNode) : null);
-      }
-      return React.createElement(results.componentClass, inputProps);
+      const componentClass = processComponent(componentName, nodeID);
+      return React.createElement(componentClass, propsObj, children && children.length ? children.map(walkNode) : undefined);
     }
   };
-  return walkNode;
+
+  const getWalker = () => {
+    nodeID = -1;
+    return walkNode;
+  }
+
+  return getWalker;
 }
