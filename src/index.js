@@ -98,7 +98,14 @@ const idyll = (options = {}, cb) => {
             });
           }
         })
-        .catch(console.error.bind(console));
+        .catch((error) => {
+          // pass along errors if anyone is listening
+          if (this.listenerCount('error')) {
+            this.emit('error', error);
+          } else { // otherwise dump to the console
+            console.error(error);
+          }
+        });
       return this;
     }
   }
