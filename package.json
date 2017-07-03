@@ -1,6 +1,6 @@
 {
   "name": "idyll-default-components",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "Components that ship by default in new Idyll projects",
   "main": "index.js",
   "scripts": {
