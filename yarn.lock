@@ -1515,9 +1515,9 @@ iconv-lite@~0.4.13:
   version "0.4.17"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.17.tgz#4fdaa3b38acbc2c031b045d0edcdfe1ecab18c8d"
 
-idyll-component@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/idyll-component/-/idyll-component-1.1.2.tgz#440b49df879db5c1d86f4dd01e5d89e6999ea873"
+idyll-component@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/idyll-component/-/idyll-component-1.2.0.tgz#40db447ed8593c1cce8cb69efc521f5cfa0114bb"
   dependencies:
     scrollwatch "^1.2.0"
 
