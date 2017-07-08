@@ -36,9 +36,10 @@ class InteractiveDocument extends React.PureComponent {
     props.ast.map(walkVars(this, props.datasets));
 
     this.state = this.initialState;
-
+    
+    const nodeWalker = walkNode(this, props.componentClasses);
     this.getChildren = () => {
-      return props.ast.map(walkNode(this, props.componentClasses));
+      return props.ast.map(nodeWalker());
     }
   }
 

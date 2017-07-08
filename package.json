@@ -40,6 +40,7 @@
     "idyll-compiler": "^1.4.4",
     "idyll-default-components": "^1.4.0",
     "insert-css": "^2.0.0",
+    "memoizee": "^0.4.5",
     "mkdirp": "^0.5.1",
     "mustache": "^2.3.0",
     "react": "^15.4.2",
