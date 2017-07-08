@@ -37,9 +37,6 @@ class IdyllComponent extends React.PureComponent {
       }
     }
   }
-  updateProps(newProps) {
-    this.props.__handleUpdateProps(newProps);
-  }
 }
 
 module.exports = IdyllComponent;
