@@ -38,7 +38,7 @@
     "findup-sync": "^1.0.0",
     "html-tags": "^1.1.1",
     "idyll-compiler": "^1.4.4",
-    "idyll-default-components": "^1.4.0",
+    "idyll-default-components": "1.5.0",
     "insert-css": "^2.0.0",
     "memoizee": "^0.4.5",
     "mkdirp": "^0.5.1",

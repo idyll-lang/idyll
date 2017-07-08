@@ -661,7 +661,7 @@ babel-preset-jest@^19.0.0:
   dependencies:
     babel-plugin-jest-hoist "^19.0.0"
 
-babel-preset-react@^6.22.0, babel-preset-react@^6.24.1:
+babel-preset-react@^6.22.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-react/-/babel-preset-react-6.24.1.tgz#ba69dfaea45fc3ec639b6a4ecea6e17702c91380"
   dependencies:
@@ -1424,7 +1424,7 @@ d3-dispatch@1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/d3-dispatch/-/d3-dispatch-1.0.3.tgz#46e1491eaa9b58c358fce5be4e8bed626e7871f8"
 
-d3-drag@^1.0.4:
+d3-drag@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/d3-drag/-/d3-drag-1.1.0.tgz#4a49b4d77a42e9e3d5a0ef3b492b14aaa2e5a733"
   dependencies:
@@ -1461,7 +1461,7 @@ d3-scale@^1.0.0:
     d3-time "1"
     d3-time-format "2"
 
-d3-selection@1, d3-selection@^1.0.5:
+d3-selection@1, d3-selection@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/d3-selection/-/d3-selection-1.1.0.tgz#1998684896488f839ca0372123da34f1d318809c"
 
@@ -1488,6 +1488,12 @@ d3-timer@^1.0.0:
 d3-voronoi@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/d3-voronoi/-/d3-voronoi-1.1.2.tgz#1687667e8f13a2d158c80c1480c5a29cb0d8973c"
+
+d@1:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
+  dependencies:
+    es5-ext "^0.10.9"
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -1745,6 +1751,37 @@ error-ex@^1.2.0:
   dependencies:
     is-arrayish "^0.2.1"
 
+es5-ext@^0.10.13, es5-ext@^0.10.14, es5-ext@^0.10.9, es5-ext@~0.10.14, es5-ext@~0.10.2:
+  version "0.10.23"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.23.tgz#7578b51be974207a5487821b56538c224e4e7b38"
+  dependencies:
+    es6-iterator "2"
+    es6-symbol "~3.1"
+
+es6-iterator@2, es6-iterator@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/es6-iterator/-/es6-iterator-2.0.1.tgz#8e319c9f0453bf575d374940a655920e59ca5512"
+  dependencies:
+    d "1"
+    es5-ext "^0.10.14"
+    es6-symbol "^3.1"
+
+es6-symbol@^3.1, es6-symbol@^3.1.1, es6-symbol@~3.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/es6-symbol/-/es6-symbol-3.1.1.tgz#bf00ef4fdab6ba1b46ecb7b629b4c7ed5715cc77"
+  dependencies:
+    d "1"
+    es5-ext "~0.10.14"
+
+es6-weak-map@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/es6-weak-map/-/es6-weak-map-2.0.2.tgz#5e3ab32251ffd1538a1f8e5ffa1357772f92d96f"
+  dependencies:
+    d "1"
+    es5-ext "^0.10.14"
+    es6-iterator "^2.0.1"
+    es6-symbol "^3.1.1"
+
 escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
@@ -1822,6 +1859,13 @@ esutils@~1.0.0:
 etag@^1.7.0, etag@~1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.0.tgz#6f631aef336d6c46362b51764044ce216be3c051"
+
+event-emitter@^0.3.4:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
+  dependencies:
+    d "1"
+    es5-ext "~0.10.14"
 
 eventemitter3@1.x.x:
   version "1.2.0"
@@ -1921,7 +1965,7 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fbjs@^0.8, fbjs@^0.8.4, fbjs@^0.8.9:
+fbjs@^0.8, fbjs@^0.8.9:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
   dependencies:
@@ -2371,31 +2415,26 @@ idyll-compiler@^1.4.4:
   optionalDependencies:
     spellchecker "^3.3.1"
 
-idyll-component@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/idyll-component/-/idyll-component-1.1.1.tgz#6ea5602734af0be616e65e1715ef1cbb055eb84f"
+idyll-component@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/idyll-component/-/idyll-component-1.2.0.tgz#40db447ed8593c1cce8cb69efc521f5cfa0114bb"
   dependencies:
     scrollwatch "^1.2.0"
 
-idyll-default-components@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/idyll-default-components/-/idyll-default-components-1.3.2.tgz#6ea3cfe547367c9ff906d34010ae1b4a12f6f11f"
+idyll-default-components@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/idyll-default-components/-/idyll-default-components-1.5.0.tgz#6c912c642144f17ab7ac14fe875875ec545a7bf9"
   dependencies:
-    babel-preset-es2015 "^6.24.1"
-    babel-preset-react "^6.24.1"
     d3-array "^1.2.0"
-    d3-drag "^1.0.4"
+    d3-drag "^1.1.0"
     d3-format "^1.2.0"
-    d3-selection "^1.0.5"
-    idyll-component "^1.1.0"
-    react "^15.5.4"
-    react-addons-css-transition-group "^15.5.2"
-    react-dom "^15.5.4"
-    react-inlinesvg "^0.5.5"
+    d3-selection "^1.1.0"
+    idyll-component "1.2.0"
+    react-inlinesvg "^0.6.0"
     react-latex "^1.0.1"
-    react-syntax-highlighter "^5.6.1"
+    react-syntax-highlighter "^5.6.2"
     reactable "^0.14.1"
-    victory "^0.18.4"
+    victory "^0.21.0"
 
 ieee754@^1.1.4:
   version "1.1.8"
@@ -2562,6 +2601,10 @@ is-posix-bracket@^0.1.0:
 is-primitive@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-primitive/-/is-primitive-2.0.0.tgz#207bab91638499c07b2adf240a41a87210034575"
+
+is-promise@^2.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.1.0.tgz#79a2a9ece7f096e80f36d2b2f3bc16c1ff4bf3fa"
 
 is-property@^1.0.0:
   version "1.0.2"
@@ -3097,7 +3140,7 @@ lodash@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.12.0, lodash@^4.14.0, lodash@^4.2.0:
+lodash@^4.14.0, lodash@^4.17.4, lodash@^4.2.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -3134,6 +3177,12 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
 
+lru-queue@0.1:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/lru-queue/-/lru-queue-0.1.0.tgz#2738bd9f0d3cf4f84490c5736c48699ac632cda3"
+  dependencies:
+    es5-ext "~0.10.2"
+
 magic-string@^0.14.0:
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.14.0.tgz#57224aef1701caeed273b17a39a956e72b172462"
@@ -3155,6 +3204,19 @@ mem@^1.1.0:
   resolved "https://registry.yarnpkg.com/mem/-/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
   dependencies:
     mimic-fn "^1.0.0"
+
+memoizee@^0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/memoizee/-/memoizee-0.4.5.tgz#1bc3ea1e4be056dd475d521979d7be3d5e5b21c8"
+  dependencies:
+    d "1"
+    es5-ext "^0.10.13"
+    es6-weak-map "^2.0.1"
+    event-emitter "^0.3.4"
+    is-promise "^2.1"
+    lru-queue "0.1"
+    next-tick "1"
+    timers-ext "0.1"
 
 merge@^1.1.3:
   version "1.2.0"
@@ -3302,6 +3364,10 @@ nearley@^2.7.12:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+next-tick@1:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
 no-case@^2.2.0:
   version "2.3.1"
@@ -3840,14 +3906,7 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-addons-css-transition-group@^15.5.2:
-  version "15.5.2"
-  resolved "https://registry.yarnpkg.com/react-addons-css-transition-group/-/react-addons-css-transition-group-15.5.2.tgz#ea7e0a9f0e1c27ca426da4efd3559915bd42ead2"
-  dependencies:
-    fbjs "^0.8.4"
-    object-assign "^4.1.0"
-
-react-dom@^15.4.2, react-dom@^15.5.4:
+react-dom@^15.4.2:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.5.4.tgz#ba0c28786fd52ed7e4f2135fe0288d462aef93da"
   dependencies:
@@ -3856,9 +3915,9 @@ react-dom@^15.4.2, react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "~15.5.7"
 
-react-inlinesvg@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/react-inlinesvg/-/react-inlinesvg-0.5.5.tgz#811c75decd392eaef682346751418c2fd911af42"
+react-inlinesvg@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-inlinesvg/-/react-inlinesvg-0.6.0.tgz#f73139f14a2f90d53a05400b8d2e63718a4fc58b"
   dependencies:
     fbjs "^0.8"
     httpplease "^0.16"
@@ -3870,7 +3929,7 @@ react-latex@^1.0.1:
   dependencies:
     katex "^0.7.0"
 
-react-syntax-highlighter@^5.6.1:
+react-syntax-highlighter@^5.6.2:
   version "5.6.2"
   resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-5.6.2.tgz#01f5ad3cc44c40c26b6fb4e00a4bed90f66304c5"
   dependencies:
@@ -3878,7 +3937,7 @@ react-syntax-highlighter@^5.6.1:
     highlight.js "~9.8.0"
     lowlight "^1.5.0"
 
-react@^15.4.2, react@^15.5.4:
+react@^15.4.2:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react/-/react-15.5.4.tgz#fa83eb01506ab237cdc1c8c3b1cea8de012bf047"
   dependencies:
@@ -4638,6 +4697,13 @@ timers-browserify@^1.0.1:
   dependencies:
     process "~0.11.0"
 
+timers-ext@0.1:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/timers-ext/-/timers-ext-0.1.2.tgz#61cc47a76c1abd3195f14527f978d58ae94c5204"
+  dependencies:
+    es5-ext "~0.10.14"
+    next-tick "1"
+
 title-case@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/title-case/-/title-case-2.1.1.tgz#3e127216da58d2bc5becf137ab91dae3a7cd8faa"
@@ -4802,40 +4868,40 @@ verror@1.3.6:
   dependencies:
     extsprintf "1.0.2"
 
-victory-chart@^18.2.0:
-  version "18.2.1"
-  resolved "https://registry.yarnpkg.com/victory-chart/-/victory-chart-18.2.1.tgz#4e517b582b891b21cd29344487d53eeadaf9eb16"
+victory-chart@^21.2.0:
+  version "21.2.3"
+  resolved "https://registry.yarnpkg.com/victory-chart/-/victory-chart-21.2.3.tgz#2d81f16755afc29b8f864c3ef86aa3b979854a6b"
   dependencies:
     d3-voronoi "^1.1.2"
-    lodash "^4.12.0"
-    victory-core "^14.1.1"
+    lodash "^4.17.4"
+    victory-core "^16.0.2"
 
-victory-core@^14.0.7, victory-core@^14.1.0, victory-core@^14.1.1:
-  version "14.1.1"
-  resolved "https://registry.yarnpkg.com/victory-core/-/victory-core-14.1.1.tgz#34273be9c68064d72943a8f654c9e56416cf8535"
+victory-core@^16.0.0, victory-core@^16.0.2, victory-core@^16.1.0:
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/victory-core/-/victory-core-16.1.1.tgz#b3f3b92f7bc746b9d22fa926b74cba32ed91ded1"
   dependencies:
     d3-ease "^1.0.0"
     d3-interpolate "^1.1.1"
     d3-scale "^1.0.0"
     d3-shape "^1.0.0"
     d3-timer "^1.0.0"
-    lodash "^4.12.0"
+    lodash "^4.17.4"
 
-victory-pie@^10.3.0:
-  version "10.3.0"
-  resolved "https://registry.yarnpkg.com/victory-pie/-/victory-pie-10.3.0.tgz#98be54defda448720c48479a6628616e14b65577"
+victory-pie@^11.1.2:
+  version "11.1.2"
+  resolved "https://registry.yarnpkg.com/victory-pie/-/victory-pie-11.1.2.tgz#9af175e58b90fbe27a9d1d1cf82252636e288809"
   dependencies:
     d3-shape "^1.0.0"
-    lodash "^4.12.0"
-    victory-core "^14.0.7"
+    lodash "^4.17.4"
+    victory-core "^16.0.0"
 
-victory@^0.18.4:
-  version "0.18.4"
-  resolved "https://registry.yarnpkg.com/victory/-/victory-0.18.4.tgz#cf7a9a31c75cec56929308d42add6056848f72c1"
+victory@^0.21.0:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/victory/-/victory-0.21.1.tgz#0e1ad62708dbc30d5183c7ef9f4d565e8bafb369"
   dependencies:
-    victory-chart "^18.2.0"
-    victory-core "^14.1.0"
-    victory-pie "^10.3.0"
+    victory-chart "^21.2.0"
+    victory-core "^16.1.0"
+    victory-pie "^11.1.2"
 
 vlq@^0.2.1:
   version "0.2.2"
