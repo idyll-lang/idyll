@@ -39,12 +39,20 @@ module.exports = function(component, componentClasses) {
       }
       if (typeof componentClass !== 'string') {
         const update = component.handleUpdateProps(id);
-        class UpdatingClass extends componentClass {
+
+        if (componentClass.default) {
+          return class extends componentClass.default {
+            updateProps(newProps) {
+              return update.call(this, newProps);
+            }
+          }
+        }
+
+        return class extends componentClass {
           updateProps(newProps) {
             return update.call(this, newProps);
           }
         }
-        return UpdatingClass;
       }
     } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
       componentClass = name.toLowerCase();

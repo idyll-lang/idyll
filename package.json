@@ -5,7 +5,11 @@
   "author": {
     "name": "Matthew Conlen"
   },
-  "main": "src/index.js",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "prepublish": "npm run build"
+  },
   "peerDependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
@@ -14,5 +18,9 @@
     "change-case": "^3.0.1",
     "html-tags": "^2.0.0",
     "memoizee": "^0.4.5"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1"
   }
 }
