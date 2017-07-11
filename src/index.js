@@ -78,7 +78,11 @@ class InteractiveDocument extends React.PureComponent {
   }
 
   componentDidMount() {
-    Object.keys(this._idyllRefs).forEach((name) => {
+    const refKeys = Object.keys(this._idyllRefs);
+    if (!refKeys.length) { 
+      return;
+    }
+    refKeys.forEach((name) => {
       const ref = this._idyllRefs[name];
       const rect = ref.domNode().getBoundingClientRect();
       this._idyllRefs[name]._node = ref.domNode();
