@@ -193,7 +193,7 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
-  const InteractiveDocument = require('../client/component');
+  const InteractiveDocument = require('idyll-interactive-document');
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(InteractiveDocument, {
