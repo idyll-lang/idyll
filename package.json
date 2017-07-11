@@ -1,6 +1,6 @@
 {
   "name": "idyll-component",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Extensible component to be used in Idyll projects",
   "main": "lib.js",
   "scripts": {
