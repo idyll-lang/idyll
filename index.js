@@ -24,14 +24,14 @@ class IdyllComponent extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    if (props.onEnteredView || props.onExitView) {
+    if (props.onEnteredView || props.onEnterView || props.onExitView) {
       this.componentDidMount = () => {
         const dom = ReactDOM.findDOMNode(this);
         const ScrollWatch = require('scrollwatch');
         var sw = new ScrollWatch({
           watch: fullPath(dom),
-          onElementInView: props.onEnteredView,
-          onElementOutOfView: props.onExitView,
+          onElementInView: props.onEnteredView || props.onEnterView || function(){},
+          onElementOutOfView: props.onExitView || function(){},
           watchOnce: false
         });
       }
