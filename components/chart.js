@@ -4,6 +4,7 @@ const V = require('victory');
 const d3Arr = require('d3-array');
 
 const types = {
+  AREA: V.VictoryArea,
   TIME: V.VictoryLine,
   LINE: V.VictoryLine,
   BAR: V.VictoryBar,
@@ -41,7 +42,11 @@ class Chart extends IdyllComponent {
       <div className={this.props.className}>
         {type !== 'PIE' ? (
           <V.VictoryChart domainPadding={10} scale={scale}>
-            <INNER_CHART data={data} x={this.props.x} y={this.props.y}>
+            <INNER_CHART
+              data={data}
+              x={this.props.x}
+              y={this.props.y}
+              interpolation={this.props.interpolation || 'linear'}>
             </INNER_CHART>
           </V.VictoryChart>
         ) : (
