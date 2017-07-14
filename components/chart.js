@@ -16,12 +16,10 @@ class Chart extends IdyllComponent {
   render() {
     const type = this.props.type.toUpperCase();
     const INNER_CHART = types[type];
-    let scale = this.props.scale;
-    let data = this.props.data;
-    let domain = this.props.domain;
+    let { scale, data, domain, ...customProps } = this.props;
 
     if (this.props.equation) {
-      const d = this.props.domain;
+      const d = domain;
       data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / this.props.samplePoints).map((x) => {
         return {
           x: x,
@@ -46,7 +44,7 @@ class Chart extends IdyllComponent {
               data={data}
               x={this.props.x}
               y={this.props.y}
-              interpolation={this.props.interpolation || 'linear'}>
+              {...customProps}>
             </INNER_CHART>
           </V.VictoryChart>
         ) : (
