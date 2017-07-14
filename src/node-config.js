@@ -1,11 +1,11 @@
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-var Module = require('module');
+const Module = require('module');
 
 module.exports = (paths) => {
   const transformFolders = [paths.COMPONENTS_DIR, paths.DEFAULT_COMPONENTS_DIR];
-  var originalLoad = Module._load;
+  const originalLoad = Module._load;
   Module._load = function (path) {
     switch (path) {
       case 'react':
