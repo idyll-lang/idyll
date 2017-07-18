@@ -3,11 +3,12 @@ const {
   dirname,
   isAbsolute,
   join,
-  parse,
+  parse
 } = require('path');
 const EventEmitter = require('events');
 const changeCase = require('change-case');
 const pathBuilder = require('./path-builder');
+const configureNode = require('./node-config');
 const pipeline = require('./pipeline');
 
 
@@ -38,11 +39,7 @@ const idyll = (options = {}, cb) => {
   if (opts.watch) opts.minify = false; // speed!
 
   const paths = pathBuilder(opts);
-  const transformFolders = [paths.COMPONENTS_DIR, paths.DEFAULT_COMPONENTS_DIR];
-  require('babel-register')({
-      presets: ['react', 'es2015'],
-      only: new RegExp(`(${transformFolders.join('|')})`)
-  });
+  configureNode(paths);
 
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
   const inputConfig = Object.assign({
