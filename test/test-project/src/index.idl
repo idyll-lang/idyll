@@ -41,3 +41,7 @@ This adds support for indexed components: [CustomComponent.IndexedComponent /]
 
 [FunctionalComponent /]
 
+[FunctionalDefaultComponent /]
+
+
+[CapitalPascal /]

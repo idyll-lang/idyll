@@ -1,3 +1,5 @@
+const React = require('react');
+
 export default () =>
   <div>
     This is some text
