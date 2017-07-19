@@ -23,6 +23,7 @@
   "dependencies": {
     "change-case": "^3.0.1",
     "html-tags": "^2.0.0",
+    "is-class": "^0.0.4",
     "memoizee": "^0.4.5",
     "react": "^15.6.1"
   },

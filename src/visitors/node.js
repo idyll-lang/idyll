@@ -2,6 +2,7 @@ const React = require('react');
 const htmlTags = require('html-tags');
 const changeCase = require('change-case');
 const memoize = require('memoizee');
+const isClass = require('is-class');
 
 const { COMPONENTS, PROPERTIES } = require('../constants');
 
@@ -37,22 +38,18 @@ module.exports = function(component, componentClasses) {
       for (var i = 1; i < split.length; i++) {
         componentClass = componentClass[split[i]];
       }
-      if (typeof componentClass === 'object') {
+      if (componentClass.hasOwnProperty('default')) {
+        componentClass = componentClass.default;
+      }
+      if (isClass(componentClass)) {
         const update = component.handleUpdateProps(id);
-
-        if (componentClass.default) {
-          return class extends componentClass.default {
+        try {
+          return class extends componentClass {
             updateProps(newProps) {
               return update.call(this, newProps);
             }
           }
-        }
-
-        return class extends componentClass {
-          updateProps(newProps) {
-            return update.call(this, newProps);
-          }
-        }
+        } catch(e) { /* just in case something weird happens, return the unmodified class */ }
       }
     } else if (htmlTags.indexOf(name.toLowerCase()) > -1) {
       componentClass = name.toLowerCase();
