@@ -18,7 +18,7 @@ module.exports = (paths) => {
   };
 
   require('babel-register')({
-      presets: ['react', 'es2015'],
+      presets: ['env', 'stage-2', 'react'],
       babelrc: false,
       only: new RegExp(`(${transformFolders.join('|')})`)
   });

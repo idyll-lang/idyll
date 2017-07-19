@@ -3,7 +3,8 @@ const fs = require('fs');
 const browserifyInc = require('browserify-incremental');
 const babelify = require('babelify');
 const reactPreset = require('babel-preset-react');
-const es2015Preset = require('babel-preset-es2015');
+const envPreset = require('babel-preset-env');
+const stage2Preset = require('babel-preset-stage-2');
 const brfs = require('brfs');
 const Promise = require('bluebird');
 const stream = require('stream');
@@ -32,7 +33,7 @@ const getTransform = (opts) => {
     return (opts[name] || []).map(d => require(d));
   };
 
-  return [[ babelify, { presets: [ reactPreset, es2015Preset ], babelrc: false } ]]
+  return [[ babelify, { presets: [ envPreset, stage2Preset, reactPreset ], babelrc: false } ]]
     .concat(_getTransform('transform'))
     .concat([[ brfs ]]);
 };
