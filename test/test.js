@@ -72,6 +72,12 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"component.val.v\" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF');
     });
 
+    it('should handle an i tag', function() {
+      var lex = Lexer();
+      var results = lex('[i]not even em[/i]');
+      expect(results.tokens.join(' ')).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "i" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "not even em" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "i" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+    });
+
   });
 
   describe('parser', function() {
@@ -381,6 +387,15 @@ describe('compiler', function() {
       var lexResults = lex(input);
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
       expect(output).to.eql([['CodeHighlight', [['language', ['value', 'json']]], ["{}"]]]);
+    })
+
+
+    it('should handle an i tag', function() {
+      const input = "[i]not even em[/i]";
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([['i', [], ['not even em']]]);
     })
   });
 
