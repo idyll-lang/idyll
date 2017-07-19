@@ -4,6 +4,7 @@ const V = require('victory');
 const d3Arr = require('d3-array');
 
 const types = {
+  AREA: V.VictoryArea,
   TIME: V.VictoryLine,
   LINE: V.VictoryLine,
   BAR: V.VictoryBar,
@@ -15,12 +16,10 @@ class Chart extends IdyllComponent {
   render() {
     const type = this.props.type.toUpperCase();
     const INNER_CHART = types[type];
-    let scale = this.props.scale;
-    let data = this.props.data;
-    let domain = this.props.domain;
+    let { scale, data, domain, ...customProps } = this.props;
 
     if (this.props.equation) {
-      const d = this.props.domain;
+      const d = domain;
       data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / this.props.samplePoints).map((x) => {
         return {
           x: x,
@@ -41,7 +40,11 @@ class Chart extends IdyllComponent {
       <div className={this.props.className}>
         {type !== 'PIE' ? (
           <V.VictoryChart domainPadding={10} scale={scale}>
-            <INNER_CHART data={data} x={this.props.x} y={this.props.y}>
+            <INNER_CHART
+              data={data}
+              x={this.props.x}
+              y={this.props.y}
+              {...customProps}>
             </INNER_CHART>
           </V.VictoryChart>
         ) : (
