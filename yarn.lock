@@ -2578,9 +2578,9 @@ iconv-lite@0.4.13, iconv-lite@~0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
-idyll-compiler@^1.4.4:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/idyll-compiler/-/idyll-compiler-1.4.5.tgz#6bd2fa381f0171df05f1a02d9567389012cacfa7"
+idyll-compiler@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/idyll-compiler/-/idyll-compiler-1.4.6.tgz#ce75a686edbf63a5803511761913da2ff031db09"
   dependencies:
     lex "^1.7.9"
     nearley "^2.7.12"
