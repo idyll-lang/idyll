@@ -37,7 +37,7 @@ module.exports = function(component, componentClasses) {
       for (var i = 1; i < split.length; i++) {
         componentClass = componentClass[split[i]];
       }
-      if (typeof componentClass !== 'string') {
+      if (typeof componentClass === 'object') {
         const update = component.handleUpdateProps(id);
 
         if (componentClass.default) {
