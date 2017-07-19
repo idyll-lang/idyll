@@ -38,3 +38,6 @@ doesn't exist.
 [PackageJsonComponentTest /]
 
 This adds support for indexed components: [CustomComponent.IndexedComponent /]
+
+[FunctionalComponent /]
+
