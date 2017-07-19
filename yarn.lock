@@ -2444,9 +2444,9 @@ idyll-default-components@1.5.0:
     reactable "^0.14.1"
     victory "^0.21.0"
 
-idyll-interactive-document@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/idyll-interactive-document/-/idyll-interactive-document-1.0.0.tgz#5138c27cce2c541f0d4e79d01af1975bd18feed5"
+idyll-interactive-document@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/idyll-interactive-document/-/idyll-interactive-document-1.0.1.tgz#e4fc2b71b4d00a9a4aa2c94ac59392424da21b8e"
   dependencies:
     change-case "^3.0.1"
     html-tags "^2.0.0"
