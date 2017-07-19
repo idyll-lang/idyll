@@ -197,7 +197,7 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(InteractiveDocument, {
-      ast,
+      ast: getFilteredAST(ast),
       componentClasses,
       datasets
     })

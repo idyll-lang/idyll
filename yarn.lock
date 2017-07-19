@@ -2609,12 +2609,13 @@ idyll-default-components@^1.6.0:
     reactable "^0.14.1"
     victory "^0.21.0"
 
-idyll-interactive-document@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/idyll-interactive-document/-/idyll-interactive-document-1.0.1.tgz#e4fc2b71b4d00a9a4aa2c94ac59392424da21b8e"
+idyll-interactive-document@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/idyll-interactive-document/-/idyll-interactive-document-1.0.2.tgz#e639910ca7da46eac0278ba660a9e0a1040b2f3d"
   dependencies:
     change-case "^3.0.1"
     html-tags "^2.0.0"
+    is-class "^0.0.4"
     memoizee "^0.4.5"
     react "^15.6.1"
 
@@ -2707,6 +2708,10 @@ is-ci@^1.0.9:
   resolved "https://registry.yarnpkg.com/is-ci/-/is-ci-1.0.10.tgz#f739336b2632365061a9d48270cd56ae3369318e"
   dependencies:
     ci-info "^1.0.0"
+
+is-class@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/is-class/-/is-class-0.0.4.tgz#e057451705bb34e39e3e33598c93a9837296b736"
 
 is-dotfile@^1.0.0:
   version "1.0.3"
