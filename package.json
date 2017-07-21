@@ -1,0 +1,23 @@
+{
+  "name": "idyll-editor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo ./src/index.js --css codemirror.css --live --open -- -t [ babelify --presets [ es2015 react ] ]",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babelify": "^7.3.0",
+    "budo": "^10.0.3",
+    "idyll-compiler": "^1.4.6",
+    "idyll-interactive-document": "^1.0.2",
+    "react": "^15.6.1",
+    "react-codemirror": "^1.0.0",
+    "react-dom": "^15.6.1"
+  }
+}
