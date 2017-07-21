@@ -12,13 +12,11 @@ module.exports = {
   float: require('./components/float.js'),
   gist: require('./components/gist.js'),
   header: require('./components/header.js'),
-  'idyll-logo': require('./components/idyll-logo.js'),
   inline: require('./components/inline.js'),
   link: require('./components/link.js'),
   range: require('./components/range.js'),
   slide: require('./components/slide.js'),
   slideshow: require('./components/slideshow.js'),
   svg: require('./components/svg.js'),
-  table: require('./components/table.js'),
-  'vega-lite': require('./components/vega-lite.js')
+  table: require('./components/table.js')
 }
