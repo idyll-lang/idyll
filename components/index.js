@@ -5,7 +5,7 @@ module.exports = {
   boolean: require('./boolean.js'),
   button: require('./button.js'),
   chart: require('./chart.js'),
-  'display-var': require('./display-var.js'),
+  display: require('./display.js'),
   dynamic: require('./dynamic.js'),
   equation: require('./equation.js'),
   fixed: require('./fixed.js'),
