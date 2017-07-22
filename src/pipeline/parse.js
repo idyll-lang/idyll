@@ -4,7 +4,7 @@ const htmlTags = require('html-tags');
 const mustache = require('mustache');
 const resolve = require('resolve');
 const slash = require('slash');
-const { paramCase } = require('change-case');
+const { paramCase, pascalCase } = require('change-case');
 const Baby = require('babyparse');
 
 const getFilteredAST = (ast) => {
@@ -43,31 +43,46 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
   } = paths;
 
   const componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_DIR);
+  const caseInsensitive = componentFiles.map(s => s.toLowerCase());
   const customComponentFiles = fs.existsSync(COMPONENTS_DIR) ? fs.readdirSync(COMPONENTS_DIR) : [];
+  const customCaseInsensitive = customComponentFiles.map(s => s.toLowerCase());
+
+  const checkFile = (name) => {        
+    const customIdx = customCaseInsensitive.indexOf(name.toLowerCase() + '.js');
+    const defaultIdx = caseInsensitive.indexOf(name.toLowerCase() + '.js');
+    if (inputConfig.components[name]) {
+      return slash(path.join(INPUT_DIR, inputConfig.components[name]));
+    } else if (customIdx > -1) {
+      return slash(path.join(COMPONENTS_DIR, customComponentFiles[customIdx]));
+    } else if (defaultIdx > -1) {
+      return slash(path.join(DEFAULT_COMPONENTS_DIR, componentFiles[defaultIdx]));
+    } else {
+      try {
+        // npm modules are required via relative paths to support working with a locally linked idyll
+        return slash(resolve.sync(name, {basedir: INPUT_DIR}));
+      } catch (err) {
+        return;
+      }
+    }
+  }
 
   const components = componentNodes.reduce(
     (acc, node) => {
       const name = paramCase(node[0].split('.')[0]);
-
       if (!acc[name]) {
-        if (inputConfig.components[name]) {
-          acc[name] = slash(path.join(INPUT_DIR, inputConfig.components[name]));
-        } else if (customComponentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = slash(path.join(COMPONENTS_DIR, name));
-        } else if (componentFiles.indexOf(name + '.js') > -1) {
-          acc[name] = slash(path.join(DEFAULT_COMPONENTS_DIR, name));
+        const p = checkFile(pascalCase(name));
+        if (p) {
+          acc[name] = p;
         } else {
-          try {
-            // npm modules are required via relative paths to support working with a locally linked idyll
-            acc[name] = slash(resolve.sync(name, {basedir: INPUT_DIR}));
-          } catch (err) {
-            if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
-              throw new Error(`Component named ${node[0]} could not be found.`)
-            }
+          const r = checkFile(name);
+          if (r) {
+            acc[name] = r;
+          }
+          else if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
+            throw new Error(`Component named ${node[0]} could not be found.`)
           }
         }
       }
-
       return acc;
     },
     {}
