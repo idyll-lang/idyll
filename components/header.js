@@ -14,9 +14,14 @@ class Header extends IdyllComponent {
             </h2>
           )
         }
-        <div className={'byline'}>
-          By: <a href={this.props.authorLink}>{this.props.author}</a>
-        </div>
+        {
+          this.props.author && (
+            <div className={'byline'}>
+              By: <a href={this.props.authorLink}>{this.props.author}</a>
+            </div>
+          )
+        }
+
       </div>
     );
   }
