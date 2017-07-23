@@ -1,25 +1,33 @@
 const React = require('react');
-const brace = require('brace');
-var CodeMirror = require('react-codemirror');
+import {Editor, EditorState, ContentState } from 'draft-js';
 
-class Editor extends React.PureComponent {
+class EditorComponent extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorState: EditorState.createWithContent(ContentState.createFromText(props.initialValue))
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(editorState) {
+    this.setState({ editorState });
+    this.props.onChange(editorState.getCurrentContent().getPlainText());
+  }
+
+  parseVal(val) {
+    return val;
+  }
 
   render() {
-    const { idyllMarkup, onChange } = this.props;
+    const { handleChange } = this;
+    const { editorState } = this.state;
     return (
       <div className={"editor"} >
-        <CodeMirror
-          value={idyllMarkup}
-          onChange={onChange}
-          options={{
-            mode: 'markdown',
-            lineNumbers: true,
-            viewportMargin: Number.POSITIVE_INFINITY
-          }}
-        />
+        <Editor editorState={editorState} onChange={handleChange} />
       </div>
     );
   }
 }
 
-module.exports = Editor;
+module.exports = EditorComponent;
