@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "budo ./src/index.js --css app.css --live --open -- -t [ babelify --presets [ es2015 react ] ] -t brfs ",
-    "build": "NODE_ENV=production browserify -g uglifyify ./src/index.js -t [ babelify --presets [ es2015 react ] ]  -t brfs -t envify -t uglifyify -o build/index.js && cp app.css build/"
+    "build": "NODE_ENV=production browserify -g uglifyify ./src/index.js -t [ babelify --presets [ es2015 react ] ]  -t brfs -t envify -t uglifyify -o docs/index.js && cp app.css docs/"
   },
   "author": "",
   "license": "ISC",
