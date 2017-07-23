@@ -16,7 +16,6 @@ var argv = require('yargs')
     l: 'layout',
     n: 'no-minify',
     o: 'output',
-    k: 'no-spellcheck',
     r: 'no-ssr',
     t: 'template',
     e: 'theme',
@@ -36,8 +35,6 @@ var argv = require('yargs')
   .describe('no-minify', 'Skip JS minification')
   .describe('output', 'Directory where built files should be written')
   .default('output', 'build')
-  .boolean('no-spellcheck')
-  .describe('no-spellcheck', `Don't check spelling of Idyll source input`)
   .boolean('no-ssr')
   .describe('no-ssr', 'Do not pre-render HTML as part of the build')
   .describe('template', 'Path to HTML template')
@@ -59,11 +56,6 @@ if (argv._[0]) argv.f = argv.inputFile = argv._[0];
 argv.minify = !argv['no-minify'];
 argv.ssr = !argv['no-ssr'];
 
-// spellcheck lives down a level
-argv.compilerOptions = {
-  spellcheck: !argv['no-spellcheck']
-};
-
 // delete stuff we don't need
 delete argv._;
 delete argv['$0'];
@@ -71,8 +63,6 @@ delete argv.n;
 delete argv.noMinify;
 delete argv['no-minify'];
 delete argv.k;
-delete argv.noSpellcheck;
-delete argv['no-spellcheck'];
 delete argv.r;
 delete argv.noSsr;
 delete argv['no-ssr'];

@@ -31,7 +31,6 @@ const idyll = (options = {}, cb) => {
       theme: 'idyll',
       transform: [],
       compilerOptions: {
-        spellcheck: true
       },
     },
     options
