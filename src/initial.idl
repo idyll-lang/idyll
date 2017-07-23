@@ -40,10 +40,10 @@ Here I bind the value of `x` to a range slider. Move the slider and watch the va
 
 
 [equation]x[/equation]:
-[DisplayVar var:`x` /]
+ [DisplayVar var:`x` /]
 
 [equation]x^2[/equation]:
-[DisplayVar var:`xSquared` /]
+ [DisplayVar var:`xSquared` /]
 
 
 Here is an example of how you could use a variable to control the frequency of a sine wave:
