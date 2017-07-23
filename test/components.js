@@ -6,7 +6,7 @@ import Aside from '../components/aside';
 import Boolean from '../components/boolean';
 import Button from '../components/button';
 import Chart from '../components/chart';
-import DisplayVar from '../components/display-var';
+import Display from '../components/display';
 import Dynamic from '../components/equation';
 import Equation from '../components/equation';
 import Fixed from '../components/fixed';
@@ -38,8 +38,8 @@ describe('Components sanity check', () => {
   it('<Chart />', () => {
     const wrapper = shallow(<Chart />);
   });
-  it('<DisplayVar />', () => {
-    const wrapper = shallow(<DisplayVar />);
+  it('<Display />', () => {
+    const wrapper = shallow(<Display />);
   });
   it('<Dynamic />', () => {
     const wrapper = shallow(<Dynamic />);
