@@ -313,8 +313,8 @@ body {
   overflow-y: auto;
   border-right: solid 2px #ddd;
   padding: 10px;
-  font-family: Courier New, Courier, monospace;
-  font-size: 14px;
+  font-size: 17px;
+  line-height: 26px;
   border-left: solid 10px #ddd;
 }
 
