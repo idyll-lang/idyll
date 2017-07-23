@@ -7,7 +7,7 @@ This document is being rendered from **Idyll markup**. If you've used [markdown]
 To make things a little more interesting you can add components to your text.
 For example, a `[Chart /]` component can be used to render a simple visualization:
 
-[Chart type:"area" /]
+[Chart type:"scatter" /]
 
 Try changing the chart's type from `scatter` to `line`, `area`, or `pie`.
 
