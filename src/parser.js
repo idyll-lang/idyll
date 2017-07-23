@@ -1,34 +1,16 @@
 const grammar = require('./grammar');
 const nearley = require('nearley');
 const smartquotes = require('smartquotes');
-let Spellcheck;
-try {
-  Spellcheck = require('spellchecker');
-} catch(e) {}
 
 module.exports = function(input, tokens, positions, options) {
   options = options || {};
-  let misspellings = 0;
+
   /**
    * Clean results removes unnecessary
    * <p> tags inside of other blocks.
    */
   const cleanResults = (node) => {
     if (typeof node === 'string') {
-      if (options.spellcheck && Spellcheck) {
-        node.split(/\s/).forEach((word) => {
-          word = word.trim();
-          if (Spellcheck.isMisspelled(word)) {
-            const suggestions = Spellcheck.getCorrectionsForMisspelling(word);
-            misspellings++;
-            if (suggestions.length) {
-              console.log(word + ': did you mean ' + Spellcheck.getCorrectionsForMisspelling(word)[0]);
-            } else {
-              console.log(word + ': no suggestions found');
-            }
-          }
-        })
-      }
       if (options.smartquotes) {
         return smartquotes(node);
       }
@@ -73,16 +55,8 @@ module.exports = function(input, tokens, positions, options) {
       // console.log(JSON.stringify(results, null, 2));
       // console.log(str);
     }
-    misspellings = 0;
-    if (options.spellcheck && Spellcheck) {
-      console.log('\n\nSpellcheck:');
-    }
     // console.log(JSON.stringify(results[0]));
-    const ret = results[0].map(cleanResults);
-    if (options.spellcheck && Spellcheck && misspellings === 0) {
-      console.log('No misspellings found.');
-    }
-    return ret;
+    return results[0].map(cleanResults);
   }
 
   throw new Error('No parse results');
