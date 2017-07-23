@@ -11,10 +11,10 @@ For example, a `[Chart /]` component can be used to render a simple visualizatio
 
 Try changing the chart's type from `scatter` to `line`, `area`, or `pie`.
 
-A component's properties can be strings ("I'm a string!"), numbers (1.569), or evaluated JavaScript (``` `2 * Math.PI` ```).
+A component's properties can be strings ("I'm a string!"), numbers (1.569), or evaluated JavaScript expressions (``` `2 * Math.PI` ```).
 
 
-There are a number of components available — see [Idyll's documentation](https://idyll-lang.github.io/components-built-in) for a full list. Additional components can be installed via `npm` (any React component should work), and if you are comfortable with JavaScript you can write [custom components](https://idyll-lang.github.io/components-custom) as well.
+There are a number of components available — see [Idyll's documentation](https://idyll-lang.github.io/components-built-in) for a full list — Additional components can be installed via `npm` (any React component should work), and if you are comfortable with JavaScript you can write [custom components](https://idyll-lang.github.io/components-custom) as well.
 
 Idyll also provides a reactive variable system that can be used to dynamically update the text based on input from a reader.
 
@@ -27,7 +27,7 @@ Instantiating a variable is similar to instantiating a component:
 
 Once you've created a variable, it can be displayed inline with text
 (x = [DisplayVar var:x /]),
-or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a using formulas in Excel:
+or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:
 
 [derived name:"xSquared" value:`x * x` /]
 
@@ -60,6 +60,8 @@ Here is an example of how you could use a variable to control the frequency of a
   min:0.5
   max:`2 * Math.PI`
   step:0.0001 /]
+
+
 
 Read more about Idyll at [https://idyll-lang.github.io/](https://idyll-lang.github.io/), and come say "Hi!" in our [chatroom on gitter](https://gitter.im/idyll-lang/Lobby).
 
