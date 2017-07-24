@@ -1,6 +1,6 @@
 ![idyll-text](https://cloud.githubusercontent.com/assets/1074773/24593896/95730fba-17dc-11e7-82dd-ae7335f205b6.png)
 
-Command line interface for idyll lang. 
+If you just want to quickly try out Idyll, we offer an online editor where you can play around and try out the language.
 
 *See https://idyll-lang.github.io/ for full documentation*.
 
@@ -37,7 +37,7 @@ In Idyll the entire document is reactive, built on top of Facebook's React frame
 * Scrolly Idyll - https://idyll-lang.github.io/idyll/scroll/
 
 
-# Docs 
+# Docs
 
 * Overview
   * [Introduction](https://idyll-lang.github.io/introduction)
@@ -65,5 +65,5 @@ To submit a PR do the following:
 * Make sure the tests pass by running `npm test`. If you add a feature, add a test for it.
 * Submit the PR!
 
-If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby. 
+If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
 
