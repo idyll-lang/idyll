@@ -10,9 +10,9 @@ var argv = require('yargs')
     m: 'components',
     c: 'css',
     d: 'datasets',
-    q: 'defaultComponents',
-    f: 'inputFile',
-    s: 'inputString',
+    q: 'default-components',
+    f: 'input-file',
+    s: 'input-string',
     l: 'layout',
     n: 'no-minify',
     o: 'output',
@@ -26,9 +26,9 @@ var argv = require('yargs')
   .describe('css', 'Custom CSS file to include in output')
   .describe('datasets', 'Directory where data files are located')
   .default('datasets', 'data')
-  .describe('defaultComponents', 'Directory where default set of components are located')
-  .describe('inputFile', 'File containing Idyll source')
-  .describe('inputString', 'Idyll source as a string')
+  .describe('default-components', 'Directory where default set of components are located')
+  .describe('input-file', 'File containing Idyll source')
+  .describe('input-string', 'Idyll source as a string')
   .describe('layout', 'Name of (or path to) the layout to use')
   .default('layout', 'blog')
   .boolean('no-minify')
