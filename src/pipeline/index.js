@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { join } = require('path');
 const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const compile = require('idyll-compiler');
@@ -27,7 +28,8 @@ const build = (opts, paths, inputConfig) => {
     // to start a Promise chain and turn any synchronous exceptions into a rejection
     () => {
       const ast = compile(opts.inputString, opts.compilerOptions);
-      const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
+      let template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
+      template = template.replace('{{libs}}', opts.dev ? '<script src="libs.js"></script>' : '')
 
       output = {
         ast: getASTJSON(ast),

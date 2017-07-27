@@ -26,6 +26,7 @@ const idyll = (options = {}, cb) => {
       template: join(
         __dirname,
         'client',
+        'assets',
         '_index.html'
       ),
       theme: 'idyll',
@@ -52,6 +53,10 @@ const idyll = (options = {}, cb) => {
 
   // Handle options that can be provided via options or via package.json
   opts.transform = options.transform || inputConfig.transform || opts.transform;
+
+  if (opts.dev) {
+    fs.createReadStream(paths.LIBS_FILE).pipe(fs.createWriteStream(join(paths.OUTPUT_DIR, 'libs.js')))
+  }
 
   let bs;
 
