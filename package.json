@@ -1,0 +1,34 @@
+{
+  "name": "idyll-compiler",
+  "version": "1.5.0",
+  "description": "Compiler for idyll",
+  "main": "index.js",
+  "scripts": {
+    "build-grammar": "nearleyc src/grammar.ne -o src/grammar.js",
+    "test": "npm run build-grammar && mocha",
+    "prepublish": "npm run build-grammar"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idyll-lang/idyll-compiler.git"
+  },
+  "keywords": [
+    "idyll",
+    "compiler"
+  ],
+  "author": "Matthew Conlen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/idyll-lang/idyll-compiler/issues"
+  },
+  "homepage": "https://github.com/idyll-lang/idyll-compiler#readme",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "lex": "^1.7.9",
+    "nearley": "^2.7.12",
+    "smartquotes": "^2.0.0"
+  }
+}
