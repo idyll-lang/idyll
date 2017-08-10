@@ -1,0 +1,11 @@
+{
+  "name": "idyll",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "^2.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
