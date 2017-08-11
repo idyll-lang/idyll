@@ -1,0 +1,65 @@
+
+# Welcome to Idyll
+### Idyll is a language for creating interactive documents on the web.
+
+This document is being rendered from **Idyll markup**. If you've used [markdown](https://daringfireball.net/projects/markdown/), Idyll should look pretty familiar, but it has some additional features. Write text in the box on the left and the output on the right will automatically update.
+
+To make things a little more interesting you can add JavaScript components to your text.
+For example, a `[Chart /]` component can be used to render a simple visualization:
+
+[Chart type:"scatter" /]
+
+Try changing the chart's type from `scatter` to `line`, `area`, or `pie`.
+
+A component's properties can be strings ("I'm a string!"), numbers (1.569), or evaluated JavaScript expressions (``` `2 * Math.PI` ```).
+
+
+There are a number of components available — see [Idyll's documentation](https://idyll-lang.github.io/components-built-in) for a full list — Additional components can be installed via `npm` (any React component should work), and if you are comfortable with JavaScript you can write [custom components](https://idyll-lang.github.io/components-custom) as well.
+
+Idyll also provides a reactive variable system that can be used to dynamically update the text based on input from a reader.
+
+[var name:"x" value:1 /]
+
+Instantiating a variable is similar to instantiating a component:
+
+`[var name:"x" value:1 /]`
+
+
+Once you've created a variable, it can be displayed inline with text
+(x = [DisplayVar var:x /]),
+or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:
+
+[derived name:"xSquared" value:`x * x` /]
+
+``[derived name:"xSquared" value:`x * x` /]``
+
+
+Here I bind the value of `x` to a range slider. Move the slider and watch the variables update.
+
+[Range value:x min:0 max:100 /]
+
+
+[equation]x[/equation]:
+ [DisplayVar var:`x` /]
+
+[equation]x^2[/equation]:
+ [DisplayVar var:`xSquared` /]
+
+
+Here is an example of how you could use a variable to control the frequency of a sine wave:
+
+
+[var name:"frequency" value:1 /]
+[Chart
+  equation:`(t) => Math.sin(t * frequency)`
+  domain:`[0, 2 * Math.PI]`
+  samplePoints:1000 /]
+
+[Range
+  value:frequency
+  min:0.5
+  max:`2 * Math.PI`
+  step:0.0001 /]
+
+Read more about Idyll at [https://idyll-lang.github.io/](https://idyll-lang.github.io/), and come say "Hi!" in our [chatroom on gitter](https://gitter.im/idyll-lang/Lobby).
+
