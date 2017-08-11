@@ -25,41 +25,6 @@ module.exports = function(component, datasets) {
         }
       });
       this.initialState[varName] = varVal;
-    } else if (componentName === COMPONENTS.Variable) {
-      let varName, varVal;
-      props.forEach((propArr) => {
-        const propName = propArr[0];
-        const propValueArr = propArr[1];
-        switch (propName) {
-          case VARIABLE.Name:
-            varName = propValueArr[1];
-            break;
-          case VARIABLE.Value:
-            switch (propValueArr[0]) {
-              case PROPERTIES.Value:
-                varVal = propValueArr[1];
-                break;
-              case PROPERTIES.Variable:
-                varVal = this.initialState[propValueArr[1]];
-                break;
-              case PROPERTIES.Expression:
-                let evalFunc = '(() => {';
-                const expression = propValueArr[1];
-                Object.keys(this.initialState).forEach((propName) => {
-                  if (expression.indexOf(propName) === -1) {
-                    return;
-                  }
-                  const val = this.initialState[propName];
-                  evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
-                });
-                evalFunc += 'return ' + propValueArr[1] + ';';
-                evalFunc += '})()';
-                varVal = eval(evalFunc);
-                break;
-            }
-        }
-      });
-      this.initialState[varName] = varVal;
     } else if (componentName === COMPONENTS.Derived) {
       let varName, getFunc;
       props.forEach((propArr) => {

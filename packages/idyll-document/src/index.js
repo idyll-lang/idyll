@@ -1,7 +1,11 @@
 const React = require('react');
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
-const utils = require('./utils');
+const {
+  flattenObject,
+  getNodesByName,
+  getVars
+} = require('./utils');
 
 const transformRefs = (refs) => {
   const output = {};
@@ -12,7 +16,7 @@ const transformRefs = (refs) => {
       if (val === null || val === undefined) {
         return;
       }
-      const results = utils.flattenObject(key, val[key]);
+      const results = flattenObject(key, val[key]);
       Object.keys(results).forEach((result) => {
         output['_idyllRefs' + ref + result] = results[result];
       });
@@ -30,13 +34,14 @@ class InteractiveDocument extends React.PureComponent {
     this.bindings = {};
     this._idyllRefs = {};
     this.derivedVars = {};
-    this.initialState = {};
     this.updateFuncCache = {};
+
+    this.initialState = getVars(getNodesByName('var', props.ast));
 
     props.ast.map(walkVars(this, props.datasets));
 
     this.state = this.initialState;
-    
+
     const nodeWalker = walkNode(this, props.componentClasses);
     this.getChildren = () => {
       return props.ast.map(nodeWalker());
@@ -79,7 +84,7 @@ class InteractiveDocument extends React.PureComponent {
 
   componentDidMount() {
     const refKeys = Object.keys(this._idyllRefs);
-    if (!refKeys.length) { 
+    if (!refKeys.length) {
       return;
     }
     refKeys.forEach((name) => {

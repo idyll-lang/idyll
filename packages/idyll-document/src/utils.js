@@ -17,6 +17,50 @@ const flattenObject = (name, obj) => {
   return output;
 };
 
+const getNodesByName = (name, tree) => {
+  const predicate = typeof name === 'string' ? (s) => s === name : name;
+
+  const byName = (acc, val) => {
+    if (typeof val === 'string') return acc;
+
+    const [ name, attrs, children ] = val;
+
+    if (predicate(name)) acc.push(val)
+
+    if (children.length > 0) children.reduce(byName, acc)
+
+    return acc;
+  }
+
+  return tree.reduce(
+    byName,
+    []
+  )
+}
+
+const getVars = (arr, context) => {
+  const pluck = (acc, val) => {
+    const [ , attrs, ] = val
+    const [nameArr, valueArr] = attrs;
+
+    const [, [, nameValue]] = nameArr
+    const [, [valueType, valueValue]] = valueArr;
+
+    if (valueType === 'value') acc[nameValue] = valueValue;
+    if (valueType === 'variable') acc[nameValue] = context[valueValue];
+    if (valueType === 'expression') acc[nameValue] = evalExpression(context, valueValue);
+
+    return acc;
+  }
+
+  return arr.reduce(
+    pluck,
+    {}
+  )
+}
+
 module.exports = {
-  flattenObject: flattenObject
+  flattenObject,
+  getNodesByName,
+  getVars
 };
