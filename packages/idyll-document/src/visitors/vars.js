@@ -25,46 +25,6 @@ module.exports = function(component, datasets) {
         }
       });
       this.initialState[varName] = varVal;
-    } else if (componentName === COMPONENTS.Derived) {
-      let varName, getFunc;
-      props.forEach((propArr) => {
-        const propName = propArr[0];
-        const propValueArr = propArr[1];
-        switch (propName) {
-          case DERIVED.Name:
-            varName = propValueArr[1];
-            break;
-          case DERIVED.Value:
-            switch (propValueArr[0]) {
-              case PROPERTIES.Value:
-              case PROPERTIES.Variable:
-                console.warn('Derived value should be an expression');
-                break;
-              case PROPERTIES.Expression:
-                getFunc = (state) => {
-                  let evalFunc = '(() => {';
-                  const expression = propValueArr[1];
-                  Object.keys(state).forEach((propName) => {
-                    if (expression.indexOf(propName) === -1) {
-                      return;
-                    }
-                    const val = state[propName];
-                    evalFunc += `var ${propName} = ${JSON.stringify(val)};\n`;
-                  });
-                  evalFunc += 'return ' + propValueArr[1] + ';';
-                  evalFunc += '})()';
-                  return evalFunc;
-                }
-                break;
-            }
-        }
-      });
-      this.derivedVars[varName] = {
-        value: eval(getFunc(Object.assign({}, this.initialState, this.getDerivedVars()))),
-        update: (newState) => {
-          this.derivedVars[varName].value = eval(getFunc(Object.assign({}, this.state, newState, this.getDerivedVars())));
-        }
-      };
     } else {
       props.forEach((propArr, i) => {
         const propName = propArr[0];

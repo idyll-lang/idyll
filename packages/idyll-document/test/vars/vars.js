@@ -26,7 +26,7 @@ describe('Component state initialization', () => {
 
   it('can update the derived vars', () => {
     const doc = new InteractiveDocument({ast});
-    doc.derivedVars.xSquared.update({x: 3, frequency: 5});
+    doc.updateDerivedVars({x: 3, frequency: 5});
     expect(doc.getDerivedVars()).toEqual({xSquared: 9});
   });
 });

@@ -38,6 +38,20 @@ const getNodesByName = (name, tree) => {
   )
 }
 
+const evalExpression = (acc, expr) => {
+  return eval(`
+    (() => {
+      ${
+        Object.keys(acc)
+          .filter(key => expr.includes(key))
+          .map(key => `var ${key} = ${acc[key]}`)
+          .join('\n')
+      }
+      return ${expr}
+    })()
+  `)
+}
+
 const getVars = (arr, context) => {
   const pluck = (acc, val) => {
     const [ , attrs, ] = val
@@ -48,7 +62,16 @@ const getVars = (arr, context) => {
 
     if (valueType === 'value') acc[nameValue] = valueValue;
     if (valueType === 'variable') acc[nameValue] = context[valueValue];
-    if (valueType === 'expression') acc[nameValue] = evalExpression(context, valueValue);
+    if (valueType === 'expression') {
+      const expr = valueValue;
+
+      acc[nameValue] = {
+        value: evalExpression(context, expr),
+        update: (newState, oldState) => {
+          return evalExpression(Object.assign({}, oldState, newState), expr)
+        }
+      }
+    }
 
     return acc;
   }

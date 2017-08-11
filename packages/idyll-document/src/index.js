@@ -33,10 +33,10 @@ class InteractiveDocument extends React.PureComponent {
     // Walk the tree, creating the proper components for evererything.
     this.bindings = {};
     this._idyllRefs = {};
-    this.derivedVars = {};
     this.updateFuncCache = {};
 
     this.initialState = getVars(getNodesByName('var', props.ast));
+    this.derivedVars = getVars(getNodesByName('derived', props.ast), this.initialState);
 
     props.ast.map(walkVars(this, props.datasets));
 
@@ -67,10 +67,14 @@ class InteractiveDocument extends React.PureComponent {
     return this.updateFuncCache[nodeID];
   }
 
-  setStateAndDerived(newState) {
+  updateDerivedVars(newState) {
     Object.keys(this.derivedVars).forEach((dv) => {
-      this.derivedVars[dv].update(newState);
+      this.derivedVars[dv].value = this.derivedVars[dv].update(newState, this.state);
     });
+  }
+
+  setStateAndDerived(newState) {
+    this.updateDerivedVars(newState);
     this.setState(newState);
   }
 
