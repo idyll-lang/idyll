@@ -19,6 +19,11 @@ describe('Component state initialization', () => {
     });
   });
 
+  it('creates the expected data props', () => {
+    const doc = new InteractiveDocument({ast, datasets: {myData: 'FAKE DATA'}});
+    expect(doc.state).toEqual({x: 2, frequency: 1, myData: 'FAKE DATA'});
+  });
+
   it('can return the expected derived var values', () => {
     const doc = new InteractiveDocument({ast});
     expect(doc.getDerivedVars()).toEqual({xSquared: 4});

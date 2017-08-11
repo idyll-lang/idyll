@@ -45,6 +45,26 @@
     ]
   ],
   [
+    "data",
+    [
+      [
+        "name",
+        [
+          "value",
+          "myData"
+        ]
+      ],
+      [
+        "source",
+        [
+          "value",
+          "myData.csv"
+        ]
+      ]
+    ],
+    []
+  ],
+  [
     "p",
     [],
     [

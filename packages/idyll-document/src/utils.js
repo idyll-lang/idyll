@@ -82,8 +82,27 @@ const getVars = (arr, context) => {
   )
 }
 
+const getData = (arr, datasets = {}) => {
+  const pluck = (acc, val) => {
+    const [ , attrs, ] = val
+    const [nameArr, ] = attrs;
+
+    const [, [, nameValue]] = nameArr
+
+    acc[nameValue] = datasets[nameValue];
+
+    return acc;
+  }
+
+  return arr.reduce(
+    pluck,
+    {}
+  )
+}
+
 module.exports = {
   flattenObject,
+  getData,
   getNodesByName,
   getVars
 };

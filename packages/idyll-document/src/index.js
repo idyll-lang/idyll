@@ -3,6 +3,7 @@ const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 const {
   flattenObject,
+  getData,
   getNodesByName,
   getVars
 } = require('./utils');
@@ -35,7 +36,11 @@ class InteractiveDocument extends React.PureComponent {
     this._idyllRefs = {};
     this.updateFuncCache = {};
 
-    this.initialState = getVars(getNodesByName('var', props.ast));
+    this.initialState = Object.assign(
+      {},
+      getVars(getNodesByName('var', props.ast)),
+      getData(getNodesByName('data', props.ast), props.datasets)
+    );
     this.derivedVars = getVars(getNodesByName('derived', props.ast), this.initialState);
 
     props.ast.map(walkVars(this, props.datasets));

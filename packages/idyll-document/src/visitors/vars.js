@@ -1,7 +1,7 @@
 const ReactDOM = require('react-dom');
 const { COMPONENTS, DATASET, PROPERTIES, DERIVED, VARIABLE } = require('../constants');
 
-module.exports = function(component, datasets) {
+module.exports = function(component, datasets = {}) {
   let nodeID = -1;
   const walkVars = function (node) {
     nodeID++;
@@ -12,20 +12,11 @@ module.exports = function(component, datasets) {
     const componentName = node[0];
     const props = node[1];
     const children = node[2];
-    if (componentName === COMPONENTS.Dataset) {
-      let varName, varVal;
-      props.forEach((propArr) => {
-        const propName = propArr[0];
-        const propValueArr = propArr[1];
-        switch (propName) {
-          case DATASET.Name:
-            varName = propValueArr[1];
-            varVal = datasets[varName];
-            break;
-        }
-      });
-      this.initialState[varName] = varVal;
-    } else {
+    if (
+      componentName !== COMPONENTS.Dataset &&
+      componentName !== COMPONENTS.Variable &&
+      componentName !== COMPONENTS.Derived
+    ) {
       props.forEach((propArr, i) => {
         const propName = propArr[0];
         const propValueArr = propArr[1];
