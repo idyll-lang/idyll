@@ -1,5 +1,6 @@
 const React = require('react');
 const IdyllComponent = require('idyll-component');
+const Slide = require('./slide');
 
 class Slideshow extends IdyllComponent {
 
@@ -9,7 +10,7 @@ class Slideshow extends IdyllComponent {
       if (typeof child === 'string') {
         return;
       }
-      if (child.type.name && child.type.name.toLowerCase() === 'slide') {
+      if ((child.type.name && child.type.name.toLowerCase() === 'slide') || child.type.prototype instanceof Slide) {
         processedChildren.push(child);
       } else {
         processedChildren = processedChildren.concat(this.getChildren(child.props.children));
