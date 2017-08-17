@@ -26,7 +26,7 @@ const transformRefs = (refs) => {
   return output;
 };
 
-class InteractiveDocument extends React.PureComponent {
+class IdyllDocument extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleUpdateProps = this.handleUpdateProps.bind(this);
@@ -170,4 +170,4 @@ class InteractiveDocument extends React.PureComponent {
   }
 }
 
-module.exports = InteractiveDocument;
+module.exports = IdyllDocument;

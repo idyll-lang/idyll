@@ -1,5 +1,5 @@
 const components = require('idyll-default-components');
-const IdyllDocument = require('idyll-interactive-document');
+const IdyllDocument = require('idyll-document');
 const React = require('react');
 
 class Renderer extends React.PureComponent {

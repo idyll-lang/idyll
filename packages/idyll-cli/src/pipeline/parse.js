@@ -47,7 +47,7 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
   const customComponentFiles = fs.existsSync(COMPONENTS_DIR) ? fs.readdirSync(COMPONENTS_DIR) : [];
   const customCaseInsensitive = customComponentFiles.map(s => s.toLowerCase());
 
-  const checkFile = (name) => {        
+  const checkFile = (name) => {
     const customIdx = customCaseInsensitive.indexOf(name.toLowerCase() + '.js');
     const defaultIdx = caseInsensitive.indexOf(name.toLowerCase() + '.js');
     if (inputConfig.components[name]) {
@@ -208,10 +208,10 @@ exports.getHTML = (paths, ast, components, datasets, template) => {
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
-  const InteractiveDocument = require('idyll-interactive-document');
+  const IdyllDocument = require('idyll-document');
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
-    React.createElement(InteractiveDocument, {
+    React.createElement(IdyllDocument, {
       ast: getFilteredAST(ast),
       componentClasses,
       datasets
