@@ -1,7 +1,7 @@
 import React from 'react';
 
-import InteractiveDocument from '../../src/';
-import ast from '../fixtures/ast.json'
+import InteractiveDocument from '../src/';
+import ast from './fixtures/ast.json'
 
 describe('Component state initialization', () => {
   it('creates the expected state', () => {

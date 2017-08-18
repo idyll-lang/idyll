@@ -100,9 +100,61 @@ const getData = (arr, datasets = {}) => {
   )
 }
 
+const splitAST = (ast) => {
+  const state = {
+    vars: [],
+    derived: [],
+    data: [],
+    elements: [],
+  }
+
+  ast.forEach(node => {
+    const [ name ] = node;
+    if (name === 'var') {
+      state.vars.push(node);
+    } else if (state[name]) {
+      state[name].push(node);
+    } else {
+      state.elements.push(node);
+    }
+  })
+
+  return state;
+}
+
+const translate = (arr) => {
+  const attrConvert = (list) => {
+    return list.reduce(
+      (acc, [name, [, val]]) => {
+        acc[name] = val
+        return acc
+      },
+      {}
+    )
+  }
+
+  const tNode = (node) => {
+    if (typeof node === 'string') return node;
+
+    if (node.length === 3) {
+      const [ name, attrs, children ] = node
+
+      return {
+        component: name,
+        ...attrConvert(attrs),
+        children: children.map(tNode),
+      }
+    }
+  }
+
+  return arr.map(tNode)
+}
+
 module.exports = {
   flattenObject,
   getData,
   getNodesByName,
-  getVars
+  getVars,
+  splitAST,
+  translate,
 };
