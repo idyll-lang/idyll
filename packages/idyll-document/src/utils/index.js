@@ -147,7 +147,7 @@ const translate = (arr) => {
     }
   }
 
-  return arr.map(tNode)
+  return splitAST(arr).elements.map(tNode)
 }
 
 module.exports = {

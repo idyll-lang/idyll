@@ -5,14 +5,14 @@ import componentClasses from 'idyll-components';
 import { mount, shallow } from 'enzyme';
 
 import IdyllDocument from '../src/';
-import { splitAST, translate } from '../src/utils'
+import { translate } from '../src/utils'
 import ReactJsonSchema from '../src/utils/schema2element';
 import ast from './fixtures/ast.json'
 import schema from './fixtures/schema.json'
 
 describe('Component state initialization', () => {
   it('converts from one schema to another', () => {
-    expect(translate(splitAST(ast).elements)).toEqual(schema)
+    expect(translate(ast)).toEqual(schema)
   })
 
   it('creates the expected elements', () => {

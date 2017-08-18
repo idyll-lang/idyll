@@ -1,7 +1,7 @@
 const compiler = require('idyll-compiler')
 const fs = require('fs')
 const { join } = require('path')
-const { splitAST, translate } = require('./index')
+const { translate } = require('./index')
 
 fs.writeFileSync(
   join(__dirname, 'ast.json'),
@@ -17,9 +17,7 @@ fs.writeFileSync(
   join(__dirname, 'schema.json'),
   JSON.stringify(
     translate(
-      splitAST(
-        JSON.parse(fs.readFileSync(join(__dirname, 'ast.json'), 'utf8'))
-      ).elements
+      JSON.parse(fs.readFileSync(join(__dirname, 'ast.json'), 'utf8'))
     ),
     null,
     2
