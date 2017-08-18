@@ -386,57 +386,51 @@
     ]
   ],
   [
-    "div",
-    [],
+    "var",
     [
       [
-        "var",
+        "name",
         [
-          [
-            "name",
-            [
-              "value",
-              "frequency"
-            ]
-          ],
-          [
-            "value",
-            [
-              "value",
-              1
-            ]
-          ]
-        ],
-        []
+          "value",
+          "frequency"
+        ]
       ],
       [
-        "Chart",
+        "value",
         [
-          [
-            "equation",
-            [
-              "expression",
-              "(t) => Math.sin(t * frequency)"
-            ]
-          ],
-          [
-            "domain",
-            [
-              "expression",
-              "[0, 2 * Math.PI]"
-            ]
-          ],
-          [
-            "samplePoints",
-            [
-              "value",
-              1000
-            ]
-          ]
-        ],
-        []
+          "value",
+          1
+        ]
       ]
-    ]
+    ],
+    []
+  ],
+  [
+    "Chart",
+    [
+      [
+        "equation",
+        [
+          "expression",
+          "(t) => Math.sin(t * frequency)"
+        ]
+      ],
+      [
+        "domain",
+        [
+          "expression",
+          "[0, 2 * Math.PI]"
+        ]
+      ],
+      [
+        "samplePoints",
+        [
+          "value",
+          1000
+        ]
+      ]
+    ],
+    []
   ],
   [
     "Range",

@@ -3,10 +3,18 @@ const fs = require('fs')
 const { join } = require('path')
 const { translate } = require('./index')
 
+const fixtures = join(
+  __dirname,
+  '..',
+  '..',
+  'test',
+  'fixtures',
+)
+
 fs.writeFileSync(
-  join(__dirname, 'ast.json'),
+  join(fixtures, 'ast.json'),
   JSON.stringify(
-    compiler(fs.readFileSync(join(__dirname, 'src.idl'), 'utf8')),
+    compiler(fs.readFileSync(join(fixtures, 'src.idl'), 'utf8')),
     null,
     2
   ),
@@ -14,10 +22,10 @@ fs.writeFileSync(
 )
 
 fs.writeFileSync(
-  join(__dirname, 'schema.json'),
+  join(fixtures, 'schema.json'),
   JSON.stringify(
     translate(
-      JSON.parse(fs.readFileSync(join(__dirname, 'ast.json'), 'utf8'))
+      JSON.parse(fs.readFileSync(join(fixtures, 'ast.json'), 'utf8'))
     ),
     null,
     2

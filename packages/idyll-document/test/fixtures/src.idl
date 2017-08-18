@@ -52,6 +52,7 @@ Here is an example of how you could use a variable to control the frequency of a
 
 
 [var name:"frequency" value:1 /]
+
 [Chart
   equation:`(t) => Math.sin(t * frequency)`
   domain:`[0, 2 * Math.PI]`

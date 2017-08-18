@@ -223,22 +223,11 @@
     ]
   },
   {
-    "component": "div",
-    "children": [
-      {
-        "component": "var",
-        "name": "frequency",
-        "value": 1,
-        "children": []
-      },
-      {
-        "component": "Chart",
-        "equation": "(t) => Math.sin(t * frequency)",
-        "domain": "[0, 2 * Math.PI]",
-        "samplePoints": 1000,
-        "children": []
-      }
-    ]
+    "component": "Chart",
+    "equation": "(t) => Math.sin(t * frequency)",
+    "domain": "[0, 2 * Math.PI]",
+    "samplePoints": 1000,
+    "children": []
   },
   {
     "component": "Range",
