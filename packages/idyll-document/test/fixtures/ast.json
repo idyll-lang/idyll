@@ -240,7 +240,7 @@
     [
       "Once you’ve created a variable, it can be displayed inline with text\n(x = ",
       [
-        "DisplayVar",
+        "Display",
         [
           [
             "var",
@@ -337,7 +337,7 @@
       ],
       ":\n ",
       [
-        "DisplayVar",
+        "Display",
         [
           [
             "var",
@@ -364,7 +364,7 @@
       ],
       ":\n ",
       [
-        "DisplayVar",
+        "Display",
         [
           [
             "var",
