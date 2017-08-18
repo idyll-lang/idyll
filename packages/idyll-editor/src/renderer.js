@@ -1,4 +1,4 @@
-const components = require('idyll-default-components');
+const components = require('idyll-components');
 const IdyllDocument = require('idyll-document');
 const React = require('react');
 
