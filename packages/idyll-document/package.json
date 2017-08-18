@@ -8,7 +8,7 @@
   "main": "lib/index.js",
   "module": "src/index.js",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "babel src -d dist",
     "prepublish": "npm run build",
     "test": "jest"
   },
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.9.1",
