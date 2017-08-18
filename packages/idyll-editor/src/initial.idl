@@ -18,11 +18,11 @@ There are a number of components available — see [Idyll's documentation](https
 
 Idyll also provides a reactive variable system that can be used to dynamically update the text based on input from a reader.
 
-[var name:"x" value:1 /]
+[var name:"x" value:2 /]
 
 Instantiating a variable is similar to instantiating a component:
 
-`[var name:"x" value:1 /]`
+`[var name:"x" value:2 /]`
 
 
 Once you've created a variable, it can be displayed inline with text
