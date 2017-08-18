@@ -1,8 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom/server';
-import renderer from 'react-test-renderer'
-import componentClasses from 'idyll-components';
 import { shallow } from 'enzyme';
+import componentClasses from 'idyll-components';
 
 import IdyllDocument from '../src/';
 import { translate } from '../src/utils'
