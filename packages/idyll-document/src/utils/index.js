@@ -191,35 +191,6 @@ const findWrapTargets = (schema, context) => {
   return fml
 }
 
-const transformSchema = (ast, context) => {
-  const schema = translate(ast);
-  const wrapTargets = findWrapTargets(schema, context);
-
-  return walkSchema(
-    node => true,
-    schema,
-    node => {
-      if (!wrapTargets.includes(node) || typeof node === 'string') return node;
-
-      const {component, children, key, ...props} = node;
-      Object.keys(props).forEach(key => {
-        if (context.hasOwnProperty(node[key])) node[key] = context[node[key]];
-      })
-      node.updateProps = (newProps) => {
-        console.log(`${node.component} updating:`)
-        console.log(newProps);
-      }
-      return {
-        component: 'span',
-        style: {color: 'fuchsia'},
-        children: [
-          node
-        ]
-      }
-    },
-  );
-}
-
 module.exports = {
   flattenObject,
   getData,
@@ -229,5 +200,4 @@ module.exports = {
   translate,
   findWrapTargets,
   walkSchema,
-  transformSchema,
 };
