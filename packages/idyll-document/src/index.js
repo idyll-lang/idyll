@@ -1,11 +1,16 @@
 const React = require('react');
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
+const ReactJsonSchema = require('./utils/schema2element').default;
 const {
   flattenObject,
   getData,
   getNodesByName,
-  getVars
+  getVars,
+  splitAST,
+  translate,
+  findWrapTargets,
+  walkSchema,
 } = require('./utils');
 
 const transformRefs = (refs) => {
@@ -36,20 +41,69 @@ class IdyllDocument extends React.PureComponent {
     this._idyllRefs = {};
     this.updateFuncCache = {};
 
-    this.initialState = Object.assign(
-      {},
-      getVars(getNodesByName('var', props.ast)),
-      getData(getNodesByName('data', props.ast), props.datasets)
-    );
-    this.derivedVars = getVars(getNodesByName('derived', props.ast), this.initialState);
+    const {
+      vars,
+      derived,
+      data,
+      elements,
+    } = splitAST(props.ast);
 
+    this.state = {
+      ...getVars(vars),
+      ...getData(data, props.datasets)
+    };
+    this.derivedVars = getVars(derived, this.state);
+
+    // still sets up bindings and refs
     props.ast.map(walkVars(this, props.datasets));
 
-    this.state = this.initialState;
+    const rjs = new ReactJsonSchema();
+    rjs.setComponentMap(props.componentClasses);
+    const schema = translate(props.ast);
 
-    const nodeWalker = walkNode(this, props.componentClasses);
+    const context = {...this.state}
+    Object.keys(this.derivedVars).forEach(key => {
+      context[key] = this.derivedVars[key].value
+    })
+
+    const wrapTargets = findWrapTargets(schema, context);
+
+    const transformedSchema = walkSchema(
+      node => true,
+      schema,
+      node => {
+        if (!wrapTargets.includes(node) || typeof node === 'string') return node;
+
+        const {component, children, key, ...props} = node;
+        Object.keys(props).forEach(key => {
+          if (context.hasOwnProperty(node[key])) node[key] = context[node[key]];
+        })
+        node.updateProps = (newProps) => {
+          console.log(`${node.component} updating:`)
+          console.log(newProps);
+        }
+        return {
+          component: 'span',
+          style: {color: 'fuchsia'},
+          children: [
+            node
+          ]
+        }
+      },
+    );
+
+    const child = rjs.parseSchema({
+      component: 'div',
+      className: 'idyll-root',
+      children: transformedSchema
+    });
+
     this.getChildren = () => {
-      return props.ast.map(nodeWalker());
+      return rjs.parseSchema({
+        component: 'div',
+        className: 'idyll-root',
+        children: transformedSchema
+      });
     }
   }
 
@@ -166,7 +220,7 @@ class IdyllDocument extends React.PureComponent {
   }
 
   render() {
-    return React.createElement('div', {className: 'idyll-root'}, this.getChildren());
+    return this.getChildren();
   }
 }
 
