@@ -31,6 +31,16 @@ const transformRefs = (refs) => {
   return output;
 };
 
+class Wrapper extends React.PureComponent {
+  render() {
+    return (
+      <span style={{backgroundColor: 'deepskyblue'}}>
+        {this.props.children}
+      </span>
+    )
+  }
+}
+
 class IdyllDocument extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -48,25 +58,25 @@ class IdyllDocument extends React.PureComponent {
       elements,
     } = splitAST(props.ast);
 
-    this.state = {
+    const initialState = {
       ...getVars(vars),
       ...getData(data, props.datasets)
     };
-    this.derivedVars = getVars(derived, this.state);
+    this.derivedVars = getVars(derived, initialState);
+
+    const state = this.state = {
+      ...initialState,
+      ...this.getDerivedVars()
+    };
 
     // still sets up bindings and refs
     props.ast.map(walkVars(this, props.datasets));
 
     const rjs = new ReactJsonSchema();
-    rjs.setComponentMap(props.componentClasses);
+    rjs.setComponentMap({...props.componentClasses, Wrapper});
     const schema = translate(props.ast);
 
-    const context = {...this.state}
-    Object.keys(this.derivedVars).forEach(key => {
-      context[key] = this.derivedVars[key].value
-    })
-
-    const wrapTargets = findWrapTargets(schema, context);
+    const wrapTargets = findWrapTargets(schema, this.state);
 
     const transformedSchema = walkSchema(
       node => true,
@@ -75,28 +85,25 @@ class IdyllDocument extends React.PureComponent {
         if (!wrapTargets.includes(node) || typeof node === 'string') return node;
 
         const {component, children, key, ...props} = node;
-        Object.keys(props).forEach(key => {
-          if (context.hasOwnProperty(node[key])) node[key] = context[node[key]];
+
+        Object.keys(props).forEach(k => {
+          if (state.hasOwnProperty(node[k])) {
+            node[k] = state[node[k]]; // update the initial value
+          }
         })
+
         node.updateProps = (newProps) => {
-          console.log(`${node.component} updating:`)
           console.log(newProps);
         }
+
         return {
-          component: 'span',
-          style: {color: 'fuchsia'},
+          component: Wrapper,
           children: [
             node
           ]
         }
       },
     );
-
-    const child = rjs.parseSchema({
-      component: 'div',
-      className: 'idyll-root',
-      children: transformedSchema
-    });
 
     this.getChildren = () => {
       return rjs.parseSchema({
