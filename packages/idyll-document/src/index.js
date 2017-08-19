@@ -11,6 +11,7 @@ const {
   translate,
   findWrapTargets,
   walkSchema,
+  transformSchema,
 } = require('./utils');
 
 const transformRefs = (refs) => {
@@ -59,50 +60,17 @@ class IdyllDocument extends React.PureComponent {
 
     const rjs = new ReactJsonSchema();
     rjs.setComponentMap(props.componentClasses);
-    const schema = translate(props.ast);
-
-    const context = {...this.state}
-    Object.keys(this.derivedVars).forEach(key => {
-      context[key] = this.derivedVars[key].value
-    })
-
-    const wrapTargets = findWrapTargets(schema, context);
-
-    const transformedSchema = walkSchema(
-      node => true,
-      schema,
-      node => {
-        if (!wrapTargets.includes(node) || typeof node === 'string') return node;
-
-        const {component, children, key, ...props} = node;
-        Object.keys(props).forEach(key => {
-          if (context.hasOwnProperty(node[key])) node[key] = context[node[key]];
-        })
-        node.updateProps = (newProps) => {
-          console.log(`${node.component} updating:`)
-          console.log(newProps);
-        }
-        return {
-          component: 'span',
-          style: {color: 'fuchsia'},
-          children: [
-            node
-          ]
-        }
-      },
-    );
-
-    const child = rjs.parseSchema({
-      component: 'div',
-      className: 'idyll-root',
-      children: transformedSchema
-    });
 
     this.getChildren = () => {
+      const context = {...this.state}
+      Object.keys(this.derivedVars).forEach(key => {
+        context[key] = this.derivedVars[key].value
+      })
+
       return rjs.parseSchema({
         component: 'div',
         className: 'idyll-root',
-        children: transformedSchema
+        children: transformSchema(props.ast, context)
       });
     }
   }
