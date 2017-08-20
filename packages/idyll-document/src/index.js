@@ -36,8 +36,15 @@ const triggers = []
 class Wrapper extends React.PureComponent {
   constructor() {
     super()
-    triggers.push((v) => {
-      this.setState({value: v.x})
+    triggers.push((newState) => {
+      let nextState = {}
+      Object.keys(this.props.stateKeys).forEach(key => {
+        nextState[key] = newState[this.props.stateKeys[key]]
+      })
+      // TODO: this shouldn't be necessary to prevent unneeded rerenders
+      if (JSON.stringify(nextState) !== JSON.stringify(this.state)) {
+        this.setState(nextState)
+      }
     })
   }
 
@@ -52,6 +59,12 @@ class Wrapper extends React.PureComponent {
       </span>
     )
   }
+}
+
+const getDerivedValues = dVars => {
+  const o = {}
+  Object.keys(dVars).forEach(key => o[key] = dVars[key].value)
+  return o
 }
 
 class IdyllDocument extends React.PureComponent {
@@ -75,11 +88,11 @@ class IdyllDocument extends React.PureComponent {
       ...getVars(vars),
       ...getData(data, props.datasets)
     };
-    this.derivedVars = getVars(derived, initialState);
+    const derivedVars = getVars(derived, initialState);
 
-    const state = this.state = {
+    let state = this.state = {
       ...initialState,
-      ...this.getDerivedVars()
+      ...getDerivedValues(derivedVars)
     };
 
     // still sets up bindings and refs
@@ -98,20 +111,45 @@ class IdyllDocument extends React.PureComponent {
         if (!wrapTargets.includes(node) || typeof node === 'string') return node;
 
         const {component, children, key, ...props} = node;
+        const stateKeys = {}
 
         Object.keys(props).forEach(k => {
-          if (state.hasOwnProperty(node[k])) {
-            node[k] = state[node[k]]; // update the initial value
+          const stateKey = node[k]
+          if (
+            state.hasOwnProperty(stateKey) ||
+            Object.keys(state).some(sk => typeof stateKey === 'string' && stateKey.includes(sk))
+          ) {
+            const stateVal = state[stateKey];
+
+            // track which state vars affect this node
+            stateKeys[k] = stateKey
+            node[k] = stateVal; // assign the initial value
           }
         })
 
         node.updateProps = (newProps) => {
-          // TODO: calculate the correct objects to send
-          triggers.forEach(f => f({x: newProps.value}))
+          const newState = {}
+          Object.keys(newProps).forEach(k => {
+            if (stateKeys[k]) {
+              const stateKey = stateKeys[k]
+              newState[stateKey] = newProps[k]
+            }
+          })
+          const newMergedState = {...state, ...newState};
+          const newDerivedValues = getDerivedValues(
+            getVars(derived, newMergedState)
+          )
+          const newDocState = {...newMergedState, ...newDerivedValues}
+
+          // update doc state
+          state = newDocState
+
+          triggers.forEach(f => f(newDocState))
         }
 
         return {
           component: Wrapper,
+          stateKeys,
           children: [
             node
           ]
