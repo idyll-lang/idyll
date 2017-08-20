@@ -31,11 +31,24 @@ const transformRefs = (refs) => {
   return output;
 };
 
+const triggers = []
+
 class Wrapper extends React.PureComponent {
+  constructor() {
+    super()
+    triggers.push((v) => {
+      this.setState({value: v.x})
+    })
+  }
+
   render() {
     return (
       <span style={{backgroundColor: 'deepskyblue'}}>
-        {this.props.children}
+        {
+          React.Children.map(this.props.children, c => {
+            return React.cloneElement(c, {...this.state})
+          })
+        }
       </span>
     )
   }
@@ -93,7 +106,8 @@ class IdyllDocument extends React.PureComponent {
         })
 
         node.updateProps = (newProps) => {
-          console.log(newProps);
+          // TODO: calculate the correct objects to send
+          triggers.forEach(f => f({x: newProps.value}))
         }
 
         return {
@@ -105,12 +119,14 @@ class IdyllDocument extends React.PureComponent {
       },
     );
 
+    const kids = rjs.parseSchema({
+      component: 'div',
+      className: 'idyll-root',
+      children: transformedSchema
+    });
+
     this.getChildren = () => {
-      return rjs.parseSchema({
-        component: 'div',
-        className: 'idyll-root',
-        children: transformedSchema
-      });
+      return kids;
     }
   }
 
