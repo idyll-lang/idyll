@@ -200,4 +200,5 @@ module.exports = {
   translate,
   findWrapTargets,
   walkSchema,
+  evalExpression,
 };

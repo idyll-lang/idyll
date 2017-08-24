@@ -11,6 +11,7 @@ const {
   translate,
   findWrapTargets,
   walkSchema,
+  evalExpression,
 } = require('./utils');
 
 const transformRefs = (refs) => {
@@ -41,10 +42,10 @@ class Wrapper extends React.PureComponent {
       Object.keys(this.props.stateKeys).forEach(key => {
         nextState[key] = newState[this.props.stateKeys[key]]
       })
-      // TODO: this shouldn't be necessary to prevent unneeded rerenders
-      if (JSON.stringify(nextState) !== JSON.stringify(this.state)) {
-        this.setState(nextState)
-      }
+      Object.keys(this.props.exprs).forEach(key => {
+        nextState[key] = evalExpression(newState, this.props.exprs[key])
+      })
+      this.setState(nextState)
     })
   }
 
@@ -112,6 +113,7 @@ class IdyllDocument extends React.PureComponent {
 
         const {component, children, key, ...props} = node;
         const stateKeys = {}
+        const exprs = {}
 
         Object.keys(props).forEach(k => {
           const stateKey = node[k]
@@ -123,7 +125,18 @@ class IdyllDocument extends React.PureComponent {
 
             // track which state vars affect this node
             stateKeys[k] = stateKey
-            node[k] = stateVal; // assign the initial value
+            if (state.hasOwnProperty(stateKey)) {
+              node[k] = stateVal; // assign the initial value
+            } else {
+              exprs[k] = stateKey
+            }
+          } else {
+            try {
+              const evaled = eval(stateKey);
+              if (stateKey !== evaled) {
+                exprs[k] = stateKey
+              }
+            } catch (e) {}
           }
         })
 
@@ -150,6 +163,7 @@ class IdyllDocument extends React.PureComponent {
         return {
           component: Wrapper,
           stateKeys,
+          exprs,
           children: [
             node
           ]
