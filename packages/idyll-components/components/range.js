@@ -7,7 +7,7 @@ class Range extends IdyllComponent {
   }
 
   handleChange(event) {
-    this.updateProps({
+    this.props.updateProps({
       value: +event.target.value
     });
   }

@@ -7,7 +7,7 @@ class Boolean extends IdyllComponent {
   }
 
   toggleCheckbox() {
-    this.updateProps({
+    this.props.updateProps({
       value: !this.props.value
     });
   }

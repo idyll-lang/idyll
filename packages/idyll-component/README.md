@@ -21,7 +21,7 @@ class CustomComponent extends IDLComponent {
 
   handleClick() {
     ...
-    this.updateProps({
+    this.props.updateProps({
       prop1: newProp1
     });
   }

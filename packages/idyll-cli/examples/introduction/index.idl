@@ -425,7 +425,7 @@ const IdyllComponent = require('idyll-component');
 class Incrementer extends IdyllComponent {
 
   increment() {
-    this.updateProps({
+    this.props.updateProps({
       value: this.props.value + 1
     })
   }
