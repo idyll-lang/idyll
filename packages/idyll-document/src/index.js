@@ -88,7 +88,7 @@ class IdyllDocument extends React.PureComponent {
       ...getVars(vars),
       ...getData(data, props.datasets)
     };
-    const derivedVars = getVars(derived, initialState);
+    const derivedVars = this.derivedVars = getVars(derived, initialState);
 
     let state = this.state = {
       ...initialState,
