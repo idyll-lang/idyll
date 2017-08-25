@@ -71,7 +71,6 @@ const getDerivedValues = dVars => {
 class IdyllDocument extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.handleUpdateProps = this.handleUpdateProps.bind(this);
 
     // Walk the tree, creating the proper components for evererything.
     this.bindings = {};
@@ -166,25 +165,6 @@ class IdyllDocument extends React.PureComponent {
     this.getChildren = () => {
       return kids;
     }
-  }
-
-  handleUpdateProps(nodeID) {
-    if (!this.updateFuncCache[nodeID]) {
-      this.updateFuncCache[nodeID] = (props) => {
-        if (this.bindings[nodeID]) {
-          const newState = {};
-          Object.keys(props).forEach((propName) => {
-            const val = props[propName];
-            if (this.bindings[nodeID][propName]) {
-              newState[this.bindings[nodeID][propName]] = val;
-            }
-          });
-          this.setStateAndDerived(newState);
-        }
-      };
-    }
-
-    return this.updateFuncCache[nodeID];
   }
 
   updateDerivedVars(newState) {
