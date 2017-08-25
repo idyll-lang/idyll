@@ -126,10 +126,14 @@ const translate = (arr) => {
   const attrConvert = (list) => {
     return list.reduce(
       (acc, [name, [type, val]]) => {
+        if (type === 'variable') {
+          acc.__vars__ = acc.__vars__ = {};
+          acc.__vars__[name] = val;
+        }
         // each node keeps a list of props that are expressions
         if (type === 'expression') {
-          acc.__expressions = acc.__expressions || [];
-          acc.__expressions.push(name);
+          acc.__expr__ = acc.__expr__ || {};
+          acc.__expr__[name] = val;
         }
 
         acc[name] = val

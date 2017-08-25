@@ -32,20 +32,27 @@ const transformRefs = (refs) => {
   return output;
 };
 
-const triggers = []
+const triggers = [];
 
 class Wrapper extends React.PureComponent {
   constructor() {
-    super()
+    super();
+    // add listener that will be called with new doc state
+    // when any component calls updateProps()
     triggers.push((newState) => {
-      let nextState = {}
-      Object.keys(this.props.stateKeys).forEach(key => {
-        nextState[key] = newState[this.props.stateKeys[key]]
-      })
-      Object.keys(this.props.exprs).forEach(key => {
-        nextState[key] = evalExpression(newState, this.props.exprs[key])
-      })
-      this.setState(nextState)
+      // update this component's state
+      const nextState = {};
+      // pull in the latest value for any tracked vars
+      Object.keys(this.props.__vars__).forEach(key => {
+        nextState[key] = newState[this.props.__vars__[key]];
+      });
+      // re-run this component's expressions using the latest doc state
+      Object.keys(this.props.__expr__).forEach(key => {
+        nextState[key] = evalExpression(newState, this.props.__expr__[key]);
+      });
+      // trigger a re-render of this component
+      // and more importantly, its wrapped component
+      this.setState(nextState);
     })
   }
 
@@ -109,46 +116,54 @@ class IdyllDocument extends React.PureComponent {
       node => {
         if (!wrapTargets.includes(node) || typeof node === 'string') return node;
 
-        const {component, children, key, __expressions = [], ...props} = node;
-        const stateKeys = {}
-        const exprs = {}
+        const {
+          component,
+          children,
+          key,
+          __vars__ = {},
+          __expr__ = {},
+          ...props // actual component props
+        } = node;
 
+        // assign the initial values for tracked vars and expressions
         Object.keys(props).forEach(k => {
-          const stateKey = node[k]
-          if (__expressions.includes(k)) {
-            exprs[k] = stateKey;
-            node[k] = evalExpression(state, stateKey); // assign the initial value
-          } else if (state.hasOwnProperty(stateKey)) {
-            // track which state vars affect this node
-            stateKeys[k] = stateKey
-            node[k] = state[stateKey]; // assign the initial value
+          if (__vars__[k]) {
+            node[k] = state[__vars__[k]];
           }
-        })
+          if (__expr__[k]) {
+            node[k] = evalExpression(state, __expr__[k]);
+          }
+        });
 
+        // define the function wrapped components will call via this.props.updateProps
         node.updateProps = (newProps) => {
-          const newState = {}
+          // init new doc state object
+          const newState = {};
+          // iterate over passed in updates
           Object.keys(newProps).forEach(k => {
-            if (stateKeys[k]) {
-              const stateKey = stateKeys[k]
-              newState[stateKey] = newProps[k]
+            // if a tracked var was updated get its new value
+            if (__vars__[k]) {
+              newState[__vars__[k]] = newProps[k]
             }
           })
+          // merge new doc state with old
           const newMergedState = {...state, ...newState};
+          // update derived values
           const newDerivedValues = getDerivedValues(
             getVars(derived, newMergedState)
           )
-          const newDocState = {...newMergedState, ...newDerivedValues}
 
-          // update doc state
-          state = newDocState;
+          // update doc state reference
+          state = {...newMergedState, ...newDerivedValues}
 
-          triggers.forEach(f => f(newDocState))
+          // pass the new doc state to all listeners aka component wrappers
+          triggers.forEach(f => f(state))
         }
 
         return {
           component: Wrapper,
-          stateKeys,
-          exprs,
+          __vars__,
+          __expr__,
           children: [
             node
           ]
@@ -156,26 +171,17 @@ class IdyllDocument extends React.PureComponent {
       },
     );
 
-    const kids = rjs.parseSchema({
+    this.kids = rjs.parseSchema({
       component: 'div',
       className: 'idyll-root',
       children: transformedSchema
     });
-
-    this.getChildren = () => {
-      return kids;
-    }
   }
 
   updateDerivedVars(newState) {
     Object.keys(this.derivedVars).forEach((dv) => {
       this.derivedVars[dv].value = this.derivedVars[dv].update(newState, this.state);
     });
-  }
-
-  setStateAndDerived(newState) {
-    this.updateDerivedVars(newState);
-    this.setState(newState);
   }
 
   getDerivedVars() {
@@ -261,7 +267,7 @@ class IdyllDocument extends React.PureComponent {
   }
 
   render() {
-    return this.getChildren();
+    return this.kids;
   }
 }
 

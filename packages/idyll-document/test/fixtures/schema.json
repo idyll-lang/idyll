@@ -150,6 +150,9 @@
       "Once you’ve created a variable, it can be displayed inline with text\n(x = ",
       {
         "component": "Display",
+        "__vars__": {
+          "var": "x"
+        },
         "var": "x",
         "children": []
       },
@@ -177,6 +180,9 @@
   },
   {
     "component": "Range",
+    "__vars__": {
+      "value": "x"
+    },
     "value": "x",
     "min": 0,
     "max": 100,
@@ -194,7 +200,9 @@
       ":\n ",
       {
         "component": "Display",
-        "__expressions": ["var"],
+        "__expr__": {
+          "var": "x"
+        },
         "var": "x",
         "children": []
       }
@@ -212,7 +220,9 @@
       ":\n ",
       {
         "component": "Display",
-        "__expressions": ["var"],
+        "__expr__": {
+          "var": "xSquared"
+        },
         "var": "xSquared",
         "children": []
       }
@@ -226,7 +236,10 @@
   },
   {
     "component": "Chart",
-    "__expressions": ["equation", "domain"],
+    "__expr__": {
+      "equation": "(t) => Math.sin(t * frequency)",
+      "domain": "[0, 2 * Math.PI]"
+    },
     "equation": "(t) => Math.sin(t * frequency)",
     "domain": "[0, 2 * Math.PI]",
     "samplePoints": 1000,
@@ -234,7 +247,12 @@
   },
   {
     "component": "Range",
-    "__expressions": ["max"],
+    "__vars__": {
+      "value": "frequency"
+    },
+    "__expr__": {
+      "max": "2 * Math.PI"
+    },
     "value": "frequency",
     "min": 0.5,
     "max": "2 * Math.PI",
