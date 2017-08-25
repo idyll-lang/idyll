@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import componentClasses from 'idyll-components';
 
 import IdyllDocument from '../src/';
-import { translate, walkSchema } from '../src/utils'
+import { translate, mapTree } from '../src/utils'
 import ReactJsonSchema from '../src/utils/schema2element';
 import ast from './fixtures/ast.json'
 import schema from './fixtures/schema.json'
@@ -38,7 +38,7 @@ describe('Schema transformations', () => {
   }];
 
   it('can copy schema', () => {
-    const d = walkSchema(x => true, source, x => x)
+    const d = mapTree(source, x => x)
     expect(d).toEqual(source)
   })
 
@@ -69,7 +69,7 @@ describe('Schema transformations', () => {
       ]
     }];
 
-    const d = walkSchema(x => true, source, x => {
+    const d = mapTree(source, x => {
       if (x.component === 'strong') {
         return {
           component: 'wrapper',

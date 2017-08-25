@@ -156,23 +156,18 @@ const translate = (arr) => {
   return splitAST(arr).elements.map(tNode)
 }
 
-const walkSchema = (predicate, tree, transformer = x => x) => {
-  const fn = (acc, node) => {
-    if (typeof node === 'string') {
-      if (predicate(node)) acc.push(transformer(node))
-      return acc;
+const mapTree = (tree, mapFn) => {
+  const walkFn = (acc, node) => {
+    if (typeof node !== 'string') {
+      node.children = node.children.reduce(walkFn, [])
     }
 
-    const { component, children, key, ...rest } = node;
-    node.children = children.reduce(fn, [])
-
-    if (predicate(node)) acc.push(transformer(node))
-
+    acc.push(mapFn(node))
     return acc;
   }
 
   return tree.reduce(
-    fn,
+    walkFn,
     []
   )
 }
@@ -190,7 +185,7 @@ const findWrapTargets = (schema, context) => {
     return decision
   }
   const fml = []
-  walkSchema(node => true, schema, n => {
+  mapTree(schema, n => {
     if (predicate(n)) fml.push(n)
     return n
   })
@@ -205,6 +200,6 @@ module.exports = {
   splitAST,
   translate,
   findWrapTargets,
-  walkSchema,
+  mapTree,
   evalExpression,
 };

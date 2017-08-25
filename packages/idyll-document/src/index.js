@@ -10,7 +10,7 @@ const {
   splitAST,
   translate,
   findWrapTargets,
-  walkSchema,
+  mapTree,
   evalExpression,
 } = require('./utils');
 
@@ -105,8 +105,7 @@ class IdyllDocument extends React.PureComponent {
 
     const wrapTargets = findWrapTargets(schema, this.state);
 
-    const transformedSchema = walkSchema(
-      node => true,
+    const transformedSchema = mapTree(
       schema,
       node => {
         if (!wrapTargets.includes(node) || typeof node === 'string') return node;
@@ -142,7 +141,7 @@ class IdyllDocument extends React.PureComponent {
           const newDocState = {...newMergedState, ...newDerivedValues}
 
           // update doc state
-          state = newDocState
+          state = newDocState;
 
           triggers.forEach(f => f(newDocState))
         }
