@@ -111,32 +111,19 @@ class IdyllDocument extends React.PureComponent {
       node => {
         if (!wrapTargets.includes(node) || typeof node === 'string') return node;
 
-        const {component, children, key, ...props} = node;
+        const {component, children, key, __expressions = [], ...props} = node;
         const stateKeys = {}
         const exprs = {}
 
         Object.keys(props).forEach(k => {
           const stateKey = node[k]
-          if (
-            state.hasOwnProperty(stateKey) ||
-            Object.keys(state).some(sk => typeof stateKey === 'string' && stateKey.includes(sk))
-          ) {
-            const stateVal = state[stateKey];
-
+          if (__expressions.includes(k)) {
+            exprs[k] = stateKey;
+            node[k] = evalExpression(state, stateKey); // assign the initial value
+          } else if (state.hasOwnProperty(stateKey)) {
             // track which state vars affect this node
             stateKeys[k] = stateKey
-            if (state.hasOwnProperty(stateKey)) {
-              node[k] = stateVal; // assign the initial value
-            } else {
-              exprs[k] = stateKey
-            }
-          } else {
-            try {
-              const evaled = eval(stateKey);
-              if (stateKey !== evaled) {
-                exprs[k] = stateKey
-              }
-            } catch (e) {}
+            node[k] = state[stateKey]; // assign the initial value
           }
         })
 

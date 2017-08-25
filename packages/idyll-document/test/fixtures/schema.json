@@ -194,6 +194,7 @@
       ":\n ",
       {
         "component": "Display",
+        "__expressions": ["var"],
         "var": "x",
         "children": []
       }
@@ -211,6 +212,7 @@
       ":\n ",
       {
         "component": "Display",
+        "__expressions": ["var"],
         "var": "xSquared",
         "children": []
       }
@@ -224,6 +226,7 @@
   },
   {
     "component": "Chart",
+    "__expressions": ["equation", "domain"],
     "equation": "(t) => Math.sin(t * frequency)",
     "domain": "[0, 2 * Math.PI]",
     "samplePoints": 1000,
@@ -231,6 +234,7 @@
   },
   {
     "component": "Range",
+    "__expressions": ["max"],
     "value": "frequency",
     "min": 0.5,
     "max": "2 * Math.PI",

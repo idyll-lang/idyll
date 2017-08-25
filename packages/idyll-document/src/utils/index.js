@@ -125,7 +125,13 @@ const splitAST = (ast) => {
 const translate = (arr) => {
   const attrConvert = (list) => {
     return list.reduce(
-      (acc, [name, [, val]]) => {
+      (acc, [name, [type, val]]) => {
+        // each node keeps a list of props that are expressions
+        if (type === 'expression') {
+          acc.__expressions = acc.__expressions || [];
+          acc.__expressions.push(name);
+        }
+
         acc[name] = val
         return acc
       },
