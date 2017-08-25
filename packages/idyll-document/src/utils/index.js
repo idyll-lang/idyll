@@ -172,24 +172,39 @@ const mapTree = (tree, mapFn) => {
   )
 }
 
-const findWrapTargets = (schema, context) => {
-  const keys = Object.keys(context);
-  const predicate = node => {
-    if (typeof node === 'string') return false;
-    const { component, children, ...props } = node;
-    const propValues = Object.values(props);
-    const decision = propValues.some(val => {
-      if (keys.includes(val)) return true; // [Range value:x min:0 max:100 /]
-      return keys.some(key => val.includes(key)) // [derived name:"xSquared" value:`x * x` /]
-    })
-    return decision
-  }
-  const fml = []
-  mapTree(schema, n => {
-    if (predicate(n)) fml.push(n)
-    return n
+const findWrapTargets = (schema, state) => {
+  const targets = [];
+  const stateKeys = Object.keys(state);
+
+  // always return node so we can walk the whole tree
+  // but collect and ultimately return just the nodes
+  // we are interested in wrapping
+  mapTree(schema, (node) => {
+    if (typeof node === 'string') return node;
+
+    // pull off the props we don't care about
+    const { component, children, __expressions, ...props } = node;
+    // iterate over the node's prop values
+    Object.values(props).forEach(val => {
+      // and include nodes whose prop value directly references a state var
+      // like [Range value:x min:0 max:100 /]
+      if (stateKeys.includes(val)) {
+        if (!targets.includes(node)) targets.push(node);
+        return;
+      }
+      // and nodes whose prop values include a state var ref
+      // like [derived name:"xSquared" value:`x * x` /]
+      stateKeys.forEach((key) => {
+        if (val.includes && val.includes(key)) {
+          if (!targets.includes(node)) targets.push(node);
+        }
+      })
+    });
+
+    return node;
   })
-  return fml
+
+  return targets;
 }
 
 module.exports = {
