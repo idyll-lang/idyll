@@ -1,4 +1,5 @@
 const React = require('react');
+const ReactDOM = require('react-dom');
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 const ReactJsonSchema = require('./utils/schema2element').default;
@@ -33,6 +34,7 @@ const transformRefs = (refs) => {
 };
 
 const triggers = [];
+const refs = {};
 
 class Wrapper extends React.PureComponent {
   constructor() {
@@ -92,11 +94,6 @@ class IdyllDocument extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    // Walk the tree, creating the proper components for evererything.
-    this.bindings = {};
-    this._idyllRefs = {};
-    this.updateFuncCache = {};
-
     const {
       vars,
       derived,
@@ -115,9 +112,6 @@ class IdyllDocument extends React.PureComponent {
       ...getDerivedValues(derivedVars)
     };
 
-    // still sets up bindings and refs
-    props.ast.map(walkVars(this, props.datasets));
-
     const rjs = new ReactJsonSchema();
     rjs.setComponentMap({...props.componentClasses, Wrapper});
     const schema = translate(props.ast);
@@ -127,6 +121,34 @@ class IdyllDocument extends React.PureComponent {
     const transformedSchema = mapTree(
       schema,
       node => {
+        // transform refs from strings to functions and store them
+        if (typeof node !== 'string' && node.ref) {
+          const refName = node.ref;
+          node.ref = el => {
+            const domNode = ReactDOM.findDOMNode(el);
+            const rect = domNode.getBoundingClientRect()
+            refs[refName] = {
+              domNode,
+              size: {
+                width: rect.width,
+                height: rect.height,
+              },
+              position: {
+                top: rect.top,
+                right: rect.right,
+                bottom: rect.bottom,
+                left: rect.left,
+              },
+              absolutePosition: {
+                top: rect.top + window.scrollY,
+                right: rect.right + window.scrollX,
+                bottom: rect.bottom + window.scrollY,
+                left: rect.left + window.scrollX,
+              },
+            };
+          }
+        }
+
         if (!wrapTargets.includes(node) || typeof node === 'string') return node;
 
         const {
@@ -193,11 +215,63 @@ class IdyllDocument extends React.PureComponent {
       },
     );
 
-    this.kids = rjs.parseSchema({
-      component: 'div',
-      className: 'idyll-root',
-      children: transformedSchema
-    });
+    this.kids = (
+      <div className="idyll-root" ref={this.initScrollListener}>
+        {rjs.parseSchema(transformedSchema)}
+      </div>
+    );
+  }
+
+  initScrollListener(el) {
+    if (!el) return;
+
+    const getScrollableContainer = el => {
+      if (el.scrollHeight > el.offsetHeight) return el;
+      return getScrollableContainer(el.parentNode);
+    }
+
+    const scroller = getScrollableContainer(el) || window;
+    scroller.addEventListener('scroll', (e) => {
+      // calculate current position based on scroll position
+      const body = document.body;
+      const html = document.documentElement;
+      const documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth );
+      const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+      const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      const scrollX = window.scrollX;
+      const scrollY = window.scrollY;
+
+      const newRefs = {};
+      Object.keys(refs).forEach((ref) => {
+        const { size, absolutePosition, domNode } = refs[ref];
+
+        // 0 percent === top of the div is over the bottom of the window
+        const minY = Math.max(0, absolutePosition.top - windowHeight);
+        // 100 percent === bottom of div is at top of window
+        const maxY = Math.min(documentHeight - windowHeight, absolutePosition.bottom);
+
+        const minX = Math.max(0, absolutePosition.left - windowWidth);
+        const maxX = Math.min(documentWidth - windowWidth, absolutePosition.right);
+
+        const rect = domNode.getBoundingClientRect();
+        newRefs[ref] = {
+          scrollProgress: {
+            x: minX === maxX ? 1 : Math.max(0, Math.min(1, (scrollX - minX) / (maxX - minX))),
+            y: minY === maxY ? 1 : Math.max(0, Math.min(1, (scrollY - minY) / (maxY - minY)))
+          },
+          position: {
+            top: rect.top,
+            left: rect.left,
+            right: rect.right,
+            bottom:  rect.bottom
+          }
+        };
+        refs[ref] = Object.assign({}, refs[ref], newRefs[ref]);
+      });
+
+      // this.setState(transformRefs(newRefs));
+    })
   }
 
   updateDerivedVars(newState) {
@@ -215,77 +289,7 @@ class IdyllDocument extends React.PureComponent {
   }
 
   componentDidMount() {
-    const refKeys = Object.keys(this._idyllRefs);
-    if (!refKeys.length) {
-      return;
-    }
-    refKeys.forEach((name) => {
-      const ref = this._idyllRefs[name];
-      const rect = ref.domNode().getBoundingClientRect();
-      this._idyllRefs[name]._node = ref.domNode();
-      this._idyllRefs[name].size = {
-        x: rect.width,
-        y: rect.height
-      };
-
-      this._idyllRefs[name].position = {
-        top: rect.top,
-        left: rect.left,
-        right: rect.right,
-        bottom:  rect.bottom
-      };
-
-      this._idyllRefs[name].absolutePosition = {
-        top: rect.top + window.scrollY,
-        left: rect.left + window.scrollX,
-        right: rect.right + window.scrollX,
-        bottom:  rect.bottom + window.scrollY
-      };
-
-    });
-    this.setState(transformRefs(this._idyllRefs));
-
-    window.addEventListener('scroll', (e) => {
-      // calculate current position based on scroll position
-      const body = document.body;
-      const html = document.documentElement;
-      const documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth );
-      const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-      const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-      const scrollX = window.scrollX;
-      const scrollY = window.scrollY;
-
-      const newRefs = {};
-      Object.keys(this._idyllRefs).forEach((ref) => {
-        const { size, absolutePosition, _node } = this._idyllRefs[ref];
-
-        // 0 percent === top of the div is over the bottom of the window
-        const minY = Math.max(0, absolutePosition.top - windowHeight);
-        // 100 percent === bottom of div is at top of window
-        const maxY = Math.min(documentHeight - windowHeight, absolutePosition.bottom);
-
-        const minX = Math.max(0, absolutePosition.left - windowWidth);
-        const maxX = Math.min(documentWidth - windowWidth, absolutePosition.right);
-
-        const rect = _node.getBoundingClientRect();
-        newRefs[ref] = {
-          scrollProgress: {
-            x: minX === maxX ? 1 : Math.max(0, Math.min(1, (scrollX - minX) / (maxX - minX))),
-            y: minY === maxY ? 1 : Math.max(0, Math.min(1, (scrollY - minY) / (maxY - minY)))
-          },
-          position: {
-            top: rect.top,
-            left: rect.left,
-            right: rect.right,
-            bottom:  rect.bottom
-          }
-        };
-        this._idyllRefs[ref] = Object.assign({}, this._idyllRefs[ref], newRefs[ref]);
-      });
-
-      this.setState(transformRefs(newRefs));
-    });
+    this.setState(transformRefs(refs));
   }
 
   render() {
