@@ -39,16 +39,29 @@ class Wrapper extends React.PureComponent {
     super();
     // add listener that will be called with new doc state
     // when any component calls updateProps()
-    triggers.push((newState) => {
+    triggers.push((newState, changedKeys) => {
+      const { __vars__, __expr__ } = this.props;
+
+      // were there changes to any vars we track?
+      // or vars our expressions reference?
+      const shouldUpdate = changedKeys.some(k => {
+        return (
+          Object.values(__vars__).includes(k) ||
+          Object.values(__expr__).some(expr => expr.includes(k))
+        )
+      });
+      // if nothing we care about changed bail out and don't re-render
+      if (!shouldUpdate) return;
+
       // update this component's state
       const nextState = {};
       // pull in the latest value for any tracked vars
-      Object.keys(this.props.__vars__).forEach(key => {
-        nextState[key] = newState[this.props.__vars__[key]];
+      Object.keys(__vars__).forEach(key => {
+        nextState[key] = newState[__vars__[key]];
       });
       // re-run this component's expressions using the latest doc state
-      Object.keys(this.props.__expr__).forEach(key => {
-        nextState[key] = evalExpression(newState, this.props.__expr__[key]);
+      Object.keys(__expr__).forEach(key => {
+        nextState[key] = evalExpression(newState, __expr__[key]);
       });
       // trigger a re-render of this component
       // and more importantly, its wrapped component
@@ -153,11 +166,20 @@ class IdyllDocument extends React.PureComponent {
             getVars(derived, newMergedState)
           )
 
+          const nextState = {...newMergedState, ...newDerivedValues};
+          const changedKeys = Object.keys(state).reduce(
+            (acc, k) => {
+              if (state[k] !== nextState[k]) acc.push(k);
+              return acc;
+            },
+            []
+          )
+
           // update doc state reference
-          state = {...newMergedState, ...newDerivedValues}
+          state = nextState;
 
           // pass the new doc state to all listeners aka component wrappers
-          triggers.forEach(f => f(state))
+          triggers.forEach(f => f(state, changedKeys))
         }
 
         return {
