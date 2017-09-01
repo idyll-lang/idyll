@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const scrollMonitor = require('scrollmonitor');
 const walkVars = require('./visitors/vars');
 const walkNode = require('./visitors/node');
 const ReactJsonSchema = require('./utils/schema2element').default;
@@ -39,6 +40,7 @@ const refs = {};
 class Wrapper extends React.PureComponent {
   constructor() {
     super();
+
     // add listener that will be called with new doc state
     // when any component calls updateProps()
     triggers.push((newState, changedKeys) => {
@@ -94,6 +96,8 @@ class IdyllDocument extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.initScrollListener = this.initScrollListener.bind(this);
+
     const {
       vars,
       derived,
@@ -124,8 +128,12 @@ class IdyllDocument extends React.PureComponent {
         // transform refs from strings to functions and store them
         if (typeof node !== 'string' && node.ref) {
           const refName = node.ref;
+          node.className = 'is-ref';
           node.ref = el => {
+            if (!el) return;
+
             const domNode = ReactDOM.findDOMNode(el);
+            domNode.dataset.ref = refName;
             const rect = domNode.getBoundingClientRect()
             refs[refName] = {
               domNode,
@@ -231,47 +239,57 @@ class IdyllDocument extends React.PureComponent {
     }
 
     const scroller = getScrollableContainer(el) || window;
+    const scrollContainer = scrollMonitor.createContainer(scroller);
+
+    const watchers = [];
+    Array.from(
+      document.getElementsByClassName('is-ref')
+    ).forEach(ref => {
+      watchers.push(scrollContainer.create(ref));
+    })
+
     scroller.addEventListener('scroll', (e) => {
-      // calculate current position based on scroll position
-      const body = document.body;
-      const html = document.documentElement;
-      const documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth );
-      const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-      const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-      const scrollX = window.scrollX;
-      const scrollY = window.scrollY;
+      const refs = {};
 
-      const newRefs = {};
-      Object.keys(refs).forEach((ref) => {
-        const { size, absolutePosition, domNode } = refs[ref];
+      watchers.forEach(watcher => {
+        // get boolean props
+        let bools = {};
+        Object.keys(watcher).forEach(key => {
+          if (!key.startsWith('is')) return;
+          bools[key] = watcher[key];
+        });
 
-        // 0 percent === top of the div is over the bottom of the window
-        const minY = Math.max(0, absolutePosition.top - windowHeight);
-        // 100 percent === bottom of div is at top of window
-        const maxY = Math.min(documentHeight - windowHeight, absolutePosition.bottom);
-
-        const minX = Math.max(0, absolutePosition.left - windowWidth);
-        const maxX = Math.min(documentWidth - windowWidth, absolutePosition.right);
-
+        const domNode = watcher.watchItem;
         const rect = domNode.getBoundingClientRect();
-        newRefs[ref] = {
-          scrollProgress: {
-            x: minX === maxX ? 1 : Math.max(0, Math.min(1, (scrollX - minX) / (maxX - minX))),
-            y: minY === maxY ? 1 : Math.max(0, Math.min(1, (scrollY - minY) / (maxY - minY)))
+        const containerNode = scrollContainer.item;
+        const containerRect = containerNode.getBoundingClientRect();
+
+        // left and right props assume no horizontal scrolling
+        refs[domNode.dataset.ref] = {
+          ...bools,
+          domNode,
+          size: {
+            width: rect.width,
+            height: rect.height
           },
           position: {
-            top: rect.top,
-            left: rect.left,
+            top: watcher.top - scrollContainer.viewportTop,
+            right: rect.right - containerRect.left,
+            bottom: watcher.bottom - scrollContainer.viewportTop,
+            left: rect.left - containerRect.left
+          },
+          absolutePosition: {
+            top: watcher.top,
             right: rect.right,
-            bottom:  rect.bottom
+            bottom: watcher.bottom,
+            left: rect.left
           }
-        };
-        refs[ref] = Object.assign({}, refs[ref], newRefs[ref]);
+        }
       });
 
-      // this.setState(transformRefs(newRefs));
-    })
+      // store new calculations
+      this.setState({refs});
+    });
   }
 
   updateDerivedVars(newState) {
