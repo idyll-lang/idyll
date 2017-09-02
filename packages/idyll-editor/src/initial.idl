@@ -11,6 +11,10 @@ For example, a `[Chart /]` component can be used to render a simple visualizatio
 
 Try changing the chart's type from `scatter` to `line`, `area`, or `pie`.
 
+Scatter Top: [Display var:`refs.scatterChart.position.top` /]
+
+Scatter Bottom: [Display var:`refs.scatterChart.position.bottom` /]
+
 A component's properties can be strings ("I'm a string!"), numbers (1.569), or evaluated JavaScript expressions (``` `2 * Math.PI` ```).
 
 

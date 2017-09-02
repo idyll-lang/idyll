@@ -187,7 +187,7 @@ const findWrapTargets = (schema, state) => {
     if (typeof node === 'string') return node;
 
     // pull off the props we don't care about
-    const { component, children, __expressions, ...props } = node;
+    const { component, children, __vars__, __expr__, ...props } = node;
     // iterate over the node's prop values
     Object.values(props).forEach(val => {
       // and include nodes whose prop value directly references a state var
@@ -199,10 +199,22 @@ const findWrapTargets = (schema, state) => {
       // and nodes whose prop values include a state var ref
       // like [derived name:"xSquared" value:`x * x` /]
       stateKeys.forEach((key) => {
-        if (val.includes && val.includes(key)) {
-          if (!targets.includes(node)) targets.push(node);
+        if (
+          val.includes &&
+          val.includes(key) &&
+          !targets.includes(node)
+        ) {
+          targets.push(node);
         }
       })
+      // and nodes that track refs
+      if (
+        val.startsWith &&
+        val.startsWith('refs') &&
+        !targets.includes(node)
+      ) {
+        targets.push(node);
+      }
     });
 
     return node;
