@@ -1,8 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const scrollMonitor = require('scrollmonitor');
-const walkVars = require('./visitors/vars');
-const walkNode = require('./visitors/node');
 const ReactJsonSchema = require('./utils/schema2element').default;
 const {
   flattenObject,
