@@ -1,5 +1,6 @@
 const React = require('react');
 const IdyllComponent = require('idyll-component');
+const PropTypes = require('prop-types');
 
 class EmbeddedGist extends IdyllComponent {
 
@@ -63,8 +64,8 @@ class EmbeddedGist extends IdyllComponent {
 }
 
 EmbeddedGist.propTypes = {
-    gist: React.PropTypes.string.isRequired, // e.g. "username/id"
-    file: React.PropTypes.string // to embed a single specific file from the gist
+    gist: PropTypes.string.isRequired, // e.g. "username/id"
+    file: PropTypes.string // to embed a single specific file from the gist
 };
 
 // Each time we request a Gist, we'll need to generate a new
