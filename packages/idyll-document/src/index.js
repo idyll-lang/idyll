@@ -85,14 +85,14 @@ class Wrapper extends React.PureComponent {
     const exps = Object.values(props.__expr__);
 
     // listen for props updates IF we care about them
-    if (vars.length || exps.some(v => !v.startsWith('refs'))) {
+    if (vars.length || exps.some(v => !v.includes('refs.'))) {
       // called with new doc state
       // when any component calls updateProps()
       updatePropsCallbacks.push(this.onUpdateProps);
     }
 
     // listen for ref updates IF we care about them
-    if (exps.some(v => v.startsWith('refs'))) {
+    if (exps.some(v => v.includes('refs.'))) {
       updateRefsCallbacks.push(this.onUpdateRefs);
     }
   }
@@ -222,7 +222,7 @@ class IdyllDocument extends React.PureComponent {
           if (__vars__[k]) {
             node[k] = state[__vars__[k]];
           }
-          if (__expr__[k] && !__expr__[k].startsWith('refs')) {
+          if (__expr__[k] && !__expr__[k].includes('refs.')) {
             node[k] = evalExpression(state, __expr__[k]);
           }
         });

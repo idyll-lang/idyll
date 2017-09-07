@@ -209,8 +209,8 @@ const findWrapTargets = (schema, state) => {
       })
       // and nodes that track refs
       if (
-        val.startsWith &&
-        val.startsWith('refs') &&
+        val.includes &&
+        val.includes('refs.') &&
         !targets.includes(node)
       ) {
         targets.push(node);
