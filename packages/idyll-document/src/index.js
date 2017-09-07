@@ -66,14 +66,6 @@ const getRefs = () => {
   return refs;
 };
 
-const _get = (o, path) => {
-  let val = o;
-  while (path.length) {
-    val = val[path.shift()];
-  }
-  return val;
-};
-
 class Wrapper extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -126,10 +118,10 @@ class Wrapper extends React.PureComponent {
     this.setState(nextState);
   }
 
-  onUpdateRefs(refs) {
+  onUpdateRefs(newState) {
     const nextState = {};
     Object.entries(this.props.__expr__).forEach(([key, val]) => {
-      nextState[key] = _get(refs, val.split('.').slice(1));
+      nextState[key] = evalExpression(newState, val);
     });
     this.setState(nextState);
   }
@@ -255,7 +247,7 @@ class IdyllDocument extends React.PureComponent {
           )
 
           // update doc state reference
-          state = { ...nextState, refs: this.state.refs };
+          state = nextState;
 
           // pass the new doc state to all listeners aka component wrappers
           updatePropsCallbacks.forEach(f => f(state, changedKeys));
@@ -288,8 +280,7 @@ class IdyllDocument extends React.PureComponent {
       scrollWatchers.push(scrollContainer.create(ref));
     });
     scroller.addEventListener('scroll', e => {
-      const refs = getRefs();
-      updateRefsCallbacks.forEach(f => f(refs));
+      updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
     });
   }
 
@@ -311,8 +302,7 @@ class IdyllDocument extends React.PureComponent {
   }
 
   componentDidMount() {
-    const refs = getRefs();
-    updateRefsCallbacks.forEach(f => f(refs));
+    updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
   }
 
   render() {

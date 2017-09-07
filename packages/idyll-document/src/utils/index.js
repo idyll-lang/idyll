@@ -44,12 +44,23 @@ const evalExpression = (acc, expr) => {
       ${
         Object.keys(acc)
           .filter(key => expr.includes(key))
-          .map(key => `var ${key} = ${acc[key]}`)
+          .map(key => {
+            if (key === 'refs') {
+              // delete each ref's domNode property
+              // because it can't be serialized
+              Object.values(acc[key]).forEach(v => {
+                delete v.domNode;
+              })
+              // add `refs` const object graph to function scope
+              return `const ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
+            }
+            return `const ${key} = ${acc[key]};`;
+          })
           .join('\n')
       }
       return ${expr}
     })()
-  `)
+  `);
 }
 
 const getVars = (arr, context) => {

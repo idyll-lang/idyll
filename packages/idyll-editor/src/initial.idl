@@ -15,6 +15,10 @@ Scatter Top: [Display var:`refs.scatterChart.position.top` /]
 
 Scatter Bottom: [Display var:`refs.scatterChart.position.bottom` /]
 
+Scatter Bottom Rounded: [Display var:`Math.round(refs.scatterChart.position.bottom)` /]
+
+Scatter Bottom + 7: [Display var:`7 + refs.scatterChart.position.bottom` /]
+
 A component's properties can be strings ("I'm a string!"), numbers (1.569), or evaluated JavaScript expressions (``` `2 * Math.PI` ```).
 
 
