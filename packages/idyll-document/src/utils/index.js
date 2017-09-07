@@ -58,7 +58,28 @@ const evalExpression = (acc, expr) => {
           })
           .join('\n')
       }
-      return ${expr}
+      return ${
+        // IIFE since only expressions are allowed in template strings
+        (() => {
+          try {
+            if (typeof eval(expr) !== 'function') return expr;
+
+            // if the source expression is a function
+            // it needs to be run inside a try...catch to avoid RTEs
+            return (...rest) => {
+              try {
+                return eval(expr)(...rest);
+              } catch (e) {
+                console.warn('ERROR evaluating:', expr);
+                console.warn(e);
+                return null;
+              }
+            }
+          } catch (e) {
+            return expr;
+          }
+        })()
+      };
     })()
   `);
 }
