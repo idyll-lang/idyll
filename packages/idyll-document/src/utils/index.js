@@ -39,49 +39,30 @@ const getNodesByName = (name, tree) => {
 }
 
 const evalExpression = (acc, expr) => {
-  return eval(`
-    (() => {
-      ${
-        Object.keys(acc)
-          .filter(key => expr.includes(key))
-          .map(key => {
-            if (key === 'refs') {
-              // delete each ref's domNode property
-              // because it can't be serialized
-              Object.values(acc[key]).forEach(v => {
-                delete v.domNode;
-              })
-              // add `refs` const object graph to function scope
-              return `const ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
-            }
-            return `const ${key} = ${acc[key]};`;
-          })
-          .join('\n')
-      }
-      return ${
-        // IIFE since only expressions are allowed in template strings
-        (() => {
-          try {
-            if (typeof eval(expr) !== 'function') return expr;
-
-            // if the source expression is a function
-            // it needs to be run inside a try...catch to avoid RTEs
-            return (...rest) => {
-              try {
-                return eval(expr)(...rest);
-              } catch (e) {
-                console.warn('ERROR evaluating:', expr);
-                console.warn(e);
-                return null;
+  try{
+    return eval(`
+      (() => {
+        ${
+          Object.keys(acc)
+            .filter(key => expr.includes(key))
+            .map(key => {
+              if (key === 'refs') {
+                // delete each ref's domNode property
+                // because it can't be serialized
+                Object.values(acc[key]).forEach(v => {
+                  delete v.domNode;
+                })
+                // add `refs` const object graph to function scope
+                return `const ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
               }
-            }
-          } catch (e) {
-            return expr;
-          }
-        })()
-      };
-    })()
-  `);
+              return `const ${key} = ${acc[key]};`;
+            })
+            .join('\n')
+        }
+        return ${expr};
+      })()`
+    );
+  } catch (e) {}
 }
 
 const getVars = (arr, context) => {
