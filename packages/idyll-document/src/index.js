@@ -157,6 +157,7 @@ class IdyllDocument extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
     const {
@@ -271,6 +272,10 @@ class IdyllDocument extends React.PureComponent {
     );
   }
 
+  scrollListener() {
+    updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
+  }
+
   initScrollListener(el) {
     if (!el) return;
 
@@ -279,9 +284,7 @@ class IdyllDocument extends React.PureComponent {
     Array.from(document.getElementsByClassName('is-ref')).forEach(ref => {
       scrollWatchers.push(scrollContainer.create(ref));
     });
-    scroller.addEventListener('scroll', e => {
-      updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
-    });
+    scroller.addEventListener('scroll', this.scrollListener);
   }
 
   updateDerivedVars(newState) {
