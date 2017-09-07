@@ -87,6 +87,13 @@ class Wrapper extends React.PureComponent {
     if (exps.some(v => v.includes('refs.'))) {
       updateRefsCallbacks.push(this.onUpdateRefs);
     }
+
+
+    this.state = { hasError: false, errorMessage: '' };
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true, errorMessage: '' + error });
   }
 
   onUpdateProps(newState, changedKeys) {
@@ -135,6 +142,9 @@ class Wrapper extends React.PureComponent {
   }
 
   render() {
+    if (this.state.hasError) {
+      return <div style={{ border: 'solid red 1px', padding: 10}}><pre>{this.state.errorMessage}</pre></div>;
+    }
     return (
       <span style={{backgroundColor: 'deepskyblue'}}>
         {
