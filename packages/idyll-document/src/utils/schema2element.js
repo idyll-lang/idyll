@@ -1,6 +1,6 @@
-
-import { DOM, createElement } from 'react';
+import { createElement } from 'react';
 import { paramCase } from 'change-case';
+import DOM from 'react-dom-factories';
 
 const _componentMap = new WeakMap();
 

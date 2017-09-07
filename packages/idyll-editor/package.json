@@ -14,17 +14,17 @@
     "idyll-compiler": "^1.4.6",
     "idyll-components": "^2.0.0",
     "idyll-document": "^1.0.2",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react": "next",
+    "react-dom": "next"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babelify": "^7.3.0",
-    "budo": "^10.0.3",
     "brfs": "^1.4.3",
+    "budo": "^10.0.3",
     "envify": "^4.1.0",
-    "uglifyify": "^4.0.3",
-    "uglify-js": "^3.0.25"
+    "uglify-js": "^3.0.25",
+    "uglifyify": "^4.0.3"
   }
 }
