@@ -1,6 +1,6 @@
 ![idyll-text](https://cloud.githubusercontent.com/assets/1074773/24593896/95730fba-17dc-11e7-82dd-ae7335f205b6.png)
 
-If you just want to quickly try out Idyll, we offer an online editor where you can play around and try out the language.
+*[Online Editor](https://idyll-lang.github.io/editor)* 
 
 *See https://idyll-lang.github.io/ for full documentation*.
 
