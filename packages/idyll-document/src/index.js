@@ -136,7 +136,7 @@ class Wrapper extends React.PureComponent {
 
   render() {
     return (
-      <span style={{backgroundColor: 'deepskyblue'}}>
+      <span>
         {
           React.Children.map(this.props.children, c => {
             return React.cloneElement(c, {...this.state});
