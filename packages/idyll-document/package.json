@@ -5,7 +5,7 @@
   "author": {
     "name": "Matthew Conlen"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "module": "src/index.js",
   "scripts": {
     "build": "babel src -d dist",

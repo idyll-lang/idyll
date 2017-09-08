@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "Components that ship by default in new Idyll projects",
   "main": "dist/index.js",
-  "module": "components/index.js",
+  "module": "src/index.js",
   "scripts": {
     "prepublish": "babel components -d dist",
     "test": "jest"
