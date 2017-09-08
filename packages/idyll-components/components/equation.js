@@ -20,7 +20,7 @@ class Equation extends IdyllComponent {
   }
 
   handleChange(event) {
-    this.updateProps({
+    this.props.updateProps({
       value: +event.target.value
     });
   }
@@ -76,7 +76,7 @@ class Equation extends IdyllComponent {
     const newProps = {};
     const val = +event.target.value;
     newProps[this.state.var] = val;
-    this.updateProps(newProps);
+    this.props.updateProps(newProps);
     this.propNodes[this.state.var].text(val);
   }
 

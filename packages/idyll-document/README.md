@@ -1,2 +1,2 @@
-# idyll-interactive-document
+# idyll-document
 Internal React component to power Idyll documents

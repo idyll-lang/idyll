@@ -1,159 +1,316 @@
 const React = require('react');
-const walkVars = require('./visitors/vars');
-const walkNode = require('./visitors/node');
-const utils = require('./utils');
+const ReactDOM = require('react-dom');
+const scrollMonitor = require('scrollmonitor');
+const ReactJsonSchema = require('./utils/schema2element').default;
+const {
+  flattenObject,
+  getData,
+  getNodesByName,
+  getVars,
+  splitAST,
+  translate,
+  findWrapTargets,
+  mapTree,
+  evalExpression,
+} = require('./utils');
 
-const transformRefs = (refs) => {
-  const output = {};
-  const keys = ['scrollProgress', 'size', 'position'];
-  Object.keys(refs).forEach((ref) => {
-    const val = refs[ref];
-    keys.forEach((key) => {
-      if (val === null || val === undefined) {
-        return;
-      }
-      const results = utils.flattenObject(key, val[key]);
-      Object.keys(results).forEach((result) => {
-        output['_idyllRefs' + ref + result] = results[result];
-      });
-    });
-  });
-  return output;
+const updatePropsCallbacks = [];
+const updateRefsCallbacks = [];
+const scrollWatchers = [];
+let scrollContainer;
+
+const getScrollableContainer = el => {
+  if (el.scrollHeight > el.offsetHeight) return el;
+  return getScrollableContainer(el.parentNode);
 };
 
-class InteractiveDocument extends React.PureComponent {
+const getRefs = () => {
+  const refs = {};
+
+  scrollWatchers.forEach(watcher => {
+    // get boolean props
+    let bools = {};
+    Object.keys(watcher).forEach(key => {
+      if (!key.startsWith('is')) return;
+      bools[key] = watcher[key];
+    });
+
+    const domNode = watcher.watchItem;
+    const rect = domNode.getBoundingClientRect();
+    const containerNode = scrollContainer.item;
+    const containerRect = containerNode.getBoundingClientRect();
+
+    // left and right props assume no horizontal scrolling
+    refs[domNode.dataset.ref] = {
+      ...bools,
+      domNode,
+      size: {
+        width: rect.width,
+        height: rect.height,
+      },
+      position: {
+        top: watcher.top - scrollContainer.viewportTop,
+        right: rect.right - containerRect.left,
+        bottom: watcher.bottom - scrollContainer.viewportTop,
+        left: rect.left - containerRect.left,
+      },
+      absolutePosition: {
+        top: watcher.top,
+        right: rect.right,
+        bottom: watcher.bottom,
+        left: rect.left,
+      },
+    };
+  });
+
+  return refs;
+};
+
+class Wrapper extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.handleUpdateProps = this.handleUpdateProps.bind(this);
 
-    // Walk the tree, creating the proper components for evererything.
-    this.bindings = {};
-    this._idyllRefs = {};
-    this.derivedVars = {};
-    this.initialState = {};
-    this.updateFuncCache = {};
+    this.onUpdateRefs = this.onUpdateRefs.bind(this);
+    this.onUpdateProps = this.onUpdateProps.bind(this);
 
-    props.ast.map(walkVars(this, props.datasets));
+    const vars = Object.values(props.__vars__);
+    const exps = Object.values(props.__expr__);
 
-    this.state = this.initialState;
-    
-    const nodeWalker = walkNode(this, props.componentClasses);
-    this.getChildren = () => {
-      return props.ast.map(nodeWalker());
+    // listen for props updates IF we care about them
+    if (vars.length || exps.some(v => !v.includes('refs.'))) {
+      // called with new doc state
+      // when any component calls updateProps()
+      updatePropsCallbacks.push(this.onUpdateProps);
+    }
+
+    // listen for ref updates IF we care about them
+    if (exps.some(v => v.includes('refs.'))) {
+      updateRefsCallbacks.push(this.onUpdateRefs);
     }
   }
 
-  handleUpdateProps(nodeID) {
-    if (!this.updateFuncCache[nodeID]) {
-      this.updateFuncCache[nodeID] = (props) => {
-        if (this.bindings[nodeID]) {
+  onUpdateProps(newState, changedKeys) {
+    const { __vars__, __expr__ } = this.props;
+
+    // were there changes to any vars we track?
+    // or vars our expressions reference?
+    const shouldUpdate = changedKeys.some(k => {
+      return (
+        Object.values(__vars__).includes(k) ||
+        Object.values(__expr__).some(expr => expr.includes(k))
+      );
+    });
+    // if nothing we care about changed bail out and don't re-render
+    if (!shouldUpdate) return;
+
+    // update this component's state
+    const nextState = {};
+    // pull in the latest value for any tracked vars
+    Object.keys(__vars__).forEach(key => {
+      nextState[key] = newState[__vars__[key]];
+    });
+    // re-run this component's expressions using the latest doc state
+    Object.keys(__expr__).forEach(key => {
+      nextState[key] = evalExpression(newState, __expr__[key]);
+    });
+    // trigger a re-render of this component
+    // and more importantly, its wrapped component
+    this.setState(nextState);
+  }
+
+  onUpdateRefs(newState) {
+    const nextState = {};
+    Object.entries(this.props.__expr__).forEach(([key, val]) => {
+      nextState[key] = evalExpression(newState, val);
+    });
+    this.setState(nextState);
+  }
+
+  componentWillUnmount() {
+    const propsIndex = updatePropsCallbacks.indexOf(this.onUpdateProps);
+    if (propsIndex > -1) updatePropsCallbacks.splice(propsIndex, 1);
+
+    const refsIndex = updateRefsCallbacks.indexOf(this.onUpdateRefs);
+    if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
+  }
+
+  render() {
+    return (
+      <span>
+        {
+          React.Children.map(this.props.children, c => {
+            return React.cloneElement(c, {...this.state});
+          })
+        }
+      </span>
+    );
+  }
+}
+
+const getDerivedValues = dVars => {
+  const o = {};
+  Object.keys(dVars).forEach(key => o[key] = dVars[key].value);
+  return o;
+};
+
+class IdyllDocument extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.scrollListener = this.scrollListener.bind(this);
+    this.initScrollListener = this.initScrollListener.bind(this);
+
+    const {
+      vars,
+      derived,
+      data,
+      elements,
+    } = splitAST(props.ast);
+
+    const initialState = {
+      ...getVars(vars),
+      ...getData(data, props.datasets),
+    };
+    const derivedVars = this.derivedVars = getVars(derived, initialState);
+
+    let state = this.state = {
+      ...initialState,
+      ...getDerivedValues(derivedVars),
+    };
+
+    const rjs = new ReactJsonSchema();
+    rjs.setComponentMap({...props.componentClasses, Wrapper});
+    const schema = translate(props.ast);
+
+    const wrapTargets = findWrapTargets(schema, this.state);
+
+    const transformedSchema = mapTree(
+      schema,
+      node => {
+        // transform refs from strings to functions and store them
+        if (typeof node !== 'string' && node.ref) {
+          const refName = node.ref;
+          node.className = 'is-ref';
+          node.ref = el => {
+            if (!el) return;
+
+            const domNode = ReactDOM.findDOMNode(el);
+            domNode.dataset.ref = refName;
+          };
+        }
+
+        if (!wrapTargets.includes(node) || typeof node === 'string') return node;
+
+        const {
+          component,
+          children,
+          key,
+          __vars__ = {},
+          __expr__ = {},
+          ...props // actual component props
+        } = node;
+
+        // assign the initial values for tracked vars and expressions
+        Object.keys(props).forEach(k => {
+          if (__vars__[k]) {
+            node[k] = state[__vars__[k]];
+          }
+          if (__expr__[k] && !__expr__[k].includes('refs.')) {
+            node[k] = evalExpression(state, __expr__[k]);
+          }
+        });
+
+        // define the function wrapped components will call via this.props.updateProps
+        node.updateProps = (newProps) => {
+          // init new doc state object
           const newState = {};
-          Object.keys(props).forEach((propName) => {
-            const val = props[propName];
-            if (this.bindings[nodeID][propName]) {
-              newState[this.bindings[nodeID][propName]] = val;
+          // iterate over passed in updates
+          Object.keys(newProps).forEach(k => {
+            // if a tracked var was updated get its new value
+            if (__vars__[k]) {
+              newState[__vars__[k]] = newProps[k];
             }
           });
-          this.setStateAndDerived(newState);
-        }
-      };
-    }
+          // merge new doc state with old
+          const newMergedState = {...state, ...newState};
+          // update derived values
+          const newDerivedValues = getDerivedValues(
+            getVars(derived, newMergedState),
+          );
 
-    return this.updateFuncCache[nodeID];
+          const nextState = {...newMergedState, ...newDerivedValues};
+          const changedKeys = Object.keys(state).reduce(
+            (acc, k) => {
+              if (state[k] !== nextState[k]) acc.push(k);
+              return acc;
+            },
+            []
+          )
+
+          // update doc state reference
+          state = nextState;
+
+          // pass the new doc state to all listeners aka component wrappers
+          updatePropsCallbacks.forEach(f => f(state, changedKeys));
+        };
+
+        return {
+          component: Wrapper,
+          __vars__,
+          __expr__,
+          children: [
+            node
+          ],
+        };
+      }
+    );
+
+    this.kids = (
+      <div className="idyll-root" ref={this.initScrollListener}>
+        {rjs.parseSchema(transformedSchema)}
+      </div>
+    );
   }
 
-  setStateAndDerived(newState) {
-    Object.keys(this.derivedVars).forEach((dv) => {
-      this.derivedVars[dv].update(newState);
+  scrollListener() {
+    updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
+  }
+
+  initScrollListener(el) {
+    if (!el) return;
+
+    const scroller = getScrollableContainer(el) || window;
+    scrollContainer = scrollMonitor.createContainer(scroller);
+    Array.from(document.getElementsByClassName('is-ref')).forEach(ref => {
+      scrollWatchers.push(scrollContainer.create(ref));
     });
-    this.setState(newState);
+    scroller.addEventListener('scroll', this.scrollListener);
+  }
+
+  updateDerivedVars(newState) {
+    Object.keys(this.derivedVars).forEach(dv => {
+      this.derivedVars[dv].value = this.derivedVars[dv].update(
+        newState,
+        this.state,
+      );
+    });
   }
 
   getDerivedVars() {
     let dvs = {};
-    Object.keys(this.derivedVars).forEach((dv) => {
+    Object.keys(this.derivedVars).forEach(dv => {
       dvs[dv] = this.derivedVars[dv].value;
     });
     return dvs;
   }
 
   componentDidMount() {
-    const refKeys = Object.keys(this._idyllRefs);
-    if (!refKeys.length) { 
-      return;
-    }
-    refKeys.forEach((name) => {
-      const ref = this._idyllRefs[name];
-      const rect = ref.domNode().getBoundingClientRect();
-      this._idyllRefs[name]._node = ref.domNode();
-      this._idyllRefs[name].size = {
-        x: rect.width,
-        y: rect.height
-      };
-
-      this._idyllRefs[name].position = {
-        top: rect.top,
-        left: rect.left,
-        right: rect.right,
-        bottom:  rect.bottom
-      };
-
-      this._idyllRefs[name].absolutePosition = {
-        top: rect.top + window.scrollY,
-        left: rect.left + window.scrollX,
-        right: rect.right + window.scrollX,
-        bottom:  rect.bottom + window.scrollY
-      };
-
-    });
-    this.setState(transformRefs(this._idyllRefs));
-
-    window.addEventListener('scroll', (e) => {
-      // calculate current position based on scroll position
-      const body = document.body;
-      const html = document.documentElement;
-      const documentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth );
-      const documentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-      const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-      const scrollX = window.scrollX;
-      const scrollY = window.scrollY;
-
-      const newRefs = {};
-      Object.keys(this._idyllRefs).forEach((ref) => {
-        const { size, absolutePosition, _node } = this._idyllRefs[ref];
-
-        // 0 percent === top of the div is over the bottom of the window
-        const minY = Math.max(0, absolutePosition.top - windowHeight);
-        // 100 percent === bottom of div is at top of window
-        const maxY = Math.min(documentHeight - windowHeight, absolutePosition.bottom);
-
-        const minX = Math.max(0, absolutePosition.left - windowWidth);
-        const maxX = Math.min(documentWidth - windowWidth, absolutePosition.right);
-
-        const rect = _node.getBoundingClientRect();
-        newRefs[ref] = {
-          scrollProgress: {
-            x: minX === maxX ? 1 : Math.max(0, Math.min(1, (scrollX - minX) / (maxX - minX))),
-            y: minY === maxY ? 1 : Math.max(0, Math.min(1, (scrollY - minY) / (maxY - minY)))
-          },
-          position: {
-            top: rect.top,
-            left: rect.left,
-            right: rect.right,
-            bottom:  rect.bottom
-          }
-        };
-        this._idyllRefs[ref] = Object.assign({}, this._idyllRefs[ref], newRefs[ref]);
-      });
-
-      this.setState(transformRefs(newRefs));
-    });
+    updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
   }
 
   render() {
-    return React.createElement('div', {className: 'idyll-root'}, this.getChildren());
+    return this.kids;
   }
 }
 
-module.exports = InteractiveDocument;
+module.exports = IdyllDocument;

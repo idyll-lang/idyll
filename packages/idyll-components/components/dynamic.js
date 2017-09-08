@@ -13,7 +13,7 @@ class Dynamic extends IdyllComponent {
       const dx = Selection.event.dx;
       const { interval, value } = this.props;
       const newValue = Math.max(Math.min(value + interval * dx, this.props.max), this.props.min);
-      this.updateProps({ value: newValue });
+      this.props.updateProps({ value: newValue });
     });
     this.drag(Selection.select(node));
   }

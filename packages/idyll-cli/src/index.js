@@ -19,7 +19,7 @@ const idyll = (options = {}, cb) => {
       minify: true,
       ssr: true,
       components: 'components',
-      defaultComponents: dirname(require.resolve('idyll-default-components')),
+      defaultComponents: dirname(require.resolve('idyll-components')),
       layout: 'blog',
       output: 'build',
       temp: '.idyll',
