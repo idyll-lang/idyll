@@ -126,5 +126,6 @@ class Feature extends IdyllComponent {
 
 
 Feature.Content = Content;
+Feature.Waypoint = Waypoint;
 
 module.exports = Feature;

@@ -2,7 +2,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const IdyllComponent = require('idyll-component');
-const Screen = require('./screen');
+const Screen = require('./utils/screen');
 
 class FullScreen extends IdyllComponent {
   constructor (props) {

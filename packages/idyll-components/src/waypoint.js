@@ -1,8 +1,7 @@
-
 const React = require('react');
 const ReactDOM = require('react-dom');
 const IdyllComponent = require('idyll-component');
-const Screen = require('./screen');
+const Screen = require('./utils/screen');
 
 class Waypoint extends IdyllComponent {
   constructor (props) {
@@ -14,5 +13,3 @@ class Waypoint extends IdyllComponent {
   }
 
 }
-
-module.exports = Waypoint;
