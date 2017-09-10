@@ -7,7 +7,18 @@ This document is being rendered from **Idyll markup**. If you've used [markdown]
 To make things a little more interesting you can add JavaScript components to your text.
 For example, a `[Chart /]` component can be used to render a simple visualization:
 
-[Chart type:"scatter" /]
+[Chart
+  type:"scatter"
+  onEnterView:`(state, ref) => {
+    console.log('enter:', ref.position.top);
+  }`
+  onExitView:`(state, ref) => {
+    console.log('exit:', ref.position.top);
+  }`
+  onScroll:`(state, ref) => {
+    console.log('scroll:', ref.position.bottom / ref.size.height);
+  }`
+/]
 
 Try changing the chart's type from `scatter` to `line`, `area`, or `pie`.
 
