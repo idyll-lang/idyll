@@ -1,5 +1,4 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 const V = require('victory');
 const d3Arr = require('d3-array');
 
@@ -12,7 +11,7 @@ const types = {
   PIE: V.VictoryPie
 };
 
-class Chart extends IdyllComponent {
+class Chart extends React.PureComponent {
   render() {
     const type = this.props.type.toUpperCase();
     const INNER_CHART = types[type];

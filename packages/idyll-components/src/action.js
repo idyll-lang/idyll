@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class Action extends IdyllComponent {
+class Action extends React.PureComponent {
   render() {
     return (
       <span {...this.props} className={'action'}>{this.props.children}</span>

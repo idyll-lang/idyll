@@ -1,11 +1,10 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const IdyllComponent = require('idyll-component');
 const Format = require('d3-format');
 const Drag = require('d3-drag');
 const Selection = require('d3-selection');
 
-class Dynamic extends IdyllComponent {
+class Dynamic extends React.PureComponent {
 
   componentDidMount() {
     const node = ReactDOM.findDOMNode(this);

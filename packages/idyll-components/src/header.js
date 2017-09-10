@@ -1,6 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
-class Header extends IdyllComponent {
+
+class Header extends React.PureComponent {
   render() {
     return (
       <div className={'article-header'}>

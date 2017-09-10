@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class Fixed extends IdyllComponent {
+class Fixed extends React.PureComponent {
   render() {
     return (
       <div style={{position: 'fixed'}} className="fixed">

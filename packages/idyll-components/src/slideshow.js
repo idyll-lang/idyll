@@ -1,8 +1,7 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 const Slide = require('./slide');
 
-class Slideshow extends IdyllComponent {
+class Slideshow extends React.PureComponent {
 
   getChildren(children) {
     let processedChildren = [];

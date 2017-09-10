@@ -1,5 +1,4 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 const V = require('victory');
 
 const types = {
@@ -8,7 +7,7 @@ const types = {
   SCATTER: V.VictoryScatter
 };
 
-class Chart extends IdyllComponent {
+class Chart extends React.PureComponent {
   render() {
     const scale = 1 / (( this.props.randomSeed % 3  +  1));
     const INNER_CHART = types[this.props.type.toUpperCase()];
