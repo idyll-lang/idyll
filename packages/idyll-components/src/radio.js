@@ -1,8 +1,8 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
+const ReactDOM = require('react-dom');
 let id = 0;
 
-class Radio extends IdyllComponent {
+class Radio extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -10,7 +10,7 @@ class Radio extends IdyllComponent {
   }
 
   onChange(e) {
-    this.updateProps({ value: e.target.value });
+    this.props.updateProps({ value: e.target.value });
   }
 
   render() {

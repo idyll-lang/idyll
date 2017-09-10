@@ -1,14 +1,14 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
+const ReactDOM = require('react-dom');
 
-class TextInput extends IdyllComponent {
+class TextInput extends React.PureComponent {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
   }
 
   onChange(e) {
-    this.updateProps({ value: e.target.value });
+    this.props.updateProps({ value: e.target.value });
   }
 
   render() {
