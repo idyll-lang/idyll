@@ -209,6 +209,8 @@ class IdyllDocument extends React.PureComponent {
 
     const wrapTargets = findWrapTargets(schema, this.state);
 
+    let refCounter = 0;
+
     const transformedSchema = mapTree(
       schema,
       node => {
@@ -216,7 +218,7 @@ class IdyllDocument extends React.PureComponent {
 
         // transform refs from strings to functions and store them
         if (node.ref || node.hasHook) {
-          node.refName = node.ref || node.component + Math.round(Math.random() * 99999).toString();
+          node.refName = node.ref || node.component + (refCounter++).toString();
           node.className = 'is-ref';
           node.ref = el => {
             if (!el) return;
