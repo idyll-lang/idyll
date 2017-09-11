@@ -120,7 +120,8 @@ class Wrapper extends React.PureComponent {
 
   onUpdateRefs(newState) {
     const nextState = {};
-    Object.entries(this.props.__expr__).forEach(([key, val]) => {
+    Object.keys(this.props.__expr__).forEach((key) => {
+      const val = this.props.__expr__[key];
       nextState[key] = evalExpression(newState, val);
     });
     this.setState(nextState);
