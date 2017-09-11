@@ -49,7 +49,6 @@ export default class ReactJsonSchema {
       } else if (componentMap && componentMap[schema.component.toLowerCase()]) {
         Component = componentMap[schema.component.toLowerCase()];
       } else if (componentMap && componentMap[paramCase(schema.component)]) {
-        console.log('....')
         Component = componentMap[paramCase(schema.component)];
       } else if (DOM.hasOwnProperty(schema.component)) {
         Component = schema.component;
