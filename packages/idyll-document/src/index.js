@@ -73,8 +73,8 @@ class Wrapper extends React.PureComponent {
     this.onUpdateRefs = this.onUpdateRefs.bind(this);
     this.onUpdateProps = this.onUpdateProps.bind(this);
 
-    const vars = Object.values(props.__vars__);
-    const exps = Object.values(props.__expr__);
+    const vars = Object.keys(props.__vars__).map(d => props.__vars__[d]);
+    const exps = Object.keys(props.__expr__).map(d => props.__expr__[d]);
 
     // listen for props updates IF we care about them
     if (vars.length || exps.some(v => !v.includes('refs.'))) {
