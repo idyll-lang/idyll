@@ -2,7 +2,7 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const imageCache = [];
 
-class Preloader extends React.Component {
+class Preloader extends React.PureComponent {
   componentDidMount() {
     const { images } = this.props;
     images.forEach((i) => {

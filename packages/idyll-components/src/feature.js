@@ -1,14 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const IdyllComponent = require('idyll-component');
-
-class Content extends React.Component {
-  render () {
-    return <div style={this.props.style}>
-      {this.props.children}
-    </div>
-  }
-}
+const Content = require('./feature-content');
 
 const stateClasses = [
   'is-top',
@@ -16,7 +8,7 @@ const stateClasses = [
   'is-bottom'
 ];
 
-class Feature extends IdyllComponent {
+class Feature extends React.PureComponent {
   constructor (props) {
     super(props)
     this.setFeature = this.setFeature.bind(this);
@@ -63,7 +55,7 @@ class Feature extends IdyllComponent {
 
     // Only update the value when onscreen:
     if (rootRect.top < window.innerHeight && rootRect.bottom > 0) {
-      this.updateProps({value: position})
+      this.props.updateProps({value: position})
     }
   }
 
@@ -124,8 +116,5 @@ class Feature extends IdyllComponent {
   }
 }
 
-
-Feature.Content = Content;
-Feature.Waypoint = Waypoint;
 
 module.exports = Feature;

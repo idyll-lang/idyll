@@ -1,9 +1,8 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const IdyllComponent = require('idyll-component');
 const Screen = require('./utils/screen');
 
-class Waypoint extends IdyllComponent {
+class Waypoint extends React.PureComponent {
   constructor (props) {
     super(props);
   }

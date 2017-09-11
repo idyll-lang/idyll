@@ -2,10 +2,8 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Container = require('./container');
-const extend = require('xtend');
-const IdyllComponent = require('idyll-component');
 
-class Screen extends IdyllComponent {
+class Screen extends React.PureComponent {
   constructor (props) {
     super(props);
   }
@@ -28,7 +26,7 @@ class Screen extends IdyllComponent {
       overlayStyle.backgroundPosition = 'top center';
     }
 
-    let contentContainerStyle = extend({
+    let contentContainerStyle = Object.assign({
       flexDirection: this.props.direction || 'column',
       display: 'flex',
       height: '100%',

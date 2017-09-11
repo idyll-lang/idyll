@@ -1,9 +1,8 @@
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const IdyllComponent = require('idyll-component');
 
-class Panel extends IdyllComponent {
+class Panel extends React.PureComponent {
   constructor (props) {
     super(props);
   }
