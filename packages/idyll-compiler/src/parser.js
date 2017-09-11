@@ -17,6 +17,16 @@ module.exports = function(input, tokens, positions, options) {
       return node;
     }
 
+    // flatten children
+    node[2] = (node[2] || []).reduce((acc, child) => {
+      if (child[0] === '_idyllContainer') {
+        acc = acc.concat(child[2]);
+      } else {
+        acc.push(child);
+      }
+      return acc;
+    }, []);
+
     if (node[0] !== 'p'
       && node[2].length === 1
       && typeof node[2][0] !== 'string'
