@@ -26,6 +26,8 @@
     "html-tags": "^2.0.0",
     "is-class": "^0.0.4",
     "memoizee": "^0.4.5",
+    "object.entries": "^1.0.4",
+    "object.values": "^1.0.4",
     "scrollmonitor": "^1.2.3"
   },
   "devDependencies": {
