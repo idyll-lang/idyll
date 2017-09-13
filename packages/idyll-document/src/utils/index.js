@@ -1,3 +1,6 @@
+const values = require('object.values');
+const entries = require('object.entries');
+
 const flattenObject = (name, obj) => {
   const output = {};
   if (obj === undefined || obj === null) {
@@ -48,7 +51,7 @@ const evalExpression = (acc, expr) => {
             if (key === 'refs') {
               // delete each ref's domNode property
               // because it can't be serialized
-              Object.values(acc[key]).forEach(v => {
+              values(acc[key]).forEach(v => {
                 delete v.domNode;
               })
               // add `refs` const object graph to function scope
@@ -237,7 +240,7 @@ const findWrapTargets = (schema, state) => {
     const { component, children, __vars__, __expr__, ...props } = node;
 
     // iterate over the node's prop values
-    Object.entries(props).forEach(([key, val]) => {
+    entries(props).forEach(([key, val]) => {
       // avoid checking more props if we know it's a match
       if (targets.includes(node)) return;
 

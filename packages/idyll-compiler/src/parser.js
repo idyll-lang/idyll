@@ -2,6 +2,17 @@ const grammar = require('./grammar');
 const nearley = require('nearley');
 const smartquotes = require('smartquotes');
 
+const flattenChildren = (nodeList) => {
+  return (nodeList || []).reduce((acc, child) => {
+    if (child[0] === '_idyllContainer') {
+      acc = acc.concat(child[2]);
+    } else {
+      acc.push(child);
+    }
+    return acc;
+  }, []);
+}
+
 module.exports = function(input, tokens, positions, options) {
   options = options || {};
 
@@ -16,6 +27,9 @@ module.exports = function(input, tokens, positions, options) {
       }
       return node;
     }
+
+    // flatten children
+    node[2] = flattenChildren(node[2]);
 
     if (node[0] !== 'p'
       && node[2].length === 1
@@ -56,7 +70,8 @@ module.exports = function(input, tokens, positions, options) {
       // console.log(str);
     }
     // console.log(JSON.stringify(results[0]));
-    return results[0].map(cleanResults);
+
+    return flattenChildren(results[0]).map(cleanResults);
   }
 
   throw new Error('No parse results');

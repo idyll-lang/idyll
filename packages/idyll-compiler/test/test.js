@@ -397,7 +397,21 @@ describe('compiler', function() {
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
       expect(output).to.eql([['i', [], ['not even em']]]);
     })
-  });
+
+    it('should not insert extra div tags', function() {
+      const input = `
+      [Slideshow]
+        [Slide/]
+        [Slide/]
+
+        [Slide/]
+      [/Slideshow]`;
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+        expect(output).to.eql([['Slideshow', [], [['Slide', [], []], ['Slide', [], []], ['Slide', [], []]] ]]);
+    })
+});
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {

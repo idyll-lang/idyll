@@ -113,7 +113,7 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
     if (children.length === 1 && typeof children[0] !== 'string') {
       return children[0];
     } else if (children.filter(function (c) { return typeof c === 'string' }).length === 0) {
-      return ["div", [], children];
+      return ["_idyllContainer", [], children];
     }
 
     return ["p", [], children];

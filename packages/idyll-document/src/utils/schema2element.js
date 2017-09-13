@@ -1,4 +1,6 @@
-import { DOM, createElement } from 'React';
+
+import { DOM, createElement } from 'react';
+import { paramCase } from 'change-case';
 
 const _componentMap = new WeakMap();
 
@@ -47,6 +49,8 @@ export default class ReactJsonSchema {
         Component = componentMap[schema.component];
       } else if (componentMap && componentMap[schema.component.toLowerCase()]) {
         Component = componentMap[schema.component.toLowerCase()];
+      } else if (componentMap && componentMap[paramCase(schema.component)]) {
+        Component = componentMap[paramCase(schema.component)];
       } else if (DOM.hasOwnProperty(schema.component)) {
         Component = schema.component;
       } else {
