@@ -9,6 +9,9 @@ env:
   - PACKAGE=idyll-compiler
   - PACKAGE=idyll-components
 
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.0.1
+
 install:
   - yarn config set workspaces-experimental true
   - yarn install
