@@ -14,6 +14,7 @@ const {
   findWrapTargets,
   mapTree,
   evalExpression,
+  hooks,
 } = require('./utils');
 
 const updatePropsCallbacks = [];
@@ -72,6 +73,7 @@ class Wrapper extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.ref = {};
     this.onUpdateRefs = this.onUpdateRefs.bind(this);
     this.onUpdateProps = this.onUpdateProps.bind(this);
 
@@ -86,7 +88,7 @@ class Wrapper extends React.PureComponent {
     }
 
     // listen for ref updates IF we care about them
-    if (exps.some(v => v.includes('refs.'))) {
+    if (props.hasHook || exps.some(v => v.includes('refs.'))) {
       updateRefsCallbacks.push(this.onUpdateRefs);
     }
   }
@@ -121,10 +123,31 @@ class Wrapper extends React.PureComponent {
   }
 
   onUpdateRefs(newState) {
-    const nextState = {};
-    entries(this.props.__expr__).forEach(([key, val]) => {
+    const { hasHook, refName, __expr__ } = this.props;
+    
+    const nextState = {refs: newState.refs};
+    entries(__expr__).forEach(([key, val]) => {
       nextState[key] = evalExpression(newState, val);
     });
+
+    // if hooks are defined call them as appropriate
+    // passing the newly constructed state and this component's ref object
+    if (hasHook) {
+      const wasIn = (this.ref || {}).isInViewport;
+      const wasInFully = (this.ref || {}).isFullyInViewport;
+
+      this.ref = nextState.refs[refName];
+      const isIn = this.ref.isInViewport;
+      const isInFully = this.ref.isFullyInViewport;
+
+      this.onScroll(nextState, this.ref);
+      if (!isInFully && wasInFully) this.onExitView(nextState, this.ref);
+      if (!isIn && wasIn) this.onExitViewFully(nextState, this.ref);
+      if (isIn && !wasIn) this.onEnterView(nextState, this.ref);
+      if (isInFully && !wasInFully) this.onEnterViewFully(nextState, this.ref);
+    }
+
+    // trigger a render with latest state
     this.setState(nextState);
   }
 
@@ -141,6 +164,10 @@ class Wrapper extends React.PureComponent {
       <span>
         {
           React.Children.map(this.props.children, c => {
+            // store hooks on the wrapper
+            hooks.forEach(hook => {
+              this[hook] = c.props[hook] || function(){};
+            });
             return React.cloneElement(c, {...this.state});
           })
         }
@@ -186,22 +213,26 @@ class IdyllDocument extends React.PureComponent {
 
     const wrapTargets = findWrapTargets(schema, this.state);
 
+    let refCounter = 0;
+
     const transformedSchema = mapTree(
       schema,
       node => {
+        if (typeof node === 'string') return node;
+
         // transform refs from strings to functions and store them
-        if (typeof node !== 'string' && node.ref) {
-          const refName = node.ref;
+        if (node.ref || node.hasHook) {
+          node.refName = node.ref || node.component + (refCounter++).toString();
           node.className = 'is-ref';
           node.ref = el => {
             if (!el) return;
 
             const domNode = ReactDOM.findDOMNode(el);
-            domNode.dataset.ref = refName;
+            domNode.dataset.ref = node.refName;
           };
         }
 
-        if (!wrapTargets.includes(node) || typeof node === 'string') return node;
+        if (!wrapTargets.includes(node)) return node;
 
         const {
           component,
@@ -260,6 +291,8 @@ class IdyllDocument extends React.PureComponent {
           component: Wrapper,
           __vars__,
           __expr__,
+          hasHook: node.hasHook,
+          refName: node.refName,
           children: [
             node
           ],
@@ -275,7 +308,8 @@ class IdyllDocument extends React.PureComponent {
   }
 
   scrollListener() {
-    updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
+    const refs = getRefs();
+    updateRefsCallbacks.forEach(f => f({ ...this.state, refs }));
   }
 
   initScrollListener(el) {
@@ -307,7 +341,8 @@ class IdyllDocument extends React.PureComponent {
   }
 
   componentDidMount() {
-    updateRefsCallbacks.forEach(f => f({ ...this.state, refs: getRefs() }));
+    const refs = getRefs();
+    updateRefsCallbacks.forEach(f => f({ ...this.state, refs }));
   }
 
   render() {

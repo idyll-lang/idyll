@@ -1,8 +1,7 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 const Format = require('d3-format');
 
-class Display extends IdyllComponent {
+class Display extends React.PureComponent {
   constructor(props) {
     super(props);
     this.format = Format.format(props.format || '0.2f');

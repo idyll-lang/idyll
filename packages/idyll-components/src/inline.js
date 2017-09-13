@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class Inline extends IdyllComponent {
+class Inline extends React.PureComponent {
   render() {
     return (
       <div style={{display: 'inline-block'}}>

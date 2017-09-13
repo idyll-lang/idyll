@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class Aside extends IdyllComponent {
+class Aside extends React.PureComponent {
   render() {
     return (
       <div className={'aside-container'}>

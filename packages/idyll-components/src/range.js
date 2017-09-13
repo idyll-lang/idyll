@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class Range extends IdyllComponent {
+class Range extends React.PureComponent {
   constructor(props) {
     super(props);
   }

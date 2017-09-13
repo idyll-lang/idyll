@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class Button extends IdyllComponent {
+class Button extends React.PureComponent {
   render() {
     return (
       <button onClick={this.props.onClick.bind(this)}>

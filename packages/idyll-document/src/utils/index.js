@@ -1,4 +1,5 @@
 const values = require('object.values');
+const entries = require('object.entries');
 
 const flattenObject = (name, obj) => {
   const output = {};
@@ -156,6 +157,14 @@ const splitAST = (ast) => {
   return state;
 }
 
+const hooks = [
+  'onEnterView',
+  'onEnterViewFully',
+  'onExitView',
+  'onExitViewFully',
+  'onScroll',
+];
+
 const translate = (arr) => {
   const attrConvert = (list) => {
     return list.reduce(
@@ -169,6 +178,8 @@ const translate = (arr) => {
           acc.__expr__ = acc.__expr__ || {};
           acc.__expr__[name] = val;
         }
+        // flag nodes that define a hook function
+        if (hooks.includes(name)) acc.hasHook = true;
 
         acc[name] = val
         return acc
@@ -220,32 +231,30 @@ const findWrapTargets = (schema, state) => {
   mapTree(schema, (node) => {
     if (typeof node === 'string') return node;
 
-    // pull off the props we don't care about
+    if (node.hasHook) {
+      targets.push(node);
+      return node;
+    }
+
+    // pull off the props we don't need to check
     const { component, children, __vars__, __expr__, ...props } = node;
+
     // iterate over the node's prop values
-    values(props).forEach(val => {
-      // and include nodes whose prop value directly references a state var
+    entries(props).forEach(([key, val]) => {
+      // avoid checking more props if we know it's a match
+      if (targets.includes(node)) return;
+
+      const valIncludes = val.includes ? val.includes.bind(val) : function(){};
+
+      // include nodes whose prop value directly references a state var
       // like [Range value:x min:0 max:100 /]
-      if (stateKeys.includes(val)) {
-        if (!targets.includes(node)) targets.push(node);
-        return;
-      }
-      // and nodes whose prop values include a state var ref
+      // or nodes that track refs
+      // or nodes whose prop values include a state var ref
       // like [derived name:"xSquared" value:`x * x` /]
-      stateKeys.forEach((key) => {
-        if (
-          val.includes &&
-          val.includes(key) &&
-          !targets.includes(node)
-        ) {
-          targets.push(node);
-        }
-      })
-      // and nodes that track refs
       if (
-        val.includes &&
-        val.includes('refs.') &&
-        !targets.includes(node)
+        stateKeys.includes(val) ||
+        valIncludes('refs.') ||
+        stateKeys.some(valIncludes)
       ) {
         targets.push(node);
       }
@@ -267,4 +276,5 @@ module.exports = {
   findWrapTargets,
   mapTree,
   evalExpression,
+  hooks,
 };

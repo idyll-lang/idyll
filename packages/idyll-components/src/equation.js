@@ -1,6 +1,5 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const IdyllComponent = require('idyll-component');
 const Latex = require('react-latex');
 const select = require('d3-selection').select;
 const format = require('d3-format').format;
@@ -11,7 +10,7 @@ if (typeof document !== 'undefined') {
 
 const allowedProps = ['domain', 'step', 'children'];
 
-class Equation extends IdyllComponent {
+class Equation extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
