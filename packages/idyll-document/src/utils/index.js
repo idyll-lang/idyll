@@ -156,7 +156,9 @@ const splitAST = (ast) => {
 
 const hooks = [
   'onEnterView',
+  'onEnterViewFully',
   'onExitView',
+  'onExitViewFully',
   'onScroll',
 ];
 

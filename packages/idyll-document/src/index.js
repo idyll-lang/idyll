@@ -131,16 +131,18 @@ class Wrapper extends React.PureComponent {
     // if hooks are defined call them as appropriate
     // passing the newly constructed state and this component's ref object
     if (hasHook) {
-      const prevRef = this.ref || {};
-      this.ref = nextState.refs[refName];
+      const wasIn = (this.ref || {}).isInViewport;
+      const wasInFully = (this.ref || {}).isFullyInViewport;
 
-      this.onScroll && this.onScroll(nextState, this.ref);
-      if (this.onEnterView && this.ref.isInViewport && !prevRef.isInViewport) {
-        this.onEnterView(nextState, this.ref);
-      }
-      if (this.onExitView && !this.ref.isInViewport && prevRef.isInViewport) {
-        this.onExitView(nextState, this.ref);
-      }
+      this.ref = nextState.refs[refName];
+      const isIn = this.ref.isInViewport;
+      const isInFully = this.ref.isFullyInViewport;
+
+      this.onScroll(nextState, this.ref);
+      if (!isInFully && wasInFully) this.onExitView(nextState, this.ref);
+      if (!isIn && wasIn) this.onExitViewFully(nextState, this.ref);
+      if (isIn && !wasIn) this.onEnterView(nextState, this.ref);
+      if (isInFully && !wasInFully) this.onEnterViewFully(nextState, this.ref);
     }
 
     // trigger a render with latest state
@@ -162,7 +164,7 @@ class Wrapper extends React.PureComponent {
           React.Children.map(this.props.children, c => {
             // store hooks on the wrapper
             hooks.forEach(hook => {
-              if (c.props[hook]) this[hook] = c.props[hook];
+              this[hook] = c.props[hook] || function(){};
             });
             return React.cloneElement(c, {...this.state});
           })
