@@ -202,8 +202,9 @@ exports.getBaseHTML = (ast, template) => {
 exports.getHTML = (paths, ast, components, datasets, template) => {
   const componentClasses = {};
   Object.keys(components).forEach(key => {
-    componentClasses[key] = require(components[key])
-  })
+    delete require.cache[require.resolve(components[key])];
+    componentClasses[key] = require(components[key]);
+  });
 
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
