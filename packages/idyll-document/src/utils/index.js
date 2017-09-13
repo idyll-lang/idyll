@@ -95,17 +95,25 @@ const getVars = (arr, context) => {
     const [, [, nameValue]] = nameArr
     const [, [valueType, valueValue]] = valueArr;
 
-    if (valueType === 'value') acc[nameValue] = valueValue;
-    if (valueType === 'variable') acc[nameValue] = context[valueValue];
-    if (valueType === 'expression') {
-      const expr = valueValue;
-
-      acc[nameValue] = {
-        value: evalExpression(context, expr),
-        update: (newState, oldState) => {
-          return evalExpression(Object.assign({}, oldState, newState), expr)
+    switch(valueType) {
+      case 'value':
+        acc[nameValue] = valueValue;
+        break;
+      case 'variable':
+        if (context.hasOwnProperty(valueValue)) {
+          acc[nameValue] = context[valueValue];
+        } else {
+          acc[nameValue] = evalExpression(context, expr);
         }
-      }
+        break;
+      case 'expression':
+        const expr = valueValue;
+        acc[nameValue] = {
+          value: evalExpression(context, expr),
+          update: (newState, oldState) => {
+            return evalExpression(Object.assign({}, oldState, newState), expr)
+          }
+        }
     }
 
     return acc;
