@@ -44,12 +44,16 @@ export default class ReactJsonSchema {
     if (schema.hasOwnProperty('component')) {
       if (schema.component === Object(schema.component)) {
         Component = schema.component;
-      } else if (componentMap && componentMap[schema.component]) {
-        Component = componentMap[schema.component];
-      } else if (componentMap && componentMap[schema.component.toLowerCase()]) {
-        Component = componentMap[schema.component.toLowerCase()];
       } else if (componentMap && componentMap[paramCase(schema.component)]) {
-        Component = componentMap[paramCase(schema.component)];
+        let name = paramCase(schema.component);
+        const split = name.split('.');
+        Component = componentMap[name];
+        for (let i = 1; i < split.length; i++) {
+          Component = Component[split[i]];
+        }
+        if (Component.hasOwnProperty('default')) {
+          Component = Component.default;
+        }
       } else if (DOM.hasOwnProperty(schema.component)) {
         Component = schema.component;
       } else {
