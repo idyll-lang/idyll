@@ -1,8 +1,16 @@
+init:
+  # Get the latest stable version of Node.js
+  - ps: Install-Product node $env:nodejs_version
+  - npm install --global yarn
+  - set PATH=%PATH%;C:\.yarn\bin
+
 image:
   - Visual Studio 2017
 
-environment:
+matrix:
   fast_finish: true
+
+environment:
   matrix:
     - nodejs_version: "6"
       package: "idyll-cli"
@@ -43,12 +51,7 @@ environment:
 cache:
  - "%LOCALAPPDATA%\\Yarn"
 
-
 install:
-  # Get the latest stable version of Node.js
-  - ps: Install-Product node $env:nodejs_version
-  - npm install --global yarn
-  - set PATH=%PATH%;C:\.yarn\bin
   # install modules
   - yarn install
 
