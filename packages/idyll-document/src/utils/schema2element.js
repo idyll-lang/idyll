@@ -1,4 +1,4 @@
-import { DOM, createElement } from 'React';
+import { DOM, createElement } from 'react';
 
 const _componentMap = new WeakMap();
 
