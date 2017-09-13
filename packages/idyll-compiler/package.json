@@ -4,9 +4,9 @@
   "description": "Compiler for idyll",
   "main": "index.js",
   "scripts": {
-    "build-grammar": "nearleyc src/grammar.ne -o src/grammar.js",
-    "test": "npm run build-grammar && mocha",
-    "prepublish": "npm run build-grammar"
+    "build": "nearleyc src/grammar.ne -o src/grammar.js",
+    "test": "npm run build && mocha",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
