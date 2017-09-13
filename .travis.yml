@@ -9,6 +9,7 @@ env:
   - PACKAGE=idyll-compiler
   - PACKAGE=idyll-components
   - PACKAGE=idyll-document
+  - PACKAGE=idyll-cli
 
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.0.1
