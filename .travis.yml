@@ -16,4 +16,4 @@ before_install:
 install:
   - yarn install
 
-script: cd packages/$PACKAGE && && npm test
+script: cd packages/$PACKAGE && npm test
