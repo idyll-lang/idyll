@@ -42,7 +42,7 @@ const getRefs = () => {
 
     const domNode = watcher.watchItem;
     const rect = domNode.getBoundingClientRect();
-    const percentInView = Math.max(
+    const portionInView = Math.max(
       0,
       Math.min(
         1,
@@ -54,7 +54,7 @@ const getRefs = () => {
     refs[domNode.dataset.ref] = {
       ...bools,
       domNode,
-      percentInView: Math.round(percentInView * 100),
+      portionInView,
       size: {
         width: rect.width,
         height: rect.height,
