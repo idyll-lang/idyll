@@ -4,6 +4,15 @@ image:
 environment:
   matrix:
     - nodejs_version: "6"
+      package: "idyll-cli"
+
+    - nodejs_version: "7"
+      package: "idyll-cli"
+
+    - nodejs_version: "8"
+      package: "idyll-cli"
+
+    - nodejs_version: "6"
       package: "idyll-compiler"
 
     - nodejs_version: "7"
@@ -20,6 +29,15 @@ environment:
 
     - nodejs_version: "8"
       package: "idyll-components"
+
+    - nodejs_version: "6"
+      package: "idyll-document"
+
+    - nodejs_version: "7"
+      package: "idyll-document"
+
+    - nodejs_version: "8"
+      package: "idyll-document"
 
 cache:
  - "%LOCALAPPDATA%\\Yarn"
