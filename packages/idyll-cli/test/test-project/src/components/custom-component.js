@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class CustomComponent extends IdyllComponent {
+class CustomComponent extends React.PureComponent {
   render() {
     return (
       <div {...this.props}>
@@ -13,7 +12,7 @@ class CustomComponent extends IdyllComponent {
 
 module.exports = CustomComponent;
 
-module.exports.IndexedComponent = class extends IdyllComponent {
+module.exports.IndexedComponent = class extends React.PureComponent {
   render() {
     return (
       <div {...this.props}>

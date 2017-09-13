@@ -1,7 +1,6 @@
 const React = require('react');
-const IdyllComponent = require('idyll-component');
 
-class PascalComponent extends IdyllComponent {
+class PascalComponent extends React.PureComponent {
   render() {
     return (
       <div {...this.props}>
