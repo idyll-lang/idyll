@@ -1,26 +1,25 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 
-import Analytics from '../components/analytics';
-import Aside from '../components/aside';
-import Boolean from '../components/boolean';
-import Button from '../components/button';
-import Chart from '../components/chart';
-import Display from '../components/display';
-import Dynamic from '../components/equation';
-import Equation from '../components/equation';
-import Fixed from '../components/fixed';
-import Float from '../components/float';
-import Gist from '../components/gist';
-import Header from '../components/header';
-import Inline from '../components/inline';
-import Link from '../components/link';
-import Range from '../components/range';
-import Slide from '../components/slide';
-import Slideshow from '../components/slideshow';
-import SVG from '../components/svg';
-import Table from '../components/table';
-// import VegaLite from '../components/vega-lite';
+import Analytics from '../src/analytics';
+import Aside from '../src/aside';
+import Boolean from '../src/boolean';
+import Button from '../src/button';
+import Chart from '../src/chart';
+import Display from '../src/display';
+import Dynamic from '../src/equation';
+import Equation from '../src/equation';
+import Fixed from '../src/fixed';
+import Float from '../src/float';
+import Gist from '../src/gist';
+import Header from '../src/header';
+import Inline from '../src/inline';
+import Link from '../src/link';
+import Range from '../src/range';
+import Slide from '../src/slide';
+import Slideshow from '../src/slideshow';
+import SVG from '../src/svg';
+import Table from '../src/table';
 
 describe('Components sanity check', () => {
   it('<Analytics />', () => {
