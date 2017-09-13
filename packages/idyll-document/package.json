@@ -10,6 +10,7 @@
   "scripts": {
     "build": "babel src -d dist",
     "prepublish": "npm run build",
+    "postinstall": "npm run build",
     "test": "jest"
   },
   "jest": {

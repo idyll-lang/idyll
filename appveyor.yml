@@ -1,33 +1,37 @@
+init:
+  # Get the latest stable version of Node.js
+  - ps: Install-Product node $env:nodejs_version
+  - npm install --global yarn
+  - set PATH=%PATH%;C:\.yarn\bin
+
 image:
   - Visual Studio 2017
+
+matrix:
+  fast_finish: true
 
 environment:
   matrix:
     - nodejs_version: "6"
-      package: "idyll-compiler"
-
     - nodejs_version: "7"
-      package: "idyll-compiler"
-
     - nodejs_version: "8"
-      package: "idyll-compiler"
 
 cache:
  - "%LOCALAPPDATA%\\Yarn"
 
-
 install:
-  # Get the latest stable version of Node.js
-  - ps: Install-Product node $env:nodejs_version
   # install modules
-  - yarn --msvs_version=2013
+  - yarn install
 
 # Post-install test scripts.
 test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
-  - cd packages/$package && npm run test
+  - cd packages/idyll-cli && npm run test && cd ../..
+  - cd packages/idyll-compiler && npm run test && cd ../..
+  - cd packages/idyll-components && npm run test && cd ../..
+  - cd packages/idyll-document && npm run test && cd ../..
 
 # Don't actually build.
 build: off
