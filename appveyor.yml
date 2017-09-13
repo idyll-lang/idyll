@@ -13,40 +13,8 @@ matrix:
 environment:
   matrix:
     - nodejs_version: "6"
-      package: "idyll-cli"
-
     - nodejs_version: "7"
-      package: "idyll-cli"
-
     - nodejs_version: "8"
-      package: "idyll-cli"
-
-    - nodejs_version: "6"
-      package: "idyll-compiler"
-
-    - nodejs_version: "7"
-      package: "idyll-compiler"
-
-    - nodejs_version: "8"
-      package: "idyll-compiler"
-
-    - nodejs_version: "6"
-      package: "idyll-components"
-
-    - nodejs_version: "7"
-      package: "idyll-components"
-
-    - nodejs_version: "8"
-      package: "idyll-components"
-
-    - nodejs_version: "6"
-      package: "idyll-document"
-
-    - nodejs_version: "7"
-      package: "idyll-document"
-
-    - nodejs_version: "8"
-      package: "idyll-document"
 
 cache:
  - "%LOCALAPPDATA%\\Yarn"
@@ -60,7 +28,10 @@ test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
-  - cd packages/%package% && npm run test
+  - cd packages/idyll-cli && npm run test && cd ../..
+  - cd packages/idyll-compiler && npm run test && cd ../..
+  - cd packages/idyll-components && npm run test && cd ../..
+  - cd packages/idyll-document && npm run test && cd ../..
 
 # Don't actually build.
 build: off
