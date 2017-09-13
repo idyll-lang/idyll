@@ -3,6 +3,8 @@ image:
 
 environment:
   matrix:
+    fast_finish: true
+
     - nodejs_version: "6"
       package: "idyll-cli"
 
