@@ -45,20 +45,22 @@ export default class ReactJsonSchema {
     if (schema.hasOwnProperty('component')) {
       if (schema.component === Object(schema.component)) {
         Component = schema.component;
-      } else if (componentMap && componentMap[paramCase(schema.component)]) {
-        let name = paramCase(schema.component);
-        const split = name.split('.');
-        Component = componentMap[name];
-        for (let i = 1; i < split.length; i++) {
-          Component = Component[split[i]];
-        }
-        if (Component.hasOwnProperty('default')) {
-          Component = Component.default;
-        }
-      } else if (DOM.hasOwnProperty(schema.component)) {
-        Component = schema.component;
       } else {
-        throw new Error(`ReactJsonSchema could not find an implementation for: ${schema.component}`);
+        const split = schema.component.split('.');
+        const name = paramCase(split[0]);
+        if (componentMap && componentMap[name]) {
+          Component = componentMap[name];
+          for (let i = 1; i < split.length; i++) {
+            Component = Component[split[i]];
+          }
+          if (Component.hasOwnProperty('default')) {
+            Component = Component.default;
+          }
+        } else if (DOM.hasOwnProperty(name)) {
+          Component = schema.component;
+        } else {
+          throw new Error(`ReactJsonSchema could not find an implementation for: ${schema.component}`);
+        }
       }
     } else {
       throw new Error('ReactJsonSchema could not resolve a component due to a missing component attribute in the schema.');
