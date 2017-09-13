@@ -6,6 +6,7 @@
   "module": "src/index.js",
   "scripts": {
     "build": "babel src -d dist",
+    "postinstall": "npm run build",
     "prepublish": "npm run build",
     "test": "jest"
   },

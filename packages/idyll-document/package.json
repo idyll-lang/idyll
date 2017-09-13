@@ -17,10 +17,6 @@
       "**/test/**/*.js"
     ]
   },
-  "peerDependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
-  },
   "dependencies": {
     "change-case": "^3.0.1",
     "html-tags": "^2.0.0",
