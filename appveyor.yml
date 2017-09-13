@@ -2,9 +2,8 @@ image:
   - Visual Studio 2017
 
 environment:
+  fast_finish: true
   matrix:
-    fast_finish: true
-
     - nodejs_version: "6"
       package: "idyll-cli"
 
