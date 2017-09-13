@@ -2,6 +2,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const scrollMonitor = require('scrollmonitor');
 const ReactJsonSchema = require('./utils/schema2element').default;
+const entries = require('object.entries');
+const values = require('object.values');
 const {
   flattenObject,
   getData,
@@ -73,8 +75,8 @@ class Wrapper extends React.PureComponent {
     this.onUpdateRefs = this.onUpdateRefs.bind(this);
     this.onUpdateProps = this.onUpdateProps.bind(this);
 
-    const vars = Object.values(props.__vars__);
-    const exps = Object.values(props.__expr__);
+    const vars = values(props.__vars__);
+    const exps = values(props.__expr__);
 
     // listen for props updates IF we care about them
     if (vars.length || exps.some(v => !v.includes('refs.'))) {
@@ -96,8 +98,8 @@ class Wrapper extends React.PureComponent {
     // or vars our expressions reference?
     const shouldUpdate = changedKeys.some(k => {
       return (
-        Object.values(__vars__).includes(k) ||
-        Object.values(__expr__).some(expr => expr.includes(k))
+        values(__vars__).includes(k) ||
+        values(__expr__).some(expr => expr.includes(k))
       );
     });
     // if nothing we care about changed bail out and don't re-render
@@ -120,7 +122,7 @@ class Wrapper extends React.PureComponent {
 
   onUpdateRefs(newState) {
     const nextState = {};
-    Object.entries(this.props.__expr__).forEach(([key, val]) => {
+    entries(this.props.__expr__).forEach(([key, val]) => {
       nextState[key] = evalExpression(newState, val);
     });
     this.setState(nextState);
