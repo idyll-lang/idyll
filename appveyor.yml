@@ -19,8 +19,9 @@ cache:
 install:
   # Get the latest stable version of Node.js
   - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product yarn 1.0.1
   # install modules
-  - yarn --msvs_version=2013
+  - yarn install
 
 # Post-install test scripts.
 test_script:

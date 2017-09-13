@@ -6,7 +6,6 @@
   "scripts": {
     "build": "nearleyc src/grammar.ne -o src/grammar.js",
     "test": "npm run build && mocha",
-    "postinstall": "npm run build",
     "prepublish": "npm run build"
   },
   "repository": {
