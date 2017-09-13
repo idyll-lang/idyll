@@ -29,6 +29,8 @@ const getScrollableContainer = el => {
 
 const getRefs = () => {
   const refs = {};
+  const containerNode = scrollContainer.item;
+  const containerRect = containerNode.getBoundingClientRect();
 
   scrollWatchers.forEach(watcher => {
     // get boolean props
@@ -40,13 +42,19 @@ const getRefs = () => {
 
     const domNode = watcher.watchItem;
     const rect = domNode.getBoundingClientRect();
-    const containerNode = scrollContainer.item;
-    const containerRect = containerNode.getBoundingClientRect();
+    const percentInView = Math.max(
+      0,
+      Math.min(
+        1,
+        (watcher.bottom - scrollContainer.viewportTop) / rect.height
+      )
+    )
 
     // left and right props assume no horizontal scrolling
     refs[domNode.dataset.ref] = {
       ...bools,
       domNode,
+      percentInView: Math.round(percentInView * 100),
       size: {
         width: rect.width,
         height: rect.height,
@@ -124,7 +132,7 @@ class Wrapper extends React.PureComponent {
 
   onUpdateRefs(newState) {
     const { hasHook, refName, __expr__ } = this.props;
-    
+
     const nextState = {refs: newState.refs};
     entries(__expr__).forEach(([key, val]) => {
       nextState[key] = evalExpression(newState, val);
