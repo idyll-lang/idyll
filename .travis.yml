@@ -1,0 +1,16 @@
+language: node_js
+
+node_js:
+  - "6"
+  - "7"
+  - "8"
+
+env:
+  - PACKAGE=idyll-compiler
+  - PACKAGE=idyll-components
+
+install:
+  - yarn config set workspaces-experimental true
+  - yarn install
+
+script: cd packages/$PACKAGE && && npm test
