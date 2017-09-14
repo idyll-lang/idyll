@@ -52,6 +52,7 @@
     "enzyme": "^2.8.2",
     "jest": "^19.0.2",
     "react": "next",
+    "react-addons-test-utils": "^15.6.0",
     "react-dom": "next"
   }
 }
