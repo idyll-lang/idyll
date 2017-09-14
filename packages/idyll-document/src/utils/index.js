@@ -55,9 +55,9 @@ const evalExpression = (acc, expr) => {
                 delete v.domNode;
               })
               // add `refs` const object graph to function scope
-              return `const ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
+              return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
             }
-            return `const ${key} = ${acc[key]};`;
+            return `var ${key} = ${acc[key]};`;
           })
           .join('\n')
       }
