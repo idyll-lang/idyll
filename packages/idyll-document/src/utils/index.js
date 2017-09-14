@@ -57,7 +57,10 @@ const evalExpression = (acc, expr) => {
               // add `refs` const object graph to function scope
               return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
             }
-            return `var ${key} = ${acc[key]};`;
+            const val = acc[key];
+            return typeof val === 'string'
+              ? `var ${key} = "${val}";`
+              : `var ${key} = ${val};`;
           })
           .join('\n')
       }
