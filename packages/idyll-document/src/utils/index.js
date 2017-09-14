@@ -57,7 +57,7 @@ const evalExpression = (acc, expr) => {
               // add `refs` const object graph to function scope
               return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
             }
-            return `var ${key} = ${acc[key]};`;
+            return `var ${key} = ${JSON.stringify(acc[key])};`;
           })
           .join('\n')
       }
