@@ -1,6 +1,6 @@
 {
   "name": "idyll-components",
-  "version": "2.0.0",
+  "version": "2.0.0-alpha.2",
   "description": "Components that ship by default in new Idyll projects",
   "main": "dist/index.js",
   "module": "src/index.js",
@@ -21,7 +21,10 @@
   "keywords": [
     "Idyll"
   ],
-  "author": "Matthew Conlen",
+  "authors": [
+    "Matthew Conlen",
+    "Ben Clinkinbeard"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/idyll-lang/idyll/issues"
@@ -29,28 +32,29 @@
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
     "d3-array": "^1.2.0",
-    "d3-drag": "^1.1.0",
+    "d3-drag": "^1.1.1",
     "d3-format": "^1.2.0",
     "d3-selection": "^1.1.0",
-    "idyll-component": "1.2.0",
     "prop-types": "^15.5.10",
-    "react-inlinesvg": "^0.6.0",
+    "react-inlinesvg": "^0.6.2",
     "react-latex": "^1.0.1",
-    "react-syntax-highlighter": "^5.6.2",
+    "react-syntax-highlighter": "^5.7.0",
     "reactable": "^0.14.1",
-    "victory": "^0.21.0"
+    "victory": "^0.22.2"
   },
   "peerDependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react": "next",
+    "react-dom": "next"
   },
   "devDependencies": {
-    "babel-cli": "6.24.1",
+    "babel-cli": "6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "enzyme": "^2.8.2",
-    "jest": "^19.0.2",
-    "react-addons-test-utils": "^15.5.1"
+    "enzyme": "^2.9.1",
+    "jest": "^21.1.0",
+    "react": "next",
+    "react-addons-test-utils": "^15.6.0",
+    "react-dom": "next"
   }
 }
