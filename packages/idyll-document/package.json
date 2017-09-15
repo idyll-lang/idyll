@@ -25,6 +25,7 @@
     "memoizee": "^0.4.5",
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
+    "react-dom-factories": "^1.0.1",
     "scrollmonitor": "^1.2.3"
   },
   "devDependencies": {
