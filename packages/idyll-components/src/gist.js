@@ -1,4 +1,5 @@
 const React = require('react');
+const PropTypes = require('prop-types');
 
 class EmbeddedGist extends React.PureComponent {
 
@@ -62,8 +63,8 @@ class EmbeddedGist extends React.PureComponent {
 }
 
 EmbeddedGist.propTypes = {
-    gist: React.PropTypes.string.isRequired, // e.g. "username/id"
-    file: React.PropTypes.string // to embed a single specific file from the gist
+    gist: PropTypes.string.isRequired, // e.g. "username/id"
+    file: PropTypes.string // to embed a single specific file from the gist
 };
 
 // Each time we request a Gist, we'll need to generate a new
