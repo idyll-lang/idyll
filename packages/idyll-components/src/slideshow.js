@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const Slide = require('./slide');
 
 class Slideshow extends React.PureComponent {
@@ -31,4 +31,4 @@ Slideshow.defaultProps = {
   currentSlide: 1
 };
 
-module.exports = Slideshow;
+export default Slideshow;

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Slide extends React.PureComponent {
   render() {
@@ -10,4 +10,4 @@ class Slide extends React.PureComponent {
   }
 }
 
-module.exports = Slide;
+export default Slide;

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 const Latex = require('react-latex');
 const select = require('d3-selection').select;
@@ -122,4 +122,4 @@ class Equation extends React.PureComponent {
   }
 }
 
-module.exports = Equation;
+export default Equation;

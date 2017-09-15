@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Inline extends React.PureComponent {
   render() {
@@ -10,4 +10,4 @@ class Inline extends React.PureComponent {
   }
 }
 
-module.exports = Inline;
+export default Inline;

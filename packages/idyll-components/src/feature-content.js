@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 
 class Content extends React.PureComponent {
@@ -9,4 +9,4 @@ class Content extends React.PureComponent {
   }
 }
 
-module.exports = Content;
+export default Content;

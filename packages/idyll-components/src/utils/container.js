@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 
 class Container extends React.Component {
@@ -69,4 +69,4 @@ Container.defaultProps = {
   fullBleed: false
 }
 
-module.exports = Container;
+export default Container;

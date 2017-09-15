@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Range extends React.PureComponent {
   constructor(props) {
@@ -26,4 +26,4 @@ Range.defaultProps = {
   step: 1
 };
 
-module.exports = Range;
+export default Range;

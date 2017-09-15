@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Boolean extends React.PureComponent {
   constructor(props) {
@@ -23,4 +23,4 @@ Boolean.defaultProps = {
   value: false
 };
 
-module.exports = Boolean;
+export default Boolean;

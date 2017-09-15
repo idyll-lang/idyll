@@ -1,5 +1,5 @@
 
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 const Screen = require('./utils/screen');
 
@@ -14,4 +14,4 @@ class FullScreen extends React.PureComponent {
 
 }
 
-module.exports = FullScreen;
+export default FullScreen;

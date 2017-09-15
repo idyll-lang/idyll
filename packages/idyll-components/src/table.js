@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const Reactable = require('reactable');
 const Table = Reactable.Table;
 const Tr = Reactable.Tr;
@@ -12,4 +12,4 @@ class TableComponent extends React.PureComponent {
   }
 }
 
-module.exports = TableComponent;
+export default TableComponent;

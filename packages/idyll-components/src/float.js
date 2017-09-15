@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Float extends React.PureComponent {
   render() {
@@ -10,4 +10,4 @@ class Float extends React.PureComponent {
   }
 }
 
-module.exports = Float;
+export default Float;

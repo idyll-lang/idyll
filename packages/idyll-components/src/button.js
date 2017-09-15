@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Button extends React.PureComponent {
   render() {
@@ -14,4 +14,4 @@ Button.defaultProps = {
   onClick: function() {}
 };
 
-module.exports = Button;
+export default Button;
