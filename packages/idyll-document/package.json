@@ -1,6 +1,6 @@
 {
   "name": "idyll-document",
-  "version": "2.0.0-alpha.3",
+  "version": "2.0.0-alpha.4",
   "license": "MIT",
   "authors": [
     "Matthew Conlen",
@@ -11,7 +11,6 @@
   "scripts": {
     "build": "babel src -d dist",
     "prepublish": "npm run build",
-    "postinstall": "npm run build",
     "test": "jest"
   },
   "jest": {
