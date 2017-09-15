@@ -21,7 +21,10 @@
   "keywords": [
     "Idyll"
   ],
-  "author": "Matthew Conlen",
+  "authors": [
+    "Matthew Conlen",
+    "Ben Clinkinbeard"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/idyll-lang/idyll/issues"
