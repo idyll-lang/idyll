@@ -1,25 +1,6 @@
 const values = require('object.values');
 const entries = require('object.entries');
 
-const flattenObject = (name, obj) => {
-  const output = {};
-  if (obj === undefined || obj === null) {
-    return output;
-  }
-  Object.keys(obj).forEach((key) => {
-    const val = obj[key];
-    if (typeof val === 'object') {
-      const results = flattenObject(key, val);
-      Object.keys(results).forEach((result) => {
-        output[name + result] = results[result];
-      });
-    } else {
-      output[name + key] = val;
-    }
-  });
-  return output;
-};
-
 const getNodesByName = (name, tree) => {
   const predicate = typeof name === 'string' ? (s) => s === name : name;
 
@@ -41,7 +22,7 @@ const getNodesByName = (name, tree) => {
   )
 }
 
-const evalExpression = (acc, expr) => {
+export const evalExpression = (acc, expr) => {
   const e = `
     (() => {
       ${
@@ -70,7 +51,7 @@ const evalExpression = (acc, expr) => {
   } catch (err) {}
 }
 
-const getVars = (arr, context) => {
+export const getVars = (arr, context) => {
   const pluck = (acc, val) => {
     const [ , attrs, ] = val
     const [nameArr, valueArr] = attrs;
@@ -108,7 +89,7 @@ const getVars = (arr, context) => {
   )
 }
 
-const getData = (arr, datasets = {}) => {
+export const getData = (arr, datasets = {}) => {
   const pluck = (acc, val) => {
     const [ , attrs, ] = val
     const [nameArr, ] = attrs;
@@ -126,7 +107,7 @@ const getData = (arr, datasets = {}) => {
   )
 }
 
-const splitAST = (ast) => {
+export const splitAST = (ast) => {
   const state = {
     vars: [],
     derived: [],
@@ -148,7 +129,7 @@ const splitAST = (ast) => {
   return state;
 }
 
-const hooks = [
+export const hooks = [
   'onEnterView',
   'onEnterViewFully',
   'onExitView',
@@ -156,7 +137,7 @@ const hooks = [
   'onScroll',
 ];
 
-const translate = (arr) => {
+export const translate = (arr) => {
   const attrConvert = (list) => {
     return list.reduce(
       (acc, [name, [type, val]]) => {
@@ -196,7 +177,7 @@ const translate = (arr) => {
   return splitAST(arr).elements.map(tNode)
 }
 
-const mapTree = (tree, mapFn) => {
+export const mapTree = (tree, mapFn) => {
   const walkFn = (acc, node) => {
     if (typeof node !== 'string') {
       node.children = node.children.reduce(walkFn, [])
@@ -212,7 +193,7 @@ const mapTree = (tree, mapFn) => {
   )
 }
 
-const findWrapTargets = (schema, state) => {
+export const findWrapTargets = (schema, state) => {
   const targets = [];
   const stateKeys = Object.keys(state);
 
@@ -256,16 +237,3 @@ const findWrapTargets = (schema, state) => {
 
   return targets;
 }
-
-module.exports = {
-  flattenObject,
-  getData,
-  getNodesByName,
-  getVars,
-  splitAST,
-  translate,
-  findWrapTargets,
-  mapTree,
-  evalExpression,
-  hooks,
-};

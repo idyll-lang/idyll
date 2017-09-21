@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 const Content = require('./feature-content');
 
@@ -117,4 +117,4 @@ class Feature extends React.PureComponent {
 }
 
 
-module.exports = Feature;
+export default Feature;

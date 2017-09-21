@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import SyntaxHighlighter from "react-syntax-highlighter/dist/light";
 import style from 'react-syntax-highlighter/dist/styles/github';
 
@@ -8,4 +8,4 @@ class CodeHighlight extends React.PureComponent {
   }
 }
 
-module.exports = CodeHighlight;
+export default CodeHighlight;

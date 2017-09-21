@@ -1,13 +1,11 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const scrollMonitor = require('scrollmonitor');
-const ReactJsonSchema = require('./utils/schema2element').default;
-const entries = require('object.entries');
-const values = require('object.values');
-const {
-  flattenObject,
+import React from 'react';
+import ReactDOM from 'react-dom';
+import scrollMonitor from 'scrollmonitor';
+import ReactJsonSchema from './utils/schema2element';
+import entries from 'object.entries';
+import values from 'object.values';
+import {
   getData,
-  getNodesByName,
   getVars,
   splitAST,
   translate,
@@ -15,7 +13,7 @@ const {
   mapTree,
   evalExpression,
   hooks,
-} = require('./utils');
+} from './utils';
 
 const updatePropsCallbacks = [];
 const updateRefsCallbacks = [];
@@ -372,4 +370,4 @@ class IdyllDocument extends React.PureComponent {
   }
 }
 
-module.exports = IdyllDocument;
+export default IdyllDocument;

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const PropTypes = require('prop-types');
 
 class EmbeddedGist extends React.PureComponent {
@@ -74,5 +74,5 @@ EmbeddedGist.nextGistCallback = () => {
     return "embed_gist_callback_" + gistCallbackId++;
 };
 
-module.exports = EmbeddedGist;
+export default EmbeddedGist;
 

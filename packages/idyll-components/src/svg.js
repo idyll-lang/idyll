@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const InlineSVG = require('react-inlinesvg');
 
 class SVG extends React.PureComponent {
@@ -9,5 +9,5 @@ class SVG extends React.PureComponent {
   }
 }
 
-module.exports = SVG;
+export default SVG;
 

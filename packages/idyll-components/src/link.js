@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Link extends React.PureComponent {
   constructor(props) {
@@ -18,4 +18,4 @@ class Link extends React.PureComponent {
   }
 }
 
-module.exports = Link;
+export default Link;

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 const imageCache = [];
 
@@ -16,4 +16,4 @@ class Preloader extends React.PureComponent {
   }
 }
 
-module.exports = Preloader;
+export default Preloader;

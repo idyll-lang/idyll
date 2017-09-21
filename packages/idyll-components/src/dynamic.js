@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 const Format = require('d3-format');
 const Drag = require('d3-drag');
@@ -35,4 +35,4 @@ Dynamic.defaultProps = {
   interval: 1
 };
 
-module.exports = Dynamic;
+export default Dynamic;

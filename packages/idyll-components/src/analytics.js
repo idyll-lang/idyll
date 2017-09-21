@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Analytics extends React.PureComponent {
   componentDidMount() {
@@ -20,4 +20,4 @@ class Analytics extends React.PureComponent {
 }
 
 
-module.exports = Analytics;
+export default Analytics;

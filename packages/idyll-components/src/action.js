@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Action extends React.PureComponent {
   render() {
@@ -8,4 +8,4 @@ class Action extends React.PureComponent {
   }
 }
 
-module.exports = Action;
+export default Action;

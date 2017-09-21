@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 
 class Select extends React.PureComponent {
@@ -25,4 +25,4 @@ class Select extends React.PureComponent {
   }
 }
 
-module.exports = Select;
+export default Select;

@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Header extends React.PureComponent {
   render() {
@@ -27,4 +27,4 @@ class Header extends React.PureComponent {
   }
 }
 
-module.exports = Header;
+export default Header;

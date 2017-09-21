@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 let id = 0;
 
@@ -27,4 +27,4 @@ class Radio extends React.PureComponent {
   }
 }
 
-module.exports = Radio;
+export default Radio;

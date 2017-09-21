@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const Format = require('d3-format');
 
 class Display extends React.PureComponent {
@@ -31,4 +31,4 @@ class Display extends React.PureComponent {
   }
 }
 
-module.exports = Display;
+export default Display;

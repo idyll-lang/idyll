@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const V = require('victory');
 const d3Arr = require('d3-array');
 
@@ -64,4 +64,4 @@ Chart.defaultProps = {
   type: 'line'
 };
 
-module.exports = Chart;
+export default Chart;

@@ -1,22 +1,20 @@
-module.exports = {
-  action: require('./action.js'),
-  analytics: require('./analytics.js'),
-  aside: require('./aside.js'),
-  boolean: require('./boolean.js'),
-  button: require('./button.js'),
-  chart: require('./chart.js'),
-  display: require('./display.js'),
-  dynamic: require('./dynamic.js'),
-  equation: require('./equation.js'),
-  fixed: require('./fixed.js'),
-  float: require('./float.js'),
-  gist: require('./gist.js'),
-  header: require('./header.js'),
-  inline: require('./inline.js'),
-  link: require('./link.js'),
-  range: require('./range.js'),
-  slide: require('./slide.js'),
-  slideshow: require('./slideshow.js'),
-  svg: require('./svg.js'),
-  table: require('./table.js')
-}
+export { default as Action } from './action';
+export { default as Analytics } from './analytics';
+export { default as Aside } from './aside';
+export { default as Bool } from './boolean';
+export { default as Button } from './button';
+export { default as Chart } from './chart';
+export { default as Display } from './display';
+export { default as Dynamic } from './dynamic';
+export { default as Equation } from './equation';
+export { default as Fixed } from './fixed';
+export { default as Float } from './float';
+export { default as Gist } from './gist';
+export { default as Header } from './header';
+export { default as Inline } from './inline';
+export { default as Link } from './link';
+export { default as Range } from './range';
+export { default as Slide } from './slide';
+export { default as Slideshow } from './slideshow';
+export { default as Svg } from './svg';
+export { default as Table } from './table';

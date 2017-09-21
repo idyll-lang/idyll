@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Aside extends React.PureComponent {
   render() {
@@ -12,4 +12,4 @@ class Aside extends React.PureComponent {
   }
 }
 
-module.exports = Aside;
+export default Aside;

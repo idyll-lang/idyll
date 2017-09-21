@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 
 class TextInput extends React.PureComponent {
@@ -18,4 +18,4 @@ class TextInput extends React.PureComponent {
   }
 }
 
-module.exports = TextInput;
+export default TextInput;

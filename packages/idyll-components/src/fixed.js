@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class Fixed extends React.PureComponent {
   render() {
@@ -10,4 +10,4 @@ class Fixed extends React.PureComponent {
   }
 }
 
-module.exports = Fixed;
+export default Fixed;

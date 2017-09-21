@@ -1,5 +1,5 @@
 
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 const Container = require('./container');
 
@@ -71,4 +71,4 @@ Screen.defaultProps = {
   align: 'left',
 };
 
-module.exports = Screen;
+export default Screen;

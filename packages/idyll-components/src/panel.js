@@ -1,5 +1,5 @@
 
-const React = require('react');
+import React from 'react';
 const ReactDOM = require('react-dom');
 
 class Panel extends React.PureComponent {
@@ -13,4 +13,4 @@ class Panel extends React.PureComponent {
 
 }
 
-module.exports = Panel;
+export default Panel;
