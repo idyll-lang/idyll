@@ -51,7 +51,7 @@ export const evalExpression = (acc, expr) => {
   } catch (err) {}
 }
 
-export const getVars = (arr, context) => {
+export const getVars = (arr, context = {}) => {
   const pluck = (acc, val) => {
     const [ , attrs, ] = val
     const [nameArr, valueArr] = attrs;
