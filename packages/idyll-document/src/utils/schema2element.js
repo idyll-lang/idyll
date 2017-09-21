@@ -4,7 +4,10 @@ import { pascalCase } from 'change-case';
 
 const _componentMap = new WeakMap();
 
-export default class ReactJsonSchema {
+class ReactJsonSchema {
+  constructor(componentMap) {
+    if (componentMap) this.setComponentMap(componentMap);
+  }
 
   parseSchema(schema) {
     let element = null;
@@ -81,3 +84,5 @@ export default class ReactJsonSchema {
     _componentMap.set(this, componentMap);
   }
 }
+
+export default ReactJsonSchema;

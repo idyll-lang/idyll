@@ -86,8 +86,7 @@ describe('Schema transformations', () => {
 
 describe('Schema to Elements', () => {
   it('creates the expected elements', () => {
-    const rjs = new ReactJsonSchema();
-    rjs.setComponentMap(components);
+    const rjs = new ReactJsonSchema(components);
     const el = rjs.parseSchema({component: 'div', children: schema});
     expect(shallow(el).contains(<h1>Welcome to Idyll</h1>)).toBe(true);
   });
