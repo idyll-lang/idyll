@@ -1,5 +1,5 @@
 
-const hashCode = (str) => {
+export const hashCode = (str) => {
   var hash = 0, i, chr;
   if (str.length === 0) return hash;
   for (i = 0; i < str.length; i++) {``
@@ -8,8 +8,4 @@ const hashCode = (str) => {
     hash |= 0; // Convert to 32bit integer
   }
   return hash;
-};
-
-module.exports = {
-  hashCode
 };

@@ -1,7 +1,6 @@
-
-const React = require('react');
-const ReactDOM = require('react-dom');
-const App = require('./app');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './app';
 
 // Add an empty div for React to mount in
 const mountNode = document.createElement('div');

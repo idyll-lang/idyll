@@ -1,10 +1,11 @@
-const React = require('react');
-const Editor = require('./editor');
-const Renderer = require('./renderer');
+import React from 'react';
+import Editor from './editor';
+import Renderer from './renderer';
+import compile from 'idyll-compiler';
+import { hashCode } from './utils';
+
 const fs = require('fs');
 const initialValue = fs.readFileSync(__dirname + '/initial.idl', 'utf8');
-const compile = require('idyll-compiler');
-const hashCode = require('./utils').hashCode;
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -58,4 +59,4 @@ class App extends React.PureComponent {
   }
 }
 
-module.exports = App;
+export default App;

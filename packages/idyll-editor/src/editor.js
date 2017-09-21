@@ -1,5 +1,5 @@
-const React = require('react');
-import {Editor, EditorState, ContentState } from 'draft-js';
+import React from 'react';
+import { Editor, EditorState, ContentState } from 'draft-js';
 
 class EditorComponent extends React.PureComponent {
   constructor(props) {
@@ -30,4 +30,4 @@ class EditorComponent extends React.PureComponent {
   }
 }
 
-module.exports = EditorComponent;
+export default EditorComponent;

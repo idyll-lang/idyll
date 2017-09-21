@@ -1,6 +1,6 @@
-const components = require('idyll-components');
-const IdyllDocument = require('../../idyll-document/src');
-const React = require('react');
+import React from 'react';
+import * as components from 'idyll-components';
+import IdyllDocument from '../../idyll-document/src';
 
 class Renderer extends React.PureComponent {
   render() {
@@ -20,4 +20,4 @@ class Renderer extends React.PureComponent {
   }
 }
 
-module.exports = Renderer;
+export default Renderer;
