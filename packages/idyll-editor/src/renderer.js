@@ -10,7 +10,7 @@ class Renderer extends React.PureComponent {
         <div className={"renderer-container"}>
           <IdyllDocument
             ast={ast}
-            componentClasses={components}
+            components={components}
             key={idyllHash}
             datasets={{}}
           />

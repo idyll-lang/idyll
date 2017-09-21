@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import componentClasses from 'idyll-components';
+import * as components from 'idyll-components';
 
 import IdyllDocument from '../src/';
 import { translate, mapTree } from '../src/utils'
@@ -87,7 +87,7 @@ describe('Schema transformations', () => {
 describe('Schema to Elements', () => {
   it('creates the expected elements', () => {
     const rjs = new ReactJsonSchema();
-    rjs.setComponentMap(componentClasses);
+    rjs.setComponentMap(components);
     const el = rjs.parseSchema({component: 'div', children: schema});
     expect(shallow(el).contains(<h1>Welcome to Idyll</h1>)).toBe(true);
   });

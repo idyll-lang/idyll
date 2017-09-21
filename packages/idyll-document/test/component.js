@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import componentClasses from 'idyll-components';
+import * as components from 'idyll-components';
 
 import IdyllDocument from '../src/';
 import { translate } from '../src/utils'
@@ -11,7 +11,7 @@ import schema from './fixtures/schema.json'
 describe('IdyllDocument', () => {
   it('creates an IdyllDocument', () => {
     expect(shallow(
-      <IdyllDocument ast={ast} componentClasses={componentClasses} />
+      <IdyllDocument ast={ast} components={components} />
     ).contains(<h1>Welcome to Idyll</h1>)).toBe(true);
   });
 });
