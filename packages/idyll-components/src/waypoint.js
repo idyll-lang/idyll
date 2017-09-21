@@ -12,3 +12,5 @@ class Waypoint extends React.PureComponent {
   }
 
 }
+
+export default Waypoint;
