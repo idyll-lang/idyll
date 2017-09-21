@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 import DOM from 'react-dom-factories';
-import { paramCase } from 'change-case';
+import { pascalCase } from 'change-case';
 
 const _componentMap = new WeakMap();
 
@@ -47,7 +47,7 @@ export default class ReactJsonSchema {
         Component = schema.component;
       } else {
         const split = schema.component.split('.');
-        const name = paramCase(split[0]);
+        const name = pascalCase(split[0]);
         if (componentMap && componentMap[name]) {
           Component = componentMap[name];
           for (let i = 1; i < split.length; i++) {
@@ -56,7 +56,7 @@ export default class ReactJsonSchema {
           if (Component.hasOwnProperty('default')) {
             Component = Component.default;
           }
-        } else if (DOM.hasOwnProperty(name)) {
+        } else if (DOM.hasOwnProperty(split)) {
           Component = schema.component;
         } else {
           throw new Error(`ReactJsonSchema could not find an implementation for: ${schema.component}`);
