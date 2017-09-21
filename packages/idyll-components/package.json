@@ -46,8 +46,8 @@
     "victory": "^0.22.2"
   },
   "peerDependencies": {
-    "react": "next",
-    "react-dom": "next"
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
@@ -56,9 +56,9 @@
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.9.1",
     "jest": "^21.1.0",
-    "react": "next",
+    "react": "^15.6.1",
     "react-addons-test-utils": "^15.6.0",
-    "react-dom": "next",
+    "react-dom": "^15.6.1",
     "rimraf": "^2.6.2"
   }
 }
