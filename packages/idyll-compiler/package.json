@@ -1,6 +1,6 @@
 {
   "name": "idyll-compiler",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.5",
   "description": "Compiler for idyll",
   "main": "index.js",
   "scripts": {
