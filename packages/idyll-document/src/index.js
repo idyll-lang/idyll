@@ -227,8 +227,7 @@ class IdyllDocument extends React.PureComponent {
       ...getDerivedValues(derivedVars),
     };
 
-    const rjs = new ReactJsonSchema();
-    rjs.setComponentMap({...props.componentClasses, Wrapper});
+    const rjs = new ReactJsonSchema({...props.components, Wrapper});
     const schema = translate(props.ast);
 
     const wrapTargets = findWrapTargets(schema, this.state);

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import componentClasses from 'idyll-components';
+import * as components from 'idyll-components';
 import InteractiveDocument from '../src/';
 import ast from './fixtures/ast.json'
 
 let doc;
 
 beforeEach(() => {
-  doc = new InteractiveDocument({ast, componentClasses, datasets: {myData: 'FAKE DATA'}});
+  doc = new InteractiveDocument({ast, components, datasets: {myData: 'FAKE DATA'}});
 })
 
 describe('Component state initialization', () => {

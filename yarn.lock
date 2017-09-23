@@ -5509,7 +5509,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.6:
+prop-types@^15.5.10:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -5646,15 +5646,6 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react-dom@next:
-  version "16.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-rc.3.tgz#bd4e4d2abd464df5149a062b45fe796bbb804c2c"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-    prop-types "^15.5.6"
-
 react-inlinesvg@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/react-inlinesvg/-/react-inlinesvg-0.6.2.tgz#cad181824652934f6235ff2b09e39b8c86344aab"
@@ -5692,15 +5683,6 @@ react@^15.6.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "^15.5.10"
-
-react@next:
-  version "16.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-rc.3.tgz#4a9df996326ba7185903d9fbed3149765e237e26"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-    prop-types "^15.5.6"
 
 reactable@^0.14.1:
   version "0.14.1"

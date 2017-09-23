@@ -1,10 +1,13 @@
 import { createElement } from 'react';
 import DOM from 'react-dom-factories';
-import { pascalCase } from 'change-case';
+import { paramCase } from 'change-case';
 
 const _componentMap = new WeakMap();
 
-export default class ReactJsonSchema {
+class ReactJsonSchema {
+  constructor(componentMap) {
+    if (componentMap) this.setComponentMap(componentMap);
+  }
 
   parseSchema(schema) {
     let element = null;
@@ -47,7 +50,7 @@ export default class ReactJsonSchema {
         Component = schema.component;
       } else {
         const split = schema.component.split('.');
-        const name = pascalCase(split[0]);
+        const name = paramCase(split[0]);
         if (componentMap && componentMap[name]) {
           Component = componentMap[name];
           for (let i = 1; i < split.length; i++) {
@@ -81,3 +84,5 @@ export default class ReactJsonSchema {
     _componentMap.set(this, componentMap);
   }
 }
+
+export default ReactJsonSchema;

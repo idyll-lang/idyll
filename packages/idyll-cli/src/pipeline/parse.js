@@ -199,26 +199,25 @@ exports.getBaseHTML = (ast, template) => {
   return mustache.render(template, parseMeta(ast));
 }
 
-exports.getHTML = (paths, ast, components, datasets, template) => {
-  const componentClasses = {};
-  Object.keys(components).forEach(key => {
-    delete require.cache[require.resolve(components[key])];
-    componentClasses[key] = require(components[key]);
+exports.getHTML = (paths, ast, _components, datasets, template) => {
+  const components = {};
+  Object.keys(_components).forEach(key => {
+    delete require.cache[require.resolve(_components[key])];
+    components[key] = require(_components[key]);
   });
 
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
-  const IdyllDocument = require('idyll-document');
+  const IdyllDocument = require('idyll-document').default;
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
       ast: getFilteredAST(ast),
-      componentClasses,
+      components,
       datasets
     })
   ).trim();
-
   return mustache.render(template, meta);
 }
 
