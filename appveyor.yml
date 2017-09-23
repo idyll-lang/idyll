@@ -30,8 +30,8 @@ test_script:
   - npm --version
   - cd packages/idyll-cli && npm run test && cd ../..
   - cd packages/idyll-compiler && npm run test && cd ../..
-  - cd packages/idyll-components && npm run test && cd ../..
-  - cd packages/idyll-document && npm run test && cd ../..
+  - cd packages/idyll-components && npm run test-windows && cd ../..
+  - cd packages/idyll-document && npm run test-windows && cd ../..
 
 # Don't actually build.
 build: off

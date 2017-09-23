@@ -14,7 +14,8 @@
     "build:es": "BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
     "prepublishOnly": "npm run build",
-    "test": "BABEL_ENV=test jest"
+    "test": "BABEL_ENV=test jest",
+    "test-windows": "SET BABEL_ENV=test && jest"
   },
   "jest": {
     "testMatch": [
