@@ -10,11 +10,11 @@
   "module": "dist/es/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:cjs": "BABEL_ENV=cjs babel src -d dist/cjs",
-    "build:es": "BABEL_ENV=es babel src -d dist/es",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
+    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "cross-env BABEL_ENV=test jest"
   },
   "jest": {
     "testMatch": [
@@ -22,7 +22,9 @@
     ]
   },
   "dependencies": {
+    "babel-jest": "^21.0.2",
     "change-case": "^3.0.1",
+    "cross-env": "^5.0.5",
     "html-tags": "^2.0.0",
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
