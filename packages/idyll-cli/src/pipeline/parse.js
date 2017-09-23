@@ -209,7 +209,7 @@ exports.getHTML = (paths, ast, _components, datasets, template) => {
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
-  const IdyllDocument = require('idyll-document');
+  const IdyllDocument = require('idyll-document').default;
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
@@ -218,7 +218,6 @@ exports.getHTML = (paths, ast, _components, datasets, template) => {
       datasets
     })
   ).trim();
-
   return mustache.render(template, meta);
 }
 

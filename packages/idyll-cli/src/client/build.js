@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 
-const IdyllDocument = require('idyll-document');
+const IdyllDocument = require('idyll-document').default;
 const mountNode = document.getElementById('idyll-mount');
 
 const ast = require('__IDYLL_AST__');
