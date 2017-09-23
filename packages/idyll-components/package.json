@@ -6,12 +6,11 @@
   "module": "dist/es/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:cjs": "BABEL_ENV=cjs babel src -d dist/cjs",
-    "build:es": "BABEL_ENV=es babel src -d dist/es",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
+    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
     "prepublishOnly": "npm run build",
-    "test": "BABEL_ENV=test jest",
-    "test-windows": "SET BABEL_ENV=test && jest"
+    "test": "cross-env BABEL_ENV=test jest"
   },
   "jest": {
     "testMatch": [
@@ -36,6 +35,7 @@
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
     "babel-jest": "^21.0.2",
+    "cross-env": "^5.0.5",
     "d3-array": "^1.2.0",
     "d3-drag": "^1.1.1",
     "d3-format": "^1.2.0",
