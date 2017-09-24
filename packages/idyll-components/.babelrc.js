@@ -7,7 +7,7 @@ const env = {
   test: [
     'es2015'
   ]
-}[BABEL_ENV];
+}[BABEL_ENV || 'cjs'];
 
 module.exports = {
   plugins: ['transform-object-rest-spread'],
