@@ -22,7 +22,6 @@
     ]
   },
   "dependencies": {
-    "babel-jest": "^21.0.2",
     "change-case": "^3.0.1",
     "cross-env": "^5.0.5",
     "html-tags": "^2.0.0",
