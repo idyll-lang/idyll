@@ -35,6 +35,9 @@ input {
 .relative {
   position: relative;
 }
+.aside-container {
+  position: relative;
+}
 .aside {
   position: absolute;
   width: 300px;
