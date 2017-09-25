@@ -10,7 +10,7 @@
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
     "prepublishOnly": "npm run build",
-    "test": "cross-env BABEL_ENV=test jest"
+    "test": "jest"
   },
   "jest": {
     "testMatch": [
@@ -34,7 +34,6 @@
   },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
-    "babel-jest": "^21.0.2",
     "cross-env": "^5.0.5",
     "d3-array": "^1.2.0",
     "d3-drag": "^1.1.1",
@@ -57,7 +56,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.9.1",
-    "jest": "^21.1.0",
+    "jest": "^20.0.4",
     "react": "^15.6.1",
     "react-addons-test-utils": "^15.6.0",
     "react-dom": "^15.6.1",

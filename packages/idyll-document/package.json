@@ -14,7 +14,7 @@
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
     "prepublishOnly": "npm run build",
-    "test": "cross-env BABEL_ENV=test jest"
+    "test": "jest"
   },
   "jest": {
     "testMatch": [
@@ -22,7 +22,6 @@
     ]
   },
   "dependencies": {
-    "babel-jest": "^21.0.2",
     "change-case": "^3.0.1",
     "cross-env": "^5.0.5",
     "html-tags": "^2.0.0",
@@ -37,7 +36,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "enzyme": "^2.9.1",
-    "jest": "^21.1.0",
+    "jest": "^20.0.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-test-renderer": "^15.6.1",
