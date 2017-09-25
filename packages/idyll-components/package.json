@@ -34,7 +34,6 @@
   },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
-    "babel-jest": "^21.0.2",
     "cross-env": "^5.0.5",
     "d3-array": "^1.2.0",
     "d3-drag": "^1.1.1",
