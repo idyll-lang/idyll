@@ -1,18 +1,15 @@
-const BABEL_ENV = process.env.BABEL_ENV;
-const env = {
-  cjs: 'env',
-  es: [
-    'env', { loose: true, modules: false }
-  ],
-  test: [
-    'es2015'
-  ]
-}[BABEL_ENV];
+const { BABEL_ENV, NODE_ENV } = process.env;
 
 module.exports = {
   plugins: ['transform-object-rest-spread'],
   presets: [
-    env,
+    [
+      'env',
+      {
+        loose: true,
+        modules: BABEL_ENV === 'cjs' || NODE_ENV === 'test',
+      },
+    ],
     'react',
   ],
 };

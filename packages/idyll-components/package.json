@@ -10,7 +10,7 @@
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
     "prepublishOnly": "npm run build",
-    "test": "cross-env BABEL_ENV=test jest"
+    "test": "jest"
   },
   "jest": {
     "testMatch": [
