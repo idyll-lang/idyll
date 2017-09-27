@@ -1,4 +1,5 @@
-![idyll-text](https://cloud.githubusercontent.com/assets/1074773/24593896/95730fba-17dc-11e7-82dd-ae7335f205b6.png)
+![idyll-logo](https://user-images.githubusercontent.com/1074773/30891039-807308e2-a2e5-11e7-827e-bce391ad9b1b.png)
+
 
 [Online Editor](https://idyll-lang.github.io/editor) | [Documentation](http://idyll-lang.org) | [Chatroom](https://gitter.im/idyll-lang/Lobby)
 
