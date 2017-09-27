@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "idyll-component": "^1.1.0",
-    "react-minimal-pie-chart": "^3.0.0"
+    "react-simple-pie-chart": "^3.0.0"
   },
   "devDependencies": {}
 }
