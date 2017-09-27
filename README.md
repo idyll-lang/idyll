@@ -1,10 +1,13 @@
 ![idyll-logo](https://user-images.githubusercontent.com/1074773/30891039-807308e2-a2e5-11e7-827e-bce391ad9b1b.png)
 
+<p align="center">
+ <a href="https://idyll-lang.github.io/editor">Online Editor</a> | <a href="https://idyll-lang.org">Documentation</a> | <a href="https://gitter.im/idyll-lang/Lobby">Chatroom</a>
+</p>
 
-[Online Editor](https://idyll-lang.github.io/editor) | [Documentation](http://idyll-lang.org) | [Chatroom](https://gitter.im/idyll-lang/Lobby)
-
-[![Backers on Open Collective](https://opencollective.com/idyll/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/idyll/sponsors/badge.svg)](#sponsors)
-
+<p align="center">
+ <a href="#backers"><img src="https://opencollective.com/idyll/backers/badge.svg" /></a>
+ <a href="#sponsors"><img src="https://opencollective.com/idyll/sponsors/badge.svg" /></a>
+</p>
 
 # What is Idyll?
 
@@ -66,23 +69,20 @@ To submit a PR do the following:
 
 If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
 
-
-## Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute]](CONTRIBUTING.md).
+This project exists thanks to all the people who contribute.
 <a href="graphs/contributors"><img src="https://opencollective.com/idyll/contributors.svg?width=890" /></a>
 
 
 ## Backers
 
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/idyll#backer)]
+Thank you to all our backers!
 
 <a href="https://opencollective.com/idyll#backers" target="_blank"><img src="https://opencollective.com/idyll/backers.svg?width=890"></a>
 
 
 ## Sponsors
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/idyll#sponsor)]
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
 <a href="https://opencollective.com/idyll/sponsor/0/website" target="_blank"><img src="https://opencollective.com/idyll/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/idyll/sponsor/1/website" target="_blank"><img src="https://opencollective.com/idyll/sponsor/1/avatar.svg"></a>
