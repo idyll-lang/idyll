@@ -1,7 +1,7 @@
 const React = require('react');
 const Table = require('react-table').default;
 
-class TableComponent extends React.Component {
+class TableComponent extends React.PureComponent {
   getColumns() {
     if (this.props.columns) {
       if (this.props.columns.length && typeof this.props.columns[0] === 'string') {
