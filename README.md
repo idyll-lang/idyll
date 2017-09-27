@@ -1,10 +1,6 @@
 ![idyll-text](https://cloud.githubusercontent.com/assets/1074773/24593896/95730fba-17dc-11e7-82dd-ae7335f205b6.png)
 
-*[Online Editor](https://idyll-lang.github.io/editor)* 
-
-*See https://idyll-lang.github.io/ for full documentation*.
-
-*Join our chatroom on Gitter: https://gitter.im/idyll-lang/Lobby*
+[Online Editor](https://idyll-lang.github.io/editor) | [Documentation](http://idyll-lang.org) | [Chatroom](https://gitter.im/idyll-lang/Lobby)
 
 
 # What is Idyll?
