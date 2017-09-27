@@ -13,7 +13,7 @@ import schema from './fixtures/schema.json'
 
 describe('IdyllDocument', () => {
   it('creates an IdyllDocument', () => {
-    expect(mount(
+    expect(shallow(
       <IdyllDocument ast={ast} components={components} />
     ).contains(<h1>Welcome to Idyll</h1>)).toBe(true);
   });

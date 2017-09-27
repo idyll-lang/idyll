@@ -27,6 +27,9 @@ const getScrollableContainer = el => {
 
 const getRefs = () => {
   const refs = {};
+  if (!scrollContainer) {
+    return;
+  }
   const containerNode = scrollContainer.item;
   const containerRect = containerNode.getBoundingClientRect();
 
