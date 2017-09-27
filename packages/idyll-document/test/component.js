@@ -1,5 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+Enzyme.configure({ adapter: new Adapter() });
+
 import * as components from 'idyll-components';
 
 import IdyllDocument from '../src/';
@@ -10,7 +13,7 @@ import schema from './fixtures/schema.json'
 
 describe('IdyllDocument', () => {
   it('creates an IdyllDocument', () => {
-    expect(shallow(
+    expect(mount(
       <IdyllDocument ast={ast} components={components} />
     ).contains(<h1>Welcome to Idyll</h1>)).toBe(true);
   });
