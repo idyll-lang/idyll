@@ -43,7 +43,7 @@
     "react-inlinesvg": "^0.6.2",
     "react-latex": "^1.0.1",
     "react-syntax-highlighter": "^5.7.0",
-    "reactable": "^0.14.1",
+    "react-table": "^6.5.3",
     "victory": "^0.22.2"
   },
   "peerDependencies": {
