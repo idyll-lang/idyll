@@ -3,7 +3,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "postinstall": "cd packages/idyll-compiler && npm run build && cd ../idyll-components && npm run build && cd ../idyll-document && npm run build && opencollective postinstall"
+    "postinstall": "cd packages/idyll-compiler && npm run build && cd ../idyll-components && npm run build && cd ../idyll-document && npm run build"
   },
   "devDependencies": {
     "lerna": "^2.0.0"
@@ -11,9 +11,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "dependencies": {
-    "opencollective": "^1.0.3"
-  },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/idyll",
