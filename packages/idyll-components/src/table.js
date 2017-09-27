@@ -32,6 +32,7 @@ class TableComponent extends React.PureComponent {
         className={`table ${this.props.className || ''}`}
         minRows={(this.props.data || []).length}
         {...this.props}
+        children={undefined}
         columns={this.getColumns()}
          />
     );
