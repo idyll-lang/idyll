@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import * as components from 'idyll-components';
 
 import IdyllDocument from '../src/';

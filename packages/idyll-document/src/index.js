@@ -75,125 +75,139 @@ const getRefs = () => {
   return refs;
 };
 
-class Wrapper extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const getWrapper = (initialState) => {
+  class _Wrapper extends React.PureComponent {
+    constructor(props) {
+      super(props);
 
-    this.ref = {};
-    this.onUpdateRefs = this.onUpdateRefs.bind(this);
-    this.onUpdateProps = this.onUpdateProps.bind(this);
+      this.ref = {};
+      this.onUpdateRefs = this.onUpdateRefs.bind(this);
+      this.onUpdateProps = this.onUpdateProps.bind(this);
 
-    const vars = values(props.__vars__);
-    const exps = values(props.__expr__);
+      const vars = values(props.__vars__);
+      const exps = values(props.__expr__);
 
-    // listen for props updates IF we care about them
-    if (vars.length || exps.some(v => !v.includes('refs.'))) {
-      // called with new doc state
-      // when any component calls updateProps()
-      updatePropsCallbacks.push(this.onUpdateProps);
+      // listen for props updates IF we care about them
+      if (vars.length || exps.some(v => !v.includes('refs.'))) {
+        // called with new doc state
+        // when any component calls updateProps()
+        updatePropsCallbacks.push(this.onUpdateProps);
+      }
+
+      // listen for ref updates IF we care about them
+      if (props.hasHook || exps.some(v => v.includes('refs.'))) {
+        updateRefsCallbacks.push(this.onUpdateRefs);
+      }
+
+      const state = { hasError: false, error: null };
+      const { __vars__, __expr__ } = props;
+
+      Object.keys(__vars__).forEach(key => {
+        state[key] = initialState[__vars__[key]];
+      });
+      Object.keys(__expr__).forEach(key => {
+        state[key] = evalExpression(initialState, __expr__[key]);
+      });
+
+      this.state = state;
     }
 
-    // listen for ref updates IF we care about them
-    if (props.hasHook || exps.some(v => v.includes('refs.'))) {
-      updateRefsCallbacks.push(this.onUpdateRefs);
+    componentDidCatch(error, info) {
+      this.setState({ hasError: true, error: error });
     }
 
-    this.state = { hasError: false, error: null };
-  }
+    onUpdateProps(newState, changedKeys) {
+      const { __vars__, __expr__ } = this.props;
 
-  componentDidCatch(error, info) {
-    this.setState({ hasError: true, error: error });
-  }
+      // were there changes to any vars we track?
+      // or vars our expressions reference?
+      const shouldUpdate = changedKeys.some(k => {
+        return (
+          values(__vars__).includes(k) ||
+          values(__expr__).some(expr => expr.includes(k))
+        );
+      });
+      // if nothing we care about changed bail out and don't re-render
+      if (!shouldUpdate) return;
 
-  onUpdateProps(newState, changedKeys) {
-    const { __vars__, __expr__ } = this.props;
+      // update this component's state
+      const nextState = {};
+      // pull in the latest value for any tracked vars
+      Object.keys(__vars__).forEach(key => {
+        nextState[key] = newState[__vars__[key]];
+      });
+      // re-run this component's expressions using the latest doc state
+      Object.keys(__expr__).forEach(key => {
+        nextState[key] = evalExpression(newState, __expr__[key]);
+      });
+      // trigger a re-render of this component
+      // and more importantly, its wrapped component
+      this.setState(nextState);
+    }
 
-    // were there changes to any vars we track?
-    // or vars our expressions reference?
-    const shouldUpdate = changedKeys.some(k => {
+    onUpdateRefs(newState) {
+      const { hasHook, refName, __expr__ } = this.props;
+
+      const nextState = {refs: newState.refs};
+      entries(__expr__).forEach(([key, val]) => {
+        nextState[key] = evalExpression(newState, val);
+      });
+
+      // if hooks are defined call them as appropriate
+      // passing the newly constructed state and this component's ref object
+      if (hasHook) {
+        const wasIn = (this.ref || {}).isInViewport;
+        const wasInFully = (this.ref || {}).isFullyInViewport;
+
+        this.ref = nextState.refs[refName];
+        const isIn = this.ref.isInViewport;
+        const isInFully = this.ref.isFullyInViewport;
+
+        this.onScroll(nextState, this.ref);
+        if (!isInFully && wasInFully) this.onExitView(nextState, this.ref);
+        if (!isIn && wasIn) this.onExitViewFully(nextState, this.ref);
+        if (isIn && !wasIn) this.onEnterView(nextState, this.ref);
+        if (isInFully && !wasInFully) this.onEnterViewFully(nextState, this.ref);
+      }
+
+      // trigger a render with latest state
+      this.setState(nextState);
+    }
+
+    componentWillUnmount() {
+      const propsIndex = updatePropsCallbacks.indexOf(this.onUpdateProps);
+      if (propsIndex > -1) updatePropsCallbacks.splice(propsIndex, 1);
+
+      const refsIndex = updateRefsCallbacks.indexOf(this.onUpdateRefs);
+      if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
+    }
+
+    render() {
+      if (this.state.hasError) {
+        return (
+          <div style={{ border: 'solid red 1px', padding: 10}}>
+            {this.state.error.message}
+          </div>
+        );
+      }
+
       return (
-        values(__vars__).includes(k) ||
-        values(__expr__).some(expr => expr.includes(k))
-      );
-    });
-    // if nothing we care about changed bail out and don't re-render
-    if (!shouldUpdate) return;
-
-    // update this component's state
-    const nextState = {};
-    // pull in the latest value for any tracked vars
-    Object.keys(__vars__).forEach(key => {
-      nextState[key] = newState[__vars__[key]];
-    });
-    // re-run this component's expressions using the latest doc state
-    Object.keys(__expr__).forEach(key => {
-      nextState[key] = evalExpression(newState, __expr__[key]);
-    });
-    // trigger a re-render of this component
-    // and more importantly, its wrapped component
-    this.setState(nextState);
-  }
-
-  onUpdateRefs(newState) {
-    const { hasHook, refName, __expr__ } = this.props;
-
-    const nextState = {refs: newState.refs};
-    entries(__expr__).forEach(([key, val]) => {
-      nextState[key] = evalExpression(newState, val);
-    });
-
-    // if hooks are defined call them as appropriate
-    // passing the newly constructed state and this component's ref object
-    if (hasHook) {
-      const wasIn = (this.ref || {}).isInViewport;
-      const wasInFully = (this.ref || {}).isFullyInViewport;
-
-      this.ref = nextState.refs[refName];
-      const isIn = this.ref.isInViewport;
-      const isInFully = this.ref.isFullyInViewport;
-
-      this.onScroll(nextState, this.ref);
-      if (!isInFully && wasInFully) this.onExitView(nextState, this.ref);
-      if (!isIn && wasIn) this.onExitViewFully(nextState, this.ref);
-      if (isIn && !wasIn) this.onEnterView(nextState, this.ref);
-      if (isInFully && !wasInFully) this.onEnterViewFully(nextState, this.ref);
-    }
-
-    // trigger a render with latest state
-    this.setState(nextState);
-  }
-
-  componentWillUnmount() {
-    const propsIndex = updatePropsCallbacks.indexOf(this.onUpdateProps);
-    if (propsIndex > -1) updatePropsCallbacks.splice(propsIndex, 1);
-
-    const refsIndex = updateRefsCallbacks.indexOf(this.onUpdateRefs);
-    if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ border: 'solid red 1px', padding: 10}}>
-          {this.state.error.message}
-        </div>
+        <span>
+          {
+            React.Children.map(this.props.children, c => {
+              // store hooks on the wrapper
+              hooks.forEach(hook => {
+                this[hook] = c.props[hook] || function(){};
+              });
+              return React.cloneElement(c, {...this.state});
+            })
+          }
+        </span>
       );
     }
-
-    return (
-      <span>
-        {
-          React.Children.map(this.props.children, c => {
-            // store hooks on the wrapper
-            hooks.forEach(hook => {
-              this[hook] = c.props[hook] || function(){};
-            });
-            return React.cloneElement(c, {...this.state});
-          })
-        }
-      </span>
-    );
   }
+
+  return _Wrapper;
 }
 
 const getDerivedValues = dVars => {
@@ -220,12 +234,15 @@ class IdyllDocument extends React.PureComponent {
       ...getVars(vars),
       ...getData(data, props.datasets),
     };
+
     const derivedVars = this.derivedVars = getVars(derived, initialState);
 
     let state = this.state = {
       ...initialState,
       ...getDerivedValues(derivedVars),
     };
+
+    const Wrapper = getWrapper(state);
 
     const rjs = new ReactJsonSchema({...props.components, Wrapper});
     const schema = translate(props.ast);
