@@ -98,19 +98,7 @@ class Wrapper extends React.PureComponent {
       updateRefsCallbacks.push(this.onUpdateRefs);
     }
 
-    const state = { hasError: false, error: null };
-    // const { __vars__, __expr__ } = props;
-
-    // Object.keys(__vars__).forEach(key => {
-    //   state[key] = initialState[__vars__[key]];
-    // });
-    // Object.keys(__expr__).forEach(key => {
-    //   state[key] = evalExpression(initialState, __expr__[key]);
-    // });
-
-    // console.log('state', state);
-
-    this.state = state;
+    this.state = { hasError: false, error: null };
   }
 
   componentDidCatch(error, info) {
