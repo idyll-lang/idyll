@@ -307,8 +307,6 @@ class IdyllDocument extends React.PureComponent {
           updatePropsCallbacks.forEach(f => f(state, changedKeys));
         };
 
-        console.log(node);
-
         return {
           component: Wrapper,
           __vars__,
