@@ -210,24 +210,16 @@ export const findWrapTargets = (schema, state) => {
 
     // pull off the props we don't need to check
     const { component, children, __vars__, __expr__, ...props } = node;
+    const expressions = Object.keys(__expr__ || {});
+    const variables = Object.keys(__vars__ || {});
 
     // iterate over the node's prop values
     entries(props).forEach(([key, val]) => {
       // avoid checking more props if we know it's a match
       if (targets.includes(node)) return;
 
-      const valIncludes = val.includes ? val.includes.bind(val) : function(){};
-
-      // include nodes whose prop value directly references a state var
-      // like [Range value:x min:0 max:100 /]
-      // or nodes that track refs
-      // or nodes whose prop values include a state var ref
-      // like [derived name:"xSquared" value:`x * x` /]
-      if (
-        stateKeys.includes(val) ||
-        valIncludes('refs.') ||
-        stateKeys.some(valIncludes)
-      ) {
+      // Include nodes that reference a variable or expression.
+      if (variables.includes(key) || expressions.includes(key)) {
         targets.push(node);
       }
     });
