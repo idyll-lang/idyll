@@ -217,6 +217,8 @@ export const findWrapTargets = (schema, state) => {
     entries(props).forEach(([key, val]) => {
       // avoid checking more props if we know it's a match
       if (targets.includes(node)) return;
+
+      // Include nodes that reference a variable or expression.
       if (variables.includes(key) || expressions.includes(key)) {
         targets.push(node);
       }
