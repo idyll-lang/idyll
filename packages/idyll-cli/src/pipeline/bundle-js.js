@@ -57,8 +57,8 @@ module.exports = function (opts, paths, output) {
     plugin: [
       (b) => {
         if (opts.minify) {
-          b.require('react/dist/react.min.js', { expose: 'react' });
-          b.require('react-dom/dist/react-dom.min.js', { expose: 'react-dom' });
+          b.require('react/umd/react.production.min.js', { expose: 'react' });
+          b.require('react-dom/umd/react-dom.production.min.js', { expose: 'react-dom' });
         }
         const aliases = {
           ast: '__IDYLL_AST__',

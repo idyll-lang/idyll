@@ -1,5 +1,8 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 import Analytics from '../src/analytics';
 import Aside from '../src/aside';
@@ -22,9 +25,6 @@ import SVG from '../src/svg';
 import Table from '../src/table';
 
 describe('Components sanity check', () => {
-  it('<Analytics />', () => {
-    const wrapper = mount(<Aside />);
-  });
   it('<Aside />', () => {
     const wrapper = shallow(<Aside />);
   });
@@ -41,10 +41,10 @@ describe('Components sanity check', () => {
     const wrapper = shallow(<Display />);
   });
   it('<Dynamic />', () => {
-    const wrapper = shallow(<Dynamic />);
+    const wrapper = mount(<Dynamic />);
   });
   it('<Equation />', () => {
-    const wrapper = shallow(<Equation />);
+    const wrapper = mount(<Equation />);
   });
   it('<Fixed />', () => {
     const wrapper = shallow(<Fixed />);
