@@ -30,48 +30,14 @@ const getRefs = () => {
   if (!scrollContainer) {
     return;
   }
-  const containerNode = scrollContainer.item;
-  const containerRect = containerNode.getBoundingClientRect();
 
   scrollWatchers.forEach(watcher => {
-    // get boolean props
-    let bools = {};
-    Object.keys(watcher).forEach(key => {
-      if (!key.startsWith('is')) return;
-      bools[key] = watcher[key];
-    });
-
-    const domNode = watcher.watchItem;
-    const rect = domNode.getBoundingClientRect();
-    const portionInView = Math.max(
-      0,
-      Math.min(
-        1,
-        (watcher.bottom - scrollContainer.viewportTop) / rect.height
-      )
-    )
-
     // left and right props assume no horizontal scrolling
+    const { watchItem, callbacks, container, recalculateLocation, ...watcherProps} = watcher;
+    const domNode = watchItem;
     refs[domNode.dataset.ref] = {
-      ...bools,
-      domNode,
-      portionInView,
-      size: {
-        width: rect.width,
-        height: rect.height,
-      },
-      position: {
-        top: watcher.top - scrollContainer.viewportTop,
-        right: rect.right - containerRect.left,
-        bottom: watcher.bottom - scrollContainer.viewportTop,
-        left: rect.left - containerRect.left,
-      },
-      absolutePosition: {
-        top: watcher.top,
-        right: rect.right,
-        bottom: watcher.bottom,
-        left: rect.left,
-      },
+      ...watcherProps,
+      domNode
     };
   });
 
@@ -251,6 +217,7 @@ class IdyllDocument extends React.PureComponent {
 
             const domNode = ReactDOM.findDOMNode(el);
             domNode.dataset.ref = node.refName;
+            domNode.dataset.scrollOffset = node.scrollOffset ? JSON.stringify(node.scrollOffset) : undefined;
           };
         }
 
@@ -340,7 +307,7 @@ class IdyllDocument extends React.PureComponent {
     const scroller = getScrollableContainer(el) || window;
     scrollContainer = scrollMonitor.createContainer(scroller);
     Array.from(document.getElementsByClassName('is-ref')).forEach(ref => {
-      scrollWatchers.push(scrollContainer.create(ref));
+      scrollWatchers.push(scrollContainer.create(ref, ref.dataset.scrollOffset ? JSON.parse(ref.dataset.scrollOffset) : undefined));
     });
     scroller.addEventListener('scroll', this.scrollListener);
   }
