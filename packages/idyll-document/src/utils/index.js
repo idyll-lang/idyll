@@ -210,6 +210,15 @@ export const findWrapTargets = (schema, state) => {
 
     // pull off the props we don't need to check
     const { component, children, __vars__, __expr__, ...props } = node;
+    const nameStartsWith = component.charAt(0);
+
+    // wrap all custom components
+    // they start with a capital letter
+    if (nameStartsWith === nameStartsWith.toUpperCase()) {
+      targets.push(node);
+      return node;
+    }
+
     const expressions = Object.keys(__expr__ || {});
     const variables = Object.keys(__vars__ || {});
 

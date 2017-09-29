@@ -12,7 +12,56 @@ const types = {
 };
 
 class Chart extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true, error: error });
+  }
+
   render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            padding: '1em',
+            backgroundColor: 'pink',
+            border: '8px solid darkred'
+          }}
+        >
+          <p>{this.state.error.message}</p>
+          I'm a <a href="https://github.com/idyll-lang/idyll/blob/master/packages/idyll-components/src/chart.js">Chart component!</a>
+          <br/>
+          Valid types are:
+          <ul>
+            <li>area</li>
+            <li>time</li>
+            <li>line</li>
+            <li>bar</li>
+            <li>scatter</li>
+            <li>pie</li>
+          </ul>
+        </div>
+      );
+    }
+
+    if (this.props.help) {
+      return (
+        <div style={{
+            padding: '2em',
+            backgroundColor: 'lightblue',
+            border: '4px solid blue'
+          }}
+        >
+          This comp uses Victory charts.
+
+          Example syntax: `[Chart type:"line" /]`
+        </div>
+      )
+    }
+
     const type = this.props.type.toUpperCase();
     const INNER_CHART = types[type];
     let { scale, data, domain, ...customProps } = this.props;
