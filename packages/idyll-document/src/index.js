@@ -18,6 +18,7 @@ import {
 const updatePropsCallbacks = [];
 const updateRefsCallbacks = [];
 const scrollWatchers = [];
+const scrollOffsets = {};
 let scrollContainer;
 
 const getScrollableContainer = el => {
@@ -217,7 +218,7 @@ class IdyllDocument extends React.PureComponent {
 
             const domNode = ReactDOM.findDOMNode(el);
             domNode.dataset.ref = node.refName;
-            domNode.dataset.scrollOffset = node.scrollOffset ? JSON.stringify(node.scrollOffset) : undefined;
+            scrollOffsets[node.refName] = node.scrollOffset || 0;
           };
         }
 
@@ -307,7 +308,7 @@ class IdyllDocument extends React.PureComponent {
     const scroller = getScrollableContainer(el) || window;
     scrollContainer = scrollMonitor.createContainer(scroller);
     Array.from(document.getElementsByClassName('is-ref')).forEach(ref => {
-      scrollWatchers.push(scrollContainer.create(ref, ref.dataset.scrollOffset ? JSON.parse(ref.dataset.scrollOffset) : undefined));
+      scrollWatchers.push(scrollContainer.create(ref, scrollOffsets[ref.dataset.ref]));
     });
     scroller.addEventListener('scroll', this.scrollListener);
   }
