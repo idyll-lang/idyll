@@ -1,6 +1,6 @@
 import React from 'react';
 import * as components from 'idyll-components';
-import IdyllDocument from '../../idyll-document/src';
+import IdyllDocument from 'idyll-document';
 
 class Renderer extends React.PureComponent {
   render() {
