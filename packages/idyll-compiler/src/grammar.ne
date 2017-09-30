@@ -38,9 +38,14 @@ BreakBlock -> (Paragraph) {%
   }
 %}
 
-Header -> "HEADER_" [1-6] __ TokenValue {%
+Header -> "HEADER_" [1-6] (__ ParagraphItem):+ __ "HEADER_END" {%
   function(data, location, reject) {
-    return ["h" + data[1], [], [data[3]]];
+    var children = [];
+    data[2].map(function (child) {
+      children.push(child[1]);
+    });
+
+    return ["h" + data[1], [], children];
   }
 %}
 

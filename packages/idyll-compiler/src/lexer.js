@@ -68,7 +68,7 @@ const lex = function(options) {
   lexer.addRule(/^\s*(#{1,6})\s*([^\n]*)\n*/gm, function(lexeme, hashes, text) {
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['HEADER_' + hashes.length].concat(formatToken(text));
+    return ['HEADER_' + hashes.length].concat(recurse(text)).concat(['HEADER_END']);
   });
 
   lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*/g, function(lexeme, text) {

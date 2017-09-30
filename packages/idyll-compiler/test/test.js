@@ -22,7 +22,7 @@ describe('compiler', function() {
     it('should recognize headings', function() {
       var lex = Lexer();
       var results = lex("\n## my title");
-      expect(results.tokens.join(' ')).to.eql('HEADER_2 TOKEN_VALUE_START "my title" TOKEN_VALUE_END EOF');
+      expect(results.tokens.join(' ')).to.eql('HEADER_2 WORDS TOKEN_VALUE_START "my title" TOKEN_VALUE_END HEADER_END EOF');
     });
     it('should handle newlines', function() {
       var lex = Lexer();
@@ -409,7 +409,15 @@ describe('compiler', function() {
       var lex = Lexer();
       var lexResults = lex(input);
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-        expect(output).to.eql([['Slideshow', [], [['Slide', [], []], ['Slide', [], []], ['Slide', [], []]] ]]);
+      expect(output).to.eql([['Slideshow', [], [['Slide', [], []], ['Slide', [], []], ['Slide', [], []]] ]]);
+    });
+
+    it('should handle items nested in a header', function() {
+      const input = `# My header is **bold**!`;
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([["h1",[],["My header is ",["strong",[],["bold"]],"!"]]]);
     })
 });
 
