@@ -35,10 +35,9 @@ const getRefs = () => {
   scrollWatchers.forEach(watcher => {
     // left and right props assume no horizontal scrolling
     const { watchItem, callbacks, container, recalculateLocation, offsets, ...watcherProps} = watcher;
-    const domNode = watchItem;
     refs[domNode.dataset.ref] = {
       ...watcherProps,
-      domNode
+      domNode: watchItem
     };
   });
 
