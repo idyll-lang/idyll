@@ -1,4 +1,4 @@
-![idyll-logo](https://user-images.githubusercontent.com/1074773/31066316-ce92589c-a700-11e7-8c3e-b3c9c7a1a38e.png)
+![idyll-logo](https://user-images.githubusercontent.com/1074773/30891039-807308e2-a2e5-11e7-827e-bce391ad9b1b.png)
 
 <p align="center">
  <a href="https://idyll-lang.github.io/editor">Online Editor</a> | <a href="https://idyll-lang.org">Documentation</a> | <a href="https://gitter.im/idyll-lang/Lobby">Chatroom</a>
