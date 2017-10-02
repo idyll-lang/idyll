@@ -208,6 +208,13 @@ export const findWrapTargets = (schema, state) => {
       return node;
     }
 
+    // wrap all custom components
+    const startsWith = node.component.charAt(0);
+    if (startsWith === startsWith.toUpperCase()) {
+      targets.push(node);
+      return node;
+    }
+
     // pull off the props we don't need to check
     const { component, children, __vars__, __expr__, ...props } = node;
     const expressions = Object.keys(__expr__ || {});
