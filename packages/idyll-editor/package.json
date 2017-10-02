@@ -1,6 +1,6 @@
 {
   "name": "idyll-editor",
-  "version": "2.0.0-alpha.7",
+  "version": "2.0.0-beta.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "draft-js": "^0.10.1",
-    "idyll-compiler": "^2.0.0-alpha.5",
-    "idyll-components": "^2.0.0-alpha.7",
-    "idyll-document": "^2.0.0-alpha.7",
+    "idyll-compiler": "^2.0.0-beta.0",
+    "idyll-components": "^2.0.0-beta.0",
+    "idyll-document": "^2.0.0-beta.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },
