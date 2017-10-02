@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "draft-js": "^0.10.1",
+    "extract-text-webpack-plugin": "^3.0.0",
     "idyll-compiler": "^2.0.0-alpha.5",
     "idyll-components": "^2.0.0-alpha.7",
     "idyll-document": "^2.0.0-alpha.7",
