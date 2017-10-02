@@ -4,8 +4,8 @@ import Renderer from './renderer';
 import compile from 'idyll-compiler';
 import { hashCode } from './utils';
 
-const fs = require('fs');
-const initialValue = fs.readFileSync(__dirname + '/initial.idl', 'utf8');
+import './app.css';
+import initialValue from './initial.idl';
 
 class App extends React.PureComponent {
   constructor(props) {
