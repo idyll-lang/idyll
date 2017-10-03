@@ -4,7 +4,7 @@ import style from 'react-syntax-highlighter/dist/styles/github';
 
 class CodeHighlight extends React.PureComponent {
   render() {
-    return <SyntaxHighlighter style={style} language={this.props.language}>{this.props.children.length ? this.props.children.length[0] : ''}</SyntaxHighlighter>;
+    return <SyntaxHighlighter style={style} language={this.props.language}>{this.props.children.length ? this.props.children[0] : ''}</SyntaxHighlighter>;
   }
 }
 
