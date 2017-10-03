@@ -132,19 +132,19 @@ describe('Sanity Check', () => {
 
     describe('Helpers', () => {
       it('<Analytics />', () => {
-        const wrapper = mount(<Analytics />);
+        const wrapper = shallow(<Analytics />);
       });
       it('<CodeHighlight />', () => {
-        const wrapper = mount(<CodeHighlight />);
+        const wrapper = shallow(<CodeHighlight />);
       });
       it('<Container />', () => {
-        const wrapper = mount(<Container />);
+        const wrapper = shallow(<Container />);
       });
       it('<Preload />', () => {
-        const wrapper = mount(<Preload />);
+        const wrapper = shallow(<Preload />);
       });
       it('<Screen />', () => {
-        const wrapper = mount(<Screen />);
+        const wrapper = shallow(<Screen />);
       });
     });
   });
