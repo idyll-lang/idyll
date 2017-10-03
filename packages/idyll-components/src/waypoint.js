@@ -1,6 +1,6 @@
 import React from 'react';
-const ReactDOM = require('react-dom');
-const Screen = require('./utils/screen');
+import ReactDOM from 'react-dom';
+import Screen from './utils/screen';
 
 class Waypoint extends React.PureComponent {
   constructor (props) {

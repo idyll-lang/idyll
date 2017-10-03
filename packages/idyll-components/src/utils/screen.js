@@ -1,7 +1,7 @@
 
 import React from 'react';
-const ReactDOM = require('react-dom');
-const Container = require('./container');
+import ReactDOM from 'react-dom';
+import Container from './container';
 
 class Screen extends React.PureComponent {
   constructor (props) {

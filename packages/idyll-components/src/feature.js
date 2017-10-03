@@ -21,11 +21,6 @@ class Feature extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
-    super.componentDidMount && super.componentDidMount();
-    const node = ReactDOM.findDOMNode(this);
-  }
-
   setRoot (c) {
     this.rootEl = window.rootEl = c;
     this.initialize();
@@ -116,5 +111,8 @@ class Feature extends React.PureComponent {
   }
 }
 
+Feature.defaultProps = {
+  children: []
+};
 
 export default Feature;

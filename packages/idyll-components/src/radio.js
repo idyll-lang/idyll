@@ -27,4 +27,8 @@ class Radio extends React.PureComponent {
   }
 }
 
+Radio.defaultProps = {
+  options: []
+};
+
 export default Radio;

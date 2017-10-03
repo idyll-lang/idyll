@@ -25,7 +25,13 @@ class Equation extends React.PureComponent {
   }
 
   componentDidMount() {
-    const dom = ReactDOM.findDOMNode(this);
+    let dom;
+    try {
+      dom = ReactDOM.findDOMNode(this);
+    } catch(e) {};
+    if (!dom) {
+      return;
+    }
 
     this.propNodes = {};
     const self = this;

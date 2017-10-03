@@ -16,4 +16,8 @@ class Preloader extends React.PureComponent {
   }
 }
 
+Preloader.defaultProps = {
+  images: []
+};
+
 export default Preloader;
