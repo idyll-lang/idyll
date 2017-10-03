@@ -5,7 +5,7 @@ const mustache = require('mustache');
 const resolve = require('resolve');
 const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
-const Baby = require('babyparse');
+const Papa = require('papaparse');
 
 const getFilteredAST = (ast) => {
   const ignoreNames = ['meta'];
@@ -110,7 +110,7 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
       );
 
       if (source.endsWith('.csv')) {
-        acc[name] = Baby.parseFiles(slash(path.join(DATA_DIR, source)), { header: true }).data;
+        acc[name] = Papa.parse(slash(path.join(DATA_DIR, source)), { header: true }).data;
       } else if (source.endsWith('.json')) {
         acc[name] = require(slash(path.join(DATA_DIR, source)));
       } else {
