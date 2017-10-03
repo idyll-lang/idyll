@@ -97,9 +97,9 @@ test('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 })
 
-// test('creates the expected output', () => {
-//   expect(projectBuildResults).toEqual(EXPECTED_BUILD_RESULTS);
-// })
+test('creates the expected HTML', () => {
+  expect(projectBuildResults['index.html']).toEqual(EXPECTED_BUILD_RESULTS['index.html']);
+});
 
 // test('creates the expected build artifacts', () => {
 //   Object.keys(EXPECTED_IDYLL_RESULTS).forEach((key) => {
