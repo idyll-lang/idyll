@@ -11,7 +11,15 @@ const types = {
   PIE: V.VictoryPie
 };
 
+let chartCount = 0;
+
 class Chart extends React.PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.id = chartCount++;
+  }
+
   render() {
     const type = this.props.type.toUpperCase();
     const INNER_CHART = types[type];
@@ -38,7 +46,7 @@ class Chart extends React.PureComponent {
     return (
       <div className={this.props.className}>
         {type !== 'PIE' ? (
-          <V.VictoryChart domainPadding={10} scale={scale}>
+          <V.VictoryChart domainPadding={10} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
             <INNER_CHART
               data={data}
               x={this.props.x}
