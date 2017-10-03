@@ -23,7 +23,7 @@ const scrollOffsets = {};
 let scrollContainer;
 
 const getScrollableContainer = el => {
-  if (el.scrollHeight > el.offsetHeight) return el;
+  if (!el || el.scrollHeight > el.offsetHeight) return el;
   return getScrollableContainer(el.parentNode);
 };
 
@@ -277,9 +277,10 @@ class IdyllDocument extends React.PureComponent {
             []
           )
 
-          // update doc state reference
-          state = nextState;
-
+          // Update doc state reference.
+          // We re-use the same object here so that
+          // IdyllDocument.state can be accurately checked in tests
+          state = Object.assign(state, nextState);
           // pass the new doc state to all listeners aka component wrappers
           updatePropsCallbacks.forEach(f => f(state, changedKeys));
         };
