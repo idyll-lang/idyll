@@ -41,10 +41,33 @@ describe('Component state initialization', () => {
 
   it('renders expressions correctly before updates', () => {
     const displayComponents = component.findWhere((n) => {return n.type() === components.Display;});
-    expect(displayComponents.length).toBeGreaterThan(2);
+    expect(displayComponents.length).toBeGreaterThan(0);
 
-    const derivedDisplay = displayComponents.at(2);
-    expect(derivedDisplay.html()).toBe('<span>4.00</span>');
+    const checks = [{
+      id: 'varDisplay',
+      html: '<span>2.00</span>'
+    }, {
+      id: 'derivedVarDisplay',
+      html: '<span>4.00</span>'
+    }, {
+      id: 'strDisplay',
+      html: '<span>string</span>'
+    }, {
+      id: 'staticObjectDisplay',
+      html: `<span>${JSON.stringify({static: 'object'})}</span>`
+    }, {
+      id: 'dynamicObjectDisplay',
+      html: `<span>${JSON.stringify({dynamic: 2.0})}</span>`
+    }, {
+      id: 'dataDisplay',
+      html: `<span>${FAKE_DATA}</span>`
+    }];
+
+    checks.forEach((check) => {
+      const display = displayComponents.find(`#${check.id}`);
+      expect(display.length).toBeGreaterThan(0);
+      expect(display.html()).toBe(check.html);
+    });
   });
 
   it('can update the vars and derived vars', () => {
@@ -66,10 +89,33 @@ describe('Component state initialization', () => {
 
   it('renders expressions correctly after updates', () => {
     const displayComponents = component.findWhere((n) => {return n.type() === components.Display;});
-    expect(displayComponents.length).toBeGreaterThan(2);
+    expect(displayComponents.length).toBeGreaterThan(0);
 
-    const derivedDisplay = displayComponents.at(2);
-    expect(derivedDisplay.html()).toBe('<span>16.00</span>');
+    const checks = [{
+      id: 'varDisplay',
+      html: '<span>4.00</span>'
+    }, {
+      id: 'derivedVarDisplay',
+      html: '<span>16.00</span>'
+    }, {
+      id: 'strDisplay',
+      html: '<span>string</span>'
+    }, {
+      id: 'staticObjectDisplay',
+      html: `<span>${JSON.stringify({static: 'object'})}</span>`
+    }, {
+      id: 'dynamicObjectDisplay',
+      html: `<span>${JSON.stringify({dynamic: 4.0})}</span>`
+    }, {
+      id: 'dataDisplay',
+      html: `<span>${FAKE_DATA}</span>`
+    }];
+
+    checks.forEach((check) => {
+      const display = displayComponents.find(`#${check.id}`);
+      expect(display.length).toBeGreaterThan(0);
+      expect(display.html()).toBe(check.html);
+    });
   });
 
 });

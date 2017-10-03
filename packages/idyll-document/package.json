@@ -15,7 +15,7 @@
     "build": "npm run build:cjs && npm run build:es",
     "dev": "yarn run build:es --watch",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "jest --updateSnapshot"
   },
   "jest": {
     "testMatch": [
