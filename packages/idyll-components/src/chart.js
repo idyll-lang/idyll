@@ -21,16 +21,17 @@ class Chart extends React.PureComponent {
   }
 
   render() {
-    const type = this.props.type.toUpperCase();
+    const { id, props } = this;
+    const type = props.type.toUpperCase();
     const INNER_CHART = types[type];
-    let { scale, data, domain, ...customProps } = this.props;
+    let { scale, data, domain, ...customProps } = props;
 
-    if (this.props.equation) {
+    if (props.equation) {
       const d = domain;
-      data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / this.props.samplePoints).map((x) => {
+      data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / props.samplePoints).map((x) => {
         return {
           x: x,
-          y: this.props.equation(x)
+          y: props.equation(x)
         };
       });
     }
@@ -44,18 +45,18 @@ class Chart extends React.PureComponent {
       });
     }
     return (
-      <div className={this.props.className}>
+      <div className={props.className}>
         {type !== 'PIE' ? (
           <V.VictoryChart domainPadding={10} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
             <INNER_CHART
               data={data}
-              x={this.props.x}
-              y={this.props.y}
+              x={props.x}
+              y={props.y}
               {...customProps}>
             </INNER_CHART>
           </V.VictoryChart>
         ) : (
-          <INNER_CHART data={data} colorScale={this.props.colorScale}>
+          <INNER_CHART data={data} colorScale={props.colorScale}>
           </INNER_CHART>
         )
         }
