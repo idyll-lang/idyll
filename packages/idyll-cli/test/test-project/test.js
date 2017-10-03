@@ -1,8 +1,8 @@
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
 
-const idyll = require('../../');
+const Idyll = require('../../');
 const fs = require('fs');
-const { join } = require('path');
+const { join, resolve, dirname } = require('path');
 const rimraf = require('rimraf');
 
 const getFilenames = (dir) => {
@@ -43,9 +43,10 @@ beforeAll(() => {
 })
 
 let output;
+let idyll;
 
 beforeAll(done => {
-  idyll({
+  idyll = Idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
     htmlTemplate: join(PROJECT_DIR, '_index.html'),
@@ -58,12 +59,38 @@ beforeAll(done => {
       spellcheck: false
     },
     minify: false
-  }).on('update', (o) => {
+  });
+
+  idyll.on('update', (o) => {
     output = o;
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
     done();
   }).build();
+})
+
+test('options work as expected', () => {
+  expect(idyll.getOptions()).toEqual({
+    layout: 'centered',
+    theme: join(PROJECT_DIR, 'custom-theme.css'),
+    minify: false,
+    ssr: true,
+    watch: false,
+    inputFile: join(PROJECT_DIR, 'index.idl'),
+    output: PROJECT_BUILD_DIR,
+    htmlTemplate: join(PROJECT_DIR, '_index.html'),
+    components: join(PROJECT_DIR, 'components'),
+    css: join(PROJECT_DIR, 'styles.css'),
+    defaultComponents: dirname(require.resolve('idyll-components')),
+    temp: ".idyll",
+    template: resolve(join(__dirname, '/../../src/client/_index.html')),
+    datasets: join(PROJECT_DIR, 'data'),
+    transform: [],
+    compilerOptions: {
+      spellcheck: false
+    },
+    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
+  })
 })
 
 test('creates the expected files', () => {

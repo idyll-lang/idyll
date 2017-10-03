@@ -1,21 +1,19 @@
 import React from 'react';
 
 import * as components from 'idyll-components';
-import InteractiveDocument from '../src/';
+import IdyllDocument from '../src/';
 import ast from './fixtures/ast.json';
 
 import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 
-let doc;
 let component;
 
 const FAKE_DATA = 'FAKE DATA';
 
 beforeAll(() => {
-  // doc = new InteractiveDocument({ast, components, datasets: {myData: FAKE_DATA}});
-  component = mount(<InteractiveDocument ast={ast} components={components} datasets={{myData: FAKE_DATA}} />);
+  component = mount(<IdyllDocument ast={ast} components={components} datasets={{myData: FAKE_DATA}} />);
 })
 
 describe('Component state initialization', () => {
