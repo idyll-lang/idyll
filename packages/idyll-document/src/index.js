@@ -150,19 +150,13 @@ class Wrapper extends React.PureComponent {
       );
     }
 
-    return (
-      <span>
-        {
-          React.Children.map(this.props.children, c => {
-            // store hooks on the wrapper
-            hooks.forEach(hook => {
-              this[hook] = c.props[hook] || function(){};
-            });
-            return React.cloneElement(c, {...this.state});
-          })
-        }
-      </span>
-    );
+    return React.Children.map(this.props.children, (c, i) => {
+      // store hooks on the wrapper
+      hooks.forEach(hook => {
+        this[hook] = c.props[hook] || function(){};
+      });
+      return React.cloneElement(c, {key: i, ...this.state});
+    });
   }
 }
 

@@ -1,12 +1,19 @@
 import React from 'react';
-const ReactDOM = require('react-dom');
-const Content = require('./feature-content');
+import ReactDOM from 'react-dom'
 
 const stateClasses = [
   'is-top',
   'is-fixed',
   'is-bottom'
 ];
+
+class Content extends React.PureComponent {
+  render () {
+    return <div style={this.props.style}>
+      {this.props.children}
+    </div>
+  }
+}
 
 class Feature extends React.PureComponent {
   constructor (props) {
@@ -49,10 +56,8 @@ class Feature extends React.PureComponent {
     if (!this.rootEl) return;
     let rootRect = this.rootEl.getBoundingClientRect();
     let position = rootRect.top / (window.innerHeight - rootRect.height)
-
     // Update this whenever it changes so that the state is correctly adjusted:
     this.setState({scrollState: position < 0 ? 0 : (position <= 1 ? 1 : 2)})
-
     // Only update the value when onscreen:
     if (rootRect.top < window.innerHeight && rootRect.bottom > 0) {
       this.props.updateProps({value: position})
@@ -62,11 +67,44 @@ class Feature extends React.PureComponent {
 
 
   initialize () {
+    console.log('initialize');
+    console.log('children', this.props.children);
     if (!this.rootEl || !this.featureEl) return;
 
     this.handleResize();
     window.addEventListener('resize', this.handleResize.bind(this));
     window.addEventListener('scroll', this.handleScroll.bind(this));
+  }
+
+  unwrapChildren() {
+    return this.props.children.map((c) => {
+      if (c => c.type.name && c.type.name.toLowerCase() === 'wrapper') {
+        return c.props.children[0];
+      }
+      return c;
+    })
+  }
+
+  getFeatureChild() {
+    const c = this.unwrapChildren().filter(c => {
+      if (!c.type) {
+        return false;
+      }
+      return (c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content;
+    })
+    console.log('featued c', c);
+    if (c.length) {
+      return c[0];
+    }
+  }
+
+  getNonFeatureChildren() {
+    return this.unwrapChildren().filter(c => {
+      if (!c.type) {
+        return true;
+      }
+      return (!c.type.name || c.type.name.toLowerCase() !== 'content') && !(c.type.prototype instanceof Content);
+    });
   }
 
   render () {
@@ -95,9 +133,11 @@ class Feature extends React.PureComponent {
       maxWidth: 'none'
     };
 
-    var featureChild = this.props.children.filter(c => (c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content)[0];
-    var nonFeatureChildren = this.props.children.filter(c => !((c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content));
+    var featureChild = this.getFeatureChild();
+    var nonFeatureChildren = this.getNonFeatureChildren();
 
+    console.log('feature child', featureChild);
+    console.log('rendering feature', this.state.scrollState);
     if (featureChild) {
       feature = React.cloneElement(featureChild, {
         style: featureStyles,
@@ -117,4 +157,4 @@ class Feature extends React.PureComponent {
 }
 
 
-export default Feature;
+export { Content, Feature as default };
