@@ -25,4 +25,8 @@ class Select extends React.PureComponent {
   }
 }
 
+Select.defaultProps = {
+  options: []
+}
+
 export default Select;

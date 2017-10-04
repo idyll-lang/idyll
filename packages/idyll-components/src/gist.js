@@ -74,5 +74,9 @@ EmbeddedGist.nextGistCallback = () => {
     return "embed_gist_callback_" + gistCallbackId++;
 };
 
+EmbeddedGist.defaultProps = {
+  gist: 'mathisonian/689614257cb1af6b15de3344da6cdc7a'
+}
+
 export default EmbeddedGist;
 

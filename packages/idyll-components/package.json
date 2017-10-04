@@ -45,7 +45,7 @@
     "react-latex": "^1.0.1",
     "react-syntax-highlighter": "^5.7.0",
     "react-table": "^6.6.0",
-    "victory": "^0.22.2"
+    "victory": "^0.23.0"
   },
   "peerDependencies": {
     "react": "^16.0.0",

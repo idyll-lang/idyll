@@ -6,4 +6,3 @@ export default () =>
     <button>And a button</button>
     Then some more text
   </div>
-  

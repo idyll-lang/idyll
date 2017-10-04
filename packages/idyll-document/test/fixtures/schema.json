@@ -231,6 +231,66 @@
   {
     "component": "p",
     "children": [
+      "Test expression, displays:"
+    ]
+  },
+  {
+    "component": "Display",
+    "id": "varDisplay",
+    "__expr__": {
+      "value": "x"
+    },
+    "value": "x",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "derivedVarDisplay",
+    "__expr__": {
+      "value": "xSquared"
+    },
+    "value": "xSquared",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "strDisplay",
+    "__expr__": {
+      "value": "\"string\""
+    },
+    "value": "\"string\"",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "staticObjectDisplay",
+    "__expr__": {
+      "value": "{ static: \"object\" }"
+    },
+    "value": "{ static: \"object\" }",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "dynamicObjectDisplay",
+    "__expr__": {
+      "value": "{ dynamic: x }"
+    },
+    "value": "{ dynamic: x }",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "dataDisplay",
+    "__expr__": {
+      "value": "myData"
+    },
+    "value": "myData",
+    "children": []
+  },
+  {
+    "component": "p",
+    "children": [
       "Here is an example of how you could use a variable to control the frequency of a sine wave:"
     ]
   },
@@ -250,11 +310,11 @@
     "__vars__": {
       "value": "frequency"
     },
+    "value": "frequency",
+    "min": 0.5,
     "__expr__": {
       "max": "2 * Math.PI"
     },
-    "value": "frequency",
-    "min": 0.5,
     "max": "2 * Math.PI",
     "step": 0.0001,
     "children": []
