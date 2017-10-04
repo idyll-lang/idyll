@@ -65,7 +65,7 @@ describe('Component state initialization', () => {
 
     checks.forEach((check) => {
       const display = displayComponents.find(`#${check.id}`);
-      expect(display.length).toBeGreaterThan(0);
+      expect(display.length).toBe(1);
       expect(display.html()).toBe(check.html);
     });
   });
@@ -113,7 +113,7 @@ describe('Component state initialization', () => {
 
     checks.forEach((check) => {
       const display = displayComponents.find(`#${check.id}`);
-      expect(display.length).toBeGreaterThan(0);
+      expect(display.length).toBe(1);
       expect(display.html()).toBe(check.html);
     });
   });

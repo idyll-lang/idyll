@@ -45,106 +45,106 @@ describe('Sanity Check', () => {
   describe('Shallow Mount', () => {
     describe('Layout', () => {
       it('<Aside />', () => {
-        const wrapper = shallow(<Aside />);
+        expect(() => shallow(<Aside />)).not.toThrow();
       });
       it('<FeatureContent />', () => {
-        const wrapper = shallow(<FeatureContent />);
+        expect(() => shallow(<FeatureContent />)).not.toThrow();
       });
       it('<Feature />', () => {
-        const wrapper = shallow(<Feature />);
+        expect(() => shallow(<Feature />)).not.toThrow();
       });
       it('<Fixed />', () => {
-        const wrapper = shallow(<Fixed />);
+        expect(() => shallow(<Fixed />)).not.toThrow();
       });
       it('<Float />', () => {
-        const wrapper = shallow(<Float />);
+        expect(() => shallow(<Float />)).not.toThrow();
       });
       it('<FullScreen />', () => {
-        const wrapper = shallow(<FullScreen />);
+        expect(() => shallow(<FullScreen />)).not.toThrow();
       });
       it('<Inline />', () => {
-        const wrapper = shallow(<Inline />);
+        expect(() => shallow(<Inline />)).not.toThrow();
       });
       it('<Panel />', () => {
-        const wrapper = shallow(<Panel />);
+        expect(() => shallow(<Panel />)).not.toThrow();
       });
       it('<Waypoint />', () => {
-        const wrapper = shallow(<Waypoint />);
+        expect(() => shallow(<Waypoint />)).not.toThrow();
       });
     })
 
     describe('Presentation', () => {
       it('<Action />', () => {
-        const wrapper = shallow(<Action />);
+        expect(() => shallow(<Action />)).not.toThrow();
       });
       it('<Boolean />', () => {
-        const wrapper = shallow(<Boolean />);
+        expect(() => shallow(<Boolean />)).not.toThrow();
       });
       it('<Button />', () => {
-        const wrapper = shallow(<Button />);
+        expect(() => shallow(<Button />)).not.toThrow();
       });
       it('<Chart />', () => {
-        const wrapper = shallow(<Chart />);
+        expect(() => shallow(<Chart />)).not.toThrow();
       });
       it('<Display />', () => {
-        const wrapper = shallow(<Display />);
+        expect(() => shallow(<Display />)).not.toThrow();
       });
       it('<Dynamic />', () => {
-        const wrapper = shallow(<Dynamic />);
+        expect(() => shallow(<Dynamic />)).not.toThrow();
       });
       it('<Equation />', () => {
-        const wrapper = shallow(<Equation />);
+        expect(() => shallow(<Equation />)).not.toThrow();
       });
       it('<Gist />', () => {
-        const wrapper = shallow(<Gist />);
+        expect(() => shallow(<Gist />)).not.toThrow();
       });
       it('<Header />', () => {
-        const wrapper = shallow(<Header />);
+        expect(() => shallow(<Header />)).not.toThrow();
       });
       it('<Link />', () => {
-        const wrapper = shallow(<Link />);
+        expect(() => shallow(<Link />)).not.toThrow();
       });
       it('<Radio />', () => {
-        const wrapper = shallow(<Radio />);
+        expect(() => shallow(<Radio />)).not.toThrow();
       });
       it('<Range />', () => {
-        const wrapper = shallow(<Range />);
+        expect(() => shallow(<Range />)).not.toThrow();
       });
       it('<Select />', () => {
-        const wrapper = shallow(<Select />);
+        expect(() => shallow(<Select />)).not.toThrow();
       });
       it('<Slide />', () => {
-        const wrapper = shallow(<Slide />);
+        expect(() => shallow(<Slide />)).not.toThrow();
       });
       it('<Slideshow />', () => {
-        const wrapper = shallow(<Slideshow />);
+        expect(() => shallow(<Slideshow />)).not.toThrow();
       });
       it('<SVG />', () => {
-        const wrapper = shallow(<SVG />);
+        expect(() => shallow(<SVG />)).not.toThrow();
       });
       it('<Table />', () => {
-        const wrapper = shallow(<Table />);
+        expect(() => shallow(<Table />)).not.toThrow();
       });
       it('<TextInput />', () => {
-        const wrapper = shallow(<TextInput />);
+        expect(() => shallow(<TextInput />)).not.toThrow();
       });
     });
 
     describe('Helpers', () => {
       it('<Analytics />', () => {
-        const wrapper = shallow(<Analytics />);
+        expect(() => shallow(<Analytics />)).not.toThrow();
       });
       it('<CodeHighlight />', () => {
-        const wrapper = shallow(<CodeHighlight />);
+        expect(() => shallow(<CodeHighlight />)).not.toThrow();
       });
       it('<Container />', () => {
-        const wrapper = shallow(<Container />);
+        expect(() => shallow(<Container />)).not.toThrow();
       });
       it('<Preload />', () => {
-        const wrapper = shallow(<Preload />);
+        expect(() => shallow(<Preload />)).not.toThrow();
       });
       it('<Screen />', () => {
-        const wrapper = shallow(<Screen />);
+        expect(() => shallow(<Screen />)).not.toThrow();
       });
     });
   });
@@ -153,106 +153,106 @@ describe('Sanity Check', () => {
   describe('Full Mount', () => {
     describe('Layout', () => {
       it('<Aside />', () => {
-        const wrapper = mount(<Aside />);
+        expect(() => mount(<Aside />)).not.toThrow();
       });
       it('<FeatureContent />', () => {
-        const wrapper = mount(<FeatureContent />);
+        expect(() => mount(<FeatureContent />)).not.toThrow();
       });
       it('<Feature />', () => {
-        const wrapper = mount(<Feature />);
+        expect(() => mount(<Feature />)).not.toThrow();
       });
       it('<Fixed />', () => {
-        const wrapper = mount(<Fixed />);
+        expect(() => mount(<Fixed />)).not.toThrow();
       });
       it('<Float />', () => {
-        const wrapper = mount(<Float />);
+        expect(() => mount(<Float />)).not.toThrow();
       });
       it('<FullScreen />', () => {
-        const wrapper = mount(<FullScreen />);
+        expect(() => mount(<FullScreen />)).not.toThrow();
       });
       it('<Inline />', () => {
-        const wrapper = mount(<Inline />);
+        expect(() => mount(<Inline />)).not.toThrow();
       });
       it('<Panel />', () => {
-        const wrapper = mount(<Panel />);
+        expect(() => mount(<Panel />)).not.toThrow();
       });
       it('<Waypoint />', () => {
-        const wrapper = mount(<Waypoint />);
+        expect(() => mount(<Waypoint />)).not.toThrow();
       });
     })
 
     describe('Presentation', () => {
       it('<Action />', () => {
-        const wrapper = mount(<Action />);
+        expect(() => mount(<Action />)).not.toThrow();
       });
       it('<Boolean />', () => {
-        const wrapper = mount(<Boolean />);
+        expect(() => mount(<Boolean />)).not.toThrow();
       });
       it('<Button />', () => {
-        const wrapper = mount(<Button />);
+        expect(() => mount(<Button />)).not.toThrow();
       });
       it('<Chart />', () => {
-        const wrapper = mount(<Chart />);
+        expect(() => mount(<Chart />)).not.toThrow();
       });
       it('<Display />', () => {
-        const wrapper = mount(<Display />);
+        expect(() => mount(<Display />)).not.toThrow();
       });
       it('<Dynamic />', () => {
-        const wrapper = mount(<Dynamic />);
+        expect(() => mount(<Dynamic />)).not.toThrow();
       });
       it('<Equation />', () => {
-        const wrapper = mount(<Equation />);
+        expect(() => mount(<Equation />)).not.toThrow();
       });
       it('<Gist />', () => {
-        const wrapper = mount(<Gist />);
+        expect(() => mount(<Gist />)).not.toThrow();
       });
       it('<Header />', () => {
-        const wrapper = mount(<Header />);
+        expect(() => mount(<Header />)).not.toThrow();
       });
       it('<Link />', () => {
-        const wrapper = mount(<Link />);
+        expect(() => mount(<Link />)).not.toThrow();
       });
       it('<Radio />', () => {
-        const wrapper = mount(<Radio />);
+        expect(() => mount(<Radio />)).not.toThrow();
       });
       it('<Range />', () => {
-        const wrapper = mount(<Range />);
+        expect(() => mount(<Range />)).not.toThrow();
       });
       it('<Select />', () => {
-        const wrapper = mount(<Select />);
+        expect(() => mount(<Select />)).not.toThrow();
       });
       it('<Slide />', () => {
-        const wrapper = mount(<Slide />);
+        expect(() => mount(<Slide />)).not.toThrow();
       });
       it('<Slideshow />', () => {
-        const wrapper = mount(<Slideshow />);
+        expect(() => mount(<Slideshow />)).not.toThrow();
       });
       it('<SVG />', () => {
-        const wrapper = mount(<SVG />);
+        expect(() => mount(<SVG />)).not.toThrow();
       });
       it('<Table />', () => {
-        const wrapper = mount(<Table />);
+        expect(() => mount(<Table />)).not.toThrow();
       });
       it('<TextInput />', () => {
-        const wrapper = mount(<TextInput />);
+        expect(() => mount(<TextInput />)).not.toThrow();
       });
     });
 
     describe('Helpers', () => {
       it('<Analytics />', () => {
-        const wrapper = mount(<Analytics />);
+        expect(() => mount(<Analytics />)).not.toThrow();
       });
       it('<CodeHighlight />', () => {
-        const wrapper = mount(<CodeHighlight />);
+        expect(() => mount(<CodeHighlight />)).not.toThrow();
       });
       it('<Container />', () => {
-        const wrapper = mount(<Container />);
+        expect(() => mount(<Container />)).not.toThrow();
       });
       it('<Preload />', () => {
-        const wrapper = mount(<Preload />);
+        expect(() => mount(<Preload />)).not.toThrow();
       });
       it('<Screen />', () => {
-        const wrapper = mount(<Screen />);
+        expect(() => mount(<Screen />)).not.toThrow();
       });
     });
   });
