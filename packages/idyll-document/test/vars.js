@@ -1,12 +1,9 @@
 import React from 'react';
-
+import { shallow, mount } from 'enzyme';
 import * as components from 'idyll-components';
+
 import IdyllDocument from '../src/';
 import ast from './fixtures/ast.json';
-
-import Enzyme, { shallow, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-Enzyme.configure({ adapter: new Adapter() });
 
 let component;
 

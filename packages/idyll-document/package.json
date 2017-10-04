@@ -18,6 +18,9 @@
     "test": "jest"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/setupJest.js"
+    ],
     "testMatch": [
       "**/test/**/*.js"
     ]
