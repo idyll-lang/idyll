@@ -178,6 +178,10 @@ export const mapTree = (tree, mapFn, filterFn = () => true) => {
   );
 };
 
+export const filterASTForDocument = (ast) => {
+  return mapTree(ast, n => n, ([name]) => name !== 'meta')
+};
+
 export const findWrapTargets = (schema, state) => {
   const targets = [];
   const stateKeys = Object.keys(state);

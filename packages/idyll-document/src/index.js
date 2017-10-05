@@ -179,7 +179,7 @@ class IdyllDocument extends React.PureComponent {
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
-    const ast = filterASTForDocument(props.ast, n => n, ([name]) => name !== 'meta');
+    const ast = filterASTForDocument(props.ast);
 
     const {
       vars,
@@ -200,7 +200,7 @@ class IdyllDocument extends React.PureComponent {
     };
 
     const rjs = new ReactJsonSchema({...props.components, Wrapper});
-    const schema = translate(props.ast);
+    const schema = translate(ast);
 
     const wrapTargets = findWrapTargets(schema, this.state);
 
