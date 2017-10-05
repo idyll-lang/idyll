@@ -1,27 +1,6 @@
 const values = require('object.values');
 const entries = require('object.entries');
 
-const getNodesByName = (name, tree) => {
-  const predicate = typeof name === 'string' ? (s) => s === name : name;
-
-  const byName = (acc, val) => {
-    if (typeof val === 'string') return acc;
-
-    const [ name, attrs, children ] = val;
-
-    if (predicate(name)) acc.push(val)
-
-    if (children.length > 0) children.reduce(byName, acc)
-
-    return acc;
-  }
-
-  return tree.reduce(
-    byName,
-    []
-  )
-}
-
 export const evalExpression = (acc, expr) => {
   const e = `
     (() => {
