@@ -102,7 +102,7 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
     // children merge them to avoid issues with
     // Equation and other components that
     // consume their children programatically.
-    children = children.reduce((acc, c) => {
+    children = children.reduce(function (acc, c) {
       if (typeof c === 'string' && lastWasString) {
         acc[acc.length - 1] += c;
         lastWasString = true;
