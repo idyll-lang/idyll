@@ -177,21 +177,27 @@ export const translate = (arr) => {
   return splitAST(arr).elements.map(tNode)
 }
 
-export const mapTree = (tree, mapFn) => {
+export const mapTree = (tree, mapFn, filterFn = () => true) => {
   const walkFn = (acc, node) => {
     if (typeof node !== 'string') {
-      node.children = node.children.reduce(walkFn, [])
+      if (node.children) {
+        // translated schema
+        node.children = node.children.reduce(walkFn, []);
+      } else {
+        // compiler AST
+        node[2] = node[2].reduce(walkFn, []);
+      }
     }
 
-    acc.push(mapFn(node))
+    if (filterFn(node)) acc.push(mapFn(node));
     return acc;
-  }
+  };
 
   return tree.reduce(
     walkFn,
     []
-  )
-}
+  );
+};
 
 export const findWrapTargets = (schema, state) => {
   const targets = [];

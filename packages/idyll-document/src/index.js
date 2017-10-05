@@ -7,6 +7,7 @@ import values from 'object.values';
 import {
   getData,
   getVars,
+  filterASTForDocument,
   splitAST,
   translate,
   findWrapTargets,
@@ -178,12 +179,14 @@ class IdyllDocument extends React.PureComponent {
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
+    const ast = filterASTForDocument(props.ast, n => n, ([name]) => name !== 'meta');
+
     const {
       vars,
       derived,
       data,
       elements,
-    } = splitAST(props.ast);
+    } = splitAST(ast);
 
     const initialState = {
       ...getVars(vars),
