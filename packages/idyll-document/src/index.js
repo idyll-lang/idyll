@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import scrollMonitor from 'scrollmonitor';
-import compile from 'idyll-compiler';
 import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
@@ -179,19 +178,12 @@ class IdyllDocument extends React.PureComponent {
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
-    if (!props.ast && !props.src) {
-      this.kids = null;
-      return;
-    }
-
-    const ast = props.ast || compile(props.src);
-
     const {
       vars,
       derived,
       data,
       elements,
-    } = splitAST(ast);
+    } = splitAST(props.ast);
 
     const initialState = {
       ...getVars(vars),
@@ -205,7 +197,7 @@ class IdyllDocument extends React.PureComponent {
     };
 
     const rjs = new ReactJsonSchema({...props.components, Wrapper});
-    const schema = translate(ast);
+    const schema = translate(props.ast);
 
     const wrapTargets = findWrapTargets(schema, this.state);
 
