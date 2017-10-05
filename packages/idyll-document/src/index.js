@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import scrollMonitor from 'scrollmonitor';
-import compile from 'idyll-compiler';
 import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import {
   getData,
   getVars,
+  filterASTForDocument,
   splitAST,
   translate,
   findWrapTargets,
@@ -179,12 +179,7 @@ class IdyllDocument extends React.PureComponent {
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
-    if (!props.ast && !props.src) {
-      this.kids = null;
-      return;
-    }
-
-    const ast = props.ast || compile(props.src);
+    const ast = filterASTForDocument(props.ast);
 
     const {
       vars,
