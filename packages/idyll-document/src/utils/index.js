@@ -32,8 +32,10 @@ export const evalExpression = (acc, expr) => {
 
 export const getVars = (arr, context = {}) => {
   const pluck = (acc, val) => {
-    const [ , attrs, ] = val
+    const [ , attrs = [], ] = val
+
     const [nameArr, valueArr] = attrs;
+    if (!nameArr || !valueArr) return acc;
 
     const [, [, nameValue]] = nameArr
     const [, [valueType, valueValue]] = valueArr;
