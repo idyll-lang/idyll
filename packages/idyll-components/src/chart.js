@@ -11,69 +11,73 @@ const types = {
   PIE: V.VictoryPie
 };
 
+let chartCount = 0;
+
 class Chart extends React.PureComponent {
+
   constructor(props) {
     super(props);
+    this.id = chartCount++;
     this.state = {};
-    this.renderError = this.renderError.bind(this);
-    this.renderHelp = this.renderHelp.bind(this);
   }
 
   componentDidCatch(error, info) {
     this.setState({ hasError: true, error: error });
   }
 
-  renderError() {
-    return ([
-      <div style={{
-        padding: '1em',
-        fontSize: '1.5em',
-        fontWeight: '900',
-        color: 'darkred',
-        backgroundColor: 'pink'
-      }}>
-        {this.state.error.message}
-      </div>,
-      <br/>,
-      this.renderHelp()
-    ])
-  }
-
-  renderHelp() {
-    return (
-      <div style={{
-        padding: '1em',
-        fontSize: '1.5em',
-        fontWeight: '900',
-        color: 'darkgreen',
-        backgroundColor: 'lightgreen'
-      }}>
-        <ul>
-          <li><a href="/" style={{textShadow: 'none'}}>area</a></li>
-          <li><a href="/" style={{textShadow: 'none'}}>bar</a></li>
-          <li><a href="/" style={{textShadow: 'none'}}>line</a></li>
-          <li><a href="/" style={{textShadow: 'none'}}>pie</a></li>
-          <li><a href="/" style={{textShadow: 'none'}}>scatter</a></li>
-          <li><a href="/" style={{textShadow: 'none'}}>time</a></li>
-        </ul>
-      </div>
-    )
-  }
-
   render() {
-    if (this.state.hasError) return this.renderError();
-    if (this.props.help) return this.renderHelp();
+    const { id, props } = this;
+    const type = props.type.toUpperCase();
 
-    const type = this.props.type.toUpperCase();
+    if (this.state.hasError) {
+      return (
+        <div style={{
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            padding: '1em',
+            backgroundColor: 'pink',
+            border: '8px solid darkred'
+          }}
+        >
+          <p>{this.state.error.message}</p>
+          I'm a <a href="https://github.com/idyll-lang/idyll/blob/master/packages/idyll-components/src/chart.js">Chart component!</a>
+          <br/>
+          Valid types are:
+          <ul>
+            <li>area</li>
+            <li>time</li>
+            <li>line</li>
+            <li>bar</li>
+            <li>scatter</li>
+            <li>pie</li>
+          </ul>
+        </div>
+      );
+    }
+
+    if (props.help) {
+      return (
+        <div style={{
+            padding: '2em',
+            backgroundColor: 'lightblue',
+            border: '4px solid blue'
+          }}
+        >
+          This comp uses Victory charts.
+
+          Example syntax: `[Chart type:"line" /]`
+        </div>
+      )
+    }
+
     const INNER_CHART = types[type];
-    let { scale, data, domain, ...customProps } = this.props;
+    let { scale, data, domain, ...customProps } = props;
 
-    if (this.props.equation) {
+    if (props.equation) {
       const d = domain;
-      data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / this.props.samplePoints).map((x) => {
+      data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / props.samplePoints).map((x) => {
         return {
           x: x,
-          y: this.props.equation(x)
+          y: props.equation(x)
         };
       });
     }
@@ -87,18 +91,18 @@ class Chart extends React.PureComponent {
       });
     }
     return (
-      <div className={this.props.className}>
+      <div className={props.className}>
         {type !== 'PIE' ? (
-          <V.VictoryChart domainPadding={10} scale={scale}>
+          <V.VictoryChart domainPadding={10} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
             <INNER_CHART
               data={data}
-              x={this.props.x}
-              y={this.props.y}
+              x={props.x}
+              y={props.y}
               {...customProps}>
             </INNER_CHART>
           </V.VictoryChart>
         ) : (
-          <INNER_CHART data={data} colorScale={this.props.colorScale}>
+          <INNER_CHART data={data} colorScale={props.colorScale}>
           </INNER_CHART>
         )
         }
