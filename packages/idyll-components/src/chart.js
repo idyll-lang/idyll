@@ -18,9 +18,56 @@ class Chart extends React.PureComponent {
   constructor(props) {
     super(props);
     this.id = chartCount++;
+    this.state = {};
+    this.renderError = this.renderError.bind(this);
+    this.renderHelp = this.renderHelp.bind(this);
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({ hasError: true, error: error });
+  }
+
+  renderError() {
+    return ([
+      <div style={{
+        padding: '1em',
+        fontSize: '1.5em',
+        fontWeight: '900',
+        color: 'darkred',
+        backgroundColor: 'pink'
+      }}>
+        {this.state.error.message}
+      </div>,
+      <br/>,
+      this.renderHelp()
+    ])
+  }
+
+  renderHelp() {
+    return (
+      <div style={{
+        padding: '1em',
+        fontSize: '1.5em',
+        fontWeight: '900',
+        color: 'darkgreen',
+        backgroundColor: 'lightgreen'
+      }}>
+        <ul>
+          <li><a href="/" style={{textShadow: 'none'}}>area</a></li>
+          <li><a href="/" style={{textShadow: 'none'}}>bar</a></li>
+          <li><a href="/" style={{textShadow: 'none'}}>line</a></li>
+          <li><a href="/" style={{textShadow: 'none'}}>pie</a></li>
+          <li><a href="/" style={{textShadow: 'none'}}>scatter</a></li>
+          <li><a href="/" style={{textShadow: 'none'}}>time</a></li>
+        </ul>
+      </div>
+    )
   }
 
   render() {
+    if (this.state.hasError) return this.renderError();
+    if (this.props.help) return this.renderHelp();
+
     const { id, props } = this;
     const type = props.type.toUpperCase();
     const INNER_CHART = types[type];
