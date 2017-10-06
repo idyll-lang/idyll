@@ -6,7 +6,7 @@ module.exports = {
       'env',
       {
         loose: true,
-        modules: 'commonjs',
+        modules: BABEL_ENV === 'cjs' || NODE_ENV === 'test' ? 'commonjs' : false,
       },
     ],
   ],
