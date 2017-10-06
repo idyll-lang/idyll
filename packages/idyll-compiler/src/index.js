@@ -1,6 +1,6 @@
 
-var parse = require('./src/parser');
-var Lexer = require('./src/lexer');
+var parse = require('./parser');
+var Lexer = require('./lexer');
 
 module.exports = function(input, options) {
   options = Object.assign({}, { spellcheck: false, smartquotes: true }, options || {});
