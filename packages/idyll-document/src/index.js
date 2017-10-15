@@ -45,10 +45,12 @@ const getRefs = () => {
   return refs;
 };
 
+let wrapperKey = 0;
 class Wrapper extends React.PureComponent {
   constructor(props) {
     super(props);
 
+    this.key = wrapperKey;
     this.ref = {};
     this.onUpdateRefs = this.onUpdateRefs.bind(this);
     this.onUpdateProps = this.onUpdateProps.bind(this);
@@ -155,7 +157,7 @@ class Wrapper extends React.PureComponent {
       hooks.forEach(hook => {
         this[hook] = c.props[hook] || function(){};
       });
-      return React.cloneElement(c, {key: i, ...this.state});
+      return React.cloneElement(c, {key: `${this.key}-${i}`, ...this.state});
     });
   }
 }

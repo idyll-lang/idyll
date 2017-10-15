@@ -8,7 +8,8 @@ class Panel extends React.PureComponent {
   }
 
   render() {
-    return <div className="panel"  {...this.props} />;
+    const { updateProps, hasError, ...props } = this.props;
+    return <div className="panel"  {...props} />;
   }
 
 }

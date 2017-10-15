@@ -14,7 +14,7 @@ class Screen extends React.PureComponent {
       position: this.props.display ? this.props.display : 'relative',
       zIndex: 1,
       height: '100vh',
-      width: this.props.fullBleed ? '100vw' : undefined,
+      width: this.props.fullBleed ? '100%' : undefined,
       left: this.props.display === 'fixed' ? 0 : undefined,
       pointerEvents: 'none',
       transition: 'background 0.5s'
@@ -43,6 +43,23 @@ class Screen extends React.PureComponent {
         stretch: 'stretch'
       }[this.props.align] || 'flex-end',
       pointerEvents: 'all'
+    }
+
+    if (this.props.fullBleed) {
+      return (
+        <div style={{overflow: 'hidden'}}>
+          <div style={Object.assign({}, overlayStyle, { position: 'absolute', left: 0 })}>
+            <div style={contentContainerStyle}>
+              <div style={{display: 'flex', flex: this.props.position}}/>
+              <div style={contentStyle} className="screen-content" >
+                {this.props.children}
+              </div>
+              <div style={{display: 'flex', flex: 1 - this.props.position}}/>
+            </div>
+          </div>
+          <div style={{width: '100%', height: '100vh'}}></div>
+        </div>
+      );
     }
 
     return <Container style={overlayStyle}

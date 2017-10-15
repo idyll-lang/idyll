@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 
 const stateClasses = [
   'is-top',
@@ -24,7 +24,6 @@ class Feature extends React.PureComponent {
     this.state = {
       scrollState: 0,
       featureMarginLeft: 0,
-      featureWidth: typeof window !== 'undefined' ? window.innerWidth : 0
     };
   }
 
@@ -34,21 +33,19 @@ class Feature extends React.PureComponent {
   }
 
   setRoot (c) {
-    this.rootEl = window.rootEl = c;
+    this.rootEl = c;
     this.initialize();
   }
 
   setFeature (c) {
-    this.featureEl = window.featureEl = c;
+    this.featureEl = c;
     this.initialize();
   }
 
   handleResize () {
     let rootRect = this.rootEl.getBoundingClientRect()
     this.setState({
-      featureMarginLeft: -rootRect.left,
-      featureWidth: window.innerWidth,
-      featureHeight: window.innerHeight
+      featureMarginLeft: -rootRect.left
     });
   }
 
@@ -67,8 +64,6 @@ class Feature extends React.PureComponent {
 
 
   initialize () {
-    console.log('initialize');
-    console.log('children', this.props.children);
     if (!this.rootEl || !this.featureEl) return;
 
     this.handleResize();
@@ -76,30 +71,35 @@ class Feature extends React.PureComponent {
     window.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
+  unwrapChild(c) {
+    if (c => c.type.name && c.type.name.toLowerCase() === 'wrapper') {
+      return c.props.children[0];
+    }
+    return c;
+  }
+
   unwrapChildren() {
-    return this.props.children.map((c) => {
-      if (c => c.type.name && c.type.name.toLowerCase() === 'wrapper') {
-        return c.props.children[0];
-      }
-      return c;
-    })
+    return this.props.children.map((c) => this.unwrapChild(c));
   }
 
   getFeatureChild() {
-    const c = this.unwrapChildren().filter(c => {
+    const unwrapped = this.unwrapChildren();
+    const filtered = React.Children.toArray(this.props.children).filter((_, i) => {
+      const c = unwrapped[i];
       if (!c.type) {
         return false;
       }
       return (c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content;
     })
-    console.log('featued c', c);
-    if (c.length) {
-      return c[0];
+    if (filtered.length) {
+      return filtered[0];
     }
   }
 
   getNonFeatureChildren() {
-    return this.unwrapChildren().filter(c => {
+    const unwrapped = this.unwrapChildren();
+    return React.Children.toArray(this.props.children).filter((_, i) => {
+      const c = unwrapped[i];
       if (!c.type) {
         return true;
       }
@@ -111,8 +111,9 @@ class Feature extends React.PureComponent {
     let feature;
     let ps = this.state.scrollState;
     let featureStyles = {
-      width: this.state.featureWidth + 'px',
-      height: this.state.featureHeight + 'px',
+      width: 'calc(100vw - 15px)',
+      overflowX: 'hidden',
+      height: '100vh',
       marginLeft: ps === 1 ? 0 : (this.state.featureMarginLeft + 'px'),
       position: ps >= 1 ? 'fixed' : 'absolute',
       bottom: ps === 2 ? 0 : 'auto',
@@ -136,13 +137,22 @@ class Feature extends React.PureComponent {
     var featureChild = this.getFeatureChild();
     var nonFeatureChildren = this.getNonFeatureChildren();
 
-    console.log('feature child', featureChild);
-    console.log('rendering feature', this.state.scrollState);
     if (featureChild) {
-      feature = React.cloneElement(featureChild, {
-        style: featureStyles,
-        ref: (ref) => this.setFeature(ref)
-      });
+      const unwrapped = this.unwrapChild(featureChild);
+      if (featureChild !== unwrapped) {
+        // React.Children.only(featureChild.props.children);
+        feature = React.cloneElement(featureChild, {
+          children: React.cloneElement(React.Children.toArray(featureChild.props.children)[0], {
+            style: featureStyles,
+            ref: (ref) => this.setFeature(ref)
+          })
+        });
+      } else {
+        feature = React.cloneElement(featureChild, {
+          style: featureStyles,
+          ref: (ref) => this.setFeature(ref)
+        });
+      }
     }
 
     return <figure
