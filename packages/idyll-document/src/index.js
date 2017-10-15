@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import scrollMonitor from 'scrollmonitor';
-import compile from 'idyll-compiler';
 import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import {
   getData,
   getVars,
+  filterASTForDocument,
   splitAST,
   translate,
   findWrapTargets,
@@ -23,7 +23,7 @@ const scrollOffsets = {};
 let scrollContainer;
 
 const getScrollableContainer = el => {
-  if (el.scrollHeight > el.offsetHeight) return el;
+  if (!el || el.scrollHeight > el.offsetHeight) return el;
   return getScrollableContainer(el.parentNode);
 };
 
@@ -175,12 +175,7 @@ class IdyllDocument extends React.PureComponent {
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
-    if (!props.ast && !props.src) {
-      this.kids = null;
-      return;
-    }
-
-    const ast = props.ast || compile(props.src);
+    const ast = filterASTForDocument(props.ast);
 
     const {
       vars,
@@ -273,9 +268,10 @@ class IdyllDocument extends React.PureComponent {
             []
           )
 
-          // update doc state reference
-          state = nextState;
-
+          // Update doc state reference.
+          // We re-use the same object here so that
+          // IdyllDocument.state can be accurately checked in tests
+          state = Object.assign(state, nextState);
           // pass the new doc state to all listeners aka component wrappers
           updatePropsCallbacks.forEach(f => f(state, changedKeys));
         };

@@ -179,6 +179,75 @@ ShallowWrapper {
         </Display>
     </p>
     <p>
+        Test expression, displays:
+    </p>
+    <Display
+        __expr__={
+            Object {
+                "value": "x",
+              }
+        }
+        id="varDisplay"
+        value="x"
+    >
+        
+    </Display>
+    <Display
+        __expr__={
+            Object {
+                "value": "xSquared",
+              }
+        }
+        id="derivedVarDisplay"
+        value="xSquared"
+    >
+        
+    </Display>
+    <Display
+        __expr__={
+            Object {
+                "value": "\\"string\\"",
+              }
+        }
+        id="strDisplay"
+        value="\\"string\\""
+    >
+        
+    </Display>
+    <Display
+        __expr__={
+            Object {
+                "value": "{ static: \\"object\\" }",
+              }
+        }
+        id="staticObjectDisplay"
+        value="{ static: \\"object\\" }"
+    >
+        
+    </Display>
+    <Display
+        __expr__={
+            Object {
+                "value": "{ dynamic: x }",
+              }
+        }
+        id="dynamicObjectDisplay"
+        value="{ dynamic: x }"
+    >
+        
+    </Display>
+    <Display
+        __expr__={
+            Object {
+                "value": "myData",
+              }
+        }
+        id="dataDisplay"
+        value="myData"
+    >
+        
+    </Display>
+    <p>
         Here is an example of how you could use a variable to control the frequency of a sine wave:
     </p>
     <Chart
@@ -422,6 +491,75 @@ ShallowWrapper {
                     
           </Display>
 </p>,
+        <p>
+          Test expression, displays:
+</p>,
+        <Display
+          __expr__={
+                    Object {
+                              "value": "x",
+                            }
+          }
+          id="varDisplay"
+          value="x"
+>
+          
+</Display>,
+        <Display
+          __expr__={
+                    Object {
+                              "value": "xSquared",
+                            }
+          }
+          id="derivedVarDisplay"
+          value="xSquared"
+>
+          
+</Display>,
+        <Display
+          __expr__={
+                    Object {
+                              "value": "\\"string\\"",
+                            }
+          }
+          id="strDisplay"
+          value="\\"string\\""
+>
+          
+</Display>,
+        <Display
+          __expr__={
+                    Object {
+                              "value": "{ static: \\"object\\" }",
+                            }
+          }
+          id="staticObjectDisplay"
+          value="{ static: \\"object\\" }"
+>
+          
+</Display>,
+        <Display
+          __expr__={
+                    Object {
+                              "value": "{ dynamic: x }",
+                            }
+          }
+          id="dynamicObjectDisplay"
+          value="{ dynamic: x }"
+>
+          
+</Display>,
+        <Display
+          __expr__={
+                    Object {
+                              "value": "myData",
+                            }
+          }
+          id="dataDisplay"
+          value="myData"
+>
+          
+</Display>,
         <p>
           Here is an example of how you could use a variable to control the frequency of a sine wave:
 </p>,
@@ -1126,6 +1264,117 @@ or be used to parameterize components. Derived variables can be used to create v
         "nodeType": "host",
         "props": Object {
           "children": Array [
+            "Test expression, displays:",
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          "Test expression, displays:",
+        ],
+        "type": "p",
+      },
+      Object {
+        "instance": null,
+        "key": "18",
+        "nodeType": "class",
+        "props": Object {
+          "__expr__": Object {
+            "value": "x",
+          },
+          "children": Array [],
+          "id": "varDisplay",
+          "value": "x",
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "19",
+        "nodeType": "class",
+        "props": Object {
+          "__expr__": Object {
+            "value": "xSquared",
+          },
+          "children": Array [],
+          "id": "derivedVarDisplay",
+          "value": "xSquared",
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "20",
+        "nodeType": "class",
+        "props": Object {
+          "__expr__": Object {
+            "value": "\\"string\\"",
+          },
+          "children": Array [],
+          "id": "strDisplay",
+          "value": "\\"string\\"",
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "21",
+        "nodeType": "class",
+        "props": Object {
+          "__expr__": Object {
+            "value": "{ static: \\"object\\" }",
+          },
+          "children": Array [],
+          "id": "staticObjectDisplay",
+          "value": "{ static: \\"object\\" }",
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "22",
+        "nodeType": "class",
+        "props": Object {
+          "__expr__": Object {
+            "value": "{ dynamic: x }",
+          },
+          "children": Array [],
+          "id": "dynamicObjectDisplay",
+          "value": "{ dynamic: x }",
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "23",
+        "nodeType": "class",
+        "props": Object {
+          "__expr__": Object {
+            "value": "myData",
+          },
+          "children": Array [],
+          "id": "dataDisplay",
+          "value": "myData",
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "24",
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
             "Here is an example of how you could use a variable to control the frequency of a sine wave:",
           ],
         },
@@ -1137,7 +1386,7 @@ or be used to parameterize components. Derived variables can be used to create v
       },
       Object {
         "instance": null,
-        "key": "18",
+        "key": "25",
         "nodeType": "class",
         "props": Object {
           "__expr__": Object {
@@ -1161,7 +1410,7 @@ or be used to parameterize components. Derived variables can be used to create v
       },
       Object {
         "instance": null,
-        "key": "19",
+        "key": "26",
         "nodeType": "class",
         "props": Object {
           "__expr__": Object {
@@ -1182,7 +1431,7 @@ or be used to parameterize components. Derived variables can be used to create v
       },
       Object {
         "instance": null,
-        "key": "20",
+        "key": "27",
         "nodeType": "host",
         "props": Object {
           "children": Array [
@@ -1424,6 +1673,75 @@ or be used to parameterize components. Derived variables can be used to create v
                         
             </Display>
 </p>,
+          <p>
+            Test expression, displays:
+</p>,
+          <Display
+            __expr__={
+                        Object {
+                                    "value": "x",
+                                  }
+            }
+            id="varDisplay"
+            value="x"
+>
+            
+</Display>,
+          <Display
+            __expr__={
+                        Object {
+                                    "value": "xSquared",
+                                  }
+            }
+            id="derivedVarDisplay"
+            value="xSquared"
+>
+            
+</Display>,
+          <Display
+            __expr__={
+                        Object {
+                                    "value": "\\"string\\"",
+                                  }
+            }
+            id="strDisplay"
+            value="\\"string\\""
+>
+            
+</Display>,
+          <Display
+            __expr__={
+                        Object {
+                                    "value": "{ static: \\"object\\" }",
+                                  }
+            }
+            id="staticObjectDisplay"
+            value="{ static: \\"object\\" }"
+>
+            
+</Display>,
+          <Display
+            __expr__={
+                        Object {
+                                    "value": "{ dynamic: x }",
+                                  }
+            }
+            id="dynamicObjectDisplay"
+            value="{ dynamic: x }"
+>
+            
+</Display>,
+          <Display
+            __expr__={
+                        Object {
+                                    "value": "myData",
+                                  }
+            }
+            id="dataDisplay"
+            value="myData"
+>
+            
+</Display>,
           <p>
             Here is an example of how you could use a variable to control the frequency of a sine wave:
 </p>,
@@ -2128,6 +2446,117 @@ or be used to parameterize components. Derived variables can be used to create v
           "nodeType": "host",
           "props": Object {
             "children": Array [
+              "Test expression, displays:",
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            "Test expression, displays:",
+          ],
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": "18",
+          "nodeType": "class",
+          "props": Object {
+            "__expr__": Object {
+              "value": "x",
+            },
+            "children": Array [],
+            "id": "varDisplay",
+            "value": "x",
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "19",
+          "nodeType": "class",
+          "props": Object {
+            "__expr__": Object {
+              "value": "xSquared",
+            },
+            "children": Array [],
+            "id": "derivedVarDisplay",
+            "value": "xSquared",
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "20",
+          "nodeType": "class",
+          "props": Object {
+            "__expr__": Object {
+              "value": "\\"string\\"",
+            },
+            "children": Array [],
+            "id": "strDisplay",
+            "value": "\\"string\\"",
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "21",
+          "nodeType": "class",
+          "props": Object {
+            "__expr__": Object {
+              "value": "{ static: \\"object\\" }",
+            },
+            "children": Array [],
+            "id": "staticObjectDisplay",
+            "value": "{ static: \\"object\\" }",
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "22",
+          "nodeType": "class",
+          "props": Object {
+            "__expr__": Object {
+              "value": "{ dynamic: x }",
+            },
+            "children": Array [],
+            "id": "dynamicObjectDisplay",
+            "value": "{ dynamic: x }",
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "23",
+          "nodeType": "class",
+          "props": Object {
+            "__expr__": Object {
+              "value": "myData",
+            },
+            "children": Array [],
+            "id": "dataDisplay",
+            "value": "myData",
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "24",
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
               "Here is an example of how you could use a variable to control the frequency of a sine wave:",
             ],
           },
@@ -2139,7 +2568,7 @@ or be used to parameterize components. Derived variables can be used to create v
         },
         Object {
           "instance": null,
-          "key": "18",
+          "key": "25",
           "nodeType": "class",
           "props": Object {
             "__expr__": Object {
@@ -2163,7 +2592,7 @@ or be used to parameterize components. Derived variables can be used to create v
         },
         Object {
           "instance": null,
-          "key": "19",
+          "key": "26",
           "nodeType": "class",
           "props": Object {
             "__expr__": Object {
@@ -2184,7 +2613,7 @@ or be used to parameterize components. Derived variables can be used to create v
         },
         Object {
           "instance": null,
-          "key": "20",
+          "key": "27",
           "nodeType": "host",
           "props": Object {
             "children": Array [

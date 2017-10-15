@@ -1,6 +1,6 @@
 {
   "name": "idyll-document",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.2",
   "license": "MIT",
   "authors": [
     "Matthew Conlen",
@@ -18,6 +18,9 @@
     "test": "jest"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/setupJest.js"
+    ],
     "testMatch": [
       "**/test/**/*.js"
     ]

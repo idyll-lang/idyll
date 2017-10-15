@@ -1,27 +1,6 @@
 const values = require('object.values');
 const entries = require('object.entries');
 
-const getNodesByName = (name, tree) => {
-  const predicate = typeof name === 'string' ? (s) => s === name : name;
-
-  const byName = (acc, val) => {
-    if (typeof val === 'string') return acc;
-
-    const [ name, attrs, children ] = val;
-
-    if (predicate(name)) acc.push(val)
-
-    if (children.length > 0) children.reduce(byName, acc)
-
-    return acc;
-  }
-
-  return tree.reduce(
-    byName,
-    []
-  )
-}
-
 export const evalExpression = (acc, expr) => {
   const e = `
     (() => {
@@ -53,8 +32,10 @@ export const evalExpression = (acc, expr) => {
 
 export const getVars = (arr, context = {}) => {
   const pluck = (acc, val) => {
-    const [ , attrs, ] = val
+    const [ , attrs = [], ] = val
+
     const [nameArr, valueArr] = attrs;
+    if (!nameArr || !valueArr) return acc;
 
     const [, [, nameValue]] = nameArr
     const [, [valueType, valueValue]] = valueArr;
@@ -177,21 +158,31 @@ export const translate = (arr) => {
   return splitAST(arr).elements.map(tNode)
 }
 
-export const mapTree = (tree, mapFn) => {
+export const mapTree = (tree, mapFn, filterFn = () => true) => {
   const walkFn = (acc, node) => {
     if (typeof node !== 'string') {
-      node.children = node.children.reduce(walkFn, [])
+      if (node.children) {
+        // translated schema
+        node.children = node.children.reduce(walkFn, []);
+      } else {
+        // compiler AST
+        node[2] = node[2].reduce(walkFn, []);
+      }
     }
 
-    acc.push(mapFn(node))
+    if (filterFn(node)) acc.push(mapFn(node));
     return acc;
-  }
+  };
 
   return tree.reduce(
     walkFn,
     []
-  )
-}
+  );
+};
+
+export const filterASTForDocument = (ast) => {
+  return mapTree(ast, n => n, ([name]) => name !== 'meta')
+};
 
 export const findWrapTargets = (schema, state) => {
   const targets = [];

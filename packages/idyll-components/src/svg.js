@@ -9,5 +9,9 @@ class SVG extends React.PureComponent {
   }
 }
 
+SVG.defaultProps = {
+  src: ''
+}
+
 export default SVG;
 

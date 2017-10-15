@@ -15,8 +15,10 @@ class Container extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.setPosition);
-    this.node = ReactDOM.findDOMNode(this)
-    this.setPosition();
+    try {
+      this.node = ReactDOM.findDOMNode(this)
+      this.setPosition();
+    } catch(e) {}
   }
 
   //shouldComponentUpdate (nextProps, nextState) {

@@ -56,6 +56,15 @@ const idyll = (options = {}, cb) => {
   let bs;
 
   class IdyllInstance extends EventEmitter {
+
+    getPaths() {
+      return paths;
+    }
+
+    getOptions() {
+      return opts;
+    }
+
     build(src) {
       if (src) opts.inputString = src;
       if (opts.debug) console.time('Build Time');

@@ -45,8 +45,17 @@ Here I bind the value of `x` to a range slider. Move the slider and watch the va
  [Display var:`x` /]
 
 [equation]x^2[/equation]:
- [Display var:`xSquared` /]
+[Display var:`xSquared` /]
 
+
+Test expression, displays:
+
+[Display id:"varDisplay" value:`x` /]
+[Display id:"derivedVarDisplay" value:`xSquared` /]
+[Display id:"strDisplay" value:`"string"` /]
+[Display id:"staticObjectDisplay" value:`{ static: "object" }` /]
+[Display id:"dynamicObjectDisplay" value:`{ dynamic: x }` /]
+[Display id:"dataDisplay" value:`myData` /]
 
 Here is an example of how you could use a variable to control the frequency of a sine wave:
 

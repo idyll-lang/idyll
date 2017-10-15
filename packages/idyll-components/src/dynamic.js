@@ -7,7 +7,13 @@ const Selection = require('d3-selection');
 class Dynamic extends React.PureComponent {
 
   componentDidMount() {
-    const node = ReactDOM.findDOMNode(this);
+    let node;
+    try {
+      node = ReactDOM.findDOMNode(this);
+    } catch(e) {};
+    if (!node) {
+      return;
+    }
     this.drag = Drag.drag().on('drag', () => {
       const dx = Selection.event.dx;
       const { interval, value } = this.props;
