@@ -12,6 +12,7 @@ import {
   Display,
   Dynamic,
   Equation,
+  FeatureContent,
   Feature,
   Fixed,
   Float,
@@ -43,8 +44,8 @@ describe('Sanity Check', () => {
       it('<Aside />', () => {
         expect(() => shallow(<Aside />)).not.toThrow();
       });
-      it('<Feature.Content />', () => {
-        expect(() => shallow(<Feature.Content />)).not.toThrow();
+      it('<FeatureContent />', () => {
+        expect(() => shallow(<FeatureContent />)).not.toThrow();
       });
       it('<Feature />', () => {
         expect(() => shallow(<Feature />)).not.toThrow();
