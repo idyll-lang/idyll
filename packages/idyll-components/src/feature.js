@@ -77,29 +77,21 @@ class Feature extends React.PureComponent {
     return this.props.children.map((c) => this.unwrapChild(c));
   }
 
-  getFeatureChild() {
+  splitFeatureChildren() {
     const unwrapped = this.unwrapChildren();
-    const filtered = React.Children.toArray(this.props.children).filter((_, i) => {
+    React.Children.toArray(this.props.children).reduce((memo, _, i) => {
       const c = unwrapped[i];
       if (!c.type) {
-        return false;
+        memo[1] = memo[1].concat([c]);
+        return memo;
       }
-      return (c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content;
-    })
-    if (filtered.length) {
-      return filtered[0];
-    }
-  }
-
-  getNonFeatureChildren() {
-    const unwrapped = this.unwrapChildren();
-    return React.Children.toArray(this.props.children).filter((_, i) => {
-      const c = unwrapped[i];
-      if (!c.type) {
-        return true;
+      if ((c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content) {
+        memo[0] = c;
+      } else {
+        memo[1] = memo[1].concat([c]);
       }
-      return (!c.type.name || c.type.name.toLowerCase() !== 'content') && !(c.type.prototype instanceof Content);
-    });
+      return memo;
+    }, [undefined, []]);
   }
 
   render () {
@@ -129,8 +121,7 @@ class Feature extends React.PureComponent {
       maxWidth: 'none'
     };
 
-    var featureChild = this.getFeatureChild();
-    var nonFeatureChildren = this.getNonFeatureChildren();
+    const [ featureChild, nonFeatureChildren ] = this.splitFeatureChildren();
 
     if (featureChild) {
       const unwrapped = this.unwrapChild(featureChild);

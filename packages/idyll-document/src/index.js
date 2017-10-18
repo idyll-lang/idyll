@@ -50,7 +50,7 @@ class Wrapper extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.key = wrapperKey;
+    this.key = wrapperKey++;
     this.ref = {};
     this.onUpdateRefs = this.onUpdateRefs.bind(this);
     this.onUpdateProps = this.onUpdateProps.bind(this);
