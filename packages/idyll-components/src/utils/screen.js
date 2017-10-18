@@ -13,12 +13,17 @@ class Screen extends React.PureComponent {
     let overlayStyle = {
       position: this.props.display ? this.props.display : 'relative',
       zIndex: 1,
-      height: '100vh',
       width: this.props.fullBleed ? '100%' : undefined,
       left: this.props.display === 'fixed' ? 0 : undefined,
       pointerEvents: 'none',
       transition: 'background 0.5s'
     };
+
+    if (this.props.height) {
+      overlayStyle.minHeight = this.props.height;
+    } else {
+      overlayStyle.height = '100vh';
+    }
 
     if (this.props.backgroundImage) {
       overlayStyle.backgroundImage = 'url(' + this.props.backgroundImage + ')';
