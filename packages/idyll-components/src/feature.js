@@ -79,16 +79,16 @@ class Feature extends React.PureComponent {
 
   splitFeatureChildren() {
     const unwrapped = this.unwrapChildren();
-    React.Children.toArray(this.props.children).reduce((memo, _, i) => {
+    return React.Children.toArray(this.props.children).reduce((memo, child, i) => {
       const c = unwrapped[i];
       if (!c.type) {
-        memo[1] = memo[1].concat([c]);
+        memo[1] = memo[1].concat([child]);
         return memo;
       }
       if ((c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content) {
-        memo[0] = c;
+        memo[0] = child;
       } else {
-        memo[1] = memo[1].concat([c]);
+        memo[1] = memo[1].concat([child]);
       }
       return memo;
     }, [undefined, []]);
@@ -122,6 +122,9 @@ class Feature extends React.PureComponent {
     };
 
     const [ featureChild, nonFeatureChildren ] = this.splitFeatureChildren();
+
+    console.log('featureChild', featureChild);
+    console.log('nonFeatureChildren', nonFeatureChildren);
 
     if (featureChild) {
       const unwrapped = this.unwrapChild(featureChild);

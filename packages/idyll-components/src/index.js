@@ -8,7 +8,6 @@ export { default as CodeHighlight } from './code-highlight';
 export { default as Display } from './display';
 export { default as Dynamic } from './dynamic';
 export { default as Equation } from './equation';
-export { default as FeatureContent } from './feature-content';
 export { default as Feature } from './feature';
 export { default as Fixed } from './fixed';
 export { default as Float } from './float';
