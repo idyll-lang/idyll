@@ -123,9 +123,6 @@ class Feature extends React.PureComponent {
 
     const [ featureChild, nonFeatureChildren ] = this.splitFeatureChildren();
 
-    console.log('featureChild', featureChild);
-    console.log('nonFeatureChildren', nonFeatureChildren);
-
     if (featureChild) {
       const unwrapped = this.unwrapChild(featureChild);
       if (featureChild !== unwrapped) {
