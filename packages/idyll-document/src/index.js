@@ -22,6 +22,8 @@ const scrollWatchers = [];
 const scrollOffsets = {};
 let scrollContainer;
 
+const evalContext = {};
+
 const getScrollableContainer = el => {
   if (!el || el.scrollHeight > el.offsetHeight) return el;
   return getScrollableContainer(el.parentNode);
@@ -97,7 +99,7 @@ class Wrapper extends React.PureComponent {
     });
     // re-run this component's expressions using the latest doc state
     Object.keys(__expr__).forEach(key => {
-      nextState[key] = evalExpression(newState, __expr__[key]);
+      nextState[key] = evalExpression(newState, __expr__[key], key, evalContext);
     });
     // trigger a re-render of this component
     // and more importantly, its wrapped component
@@ -109,7 +111,7 @@ class Wrapper extends React.PureComponent {
 
     const nextState = {refs: newState.refs};
     entries(__expr__).forEach(([key, val]) => {
-      nextState[key] = evalExpression(newState, val);
+      nextState[key] = evalExpression(newState, val, key, evalContext);
     });
 
     // if hooks are defined call them as appropriate
@@ -188,6 +190,8 @@ class IdyllDocument extends React.PureComponent {
       elements,
     } = splitAST(ast);
 
+
+
     const initialState = {
       ...getVars(vars),
       ...getData(data, props.datasets),
@@ -198,6 +202,32 @@ class IdyllDocument extends React.PureComponent {
       ...initialState,
       ...getDerivedValues(derivedVars),
     };
+
+    this.updateState = (newState) => {
+      // merge new doc state with old
+      const newMergedState = {...this.state, ...newState};
+      // update derived values
+      const newDerivedValues = getDerivedValues(
+        getVars(derived, newMergedState),
+      );
+      const nextState = {...newMergedState, ...newDerivedValues};
+      const changedKeys = Object.keys(state).reduce(
+        (acc, k) => {
+          if (state[k] !== nextState[k]) acc.push(k);
+          return acc;
+        },
+        []
+      )
+      // Update doc state reference.
+      // We re-use the same object here so that
+      // IdyllDocument.state can be accurately checked in tests
+      state = Object.assign(state, nextState);
+      // pass the new doc state to all listeners aka component wrappers
+      updatePropsCallbacks.forEach(f => f(state, changedKeys));
+    };
+
+    evalContext.update = this.updateState;
+
 
     const rjs = new ReactJsonSchema({...props.components, Wrapper});
     const schema = translate(ast);
@@ -241,7 +271,7 @@ class IdyllDocument extends React.PureComponent {
             node[k] = state[__vars__[k]];
           }
           if (__expr__[k] && !__expr__[k].includes('refs.')) {
-            node[k] = evalExpression(state, __expr__[k]);
+            node[k] = evalExpression(state, __expr__[k], k, evalContext);
           }
         });
 
@@ -256,28 +286,7 @@ class IdyllDocument extends React.PureComponent {
               newState[__vars__[k]] = newProps[k];
             }
           });
-          // merge new doc state with old
-          const newMergedState = {...state, ...newState};
-          // update derived values
-          const newDerivedValues = getDerivedValues(
-            getVars(derived, newMergedState),
-          );
-
-          const nextState = {...newMergedState, ...newDerivedValues};
-          const changedKeys = Object.keys(state).reduce(
-            (acc, k) => {
-              if (state[k] !== nextState[k]) acc.push(k);
-              return acc;
-            },
-            []
-          )
-
-          // Update doc state reference.
-          // We re-use the same object here so that
-          // IdyllDocument.state can be accurately checked in tests
-          state = Object.assign(state, nextState);
-          // pass the new doc state to all listeners aka component wrappers
-          updatePropsCallbacks.forEach(f => f(state, changedKeys));
+          this.updateState(newState);
         };
 
         return {
