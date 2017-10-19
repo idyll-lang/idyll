@@ -49,10 +49,10 @@ class Container extends React.Component {
   }
 
   render () {
-    var expandStyle = Object.assign({
+    var expandStyle = Object.assign({}, this.props.style || {}, {
       marginLeft: this.state.expandLeft,
       marginRight: this.state.expandRight
-    }, this.props.style || {});
+    });
 
     return <div
       style={this.props.style}
