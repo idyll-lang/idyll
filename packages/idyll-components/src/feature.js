@@ -1,12 +1,19 @@
 import React from 'react';
-const ReactDOM = require('react-dom');
-const Content = require('./feature-content');
+import ReactDOM from 'react-dom';
 
 const stateClasses = [
   'is-top',
   'is-fixed',
   'is-bottom'
 ];
+
+class Content extends React.PureComponent {
+  render () {
+    return <div style={this.props.style}>
+      {this.props.children}
+    </div>
+  }
+}
 
 class Feature extends React.PureComponent {
   constructor (props) {
@@ -17,26 +24,23 @@ class Feature extends React.PureComponent {
     this.state = {
       scrollState: 0,
       featureMarginLeft: 0,
-      featureWidth: typeof window !== 'undefined' ? window.innerWidth : 0
     };
   }
 
   setRoot (c) {
-    this.rootEl = window.rootEl = c;
+    this.rootEl = c;
     this.initialize();
   }
 
   setFeature (c) {
-    this.featureEl = window.featureEl = c;
+    this.featureEl = c;
     this.initialize();
   }
 
   handleResize () {
     let rootRect = this.rootEl.getBoundingClientRect()
     this.setState({
-      featureMarginLeft: -rootRect.left,
-      featureWidth: window.innerWidth,
-      featureHeight: window.innerHeight
+      featureMarginLeft: -rootRect.left
     });
   }
 
@@ -44,10 +48,8 @@ class Feature extends React.PureComponent {
     if (!this.rootEl) return;
     let rootRect = this.rootEl.getBoundingClientRect();
     let position = rootRect.top / (window.innerHeight - rootRect.height)
-
     // Update this whenever it changes so that the state is correctly adjusted:
     this.setState({scrollState: position < 0 ? 0 : (position <= 1 ? 1 : 2)})
-
     // Only update the value when onscreen:
     if (rootRect.top < window.innerHeight && rootRect.bottom > 0) {
       this.props.updateProps({value: position})
@@ -64,12 +66,41 @@ class Feature extends React.PureComponent {
     window.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
+  unwrapChild(c) {
+    if (c => c.type.name && c.type.name.toLowerCase() === 'wrapper') {
+      return c.props.children[0];
+    }
+    return c;
+  }
+
+  unwrapChildren() {
+    return this.props.children.map((c) => this.unwrapChild(c));
+  }
+
+  splitFeatureChildren() {
+    const unwrapped = this.unwrapChildren();
+    return React.Children.toArray(this.props.children).reduce((memo, child, i) => {
+      const c = unwrapped[i];
+      if (!c.type) {
+        memo[1] = memo[1].concat([child]);
+        return memo;
+      }
+      if ((c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content) {
+        memo[0] = child;
+      } else {
+        memo[1] = memo[1].concat([child]);
+      }
+      return memo;
+    }, [undefined, []]);
+  }
+
   render () {
     let feature;
     let ps = this.state.scrollState;
     let featureStyles = {
-      width: this.state.featureWidth + 'px',
-      height: this.state.featureHeight + 'px',
+      width: 'calc(100vw - 15px)',
+      overflowX: 'hidden',
+      height: '100vh',
       marginLeft: ps === 1 ? 0 : (this.state.featureMarginLeft + 'px'),
       position: ps >= 1 ? 'fixed' : 'absolute',
       bottom: ps === 2 ? 0 : 'auto',
@@ -90,14 +121,24 @@ class Feature extends React.PureComponent {
       maxWidth: 'none'
     };
 
-    var featureChild = this.props.children.filter(c => (c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content)[0];
-    var nonFeatureChildren = this.props.children.filter(c => !((c.type.name && c.type.name.toLowerCase() === 'content') || c.type.prototype instanceof Content));
+    const [ featureChild, nonFeatureChildren ] = this.splitFeatureChildren();
 
     if (featureChild) {
-      feature = React.cloneElement(featureChild, {
-        style: featureStyles,
-        ref: (ref) => this.setFeature(ref)
-      });
+      const unwrapped = this.unwrapChild(featureChild);
+      if (featureChild !== unwrapped) {
+        // React.Children.only(featureChild.props.children);
+        feature = React.cloneElement(featureChild, {
+          children: React.cloneElement(React.Children.toArray(featureChild.props.children)[0], {
+            style: featureStyles,
+            ref: (ref) => this.setFeature(ref)
+          })
+        });
+      } else {
+        feature = React.cloneElement(featureChild, {
+          style: featureStyles,
+          ref: (ref) => this.setFeature(ref)
+        });
+      }
     }
 
     return <figure
@@ -115,4 +156,4 @@ Feature.defaultProps = {
   children: []
 };
 
-export default Feature;
+export { Content, Feature as default };

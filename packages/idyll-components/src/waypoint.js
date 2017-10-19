@@ -8,7 +8,7 @@ class Waypoint extends React.PureComponent {
   }
 
   render() {
-    return <Screen direction="row"  {...this.props} />;
+    return <Screen align="center" direction="row" height="75vh" {...this.props} />;
   }
 
 }
