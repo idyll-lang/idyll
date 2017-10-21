@@ -113,7 +113,6 @@ class Wrapper extends React.PureComponent {
     if (this.usesRefs) {
       const nextState = {refs: newState.refs};
       entries(__expr__)
-        .filter(([key, val]) => { return key.includes('refs.'); })
         .forEach(([key, val]) => {
           if (!key.includes('refs.')) {
             return;
