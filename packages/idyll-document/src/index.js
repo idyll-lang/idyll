@@ -66,7 +66,7 @@ class Wrapper extends React.PureComponent {
     this.usesRefs = exps.some(v => v.includes('refs.'));
 
     // listen for props updates IF we care about them
-    if (vars.length || !this.usesRefs) {
+    if (vars.length || exps.length) {
       // called with new doc state
       // when any component calls updateProps()
       updatePropsCallbacks.push(this.onUpdateProps);
@@ -121,7 +121,7 @@ class Wrapper extends React.PureComponent {
       entries(__expr__)
         .filter(([key, val]) => { return key.includes('refs.'); })
         .forEach(([key, val]) => {
-          if (key.includes('refs.')) {
+          if (!key.includes('refs.')) {
             return;
           }
           nextState[key] = evalExpression(newState, val, key, evalContext);
