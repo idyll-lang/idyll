@@ -3,7 +3,7 @@ const entries = require('object.entries');
 
 export const evalExpression = (acc, expr, key, context) => {
   let e;
-  if (key.match(/on[A-Z].*/) || key.match(/handle[A-Z].*/)) {
+  if (key && (key.match(/on[A-Z].*/) || key.match(/handle[A-Z].*/))) {
     let setState = setState;
     e = `
       (() => {
@@ -67,7 +67,7 @@ export const evalExpression = (acc, expr, key, context) => {
   } catch (err) {}
 }
 
-export const getVars = (arr, context = {}) => {
+export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
     const [ , attrs = [], ] = val
 
@@ -155,6 +155,13 @@ export const hooks = [
   'onScroll',
 ];
 
+export const scrollMonitorEvents = {
+  'onEnterView': 'enterViewport',
+  'onEnterViewFull': 'fullyEnterViewport',
+  'onExitView': 'partiallyExitViewport',
+  'onExitViewFully': 'exitViewport'
+}
+
 export const translate = (arr) => {
   const attrConvert = (list) => {
     return list.reduce(
@@ -169,7 +176,9 @@ export const translate = (arr) => {
           acc.__expr__[name] = val;
         }
         // flag nodes that define a hook function
-        if (hooks.includes(name)) acc.hasHook = true;
+        if (hooks.includes(name)) {
+          acc.hasHook = true;
+        };
 
         acc[name] = val;
         return acc;

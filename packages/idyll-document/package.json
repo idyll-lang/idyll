@@ -32,7 +32,8 @@
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
     "react-dom-factories": "^1.0.1",
-    "scrollmonitor": "^1.2.3"
+    "scrollmonitor": "^1.2.3",
+    "scrollparent": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
