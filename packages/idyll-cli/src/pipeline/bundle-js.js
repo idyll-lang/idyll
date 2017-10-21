@@ -12,7 +12,7 @@ const stream = require('stream');
 const toStream = (k, o) => {
   let src;
 
-  if (k === 'ast' || k === 'data') {
+  if (['ast', 'data', 'opts'].indexOf(k) > -1) {
     src = `module.exports = ${JSON.stringify(o)}`;
   } else if (k === 'syntaxHighlighting') {
     src = `module.exports = (function (){${o}})()`;
@@ -64,12 +64,14 @@ module.exports = function (opts, paths, output) {
           ast: '__IDYLL_AST__',
           components: '__IDYLL_COMPONENTS__',
           data: '__IDYLL_DATA__',
-          syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__'
+          syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__',
+          opts: '__IDYLL_OPTS__'
         };
 
         for (const key in aliases) {
+          const data = output[key];
           b.exclude(aliases[key]);
-          b.require(toStream(key, output[key]), {
+          b.require(toStream(key, data), {
             expose: aliases[key],
             basedir: paths.TMP_DIR
           })
