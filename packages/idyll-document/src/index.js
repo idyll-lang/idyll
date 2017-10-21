@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import scrollparent from 'scrollparent';
 import scrollMonitor from 'scrollmonitor';
 import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
@@ -14,18 +15,16 @@ import {
   mapTree,
   evalExpression,
   hooks,
+  scrollMonitorEvents
 } from './utils';
 
 const updatePropsCallbacks = [];
 const updateRefsCallbacks = [];
 const scrollWatchers = [];
 const scrollOffsets = {};
+const refCache = {};
+const evalContext = {};
 let scrollContainer;
-
-const getScrollableContainer = el => {
-  if (!el || el.scrollHeight > el.offsetHeight) return el;
-  return getScrollableContainer(el.parentNode);
-};
 
 const getRefs = () => {
   const refs = {};
@@ -58,15 +57,17 @@ class Wrapper extends React.PureComponent {
     const vars = values(props.__vars__);
     const exps = values(props.__expr__);
 
+    this.usesRefs = exps.some(v => v.includes('refs.'));
+
     // listen for props updates IF we care about them
-    if (vars.length || exps.some(v => !v.includes('refs.'))) {
+    if (vars.length || exps.length) {
       // called with new doc state
       // when any component calls updateProps()
       updatePropsCallbacks.push(this.onUpdateProps);
     }
 
     // listen for ref updates IF we care about them
-    if (props.hasHook || exps.some(v => v.includes('refs.'))) {
+    if (props.hasHook || this.usesRefs) {
       updateRefsCallbacks.push(this.onUpdateRefs);
     }
 
@@ -99,7 +100,7 @@ class Wrapper extends React.PureComponent {
     });
     // re-run this component's expressions using the latest doc state
     Object.keys(__expr__).forEach(key => {
-      nextState[key] = evalExpression(newState, __expr__[key]);
+      nextState[key] = evalExpression(newState, __expr__[key], key, evalContext);
     });
     // trigger a re-render of this component
     // and more importantly, its wrapped component
@@ -107,32 +108,21 @@ class Wrapper extends React.PureComponent {
   }
 
   onUpdateRefs(newState) {
-    const { hasHook, refName, __expr__ } = this.props;
+    const { __expr__ } = this.props;
 
-    const nextState = {refs: newState.refs};
-    entries(__expr__).forEach(([key, val]) => {
-      nextState[key] = evalExpression(newState, val);
-    });
+    if (this.usesRefs) {
+      const nextState = {refs: newState.refs};
+      entries(__expr__)
+        .forEach(([key, val]) => {
+          if (!key.includes('refs.')) {
+            return;
+          }
+          nextState[key] = evalExpression(newState, val, key, evalContext);
+        });
 
-    // if hooks are defined call them as appropriate
-    // passing the newly constructed state and this component's ref object
-    if (hasHook) {
-      const wasIn = (this.ref || {}).isInViewport;
-      const wasInFully = (this.ref || {}).isFullyInViewport;
-
-      this.ref = nextState.refs[refName];
-      const isIn = this.ref.isInViewport;
-      const isInFully = this.ref.isFullyInViewport;
-
-      this.onScroll(nextState, this.ref);
-      if (!isInFully && wasInFully) this.onExitView(nextState, this.ref);
-      if (!isIn && wasIn) this.onExitViewFully(nextState, this.ref);
-      if (isIn && !wasIn) this.onEnterView(nextState, this.ref);
-      if (isInFully && !wasInFully) this.onEnterViewFully(nextState, this.ref);
+      // trigger a render with latest state
+      this.setState(nextState);
     }
-
-    // trigger a render with latest state
-    this.setState(nextState);
   }
 
   componentWillUnmount() {
@@ -153,10 +143,6 @@ class Wrapper extends React.PureComponent {
     }
 
     return React.Children.map(this.props.children, (c, i) => {
-      // store hooks on the wrapper
-      hooks.forEach(hook => {
-        this[hook] = c.props[hook] || function(){};
-      });
       return React.cloneElement(c, {key: `${this.key}-${i}`, ...this.state});
     });
   }
@@ -184,6 +170,8 @@ class IdyllDocument extends React.PureComponent {
       elements,
     } = splitAST(ast);
 
+
+
     const initialState = {
       ...getVars(vars),
       ...getData(data, props.datasets),
@@ -194,6 +182,32 @@ class IdyllDocument extends React.PureComponent {
       ...initialState,
       ...getDerivedValues(derivedVars),
     };
+
+    this.updateState = (newState) => {
+      // merge new doc state with old
+      const newMergedState = {...this.state, ...newState};
+      // update derived values
+      const newDerivedValues = getDerivedValues(
+        getVars(derived, newMergedState),
+      );
+      const nextState = {...newMergedState, ...newDerivedValues};
+      const changedKeys = Object.keys(state).reduce(
+        (acc, k) => {
+          if (state[k] !== nextState[k]) acc.push(k);
+          return acc;
+        },
+        []
+      )
+      // Update doc state reference.
+      // We re-use the same object here so that
+      // IdyllDocument.state can be accurately checked in tests
+      state = Object.assign(state, nextState);
+      // pass the new doc state to all listeners aka component wrappers
+      updatePropsCallbacks.forEach(f => f(state, changedKeys));
+    };
+
+    evalContext.update = this.updateState;
+
 
     const rjs = new ReactJsonSchema({...props.components, Wrapper});
     const schema = translate(ast);
@@ -210,13 +224,15 @@ class IdyllDocument extends React.PureComponent {
         // transform refs from strings to functions and store them
         if (node.ref || node.hasHook) {
           node.refName = node.ref || node.component + (refCounter++).toString();
-          node.className = 'is-ref';
           node.ref = el => {
             if (!el) return;
-
             const domNode = ReactDOM.findDOMNode(el);
             domNode.dataset.ref = node.refName;
             scrollOffsets[node.refName] = node.scrollOffset || 0;
+            refCache[node.refName] = {
+              props: node,
+              domNode: domNode
+            };
           };
         }
 
@@ -237,7 +253,10 @@ class IdyllDocument extends React.PureComponent {
             node[k] = state[__vars__[k]];
           }
           if (__expr__[k] && !__expr__[k].includes('refs.')) {
-            node[k] = evalExpression(state, __expr__[k]);
+            if (hooks.indexOf(k) > -1) {
+              return;
+            }
+            node[k] = evalExpression(state, __expr__[k], k, evalContext);
           }
         });
 
@@ -252,28 +271,7 @@ class IdyllDocument extends React.PureComponent {
               newState[__vars__[k]] = newProps[k];
             }
           });
-          // merge new doc state with old
-          const newMergedState = {...state, ...newState};
-          // update derived values
-          const newDerivedValues = getDerivedValues(
-            getVars(derived, newMergedState),
-          );
-
-          const nextState = {...newMergedState, ...newDerivedValues};
-          const changedKeys = Object.keys(state).reduce(
-            (acc, k) => {
-              if (state[k] !== nextState[k]) acc.push(k);
-              return acc;
-            },
-            []
-          )
-
-          // Update doc state reference.
-          // We re-use the same object here so that
-          // IdyllDocument.state can be accurately checked in tests
-          state = Object.assign(state, nextState);
-          // pass the new doc state to all listeners aka component wrappers
-          updatePropsCallbacks.forEach(f => f(state, changedKeys));
+          this.updateState(newState);
         };
 
         return {
@@ -304,11 +302,26 @@ class IdyllDocument extends React.PureComponent {
   initScrollListener(el) {
     if (!el) return;
 
-    const scroller = getScrollableContainer(el) || window;
+    let scroller = scrollparent(el);
+    if (scroller === document.documentElement) {
+      scroller = document.body;
+    }
     scrollContainer = scrollMonitor.createContainer(scroller);
-    Array.from(document.getElementsByClassName('is-ref')).forEach(ref => {
-      scrollWatchers.push(scrollContainer.create(ref, scrollOffsets[ref.dataset.ref]));
+    Object.keys(refCache).forEach((key) => {
+      const { props, domNode } = refCache[key];
+      const watcher = scrollContainer.create(domNode, scrollOffsets[key]);
+      hooks.forEach((hook) => {
+        if (props[hook]) {
+          watcher[scrollMonitorEvents[hook]](() => {
+            evalExpression(this.state, props[hook], hook, evalContext)();
+          });
+        }
+      })
+      scrollWatchers.push(watcher);
     });
+    if (scroller === document.body) {
+      scroller = window;
+    }
     scroller.addEventListener('scroll', this.scrollListener);
   }
 

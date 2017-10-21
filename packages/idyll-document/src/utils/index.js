@@ -1,36 +1,73 @@
 const values = require('object.values');
 const entries = require('object.entries');
 
-export const evalExpression = (acc, expr) => {
-  const e = `
-    (() => {
-      ${
-        Object.keys(acc)
-          .filter(key => expr.includes(key))
-          .map(key => {
-            if (key === 'refs') {
-              // delete each ref's domNode property
-              // because it can't be serialized
-              values(acc[key]).forEach(v => {
-                delete v.domNode;
+export const evalExpression = (acc, expr, key, context) => {
+  let e;
+  if (key && (key.match(/on[A-Z].*/) || key.match(/handle[A-Z].*/))) {
+    let setState = setState;
+    e = `
+      (() => {
+          ${
+            Object.keys(acc)
+              .filter(key => expr.includes(key))
+              .map(key => {
+                if (key === 'refs') {
+                  // delete each ref's domNode property
+                  // because it can't be serialized
+                  values(acc[key]).forEach(v => {
+                    delete v.domNode;
+                  })
+                  // add `refs` const object graph to function scope
+                  return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
+                }
+                return `var ${key} = ${JSON.stringify(acc[key])};`;
               })
-              // add `refs` const object graph to function scope
-              return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
-            }
-            return `var ${key} = ${JSON.stringify(acc[key])};`;
-          })
-          .join('\n')
-      }
-      return ${expr};
-    })()
-  `;
+              .join('\n')
+          }
+          ${expr};
+          context.update({ ${
+            Object.keys(acc)
+              .filter(key => expr.includes(key) && key !== 'refs')
+              .map(key => `${key}: ${key}`)
+              .join(', ')
+          }});
+      })()
+    `;
+
+    return (function() {
+      eval(e);
+    }).bind(context || {});
+  } else {
+    e = `
+      (() => {
+        ${
+          Object.keys(acc)
+            .filter(key => expr.includes(key))
+            .map(key => {
+              if (key === 'refs') {
+                // delete each ref's domNode property
+                // because it can't be serialized
+                values(acc[key]).forEach(v => {
+                  delete v.domNode;
+                })
+                // add `refs` const object graph to function scope
+                return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
+              }
+              return `var ${key} = ${JSON.stringify(acc[key])};`;
+            })
+            .join('\n')
+        }
+        return ${expr};
+      })()
+    `;
+  }
 
   try {
     return eval(e);
   } catch (err) {}
 }
 
-export const getVars = (arr, context = {}) => {
+export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
     const [ , attrs = [], ] = val
 
@@ -114,9 +151,15 @@ export const hooks = [
   'onEnterView',
   'onEnterViewFully',
   'onExitView',
-  'onExitViewFully',
-  'onScroll',
+  'onExitViewFully'
 ];
+
+export const scrollMonitorEvents = {
+  'onEnterView': 'enterViewport',
+  'onExitViewFully': 'fullyEnterViewport',
+  'onExitView': 'partiallyExitViewport',
+  'onExitViewFully': 'exitViewport'
+}
 
 export const translate = (arr) => {
   const attrConvert = (list) => {
@@ -132,10 +175,12 @@ export const translate = (arr) => {
           acc.__expr__[name] = val;
         }
         // flag nodes that define a hook function
-        if (hooks.includes(name)) acc.hasHook = true;
+        if (hooks.includes(name)) {
+          acc.hasHook = true;
+        };
 
-        acc[name] = val
-        return acc
+        acc[name] = val;
+        return acc;
       },
       {}
     )
@@ -145,7 +190,7 @@ export const translate = (arr) => {
     if (typeof node === 'string') return node;
 
     if (node.length === 3) {
-      const [ name, attrs, children ] = node
+      const [ name, attrs, children ] = node;
 
       return {
         component: name,
