@@ -151,13 +151,12 @@ export const hooks = [
   'onEnterView',
   'onEnterViewFully',
   'onExitView',
-  'onExitViewFully',
-  'onScroll',
+  'onExitViewFully'
 ];
 
 export const scrollMonitorEvents = {
   'onEnterView': 'enterViewport',
-  'onEnterViewFull': 'fullyEnterViewport',
+  'onExitViewFully': 'fullyEnterViewport',
   'onExitView': 'partiallyExitViewport',
   'onExitViewFully': 'exitViewport'
 }
