@@ -34,7 +34,10 @@ const build = (opts, paths, inputConfig) => {
         components: getComponentsJS(ast, paths, inputConfig),
         css: css(opts),
         data: getDataJS(ast, paths.DATA_DIR),
-        syntaxHighlighting: getHighlightJS(ast, paths)
+        syntaxHighlighting: getHighlightJS(ast, paths),
+        opts: {
+          ssr: opts.ssr
+        }
       };
       if (!opts.ssr) {
         output.html = getBaseHTML(ast, template);
