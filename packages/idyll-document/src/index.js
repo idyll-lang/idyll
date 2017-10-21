@@ -23,14 +23,8 @@ const updateRefsCallbacks = [];
 const scrollWatchers = [];
 const scrollOffsets = {};
 const refCache = {};
-let scrollContainer;
-
 const evalContext = {};
-
-const getScrollableContainer = el => {
-  if (!el || el.scrollHeight > el.clientHeight) return el;
-  return getScrollableContainer(el.parentNode);
-};
+let scrollContainer;
 
 const getRefs = () => {
   const refs = {};
