@@ -78,6 +78,18 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "i" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "not even em" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "i" TOKEN_VALUE_END CLOSE_BRACKET EOF');
     });
 
+    it('should ignore comments', function() {
+      var lex = Lexer();
+      var results = lex(`
+        Text. / Not a comment.
+        // Comment
+        // Second comment
+        [component]
+          // comment inside components
+        [/component]
+      `);
+      expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+    });
   });
 
   describe('parser', function() {

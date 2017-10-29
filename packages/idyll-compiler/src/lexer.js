@@ -148,11 +148,18 @@ const lex = function(options) {
     return ['LINK'].concat(formatToken(text)).concat(formatToken(link));
   });
 
-  lexer.addRule(/^\s?\/\/[^\n]*$/gm, function(lexeme) {
+  lexer.addRule(/\s?\/\/[^\n]*/gm, function(lexeme) {
     updatePosition(lexeme);
   });
 
-  lexer.addRule(/(\n?[^`\*\[\n\]!\d_])+/, function(lexeme) {
+  lexer.addRule(/\/(\n?[^`\*\[\/\n\]!\d_])*/gm, function(lexeme) {
+    this.reject = inComponent || lexeme.trim() === '';
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['WORDS'].concat(formatToken(lexeme));
+  });
+
+  lexer.addRule(/(\n?[^`\*\[\/\n\]!\d_])+/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
