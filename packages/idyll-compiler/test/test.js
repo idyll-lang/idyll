@@ -90,6 +90,18 @@ describe('compiler', function() {
       `);
       expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF');
     });
+
+    it('should handle a header', function() {
+      var input = `
+        ## This is a header
+        And this is a normal paragraph.
+
+        [component]# This header is inside a component.[/component]
+      `;
+      var lex = Lexer();
+      var results = lex(input);
+      expect(results.tokens.join(' ')).to.eql('HEADER_2 WORDS TOKEN_VALUE_START "This is a header" TOKEN_VALUE_END HEADER_END WORDS TOKEN_VALUE_START "        And this is a normal paragraph." TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET HEADER_1 WORDS TOKEN_VALUE_START "This header is inside a component." TOKEN_VALUE_END HEADER_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+    });
   });
 
   describe('parser', function() {
@@ -157,7 +169,12 @@ describe('compiler', function() {
     });
 
     it('should handle a header', function() {
-      var input = '## This is a header\n\n And this is a normal paragraph.';
+      var input = `
+        ## This is a header
+        And this is a normal paragraph.
+
+        [component]# This header is inside a component.[/component]
+      `;
       var lex = Lexer();
       var lexResults = lex(input);
       var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
@@ -165,7 +182,9 @@ describe('compiler', function() {
         ['h2', [], [
           'This is a header']
         ],['p', [], [
-          ' And this is a normal paragraph.']
+          '        And this is a normal paragraph.']
+        ], ['component', [],
+          [['h1', [], ['This header is inside a component.']]]
         ],
       ]);
     });
