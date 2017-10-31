@@ -69,7 +69,8 @@ export const evalExpression = (acc, expr, key, context) => {
 
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
-    const [ , attrs = [], ] = val
+    const [ variableType, attrs = [], ] = val;
+    console.log(variableType);
 
     const [nameArr, valueArr] = attrs;
     if (!nameArr || !valueArr) return acc;
@@ -89,11 +90,16 @@ export const getVars = (arr, context = {}, evalContext) => {
         }
         break;
       case 'expression':
+        console.log('setting expression name ', nameValue, 'value', valueValue);
         const expr = valueValue;
-        acc[nameValue] = {
-          value: evalExpression(context, expr),
-          update: (newState, oldState) => {
-            return evalExpression(Object.assign({}, oldState, newState), expr)
+        if (variableType === 'var') {
+          acc[nameValue] = evalExpression(context, expr);
+        } else {
+          acc[nameValue] = {
+            value: evalExpression(context, expr),
+            update: (newState, oldState) => {
+              return evalExpression(Object.assign({}, oldState, newState), expr)
+            }
           }
         }
     }
