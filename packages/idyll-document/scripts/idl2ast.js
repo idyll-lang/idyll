@@ -1,14 +1,13 @@
 const compiler = require('idyll-compiler')
 const fs = require('fs')
 const { join } = require('path')
-const { translate } = require('./index')
+const { translate } = require('../dist/cjs/utils/index')
 
 const fixtures = join(
   __dirname,
   '..',
-  '..',
   'test',
-  'fixtures',
+  'fixtures'
 )
 
 fs.writeFileSync(

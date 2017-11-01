@@ -57,8 +57,10 @@ Test expression, displays:
 [Display id:"dynamicObjectDisplay" value:`{ dynamic: x }` /]
 [Display id:"dataDisplay" value:`myData` /]
 
-Here is an example of how you could use a variable to control the frequency of a sine wave:
+[Display id:"bareDataDisplay" value:myData /]
+[Display id:"bareVarDisplay" value:varDisplay /]
 
+Here is an example of how you could use a variable to control the frequency of a sine wave:
 
 [var name:"frequency" value:1 /]
 

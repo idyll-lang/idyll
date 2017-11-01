@@ -362,7 +362,7 @@
           "x^2"
         ]
       ],
-      ":\n ",
+      ":",
       [
         "Display",
         [
@@ -500,6 +500,46 @@
         [
           "expression",
           "myData"
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "Display",
+    [
+      [
+        "id",
+        [
+          "value",
+          "bareDataDisplay"
+        ]
+      ],
+      [
+        "value",
+        [
+          "variable",
+          "myData"
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "Display",
+    [
+      [
+        "id",
+        [
+          "value",
+          "bareVarDisplay"
+        ]
+      ],
+      [
+        "value",
+        [
+          "variable",
+          "varDisplay"
         ]
       ]
     ],

@@ -58,6 +58,12 @@ describe('Component state initialization', () => {
     }, {
       id: 'dataDisplay',
       html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareDataDisplay',
+      html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareVarDisplay',
+      html: '<span>2.00</span>'
     }];
 
     checks.forEach((check) => {
@@ -106,6 +112,12 @@ describe('Component state initialization', () => {
     }, {
       id: 'dataDisplay',
       html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareDataDisplay',
+      html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareVarDisplay',
+      html: '<span>4.00</span>'
     }];
 
     checks.forEach((check) => {

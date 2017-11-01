@@ -217,7 +217,7 @@
           "x^2"
         ]
       },
-      ":\n ",
+      ":",
       {
         "component": "Display",
         "__expr__": {
@@ -286,6 +286,24 @@
       "value": "myData"
     },
     "value": "myData",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareDataDisplay",
+    "__vars__": {
+      "value": "myData"
+    },
+    "value": "myData",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareVarDisplay",
+    "__vars__": {
+      "value": "varDisplay"
+    },
+    "value": "varDisplay",
     "children": []
   },
   {
