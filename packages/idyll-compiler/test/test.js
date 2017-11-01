@@ -171,9 +171,11 @@ describe('compiler', function() {
     it('should handle a header', function() {
       var input = `
         ## This is a header
-        And this is a normal paragraph.
+        And this is a normal paragraph. This is # not a header.
 
         [component]# This header is inside a component.[/component]
+
+        [component]This is not a # header inside a component.[/component]
       `;
       var lex = Lexer();
       var lexResults = lex(input);
@@ -182,10 +184,11 @@ describe('compiler', function() {
         ['h2', [], [
           'This is a header']
         ],['p', [], [
-          '        And this is a normal paragraph.']
+          '        And this is a normal paragraph. This is # not a header.']
         ], ['component', [],
           [['h1', [], ['This header is inside a component.']]]
-        ],
+        ], ['component', [],
+        ['This is not a # header inside a component.']],
       ]);
     });
 
