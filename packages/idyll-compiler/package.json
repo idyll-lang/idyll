@@ -11,6 +11,7 @@
     "compile": "nearleyc src/grammar.ne -o src/grammar.js",
     "build": "npm run compile && npm run build:es && npm run build:cjs",
     "test": "npm run compile && mocha",
+    "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "repository": {
