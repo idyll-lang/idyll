@@ -22,7 +22,7 @@ describe('compiler', function() {
     it('should recognize headings', function() {
       var lex = Lexer();
       var results = lex("\n## my title");
-      expect(results.tokens.join(' ')).to.eql('HEADER_2 WORDS TOKEN_VALUE_START "my title" TOKEN_VALUE_END HEADER_END EOF');
+      expect(results.tokens.join(' ')).to.eql('BREAK HEADER_2 WORDS TOKEN_VALUE_START "my title" TOKEN_VALUE_END HEADER_END EOF');
     });
     it('should handle newlines', function() {
       var lex = Lexer();
@@ -100,7 +100,7 @@ describe('compiler', function() {
       `;
       var lex = Lexer();
       var results = lex(input);
-      expect(results.tokens.join(' ')).to.eql('HEADER_2 WORDS TOKEN_VALUE_START "This is a header" TOKEN_VALUE_END HEADER_END WORDS TOKEN_VALUE_START "        And this is a normal paragraph." TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET HEADER_1 WORDS TOKEN_VALUE_START "This header is inside a component." TOKEN_VALUE_END HEADER_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+      expect(results.tokens.join(' ')).to.eql('BREAK HEADER_2 WORDS TOKEN_VALUE_START "This is a header" TOKEN_VALUE_END HEADER_END WORDS TOKEN_VALUE_START "And this is a normal paragraph." TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK HEADER_1 WORDS TOKEN_VALUE_START "This header is inside a component." TOKEN_VALUE_END HEADER_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF');
     });
   });
 
@@ -176,6 +176,12 @@ describe('compiler', function() {
         [component]# This header is inside a component.[/component]
 
         [component]This is not a # header inside a component.[/component]
+
+        [component /]
+
+        # Header
+
+        End text
       `;
       var lex = Lexer();
       var lexResults = lex(input);
@@ -184,14 +190,41 @@ describe('compiler', function() {
         ['h2', [], [
           'This is a header']
         ],['p', [], [
-          '        And this is a normal paragraph. This is # not a header.']
+          'And this is a normal paragraph. This is # not a header.']
         ], ['component', [],
           [['h1', [], ['This header is inside a component.']]]
-        ], ['component', [],
-        ['This is not a # header inside a component.']],
+        ], ['component', [], ['This is not a # header inside a component.']
+        ], ['component', [], []
+        ], ['h1', [], ['Header']
+        ], ['p', [], ['End text']
+        ]
       ]);
     });
 
+    it('should handle multiple headers', function() {
+      var input = `
+        # This is a header
+        ## This is a header
+
+        ### This is a header
+
+        #### This is a header
+      `;
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([
+        ['h1', [], [
+          'This is a header']
+        ], ['h2', [], [
+          'This is a header']
+        ], ['h3', [], [
+          'This is a header']
+        ], ['h4', [], [
+          'This is a header']
+        ]
+      ]);
+    });
     it('should parse an open component with a break at the end', function() {
       var input = '[Slideshow currentSlide:1]text and stuff \n\n [/Slideshow]';
       var lex = Lexer();

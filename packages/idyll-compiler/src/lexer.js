@@ -65,10 +65,10 @@ const lex = function(options) {
     return ['INLINE_CODE'].concat(formatToken(text.trim()));
   });
 
-  lexer.addRule(/\s*(#{1,6})\s*([^\n\[]*)\n*/gm, function(lexeme, hashes, text) {
+  lexer.addRule(/[\s\n]*(#{1,6})\s*([^\n\[]*)[\n\s]*/gm, function(lexeme, hashes, text) {
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['HEADER_' + hashes.length].concat(recurse(text)).concat(['HEADER_END']);
+    return ['BREAK', 'HEADER_' + hashes.length].concat(recurse(text)).concat(['HEADER_END']);
   });
 
   lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*/g, function(lexeme, text) {
