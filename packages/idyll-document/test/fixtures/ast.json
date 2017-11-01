@@ -539,7 +539,87 @@
         "value",
         [
           "variable",
-          "varDisplay"
+          "x"
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "Display",
+    [
+      [
+        "id",
+        [
+          "value",
+          "bareDerivedDisplay"
+        ]
+      ],
+      [
+        "value",
+        [
+          "variable",
+          "xSquared"
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "var",
+    [
+      [
+        "name",
+        [
+          "value",
+          "objectVar"
+        ]
+      ],
+      [
+        "value",
+        [
+          "expression",
+          " { an: \"object\" } "
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "Display",
+    [
+      [
+        "id",
+        [
+          "value",
+          "objectVarDisplay"
+        ]
+      ],
+      [
+        "value",
+        [
+          "expression",
+          " objectVar "
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "Display",
+    [
+      [
+        "id",
+        [
+          "value",
+          "bareObjectVarDisplay"
+        ]
+      ],
+      [
+        "value",
+        [
+          "variable",
+          "objectVar"
         ]
       ]
     ],

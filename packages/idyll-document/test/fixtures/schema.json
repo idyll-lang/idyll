@@ -301,9 +301,36 @@
     "component": "Display",
     "id": "bareVarDisplay",
     "__vars__": {
-      "value": "varDisplay"
+      "value": "x"
     },
-    "value": "varDisplay",
+    "value": "x",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareDerivedDisplay",
+    "__vars__": {
+      "value": "xSquared"
+    },
+    "value": "xSquared",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "objectVarDisplay",
+    "__expr__": {
+      "value": " objectVar "
+    },
+    "value": " objectVar ",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareObjectVarDisplay",
+    "__vars__": {
+      "value": "objectVar"
+    },
+    "value": "objectVar",
     "children": []
   },
   {
