@@ -15,7 +15,9 @@
     "build": "npm run build:cjs && npm run build:es",
     "dev": "yarn run build:es --watch",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "jest",
+    "update-fixtures": "npm run build && node scripts/idl2ast",
+    "update-snapshot": " jest --updateSnapshot"
   },
   "jest": {
     "setupFiles": [

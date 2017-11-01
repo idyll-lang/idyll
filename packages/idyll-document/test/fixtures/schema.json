@@ -217,7 +217,7 @@
           "x^2"
         ]
       },
-      ":\n ",
+      ":",
       {
         "component": "Display",
         "__expr__": {
@@ -286,6 +286,51 @@
       "value": "myData"
     },
     "value": "myData",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareDataDisplay",
+    "__vars__": {
+      "value": "myData"
+    },
+    "value": "myData",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareVarDisplay",
+    "__vars__": {
+      "value": "x"
+    },
+    "value": "x",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareDerivedDisplay",
+    "__vars__": {
+      "value": "xSquared"
+    },
+    "value": "xSquared",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "objectVarDisplay",
+    "__expr__": {
+      "value": " objectVar "
+    },
+    "value": " objectVar ",
+    "children": []
+  },
+  {
+    "component": "Display",
+    "id": "bareObjectVarDisplay",
+    "__vars__": {
+      "value": "objectVar"
+    },
+    "value": "objectVar",
     "children": []
   },
   {

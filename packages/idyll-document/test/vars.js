@@ -19,7 +19,8 @@ describe('Component state initialization', () => {
       x: 2,
       frequency: 1,
       xSquared: 4,
-      myData: FAKE_DATA
+      myData: FAKE_DATA,
+      objectVar: {an: "object"}
     });
   });
 
@@ -58,6 +59,21 @@ describe('Component state initialization', () => {
     }, {
       id: 'dataDisplay',
       html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareDataDisplay',
+      html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareVarDisplay',
+      html: '<span>2.00</span>'
+    }, {
+      id: 'bareDerivedDisplay',
+      html: '<span>4.00</span>'
+    }, {
+      id: 'objectVarDisplay',
+      html: `<span>${JSON.stringify({an: "object"})}</span>`
+    }, {
+      id: 'bareObjectVarDisplay',
+      html: `<span>${JSON.stringify({an: "object"})}</span>`
     }];
 
     checks.forEach((check) => {
@@ -80,7 +96,8 @@ describe('Component state initialization', () => {
       x: 4,
       frequency: 1,
       xSquared: 16,
-      myData: FAKE_DATA
+      myData: FAKE_DATA,
+      objectVar: {an: "object"}
     });
   });
 
@@ -106,6 +123,21 @@ describe('Component state initialization', () => {
     }, {
       id: 'dataDisplay',
       html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareDataDisplay',
+      html: `<span>${FAKE_DATA}</span>`
+    }, {
+      id: 'bareDerivedDisplay',
+      html: '<span>16.00</span>'
+    }, {
+      id: 'bareVarDisplay',
+      html: '<span>4.00</span>'
+    }, {
+      id: 'objectVarDisplay',
+      html: `<span>${JSON.stringify({an: "object"})}</span>`
+    }, {
+      id: 'bareObjectVarDisplay',
+      html: `<span>${JSON.stringify({an: "object"})}</span>`
     }];
 
     checks.forEach((check) => {
