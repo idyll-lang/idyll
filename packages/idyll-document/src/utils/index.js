@@ -170,7 +170,7 @@ export const translate = (arr) => {
     return list.reduce(
       (acc, [name, [type, val]]) => {
         if (type === 'variable') {
-          acc.__vars__ = acc.__vars__ = {};
+          acc.__vars__ = acc.__vars__ || {};
           acc.__vars__[name] = val;
         }
         // each node keeps a list of props that are expressions
