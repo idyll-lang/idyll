@@ -2,6 +2,7 @@ import fs from 'fs';
 import { join } from 'path';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
+import compile from 'idyll-compiler'
 import * as components from 'idyll-components';
 
 import IdyllDocument from '../src/';
@@ -29,3 +30,19 @@ describe('IdyllDocument', () => {
     expect(astDoc.find('Wrapper Chart').length).toBe(2);
   });
 });
+
+describe('Source to Doc', () => {
+  it('can create a header', () => {
+    const ast = compile('# A header');
+    const doc = shallow(<IdyllDocument ast={ast} components={components} />);
+    expect(doc).toBeDefined();
+    expect(doc.find('h1').length).toBe(1);
+  })
+
+  it('can create an SVG', () => {
+    const ast = compile('[SVG /]');
+    const doc = shallow(<IdyllDocument ast={ast} components={components} />);
+    expect(doc).toBeDefined();
+    // underlying component is async so just make sure nothing blew up
+  })
+})
