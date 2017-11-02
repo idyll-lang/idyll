@@ -44,34 +44,42 @@ class ReactJsonSchema {
 
   resolveComponent(schema) {
     const componentMap = this.getComponentMap();
-    let Component = null;
-    if (schema.hasOwnProperty('component')) {
-      if (schema.component === Object(schema.component)) {
-        Component = schema.component;
-      } else {
-        const split = schema.component.split('.');
-        let name = paramCase(split[0]);
-        if (componentMap && (componentMap[name] || componentMap[pascalCase(name)])) {
-          if (!componentMap[name]) {
-            name = pascalCase(name);
-          }
-          Component = componentMap[name];
-          for (let i = 1; i < split.length; i++) {
-            Component = Component[split[i]];
-          }
-          if (Component.hasOwnProperty('default')) {
-            Component = Component.default;
-          }
-        } else if (DOM.hasOwnProperty(split)) {
-          Component = schema.component;
-        } else {
-          throw new Error(`ReactJsonSchema could not find an implementation for: ${schema.component}`);
-        }
-      }
-    } else {
+    let Component;
+
+    // bail early if there is no component name
+    if (!schema.hasOwnProperty('component')) {
       throw new Error('ReactJsonSchema could not resolve a component due to a missing component attribute in the schema.');
     }
-    return Component;
+
+    // if it's already a ref bail early
+    if (schema.component === Object(schema.component)) {
+      return schema.component;
+    }
+
+    const [name, ...subs] = schema.component.split('.');
+
+    // find the def in the provided map
+    if (componentMap) {
+      Component = componentMap[name];
+      if (!Component) Component = componentMap[paramCase(name)];
+      if (!Component) Component = componentMap[pascalCase(name)];
+
+      for (let i = 0; i < subs.length; i++) {
+        Component = Component[subs[i]];
+      }
+    }
+
+    // if still nothing found it's a native DOM component or an error
+    if (!Component) {
+      if (DOM.hasOwnProperty(name)) {
+        Component = schema.component;
+      } else {
+        throw new Error(`ReactJsonSchema could not find an implementation for: ${schema.component}`);
+      }
+    }
+
+    // if there is a default prop (CommonJS) return that
+    return Component.default || Component;
   }
 
   resolveComponentChildren(schema) {
