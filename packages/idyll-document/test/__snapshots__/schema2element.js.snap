@@ -343,6 +343,19 @@ ShallowWrapper {
     >
         
     </Range>
+    <Range
+        __vars__={
+            Object {
+                "value": "frequency",
+              }
+        }
+        max={1}
+        min={0}
+        step={1}
+        value="frequency"
+    >
+        
+    </Range>
     <p>
         Read more about Idyll at 
         <a
@@ -706,6 +719,19 @@ ShallowWrapper {
           max="2 * Math.PI"
           min={0.5}
           step={0.0001}
+          value="frequency"
+>
+          
+</Range>,
+        <Range
+          __vars__={
+                    Object {
+                              "value": "frequency",
+                            }
+          }
+          max={1}
+          min={0}
+          step={1}
           value="frequency"
 >
           
@@ -1618,6 +1644,24 @@ or be used to parameterize components. Derived variables can be used to create v
       Object {
         "instance": null,
         "key": "32",
+        "nodeType": "class",
+        "props": Object {
+          "__vars__": Object {
+            "value": "frequency",
+          },
+          "children": Array [],
+          "max": 1,
+          "min": 0,
+          "step": 1,
+          "value": "frequency",
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "33",
         "nodeType": "host",
         "props": Object {
           "children": Array [
@@ -2020,6 +2064,19 @@ or be used to parameterize components. Derived variables can be used to create v
             max="2 * Math.PI"
             min={0.5}
             step={0.0001}
+            value="frequency"
+>
+            
+</Range>,
+          <Range
+            __vars__={
+                        Object {
+                                    "value": "frequency",
+                                  }
+            }
+            max={1}
+            min={0}
+            step={1}
             value="frequency"
 >
             
@@ -2932,6 +2989,24 @@ or be used to parameterize components. Derived variables can be used to create v
         Object {
           "instance": null,
           "key": "32",
+          "nodeType": "class",
+          "props": Object {
+            "__vars__": Object {
+              "value": "frequency",
+            },
+            "children": Array [],
+            "max": 1,
+            "min": 0,
+            "step": 1,
+            "value": "frequency",
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "33",
           "nodeType": "host",
           "props": Object {
             "children": Array [

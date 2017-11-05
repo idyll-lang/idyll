@@ -365,6 +365,14 @@
     "children": []
   },
   {
+    "component": "range",
+    "__vars__": {
+      "value": "frequency"
+    },
+    "value": "frequency",
+    "children": []
+  },
+  {
     "component": "p",
     "children": [
       "Read more about Idyll at ",

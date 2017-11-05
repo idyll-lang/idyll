@@ -80,5 +80,7 @@ Here is an example of how you could use a variable to control the frequency of a
   max:`2 * Math.PI`
   step:0.0001 /]
 
+[range value:frequency /]
+
 Read more about Idyll at [https://idyll-lang.github.io/](https://idyll-lang.github.io/), and come say "Hi!" in our [chatroom on gitter](https://gitter.im/idyll-lang/Lobby).
 

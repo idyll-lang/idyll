@@ -147,4 +147,14 @@ describe('Component state initialization', () => {
     });
   });
 
+  it('injects updateProps correctly', () => {
+    const rangeComponents = component.findWhere((n) => {return n.type() === components.Range;});
+    rangeComponents.forEach((component, i) => {
+      console.log(component)
+      console.log(component.instance().props.updateProps);
+      component.instance().props.updateProps({ value: i });
+    })
+    expect(component.instance().state.frequency).toEqual(rangeComponents.length - 1);
+  })
+
 });
