@@ -722,6 +722,80 @@
     "p",
     [],
     [
+      [
+        "var",
+        [
+          [
+            "name",
+            [
+              "value",
+              "lateVar"
+            ]
+          ],
+          [
+            "value",
+            [
+              "value",
+              50
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "lateVarDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "variable",
+              "lateVar"
+            ]
+          ]
+        ],
+        []
+      ],
+      "\nLate Var Range:"
+    ]
+  ],
+  [
+    "Range",
+    [
+      [
+        "value",
+        [
+          "variable",
+          "lateVar"
+        ]
+      ],
+      [
+        "min",
+        [
+          "value",
+          2
+        ]
+      ],
+      [
+        "max",
+        [
+          "value",
+          100
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "p",
+    [],
+    [
       "Read more about Idyll at ",
       [
         "a",

@@ -309,6 +309,34 @@ ShallowWrapper {
         value="frequency"
     />
     <p>
+        <var
+            name="lateVar"
+            value={50}
+        />
+        <Display
+            __vars__={
+                Object {
+                    "value": "lateVar",
+                  }
+            }
+            id="lateVarDisplay"
+            value="lateVar"
+        />
+        
+        Late Var Range:
+    </p>
+    <Range
+        __vars__={
+            Object {
+                "value": "lateVar",
+              }
+        }
+        max={100}
+        min={2}
+        step={1}
+        value="lateVar"
+    />
+    <p>
         Read more about Idyll at 
         <a
             href="https://idyll-lang.github.io/"
@@ -639,6 +667,34 @@ ShallowWrapper {
           min={0.5}
           step={0.0001}
           value="frequency"
+/>,
+        <p>
+          <var
+                    name="lateVar"
+                    value={50}
+          />
+          <Display
+                    __vars__={
+                              Object {
+                                        "value": "lateVar",
+                                      }
+                    }
+                    id="lateVarDisplay"
+                    value="lateVar"
+          />
+          
+          Late Var Range:
+</p>,
+        <Range
+          __vars__={
+                    Object {
+                              "value": "lateVar",
+                            }
+          }
+          max={100}
+          min={2}
+          step={1}
+          value="lateVar"
 />,
         <p>
           Read more about Idyll at 
@@ -1556,6 +1612,83 @@ or be used to parameterize components. Derived variables can be used to create v
         "nodeType": "host",
         "props": Object {
           "children": Array [
+            <var
+              name="lateVar"
+              value={50}
+/>,
+            <Display
+              __vars__={
+                            Object {
+                                          "value": "lateVar",
+                                        }
+              }
+              id="lateVarDisplay"
+              value="lateVar"
+/>,
+            "
+Late Var Range:",
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": "0",
+            "nodeType": "host",
+            "props": Object {
+              "children": undefined,
+              "name": "lateVar",
+              "value": 50,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "var",
+          },
+          Object {
+            "instance": null,
+            "key": "1",
+            "nodeType": "class",
+            "props": Object {
+              "__vars__": Object {
+                "value": "lateVar",
+              },
+              "children": undefined,
+              "id": "lateVarDisplay",
+              "value": "lateVar",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "
+Late Var Range:",
+        ],
+        "type": "p",
+      },
+      Object {
+        "instance": null,
+        "key": "34",
+        "nodeType": "class",
+        "props": Object {
+          "__vars__": Object {
+            "value": "lateVar",
+          },
+          "children": undefined,
+          "max": 100,
+          "min": 2,
+          "step": 1,
+          "value": "lateVar",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "35",
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
             "Read more about Idyll at ",
             <a
               href="https://idyll-lang.github.io/"
@@ -1923,6 +2056,34 @@ or be used to parameterize components. Derived variables can be used to create v
             min={0.5}
             step={0.0001}
             value="frequency"
+/>,
+          <p>
+            <var
+                        name="lateVar"
+                        value={50}
+            />
+            <Display
+                        __vars__={
+                                    Object {
+                                                "value": "lateVar",
+                                              }
+                        }
+                        id="lateVarDisplay"
+                        value="lateVar"
+            />
+            
+            Late Var Range:
+</p>,
+          <Range
+            __vars__={
+                        Object {
+                                    "value": "lateVar",
+                                  }
+            }
+            max={100}
+            min={2}
+            step={1}
+            value="lateVar"
 />,
           <p>
             Read more about Idyll at 
@@ -2837,6 +2998,83 @@ or be used to parameterize components. Derived variables can be used to create v
         Object {
           "instance": null,
           "key": "33",
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <var
+                name="lateVar"
+                value={50}
+/>,
+              <Display
+                __vars__={
+                                Object {
+                                                "value": "lateVar",
+                                              }
+                }
+                id="lateVarDisplay"
+                value="lateVar"
+/>,
+              "
+Late Var Range:",
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": "0",
+              "nodeType": "host",
+              "props": Object {
+                "children": undefined,
+                "name": "lateVar",
+                "value": 50,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "var",
+            },
+            Object {
+              "instance": null,
+              "key": "1",
+              "nodeType": "class",
+              "props": Object {
+                "__vars__": Object {
+                  "value": "lateVar",
+                },
+                "children": undefined,
+                "id": "lateVarDisplay",
+                "value": "lateVar",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            "
+Late Var Range:",
+          ],
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": "34",
+          "nodeType": "class",
+          "props": Object {
+            "__vars__": Object {
+              "value": "lateVar",
+            },
+            "children": undefined,
+            "max": 100,
+            "min": 2,
+            "step": 1,
+            "value": "lateVar",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "35",
           "nodeType": "host",
           "props": Object {
             "children": Array [

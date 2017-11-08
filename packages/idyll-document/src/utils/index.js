@@ -137,17 +137,24 @@ export const splitAST = (ast) => {
     elements: [],
   }
 
-  ast.forEach(node => {
-    const [ name ] = node;
-    if (name === 'var') {
-      state.vars.push(node);
-    } else if (state[name]) {
-      state[name].push(node);
-    } else {
-      state.elements.push(node);
+  const handleNode = (storeElements) => {
+    return (node) => {
+      const [ name, props, children ] = node;
+      if (name === 'var') {
+        state.vars.push(node);
+      } else if (state[name]) {
+        state[name].push(node);
+      } else if (storeElements) {
+        state.elements.push(node);
+      }
+      if (!children || typeof children === 'string') {
+        return;
+      }
+      children.forEach(handleNode(false));
     }
-  })
+  }
 
+  ast.forEach(handleNode(true));
   return state;
 }
 
