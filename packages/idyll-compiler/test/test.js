@@ -225,6 +225,28 @@ describe('compiler', function() {
         ]
       ]);
     });
+    it('should handle a header that starts with a number', function() {
+      var input = `
+        # 1. This is a header
+        ## 2. This is also a header
+
+        ### 3. This too.
+      `;
+      var lex = Lexer();
+      var lexResults = lex(input);
+      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      expect(output).to.eql([
+        ['h1', [], [
+          '1', '. This is a header']
+        ], ['h2', [], [
+          '2', '. This is also a header']
+        ], ['h3', [], [
+          '3', '. This too.']
+        ]
+      ]);
+    });
+
+
     it('should parse an open component with a break at the end', function() {
       var input = '[Slideshow currentSlide:1]text and stuff \n\n [/Slideshow]';
       var lex = Lexer();
