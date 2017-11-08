@@ -48,9 +48,7 @@ ShallowWrapper {
         }
         samplePoints={100}
         type="scatter"
-    >
-        
-    </Chart>
+    />
     <p>
         Try changing the chart’s type from 
         <code>
@@ -115,9 +113,7 @@ ShallowWrapper {
                   }
             }
             var="x"
-        >
-            
-        </Display>
+        />
         ),
         or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:
     </p>
@@ -141,9 +137,7 @@ ShallowWrapper {
         min={0}
         step={1}
         value="x"
-    >
-        
-    </Range>
+    />
     <p>
         <Equation>
             x
@@ -157,9 +151,7 @@ ShallowWrapper {
                   }
             }
             var="x"
-        >
-            
-        </Display>
+        />
     </p>
     <p>
         <Equation>
@@ -173,9 +165,7 @@ ShallowWrapper {
                   }
             }
             var="xSquared"
-        >
-            
-        </Display>
+        />
     </p>
     <p>
         Test expression, displays:
@@ -188,9 +178,7 @@ ShallowWrapper {
         }
         id="varDisplay"
         value="x"
-    >
-        
-    </Display>
+    />
     <Display
         __expr__={
             Object {
@@ -199,9 +187,7 @@ ShallowWrapper {
         }
         id="derivedVarDisplay"
         value="xSquared"
-    >
-        
-    </Display>
+    />
     <Display
         __expr__={
             Object {
@@ -210,9 +196,7 @@ ShallowWrapper {
         }
         id="strDisplay"
         value="\\"string\\""
-    >
-        
-    </Display>
+    />
     <Display
         __expr__={
             Object {
@@ -221,9 +205,7 @@ ShallowWrapper {
         }
         id="staticObjectDisplay"
         value="{ static: \\"object\\" }"
-    >
-        
-    </Display>
+    />
     <Display
         __expr__={
             Object {
@@ -232,9 +214,7 @@ ShallowWrapper {
         }
         id="dynamicObjectDisplay"
         value="{ dynamic: x }"
-    >
-        
-    </Display>
+    />
     <Display
         __expr__={
             Object {
@@ -243,9 +223,7 @@ ShallowWrapper {
         }
         id="dataDisplay"
         value="myData"
-    >
-        
-    </Display>
+    />
     <Display
         __vars__={
             Object {
@@ -254,9 +232,7 @@ ShallowWrapper {
         }
         id="bareDataDisplay"
         value="myData"
-    >
-        
-    </Display>
+    />
     <Display
         __vars__={
             Object {
@@ -265,9 +241,7 @@ ShallowWrapper {
         }
         id="bareVarDisplay"
         value="x"
-    >
-        
-    </Display>
+    />
     <Display
         __vars__={
             Object {
@@ -276,9 +250,7 @@ ShallowWrapper {
         }
         id="bareDerivedDisplay"
         value="xSquared"
-    >
-        
-    </Display>
+    />
     <Display
         __expr__={
             Object {
@@ -287,9 +259,7 @@ ShallowWrapper {
         }
         id="objectVarDisplay"
         value=" objectVar "
-    >
-        
-    </Display>
+    />
     <Display
         __vars__={
             Object {
@@ -298,12 +268,8 @@ ShallowWrapper {
         }
         id="bareObjectVarDisplay"
         value="objectVar"
-    >
-        
-    </Display>
-    <br>
-        
-    </br>
+    />
+    <br />
     <p>
         Here is an example of how you could use a variable to control the frequency of a sine wave:
     </p>
@@ -325,9 +291,7 @@ ShallowWrapper {
         }
         samplePoints={1000}
         type="line"
-    >
-        
-    </Chart>
+    />
     <Range
         __expr__={
             Object {
@@ -343,9 +307,7 @@ ShallowWrapper {
         min={0.5}
         step={0.0001}
         value="frequency"
-    >
-        
-    </Range>
+    />
     <p>
         Read more about Idyll at 
         <a
@@ -418,9 +380,7 @@ ShallowWrapper {
           }
           samplePoints={100}
           type="scatter"
->
-          
-</Chart>,
+/>,
         <p>
           Try changing the chart’s type from 
           <code>
@@ -485,9 +445,7 @@ ShallowWrapper {
                                       }
                     }
                     var="x"
-          >
-                    
-          </Display>
+          />
           ),
           or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:
 </p>,
@@ -511,9 +469,7 @@ ShallowWrapper {
           min={0}
           step={1}
           value="x"
->
-          
-</Range>,
+/>,
         <p>
           <Equation>
                     x
@@ -527,9 +483,7 @@ ShallowWrapper {
                                       }
                     }
                     var="x"
-          >
-                    
-          </Display>
+          />
 </p>,
         <p>
           <Equation>
@@ -543,9 +497,7 @@ ShallowWrapper {
                                       }
                     }
                     var="xSquared"
-          >
-                    
-          </Display>
+          />
 </p>,
         <p>
           Test expression, displays:
@@ -558,9 +510,7 @@ ShallowWrapper {
           }
           id="varDisplay"
           value="x"
->
-          
-</Display>,
+/>,
         <Display
           __expr__={
                     Object {
@@ -569,9 +519,7 @@ ShallowWrapper {
           }
           id="derivedVarDisplay"
           value="xSquared"
->
-          
-</Display>,
+/>,
         <Display
           __expr__={
                     Object {
@@ -580,9 +528,7 @@ ShallowWrapper {
           }
           id="strDisplay"
           value="\\"string\\""
->
-          
-</Display>,
+/>,
         <Display
           __expr__={
                     Object {
@@ -591,9 +537,7 @@ ShallowWrapper {
           }
           id="staticObjectDisplay"
           value="{ static: \\"object\\" }"
->
-          
-</Display>,
+/>,
         <Display
           __expr__={
                     Object {
@@ -602,9 +546,7 @@ ShallowWrapper {
           }
           id="dynamicObjectDisplay"
           value="{ dynamic: x }"
->
-          
-</Display>,
+/>,
         <Display
           __expr__={
                     Object {
@@ -613,9 +555,7 @@ ShallowWrapper {
           }
           id="dataDisplay"
           value="myData"
->
-          
-</Display>,
+/>,
         <Display
           __vars__={
                     Object {
@@ -624,9 +564,7 @@ ShallowWrapper {
           }
           id="bareDataDisplay"
           value="myData"
->
-          
-</Display>,
+/>,
         <Display
           __vars__={
                     Object {
@@ -635,9 +573,7 @@ ShallowWrapper {
           }
           id="bareVarDisplay"
           value="x"
->
-          
-</Display>,
+/>,
         <Display
           __vars__={
                     Object {
@@ -646,9 +582,7 @@ ShallowWrapper {
           }
           id="bareDerivedDisplay"
           value="xSquared"
->
-          
-</Display>,
+/>,
         <Display
           __expr__={
                     Object {
@@ -657,9 +591,7 @@ ShallowWrapper {
           }
           id="objectVarDisplay"
           value=" objectVar "
->
-          
-</Display>,
+/>,
         <Display
           __vars__={
                     Object {
@@ -668,12 +600,8 @@ ShallowWrapper {
           }
           id="bareObjectVarDisplay"
           value="objectVar"
->
-          
-</Display>,
-        <br>
-          
-</br>,
+/>,
+        <br />,
         <p>
           Here is an example of how you could use a variable to control the frequency of a sine wave:
 </p>,
@@ -695,9 +623,7 @@ ShallowWrapper {
           }
           samplePoints={1000}
           type="line"
->
-          
-</Chart>,
+/>,
         <Range
           __expr__={
                     Object {
@@ -713,9 +639,7 @@ ShallowWrapper {
           min={0.5}
           step={0.0001}
           value="frequency"
->
-          
-</Range>,
+/>,
         <p>
           Read more about Idyll at 
           <a
@@ -865,7 +789,7 @@ For example, a ",
         "key": "4",
         "nodeType": "class",
         "props": Object {
-          "children": Array [],
+          "children": undefined,
           "domain": Array [
             -1,
             1,
@@ -879,7 +803,7 @@ For example, a ",
           "type": "scatter",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1153,9 +1077,7 @@ For example, a ",
                                         }
               }
               var="x"
->
-              
-</Display>,
+/>,
             "),
 or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:",
           ],
@@ -1172,11 +1094,11 @@ or be used to parameterize components. Derived variables can be used to create v
               "__vars__": Object {
                 "var": "x",
               },
-              "children": Array [],
+              "children": undefined,
               "var": "x",
             },
             "ref": null,
-            "rendered": Array [],
+            "rendered": null,
             "type": [Function],
           },
           "),
@@ -1242,14 +1164,14 @@ or be used to parameterize components. Derived variables can be used to create v
           "__vars__": Object {
             "value": "x",
           },
-          "children": Array [],
+          "children": undefined,
           "max": 100,
           "min": 0,
           "step": 1,
           "value": "x",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1270,9 +1192,7 @@ or be used to parameterize components. Derived variables can be used to create v
                                         }
               }
               var="x"
->
-              
-</Display>,
+/>,
           ],
         },
         "ref": null,
@@ -1302,11 +1222,11 @@ or be used to parameterize components. Derived variables can be used to create v
               "__expr__": Object {
                 "var": "x",
               },
-              "children": Array [],
+              "children": undefined,
               "var": "x",
             },
             "ref": null,
-            "rendered": Array [],
+            "rendered": null,
             "type": [Function],
           },
         ],
@@ -1329,9 +1249,7 @@ or be used to parameterize components. Derived variables can be used to create v
                                         }
               }
               var="xSquared"
->
-              
-</Display>,
+/>,
           ],
         },
         "ref": null,
@@ -1360,11 +1278,11 @@ or be used to parameterize components. Derived variables can be used to create v
               "__expr__": Object {
                 "var": "xSquared",
               },
-              "children": Array [],
+              "children": undefined,
               "var": "xSquared",
             },
             "ref": null,
-            "rendered": Array [],
+            "rendered": null,
             "type": [Function],
           },
         ],
@@ -1393,12 +1311,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__expr__": Object {
             "value": "x",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "varDisplay",
           "value": "x",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1409,12 +1327,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__expr__": Object {
             "value": "xSquared",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "derivedVarDisplay",
           "value": "xSquared",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1425,12 +1343,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__expr__": Object {
             "value": "\\"string\\"",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "strDisplay",
           "value": "\\"string\\"",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1441,12 +1359,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__expr__": Object {
             "value": "{ static: \\"object\\" }",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "staticObjectDisplay",
           "value": "{ static: \\"object\\" }",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1457,12 +1375,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__expr__": Object {
             "value": "{ dynamic: x }",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "dynamicObjectDisplay",
           "value": "{ dynamic: x }",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1473,12 +1391,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__expr__": Object {
             "value": "myData",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "dataDisplay",
           "value": "myData",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1489,12 +1407,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__vars__": Object {
             "value": "myData",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "bareDataDisplay",
           "value": "myData",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1505,12 +1423,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__vars__": Object {
             "value": "x",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "bareVarDisplay",
           "value": "x",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1521,12 +1439,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__vars__": Object {
             "value": "xSquared",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "bareDerivedDisplay",
           "value": "xSquared",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1537,12 +1455,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__expr__": Object {
             "value": " objectVar ",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "objectVarDisplay",
           "value": " objectVar ",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1553,12 +1471,12 @@ or be used to parameterize components. Derived variables can be used to create v
           "__vars__": Object {
             "value": "objectVar",
           },
-          "children": Array [],
+          "children": undefined,
           "id": "bareObjectVarDisplay",
           "value": "objectVar",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1566,10 +1484,10 @@ or be used to parameterize components. Derived variables can be used to create v
         "key": "29",
         "nodeType": "host",
         "props": Object {
-          "children": Array [],
+          "children": undefined,
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": "br",
       },
       Object {
@@ -1596,7 +1514,7 @@ or be used to parameterize components. Derived variables can be used to create v
             "domain": "[0, 2 * Math.PI]",
             "equation": "(t) => Math.sin(t * frequency)",
           },
-          "children": Array [],
+          "children": undefined,
           "domain": "[0, 2 * Math.PI]",
           "domainPadding": 0,
           "equation": "(t) => Math.sin(t * frequency)",
@@ -1608,7 +1526,7 @@ or be used to parameterize components. Derived variables can be used to create v
           "type": "line",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1622,14 +1540,14 @@ or be used to parameterize components. Derived variables can be used to create v
           "__vars__": Object {
             "value": "frequency",
           },
-          "children": Array [],
+          "children": undefined,
           "max": "2 * Math.PI",
           "min": 0.5,
           "step": 0.0001,
           "value": "frequency",
         },
         "ref": null,
-        "rendered": Array [],
+        "rendered": null,
         "type": [Function],
       },
       Object {
@@ -1746,9 +1664,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             samplePoints={100}
             type="scatter"
->
-            
-</Chart>,
+/>,
           <p>
             Try changing the chart’s type from 
             <code>
@@ -1813,9 +1729,7 @@ or be used to parameterize components. Derived variables can be used to create v
                                               }
                         }
                         var="x"
-            >
-                        
-            </Display>
+            />
             ),
             or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:
 </p>,
@@ -1839,9 +1753,7 @@ or be used to parameterize components. Derived variables can be used to create v
             min={0}
             step={1}
             value="x"
->
-            
-</Range>,
+/>,
           <p>
             <Equation>
                         x
@@ -1855,9 +1767,7 @@ or be used to parameterize components. Derived variables can be used to create v
                                               }
                         }
                         var="x"
-            >
-                        
-            </Display>
+            />
 </p>,
           <p>
             <Equation>
@@ -1871,9 +1781,7 @@ or be used to parameterize components. Derived variables can be used to create v
                                               }
                         }
                         var="xSquared"
-            >
-                        
-            </Display>
+            />
 </p>,
           <p>
             Test expression, displays:
@@ -1886,9 +1794,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="varDisplay"
             value="x"
->
-            
-</Display>,
+/>,
           <Display
             __expr__={
                         Object {
@@ -1897,9 +1803,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="derivedVarDisplay"
             value="xSquared"
->
-            
-</Display>,
+/>,
           <Display
             __expr__={
                         Object {
@@ -1908,9 +1812,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="strDisplay"
             value="\\"string\\""
->
-            
-</Display>,
+/>,
           <Display
             __expr__={
                         Object {
@@ -1919,9 +1821,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="staticObjectDisplay"
             value="{ static: \\"object\\" }"
->
-            
-</Display>,
+/>,
           <Display
             __expr__={
                         Object {
@@ -1930,9 +1830,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="dynamicObjectDisplay"
             value="{ dynamic: x }"
->
-            
-</Display>,
+/>,
           <Display
             __expr__={
                         Object {
@@ -1941,9 +1839,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="dataDisplay"
             value="myData"
->
-            
-</Display>,
+/>,
           <Display
             __vars__={
                         Object {
@@ -1952,9 +1848,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="bareDataDisplay"
             value="myData"
->
-            
-</Display>,
+/>,
           <Display
             __vars__={
                         Object {
@@ -1963,9 +1857,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="bareVarDisplay"
             value="x"
->
-            
-</Display>,
+/>,
           <Display
             __vars__={
                         Object {
@@ -1974,9 +1866,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="bareDerivedDisplay"
             value="xSquared"
->
-            
-</Display>,
+/>,
           <Display
             __expr__={
                         Object {
@@ -1985,9 +1875,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="objectVarDisplay"
             value=" objectVar "
->
-            
-</Display>,
+/>,
           <Display
             __vars__={
                         Object {
@@ -1996,12 +1884,8 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             id="bareObjectVarDisplay"
             value="objectVar"
->
-            
-</Display>,
-          <br>
-            
-</br>,
+/>,
+          <br />,
           <p>
             Here is an example of how you could use a variable to control the frequency of a sine wave:
 </p>,
@@ -2023,9 +1907,7 @@ or be used to parameterize components. Derived variables can be used to create v
             }
             samplePoints={1000}
             type="line"
->
-            
-</Chart>,
+/>,
           <Range
             __expr__={
                         Object {
@@ -2041,9 +1923,7 @@ or be used to parameterize components. Derived variables can be used to create v
             min={0.5}
             step={0.0001}
             value="frequency"
->
-            
-</Range>,
+/>,
           <p>
             Read more about Idyll at 
             <a
@@ -2193,7 +2073,7 @@ For example, a ",
           "key": "4",
           "nodeType": "class",
           "props": Object {
-            "children": Array [],
+            "children": undefined,
             "domain": Array [
               -1,
               1,
@@ -2207,7 +2087,7 @@ For example, a ",
             "type": "scatter",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2481,9 +2361,7 @@ For example, a ",
                                               }
                 }
                 var="x"
->
-                
-</Display>,
+/>,
               "),
 or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:",
             ],
@@ -2500,11 +2378,11 @@ or be used to parameterize components. Derived variables can be used to create v
                 "__vars__": Object {
                   "var": "x",
                 },
-                "children": Array [],
+                "children": undefined,
                 "var": "x",
               },
               "ref": null,
-              "rendered": Array [],
+              "rendered": null,
               "type": [Function],
             },
             "),
@@ -2570,14 +2448,14 @@ or be used to parameterize components. Derived variables can be used to create v
             "__vars__": Object {
               "value": "x",
             },
-            "children": Array [],
+            "children": undefined,
             "max": 100,
             "min": 0,
             "step": 1,
             "value": "x",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2598,9 +2476,7 @@ or be used to parameterize components. Derived variables can be used to create v
                                               }
                 }
                 var="x"
->
-                
-</Display>,
+/>,
             ],
           },
           "ref": null,
@@ -2630,11 +2506,11 @@ or be used to parameterize components. Derived variables can be used to create v
                 "__expr__": Object {
                   "var": "x",
                 },
-                "children": Array [],
+                "children": undefined,
                 "var": "x",
               },
               "ref": null,
-              "rendered": Array [],
+              "rendered": null,
               "type": [Function],
             },
           ],
@@ -2657,9 +2533,7 @@ or be used to parameterize components. Derived variables can be used to create v
                                               }
                 }
                 var="xSquared"
->
-                
-</Display>,
+/>,
             ],
           },
           "ref": null,
@@ -2688,11 +2562,11 @@ or be used to parameterize components. Derived variables can be used to create v
                 "__expr__": Object {
                   "var": "xSquared",
                 },
-                "children": Array [],
+                "children": undefined,
                 "var": "xSquared",
               },
               "ref": null,
-              "rendered": Array [],
+              "rendered": null,
               "type": [Function],
             },
           ],
@@ -2721,12 +2595,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__expr__": Object {
               "value": "x",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "varDisplay",
             "value": "x",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2737,12 +2611,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__expr__": Object {
               "value": "xSquared",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "derivedVarDisplay",
             "value": "xSquared",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2753,12 +2627,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__expr__": Object {
               "value": "\\"string\\"",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "strDisplay",
             "value": "\\"string\\"",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2769,12 +2643,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__expr__": Object {
               "value": "{ static: \\"object\\" }",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "staticObjectDisplay",
             "value": "{ static: \\"object\\" }",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2785,12 +2659,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__expr__": Object {
               "value": "{ dynamic: x }",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "dynamicObjectDisplay",
             "value": "{ dynamic: x }",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2801,12 +2675,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__expr__": Object {
               "value": "myData",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "dataDisplay",
             "value": "myData",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2817,12 +2691,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__vars__": Object {
               "value": "myData",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "bareDataDisplay",
             "value": "myData",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2833,12 +2707,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__vars__": Object {
               "value": "x",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "bareVarDisplay",
             "value": "x",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2849,12 +2723,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__vars__": Object {
               "value": "xSquared",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "bareDerivedDisplay",
             "value": "xSquared",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2865,12 +2739,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__expr__": Object {
               "value": " objectVar ",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "objectVarDisplay",
             "value": " objectVar ",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2881,12 +2755,12 @@ or be used to parameterize components. Derived variables can be used to create v
             "__vars__": Object {
               "value": "objectVar",
             },
-            "children": Array [],
+            "children": undefined,
             "id": "bareObjectVarDisplay",
             "value": "objectVar",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2894,10 +2768,10 @@ or be used to parameterize components. Derived variables can be used to create v
           "key": "29",
           "nodeType": "host",
           "props": Object {
-            "children": Array [],
+            "children": undefined,
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": "br",
         },
         Object {
@@ -2924,7 +2798,7 @@ or be used to parameterize components. Derived variables can be used to create v
               "domain": "[0, 2 * Math.PI]",
               "equation": "(t) => Math.sin(t * frequency)",
             },
-            "children": Array [],
+            "children": undefined,
             "domain": "[0, 2 * Math.PI]",
             "domainPadding": 0,
             "equation": "(t) => Math.sin(t * frequency)",
@@ -2936,7 +2810,7 @@ or be used to parameterize components. Derived variables can be used to create v
             "type": "line",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
@@ -2950,14 +2824,14 @@ or be used to parameterize components. Derived variables can be used to create v
             "__vars__": Object {
               "value": "frequency",
             },
-            "children": Array [],
+            "children": undefined,
             "max": "2 * Math.PI",
             "min": 0.5,
             "step": 0.0001,
             "value": "frequency",
           },
           "ref": null,
-          "rendered": Array [],
+          "rendered": null,
           "type": [Function],
         },
         Object {
