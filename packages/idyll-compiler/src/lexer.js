@@ -12,17 +12,18 @@ const formatToken = (text) => {
 
 
 const lex = function(options) {
-  let { row, column, outer } = Object.assign({}, {
+  let { row, column, outer, skipLists } = Object.assign({}, {
     row: 1,
     column: 1,
-    outer: true
+    outer: true,
+    skipLists: false
   }, options || {});
   var lexer = new Lexer();
   var inComponent = false;
   var gotName = false;
 
-  const recurse = (str) => {
-    return lex({row, column, outer: false})(str).tokens;
+  const recurse = (str, opts) => {
+    return lex(Object.assign({ row, column, outer: false }, opts || {}))(str).tokens;
   };
 
   var updatePosition = function(lexeme) {
@@ -65,10 +66,10 @@ const lex = function(options) {
     return ['INLINE_CODE'].concat(formatToken(text.trim()));
   });
 
-  lexer.addRule(/[\s\n]*(#{1,6})\s*([^\n\[]*)[\n\s]*/gm, function(lexeme, hashes, text) {
+  lexer.addRule(/[\s\n]*(#{1,6})\s*([^\n\[]+)[\n\s]*/gm, function(lexeme, hashes, text) {
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['BREAK', 'HEADER_' + hashes.length].concat(recurse(text)).concat(['HEADER_END']);
+    return ['BREAK', 'HEADER_' + hashes.length].concat(recurse(text, { skipLists: true })).concat(['HEADER_END']);
   });
 
   lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*/g, function(lexeme, text) {
@@ -109,7 +110,7 @@ const lex = function(options) {
   });
 
   lexer.addRule(/^\s*([\-\*]\s*([^\n]*)\n)*([\-\*]\s*([^\n]*)\n?)/gm, function(lexeme) {
-    this.reject = inComponent;
+    this.reject = inComponent || skipLists;
     if (this.reject) return;
     updatePosition(lexeme);
     const items = lexeme.trim().split('\n');
@@ -122,7 +123,7 @@ const lex = function(options) {
   });
 
   lexer.addRule(/^\s*(\d+\.\s*([^\n]*)\n)*(\d+\.\s*([^\n]*)\n?)/gm, function(lexeme) {
-    this.reject = inComponent;
+    this.reject = inComponent || skipLists;
     if (this.reject) return;
     updatePosition(lexeme);
     const items = lexeme.trim().split('\n');
