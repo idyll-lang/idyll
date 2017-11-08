@@ -65,6 +65,8 @@ Test expression, displays:
 [Display id:"objectVarDisplay" value:` objectVar `  /]
 [Display id:"bareObjectVarDisplay" value:objectVar  /]
 
+[br /]
+
 Here is an example of how you could use a variable to control the frequency of a sine wave:
 
 [var name:"frequency" value:1 /]

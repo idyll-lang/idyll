@@ -301,6 +301,9 @@ ShallowWrapper {
     >
         
     </Display>
+    <br>
+        
+    </br>
     <p>
         Here is an example of how you could use a variable to control the frequency of a sine wave:
     </p>
@@ -668,6 +671,9 @@ ShallowWrapper {
 >
           
 </Display>,
+        <br>
+          
+</br>,
         <p>
           Here is an example of how you could use a variable to control the frequency of a sine wave:
 </p>,
@@ -1560,6 +1566,17 @@ or be used to parameterize components. Derived variables can be used to create v
         "key": "29",
         "nodeType": "host",
         "props": Object {
+          "children": Array [],
+        },
+        "ref": null,
+        "rendered": Array [],
+        "type": "br",
+      },
+      Object {
+        "instance": null,
+        "key": "30",
+        "nodeType": "host",
+        "props": Object {
           "children": Array [
             "Here is an example of how you could use a variable to control the frequency of a sine wave:",
           ],
@@ -1572,7 +1589,7 @@ or be used to parameterize components. Derived variables can be used to create v
       },
       Object {
         "instance": null,
-        "key": "30",
+        "key": "31",
         "nodeType": "class",
         "props": Object {
           "__expr__": Object {
@@ -1596,7 +1613,7 @@ or be used to parameterize components. Derived variables can be used to create v
       },
       Object {
         "instance": null,
-        "key": "31",
+        "key": "32",
         "nodeType": "class",
         "props": Object {
           "__expr__": Object {
@@ -1617,7 +1634,7 @@ or be used to parameterize components. Derived variables can be used to create v
       },
       Object {
         "instance": null,
-        "key": "32",
+        "key": "33",
         "nodeType": "host",
         "props": Object {
           "children": Array [
@@ -1982,6 +1999,9 @@ or be used to parameterize components. Derived variables can be used to create v
 >
             
 </Display>,
+          <br>
+            
+</br>,
           <p>
             Here is an example of how you could use a variable to control the frequency of a sine wave:
 </p>,
@@ -2874,6 +2894,17 @@ or be used to parameterize components. Derived variables can be used to create v
           "key": "29",
           "nodeType": "host",
           "props": Object {
+            "children": Array [],
+          },
+          "ref": null,
+          "rendered": Array [],
+          "type": "br",
+        },
+        Object {
+          "instance": null,
+          "key": "30",
+          "nodeType": "host",
+          "props": Object {
             "children": Array [
               "Here is an example of how you could use a variable to control the frequency of a sine wave:",
             ],
@@ -2886,7 +2917,7 @@ or be used to parameterize components. Derived variables can be used to create v
         },
         Object {
           "instance": null,
-          "key": "30",
+          "key": "31",
           "nodeType": "class",
           "props": Object {
             "__expr__": Object {
@@ -2910,7 +2941,7 @@ or be used to parameterize components. Derived variables can be used to create v
         },
         Object {
           "instance": null,
-          "key": "31",
+          "key": "32",
           "nodeType": "class",
           "props": Object {
             "__expr__": Object {
@@ -2931,7 +2962,7 @@ or be used to parameterize components. Derived variables can be used to create v
         },
         Object {
           "instance": null,
-          "key": "32",
+          "key": "33",
           "nodeType": "host",
           "props": Object {
             "children": Array [

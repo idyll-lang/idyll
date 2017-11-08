@@ -83,8 +83,9 @@ class ReactJsonSchema {
   }
 
   resolveComponentChildren(schema) {
-    return (schema.hasOwnProperty('children')) ?
-      this.parseSchema(schema.children) : [];
+    const children = (schema.hasOwnProperty('children')) ?
+    this.parseSchema(schema.children) : [];
+    return children.length ? children : null;
   }
 
   getComponentMap() {

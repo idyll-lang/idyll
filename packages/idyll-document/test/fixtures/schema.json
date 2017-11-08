@@ -334,6 +334,10 @@
     "children": []
   },
   {
+    "component": "br",
+    "children": []
+  },
+  {
     "component": "p",
     "children": [
       "Here is an example of how you could use a variable to control the frequency of a sine wave:"
