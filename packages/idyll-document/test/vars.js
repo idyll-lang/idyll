@@ -20,7 +20,8 @@ describe('Component state initialization', () => {
       frequency: 1,
       xSquared: 4,
       myData: FAKE_DATA,
-      objectVar: {an: "object"}
+      objectVar: {an: "object"},
+      lateVar: 50
     });
   });
 
@@ -97,7 +98,8 @@ describe('Component state initialization', () => {
       frequency: 1,
       xSquared: 16,
       myData: FAKE_DATA,
-      objectVar: {an: "object"}
+      objectVar: {an: "object"},
+      lateVar: 50
     });
   });
 
@@ -138,6 +140,9 @@ describe('Component state initialization', () => {
     }, {
       id: 'bareObjectVarDisplay',
       html: `<span>${JSON.stringify({an: "object"})}</span>`
+    }, {
+      id: 'lateVarDisplay',
+      html: `<span>50.00</span>`
     }];
 
     checks.forEach((check) => {

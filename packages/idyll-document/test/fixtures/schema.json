@@ -371,6 +371,37 @@
   {
     "component": "p",
     "children": [
+      {
+        "component": "var",
+        "name": "lateVar",
+        "value": 50,
+        "children": []
+      },
+      {
+        "component": "Display",
+        "id": "lateVarDisplay",
+        "__vars__": {
+          "value": "lateVar"
+        },
+        "value": "lateVar",
+        "children": []
+      },
+      "\nLate Var Range:"
+    ]
+  },
+  {
+    "component": "Range",
+    "__vars__": {
+      "value": "lateVar"
+    },
+    "value": "lateVar",
+    "min": 2,
+    "max": 100,
+    "children": []
+  },
+  {
+    "component": "p",
+    "children": [
       "Read more about Idyll at ",
       {
         "component": "a",

@@ -82,5 +82,12 @@ Here is an example of how you could use a variable to control the frequency of a
   max:`2 * Math.PI`
   step:0.0001 /]
 
+[var name:"lateVar" value:50 /]
+[Display id:"lateVarDisplay" value:lateVar /]
+Late Var Range:
+
+[Range value:lateVar min:2 max:100 /]
+
+
 Read more about Idyll at [https://idyll-lang.github.io/](https://idyll-lang.github.io/), and come say "Hi!" in our [chatroom on gitter](https://gitter.im/idyll-lang/Lobby).
 
