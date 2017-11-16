@@ -58,7 +58,7 @@ const build = (opts, paths, inputConfig) => {
   .then((js) => {
     // minify bundle if necessary and store it
     if (opts.minify) {
-      js = UglifyJS.minify(js, {fromString: true, mangle: { except: ['_classCallCheck'] }}).code;
+      js = UglifyJS.minify(js, {fromString: true, mangle: { keep_fnames: true}}).code;
     }
     output.js = js;
   })
