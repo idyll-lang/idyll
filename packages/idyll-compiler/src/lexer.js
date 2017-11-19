@@ -10,6 +10,7 @@ const formatToken = (text) => {
   return results;
 }
 
+let currentInput = null;
 
 const lex = function(options) {
   let { row, column, outer, skipLists } = Object.assign({}, {
@@ -18,7 +19,16 @@ const lex = function(options) {
     outer: true,
     skipLists: false
   }, options || {});
-  var lexer = new Lexer();
+  var lexer = new Lexer(function (chr) {
+    let errorString = `
+      Error lexing input, unexpected token: ${chr}
+
+      Found near index ${this.index - 1}:
+
+      ${currentInput.substring(Math.max(0, this.index - 10), Math.min(this.index + 10, currentInput.length - 1))}
+    `
+    throw new Error(errorString);
+  });
   var inComponent = false;
   var gotName = false;
 
@@ -174,7 +184,7 @@ const lex = function(options) {
     updatePosition(lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
-  lexer.addRule(/\\\[|\\\]/, function(lexeme) {
+  lexer.addRule(/\\[\[\]]?/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
@@ -271,6 +281,7 @@ const lex = function(options) {
   });
 
   return function(str) {
+    currentInput = str;
     var vals = [];
     var output = [];
     var positions = [];
