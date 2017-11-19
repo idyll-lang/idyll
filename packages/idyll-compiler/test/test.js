@@ -30,6 +30,12 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START \"text\" TOKEN_VALUE_END EOF');
     });
 
+    it('should ignore escaped brackets', function() {
+      var lex = Lexer();
+      var results = lex("Text with a range, \\[0, 20\\].");
+      expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START \"Text with a range, \" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \"[\" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \"0\" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \", \" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \"2\" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \"0\" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \"]\" TOKEN_VALUE_END WORDS TOKEN_VALUE_START \".\" TOKEN_VALUE_END EOF');
+    });
+
     it('should handle markdown formating in a list element', function() {
       var lex = Lexer();
       var results = lex("- **test**");
