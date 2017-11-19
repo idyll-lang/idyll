@@ -1,6 +1,6 @@
 {
   "name": "idyll-editor",
-  "version": "2.0.5",
+  "version": "2.0.8",
   "description": "",
   "main": "index.js",
   "private": "true",
@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "draft-js": "^0.10.1",
-    "idyll-compiler": "^2.0.5",
+    "idyll-compiler": "^2.0.8",
     "idyll-components": "^2.0.0",
     "idyll-document": "^2.0.4",
     "react": "^16.0.0",
