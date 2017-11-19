@@ -5,7 +5,7 @@ const formatToken = (text) => {
   text = text || '';
   const results = []
   results.push('TOKEN_VALUE_START');
-  results.push('"' + text.replace(/\"/g, '&quot;') + '"');
+  results.push('"' + text.replace(/\"/g, '&quot;').replace(/\\\[/, '[').replace(/\\\]/, ']') + '"');
   results.push('TOKEN_VALUE_END');
   return results;
 }
@@ -153,14 +153,14 @@ const lex = function(options) {
     updatePosition(lexeme);
   });
 
-  lexer.addRule(/\/(\n?[^`\*\[\/\n\]!\d_])*/gm, function(lexeme) {
+  lexer.addRule(/\/(\n?[^`\*\[\/\n\]!\\\d_])*/gm, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
 
-  lexer.addRule(/(\n?[^`\*\[\/\n\]!\d_])+/, function(lexeme) {
+  lexer.addRule(/(\n?[^`\*\[\/\n\]!\\\d_])+/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
@@ -169,6 +169,12 @@ const lex = function(options) {
   // Match on separately so we can greedily match the
   // other tags.
   lexer.addRule(/[!\d\*_`]/, function(lexeme) {
+    this.reject = inComponent || lexeme.trim() === '';
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['WORDS'].concat(formatToken(lexeme));
+  });
+  lexer.addRule(/\\\[|\\\]/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
@@ -185,7 +191,6 @@ const lex = function(options) {
   lexer.addRule(/[ \t\n]+/, function(lexeme) {
     updatePosition(lexeme);
   });
-
 
   lexer.addRule(/\[/, function(lexeme) {
     inComponent = true;
