@@ -3,7 +3,7 @@ const entries = require('object.entries');
 
 export const evalExpression = (acc, expr, key, context) => {
   let e;
-  if (key && (key.match(/on[A-Z].*/) || key.match(/handle[A-Z].*/))) {
+  if (key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/))) {
     let setState = setState;
     e = `
       (() => {
