@@ -143,7 +143,7 @@ class Wrapper extends React.PureComponent {
     }
 
     const { __expr__, __vars__, hasError, ...state } = this.state
-    const { children, ...passThruProps } = this.props
+    const { children, __expr__: _e, __vars__: _v, ...passThruProps } = this.props
     return React.Children.map(children, (c, i) => {
       return React.cloneElement(c, {
         key: `${this.key}-${i}`,
