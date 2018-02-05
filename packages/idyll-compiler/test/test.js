@@ -2,6 +2,7 @@
 var expect = require('expect.js');
 var Lexer = require('../src/lexer');
 var parse = require('../src/parser');
+var compile = require('../src');
 var fs = require('fs');
 
 describe('compiler', function() {
@@ -113,46 +114,29 @@ describe('compiler', function() {
   describe('parser', function() {
     it('should parse a simple string', function() {
       var input = 'Just a simple string';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['p', [], ['Just a simple string']]]);
+      expect(compile(input)).to.eql([['p', [], ['Just a simple string']]]);
     });
     it('should handle multiple blocks', function() {
       var input = 'Just a simple string \n\n with some whitespace';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['p', [], ['Just a simple string ']], ['p', [], ['with some whitespace']]]);
+      expect(compile(input)).to.eql([['p', [], ['Just a simple string ']], ['p', [], ['with some whitespace']]]);
     });
     it('should parse a closed component', function() {
       var input = '[var /]';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['var', [], []]]);
+      expect(compile(input)).to.eql([['var', [], []]]);
     });
     it('should parse a closed component', function() {
       var input = '[var name:"v1" value:5 /]\n\nJust a simple string plus a component \n\n [VarDisplay var:v1 /]';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['var', [['name', ['value', 'v1']], ['value', ['value', 5]]], []], ['p', [], ['Just a simple string plus a component ']], ['VarDisplay', [['var', ['variable', 'v1']]] , []]]);
+      expect(compile(input)).to.eql([['var', [['name', ['value', 'v1']], ['value', ['value', 5]]], []], ['p', [], ['Just a simple string plus a component ']], ['VarDisplay', [['var', ['variable', 'v1']]] , []]]);
     });
 
     it('should parse an open component', function() {
       var input = '[Slideshow currentSlide:1]test test test[/Slideshow]';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+      var output = compile(input);
     });
 
     it('should parse a nested component', function() {
       var input = '[Slideshow currentSlide:1]text and stuff \n\n lots of newlines.\n\n[OpenComponent key:"val" ][/OpenComponent][/Slideshow]';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['Slideshow', [['currentSlide', ['value', 1]]],
             [
@@ -163,10 +147,7 @@ describe('compiler', function() {
     });
     it('should handle an inline closed component', function() {
       var input = 'This is a normal text paragraph that [VarDisplay var:var /] has a component embedded in it.';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([
+      expect(compile(input)).to.eql([
         ['p', [], [
           'This is a normal text paragraph that ',
           ['VarDisplay', [['var', ['variable', 'var']]], []],
@@ -189,10 +170,7 @@ describe('compiler', function() {
 
         End text
       `;
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([
+      expect(compile(input)).to.eql([
         ['h2', [], [
           'This is a header']
         ],['p', [], [
@@ -207,6 +185,39 @@ describe('compiler', function() {
       ]);
     });
 
+    it('should ignore front-matter', function() {
+      var input = `
+---
+key: value
+title: Title
+---
+## This is a header
+And this is a normal paragraph. This is # not a header.
+
+[component]# This header is inside a component.[/component]
+
+[component]This is not a # header inside a component.[/component]
+
+[component /]
+
+# Header
+
+End text
+      `;
+      expect(compile(input)).to.eql([
+        ['h2', [], [
+          'This is a header']
+        ],['p', [], [
+          'And this is a normal paragraph. This is # not a header.']
+        ], ['component', [],
+          [['h1', [], ['This header is inside a component.']]]
+        ], ['component', [], ['This is not a # header inside a component.']
+        ], ['component', [], []
+        ], ['h1', [], ['Header']
+        ], ['p', [], ['End text']
+        ]
+      ]);
+    });
     it('should handle multiple headers', function() {
       var input = `
         # This is a header
@@ -216,10 +227,7 @@ describe('compiler', function() {
 
         #### This is a header
       `;
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([
+      expect(compile(input)).to.eql([
         ['h1', [], [
           'This is a header']
         ], ['h2', [], [
@@ -238,10 +246,7 @@ describe('compiler', function() {
 
         ### 3. This too.
       `;
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([
+      expect(compile(input)).to.eql([
         ['h1', [], [
           '1', '. This is a header']
         ], ['h2', [], [
@@ -255,10 +260,7 @@ describe('compiler', function() {
 
     it('should parse an open component with a break at the end', function() {
       var input = '[Slideshow currentSlide:1]text and stuff \n\n [/Slideshow]';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['Slideshow', [['currentSlide', ['value', 1]]],
             [
@@ -269,10 +271,7 @@ describe('compiler', function() {
     });
     it('should parse a paragraph and code fence', function() {
       var input = 'text text text lots of text\n\n\n```\nvar code = true;\n```\n';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['p', [], ['text text text lots of text']],
           ['pre', [], [['code', [], ['var code = true;']]]]
@@ -280,10 +279,7 @@ describe('compiler', function() {
     });
     it('should parse a code fence with backticks inside', function() {
       var input = 'text text text lots of text\n\n\n````\n```\nvar code = true;\n```\n````\n';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['p', [], ['text text text lots of text']],
           ['pre', [], [['code', [], ['```\nvar code = true;\n```']]]]
@@ -291,20 +287,14 @@ describe('compiler', function() {
     });
     it('should parse inline code with backticks inside', function() {
       var input = 'text text text lots of text `` `var code = true;` ``\n';
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['p', [], ['text text text lots of text ', ['code', [], ['`var code = true;`']]]]
         ]);
     });
     it('should handle backticks in a paragraph', function() {
       var input = "regular text and stuff, then some `code`";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['p', [], ['regular text and stuff, then some ', ['code', [], ['code']]]]
         ]);
@@ -313,10 +303,7 @@ describe('compiler', function() {
 
     it('should accept negative numbers', function() {
       var input = "[component prop:-10 /]";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['component', [['prop', ['value', -10]]], []]
         ]);
@@ -325,10 +312,7 @@ describe('compiler', function() {
 
     it('should accept positive numbers', function() {
       var input = "[component prop:10 /]";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['component', [['prop', ['value', 10]]], []]
         ]);
@@ -337,10 +321,7 @@ describe('compiler', function() {
 
     it('should handle booleans', function() {
       const input = "[component prop:true /]";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['component', [['prop', ['value', true]]], []]
         ]);
@@ -348,10 +329,7 @@ describe('compiler', function() {
 
     it('should handle booleans in backticks', function() {
       const input = "[component prop:`true` /]";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['component', [['prop', ['expression', 'true']]], []]
         ]);
@@ -359,10 +337,7 @@ describe('compiler', function() {
 
     it('should handle italics and bold', function() {
       const input = "regular text and stuff, then some *italics* and some **bold**.";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
         ]);
@@ -370,10 +345,7 @@ describe('compiler', function() {
 
     it('should handle unordered list', function() {
       const input = "* this is the first unordered list item\n* this is the second unordered list item";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
       [
         ['ul', [], [
           ['li', [], ['this is the first unordered list item']],
@@ -384,10 +356,7 @@ describe('compiler', function() {
 
     it('should handle ordered list', function() {
       const input = "1. this is the first ordered list item\n2. this is the second ordered list item";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql(
+      expect(compile(input)).to.eql(
         [
           ['ol', [], [
             ['li', [], ['this is the first ordered list item']],
@@ -399,98 +368,62 @@ describe('compiler', function() {
 
     it('should handle inline links', function() {
       const input = "If you want to define an [inline link](https://idyll-lang.github.io) in the standard markdown style, you can do that.";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([["p",[],["If you want to define an ",["a",[["href",["value","https://idyll-lang.github.io"]]],["inline link"]]," in the standard markdown style, you can do that."]]]
+      expect(compile(input)).to.eql([["p",[],["If you want to define an ",["a",[["href",["value","https://idyll-lang.github.io"]]],["inline link"]]," in the standard markdown style, you can do that."]]]
       );
     });
     it('should handle inline images', function() {
       const input = "If you want to define an ![inline image](https://idyll-lang.github.io/logo-text.svg) in the standard markdown style, you can do that.";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([["p",[],["If you want to define an ",["img",[["src",["value","https://idyll-lang.github.io/logo-text.svg"]], ["alt", ["value", "inline image"]]],[]]," in the standard markdown style, you can do that."]]]
+      expect(compile(input)).to.eql([["p",[],["If you want to define an ",["img",[["src",["value","https://idyll-lang.github.io/logo-text.svg"]], ["alt", ["value", "inline image"]]],[]]," in the standard markdown style, you can do that."]]]
       );
     });
 
     it('should handle lines that start with bold or italic', function() {
       const input = "**If** I start a line with bold this should work,\nwhat if I\n\n*start with an italic*?";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([["p",[],[["strong",[],["If"]]," I start a line with bold this should work,\nwhat if I"]],["p",[],[["em",[],["start with an italic"]],"?"]]]
+      expect(compile(input)).to.eql([["p",[],[["strong",[],["If"]]," I start a line with bold this should work,\nwhat if I"]],["p",[],[["em",[],["start with an italic"]],"?"]]]
       );
     })
     it('should handle component name with a period', function() {
       const input = "This component name has a period separator [component.val /].";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([["p",[],["This component name has a period separator ",["component.val",[],[]],"."]]]);
+      expect(compile(input)).to.eql([["p",[],["This component name has a period separator ",["component.val",[],[]],"."]]]);
     })
     it('should handle component name with multiple periods', function() {
       const input = "This component name has a period separator [component.val.v /].";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([["p",[],["This component name has a period separator ",["component.val.v",[],[]],"."]]]);
+      expect(compile(input)).to.eql([["p",[],["This component name has a period separator ",["component.val.v",[],[]],"."]]]);
     })
 
     it('should handle strong text with a p', function() {
       const input = "**p a**";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['strong', [], ['p a']]]);
+      expect(compile(input)).to.eql([['strong', [], ['p a']]]);
     })
 
     it('should handle strong emphasized text using asterisks', function() {
       const input = "***test***";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['strong', [], [['em', [], ['test']]]]]);
+      expect(compile(input)).to.eql([['strong', [], [['em', [], ['test']]]]]);
     })
 
     it('should handle strong emphasized text using underscores', function() {
       const input = "___test___";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['strong', [], [['em', [], ['test']]]]]);
+      expect(compile(input)).to.eql([['strong', [], [['em', [], ['test']]]]]);
     })
 
     it('should merge consecutive word blocks', function() {
       const input = "[Equation]y = 0[/Equation]";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['Equation', [], ['y = 0']]]);
+      expect(compile(input)).to.eql([['Equation', [], ['y = 0']]]);
     })
 
     it('should not put smartquotes in code blocks', function() {
       const input = "`Why 'hello' there`";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['code', [], ["Why 'hello' there"]]]);
+      expect(compile(input)).to.eql([['code', [], ["Why 'hello' there"]]]);
     })
     it('should handle a language in a codeblock ', function() {
       const input = "```json\n{}\n```";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['CodeHighlight', [['language', ['value', 'json']]], ["{}"]]]);
+      expect(compile(input)).to.eql([['CodeHighlight', [['language', ['value', 'json']]], ["{}"]]]);
     })
 
 
     it('should handle an i tag', function() {
       const input = "[i]not even em[/i]";
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['i', [], ['not even em']]]);
+      expect(compile(input)).to.eql([['i', [], ['not even em']]]);
     })
 
     it('should not insert extra div tags', function() {
@@ -501,28 +434,20 @@ describe('compiler', function() {
 
         [Slide/]
       [/Slideshow]`;
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([['Slideshow', [], [['Slide', [], []], ['Slide', [], []], ['Slide', [], []]] ]]);
+      expect(compile(input)).to.eql([['Slideshow', [], [['Slide', [], []], ['Slide', [], []], ['Slide', [], []]] ]]);
     });
 
     it('should handle items nested in a header', function() {
       const input = `# My header is **bold**!`;
-      var lex = Lexer();
-      var lexResults = lex(input);
-      var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
-      expect(output).to.eql([["h1",[],["My header is ",["strong",[],["bold"]],"!"]]]);
+      expect(compile(input)).to.eql([["h1",[],["My header is ",["strong",[],["bold"]],"!"]]]);
     })
 });
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {
       input = 'This string contains an un-closed component [BadComponent key:"val" ] ';
-      var lex = Lexer();
-      var lexResults = lex(input);
       try {
-        var output = parse(input, lexResults.tokens.join(' '), lexResults.positions);
+        var output = compile(input);
       } catch(err) {
         expect(err.row).to.be(1);
         expect(err.column).to.be(70);

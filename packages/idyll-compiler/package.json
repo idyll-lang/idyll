@@ -37,6 +37,7 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
+    "gray-matter": "^3.1.1",
     "lex": "^1.7.9",
     "nearley": "^2.7.12",
     "smartquotes": "^2.0.0"
