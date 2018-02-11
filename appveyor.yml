@@ -32,6 +32,8 @@ test_script:
   - cd packages/idyll-compiler && npm run test && cd ../..
   - cd packages/idyll-components && npm run test && cd ../..
   - cd packages/idyll-document && npm run test && cd ../..
+  - cd packages/idyll-layouts && npm run test && cd ../..
+  - cd packages/idyll-themes && npm run test && cd ../..
 
 # Don't actually build.
 build: off
