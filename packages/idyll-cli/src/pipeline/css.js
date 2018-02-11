@@ -19,7 +19,6 @@ module.exports = function (options) {
   css = css ? css.trim() : css;
   const pathPrefix = css && isAbsolute(css) ? '' : process.cwd();
 
-  console.log('using theme ', theme);
   const layoutCSS = isPath(layout) ? readFileSync(join(pathPrefix, cleanPath(layout))) : layouts[layout].styles;
   const themeCSS = isPath(theme) ? readFileSync(join(pathPrefix, cleanPath(theme))) : themes[theme].styles;
   const customCSS = css ? readFileSync(join(pathPrefix, cleanPath(css))) : '';
