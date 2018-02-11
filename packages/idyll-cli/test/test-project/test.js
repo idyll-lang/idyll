@@ -29,6 +29,7 @@ const dirToHash = (dir) => {
 const PROJECT_DIR = join(__dirname, 'src');
 
 const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build');
+const PROJECT_IDYLL_CACHE = join(PROJECT_DIR, '.idyll');
 let projectBuildFilenames;
 let projectBuildResults;
 
@@ -40,6 +41,7 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
 beforeAll(() => {
   rimraf.sync(PROJECT_BUILD_DIR);
+  rimraf.sync(PROJECT_IDYLL_CACHE);
 })
 
 let output;
