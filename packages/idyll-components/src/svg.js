@@ -1,5 +1,5 @@
 import React from 'react';
-const InlineSVG = require('react-inlinesvg');
+import InlineSVG  from 'react-inlinesvg';
 
 class SVG extends React.PureComponent {
   render() {
