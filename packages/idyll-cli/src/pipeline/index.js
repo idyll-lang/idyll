@@ -36,7 +36,9 @@ const build = (opts, paths, inputConfig) => {
         data: getDataJS(ast, paths.DATA_DIR),
         syntaxHighlighting: getHighlightJS(ast, paths),
         opts: {
-          ssr: opts.ssr
+          ssr: opts.ssr,
+          theme: opts.theme,
+          layout: opts.layout
         }
       };
       if (!opts.ssr) {
@@ -47,7 +49,12 @@ const build = (opts, paths, inputConfig) => {
           ast,
           output.components,
           output.data,
-          template
+          template,
+          {
+            ssr: opts.ssr,
+            theme: opts.theme,
+            layout: opts.layout
+          }
         );
       }
     }

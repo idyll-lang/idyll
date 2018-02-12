@@ -209,7 +209,7 @@ exports.getBaseHTML = (ast, template) => {
   return mustache.render(template, parseMeta(ast));
 }
 
-exports.getHTML = (paths, ast, _components, datasets, template) => {
+exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const components = {};
   Object.keys(_components).forEach(key => {
     delete require.cache[require.resolve(_components[key])];
@@ -225,7 +225,9 @@ exports.getHTML = (paths, ast, _components, datasets, template) => {
     React.createElement(IdyllDocument, {
       ast: getFilteredAST(ast),
       components,
-      datasets
+      datasets,
+      theme: opts.theme,
+      layout: opts.layout
     })
   ).trim();
   return mustache.render(template, meta);

@@ -7,11 +7,8 @@ body {
 
 .idyll-root {
   box-sizing: border-box;
-  max-width: 600px;
-  margin: 0 auto;
   padding: 60px 0;
   margin-bottom: 60px;
-  width: calc(100vw - 2 * 250px);
 }
 
 .article-header {

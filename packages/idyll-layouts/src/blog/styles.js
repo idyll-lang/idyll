@@ -1,6 +1,6 @@
 
 
-export default () => `
+export default ({ maxWidth }) => `
 
 body {
   margin: 0;
@@ -8,12 +8,9 @@ body {
 
 .idyll-root {
   box-sizing: border-box;
-  max-width: 90vw;
   margin: 0 auto;
   padding: 60px 0;
   margin-bottom: 60px;
-  width: 600px;
-  margin-left: 10vw;
 }
 
 .section {

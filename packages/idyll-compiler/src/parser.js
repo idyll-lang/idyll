@@ -13,6 +13,42 @@ const flattenChildren = (nodeList) => {
   }, []);
 }
 
+const attrConvert = (list) => {
+  return (list || []).reduce(
+    (acc, [name, [type, val]]) => {
+      if (type === 'value') {
+        acc[name] = val;
+      }
+      return acc;
+    },
+    {}
+  )
+}
+
+const makeFullWidth = (nodeList) => {
+  let currentTextContainer = [];
+  const reduced = (nodeList || []).reduce((acc, child) => {
+
+    if (typeof child === 'string') {
+      currentTextContainer.push(child);
+      return acc;
+    }
+    const attrs = attrConvert(child[1] || []);
+    if (child[0].toLowerCase() === 'textcontainer' || attrs.fullWidth) {
+        acc = acc.concat([['TextContainer', [], currentTextContainer], child]);
+        currentTextContainer = [];
+    } else {
+      currentTextContainer.push(child);
+    }
+    return acc;
+  }, []);
+
+  if (currentTextContainer.length) {
+    return reduced.concat([['TextContainer', [], currentTextContainer]]);
+  }
+  return reduced;
+}
+
 module.exports = function(input, tokens, positions, options) {
   options = options || {};
 
@@ -71,7 +107,7 @@ module.exports = function(input, tokens, positions, options) {
     }
     // console.log(JSON.stringify(results[0]));
 
-    return flattenChildren(results[0]).map(cleanResults);
+    return makeFullWidth(flattenChildren(results[0])).map(cleanResults);
   }
 
   throw new Error('No parse results');
