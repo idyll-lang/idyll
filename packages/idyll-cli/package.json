@@ -43,6 +43,8 @@
     "idyll-compiler": "^2.0.10",
     "idyll-components": "^2.0.0",
     "idyll-document": "^2.1.0",
+    "idyll-layouts": "^1.0.0",
+    "idyll-themes": "^1.0.0",
     "insert-css": "^2.0.0",
     "mkdirp": "^0.5.1",
     "mustache": "^2.3.0",

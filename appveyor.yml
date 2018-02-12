@@ -12,9 +12,9 @@ matrix:
 
 environment:
   matrix:
-    - nodejs_version: "6"
     - nodejs_version: "7"
     - nodejs_version: "8"
+    - nodejs_version: "9"
 
 cache:
  - "%LOCALAPPDATA%\\Yarn"
@@ -32,6 +32,8 @@ test_script:
   - cd packages/idyll-compiler && npm run test && cd ../..
   - cd packages/idyll-components && npm run test && cd ../..
   - cd packages/idyll-document && npm run test && cd ../..
+  - cd packages/idyll-layouts && npm run test && cd ../..
+  - cd packages/idyll-themes && npm run test && cd ../..
 
 # Don't actually build.
 build: off
