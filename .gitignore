@@ -2,3 +2,4 @@ node_modules
 dist
 .idyll
 build
+yarn-error.log
