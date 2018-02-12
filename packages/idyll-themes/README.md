@@ -1,4 +1,4 @@
-# idyll-components
-Components that ship by default in new idyll projects.
+# idyll-themes
+Themes that ship by default in new idyll projects.
 
-*See http://idyll-lang.org/components-built-in for complete documentation.*
+*See http://idyll-lang.org for complete documentation.*
