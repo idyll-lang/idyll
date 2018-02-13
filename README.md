@@ -5,6 +5,8 @@
 </p>
 
 <p align="center">
+ <a href="https://travis-ci.org/idyll-lang/idyll"><img src="https://travis-ci.org/idyll-lang/idyll.svg?branch=master" /></a> 
+ <a href="https://ci.appveyor.com/project/mathisonian/idyll"><img src="https://ci.appveyor.com/api/projects/status/6e89g4xdbq5twr1o/branch/master?svg=true" /></a> 
  <a href="#backers"><img src="https://opencollective.com/idyll/backers/badge.svg" /></a>
  <a href="#sponsors"><img src="https://opencollective.com/idyll/sponsors/badge.svg" /></a>
 </p>
