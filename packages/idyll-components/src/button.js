@@ -2,8 +2,9 @@ import React from 'react';
 
 class Button extends React.PureComponent {
   render() {
+    const { onClick, updateProps, ...props } = this.props;
     return (
-      <button {...props} onClick={this.props.onClick.bind(this)}>
+      <button {...props} onClick={onClick.bind(this)}>
         {this.props.children}
       </button>
     );
