@@ -6728,9 +6728,9 @@ react-inlinesvg@^0.7.5:
     httpplease "^0.16.4"
     once "^1.4.0"
 
-"react-latex@github:mathisonian/react-latex":
+react-latex-patched@^1.1.1:
   version "1.1.1"
-  resolved "https://codeload.github.com/mathisonian/react-latex/tar.gz/c593221f827f595afaa0aaf856404f4196388244"
+  resolved "https://registry.yarnpkg.com/react-latex-patched/-/react-latex-patched-1.1.1.tgz#d6a36c070c6d32feeb6e5625d9b44b306c920b71"
   dependencies:
     katex "^0.9.0"
 

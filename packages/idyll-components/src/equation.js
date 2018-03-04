@@ -1,6 +1,6 @@
 import React from 'react';
 const ReactDOM = require('react-dom');
-const Latex = require('react-latex');
+const Latex = require('react-latex-patched');
 const select = require('d3-selection').select;
 const format = require('d3-format').format;
 
