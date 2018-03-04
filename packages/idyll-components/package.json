@@ -44,7 +44,7 @@
     "d3-selection": "^1.1.0",
     "prop-types": "^15.5.10",
     "react-inlinesvg": "^0.7.5",
-    "react-latex": "mathisonian/react-latex",
+    "react-latex": "github:mathisonian/react-latex",
     "react-syntax-highlighter": "^5.7.0",
     "react-table": "^6.6.0",
     "victory": "^0.23.0"
