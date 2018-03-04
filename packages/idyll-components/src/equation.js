@@ -4,10 +4,6 @@ const Latex = require('react-latex');
 const select = require('d3-selection').select;
 const format = require('d3-format').format;
 
-if (typeof document !== 'undefined') {
-  document.write('<link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.3.0/katex.min.css" rel="stylesheet">');
-}
-
 const allowedProps = ['domain', 'step', 'children'];
 
 class Equation extends React.PureComponent {
@@ -26,6 +22,11 @@ class Equation extends React.PureComponent {
 
   componentDidMount() {
     let dom;
+
+    if (typeof document !== 'undefined') {
+      document.write('<link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" rel="stylesheet">');
+    }
+
     try {
       dom = ReactDOM.findDOMNode(this);
     } catch(e) {};
