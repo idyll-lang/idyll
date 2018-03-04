@@ -313,11 +313,7 @@ class IdyllDocument extends React.PureComponent {
       }
     );
 
-    this.kids = (
-      <div className="idyll-root" ref={this.initScrollListener}>
-        {rjs.parseSchema(transformedSchema)}
-      </div>
-    );
+    this.kids = rjs.parseSchema(transformedSchema);
   }
 
   scrollListener() {
@@ -374,7 +370,11 @@ class IdyllDocument extends React.PureComponent {
   }
 
   render() {
-    return this.kids;
+    return (
+      <div className="idyll-root" ref={this.initScrollListener}>
+        {this.kids}
+      </div>
+    )
   }
 }
 

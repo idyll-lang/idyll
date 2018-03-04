@@ -3,9 +3,7 @@ import React from 'react';
 class Button extends React.PureComponent {
   render() {
     return (
-      <button onClick={this.props.onClick.bind(this)}>
-        {this.props.children}
-      </button>
+      <button {...this.props} onClick={this.props.onClick.bind(this)} />
     );
   }
 }

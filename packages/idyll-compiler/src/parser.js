@@ -34,7 +34,10 @@ const makeFullWidth = (nodeList) => {
       return acc;
     }
     const attrs = attrConvert(child[1] || []);
-    if (child[0].toLowerCase() === 'textcontainer' || attrs.fullWidth) {
+    if (child[0].toLowerCase() === 'fullwidth' || attrs.fullWidth) {
+        if (child[0].toLowerCase() === 'fullwidth') {
+          child[0] = 'div';
+        }
         acc = acc.concat([['TextContainer', [], currentTextContainer], child]);
         currentTextContainer = [];
     } else {
