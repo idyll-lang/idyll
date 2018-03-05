@@ -22,6 +22,7 @@ const idyll = (options = {}, cb) => {
       defaultComponents: dirname(require.resolve('idyll-components')),
       layout: 'blog',
       output: 'build',
+      port: process.env.PORT || 3000,
       temp: '.idyll',
       template: join(
         __dirname,
@@ -93,13 +94,15 @@ const idyll = (options = {}, cb) => {
               });
             });
 
+            console.log('INITING PORT ', opts.port)
             bs.init({
               cors: true,
               logLevel: 'warn',
               logPrefix: 'Idyll',
               notify: false,
               server: [paths.OUTPUT_DIR, paths.INPUT_DIR],
-              ui: false
+              ui: false,
+              port: opts.port
             });
           }
         })
