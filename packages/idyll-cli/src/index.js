@@ -94,7 +94,6 @@ const idyll = (options = {}, cb) => {
               });
             });
 
-            console.log('INITING PORT ', opts.port)
             bs.init({
               cors: true,
               logLevel: 'warn',
