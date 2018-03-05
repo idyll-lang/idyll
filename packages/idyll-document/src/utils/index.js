@@ -17,10 +17,8 @@ export const evalExpression = (acc, expr, key, context) => {
                   values(acc[key]).forEach(v => {
                     delete v.domNode;
                   })
-                  // add `refs` const object graph to function scope
-                  return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
                 }
-                return `var ${key} = ${JSON.stringify(acc[key])};`;
+                return `var ${key} = this.${key};`;
               })
               .join('\n')
           }
@@ -36,10 +34,10 @@ export const evalExpression = (acc, expr, key, context) => {
 
     return (function() {
       eval(e);
-    }).bind(context || {});
+    }).bind(Object.assign({}, acc, context || {}));
   } else {
     e = `
-      (() => {
+      ((context) => {
         ${
           Object.keys(acc)
             .filter(key => expr.includes(key))
@@ -50,20 +48,22 @@ export const evalExpression = (acc, expr, key, context) => {
                 values(acc[key]).forEach(v => {
                   delete v.domNode;
                 })
-                // add `refs` const object graph to function scope
-                return `var ${key} = JSON.parse('${JSON.stringify(acc[key])}')`;
               }
-              return `var ${key} = ${JSON.stringify(acc[key])};`;
+              return `var ${key} = context.${key};`;
             })
             .join('\n')
         }
         return ${expr};
-      })()
+      })(this)
     `;
   }
 
   try {
-    return eval(e);
+    return (function(evalString){
+      try {
+        return eval('(' + evalString + ')');
+      } catch(err) {}
+    }).call(Object.assign({}, acc, context || {}), e);
   } catch (err) {}
 }
 

@@ -25,7 +25,7 @@ class EmbeddedGist extends React.PureComponent {
       link.rel = "stylesheet";
       link.href = href;
 
-      document.head.appendChild(link);
+      (document.head || document.body || {appendChild: () => {}}).appendChild(link);
     }
   }
 
@@ -50,7 +50,7 @@ class EmbeddedGist extends React.PureComponent {
     var script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = url;
-    document.head.appendChild(script);
+    (document.head || document.body || {appendChild: () => {}}).appendChild(script);
   }
 
   render() {

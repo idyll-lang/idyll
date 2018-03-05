@@ -29,10 +29,17 @@ class Chart extends React.PureComponent {
     if (props.equation) {
       const d = domain;
       data = d3Arr.range(d[0], d[1], (d[1] - d[0]) / props.samplePoints).map((x) => {
-        return {
-          x: x,
-          y: props.equation(x)
-        };
+        try {
+          return {
+            x: x,
+            y: props.equation(x)
+          };
+        } catch(err) {
+          return {
+            x: x,
+            y: 0
+          }
+        }
       });
     }
 

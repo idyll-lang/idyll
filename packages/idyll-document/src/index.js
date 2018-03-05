@@ -117,7 +117,7 @@ const createWrapper = ({ theme, layout }) => {
     });
     // trigger a re-render of this component
     // and more importantly, its wrapped component
-    this.setState(nextState);
+    this.setState(Object.assign({ hasError: false }, nextState));
   }
 
   onUpdateRefs(newState) {
