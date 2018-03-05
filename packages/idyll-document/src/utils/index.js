@@ -167,7 +167,7 @@ export const hooks = [
 
 export const scrollMonitorEvents = {
   'onEnterView': 'enterViewport',
-  'onExitViewFully': 'fullyEnterViewport',
+  'onEnterViewFully': 'fullyEnterViewport',
   'onExitView': 'partiallyExitViewport',
   'onExitViewFully': 'exitViewport'
 }
