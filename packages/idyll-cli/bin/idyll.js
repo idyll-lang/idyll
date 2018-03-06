@@ -16,6 +16,7 @@ var argv = require('yargs')
     l: 'layout',
     n: 'no-minify',
     o: 'output',
+    p: 'port',
     r: 'no-ssr',
     t: 'template',
     e: 'theme',
@@ -41,6 +42,7 @@ var argv = require('yargs')
   .array('transform')
   .describe('transform', 'Custom browserify transforms to apply.')
   .default('transform', [])
+  .describe('port', 'Custom port to bind the local server to.')
   .describe('theme', 'Name of (or path to) the theme to use')
   .default('theme', 'idyll')
   .boolean('watch')
