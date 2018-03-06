@@ -1,4 +1,6 @@
 const grammar = require('./grammar');
+const ast = require('./ast');
+
 const nearley = require('nearley');
 const smartquotes = require('smartquotes');
 
@@ -34,11 +36,35 @@ const makeFullWidth = (nodeList) => {
       return acc;
     }
     const attrs = attrConvert(child[1] || []);
-    if (child[0].toLowerCase() === 'fullwidth' || attrs.fullWidth) {
-        if (child[0].toLowerCase() === 'fullwidth') {
+    const childName = child[0].toLowerCase();
+    if ((['derived', 'fullwidth', 'var'].indexOf(childName) > -1) || attrs.fullWidth) {
+        if (childName === 'fullwidth') {
           child[0] = 'div';
+          const className = ast.getProperty(child, 'className');
+          if (className) {
+            switch (className[0]) {
+              case 'value':
+                child = ast.setProperty(child, 'className', ['value', 'fullWidth ' + className[1]]);
+                break;
+              case 'expression':
+                child = ast.setProperty(child, 'className', ['expression', `"fullWidth " + (${className[1]})`]);
+                break;
+              case 'variable':
+                child = ast.setProperty(child, 'className', ['expression', `"fullWidth " + (${className[1]})`]);
+                break;
+              default:
+                child = ast.setProperty(child, 'className', ['value', 'fullWidth']);
+            }
+          } else {
+            child = ast.setProperty(child, 'className', ['value', 'fullWidth']);
+          }
         }
-        acc = acc.concat([['TextContainer', [], currentTextContainer], child]);
+
+        if (currentTextContainer.length) {
+          acc = acc.concat([['TextContainer', [], currentTextContainer], child]);
+        } else {
+          acc = acc.concat([child]);
+        }
         currentTextContainer = [];
     } else {
       currentTextContainer.push(child);
@@ -50,6 +76,17 @@ const makeFullWidth = (nodeList) => {
     return reduced.concat([['TextContainer', [], currentTextContainer]]);
   }
   return reduced;
+}
+
+const wrapText = (nodeList) => {
+  return ast.modifyNodesByName(nodeList, 'TextContainer', (node) => {
+    return ast.modifyChildren(node, (child) => {
+      if (typeof child === 'string') {
+        return ['p', [], [child]];
+      }
+      return child;
+    })
+  })
 }
 
 module.exports = function(input, tokens, positions, options) {
@@ -110,7 +147,11 @@ module.exports = function(input, tokens, positions, options) {
     }
     // console.log(JSON.stringify(results[0]));
 
-    return makeFullWidth(flattenChildren(results[0])).map(cleanResults);
+    return wrapText(
+      makeFullWidth(
+          flattenChildren(results[0])
+      ).map(cleanResults)
+    );
   }
 
   throw new Error('No parse results');
