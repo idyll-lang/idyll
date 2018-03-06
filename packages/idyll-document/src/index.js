@@ -58,7 +58,7 @@ const getRefs = () => {
 
 let wrapperKey = 0;
 const createWrapper = ({ theme, layout }) => {
-  return class extends React.PureComponent {
+  return class Wrapper extends React.PureComponent {
   constructor(props) {
     super(props);
 
