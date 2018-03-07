@@ -79,6 +79,20 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
             acc[name] = r;
           }
           else if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
+            if (['fullwidth', 'textcontainer'].indexOf(node[0].toLowerCase()) > -1) {
+              const msg = `
+                Could not find component ${node[0]}.
+
+                This error can occur if you are using an out of date version of the Idyll
+                components with a newer version of the Idyll build tool. To install the
+                latest idyll-component, run \`npm install idyll-components@latest\`.
+
+                If you are reading the components from a local folder (e.g. ./components/default),
+                you can refresh components in that folder by copying from ./node_modules/idyll-components/src/
+                to your local directory.
+              `
+              throw new Error(msg)
+            }
             throw new Error(`Component named ${node[0]} could not be found.`)
           }
         }

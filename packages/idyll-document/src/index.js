@@ -239,8 +239,8 @@ class IdyllDocument extends React.PureComponent {
     // Put these in to avoid hard errors if people are on the latest
     // CLI but haven't updated their local default components
     const fallbackComponents = {
-      TextContainer: generatePlaceholder('TextContainer'),
-      FullWidth: generatePlaceholder('FullWidth')
+      'text-container': generatePlaceholder('TextContainer'),
+      'full-width': generatePlaceholder('FullWidth')
     };
 
     // Components that the Document needs to function properly
