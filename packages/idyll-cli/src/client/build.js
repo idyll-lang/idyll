@@ -10,7 +10,6 @@ const datasets = require('__IDYLL_DATA__');
 require('__IDYLL_SYNTAX_HIGHLIGHT__');
 
 const opts = require('__IDYLL_OPTS__');
-console.log(opts);
 const { theme, layout } = opts;
 
 const mountMethod = opts.ssr ? 'hydrate' : 'render';
