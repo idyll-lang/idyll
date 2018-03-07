@@ -5,6 +5,7 @@ import scrollMonitor from 'scrollmonitor';
 import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
+import { generatePlaceholder } from './components/placeholder';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -235,7 +236,27 @@ class IdyllDocument extends React.PureComponent {
     evalContext.update = this.updateState;
 
 
-    const rjs = new ReactJsonSchema({...props.components, Wrapper});
+    // Put these in to avoid hard errors if people are on the latest
+    // CLI but haven't updated their local default components
+    const fallbackComponents = {
+      TextContainer: generatePlaceholder('TextContainer'),
+      FullWidth: generatePlaceholder('FullWidth')
+    };
+
+    // Components that the Document needs to function properly
+    const internalComponents = {
+      Wrapper
+    }
+
+    Object.keys(internalComponents).forEach((key) => {
+      if (props.components[key]) {
+        console.warn(`Warning! You are including a component named ${key}, but this conflicts with an internal component. Please rename your component.`);
+      }
+    })
+
+    const components = Object.assign(fallbackComponents, props.components, internalComponents);
+
+    const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
 
     const wrapTargets = findWrapTargets(schema, this.state);
