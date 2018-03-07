@@ -20,7 +20,8 @@ const idyll = (options = {}, cb) => {
       ssr: true,
       components: 'components',
       defaultComponents: dirname(require.resolve('idyll-components')),
-      layout: 'blog',
+      layout: 'centered',
+      theme: 'github',
       output: 'build',
       port: process.env.PORT || 3000,
       temp: '.idyll',
@@ -29,7 +30,6 @@ const idyll = (options = {}, cb) => {
         'client',
         '_index.html'
       ),
-      theme: 'idyll',
       transform: [],
       compilerOptions: {
       },

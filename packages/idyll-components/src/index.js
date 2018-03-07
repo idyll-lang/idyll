@@ -25,5 +25,6 @@ export { default as Slide } from './slide';
 export { default as Slideshow } from './slideshow';
 export { default as SVG } from './svg';
 export { default as Table } from './table';
+export { default as TextContainer } from './text-container';
 export { default as TextInput } from './text-input';
 export { default as Waypoint } from './waypoint';

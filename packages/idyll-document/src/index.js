@@ -5,6 +5,11 @@ import scrollMonitor from 'scrollmonitor';
 import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
+import { generatePlaceholder } from './components/placeholder';
+
+import * as layouts from 'idyll-layouts';
+import * as themes from 'idyll-themes';
+
 import {
   getData,
   getVars,
@@ -26,6 +31,14 @@ const refCache = {};
 const evalContext = {};
 let scrollContainer;
 
+const getLayout = (layout) => {
+  return layouts[layout.trim()] || {};
+}
+
+const getTheme = (theme) => {
+  return themes[theme.trim()] || {};
+}
+
 const getRefs = () => {
   const refs = {};
   if (!scrollContainer) {
@@ -45,7 +58,8 @@ const getRefs = () => {
 };
 
 let wrapperKey = 0;
-class Wrapper extends React.PureComponent {
+const createWrapper = ({ theme, layout }) => {
+  return class Wrapper extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -140,19 +154,24 @@ class Wrapper extends React.PureComponent {
           {this.state.error.message}
         </div>
       );
-    }
+      }
 
-    const { __expr__, __vars__, hasError, hasHook, refName, ...state } = this.state
-    const { children, refName: _r, hasHook: _h, __expr__: _e, __vars__: _v, ...passThruProps } = this.props
-    return React.Children.map(children, (c, i) => {
-      return React.cloneElement(c, {
-        key: `${this.key}-${i}`,
-        ...state,
-        ...passThruProps,
+      const { __expr__, __vars__, hasError, hasHook, refName, ...state } = this.state
+      const { children, refName: _r, hasHook: _h, __expr__: _e, __vars__: _v, ...passThruProps } = this.props
+      return React.Children.map(children, (c, i) => {
+        return React.cloneElement(c, {
+          key: `${this.key}-${i}`,
+          idyll: {
+            theme: getTheme(theme),
+            layout: getLayout(layout)
+          },
+          ...state,
+          ...passThruProps,
+        })
       })
-    })
+    }
   }
-}
+};
 
 const getDerivedValues = dVars => {
   const o = {};
@@ -176,6 +195,8 @@ class IdyllDocument extends React.PureComponent {
       elements,
     } = splitAST(ast);
 
+
+    const Wrapper = createWrapper({ theme: props.theme, layout: props.layout });
 
 
     const initialState = {
@@ -215,7 +236,27 @@ class IdyllDocument extends React.PureComponent {
     evalContext.update = this.updateState;
 
 
-    const rjs = new ReactJsonSchema({...props.components, Wrapper});
+    // Put these in to avoid hard errors if people are on the latest
+    // CLI but haven't updated their local default components
+    const fallbackComponents = {
+      'text-container': generatePlaceholder('TextContainer'),
+      'full-width': generatePlaceholder('FullWidth')
+    };
+
+    // Components that the Document needs to function properly
+    const internalComponents = {
+      Wrapper
+    }
+
+    Object.keys(internalComponents).forEach((key) => {
+      if (props.components[key]) {
+        console.warn(`Warning! You are including a component named ${key}, but this conflicts with an internal component. Please rename your component.`);
+      }
+    })
+
+    const components = Object.assign(fallbackComponents, props.components, internalComponents);
+
+    const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
 
     const wrapTargets = findWrapTargets(schema, this.state);
@@ -293,11 +334,7 @@ class IdyllDocument extends React.PureComponent {
       }
     );
 
-    this.kids = (
-      <div className="idyll-root" ref={this.initScrollListener}>
-        {rjs.parseSchema(transformedSchema)}
-      </div>
-    );
+    this.kids = rjs.parseSchema(transformedSchema);
   }
 
   scrollListener() {
@@ -354,8 +391,18 @@ class IdyllDocument extends React.PureComponent {
   }
 
   render() {
-    return this.kids;
+    return (
+      <div className="idyll-root" ref={this.initScrollListener}>
+        {this.kids}
+      </div>
+    )
   }
 }
+
+IdyllDocument.defaultProps = {
+  layout: 'blog',
+  theme: 'github',
+  insertStyles: false
+};
 
 export default IdyllDocument;

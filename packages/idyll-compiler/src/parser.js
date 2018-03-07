@@ -1,4 +1,6 @@
 const grammar = require('./grammar');
+const ast = require('./ast');
+
 const nearley = require('nearley');
 const smartquotes = require('smartquotes');
 
@@ -11,6 +13,82 @@ const flattenChildren = (nodeList) => {
     }
     return acc;
   }, []);
+}
+
+const attrConvert = (list) => {
+  return (list || []).reduce(
+    (acc, [name, [type, val]]) => {
+      if (type === 'value') {
+        acc[name] = val;
+      }
+      return acc;
+    },
+    {}
+  )
+}
+
+const makeFullWidth = (nodeList) => {
+  let currentTextContainer = [];
+  const reduced = (nodeList || []).reduce((acc, child) => {
+
+    if (typeof child === 'string') {
+      currentTextContainer.push(child);
+      return acc;
+    }
+    const attrs = attrConvert(child[1] || []);
+    const childName = child[0].toLowerCase();
+    if ((['derived', 'fullwidth', 'var'].indexOf(childName) > -1) || attrs.fullWidth) {
+        if (childName === 'fullwidth') {
+          child[0] = 'div';
+          const className = ast.getProperty(child, 'className');
+          if (className) {
+            switch (className[0]) {
+              case 'value':
+                child = ast.setProperty(child, 'className', ['value', 'fullWidth ' + className[1]]);
+                break;
+              case 'expression':
+                child = ast.setProperty(child, 'className', ['expression', `"fullWidth " + (${className[1]})`]);
+                break;
+              case 'variable':
+                child = ast.setProperty(child, 'className', ['expression', `"fullWidth " + (${className[1]})`]);
+                break;
+              default:
+                child = ast.setProperty(child, 'className', ['value', 'fullWidth']);
+            }
+          } else {
+            child = ast.setProperty(child, 'className', ['value', 'fullWidth']);
+          }
+        } else {
+          child = ast.removeProperty(child, 'fullWidth');
+        }
+
+        if (currentTextContainer.length) {
+          acc = acc.concat([['TextContainer', [], currentTextContainer], child]);
+        } else {
+          acc = acc.concat([child]);
+        }
+        currentTextContainer = [];
+    } else {
+      currentTextContainer.push(child);
+    }
+    return acc;
+  }, []);
+
+  if (currentTextContainer.length) {
+    return reduced.concat([['TextContainer', [], currentTextContainer]]);
+  }
+  return reduced;
+}
+
+const wrapText = (nodeList) => {
+  return ast.modifyNodesByName(nodeList, 'TextContainer', (node) => {
+    return ast.modifyChildren(node, (child) => {
+      if (typeof child === 'string') {
+        return ['p', [], [child]];
+      }
+      return child;
+    })
+  })
 }
 
 module.exports = function(input, tokens, positions, options) {
@@ -71,7 +149,11 @@ module.exports = function(input, tokens, positions, options) {
     }
     // console.log(JSON.stringify(results[0]));
 
-    return flattenChildren(results[0]).map(cleanResults);
+    return wrapText(
+      makeFullWidth(
+          flattenChildren(results[0])
+      ).map(cleanResults)
+    );
   }
 
   throw new Error('No parse results');

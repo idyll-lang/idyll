@@ -79,6 +79,20 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
             acc[name] = r;
           }
           else if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
+            if (['fullwidth', 'textcontainer'].indexOf(node[0].toLowerCase()) > -1) {
+              const msg = `
+                Could not find component ${node[0]}.
+
+                This error can occur if you are using an out of date version of the Idyll
+                components with a newer version of the Idyll build tool. To install the
+                latest idyll-component, run \`npm install idyll-components@latest\`.
+
+                If you are reading the components from a local folder (e.g. ./components/default),
+                you can refresh components in that folder by copying from ./node_modules/idyll-components/src/
+                to your local directory.
+              `
+              throw new Error(msg)
+            }
             throw new Error(`Component named ${node[0]} could not be found.`)
           }
         }
@@ -209,7 +223,7 @@ exports.getBaseHTML = (ast, template) => {
   return mustache.render(template, parseMeta(ast));
 }
 
-exports.getHTML = (paths, ast, _components, datasets, template) => {
+exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const components = {};
   Object.keys(_components).forEach(key => {
     delete require.cache[require.resolve(_components[key])];
@@ -225,7 +239,9 @@ exports.getHTML = (paths, ast, _components, datasets, template) => {
     React.createElement(IdyllDocument, {
       ast: getFilteredAST(ast),
       components,
-      datasets
+      datasets,
+      theme: opts.theme,
+      layout: opts.layout
     })
   ).trim();
   return mustache.render(template, meta);
