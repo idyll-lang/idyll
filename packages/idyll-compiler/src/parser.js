@@ -58,7 +58,7 @@ const makeFullWidth = (nodeList) => {
           } else {
             child = ast.setProperty(child, 'className', ['value', 'fullWidth']);
           }
-        } {
+        } else {
           child = ast.removeProperty(child, 'fullWidth');
         }
 
