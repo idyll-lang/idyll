@@ -79,5 +79,15 @@ module.exports = {
       node = this.setProperty(node, key, properties[key]);
     })
     return node;
+  },
+
+  removeProperty: function(node, key) {
+    node[1] = node[1].filter(([propName, propVale]) => {
+      if (propName === key) {
+        return false;
+      }
+      return true;
+    })
+    return node;
   }
 }

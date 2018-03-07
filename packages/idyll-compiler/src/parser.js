@@ -58,6 +58,8 @@ const makeFullWidth = (nodeList) => {
           } else {
             child = ast.setProperty(child, 'className', ['value', 'fullWidth']);
           }
+        } {
+          child = ast.removeProperty(child, 'fullWidth');
         }
 
         if (currentTextContainer.length) {
