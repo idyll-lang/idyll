@@ -31,11 +31,11 @@ const evalContext = {};
 let scrollContainer;
 
 const getLayout = (layout) => {
-  return layouts[layout.trim()];
+  return layouts[layout.trim()] || {};
 }
 
 const getTheme = (theme) => {
-  return themes[theme.trim()];
+  return themes[theme.trim()] || {};
 }
 
 const getRefs = () => {
