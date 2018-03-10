@@ -120,7 +120,7 @@ module.exports = function(input, tokens, positions, options) {
     }
 
     // don't apply cleaning to codeblocks
-    if (['pre', 'code'].indexOf(node[0].toLowerCase()) > -1) {
+    if (['pre', 'code', 'codehighlight'].indexOf(node[0].toLowerCase()) > -1) {
       return node;
     }
     return [node[0], node[1], node[2].map(cleanResults)];
