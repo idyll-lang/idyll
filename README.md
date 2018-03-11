@@ -72,7 +72,7 @@ To submit a PR do the following:
 If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
 
 This project exists thanks to all the people who contribute.
-<a href="graphs/contributors"><img src="https://opencollective.com/idyll/contributors.svg?width=890" /></a>
+<a href="https://github.com/idyll-lang/idyll/graphs/contributors"><img src="https://opencollective.com/idyll/contributors.svg?width=890" /></a>
 
 
 ## Backers
