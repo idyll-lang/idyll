@@ -79,7 +79,7 @@ body {
 }
 
 .pl-c2::before {
-  content: "^M";
+  content: "\\000d";
 }
 
 .pl-sr .pl-cce {
@@ -624,7 +624,7 @@ code {
 code::before,
 code::after {
   letter-spacing: -0.2em;
-  content: "\00a0";
+  content: "\\00a0";
 }
 
 pre {
