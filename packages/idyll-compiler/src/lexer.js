@@ -119,7 +119,7 @@ const lex = function(options) {
     return ['STRONGEM'].concat(formatToken(text));
   });
 
-  lexer.addRule(/^\s*([\-\*]\s*([^\n]*)\n)*([\-\*]\s*([^\n]*)\n?)/gm, function(lexeme) {
+  lexer.addRule(/^\s*([\-\*]\s+([^\n]*)\n)*([\-\*]\s+([^\n]*)\n?)/gm, function(lexeme) {
     this.reject = inComponent || skipLists;
     if (this.reject) return;
     updatePosition(lexeme);
@@ -132,7 +132,7 @@ const lex = function(options) {
     return output.concat(['LIST_END']);
   });
 
-  lexer.addRule(/^\s*(\d+\.\s*([^\n]*)\n)*(\d+\.\s*([^\n]*)\n?)/gm, function(lexeme) {
+  lexer.addRule(/^\s*(\d+\.\s+([^\n]*)\n)*(\d+\.\s+([^\n]*)\n?)/gm, function(lexeme) {
     this.reject = inComponent || skipLists;
     if (this.reject) return;
     updatePosition(lexeme);
