@@ -98,7 +98,7 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF');
     });
 
-    it('ordered lists with a space after the bullet are parsed as a lists', function() {
+    it('ordered lists with a space after the bullet are parsed as a list', function() {
       var input = `
         1. bar
       `;
@@ -107,7 +107,7 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('BREAK ORDERED_LIST LIST_ITEM WORDS TOKEN_VALUE_START "bar" TOKEN_VALUE_END LIST_END EOF');
     });
 
-    it('ordered lists with no space after the bullet are not parsed as a lists', function() {
+    it('ordered lists with no space after the bullet are not parsed as a list', function() {
       var input = `
         1.bar
       `;
@@ -116,7 +116,7 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "1" TOKEN_VALUE_END WORDS TOKEN_VALUE_START ".bar" TOKEN_VALUE_END EOF');
     });
 
-    it('unordered lists with a space after the bullet are parsed as a lists', function() {
+    it('unordered lists with a space after the bullet are parsed as a list', function() {
       var input = `
         - bar
       `;
@@ -125,7 +125,7 @@ describe('compiler', function() {
       expect(results.tokens.join(' ')).to.eql('BREAK UNORDERED_LIST LIST_ITEM WORDS TOKEN_VALUE_START "bar" TOKEN_VALUE_END LIST_END EOF');
     });
 
-    it('unordered lists with no space after the bullet are not parsed as a lists', function() {
+    it('unordered lists with no space after the bullet are not parsed as a list', function() {
       var input = `
         -bar
       `;
