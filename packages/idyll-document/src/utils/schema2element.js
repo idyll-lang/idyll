@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import React, { createElement } from 'react';
 import DOM from 'react-dom-factories';
 import { paramCase, pascalCase } from 'change-case';
 
