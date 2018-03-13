@@ -23,8 +23,19 @@ class Equation extends React.PureComponent {
   componentDidMount() {
     let dom;
 
-    if (typeof document !== 'undefined') {
-      document.write('<link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css" rel="stylesheet">');
+    const cssId = 'idyll-equation-css';  // you could encode the css path itself to generate id..
+    if (document && !document.getElementById(cssId)) {
+      const heads = document.getElementsByTagName('head')
+      if (heads.length) {
+        const head  = heads[0];
+        const link  = document.createElement('link');
+        link.id   = cssId;
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css';
+        link.media = 'all';
+        head.appendChild(link);
+      }
     }
 
     try {
