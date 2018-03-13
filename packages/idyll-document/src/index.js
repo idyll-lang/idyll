@@ -388,6 +388,13 @@ class IdyllDocument extends React.PureComponent {
   componentDidMount() {
     const refs = getRefs();
     updateRefsCallbacks.forEach(f => f({ ...this.state, refs }));
+
+    if (typeof this.props.context === 'function') {
+      this.props.context({
+        update: this.updateState.bind(this),
+        data: () => this.state
+      });
+    }
   }
 
   render() {
