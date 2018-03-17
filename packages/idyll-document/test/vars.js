@@ -14,6 +14,8 @@ beforeAll(() => {
 })
 
 describe('Component state initialization', () => {
+
+
   it('creates the expected state', () => {
     expect(component.state()).toEqual({
       x: 2,
@@ -83,6 +85,20 @@ describe('Component state initialization', () => {
       expect(display.html()).toBe(check.html);
     });
   });
+
+
+  it('handles custom initial state', () => {
+    component = mount(<IdyllDocument ast={ast} initialState={{ x: 4 }} components={components} datasets={{myData: FAKE_DATA}} />);
+
+    expect(component.state()).toEqual({
+      x: 4,
+      frequency: 1,
+      xSquared: 16,
+      myData: FAKE_DATA,
+      objectVar: {an: "object"},
+      lateVar: 50
+    });
+  })
 
   it('can update the vars and derived vars', () => {
     const rangeComponents = component.findWhere((n) => {return n.type() === components.Range;});

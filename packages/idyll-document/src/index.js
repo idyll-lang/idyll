@@ -199,10 +199,10 @@ class IdyllDocument extends React.PureComponent {
     const Wrapper = createWrapper({ theme: props.theme, layout: props.layout });
 
 
-    const initialState = {
+    const initialState = Object.assign({}, {
       ...getVars(vars),
       ...getData(data, props.datasets),
-    };
+    }, props.initialState ? props.initialState : {});
     const derivedVars = this.derivedVars = getVars(derived, initialState);
 
     let state = this.state = {
