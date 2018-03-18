@@ -86,7 +86,7 @@ Thank you to all our backers!
 
 <img width="400px" src="https://idyll-lang.org/static/images/sponsors.png" />
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
+Support this project by [becoming a sponsor](https://opencollective.com/idyll). Your logo will show up here with a link to your website.
 
 
 
