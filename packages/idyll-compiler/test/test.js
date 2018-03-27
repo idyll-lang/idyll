@@ -1,7 +1,6 @@
 
 var expect = require('expect.js');
 var Lexer = require('../src/lexer');
-var parse = require('../src/parser');
 var compile = require('../src');
 var fs = require('fs');
 
@@ -156,7 +155,7 @@ describe('compiler', function() {
       var input = 'Just a simple string \n\n with some whitespace';
       expect(compile(input)).to.eql([['TextContainer', [], [['p', [], ['Just a simple string ']], ['p', [], ['with some whitespace']]]]]);
     });
-    it('should parse a closed component', function() {
+    it('should parse a closed var', function() {
       var input = '[var /]';
       expect(compile(input)).to.eql([['var', [], []]]);
     });
@@ -565,6 +564,36 @@ End text
         ['TextContainer', [], [
           ["h1",[],["My header is ",["strong",[],["bold"]],"!"]]
         ]]
+      ]);
+    })
+
+    it('should handle full width components and elements', function() {
+      const input = `
+        This is text
+
+        [FullWidth]
+        This is full width
+        [/FullWidth]
+
+        [div fullWidth:true /]
+
+        This is not full width
+      `;
+      expect(compile(input)).to.eql([
+        ['TextContainer', [], [
+          ['p',
+          [],
+          ['This is text']]
+        ]],
+        ['div', [[ "className", ["value", "fullWidth"]]], [
+          '\n        This is full width\n        '
+        ]],
+        ['div', [], []],
+        ['TextContainer', [], [
+          ['p',
+          [],
+          ['This is not full width']]
+        ]],
       ]);
     })
 });

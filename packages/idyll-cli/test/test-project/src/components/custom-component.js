@@ -2,7 +2,7 @@ const React = require('react');
 
 class CustomComponent extends React.PureComponent {
   render() {
-    const {hasError, updateProps, ...props} = this.props;
+    const {hasError, updateProps, idyll, ...props} = this.props;
     return (
       <div {...props}>
         This is a custom component
@@ -15,7 +15,7 @@ module.exports = CustomComponent;
 
 module.exports.IndexedComponent = class extends React.PureComponent {
   render() {
-    const {hasError, updateProps, ...props} = this.props;
+    const {hasError, updateProps, idyll, ...props} = this.props;
     return (
       <div {...props}>
         This is another custom component
