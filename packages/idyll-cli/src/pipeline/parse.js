@@ -91,9 +91,11 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
                 you can refresh components in that folder by copying from ./node_modules/idyll-components/src/
                 to your local directory.
               `
-              throw new Error(msg)
+              console.warn(msg);
+              acc[name] = node[0];
+            } else {
+              throw new Error(`Component named ${node[0]} could not be found.`)
             }
-            throw new Error(`Component named ${node[0]} could not be found.`)
           }
         }
       }

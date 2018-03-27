@@ -17,6 +17,7 @@ import {
   splitAST,
   translate,
   findWrapTargets,
+  filterIdyllProps,
   mapTree,
   evalExpression,
   hooks,
@@ -38,6 +39,7 @@ const getLayout = (layout) => {
 const getTheme = (theme) => {
   return themes[theme.trim()] || {};
 }
+
 
 const getRefs = () => {
   const refs = {};
@@ -156,8 +158,8 @@ const createWrapper = ({ theme, layout }) => {
       );
       }
 
-      const { __expr__, __vars__, hasError, hasHook, refName, ...state } = this.state
-      const { children, refName: _r, hasHook: _h, __expr__: _e, __vars__: _v, ...passThruProps } = this.props
+      const state = filterIdyllProps(this.state, this.props.isHTMLNode);
+      const { children, ...passThruProps } = filterIdyllProps(this.props, this.props.isHTMLNode);
       return React.Children.map(children, (c, i) => {
         return React.cloneElement(c, {
           key: `${this.key}-${i}`,
@@ -307,28 +309,30 @@ class IdyllDocument extends React.PureComponent {
           }
         });
 
-        // define the function wrapped components will call via this.props.updateProps
-        node.updateProps = (newProps) => {
-          // init new doc state object
-          const newState = {};
-          // iterate over passed in updates
-          Object.keys(newProps).forEach(k => {
-            // if a tracked var was updated get its new value
-            if (__vars__[k]) {
-              newState[__vars__[k]] = newProps[k];
-            }
-          });
-          this.updateState(newState);
-        };
+        const resolvedComponent = rjs.resolveComponent(node);
+        const isHTMLNode = typeof resolvedComponent === 'string';
 
         return {
           component: Wrapper,
           __vars__,
           __expr__,
+          isHTMLNode: isHTMLNode,
           hasHook: node.hasHook,
           refName: node.refName,
+          updateProps: (newProps) => {
+            // init new doc state object
+            const newState = {};
+            // iterate over passed in updates
+            Object.keys(newProps).forEach(k => {
+              // if a tracked var was updated get its new value
+              if (__vars__[k]) {
+                newState[__vars__[k]] = newProps[k];
+              }
+            });
+            this.updateState(newState);
+          },
           children: [
-            node
+            filterIdyllProps(node, isHTMLNode)
           ],
         };
       }
