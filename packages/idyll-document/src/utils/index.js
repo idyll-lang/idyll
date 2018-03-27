@@ -111,6 +111,26 @@ export const getVars = (arr, context = {}, evalContext) => {
   )
 }
 
+export const filterIdyllProps = (props, filterInjected) => {
+  const {
+    __vars__,
+    __expr__,
+    hasHook,
+    isHTMLNode,
+    refName,
+    onEnterViewFully,
+    onEnterView,
+    onExitViewFully,
+    onExitView,
+    ...rest
+  } = props;
+  if (filterInjected) {
+    const { idyll, hasError, updateProps, ...ret} = rest;
+    return ret;
+  }
+  return rest;
+}
+
 export const getData = (arr, datasets = {}) => {
   const pluck = (acc, val) => {
     const [ , attrs, ] = val

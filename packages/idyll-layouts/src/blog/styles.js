@@ -62,10 +62,6 @@ input {
 }
 
 @media all and (max-width: 1600px) {
-  .idyll-root {
-    margin-left: 100px;
-  }
-
   .fixed {
     width: calc((85vw - 600px) - 50px);
   }
