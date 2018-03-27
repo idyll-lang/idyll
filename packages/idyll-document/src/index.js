@@ -350,10 +350,13 @@ class IdyllDocument extends React.PureComponent {
     if (!el) return;
 
     let scroller = scrollparent(el);
-    if (scroller === document.documentElement) {
-      scroller = document.body;
+    let scrollContainer;
+    if (scroller === document.documentElement || scroller === document.body || scroller === window) {
+      scroller = window;
+      scrollContainer = scrollMonitor;
+    } else {
+      scrollContainer = scrollMonitor.createContainer(scroller);
     }
-    scrollContainer = scrollMonitor.createContainer(scroller);
     Object.keys(refCache).forEach((key) => {
       const { props, domNode } = refCache[key];
       const watcher = scrollContainer.create(domNode, scrollOffsets[key]);
@@ -366,9 +369,6 @@ class IdyllDocument extends React.PureComponent {
       })
       scrollWatchers.push(watcher);
     });
-    if (scroller === document.body) {
-      scroller = window;
-    }
     scroller.addEventListener('scroll', this.scrollListener);
   }
 
