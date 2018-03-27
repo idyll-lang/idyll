@@ -111,11 +111,10 @@ test('creates the expected HTML', () => {
 // })
 test('should construct the AST properly', () => {
   const ast = [
-    ['TextContainer', [], [
-      ["Header", [["title", ["value", "Welcome to Idyll"]], ["subtitle", ["value", "Open index.idl to start writing"]], ["author", ["value", "Your Name Here"]], ["authorLink", ["value", "https://idyll-lang.github.io"]]], []], ["p", [], ["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]], ["data", [["name", ["value", "myData"]], ["source", ["value", "example-data.json"]]], []], ["Table", [["data", ["variable", "myData"]]], []], ["p", [], ["Here is how you can use a variable:"]],
-    ]],
     ["var", [["name", ["value", "exampleVar"]], ["value", ["value", 5]]], []],
+    ["data", [["name", ["value", "myData"]], ["source", ["value", "example-data.json"]]], []],
     ['TextContainer', [], [
+      ["Header", [["title", ["value", "Welcome to Idyll"]], ["subtitle", ["value", "Open index.idl to start writing"]], ["author", ["value", "Your Name Here"]], ["authorLink", ["value", "https://idyll-lang.github.io"]]], []], ["p", [], ["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]], ["Table", [["data", ["variable", "myData"]]], []], ["p", [], ["Here is how you can use a variable:"]],
       ["Range", [["min", ["value", 0]], ["max", ["value", 10]], ["value", ["variable", "exampleVar"]]], []], ["Display", [["value", ["variable", "exampleVar"]]], []], ["CodeHighlight", [["language", ["value", "js"]]], ["var code = true;"]], ["p", [], ["And here is a custom component:"]], ["CustomComponent", [], []], ["p", [], ["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]], ["ReactSimplePieChart",[["slices",["expression","[{\n    color: '#7b3af5',\n    value: 0.1,\n  }, {\n    color: '#EAE7D6',\n    value: 0.9, },\n  ]"]]],[]], ["PackageJsonComponentTest", [], []], ["p", [], ["This adds support for indexed components: ", ["CustomComponent.IndexedComponent", [], []]]], ["FunctionalComponent", [], []], ["FunctionalDefaultComponent", [], []], ["CapitalPascal", [], []]
     ]]
   ];
