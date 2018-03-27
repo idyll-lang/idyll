@@ -1,6 +1,6 @@
 {
   "name": "idyll",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Command line interface for idyll lang",
   "main": "src/index.js",
   "bin": {
@@ -41,9 +41,9 @@
     "findup-sync": "^1.0.0",
     "html-tags": "^1.1.1",
     "idyll-compiler": "^2.3.2",
-    "idyll-components": "^2.3.3",
-    "idyll-document": "^2.5.0",
-    "idyll-layouts": "^2.3.0",
+    "idyll-components": "^2.5.1",
+    "idyll-document": "^2.5.1",
+    "idyll-layouts": "^2.5.1",
     "idyll-themes": "^2.3.1",
     "insert-css": "^2.0.0",
     "mkdirp": "^0.5.1",
