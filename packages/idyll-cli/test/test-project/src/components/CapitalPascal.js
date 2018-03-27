@@ -2,7 +2,7 @@ const React = require('react');
 
 class PascalComponent extends React.PureComponent {
   render() {
-    const {hasError, updateProps, ...props} = this.props;
+    const {hasError, updateProps, idyll, ...props} = this.props;
 
     return (
       <div {...props}>
