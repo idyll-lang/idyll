@@ -13,11 +13,13 @@ const formatToken = (text) => {
 let currentInput = null;
 
 const lex = function(options) {
-  let { row, column, outer, skipLists } = Object.assign({}, {
+  let { row, column, outer, skipLists, inComponent, gotName } = Object.assign({}, {
     row: 1,
     column: 1,
     outer: true,
-    skipLists: false
+    skipLists: false,
+    inComponent: false,
+    gotName: false
   }, options || {});
   var lexer = new Lexer(function (chr) {
     let errorString = `
@@ -29,8 +31,6 @@ const lex = function(options) {
     `
     throw new Error(errorString);
   });
-  var inComponent = false;
-  var gotName = false;
 
   const recurse = (str, opts) => {
     return lex(Object.assign({ row, column, outer: false }, opts || {}))(str).tokens;
@@ -45,6 +45,39 @@ const lex = function(options) {
     column += lines[lines.length - 1].length;
   }
 
+
+  // Rules at the front are pre-processed,
+  // e.g. equations, and code snippets
+  // that shouldn't be formatted.
+
+  lexer.addRule(/\[\s*equation\s*(((`[^`]*`)|([^`\]]*))*)\s*\](((?!(\[\s*equation\s*\])).)*)\[\s*\/\s*equation\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
+    inComponent = true;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['OPEN_BRACKET', 'COMPONENT_NAME']
+      .concat(formatToken('equation'))
+      .concat(recurse(props, { inComponent: true, gotName: true }))
+      .concat(['CLOSE_BRACKET'])
+      .concat(['WORDS'])
+      .concat(formatToken(innerText))
+      .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+      .concat(formatToken('equation'))
+      .concat(['CLOSE_BRACKET']);
+  });
+  lexer.addRule(/\[\s*code\s*(((`[^`]*`)|([^`\]]*))*)\s*\](((?!(\[\s*code\s*\])).)*)\[\s*\/\s*code\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
+    inComponent = true;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['OPEN_BRACKET', 'COMPONENT_NAME']
+      .concat(formatToken('code'))
+      .concat(recurse(props, { inComponent: true, gotName: true }))
+      .concat(['CLOSE_BRACKET'])
+      .concat(['WORDS'])
+      .concat(formatToken(innerText))
+      .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+      .concat(formatToken('code'))
+      .concat(['CLOSE_BRACKET']);
+  });
   lexer.addRule(/`{4}(\S*)\n(((?!````)[\s\S])+)`{4}/g, function(lexeme, language, text) {
     this.reject = inComponent;
     if (this.reject) return;
@@ -207,6 +240,8 @@ const lex = function(options) {
   lexer.addRule(/[ \t\n]+/, function(lexeme) {
     updatePosition(lexeme);
   });
+
+
 
   lexer.addRule(/\[/, function(lexeme) {
     inComponent = true;

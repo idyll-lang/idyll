@@ -5,7 +5,6 @@ module.exports = function(input, tokens, positions, options) {
   options = options || {};
 
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
-
   try {
     p.feed(tokens);
   } catch(err) {

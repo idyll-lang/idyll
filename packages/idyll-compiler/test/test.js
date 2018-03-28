@@ -45,7 +45,7 @@ describe('compiler', function() {
     it('should handle equations', function () {
       var lex = Lexer();
       var results = lex("[Equation]y = 0[/Equation]");
-      expect(results.tokens.join(' ')).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+      expect(results.tokens.join(' ')).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
     });
 
     it('should handle backticks in a paragraph', function() {
@@ -528,7 +528,7 @@ End text
       const input = "[Equation]y = 0[/Equation]";
       expect(compile(input)).to.eql([
         ['TextContainer', [], [
-          ['Equation', [], ['y = 0']]
+          ['equation', [], ['y = 0']]
         ]]
       ]);
     })
@@ -663,21 +663,47 @@ End text
       ]);
     });
 
-    // it('should handle equations with strange things inside', function() {
+    it('should handle equations with strange things inside - 1', function() {
 
-    //   const input = `[Equation display:\`true\`] \\sum_{j=0}^n x^{j} + \\sum x^{k} [/Equation]`;
+      const input = `[equation display:true]\sum_{j=0}^n x^{j} + \sum x^{k}[/equation]`;
 
-    //   expect(compile(input)).to.eql(
-    //   [
-    //     ['TextContainer', [], [
-    //       ['p', [], [
-    //         ['em', [], ['text']],
-    //         ' ',
-    //         ['b', [], ['other text']]
-    //       ]]
-    //     ]]
-    //   ]);
-    // });
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['equation', [['display', ['value', true]]], [
+            '\sum_{j=0}^n x^{j} + \sum x^{k}'
+          ]]
+        ]]
+      ]);
+    });
+
+    it('should handle equations with strange things inside - 2', function() {
+
+      const input = `[equation display:true]\sum_{j=0}^n x^{j} + \sum_{k=0}^n x^{k}[/equation]`;
+
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['equation', [['display', ['value', true]]], [
+            '\sum_{j=0}^n x^{j} + \sum_{k=0}^n x^{k}'
+          ]]
+        ]]
+      ]);
+    });
+
+    it('should handle code blocks with parens inside', function() {
+      const input = `[code](n - 1)!/2 possible paths[/code]`;
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['code', [], [
+            '(n - 1)!/2 possible paths'
+          ]]
+        ]]
+      ]);
+    });
 
   });
 
