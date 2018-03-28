@@ -52,7 +52,6 @@ const idyll = (options = {}, cb) => {
     delete inputConfig.components[key];
   };
 
-  console.log(inputPackage.idyll);
   // Handle options that can be provided via options or via package.json
   opts.transform = options.transform || inputConfig.transform || opts.transform;
   opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
@@ -68,8 +67,6 @@ const idyll = (options = {}, cb) => {
       }
     })
   }
-
-  console.log('opts.compiler', opts.compiler)
 
   let bs;
 
