@@ -680,7 +680,10 @@ End text
 
     it('should handle equations with strange things inside - 2', function() {
 
-      const input = `[equation display:true]\sum_{j=0}^n x^{j} + \sum_{k=0}^n x^{k}[/equation]`;
+      const input = `
+      [equation display:true]\sum_{j=0}^n x^{j} + \sum_{k=0}^n x^{k}
+      [/equation]
+      `;
 
 
       expect(compile(input)).to.eql(
@@ -704,6 +707,26 @@ End text
         ]]
       ]);
     });
+
+    // it('should respect linebreaks', function() {
+    //   const input = `
+    //   How many
+    //   lines should
+
+    //   this text
+    //   be
+    //   on
+    //   ?
+    //   `;
+    //   expect(compile(input)).to.eql(
+    //   [
+    //     ['TextContainer', [], [
+    //       ['code', [], [
+    //         '(n - 1)!/2 possible paths'
+    //       ]]
+    //     ]]
+    //   ]);
+    // });
 
   });
 

@@ -1,0 +1,8 @@
+[Feature]
+  [Feature.Content]
+    This content gets locked on the screen
+  [/Feature.Content]
+
+  Anything else you put here will scroll by. The
+  component will unlock after all of this content here has been shown.
+[/Feature]

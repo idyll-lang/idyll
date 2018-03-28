@@ -1,0 +1,12 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    "markdown-in-js/babel",
+    "convert-to-json",
+    ["babel-plugin-inline-import", {
+      "extensions": [ ".idl" ]
+    }]
+  ]
+}

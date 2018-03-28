@@ -50,7 +50,7 @@ const lex = function(options) {
   // e.g. equations, and code snippets
   // that shouldn't be formatted.
 
-  lexer.addRule(/\[\s*equation\s*(((`[^`]*`)|([^`\]]*))*)\s*\](((?!(\[\s*equation\s*\])).)*)\[\s*\/\s*equation\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
+  lexer.addRule(/\[\s*equation\s*(((`[^`]*`)|([^`\]]*))*)\s*\][\n\s\t]*(((?!(\[\s*equation\s*\])).)*)[\n\s\t]*\[\s*\/\s*equation\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
     inComponent = true;
     if (this.reject) return;
     updatePosition(lexeme);
@@ -64,7 +64,7 @@ const lex = function(options) {
       .concat(formatToken('equation'))
       .concat(['CLOSE_BRACKET']);
   });
-  lexer.addRule(/\[\s*code\s*(((`[^`]*`)|([^`\]]*))*)\s*\](((?!(\[\s*code\s*\])).)*)\[\s*\/\s*code\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
+  lexer.addRule(/\[\s*code\s*(((`[^`]*`)|([^`\]]*))*)\s*\][\n\s\t]*(((?!(\[\s*code\s*\])).)*)[\n\s\t]*\[\s*\/\s*code\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
     inComponent = true;
     if (this.reject) return;
     updatePosition(lexeme);
@@ -165,7 +165,7 @@ const lex = function(options) {
     const matches = items.map((item) => /[\-\*]\s*([^\n]*)/.exec(item)[1]);
     let output = ['BREAK', 'UNORDERED_LIST'];
     matches.forEach((item) => {
-      output = output.concat(['LIST_ITEM']).concat(recurse(item));
+      output = output.concat(['LIST_ITEM']).concat(recurse(item.trim() || ' '));
     });
     return output.concat(['LIST_END']);
   });

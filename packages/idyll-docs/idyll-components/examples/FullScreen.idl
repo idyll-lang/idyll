@@ -1,0 +1,15 @@
+[FullScreen]
+  [MyCustomComponent /]
+[/FullScreen]
+
+This is useful to use in conjunction with the [Feature] component
+to get fullscreen background images:
+[Feature]
+  [Feature.Content]
+    [FullScreen backgroundImage:"background-image.jpg"  /]
+  [/Feature.Content]
+
+  Anything else you put here will scroll by. The
+  component will unlock after all of this content here has been shown.
+  ...
+[/Feature]
