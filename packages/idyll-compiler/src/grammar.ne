@@ -137,27 +137,31 @@ Text -> "WORDS" __ TokenValue {%
   }
 %}
 
-TextInline -> (CodeInline | BoldInline | EmInline | BoldEmInline | LinkInline | ImageInline) {%
+TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | ImageInline) {%
   function(data, location, reject) {
     return data[0][0];
   }
 %}
 
-BoldInline -> "STRONG" __ TokenValue {%
+BoldInline -> "STRONG" (__ ParagraphItem):+ __ "STRONG_END" {%
   function(data, location, reject) {
-    return ['strong', [], [data[2]]];
+    var children = [];
+    data[1].map(function (child) {
+      children.push(child[1]);
+    });
+
+    return ["strong", [], children];
   }
 %}
 
-EmInline -> "EM" __ TokenValue {%
+EmInline -> "EM" (__ ParagraphItem):+ __ "EM_END" {%
   function(data, location, reject) {
-    return ['em', [], [data[2]]];
-  }
-%}
+    var children = [];
+    data[1].map(function (child) {
+      children.push(child[1]);
+    });
 
-BoldEmInline -> "STRONGEM" __ TokenValue {%
-  function(data, location, reject) {
-    return ['strong', [], [['em', [], [data[2]]]]];
+    return ["em", [], children];
   }
 %}
 

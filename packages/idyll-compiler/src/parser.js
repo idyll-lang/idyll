@@ -5,6 +5,7 @@ module.exports = function(input, tokens, positions, options) {
   options = options || {};
 
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
+
   try {
     p.feed(tokens);
   } catch(err) {
@@ -12,6 +13,7 @@ module.exports = function(input, tokens, positions, options) {
     const index = cleaned.match(/ /g).length;
     const position = positions[index];
     const message = 'Error parsing input at line ' + position[0] + ', column ' + position[1] + '\n\n' + input.split('\n')[position[0] - 1] + '\n' + Array(Math.max(0, position[1] - 2)).join(' ') + '^^^';
+
     const e = new Error(message);
     e.row = position[0];
     e.column = position[1];

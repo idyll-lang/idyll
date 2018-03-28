@@ -82,41 +82,46 @@ const lex = function(options) {
     return ['BREAK', 'HEADER_' + hashes.length].concat(recurse(text, { skipLists: true })).concat(['HEADER_END']);
   });
 
-  lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*/g, function(lexeme, text) {
+
+  lexer.addRule(/\*\*([^\s\n][^\*]*[^\s\n])\*\*(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['EM'].concat(formatToken(text));
+    var ret = ['STRONG'].concat(recurse(text, { skipLists: true })).concat(['STRONG_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
-  lexer.addRule(/_([^\s\n_][^_]*[^\s\n_])_/g, function(lexeme, text) {
+  lexer.addRule(/__([^\s\n][^_]*[^\s\n])__(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['EM'].concat(formatToken(text));
+    var ret = ['STRONG'].concat(recurse(text, { skipLists: true })).concat(['STRONG_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
-  lexer.addRule(/\*\*([^\s\n\*][^\*]*[^\s\n\*])\*\*/g, function(lexeme, text) {
+  lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['STRONG'].concat(formatToken(text));
+    var ret = ['EM'].concat(recurse(text, { skipLists: true })).concat(['EM_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
-  lexer.addRule(/\*\*\*([^\s\n\*][^\*]*[^\s\n\*])\*\*\*/g, function(lexeme, text) {
+  lexer.addRule(/_([^\s\n_][^_]*[^\s\n_])_(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['STRONGEM'].concat(formatToken(text));
-  });
-  lexer.addRule(/__([^\s\n_][^_]*[^\s\n_])__/g, function(lexeme, text) {
-    this.reject = inComponent;
-    if (this.reject) return;
-    updatePosition(lexeme);
-    return ['STRONG'].concat(formatToken(text));
-  });
-  lexer.addRule(/___([^\s\n_][^_]*[^\s\n_])___/g, function(lexeme, text) {
-    this.reject = inComponent;
-    if (this.reject) return;
-    updatePosition(lexeme);
-    return ['STRONGEM'].concat(formatToken(text));
+    var ret = ['EM'].concat(recurse(text, { skipLists: true })).concat(['EM_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
 
   lexer.addRule(/^\s*([\-\*]\s+([^\n]*)\n)*([\-\*]\s+([^\n]*)\n?)/gm, function(lexeme) {
@@ -198,6 +203,7 @@ const lex = function(options) {
     return ['BREAK'];
   });
 
+
   lexer.addRule(/[ \t\n]+/, function(lexeme) {
     updatePosition(lexeme);
   });
@@ -209,12 +215,16 @@ const lex = function(options) {
     return ['OPEN_BRACKET'];
   });
 
-  lexer.addRule(/\]/, function(lexeme) {
+  lexer.addRule(/\]([ ]*)/, function(lexeme, trailingSpace) {
     inComponent = false;
     gotName = false;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['CLOSE_BRACKET'];
+    var ret = ['CLOSE_BRACKET'];
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace));
+    }
+    return ret;
   });
 
   lexer.addRule(/\//, function(lexeme) {
