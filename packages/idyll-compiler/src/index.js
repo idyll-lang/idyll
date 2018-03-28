@@ -16,6 +16,8 @@ module.exports = function(input, options) {
   const lexResults = lex(content);
   const output = parse(content, lexResults.tokens.join(' '), lexResults.positions, options);
 
+  console.log('compiler options', options);
+  console.log('fdsafds')
   let astTransform = process(output, options)
     .pipe(hoistVariables)
     .pipe(flattenChildren)

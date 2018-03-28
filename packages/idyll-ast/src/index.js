@@ -17,8 +17,18 @@
 */
 
 
+const appendNode = function(ast, node) {
+  return appendNodes(ast, [node]);
+};
+
 const appendNodes = function(ast, nodes) {
   return [].concat(ast, nodes);
+};
+
+const createNode = function(name, props, children) {
+  let node = [name, [], children || []];
+  node = setProperties(node, props || {});
+  return node;
 };
 
 const getChildren = function(node) {
@@ -101,6 +111,10 @@ const getProperty = function(node, key) {
   });
 };
 
+const prependNode = function(ast, node) {
+  return prependNodes(ast, [node]);
+};
+
 const prependNodes = function(ast, nodes) {
   return [].concat(nodes, ast);
 };
@@ -119,13 +133,16 @@ const removeNodesByName = function(ast, name) {
 
 const setProperty = function(node, key, value) {
   let hasSet = false;
-  node[1].forEach((element) => {
+  const isArr = Array.isArray(value);
+  node[1] = node[1].map((element) => {
       if (element[0] === key) {
         hasSet = true;
+        return [element[0], isArr ? value : ['value', value]];
       }
+      return element;
   });
   if (!hasSet) {
-    node[1] = node[1].concat([[key, value]]);
+    node[1] = node[1].concat([[key, isArr ? value : ['value', value]]]);
   }
 
   return node;
@@ -149,7 +166,9 @@ const removeProperty = function(node, key) {
 };
 
 module.exports = {
+  appendNode,
   appendNodes,
+  createNode,
   getChildren,
   getNodesByName,
   filterChildren,
@@ -157,6 +176,7 @@ module.exports = {
   modifyChildren,
   modifyNodesByName,
   getProperty,
+  prependNode,
   prependNodes,
   removeNodesByName,
   setProperties,

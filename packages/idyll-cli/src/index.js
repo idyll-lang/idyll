@@ -31,7 +31,7 @@ const idyll = (options = {}, cb) => {
         '_index.html'
       ),
       transform: [],
-      compilerOptions: {
+      compiler: {
       },
     },
     options
@@ -45,28 +45,31 @@ const idyll = (options = {}, cb) => {
   const inputConfig = Object.assign({
     components: {},
     transform: [],
-    compilerOptions: {}
+    compiler: {}
   }, inputPackage.idyll || {});
   for (let key in inputConfig.components) {
     inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
     delete inputConfig.components[key];
   };
 
+  console.log(inputPackage.idyll);
   // Handle options that can be provided via options or via package.json
   opts.transform = options.transform || inputConfig.transform || opts.transform;
-  opts.compilerOptions = options.compilerOptions || inputConfig.compilerOptions || opts.compilerOptions;
+  opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
 
   // Resolve compiler plugins:
-  if (opts.compilerOptions.postProcessors) {
-    opts.compilerOptions.postProcessors.forEach((processor) => {
+  if (opts.compiler.postProcessors) {
+    opts.compiler.postProcessors = opts.compiler.postProcessors.map((processor) => {
       try {
-        opts.compilerOptions.postProcessors = require(processor);
+        return require(processor, { basedir: paths.INPUT_DIR });
       } catch(e) {
         console.log(e);
-        console.warn('\n\nCould not find load post-processor plugin: ', processor);
+        console.warn('\n\nCould not find post-processor plugin: ', processor);
       }
     })
   }
+
+  console.log('opts.compiler', opts.compiler)
 
   let bs;
 

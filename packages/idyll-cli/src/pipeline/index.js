@@ -26,7 +26,8 @@ const build = (opts, paths, inputConfig) => {
     // this is all synchronous so we wrap it with Promise.try
     // to start a Promise chain and turn any synchronous exceptions into a rejection
     () => {
-      const ast = compile(opts.inputString, opts.compilerOptions);
+      // opts.compilerOptions is kept for backwards compatability
+      const ast = compile(opts.inputString, opts.compiler || opts.compilerOptions);
       const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
       output = {
