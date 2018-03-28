@@ -1,0 +1,3 @@
+[link text:"the text" url:"https://some.url" /]
+
+is equivalent to [a href:"https://some.url"]the text[/a].

@@ -1,0 +1,11 @@
+[var name:"slide" value:1 /]
+
+[slideshow currentSlide:slide]
+  [slide]This is the content for slide 1[/slide]
+  [slide]This is the content for slide 2[/slide]
+  [slide]This is the content for slide 3[/slide]
+[/slideshow]
+
+[Button onClick:`slide = 1`]Slide 1[/Button]
+[Button onClick:`slide = 2`]Slide 2[/Button]
+[Button onClick:`slide = 3`]Slide 3[/Button]

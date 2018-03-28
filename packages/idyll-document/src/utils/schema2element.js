@@ -75,11 +75,11 @@ class ReactJsonSchema {
         Component = schema.component;
       } else {
         console.warn(`Could not find an implementation for: {schema.component}`);
-        return () => {
+        return () => (
           <div style={{ color: 'black', border: 'solid 1px red'}}>
             <pre>Could not find an implementation for: {schema.component}</pre>
           </div>
-        }
+        )
       }
     }
 

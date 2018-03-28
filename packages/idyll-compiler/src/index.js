@@ -1,13 +1,13 @@
 
 const parse = require('./parser');
 const Lexer = require('./lexer');
-const process = require('./processors');
+const Processor = require('./processors');
 const { cleanNewlines } = require('./processors/pre');
 const { hoistVariables, flattenChildren, cleanResults, makeFullWidth, wrapText } = require('./processors/post');
 const matter = require('gray-matter');
 
 module.exports = function(input, options) {
-  input = process(input).pipe(cleanNewlines).end();
+  input = Processor(input).pipe(cleanNewlines).end();
 
   const { content, data } = matter(input.trim());
 
@@ -16,7 +16,7 @@ module.exports = function(input, options) {
   const lexResults = lex(content);
   const output = parse(content, lexResults.tokens.join(' '), lexResults.positions, options);
 
-  const ret = process(output, options)
+  const ret = Processor(output, options)
     .pipe(hoistVariables)
     .pipe(flattenChildren)
     .pipe(makeFullWidth)

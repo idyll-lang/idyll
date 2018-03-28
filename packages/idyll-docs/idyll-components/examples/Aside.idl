@@ -1,0 +1,4 @@
+[Aside]
+  [Chart type:"time" data:complaintsByDate /]
+  [caption]Complaints sent to the CFPB each month[/caption]
+[/Aside]

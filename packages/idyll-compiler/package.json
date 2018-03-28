@@ -1,6 +1,6 @@
 {
   "name": "idyll-compiler",
-  "version": "2.5.5",
+  "version": "2.3.2",
   "description": "Compiler for idyll",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -10,13 +10,14 @@
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "compile": "nearleyc src/grammar.ne -o src/grammar.js",
     "build": "npm run compile && npm run build:es && npm run build:cjs",
+    "dev": "yarn run build:es --watch",
     "test": "npm run compile && mocha",
     "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/idyll-lang/idyll-compiler.git"
+    "url": "git+https://github.com/idyll-lang/idyll.git"
   },
   "keywords": [
     "idyll",
@@ -25,9 +26,9 @@
   "author": "Matthew Conlen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/idyll-lang/idyll-compiler/issues"
+    "url": "https://github.com/idyll-lang/idyll/issues"
   },
-  "homepage": "https://github.com/idyll-lang/idyll-compiler#readme",
+  "homepage": "https://github.com/idyll-lang/idyll#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
