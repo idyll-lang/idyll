@@ -663,21 +663,21 @@ End text
       ]);
     });
 
-    it('should handle equations with strange things inside', function() {
+    // it('should handle equations with strange things inside', function() {
 
-      const input = `[Equation display:\`true\`] \\sum_{j=0}^n x^{j} + \\sum x^{k} [/Equation]`;
+    //   const input = `[Equation display:\`true\`] \\sum_{j=0}^n x^{j} + \\sum x^{k} [/Equation]`;
 
-      expect(compile(input)).to.eql(
-      [
-        ['TextContainer', [], [
-          ['p', [], [
-            ['em', [], ['text']],
-            ' ',
-            ['b', [], ['other text']]
-          ]]
-        ]]
-      ]);
-    });
+    //   expect(compile(input)).to.eql(
+    //   [
+    //     ['TextContainer', [], [
+    //       ['p', [], [
+    //         ['em', [], ['text']],
+    //         ' ',
+    //         ['b', [], ['other text']]
+    //       ]]
+    //     ]]
+    //   ]);
+    // });
 
   });
 
