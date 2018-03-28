@@ -16,13 +16,16 @@ module.exports = function(input, options) {
   const lexResults = lex(content);
   const output = parse(content, lexResults.tokens.join(' '), lexResults.positions, options);
 
-  const ret = process(output, options)
+  let astTransform = process(output, options)
     .pipe(hoistVariables)
     .pipe(flattenChildren)
     .pipe(makeFullWidth)
     .pipe(wrapText)
-    .pipe(cleanResults)
-    .end();
+    .pipe(cleanResults);
 
-  return ret;
+  if (options.postProcessors) {
+    options.postProcessors.forEach(astTransform.pipe);
+  }
+
+  return astTransform.end();
 }
