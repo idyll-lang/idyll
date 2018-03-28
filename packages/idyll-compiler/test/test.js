@@ -708,25 +708,25 @@ End text
       ]);
     });
 
-    it('should respect linebreaks', function() {
-      const input = `
-      How many
-      lines should
+    // it('should respect linebreaks', function() {
+    //   const input = `
+    //   How many
+    //   lines should
 
-      this text
-      be
-      on
-      ?
-      `;
-      expect(compile(input)).to.eql(
-      [
-        ['TextContainer', [], [
-          ['code', [], [
-            '(n - 1)!/2 possible paths'
-          ]]
-        ]]
-      ]);
-    });
+    //   this text
+    //   be
+    //   on
+    //   ?
+    //   `;
+    //   expect(compile(input)).to.eql(
+    //   [
+    //     ['TextContainer', [], [
+    //       ['code', [], [
+    //         '(n - 1)!/2 possible paths'
+    //       ]]
+    //     ]]
+    //   ]);
+    // });
 
   });
 
