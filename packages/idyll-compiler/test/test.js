@@ -39,7 +39,7 @@ describe('compiler', function() {
     it('should handle markdown formating in a list element', function() {
       var lex = Lexer();
       var results = lex("- **test**");
-      expect(results.tokens.join(' ')).to.eql('BREAK UNORDERED_LIST LIST_ITEM STRONG TOKEN_VALUE_START "test" TOKEN_VALUE_END LIST_END EOF');
+      expect(results.tokens.join(' ')).to.eql('BREAK UNORDERED_LIST LIST_ITEM STRONG WORDS TOKEN_VALUE_START "test" TOKEN_VALUE_END STRONG_END LIST_END EOF');
     });
 
     it('should handle equations', function () {
@@ -507,6 +507,23 @@ End text
       ]);
     })
 
+    it('should handle strong emphasized text using mixed asterisks and underscores - 1', function() {
+      const input = "_**test**_";
+      expect(compile(input)).to.eql([
+        ['TextContainer', [], [
+          ['em', [], [['strong', [], ['test']]]]
+        ]]
+      ]);
+    })
+    it('should handle strong emphasized text using mixed asterisks and underscores - 2', function() {
+      const input = "**_test_**";
+      expect(compile(input)).to.eql([
+        ['TextContainer', [], [
+          ['strong', [], [['em', [], ['test']]]]
+        ]]
+      ]);
+    })
+
     it('should merge consecutive word blocks', function() {
       const input = "[Equation]y = 0[/Equation]";
       expect(compile(input)).to.eql([
@@ -596,7 +613,74 @@ End text
         ]],
       ]);
     })
-});
+    it('should handle lists followed by emphasised text', function() {
+      const input = `
+- foo
+- bar
+
+*Wow!*
+      `;
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['ul', [], [
+            ['li', [], ['foo']],
+            ['li', [], ['bar']]
+          ]],
+          ['em', [], ["Wow","!"]],
+        ]]
+      ]);
+    });
+
+    it('should preserve space between inline blocks - 1', function() {
+      const input = `*text* __other text__`;
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['p', [], [
+            ['em', [], ['text']],
+            ' ',
+            ['strong', [], ['other text']],
+          ]]
+        ]]
+      ]);
+    });
+    it('should preserve space between inline blocks - 2', function() {
+
+      const input = `[em]text[/em] [b]other text[/b]`;
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['p', [], [
+            ['em', [], ['text']],
+            ' ',
+            ['b', [], ['other text']]
+          ]]
+        ]]
+      ]);
+    });
+
+    it('should handle equations with strange things inside', function() {
+
+      const input = `[Equation display:\`true\`] \\sum_{j=0}^n x^{j} + \\sum x^{k} [/Equation]`;
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['p', [], [
+            ['em', [], ['text']],
+            ' ',
+            ['b', [], ['other text']]
+          ]]
+        ]]
+      ]);
+    });
+
+  });
+
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {
