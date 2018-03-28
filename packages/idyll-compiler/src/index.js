@@ -2,18 +2,15 @@
 const parse = require('./parser');
 const Lexer = require('./lexer');
 const process = require('./processors');
-const preProcessors = require('./processors/pre');
+const { cleanNewlines } = require('./processors/pre');
 const { hoistVariables, flattenChildren, cleanResults, makeFullWidth, wrapText } = require('./processors/post');
 const matter = require('gray-matter');
 
-
-const cleanNewlines = (input) => {
-  return input.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-}
-
 module.exports = function(input, options) {
-  input = cleanNewlines(input);
+  input = process(input).pipe(cleanNewlines).end();
+
   const { content, data } = matter(input.trim());
+
   options = Object.assign({}, { spellcheck: false, smartquotes: true }, options || {});
   const lex = Lexer();
   const lexResults = lex(content);
