@@ -1,0 +1,4 @@
+[var name:"myVar" value:10 /]
+
+[Range value:myVar min:0 max:100 /]
+[Display value:myVar /]

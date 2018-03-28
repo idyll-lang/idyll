@@ -1,0 +1,1 @@
+This is regular text, but when you [action onClick:`alert('clicked the text')`]click me[/action], an alert will appear.

@@ -1,0 +1,8 @@
+[Feature]
+...
+[/Feature]
+
+[Panel]
+  This is the next section! The panel will slide up over
+  the feature and the text will continue on.
+[/Panel]

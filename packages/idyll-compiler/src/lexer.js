@@ -13,11 +13,13 @@ const formatToken = (text) => {
 let currentInput = null;
 
 const lex = function(options) {
-  let { row, column, outer, skipLists } = Object.assign({}, {
+  let { row, column, outer, skipLists, inComponent, gotName } = Object.assign({}, {
     row: 1,
     column: 1,
     outer: true,
-    skipLists: false
+    skipLists: false,
+    inComponent: false,
+    gotName: false
   }, options || {});
   var lexer = new Lexer(function (chr) {
     let errorString = `
@@ -29,8 +31,6 @@ const lex = function(options) {
     `
     throw new Error(errorString);
   });
-  var inComponent = false;
-  var gotName = false;
 
   const recurse = (str, opts) => {
     return lex(Object.assign({ row, column, outer: false }, opts || {}))(str).tokens;
@@ -45,6 +45,39 @@ const lex = function(options) {
     column += lines[lines.length - 1].length;
   }
 
+
+  // Rules at the front are pre-processed,
+  // e.g. equations, and code snippets
+  // that shouldn't be formatted.
+
+  lexer.addRule(/\[\s*equation\s*(((`[^`]*`)|([^`\]]*))*)\s*\][\n\s\t]*(((?!(\[\s*equation\s*\])).)*)[\n\s\t]*\[\s*\/\s*equation\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
+    inComponent = true;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['OPEN_BRACKET', 'COMPONENT_NAME']
+      .concat(formatToken('equation'))
+      .concat(recurse(props, { inComponent: true, gotName: true }))
+      .concat(['CLOSE_BRACKET'])
+      .concat(['WORDS'])
+      .concat(formatToken(innerText))
+      .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+      .concat(formatToken('equation'))
+      .concat(['CLOSE_BRACKET']);
+  });
+  lexer.addRule(/\[\s*code\s*(((`[^`]*`)|([^`\]]*))*)\s*\][\n\s\t]*(((?!(\[\s*code\s*\])).)*)[\n\s\t]*\[\s*\/\s*code\s*\]/i, function(lexeme, props, _1, _2, _3, innerText) {
+    inComponent = true;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['OPEN_BRACKET', 'COMPONENT_NAME']
+      .concat(formatToken('code'))
+      .concat(recurse(props, { inComponent: true, gotName: true }))
+      .concat(['CLOSE_BRACKET'])
+      .concat(['WORDS'])
+      .concat(formatToken(innerText))
+      .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+      .concat(formatToken('code'))
+      .concat(['CLOSE_BRACKET']);
+  });
   lexer.addRule(/`{4}(\S*)\n(((?!````)[\s\S])+)`{4}/g, function(lexeme, language, text) {
     this.reject = inComponent;
     if (this.reject) return;
@@ -82,41 +115,46 @@ const lex = function(options) {
     return ['BREAK', 'HEADER_' + hashes.length].concat(recurse(text, { skipLists: true })).concat(['HEADER_END']);
   });
 
-  lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*/g, function(lexeme, text) {
+
+  lexer.addRule(/\*\*([^\s\n][^\*]*[^\s\n])\*\*(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['EM'].concat(formatToken(text));
+    var ret = ['STRONG'].concat(recurse(text, { skipLists: true })).concat(['STRONG_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
-  lexer.addRule(/_([^\s\n_][^_]*[^\s\n_])_/g, function(lexeme, text) {
+  lexer.addRule(/__([^\s\n][^_]*[^\s\n])__(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['EM'].concat(formatToken(text));
+    var ret = ['STRONG'].concat(recurse(text, { skipLists: true })).concat(['STRONG_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
-  lexer.addRule(/\*\*([^\s\n\*][^\*]*[^\s\n\*])\*\*/g, function(lexeme, text) {
+  lexer.addRule(/\*([^\s\n\*][^\*]*[^\s\n\*])\*(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['STRONG'].concat(formatToken(text));
+    var ret = ['EM'].concat(recurse(text, { skipLists: true })).concat(['EM_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
-  lexer.addRule(/\*\*\*([^\s\n\*][^\*]*[^\s\n\*])\*\*\*/g, function(lexeme, text) {
+  lexer.addRule(/_([^\s\n_][^_]*[^\s\n_])_(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['STRONGEM'].concat(formatToken(text));
-  });
-  lexer.addRule(/__([^\s\n_][^_]*[^\s\n_])__/g, function(lexeme, text) {
-    this.reject = inComponent;
-    if (this.reject) return;
-    updatePosition(lexeme);
-    return ['STRONG'].concat(formatToken(text));
-  });
-  lexer.addRule(/___([^\s\n_][^_]*[^\s\n_])___/g, function(lexeme, text) {
-    this.reject = inComponent;
-    if (this.reject) return;
-    updatePosition(lexeme);
-    return ['STRONGEM'].concat(formatToken(text));
+    var ret = ['EM'].concat(recurse(text, { skipLists: true })).concat(['EM_END']);
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace))
+    }
+    return ret;
   });
 
   lexer.addRule(/^\s*([\-\*]\s+([^\n]*)\n)*([\-\*]\s+([^\n]*)\n?)/gm, function(lexeme) {
@@ -127,7 +165,7 @@ const lex = function(options) {
     const matches = items.map((item) => /[\-\*]\s*([^\n]*)/.exec(item)[1]);
     let output = ['BREAK', 'UNORDERED_LIST'];
     matches.forEach((item) => {
-      output = output.concat(['LIST_ITEM']).concat(recurse(item));
+      output = output.concat(['LIST_ITEM']).concat(recurse(item.trim() || ' '));
     });
     return output.concat(['LIST_END']);
   });
@@ -198,9 +236,12 @@ const lex = function(options) {
     return ['BREAK'];
   });
 
+
   lexer.addRule(/[ \t\n]+/, function(lexeme) {
     updatePosition(lexeme);
   });
+
+
 
   lexer.addRule(/\[/, function(lexeme) {
     inComponent = true;
@@ -209,12 +250,16 @@ const lex = function(options) {
     return ['OPEN_BRACKET'];
   });
 
-  lexer.addRule(/\]/, function(lexeme) {
+  lexer.addRule(/\]([ ]*)/, function(lexeme, trailingSpace) {
     inComponent = false;
     gotName = false;
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['CLOSE_BRACKET'];
+    var ret = ['CLOSE_BRACKET'];
+    if (trailingSpace) {
+      ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace));
+    }
+    return ret;
   });
 
   lexer.addRule(/\//, function(lexeme) {

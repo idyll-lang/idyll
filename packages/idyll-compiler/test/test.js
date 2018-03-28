@@ -39,13 +39,13 @@ describe('compiler', function() {
     it('should handle markdown formating in a list element', function() {
       var lex = Lexer();
       var results = lex("- **test**");
-      expect(results.tokens.join(' ')).to.eql('BREAK UNORDERED_LIST LIST_ITEM STRONG TOKEN_VALUE_START "test" TOKEN_VALUE_END LIST_END EOF');
+      expect(results.tokens.join(' ')).to.eql('BREAK UNORDERED_LIST LIST_ITEM STRONG WORDS TOKEN_VALUE_START "test" TOKEN_VALUE_END STRONG_END LIST_END EOF');
     });
 
     it('should handle equations', function () {
       var lex = Lexer();
       var results = lex("[Equation]y = 0[/Equation]");
-      expect(results.tokens.join(' ')).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "Equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+      expect(results.tokens.join(' ')).to.eql('OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF');
     });
 
     it('should handle backticks in a paragraph', function() {
@@ -507,11 +507,28 @@ End text
       ]);
     })
 
+    it('should handle strong emphasized text using mixed asterisks and underscores - 1', function() {
+      const input = "_**test**_";
+      expect(compile(input)).to.eql([
+        ['TextContainer', [], [
+          ['em', [], [['strong', [], ['test']]]]
+        ]]
+      ]);
+    })
+    it('should handle strong emphasized text using mixed asterisks and underscores - 2', function() {
+      const input = "**_test_**";
+      expect(compile(input)).to.eql([
+        ['TextContainer', [], [
+          ['strong', [], [['em', [], ['test']]]]
+        ]]
+      ]);
+    })
+
     it('should merge consecutive word blocks', function() {
       const input = "[Equation]y = 0[/Equation]";
       expect(compile(input)).to.eql([
         ['TextContainer', [], [
-          ['Equation', [], ['y = 0']]
+          ['equation', [], ['y = 0']]
         ]]
       ]);
     })
@@ -596,7 +613,123 @@ End text
         ]],
       ]);
     })
-});
+    it('should handle lists followed by emphasised text', function() {
+      const input = `
+- foo
+- bar
+
+*Wow!*
+      `;
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['ul', [], [
+            ['li', [], ['foo']],
+            ['li', [], ['bar']]
+          ]],
+          ['em', [], ["Wow","!"]],
+        ]]
+      ]);
+    });
+
+    it('should preserve space between inline blocks - 1', function() {
+      const input = `*text* __other text__`;
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['p', [], [
+            ['em', [], ['text']],
+            ' ',
+            ['strong', [], ['other text']],
+          ]]
+        ]]
+      ]);
+    });
+    it('should preserve space between inline blocks - 2', function() {
+
+      const input = `[em]text[/em] [b]other text[/b]`;
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['p', [], [
+            ['em', [], ['text']],
+            ' ',
+            ['b', [], ['other text']]
+          ]]
+        ]]
+      ]);
+    });
+
+    it('should handle equations with strange things inside - 1', function() {
+
+      const input = `[equation display:true]\sum_{j=0}^n x^{j} + \sum x^{k}[/equation]`;
+
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['equation', [['display', ['value', true]]], [
+            '\sum_{j=0}^n x^{j} + \sum x^{k}'
+          ]]
+        ]]
+      ]);
+    });
+
+    it('should handle equations with strange things inside - 2', function() {
+
+      const input = `
+      [equation display:true]\sum_{j=0}^n x^{j} + \sum_{k=0}^n x^{k}
+      [/equation]
+      `;
+
+
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['equation', [['display', ['value', true]]], [
+            '\sum_{j=0}^n x^{j} + \sum_{k=0}^n x^{k}'
+          ]]
+        ]]
+      ]);
+    });
+
+    it('should handle code blocks with parens inside', function() {
+      const input = `[code](n - 1)!/2 possible paths[/code]`;
+      expect(compile(input)).to.eql(
+      [
+        ['TextContainer', [], [
+          ['code', [], [
+            '(n - 1)!/2 possible paths'
+          ]]
+        ]]
+      ]);
+    });
+
+    // it('should respect linebreaks', function() {
+    //   const input = `
+    //   How many
+    //   lines should
+
+    //   this text
+    //   be
+    //   on
+    //   ?
+    //   `;
+    //   expect(compile(input)).to.eql(
+    //   [
+    //     ['TextContainer', [], [
+    //       ['code', [], [
+    //         '(n - 1)!/2 possible paths'
+    //       ]]
+    //     ]]
+    //   ]);
+    // });
+
+  });
+
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {

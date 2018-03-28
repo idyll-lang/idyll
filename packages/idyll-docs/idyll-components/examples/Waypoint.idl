@@ -1,0 +1,13 @@
+[var name:"state" value:0]
+
+[Waypoint onEnterView:`state = 0`]
+  Initial state!
+[/Waypoint]
+
+[Waypoint onEnterView:`state = 1`]
+  Second state.
+[/Waypoint]
+
+[Waypoint onEnterView:`state = 2`]
+  Third state...
+[/Waypoint]
