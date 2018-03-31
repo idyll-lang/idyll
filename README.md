@@ -61,12 +61,18 @@ In Idyll the entire document is reactive, built on top of Facebook's React frame
 
 Idyll attempts to adhere to the [open open source](http://openopensource.org/) philosophy as much as reasonably possible. Pull requests are very welcome!
 
+## Dev Dependencies
+
+To work with Idyll's codebase, you must have [Lerna](https://github.com/lerna/lerna) and [yarn](https://yarnpkg.com/en/docs/install) installed.
+
 To submit a PR do the following:
 
 * [Fork the repo](https://help.github.com/articles/fork-a-repo/) and [clone it](https://help.github.com/articles/cloning-a-repository/) onto to your computer.
-* Run `yarn` to install the dependencies. If you don't have yarn installed, see https://yarnpkg.com/en/docs/install
+* Run `lerna bootstrap` from inside the `idyll` folder to install the dependencies and link all of the packages together. 
 * Make your changes.
-* Make sure the tests pass by running `npm test`. If you add a feature, add a test for it.
+* Test your changes:
+  * Make sure the tests pass by running `npm test`. If you add a feature, add a test for it.
+  * If you'd like to test these changes in a local Idyll project, you can run `yarn link idyll` inside of your project, and your local dev version of idyll will be used. 
 * Submit the PR!
 
 If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
