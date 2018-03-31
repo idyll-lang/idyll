@@ -65,6 +65,8 @@ Idyll attempts to adhere to the [open open source](http://openopensource.org/) p
 
 To work with Idyll's codebase, you must have [Lerna](https://github.com/lerna/lerna) and [yarn](https://yarnpkg.com/en/docs/install) installed.
 
+## Making Changes 
+
 To submit a PR do the following:
 
 * [Fork the repo](https://help.github.com/articles/fork-a-repo/) and [clone it](https://help.github.com/articles/cloning-a-repository/) onto to your computer.
