@@ -310,6 +310,12 @@ const lex = function(options) {
     updatePosition(lexeme);
     return ['STRING'].concat(formatToken(lexeme));
   });
+  lexer.addRule(/'([^']*)'/, function(lexeme, str) {
+    this.reject = !inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['STRING'].concat(formatToken('"' + str + '"'));
+  });
 
   lexer.addRule(/:/, function(lexeme) {
     this.reject = !inComponent;
