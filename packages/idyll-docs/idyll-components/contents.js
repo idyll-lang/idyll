@@ -76,8 +76,8 @@ const components = [
     }
   },
   {
-    "Presentation": {
-      "description": "These components render something to the screen, for example the `Chart` component takes data as input and can display several types of charts.",
+    "Input": {
+      "description": "The components are used to accept reader input and update variables in response.",
       "components": [
         {
           "Action": {
@@ -120,28 +120,6 @@ const components = [
           }
         },
         {
-          "Chart": {
-            "thumbnail": "chart.png",
-            "description": "This will display a chart.",
-            "image": "chart.png",
-            "idyllProps": [
-              {
-                "data": "A JSON object containing the data for this chart. It uses the [victory](https://formidable.com/open-source/victory/docs) library to handle rendering, so see those docs for more information on what types of data can be passed in."
-              },
-              {
-                "type": "The type of the chart to display, can be `line`, `scatter`, `bar`, `pie`, or `time`. The time type is a line chart that expects the `x` values in the data to be in the temporal domain."
-              }
-            ]
-          }
-        },
-        {
-          "Display": {
-            "thumbnail": "display.png",
-            "description": "This will render the value of a variable to the screen. It is mostly useful for debugging:",
-            "image": "displayvar.gif"
-          }
-        },
-        {
           "Dynamic": {
             "thumbnail": "dynamic.png",
             "description": "This will render a dynamic variable to the screen.",
@@ -160,33 +138,6 @@ const components = [
                 "interval": "The granularity of the changes."
               }
             ]
-          }
-        },
-        {
-          "Equation": {
-            "thumbnail": "equation.png",
-            "description": "This uses [KaTeX](https://github.com/Khan/KaTeX) to typeset mathematical equations. Example:",
-            "image": "equation.png"
-          }
-        },
-        {
-          "Gist": {
-            "thumbnail": "gist.png",
-            "description": "Embed a github gist",
-            "image": "gist.png"
-          }
-        },
-        {
-          "Header": {
-            "thumbnail": "header.png",
-            "description": "This component makes it easy to add a title, subtitle, and byline to your article:",
-            "image": "header.png"
-          }
-        },
-        {
-          "Link": {
-            "thumbnail": "link.png",
-            "description": "This component just acts as syntactic sugar for displaying links inline in your text."
           }
         },
         {
@@ -239,6 +190,73 @@ const components = [
           }
         },
         {
+          "TextInput": {
+            "thumbnail": "text-input.png",
+            "description": "A user-editable text input field.",
+            "idyllProps": [
+              {
+                "value": "the current value of the text entry box."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "Presentation": {
+      "description": "These components render something to the screen, for example the `Chart` component takes data as input and can display several types of charts.",
+      "components": [
+        {
+          "Chart": {
+            "thumbnail": "chart.png",
+            "description": "This will display a chart.",
+            "image": "chart.png",
+            "idyllProps": [
+              {
+                "data": "A JSON object containing the data for this chart. It uses the [victory](https://formidable.com/open-source/victory/docs) library to handle rendering, so see those docs for more information on what types of data can be passed in."
+              },
+              {
+                "type": "The type of the chart to display, can be `line`, `scatter`, `bar`, `pie`, or `time`. The time type is a line chart that expects the `x` values in the data to be in the temporal domain."
+              }
+            ]
+          }
+        },
+        {
+          "Display": {
+            "thumbnail": "display.png",
+            "description": "This will render the value of a variable to the screen. It is mostly useful for debugging:",
+            "image": "displayvar.gif"
+          }
+        },
+        {
+          "Equation": {
+            "thumbnail": "equation.png",
+            "description": "This uses [KaTeX](https://github.com/Khan/KaTeX) to typeset mathematical equations. Example:",
+            "image": "equation.png"
+          }
+        },
+        {
+          "Gist": {
+            "thumbnail": "gist.png",
+            "description": "Embed a github gist",
+            "image": "gist.png"
+          }
+        },
+        {
+          "Header": {
+            "thumbnail": "header.png",
+            "description": "This component makes it easy to add a title, subtitle, and byline to your article:",
+            "image": "header.png"
+          }
+        },
+        {
+          "Link": {
+            "thumbnail": "link.png",
+            "description": "This component just acts as syntactic sugar for displaying links inline in your text."
+          }
+        },
+        {
           "Slideshow": {
             "thumbnail": "slideshow.png",
             "description": "This component is used to dynamically display different content. It can be used to make slideshows, but is generally useful for dynamically displaying different content of any type.",
@@ -256,17 +274,6 @@ const components = [
             "thumbnail": "table.png",
             "description": "Display tabular data. Uses https://github.com/glittershark/reactable under the hood to render the table.",
             "image": "table.png"
-          }
-        },
-        {
-          "TextInput": {
-            "thumbnail": "text-input.png",
-            "description": "A user-editable text input field.",
-            "idyllProps": [
-              {
-                "value": "the current value of the text entry box."
-              }
-            ]
           }
         }
       ]

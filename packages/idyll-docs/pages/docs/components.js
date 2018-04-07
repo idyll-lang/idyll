@@ -178,8 +178,8 @@ export default ({ url }) => (
   <Layout url={ url }>
     <h1>Built-In Components</h1>
     <p>
-      Idyll ships with a handful of components that handle common tasks. They are broken into three categories:{' '}
-      <em>layout</em>, <em>presentation</em>, and <em>helpers</em>.
+      Idyll ships with a handful of components that handle common tasks. They are broken into four categories:{' '}
+      <em>layout</em>, <em>input</em>, <em>presentation</em>, and <em>helpers</em>.
     </p>
     <div className="page-contents">
       <div>
