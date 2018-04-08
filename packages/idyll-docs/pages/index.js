@@ -100,7 +100,7 @@ The value of x is [Display value:x format:"d" /].
               <div className="output">
               {
                 ast ?
-                <IdyllDocument layout='blog' markup={exampleValue} components={IdyllComponents} key={ exampleValue }  />
+                <IdyllDocument layout='centered' markup={exampleValue} components={IdyllComponents} key={ exampleValue }  />
                 : null
               }
               {

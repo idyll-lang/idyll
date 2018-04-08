@@ -13,8 +13,19 @@ module.exports = function(input, options, callback) {
 
   options = Object.assign({}, { spellcheck: false, smartquotes: true, async: true }, options || {});
   const lex = Lexer();
-  const lexResults = lex(content);
-  const output = parse(content, lexResults.tokens.join(' '), lexResults.positions, options);
+  let lexResults = '', output = [];
+  try {
+    lexResults = lex(content);
+  } catch(err) {
+    console.warn('Error parsing Idyll markup:\n');
+    console.error(err.message);
+  }
+  try {
+    output = parse(content, lexResults.tokens.join(' '), lexResults.positions, options);
+  } catch(err) {
+    console.warn('\n\n\nError parsing Idyll markup:\n');
+    console.error(err.message);
+  }
 
   let astTransform = Processor(output, options)
     .pipe(hoistVariables)

@@ -107,6 +107,12 @@ code is needed. By default Idyll will look for your custom components
 inside of a folder called \`components/\`. If you wish to change the custom
 component path, specify it with the \`--components\` option, e.g.
 \`idyll index.idl --css styles.css --components custom/component/path/\`.
+
+## Manipulating component children
+
+If your component needs to modify the render tree of its children,
+<https://github.com/idyll-lang/idyll-component-children> is a helper library
+to filter and map the component's children.
 `)
 
 export default ({ url }) => (
