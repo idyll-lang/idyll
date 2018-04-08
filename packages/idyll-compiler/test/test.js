@@ -733,13 +733,101 @@ End text
 
   describe('error handling', function() {
     it('record line and column number of an error', function() {
-      input = 'This string contains an un-closed component [BadComponent key:"val" ] ';
+      const input = 'This string contains an un-closed component [BadComponent key:"val" ] ';
       try {
-        var output = compile(input);
+        const output = compile(input);
       } catch(err) {
         expect(err.row).to.be(1);
         expect(err.column).to.be(70);
       }
     });
   });
+
+  describe('plugins', function() {
+    it('should handle a synchronous post-processing plugin', function(done) {
+      const input = 'Hello World';
+      compile(input, { postProcessors: [(ast) => {
+        return ast.concat([['TextContainer', [], [ ':)' ]]])
+      }]}, function(err, output) {
+        expect(err).to.be(null);
+        expect(output).to.eql([
+          ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
+          ['TextContainer', [], [ ':)' ]]
+        ]);
+        done();
+      });
+    });
+
+    it('should handle an asynchronous post-processing plugin', function(done) {
+      const input = 'Hello World';
+      compile(input, { postProcessors: [(ast, callback) => {
+        callback(null, ast.concat([['TextContainer', [], [ ':)' ]]]));
+      }]}, function(err, output) {
+        expect(err).to.be(null);
+        expect(output).to.eql([
+          ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
+          ['TextContainer', [], [ ':)' ]]
+        ]);
+        done();
+      });
+    });
+
+    it('should handle multiple synchronous post-processing plugins', function(done) {
+      const input = 'Hello World';
+      compile(input, { postProcessors: [(ast) => {
+        return ast.concat([['TextContainer', [], [ ':)' ]]]);
+      }, (ast) => {
+        return ast.concat([['TextContainer', [], [ ':(' ]]]);
+      }]}, function(err, output) {
+        expect(err).to.be(null);
+        expect(output).to.eql([
+          ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
+          ['TextContainer', [], [ ':)' ]],
+          ['TextContainer', [], [ ':(' ]],
+        ]);
+        done();
+      });
+    });
+
+    it('should handle multiple asynchronous post-processing plugins', function(done) {
+      const input = 'Hello World';
+      compile(input, { postProcessors: [(ast, callback) => {
+        callback(null, ast.concat([['TextContainer', [], [ ':)' ]]]));
+      }, (ast, callback) => {
+        callback(null, ast.concat([['TextContainer', [], [ ':(' ]]]));
+      }]}, function(err, output) {
+        expect(err).to.be(null);
+        expect(output).to.eql([
+          ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
+          ['TextContainer', [], [ ':)' ]],
+          ['TextContainer', [], [ ':(' ]],
+        ]);
+        done();
+      });
+    });
+
+    it('should handle mixed synchronous and asynchronous post-processing plugins', function(done) {
+      const input = 'Hello World';
+      compile(input, { postProcessors: [(ast, callback) => {
+        callback(null, ast.concat([['TextContainer', [], [ '1' ]]]));
+      }, (ast) => {
+        return ast.concat([['TextContainer', [], [ '2' ]]]);
+      }, (ast, callback) => {
+        callback(null, ast.concat([['TextContainer', [], [ '3' ]]]));
+      }, (ast) => {
+        return ast.concat([['TextContainer', [], [ '4' ]]]);
+      }]}, function(err, output) {
+        expect(err).to.be(null);
+        expect(output).to.eql([
+          ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
+          ['TextContainer', [], [ '1' ]],
+          ['TextContainer', [], [ '2' ]],
+          ['TextContainer', [], [ '3' ]],
+          ['TextContainer', [], [ '4' ]],
+        ]);
+        done();
+      });
+    });
+
+  })
 });
