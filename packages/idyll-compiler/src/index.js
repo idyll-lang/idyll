@@ -6,12 +6,12 @@ const { cleanNewlines } = require('./processors/pre');
 const { hoistVariables, flattenChildren, cleanResults, makeFullWidth, wrapText } = require('./processors/post');
 const matter = require('gray-matter');
 
-module.exports = function(input, options) {
+module.exports = function(input, options, callback) {
   input = Processor(input).pipe(cleanNewlines).end();
 
   const { content, data } = matter(input.trim());
 
-  options = Object.assign({}, { spellcheck: false, smartquotes: true }, options || {});
+  options = Object.assign({}, { spellcheck: false, smartquotes: true, async: true }, options || {});
   const lex = Lexer();
   let lexResults = '', output = [];
   try {
@@ -27,7 +27,7 @@ module.exports = function(input, options) {
     console.error(err.message);
   }
 
-  const ret = Processor(output, options)
+  let astTransform = Processor(output, options)
     .pipe(hoistVariables)
     .pipe(flattenChildren)
     .pipe(makeFullWidth)
@@ -35,5 +35,32 @@ module.exports = function(input, options) {
     .pipe(cleanResults)
     .end();
 
-  return ret;
+  if (options.postProcessors) {
+
+    // Turn them all into promises
+    const promises = options.postProcessors.map((f) => {
+      return (ast) => {
+        return new Promise((resolve, reject) => {
+          if (f.length === 2) {
+            f(ast, (err, value) => {
+              if (err) {
+                return reject(err);
+              }
+              resolve(value);
+            })
+          } else {
+            resolve(f(ast));
+          }
+        });
+      }
+    })
+
+    return promises.reduce((promise, f, i) => {
+      return promise.then((val) => {
+        return f(val);
+      });
+    }, Promise.resolve(astTransform));
+  } else {
+    return options.async ? new Promise((resolve) => resolve(astTransform)) : astTransform;
+  }
 }

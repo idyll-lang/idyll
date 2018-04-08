@@ -6,6 +6,7 @@ node_js:
   - "9"
 
 env:
+  - PACKAGE=idyll-ast
   - PACKAGE=idyll-compiler
   - PACKAGE=idyll-components
   - PACKAGE=idyll-cli

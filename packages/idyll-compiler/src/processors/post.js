@@ -1,7 +1,7 @@
 
 const smartquotes = require('smartquotes');
 
-const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty } = require('../ast');
+const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty } = require('idyll-ast');
 
 
 const attrConvert = (list) => {

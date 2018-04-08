@@ -28,6 +28,7 @@ test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
+  - cd packages/idyll-ast && npm run test && cd ../..
   - cd packages/idyll-cli && npm run test && cd ../..
   - cd packages/idyll-compiler && npm run test && cd ../..
   - cd packages/idyll-components && npm run test && cd ../..

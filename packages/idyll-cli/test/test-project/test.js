@@ -57,7 +57,7 @@ beforeAll(done => {
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
-    compilerOptions: {
+    compiler: {
       spellcheck: false
     },
     minify: false
@@ -89,7 +89,7 @@ test('options work as expected', () => {
     datasets: join(PROJECT_DIR, 'data'),
     transform: [],
     port: 3000,
-    compilerOptions: {
+    compiler: {
       spellcheck: false
     },
     inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
