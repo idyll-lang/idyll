@@ -11,7 +11,7 @@ module.exports = function(input, options, callback) {
 
   const { content, data } = matter(input.trim());
 
-  options = Object.assign({}, { spellcheck: false, smartquotes: true }, options || {});
+  options = Object.assign({}, { spellcheck: false, smartquotes: true, async: true }, options || {});
   const lex = Lexer();
   const lexResults = lex(content);
   const output = parse(content, lexResults.tokens.join(' '), lexResults.positions, options);
@@ -44,20 +44,12 @@ module.exports = function(input, options, callback) {
       }
     })
 
-    const promise = promises.reduce((promise, f, i) => {
+    return promises.reduce((promise, f, i) => {
       return promise.then((val) => {
         return f(val);
       });
     }, Promise.resolve(astTransform));
-
-    promise.then(v => {
-      callback(null, v);
-    }).catch(e => {
-      callback(e);
-    });
-  } else if (callback) {
-    callback(null, astTransform);
   } else {
-    return astTransform;
+    return options.async ? new Promise((resolve) => resolve(astTransform)) : astTransform;
   }
 }

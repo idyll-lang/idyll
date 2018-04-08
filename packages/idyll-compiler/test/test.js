@@ -149,29 +149,29 @@ describe('compiler', function() {
   describe('parser', function() {
     it('should parse a simple string', function() {
       var input = 'Just a simple string';
-      expect(compile(input)).to.eql([['TextContainer', [],  [['p', [], ['Just a simple string']]]]]);
+      expect(compile(input, { async: false })).to.eql([['TextContainer', [],  [['p', [], ['Just a simple string']]]]]);
     });
     it('should handle multiple blocks', function() {
       var input = 'Just a simple string \n\n with some whitespace';
-      expect(compile(input)).to.eql([['TextContainer', [], [['p', [], ['Just a simple string ']], ['p', [], ['with some whitespace']]]]]);
+      expect(compile(input, { async: false })).to.eql([['TextContainer', [], [['p', [], ['Just a simple string ']], ['p', [], ['with some whitespace']]]]]);
     });
     it('should parse a closed var', function() {
       var input = '[var /]';
-      expect(compile(input)).to.eql([['var', [], []]]);
+      expect(compile(input, { async: false })).to.eql([['var', [], []]]);
     });
     it('should parse a closed component', function() {
       var input = '[var name:"v1" value:5 /]\n\nJust a simple string plus a component \n\n [VarDisplay var:v1 /]';
-      expect(compile(input)).to.eql([['var', [['name', ['value', 'v1']], ['value', ['value', 5]]], []], ['TextContainer', [], [['p', [], ['Just a simple string plus a component ']], ['VarDisplay', [['var', ['variable', 'v1']]] , []]]]]);
+      expect(compile(input, { async: false })).to.eql([['var', [['name', ['value', 'v1']], ['value', ['value', 5]]], []], ['TextContainer', [], [['p', [], ['Just a simple string plus a component ']], ['VarDisplay', [['var', ['variable', 'v1']]] , []]]]]);
     });
 
     it('should parse an open component', function() {
       var input = '[Slideshow currentSlide:1]test test test[/Slideshow]';
-      var output = compile(input);
+      var output = compile(input, { async: false });
     });
 
     it('should parse a nested component', function() {
       var input = '[Slideshow currentSlide:1]text and stuff \n\n lots of newlines.\n\n[OpenComponent key:"val" ][/OpenComponent][/Slideshow]';
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [['Slideshow', [['currentSlide', ['value', 1]]],
             [
@@ -183,7 +183,7 @@ describe('compiler', function() {
     });
     it('should handle an inline closed component', function() {
       var input = 'This is a normal text paragraph that [VarDisplay var:var /] has a component embedded in it.';
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [],
           [['p', [], [
             'This is a normal text paragraph that ',
@@ -209,7 +209,7 @@ describe('compiler', function() {
 
         End text
       `;
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [],
           [['h2', [], [
             'This is a header']
@@ -244,7 +244,7 @@ And this is a normal paragraph. This is # not a header.
 
 End text
       `;
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [],
           [['h2', [], [
             'This is a header']
@@ -268,7 +268,7 @@ End text
 
         #### This is a header
       `;
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
 
         ['TextContainer', [],
           [['h1', [], [
@@ -290,7 +290,7 @@ End text
 
         ### 3. This too.
       `;
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
 
         ['TextContainer', [],
           [['h1', [], [
@@ -307,7 +307,7 @@ End text
 
     it('should parse an open component with a break at the end', function() {
       var input = '[Slideshow currentSlide:1]text and stuff \n\n [/Slideshow]';
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [],
             [['Slideshow', [['currentSlide', ['value', 1]]],
@@ -320,7 +320,7 @@ End text
     });
     it('should parse a paragraph and code fence', function() {
       var input = 'text text text lots of text\n\n\n```\nvar code = true;\n```\n';
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['p', [], ['text text text lots of text']],
@@ -330,7 +330,7 @@ End text
     });
     it('should parse a code fence with backticks inside', function() {
       var input = 'text text text lots of text\n\n\n````\n```\nvar code = true;\n```\n````\n';
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['p', [], ['text text text lots of text']],
@@ -340,7 +340,7 @@ End text
     });
     it('should parse inline code with backticks inside', function() {
       var input = 'text text text lots of text `` `var code = true;` ``\n';
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['p', [], ['text text text lots of text ', ['code', [], ['`var code = true;`']]]]
@@ -349,7 +349,7 @@ End text
     });
     it('should handle backticks in a paragraph', function() {
       var input = "regular text and stuff, then some `code`";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['p', [], ['regular text and stuff, then some ', ['code', [], ['code']]]]
@@ -360,7 +360,7 @@ End text
 
     it('should accept negative numbers', function() {
       var input = "[component prop:-10 /]";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['component', [['prop', ['value', -10]]], []]
@@ -371,7 +371,7 @@ End text
 
     it('should accept positive numbers', function() {
       var input = "[component prop:10 /]";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['component', [['prop', ['value', 10]]], []]
@@ -382,7 +382,7 @@ End text
 
     it('should handle booleans', function() {
       const input = "[component prop:true /]";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['component', [['prop', ['value', true]]], []]
@@ -392,7 +392,7 @@ End text
 
     it('should handle booleans in backticks', function() {
       const input = "[component prop:`true` /]";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['component', [['prop', ['expression', 'true']]], []]
@@ -402,7 +402,7 @@ End text
 
     it('should handle italics and bold', function() {
       const input = "regular text and stuff, then some *italics* and some **bold**.";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['p', [], ['regular text and stuff, then some ', ['em', [], ['italics']], ' and some ', ['strong', [], ['bold']], '.']]
@@ -412,7 +412,7 @@ End text
 
     it('should handle unordered list', function() {
       const input = "* this is the first unordered list item\n* this is the second unordered list item";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
           ['ul', [], [
@@ -425,7 +425,7 @@ End text
 
     it('should handle ordered list', function() {
       const input = "1. this is the first ordered list item\n2. this is the second ordered list item";
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
         [
           ['TextContainer', [], [
             ['ol', [], [
@@ -439,7 +439,7 @@ End text
 
     it('should handle inline links', function() {
       const input = "If you want to define an [inline link](https://idyll-lang.github.io) in the standard markdown style, you can do that.";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ["p",[],["If you want to define an ",["a",[["href",["value","https://idyll-lang.github.io"]]],["inline link"]]," in the standard markdown style, you can do that."]]
         ]]
@@ -448,7 +448,7 @@ End text
     });
     it('should handle inline images', function() {
       const input = "If you want to define an ![inline image](https://idyll-lang.github.io/logo-text.svg) in the standard markdown style, you can do that.";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ["p",[],["If you want to define an ",["img",[["src",["value","https://idyll-lang.github.io/logo-text.svg"]], ["alt", ["value", "inline image"]]],[]]," in the standard markdown style, you can do that."]]]
         ]]
@@ -457,7 +457,7 @@ End text
 
     it('should handle lines that start with bold or italic', function() {
       const input = "**If** I start a line with bold this should work,\nwhat if I\n\n*start with an italic*?";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ["p",[],[["strong",[],["If"]]," I start a line with bold this should work,\nwhat if I"]],["p",[],[["em",[],["start with an italic"]],"?"]]
         ]]
@@ -466,14 +466,14 @@ End text
     })
     it('should handle component name with a period', function() {
       const input = "This component name has a period separator [component.val /].";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ["p",[],["This component name has a period separator ",["component.val",[],[]],"."]]
         ]]]);
     })
     it('should handle component name with multiple periods', function() {
       const input = "This component name has a period separator [component.val.v /].";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ["p",[],["This component name has a period separator ",["component.val.v",[],[]],"."]]
         ]]
@@ -482,7 +482,7 @@ End text
 
     it('should handle strong text with a p', function() {
       const input = "**p a**";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['strong', [], ['p a']]
         ]]
@@ -491,7 +491,7 @@ End text
 
     it('should handle strong emphasized text using asterisks', function() {
       const input = "***test***";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['strong', [], [['em', [], ['test']]]]
         ]]
@@ -500,7 +500,7 @@ End text
 
     it('should handle strong emphasized text using underscores', function() {
       const input = "___test___";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['strong', [], [['em', [], ['test']]]]
         ]]
@@ -509,7 +509,7 @@ End text
 
     it('should handle strong emphasized text using mixed asterisks and underscores - 1', function() {
       const input = "_**test**_";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['em', [], [['strong', [], ['test']]]]
         ]]
@@ -517,7 +517,7 @@ End text
     })
     it('should handle strong emphasized text using mixed asterisks and underscores - 2', function() {
       const input = "**_test_**";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['strong', [], [['em', [], ['test']]]]
         ]]
@@ -526,7 +526,7 @@ End text
 
     it('should merge consecutive word blocks', function() {
       const input = "[Equation]y = 0[/Equation]";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['equation', [], ['y = 0']]
         ]]
@@ -535,7 +535,7 @@ End text
 
     it('should not put smartquotes in code blocks', function() {
       const input = "`Why 'hello' there`";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['code', [], ["Why 'hello' there"]]
         ]]
@@ -543,7 +543,7 @@ End text
     })
     it('should handle a language in a codeblock ', function() {
       const input = "```json\n{}\n```";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['CodeHighlight', [['language', ['value', 'json']]], ["{}"]]
         ]]
@@ -553,7 +553,7 @@ End text
 
     it('should handle an i tag', function() {
       const input = "[i]not even em[/i]";
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['i', [], ['not even em']]
         ]]
@@ -568,7 +568,7 @@ End text
 
         [Slide/]
       [/Slideshow]`;
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['Slideshow', [], [['Slide', [], []], ['Slide', [], []], ['Slide', [], []]] ]
         ]]
@@ -577,7 +577,7 @@ End text
 
     it('should handle items nested in a header', function() {
       const input = `# My header is **bold**!`;
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ["h1",[],["My header is ",["strong",[],["bold"]],"!"]]
         ]]
@@ -596,7 +596,7 @@ End text
 
         This is not full width
       `;
-      expect(compile(input)).to.eql([
+      expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [], [
           ['p',
           [],
@@ -621,7 +621,7 @@ End text
 *Wow!*
       `;
 
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
           ['ul', [], [
@@ -636,7 +636,7 @@ End text
     it('should preserve space between inline blocks - 1', function() {
       const input = `*text* __other text__`;
 
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
           ['p', [], [
@@ -651,7 +651,7 @@ End text
 
       const input = `[em]text[/em] [b]other text[/b]`;
 
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
           ['p', [], [
@@ -668,7 +668,7 @@ End text
       const input = `[equation display:true]\sum_{j=0}^n x^{j} + \sum x^{k}[/equation]`;
 
 
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
           ['equation', [['display', ['value', true]]], [
@@ -686,7 +686,7 @@ End text
       `;
 
 
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
           ['equation', [['display', ['value', true]]], [
@@ -698,7 +698,7 @@ End text
 
     it('should handle code blocks with parens inside', function() {
       const input = `[code](n - 1)!/2 possible paths[/code]`;
-      expect(compile(input)).to.eql(
+      expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
           ['code', [], [
@@ -718,7 +718,7 @@ End text
     //   on
     //   ?
     //   `;
-    //   expect(compile(input)).to.eql(
+    //   expect(compile(input, { async: false })).to.eql(
     //   [
     //     ['TextContainer', [], [
     //       ['code', [], [
@@ -735,7 +735,7 @@ End text
     it('record line and column number of an error', function() {
       const input = 'This string contains an un-closed component [BadComponent key:"val" ] ';
       try {
-        const output = compile(input);
+        const output = compile(input, { async: false });
       } catch(err) {
         expect(err.row).to.be(1);
         expect(err.column).to.be(70);
@@ -748,8 +748,7 @@ End text
       const input = 'Hello World';
       compile(input, { postProcessors: [(ast) => {
         return ast.concat([['TextContainer', [], [ ':)' ]]])
-      }]}, function(err, output) {
-        expect(err).to.be(null);
+      }]}).then(function(output) {
         expect(output).to.eql([
           ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
           ['TextContainer', [], [ ':)' ]]
@@ -762,8 +761,7 @@ End text
       const input = 'Hello World';
       compile(input, { postProcessors: [(ast, callback) => {
         callback(null, ast.concat([['TextContainer', [], [ ':)' ]]]));
-      }]}, function(err, output) {
-        expect(err).to.be(null);
+      }]}).then(function(output) {
         expect(output).to.eql([
           ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
           ['TextContainer', [], [ ':)' ]]
@@ -778,8 +776,7 @@ End text
         return ast.concat([['TextContainer', [], [ ':)' ]]]);
       }, (ast) => {
         return ast.concat([['TextContainer', [], [ ':(' ]]]);
-      }]}, function(err, output) {
-        expect(err).to.be(null);
+      }]}).then(function(output) {
         expect(output).to.eql([
           ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
           ['TextContainer', [], [ ':)' ]],
@@ -795,14 +792,14 @@ End text
         callback(null, ast.concat([['TextContainer', [], [ ':)' ]]]));
       }, (ast, callback) => {
         callback(null, ast.concat([['TextContainer', [], [ ':(' ]]]));
-      }]}, function(err, output) {
-        expect(err).to.be(null);
-        expect(output).to.eql([
-          ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
-          ['TextContainer', [], [ ':)' ]],
-          ['TextContainer', [], [ ':(' ]],
-        ]);
-        done();
+      }]})
+        .then(function(output) {
+          expect(output).to.eql([
+            ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
+            ['TextContainer', [], [ ':)' ]],
+            ['TextContainer', [], [ ':(' ]],
+          ]);
+          done();
       });
     });
 
@@ -816,8 +813,7 @@ End text
         callback(null, ast.concat([['TextContainer', [], [ '3' ]]]));
       }, (ast) => {
         return ast.concat([['TextContainer', [], [ '4' ]]]);
-      }]}, function(err, output) {
-        expect(err).to.be(null);
+      }]}).then(function(output) {
         expect(output).to.eql([
           ['TextContainer', [], [ [ 'p', [], ['Hello World']] ]],
           ['TextContainer', [], [ '1' ]],

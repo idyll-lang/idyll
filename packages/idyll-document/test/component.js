@@ -14,7 +14,7 @@ describe('IdyllDocument', () => {
 
   beforeEach(() => {
     ast = JSON.parse(fixture('ast.json'));
-    astDoc = shallow(<IdyllDocument ast={ast} components={components} />);
+    astDoc = mount(<IdyllDocument ast={ast} components={components} />);
   });
 
   it('can be constructed with ast prop', () => {
@@ -32,17 +32,33 @@ describe('IdyllDocument', () => {
 });
 
 describe('Source to Doc', () => {
-  it('can create a header', () => {
-    const ast = compile('# A header');
-    const doc = shallow(<IdyllDocument ast={ast} components={components} />);
-    expect(doc).toBeDefined();
-    expect(doc.find('h1').length).toBe(1);
+  it('can create a header', (done) => {
+    compile('# A header')
+      .then((ast) => {
+        const doc = mount(<IdyllDocument ast={ast} components={components} />);
+        expect(doc).toBeDefined();
+        expect(doc.find('h1').length).toBe(1);
+        done();
+      });
   })
 
-  it('can create an SVG', () => {
-    const ast = compile('[SVG /]');
-    const doc = shallow(<IdyllDocument ast={ast} components={components} />);
-    expect(doc).toBeDefined();
-    // underlying component is async so just make sure nothing blew up
+  it('can create an SVG', (done) => {
+    compile('[SVG /]')
+      .then((ast) => {
+        const doc = mount(<IdyllDocument ast={ast} components={components} />);
+        expect(doc).toBeDefined();
+        done();
+      });
+  })
+
+  it('works with markup instead of an AST', (done) => {
+    const doc = mount(<IdyllDocument markup={'# A header'} components={components} />);
+
+    setTimeout(() => {
+      doc.update();
+      expect(doc).toBeDefined();
+      expect(doc.find('h1').length).toBe(1);
+      done();
+    }, 100)
   })
 })

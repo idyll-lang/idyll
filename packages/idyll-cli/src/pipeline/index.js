@@ -22,64 +22,65 @@ const build = (opts, paths, inputConfig) => {
     opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
   }
 
-  return Promise.try(
-    // this is all synchronous so we wrap it with Promise.try
-    // to start a Promise chain and turn any synchronous exceptions into a rejection
-    () => {
-      // opts.compilerOptions is kept for backwards compatability
-      const ast = compile(opts.inputString, opts.compiler || opts.compilerOptions);
-      const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
+  return compile(opts.inputString, opts.compiler || opts.compilerOptions)
+    .then((ast) => {
+      return Promise.try(
+        () => {
+          // opts.compilerOptions is kept for backwards compatability
+          const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
-      output = {
-        ast: getASTJSON(ast),
-        components: getComponentsJS(ast, paths, inputConfig),
-        css: css(opts),
-        data: getDataJS(ast, paths.DATA_DIR),
-        syntaxHighlighting: getHighlightJS(ast, paths),
-        opts: {
-          ssr: opts.ssr,
-          theme: opts.theme,
-          layout: opts.layout
-        }
-      };
-      if (!opts.ssr) {
-        output.html = getBaseHTML(ast, template);
-      } else {
-        output.html = getHTML(
-          paths,
-          ast,
-          output.components,
-          output.data,
-          template,
-          {
-            ssr: opts.ssr,
-            theme: opts.theme,
-            layout: opts.layout
+          output = {
+            ast: getASTJSON(ast),
+            components: getComponentsJS(ast, paths, inputConfig),
+            css: css(opts),
+            data: getDataJS(ast, paths.DATA_DIR),
+            syntaxHighlighting: getHighlightJS(ast, paths),
+            opts: {
+              ssr: opts.ssr,
+              theme: opts.theme,
+              layout: opts.layout
+            }
+          };
+          if (!opts.ssr) {
+            output.html = getBaseHTML(ast, template);
+          } else {
+            output.html = getHTML(
+              paths,
+              ast,
+              output.components,
+              output.data,
+              template,
+              {
+                ssr: opts.ssr,
+                theme: opts.theme,
+                layout: opts.layout
+              }
+            );
           }
-        );
+        }
+      )
+
+    })
+    .then(() => {
+      return bundleJS(opts, paths, output); // create index.js bundle
+    })
+    .then((js) => {
+      // minify bundle if necessary and store it
+      if (opts.minify) {
+        js = UglifyJS.minify(js, {fromString: true, mangle: { keep_fnames: true}}).code;
       }
-    }
-  )
-  .then(() => {
-    return bundleJS(opts, paths, output); // create index.js bundle
-  })
-  .then((js) => {
-    // minify bundle if necessary and store it
-    if (opts.minify) {
-      js = UglifyJS.minify(js, {fromString: true, mangle: { keep_fnames: true}}).code;
-    }
-    output.js = js;
-  })
-  .then(() => {
-    return Promise.all([
-      writeFile(paths.JS_OUTPUT_FILE, output.js),
-      writeFile(paths.CSS_OUTPUT_FILE, output.css),
-      writeFile(paths.HTML_OUTPUT_FILE, output.html),
-    ]);
-  })
-  .then(() => {
-    return output; // return all results
-  });
+      output.js = js;
+    })
+    .then(() => {
+      return Promise.all([
+        writeFile(paths.JS_OUTPUT_FILE, output.js),
+        writeFile(paths.CSS_OUTPUT_FILE, output.css),
+        writeFile(paths.HTML_OUTPUT_FILE, output.html),
+      ]);
+    })
+    .then(() => {
+      return output; // return all results
+    });
 }
 
 const updateCSS = (opts, paths) => {

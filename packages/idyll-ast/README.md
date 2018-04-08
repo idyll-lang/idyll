@@ -16,13 +16,14 @@ npm install --save idyll-ast
 const ast = require('idyll-ast');
 const compile = require('idyll-compiler');
 
-const inputAST = compile(`
+compile(`
  # idyll markup goes here
-`);
-
-const transformedAST = ast.modifyNodesByName(inputAST, 'h1', (node) => {
-  node = ast.setProperty(node, 'className', 'super-great-header');
-  return node;
+`)
+.then((ast) => {
+  const transformedAST = ast.modifyNodesByName(inputAST, 'h1', (node) => {
+    node = ast.setProperty(node, 'className', 'super-great-header');
+    return node;
+  })
 })
 
 ```
