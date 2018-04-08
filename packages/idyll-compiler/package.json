@@ -1,6 +1,6 @@
 {
   "name": "idyll-compiler",
-  "version": "2.5.7",
+  "version": "2.6.0",
   "description": "Compiler for idyll",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
