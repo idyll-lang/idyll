@@ -1,6 +1,6 @@
 {
   "name": "idyll-ast",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilities for manipulating Idyll's AST",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -34,7 +34,5 @@
     "expect.js": "^0.3.1",
     "mocha": "^3.2.0",
     "rimraf": "^2.6.2"
-  },
-  "dependencies": {
   }
 }
