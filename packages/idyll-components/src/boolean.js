@@ -23,4 +23,15 @@ Boolean.defaultProps = {
   value: false
 };
 
+
+Boolean._idyll = {
+  name: "Boolean",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "boolean",
+    example: "x"
+  }]
+}
+
 export default Boolean;

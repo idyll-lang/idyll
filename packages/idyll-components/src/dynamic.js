@@ -41,4 +41,27 @@ Dynamic.defaultProps = {
   interval: 1
 };
 
+
+Dynamic._idyll = {
+  name: "Dynamic",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "number",
+    example: "x"
+  }, {
+    name: "format",
+    type: "string",
+    example: '"0.2f"'
+  }, {
+    name: "min",
+    type: "number",
+    example: '-100'
+  }, {
+    name: "max",
+    type: "number",
+    example: '100'
+  }]
+}
+
 export default Dynamic;

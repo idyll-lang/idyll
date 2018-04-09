@@ -12,4 +12,10 @@ class Aside extends React.PureComponent {
   }
 }
 
+
+Aside._idyll = {
+  name: "Aside",
+  tagType: "open"
+}
+
 export default Aside;

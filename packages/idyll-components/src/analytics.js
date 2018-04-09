@@ -22,4 +22,16 @@ class Analytics extends React.PureComponent {
 }
 
 
+Analytics._idyll = {
+  name: "Analytics",
+  tagType: "closed",
+  props: [{
+    name: "google",
+    type: 'string',
+    example: '"UA-XXXXXXX"'
+  }]
+}
+
+
+
 export default Analytics;
