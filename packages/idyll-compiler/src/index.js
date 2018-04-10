@@ -17,14 +17,14 @@ module.exports = function(input, options, callback) {
   try {
     lexResults = lex(content);
   } catch(err) {
-    console.warn('Error parsing Idyll markup:\n');
-    console.error(err.message);
+    console.warn(`\nError parsing Idyll markup:\n${err.message}`);
+    return new Promise((resolve, reject) => reject(err));
   }
   try {
     output = parse(content, lexResults.tokens.join(' '), lexResults.positions, options);
   } catch(err) {
-    console.warn('\n\n\nError parsing Idyll markup:\n');
-    console.error(err.message);
+    console.warn(`\nError parsing Idyll markup:\n${err.message}`);
+    return new Promise((resolve, reject) => reject(err));
   }
 
   let astTransform = Processor(output, options)
