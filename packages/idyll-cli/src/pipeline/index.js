@@ -3,6 +3,8 @@ const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
+const debug = require('debug')('idyll-cli')
+
 const {
   getASTJSON,
   getComponentsJS,

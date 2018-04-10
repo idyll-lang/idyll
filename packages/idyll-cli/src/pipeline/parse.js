@@ -6,6 +6,7 @@ const resolve = require('resolve');
 const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
 const Papa = require('papaparse');
+const debug = require('debug')('idyll-cli')
 
 const getFilteredAST = (ast) => {
   const ignoreNames = ['meta'];
@@ -72,10 +73,12 @@ exports.getComponentsJS = (ast, paths, inputConfig) => {
       if (!acc[name]) {
         const p = checkFile(pascalCase(name));
         if (p) {
+          debug(`Resolving component ${name} to path ${p}`);
           acc[name] = p;
         } else {
           const r = checkFile(name);
           if (r) {
+            debug(`Resolving component ${name} to path ${p}`);
             acc[name] = r;
           }
           else if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
@@ -126,8 +129,10 @@ exports.getDataJS = (ast, DATA_DIR, o) => {
       );
 
       if (source.endsWith('.csv')) {
+        debug(`Loading ${source} as a CSV into data variable ${name}`)
         acc[name] = Papa.parse(slash(path.join(DATA_DIR, source)), { header: true }).data;
       } else if (source.endsWith('.json')) {
+        debug(`Loading ${source} as a JSON document into data variable ${name}`)
         acc[name] = require(slash(path.join(DATA_DIR, source)));
       } else {
         throw new Error('Unknown data file type: ' + source);

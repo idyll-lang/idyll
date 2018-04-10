@@ -7,10 +7,11 @@ const {
 } = require('path');
 const EventEmitter = require('events');
 const changeCase = require('change-case');
+const debug = require('debug')('idyll-cli')
+
 const pathBuilder = require('./path-builder');
 const configureNode = require('./node-config');
 const pipeline = require('./pipeline');
-
 
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
@@ -39,6 +40,8 @@ const idyll = (options = {}, cb) => {
   if (opts.watch) opts.minify = false; // speed!
 
   const paths = pathBuilder(opts);
+  debug('Reading from paths:', paths);
+
   configureNode(paths);
 
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
@@ -68,10 +71,15 @@ const idyll = (options = {}, cb) => {
 
     build(src) {
       if (src) opts.inputString = src;
+
+      debug('Starting the build');
+      // Leaving the following timing statement in for backwards-compatibility.
       if (opts.debug) console.time('Build Time');
 
       pipeline.build(opts, paths, inputConfig)
         .then((output) => {
+          debug('Build completed');
+          // Leaving the following timing statement in for backwards-compatibility.
           if (opts.debug) console.timeEnd('Build Time')
           this.emit('update', output);
         })

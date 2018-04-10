@@ -3,9 +3,13 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const Module = require('module');
 const os = require('os');
+const debug = require('debug')('idyll-cli')
 
 module.exports = (paths) => {
   const transformFolders = [paths.COMPONENTS_DIR, paths.DEFAULT_COMPONENTS_DIR];
+
+  debug('Reading components from directories:', transformFolders);
+
   const originalLoad = Module._load;
   const isWindows = os.platform().includes('win');
   Module._load = function (path) {

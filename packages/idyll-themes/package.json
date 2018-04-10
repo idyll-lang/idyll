@@ -41,5 +41,8 @@
     "cross-env": "^5.0.5",
     "jest": "^20.0.4",
     "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "debug": "^3.1.0"
   }
 }

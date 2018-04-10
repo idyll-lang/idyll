@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const idyll = require('../src/');
+const debug = require('debug')('idyll-cli')
 
 var argv = require('yargs')
   .usage('Usage: idyll index.idl')
@@ -73,5 +74,7 @@ delete argv['no-ssr'];
 Object.keys(argv).forEach((key) => {
   if (argv[key] === undefined) delete argv[key];
 })
+
+debug('Using CLI arguments:', argv)
 
 idyll(argv).build();

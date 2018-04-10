@@ -37,6 +37,7 @@
     "browserify": "^14.3.0",
     "browserify-incremental": "^3.1.1",
     "change-case": "^3.0.1",
+    "debug": "^3.1.0",
     "dev-null": "^0.1.1",
     "findup-sync": "^1.0.0",
     "html-tags": "^1.1.1",
