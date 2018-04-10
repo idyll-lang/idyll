@@ -24,15 +24,16 @@ class Equation extends React.PureComponent {
     let dom;
 
     const cssId = 'idyll-equation-css';  // you could encode the css path itself to generate id..
-    if (document && !document.getElementById(cssId) && !this.props.skipCSS && !select("link[href='/path/to.css']").size()) {
+    const cssURL = '//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css'
+    if (document && !document.getElementById(cssId) && !this.props.skipCSS && !select(`link[href='${cssURL}']`).size()) {
       const heads = document.getElementsByTagName('head')
       if (heads.length) {
         const head  = heads[0];
         const link  = document.createElement('link');
         link.id   = cssId;
+        link.href = cssURL;
         link.rel  = 'stylesheet';
         link.type = 'text/css';
-        link.href = '//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css';
         link.media = 'all';
         head.appendChild(link);
       }
