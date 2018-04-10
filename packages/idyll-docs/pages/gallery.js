@@ -4,7 +4,7 @@ import ExampleGroup from '../components/example-group'
 
 const exampleGroups = [
   {
-    title: 'Full articles',
+    title: 'Articles and blog posts',
     examples: [
       {
         label: 'Barnes-Hut',
@@ -65,6 +65,11 @@ const exampleGroups = [
         label: 'Firebase',
         href: 'https://mathisonian.github.io/idyll/firebase/',
         image: 'firebase.png'
+      },
+      {
+        label: 'Apparatus',
+        href: 'https://mathisonian.com/writing/apparatus',
+        image: 'apparatus.png'
       }
     ],
   },
