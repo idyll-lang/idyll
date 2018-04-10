@@ -85,33 +85,13 @@ Chart._idyll = {
   name: "Chart",
   tagType: "closed",
   props: [{
-    name: "domain",
-    type: "array",
-    example: "`[-1, 1]`"
-  },{
-    name: "range",
-    type: "array",
-    example: "`[-1, 1]`"
-  },{
-    name: "domainPadding",
-    type: "array",
-    example: "`[-1, 1]`"
-  },{
-    name: "samplePoints",
-    type: "array",
-    example: "`[-1, 1]`"
-  },{
     name: "type",
-    type: "array",
-    example: "`[-1, 1]`"
+    type: "string",
+    example: '"scatter"'
   },{
     name: "data",
     type: "array",
     example: "`[{x: 1, y: 1}, { x: 2, y: 2 }]`"
-  },{
-    name: "equation",
-    type: "function",
-    example: "`(x) => x * x`"
   }]
 }
 

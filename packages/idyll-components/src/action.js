@@ -3,7 +3,7 @@ import React from 'react';
 class Action extends React.PureComponent {
   render() {
     return (
-      <span {...this.props} className={'action'}>{this.props.children}</span>
+      <span {...this.props} className={'idyll-action'}>{this.props.children}</span>
     );
   }
 }

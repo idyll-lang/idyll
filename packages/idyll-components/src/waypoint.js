@@ -13,4 +13,14 @@ class Waypoint extends React.PureComponent {
 
 }
 
+Waypoint._idyll = {
+  name: "Waypoint",
+  tagType: "open",
+  props: [{
+    name: "onEnterView",
+    type: "event",
+    example: "`x = true`"
+  }]
+}
+
 export default Waypoint;

@@ -281,4 +281,14 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
                             div.table-wrapper, table { width: 85%; }
                             img { width: 100%; } }
 
+
+
+.idyll-dynamic {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.idyll-action {
+  text-decoration: underline;
+}
 `

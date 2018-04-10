@@ -78,5 +78,18 @@ EmbeddedGist.defaultProps = {
   gist: 'mathisonian/689614257cb1af6b15de3344da6cdc7a'
 }
 
+Gist._idyll = {
+  name: "Gist",
+  tagType: "closed",
+  props: [{
+    name: "gist",
+    type: "string",
+    example: '"0f83a12e29b268ffca39f471ecf39e91"'
+  }, {
+    name: 'file',
+    type: 'string',
+    example: '"particles.idl"'
+  }]
+}
 export default EmbeddedGist;
 
