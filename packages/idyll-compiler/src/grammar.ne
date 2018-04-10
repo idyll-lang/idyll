@@ -49,7 +49,7 @@ Header -> "HEADER_" [1-6] (__ ParagraphItem):+ __ "HEADER_END" {%
   }
 %}
 
-Header -> "QUOTE_START" (__ ParagraphItem):+ __ "QUOTE_END" {%
+Quote -> "QUOTE_START" (__ ParagraphItem):+ __ "QUOTE_END" {%
   function(data, location, reject) {
     var children = [];
     data[1].map(function (child) {
