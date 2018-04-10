@@ -1,5 +1,6 @@
-import Link from 'next/link'
-import Layout from '../components/basic-layout'
+
+import { Link } from '../routes';
+import Layout from '../components/basic-layout';
 import { indexedItems } from '../gallery/contents';
 
 

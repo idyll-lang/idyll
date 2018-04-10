@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '../routes';
 
 const imageUrl = (url) => /^http/.test(url) ? url : `/static/images/${url}`
 
@@ -15,14 +15,14 @@ function slugify(text)
 
 export default ({ href, label, image }) => (
   <div className="example">
-    <Link href={ `/gallery/${slugify(label)}` }>
-      <div>
+    <Link route='gallery-item' params={{slug: slugify(label)}}>
+      <a>
         <div
           className="example-image"
           style={{ backgroundImage: `url(${imageUrl(image)})` }}
         ></div>
         <div className="example-label">{ label }</div>
-      </div>
+      </a>
     </Link>
 
     <style jsx>{`

@@ -24,7 +24,8 @@ const exampleGroups = [
       {
         label: 'Autumn Colormaps',
         href: 'https://mathisonian.github.io/idyll/fall-colors/',
-        image: 'https://mathisonian.github.io/idyll/fall-colors/images/share.png'
+        image: 'https://mathisonian.github.io/idyll/fall-colors/images/share.png',
+        sourceUrl: "https://github.com/mathisonian/idyll/tree/master/fall-colors"
       },
       {
         label: 'An Idyll Walkthrough',
@@ -87,11 +88,13 @@ const exampleGroups = [
         label: 'Lorenz Attractor',
         href: 'https://mathisonian.github.io/lorenz/',
         image: 'lorenz.png',
+        sourceUrl: 'https://github.com/mathisonian/lorenz'
       },
       {
         label: 'Nonlinear Sliders',
         href: 'https://mathisonian.github.io/idyll/nonlinear-sliders/',
         image: 'nonlinear.png',
+        sourceUrl: 'https://github.com/mathisonian/idyll/tree/master/nonlinear-sliders'
       },
       {
         label: 'Scrolly Idyll',
