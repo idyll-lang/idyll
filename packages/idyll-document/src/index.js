@@ -62,7 +62,7 @@ class IdyllDocument extends React.Component {
       <Runtime
         {...this.props}
         key={ this.state.hash }
-        context={(context) => { this.idyllContext = context; return this.props.context(context); }}
+        context={(context) => { this.idyllContext = context; this.props.context && this.props.context(context); }}
         initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
         ast={ this.props.ast || this.state.ast }
          />
