@@ -24,7 +24,7 @@ class Equation extends React.PureComponent {
     let dom;
 
     const cssId = 'idyll-equation-css';  // you could encode the css path itself to generate id..
-    if (document && !document.getElementById(cssId)) {
+    if (document && !document.getElementById(cssId) && !this.props.skipCSS && !select("link[href='/path/to.css']").size()) {
       const heads = document.getElementsByTagName('head')
       if (heads.length) {
         const head  = heads[0];
