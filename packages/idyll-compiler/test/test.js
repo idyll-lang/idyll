@@ -29,6 +29,13 @@ describe('compiler', function() {
       var results = lex("\n## my title");
       expect(results.tokens.join(' ')).to.eql('BREAK HEADER_2 WORDS TOKEN_VALUE_START "my title" TOKEN_VALUE_END HEADER_END EOF');
     });
+
+    it('should recognize block quotes', function() {
+      var lex = Lexer();
+      var results = lex("\n> My blockquote");
+      expect(results.tokens.join(' ')).to.eql('BREAK QUOTE_START WORDS TOKEN_VALUE_START "My blockquote" TOKEN_VALUE_END QUOTE_END EOF');
+    });
+
     it('should handle newlines', function() {
       var lex = Lexer();
       var results = lex("\n\n\n\n text \n\n");
@@ -225,6 +232,36 @@ describe('compiler', function() {
           ], ['component', [], ['This is not a # header inside a component.']
           ], ['component', [], []
           ], ['h1', [], ['Header']
+          ], ['p', [], ['End text']
+          ]]]
+      ]);
+    });
+    it('should handle quotes', function() {
+      var input = `
+        > This is a quote
+        And this is a normal paragraph. This is > not a quote.
+
+        [component]> This quote is inside a component.[/component]
+
+        [component]This is not a > quote inside a component.[/component]
+
+        [component /]
+
+        > quote
+
+        End text
+      `;
+      expect(compile(input, { async: false })).to.eql([
+        ['TextContainer', [],
+          [['blockquote', [], [
+            'This is a quote']
+          ],['p', [], [
+            'And this is a normal paragraph. This is > not a quote.']
+          ], ['component', [],
+            [['blockquote', [], ['This quote is inside a component.']]]
+          ], ['component', [], ['This is not a > quote inside a component.']
+          ], ['component', [], []
+          ], ['blockquote', [], ['quote']
           ], ['p', [], ['End text']
           ]]]
       ]);
