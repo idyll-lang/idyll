@@ -78,7 +78,7 @@ EmbeddedGist.defaultProps = {
   gist: 'mathisonian/689614257cb1af6b15de3344da6cdc7a'
 }
 
-Gist._idyll = {
+EmbeddedGist._idyll = {
   name: "Gist",
   tagType: "closed",
   props: [{
