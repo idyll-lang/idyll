@@ -31,6 +31,7 @@ const exampleGroups = [
         label: 'An Idyll Walkthrough',
         href: 'https://mathisonian.github.io/idyll/a-walk-on-the-idyll-side/',
         image: 'walk-on-the-idyll-side.png',
+        sourceUrl: "https://github.com/mathisonian/idyll/tree/master/introducing-idyll"
       },
       {
         label: 'Seattle PD’s Dashcam Problem',
