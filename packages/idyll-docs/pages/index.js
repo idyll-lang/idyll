@@ -98,11 +98,7 @@ The value of x is [Display value:x format:"d" /].
 
               <div className="label">Output</div>
               <div className="output">
-              {
-                ast ?
-                <IdyllDocument layout='centered' markup={exampleValue} components={IdyllComponents} key={ exampleValue }  />
-                : null
-              }
+                <IdyllDocument layout='centered' markup={exampleValue} components={IdyllComponents} />
               {
                 error ? (
                   <pre>

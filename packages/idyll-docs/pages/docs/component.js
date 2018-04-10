@@ -16,6 +16,11 @@ function md2html(md, naked = false) {
   return Parser(html)
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
 class IdyllComponentDoc extends React.Component {
   render() {
     const {

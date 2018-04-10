@@ -29,4 +29,17 @@ Select.defaultProps = {
   options: []
 }
 
+Select._idyll = {
+  name: "Select",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "string",
+    example: "x"
+  }, {
+    name: "options",
+    type: "array",
+    example: '`["option1", "option2"]`'
+  }]
+}
 export default Select;

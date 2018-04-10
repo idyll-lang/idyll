@@ -31,4 +31,17 @@ Slideshow.defaultProps = {
   currentSlide: 1
 };
 
+Slideshow._idyll = {
+  name: "Slideshow",
+  tagType: "open",
+  children: [`
+[slide]This is the content for slide 1[/slide]
+[slide]This is the content for slide 2[/slide]
+[slide]This is the content for slide 3[/slide]`],
+  props: [{
+    name: "currentSlide",
+    type: "number",
+    example: 'x'
+  }]
+}
 export default Slideshow;

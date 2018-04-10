@@ -31,4 +31,19 @@ class Display extends React.PureComponent {
   }
 }
 
+
+Display._idyll = {
+  name: "Display",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "number",
+    example: "x"
+  }, {
+    name: "format",
+    type: "string",
+    example: '"0.2f"'
+  }]
+}
+
 export default Display;

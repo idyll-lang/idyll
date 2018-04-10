@@ -27,4 +27,26 @@ class Header extends React.PureComponent {
   }
 }
 
+Header._idyll = {
+  name: "Header",
+  tagType: "closed",
+  props: [{
+    name: "title",
+    type: "string",
+    example: '"Article Title"'
+  }, {
+    name: 'subtitle',
+    type: 'string',
+    example: '"Article subtitle."'
+  }, {
+    name: 'author',
+    type: 'string',
+    example: '"Author Name"'
+  }, {
+    name: 'authorLink',
+    type: 'string',
+    example: '"author.website"'
+  }]
+}
+
 export default Header;

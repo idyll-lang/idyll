@@ -117,5 +117,9 @@ span.action {
   cursor: pointer;
 }
 
+.idyll-dynamic {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
 
 `

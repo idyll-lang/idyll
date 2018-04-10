@@ -31,4 +31,19 @@ Radio.defaultProps = {
   options: []
 };
 
+
+Radio._idyll = {
+  name: "Radio",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "string",
+    example: "x"
+  }, {
+    name: "options",
+    type: "array",
+    example: '`["option1", "option2"]`'
+  }]
+}
+
 export default Radio;

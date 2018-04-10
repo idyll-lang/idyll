@@ -13,5 +13,15 @@ SVG.defaultProps = {
   src: ''
 }
 
+SVG._idyll = {
+  name: "SVG",
+  tagType: "closed",
+  props: [{
+    name: "src",
+    type: "string",
+    example: '"https://path/to/file.svg"'
+  }]
+}
+
 export default SVG;
 

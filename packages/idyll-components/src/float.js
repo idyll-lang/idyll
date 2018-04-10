@@ -10,4 +10,19 @@ class Float extends React.PureComponent {
   }
 }
 
+
+Float._idyll = {
+  name: "Float",
+  tagType: "open",
+  props: [{
+    name: "position",
+    type: "string",
+    example: '"left"'
+  }, {
+    name: 'width',
+    type: 'string',
+    example: '"50%"'
+  }]
+}
+
 export default Float;

@@ -18,4 +18,14 @@ class TextInput extends React.PureComponent {
   }
 }
 
+TextInput._idyll = {
+  name: "TextInput",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "string",
+    example: '"Hello"'
+  }]
+}
+
 export default TextInput;

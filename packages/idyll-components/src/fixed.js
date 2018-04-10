@@ -10,4 +10,10 @@ class Fixed extends React.PureComponent {
   }
 }
 
+
+Fixed._idyll = {
+  name: "Fixed",
+  tagType: "open"
+}
+
 export default Fixed;

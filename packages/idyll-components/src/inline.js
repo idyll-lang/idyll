@@ -10,4 +10,10 @@ class Inline extends React.PureComponent {
   }
 }
 
+Inline._idyll = {
+  name: "Inline",
+  tagType: "open"
+}
+
+
 export default Inline;

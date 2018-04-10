@@ -80,4 +80,19 @@ Chart.defaultProps = {
   type: 'line'
 };
 
+
+Chart._idyll = {
+  name: "Chart",
+  tagType: "closed",
+  props: [{
+    name: "type",
+    type: "string",
+    example: '"scatter"'
+  },{
+    name: "data",
+    type: "array",
+    example: "`[{x: 1, y: 1}, { x: 2, y: 2 }]`"
+  }]
+}
+
 export default Chart;

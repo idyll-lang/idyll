@@ -135,7 +135,7 @@ const components = [
                 "min": "The minimum value."
               },
               {
-                "interval": "The granularity of the changes."
+                "step": "The granularity of the changes."
               }
             ]
           }
@@ -272,7 +272,7 @@ const components = [
         {
           "Table": {
             "thumbnail": "table.png",
-            "description": "Display tabular data. Uses https://github.com/glittershark/reactable under the hood to render the table.",
+            "description": "Display tabular data. Uses https://github.com/react-tools/react-table under the hood to render the table.",
             "image": "table.png"
           }
         }
@@ -336,7 +336,7 @@ const components = [
 
 function slugify(text)
 {
-  return text.toString().toLowerCase()
+  return text.toString().split(/([A-Z][a-z]+)/).join('-').toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
     .replace(/\-\-+/g, '-')         // Replace multiple - with single -

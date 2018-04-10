@@ -140,4 +140,15 @@ class Equation extends React.PureComponent {
   }
 }
 
+Equation._idyll = {
+  name: "Equation",
+  tagType: "open",
+  children: "y = x^2",
+  props: [{
+    name: "display",
+    type: "boolean",
+    example: "true"
+  }]
+}
+
 export default Equation;
