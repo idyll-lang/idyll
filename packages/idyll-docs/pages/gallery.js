@@ -7,9 +7,29 @@ const exampleGroups = [
     title: 'Full articles',
     examples: [
       {
+        label: 'Barnes-Hut',
+        href: 'https://jheer.github.io/barnes-hut/',
+        image: 'barnes-hut.png',
+      },
+      {
+        label: 'Kernel Density Estimation',
+        href: 'https://mathisonian.github.io/kde/',
+        image: 'https://mathisonian.github.io/kde/images/share.png',
+      },
+      {
         label: 'The Etymology of Trig Functions',
         href: 'https://mathisonian.github.io/trig/etymology/',
         image: 'trig.png',
+      },
+      {
+        label: 'Autumn Colormaps',
+        href: 'https://mathisonian.github.io/idyll/fall-colors/',
+        image: 'https://mathisonian.github.io/idyll/fall-colors/images/share.png',
+      },
+      {
+        label: 'An Idyll Walkthrough',
+        href: 'https://mathisonian.github.io/idyll/a-walk-on-the-idyll-side/',
+        image: 'walk-on-the-idyll-side.png',
       },
       {
         label: 'Seattle PD’s Dashcam Problem',
@@ -41,6 +61,11 @@ const exampleGroups = [
         href: 'https://idyll-lang.github.io/examples/csv/',
         image: 'vl.png',
       },
+      {
+        label: 'Firebase',
+        href: 'https://mathisonian.github.io/idyll/firebase/',
+        image: 'firebase.png'
+      }
     ],
   },
   {
