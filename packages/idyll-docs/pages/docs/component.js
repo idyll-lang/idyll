@@ -87,10 +87,7 @@ export default class IdyllComponentPage extends React.PureComponent {
 
   render() {
     const { url } = this.props;
-    console.log(Object.keys(indexedComponents))
-    // console.log(url.query.slug.split('-').map(capitalizeFirstLetter).join(''))
     const comp = indexedComponents[url.query.slug];
-    console.log(comp);
     return (
       <Layout url={ url }>
         <div>
