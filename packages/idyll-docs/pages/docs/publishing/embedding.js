@@ -15,7 +15,7 @@ export default ({ url }) => (
 
       <p>To do this, you must first install the dependencies:</p>
 
-      <pre><code class="sh language-sh">$ npm i --save idyll-document idyll-compiler idyll-components
+      <pre><code class="sh language-sh">$ npm i --save idyll-document idyll-components
       </code></pre>
 
       <p>then, add it to your page. If you are already using React, you
@@ -23,7 +23,6 @@ export default ({ url }) => (
 
       <pre><code class="javascript language-javascript">
 {`import IdyllDocument from 'idyll-document';
-import compile from 'idyll-compiler';
 import * as components from 'idyll-components';
 
 // An example functional component
@@ -49,7 +48,6 @@ import * as components from 'idyll-components';
 {`import React from 'react';
 import ReactDOM from 'react-dom';
 import IdyllDocument from 'idyll-document';
-import compile from 'idyll-compiler';
 import * as components from 'idyll-components';
 
 // You must provide idyllMarkup

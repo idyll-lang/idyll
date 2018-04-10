@@ -21,7 +21,8 @@ class LiveIdyllEditor extends React.PureComponent {
   }
 
   componentDidCatch(error, info) {
-    // console.log(error);
+
+    console.log(error);
     this.setState({ error: error.message });
   }
 

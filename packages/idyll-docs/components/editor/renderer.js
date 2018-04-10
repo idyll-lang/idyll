@@ -25,7 +25,7 @@ class Renderer extends React.PureComponent {
   }
 
   render() {
-    const { ast, idyllHash } = this.props;
+    const { markup } = this.props;
     return (
       <div className={`renderer `}>
         <div className={`renderer-container ${scopedStyles.className}`}>
@@ -34,11 +34,9 @@ class Renderer extends React.PureComponent {
             <pre>{this.state.error.toString()}</pre>
           ) :
           <IdyllDocument
-            ast={ ast }
+            markup={ markup }
             components={ Object.assign({}, components, { 'vega-lite': VegaLite }) }
-            key={ idyllHash }
             layout={ 'centered' }
-            __persistStateAcrossUpdates={true}
             context={(context) => {
               window.IDYLL_CONTEXT = context;
             }}

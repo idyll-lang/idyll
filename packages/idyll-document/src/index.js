@@ -6,8 +6,8 @@ import compile from 'idyll-compiler';
 export const hashCode = (str) => {
   var hash = 0, i, chr;
   if (str.length === 0) return hash;
-  for (i = 0; i < str.length; i++) {``
-    chr   = str.charCodeAt(i);``
+  for (i = 0; i < str.length; i++) {
+    chr   = str.charCodeAt(i);
     hash  = ((hash << 5) - hash) + chr;
     hash |= 0; // Convert to 32bit integer
   }
@@ -20,7 +20,9 @@ class IdyllDocument extends React.Component {
     super(props);
     this.state = {
       ast: props.ast || [],
-      hash: ''
+      previousAST: props.ast || [],
+      hash: '',
+      error: null
     }
   }
 
@@ -33,6 +35,11 @@ class IdyllDocument extends React.Component {
     }
   }
 
+  componentDidCatch(error, info) {
+    this.props.onError && this.props.onError(error);
+    this.setState({ error: error.message });
+  }
+
   componentWillReceiveProps(newProps) {
     if (newProps.ast) {
       return;
@@ -40,18 +47,23 @@ class IdyllDocument extends React.Component {
 
     const hash = hashCode(newProps.markup);
     if (hash !== this.state.hash) {
+      this.setState({ previousAST: this.state.ast });
       compile(newProps.markup)
         .then((ast) => {
-          this.setState({ ast, hash });
+          this.setState({ previousAST: ast, ast, hash });
         })
+        .catch(this.componentDidCatch.bind(this));
     }
   }
+
 
   render() {
     return (
       <Runtime
         {...this.props}
         key={ this.state.hash }
+        context={(context) => { this.idyllContext = context; this.props.context && this.props.context(context); }}
+        initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
         ast={ this.props.ast || this.state.ast }
          />
     )
