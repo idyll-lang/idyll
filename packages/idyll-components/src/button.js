@@ -15,8 +15,8 @@ Button.defaultProps = {
   onClick: function() {}
 };
 
-Boolean._idyll = {
-  name: "Boolean",
+Button._idyll = {
+  name: "Button",
   tagType: "open",
   children: ['Click Me.'],
   props: [{
