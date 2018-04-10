@@ -33,6 +33,15 @@ const getNodesByName = (name, tree) => {
   )
 }
 
+exports.getComponentNodes = (ast) => {
+  const ignoreNames = ['var', 'data', 'meta', 'derived'];
+  return getNodesByName(s => !ignoreNames.includes(s), ast);
+}
+
+exports.getDataNodes = (ast) => {
+  return getNodesByName('data', ast);
+}
+
 exports.getComponentsJS = (ast, paths, inputConfig) => {
   const ignoreNames = ['var', 'data', 'meta', 'derived'];
   const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);

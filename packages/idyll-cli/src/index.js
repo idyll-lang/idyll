@@ -8,10 +8,16 @@ const {
 const EventEmitter = require('events');
 const changeCase = require('change-case');
 const debug = require('debug')('idyll-cli')
+const mkdirp = require('mkdirp')
 
 const pathBuilder = require('./path-builder');
 const configureNode = require('./node-config');
 const pipeline = require('./pipeline');
+
+function createDirectories(paths) {
+  mkdirp.sync(paths.OUTPUT_DIR);
+  mkdirp.sync(paths.TMP_DIR);
+}
 
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
@@ -42,6 +48,7 @@ const idyll = (options = {}, cb) => {
   const paths = pathBuilder(opts);
   debug('Reading from paths:', paths);
 
+  createDirectories(paths);
   configureNode(paths);
 
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};

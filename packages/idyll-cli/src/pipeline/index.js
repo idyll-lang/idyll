@@ -7,8 +7,8 @@ const debug = require('debug')('idyll-cli')
 
 const {
   getASTJSON,
-  getComponentsJS,
-  getDataJS,
+  getComponentNodes,
+  getDataNodes,
   getHighlightJS,
   getBaseHTML,
   getHTML
@@ -18,7 +18,7 @@ const bundleJS = require('./bundle-js');
 
 let output;
 
-const build = (opts, paths, inputConfig) => {
+const build = (opts, paths, resolvers) => {
   // always store source in opts.inputString
   if (paths.IDYLL_INPUT_FILE) {
     opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
@@ -31,11 +31,15 @@ const build = (opts, paths, inputConfig) => {
       const ast = compile(opts.inputString, opts.compilerOptions);
       const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
+      var components = getComponentNodes(ast).map(c => resolvers.components.resolve(c));
+      var data = getDataNodes(ast).map(d => resolvers.data.resolve(d));
+      var css = resolvers.css.resolve();
+
       output = {
         ast: getASTJSON(ast),
-        components: getComponentsJS(ast, paths, inputConfig),
-        css: css(opts),
-        data: getDataJS(ast, paths.DATA_DIR),
+        components,
+        data,
+        css,
         syntaxHighlighting: getHighlightJS(ast, paths),
         opts: {
           ssr: opts.ssr,
@@ -83,8 +87,8 @@ const build = (opts, paths, inputConfig) => {
   });
 }
 
-const updateCSS = (opts, paths) => {
-  output.css = css(opts);
+const updateCSS = (paths, css) => {
+  output.css = css.load();
   return writeFile(paths.CSS_OUTPUT_FILE, output.css)
     .then(() => {
       return output; // return all results
