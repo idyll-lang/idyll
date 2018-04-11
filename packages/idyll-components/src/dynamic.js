@@ -17,7 +17,7 @@ class Dynamic extends React.PureComponent {
     this.drag = Drag.drag().on('drag', () => {
       const dx = Selection.event.dx;
       const { step, value, interval } = this.props;
-      const newValue = Math.max(Math.min(value + step || interval * dx, this.props.max), this.props.min);
+      const newValue = Math.max(Math.min(value + (step || interval) * dx, this.props.max), this.props.min);
       this.props.updateProps({ value: newValue });
     });
     this.drag(Selection.select(node));
