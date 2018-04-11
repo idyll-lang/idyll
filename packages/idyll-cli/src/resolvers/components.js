@@ -70,9 +70,9 @@ class ComponentResolver {
     } catch (err) {
       if (htmlTags.indexOf(name) === -1) {
         if (['fullwidth', 'textcontainer'].indexOf(node[0].toLowerCase()) > -1) {
-          return errors.throwOutOfDate(name);
+          throw new errors.OutOfDateError(name);
         }
-        return errors.throwInvalidComponent(name);
+        throw new errors.InvalidComponentError(name);
       }
       // At this point, it is a valid HTML tag.
       return name;
@@ -80,6 +80,7 @@ class ComponentResolver {
   }
 
   getDirectories() {
+    return [...this.paths.COMPONENT_DIRS, ...this.paths.DEFAULT_COMPONENT_DIRS];
   }
 }
 

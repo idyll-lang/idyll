@@ -3,6 +3,7 @@ const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
+const { paramCase, pascalCase } = require('change-case');
 const debug = require('debug')('idyll-cli')
 
 const {
@@ -31,9 +32,15 @@ const build = (opts, paths, resolvers) => {
       const ast = compile(opts.inputString, opts.compilerOptions);
       const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
-      var components = getComponentNodes(ast).map(c => resolvers.components.resolve(c));
-      var data = getDataNodes(ast).map(d => resolvers.data.resolve(d));
-      var css = resolvers.css.resolve();
+      // Set -> Array to remove duplicate entries.
+      const components = Array.from(new Set(getComponentNodes(ast).map(node => {
+        const name = pascalCase(paramCase(node[0].split('.')[0]));
+        return resolvers.get('components').resolve(name)
+      })));
+      const data = getDataNodes(ast).map(({ name, source }) => {
+        return resolvers.get('data').resolve(name, source)
+      });
+      const css = resolvers.get('css').resolve();
 
       output = {
         ast: getASTJSON(ast),
