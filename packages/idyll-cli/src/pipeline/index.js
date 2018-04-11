@@ -95,7 +95,7 @@ const build = (opts, paths, resolvers) => {
 }
 
 const updateCSS = (paths, css) => {
-  output.css = css.load();
+  output.css = css.resolve();
   return writeFile(paths.CSS_OUTPUT_FILE, output.css)
     .then(() => {
       return output; // return all results
