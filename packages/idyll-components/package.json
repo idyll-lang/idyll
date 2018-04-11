@@ -42,6 +42,7 @@
     "d3-drag": "^1.1.1",
     "d3-format": "^1.2.0",
     "d3-selection": "^1.1.0",
+    "idyll-component-children": "^1.0.2",
     "prop-types": "^15.5.10",
     "react-inlinesvg": "^0.7.5",
     "react-latex-patched": "^1.1.1",
