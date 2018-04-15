@@ -32,6 +32,9 @@ const createNode = function(name, props, children) {
 };
 
 const getChildren = function(node) {
+  if (typeof node === 'string') {
+    return [];
+  }
   return node[2] || [];
 };
 
