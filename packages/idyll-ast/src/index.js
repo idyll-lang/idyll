@@ -35,6 +35,13 @@ const getChildren = function(node) {
   return node[2] || [];
 };
 
+const walkNodes = function(ast, f) {
+  (ast || []).forEach((node) => {
+    getChildren(node).forEach(c => walkNodes(c, f));
+    f(node);
+  });
+};
+
 const modifyChildren = function(node, modifier) {
   if (typeof node === 'string') {
     return node;
@@ -181,5 +188,6 @@ module.exports = {
   removeNodesByName,
   setProperties,
   setProperty,
-  removeProperty
+  removeProperty,
+  walkNodes
 }
