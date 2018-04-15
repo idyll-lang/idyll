@@ -111,6 +111,9 @@ const modifyNodesByName = function(ast, name, modifier) {
 };
 
 const getProperty = function(node, key) {
+  if (typeof node === 'string') {
+    return null;
+  }
   let retProp;
   node[1].forEach((element) => {
     if (element[0] === key) {
@@ -121,11 +124,17 @@ const getProperty = function(node, key) {
 };
 
 const getProperties = function(node) {
+  if (typeof node === 'string') {
+    return [];
+  }
   return node[1] || [];
 };
 
 const getPropertiesByType = function(node, type) {
-  return node[1].filter((element) => {
+  if (typeof node === 'string') {
+    return [];
+  }
+  return (node[1] || []).filter((element) => {
     return element[1][0] === type;
   });
 };
