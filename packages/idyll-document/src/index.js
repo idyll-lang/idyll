@@ -28,7 +28,7 @@ class IdyllDocument extends React.Component {
 
   componentDidMount() {
     if (!this.props.ast && this.props.markup) {
-      compile(this.props.markup)
+      compile(this.props.markup, this.props.compilerOptions)
         .then((ast) => {
           this.setState({ ast, hash: hashCode(this.props.markup) });
         })
@@ -48,7 +48,7 @@ class IdyllDocument extends React.Component {
     const hash = hashCode(newProps.markup);
     if (hash !== this.state.hash) {
       this.setState({ previousAST: this.state.ast });
-      compile(newProps.markup)
+      compile(newProps.markup, newProps.compilerOptions)
         .then((ast) => {
           this.setState({ previousAST: ast, ast, hash });
         })
