@@ -30,7 +30,7 @@ class IdyllDocument extends React.Component {
     if (!this.props.ast && this.props.markup) {
       compile(this.props.markup, this.props.compilerOptions)
         .then((ast) => {
-          this.setState({ ast, hash: hashCode(this.props.markup) });
+          this.setState({ ast, hash: hashCode(this.props.markup), error: null });
         })
     }
   }
@@ -50,22 +50,33 @@ class IdyllDocument extends React.Component {
       this.setState({ previousAST: this.state.ast });
       compile(newProps.markup, newProps.compilerOptions)
         .then((ast) => {
-          this.setState({ previousAST: ast, ast, hash });
+          this.setState({ previousAST: ast, ast, hash, error: null });
         })
         .catch(this.componentDidCatch.bind(this));
     }
   }
 
+  getErrorComponent() {
+    if (!this.state.error) {
+      return null;
+    }
+    return React.createElement(this.props.errorComponent || 'pre', {
+      className: "idyll-document-error"
+    }, this.state.error);
+  }
 
   render() {
     return (
-      <Runtime
-        {...this.props}
-        key={ this.state.hash }
-        context={(context) => { this.idyllContext = context; this.props.context && this.props.context(context); }}
-        initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
-        ast={ this.props.ast || this.state.ast }
-         />
+      <div >
+        <Runtime
+          {...this.props}
+          key={ this.state.hash }
+          context={(context) => { this.idyllContext = context; this.props.context && this.props.context(context); }}
+          initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
+          ast={ this.props.ast || this.state.ast }
+          />
+        { this.getErrorComponent() }
+      </div>
     )
   }
 }

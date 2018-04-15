@@ -291,4 +291,10 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
 .idyll-action {
   text-decoration: underline;
 }
+
+
+.idyll-document-error {
+  color: red;
+  font-family: monospace;
+}
 `
