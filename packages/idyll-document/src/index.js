@@ -37,7 +37,6 @@ class IdyllDocument extends React.Component {
 
   componentDidCatch(error, info) {
     this.props.onError && this.props.onError(error);
-    console.log(error)
     this.setState({ error: error.message });
   }
 
@@ -58,7 +57,6 @@ class IdyllDocument extends React.Component {
   }
 
   getErrorComponent() {
-    console.log('rendering error');
     if (!this.state.error) {
       return null;
     }
@@ -68,7 +66,6 @@ class IdyllDocument extends React.Component {
   }
 
   render() {
-    console.log('rendering')
     return (
       <div >
         <Runtime
