@@ -59,13 +59,24 @@ class IdyllDocument extends React.Component {
 
   render() {
     return (
-      <Runtime
-        {...this.props}
-        key={ this.state.hash }
-        context={(context) => { this.idyllContext = context; this.props.context && this.props.context(context); }}
-        initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
-        ast={ this.props.ast || this.state.ast }
-         />
+      <div style={{position: 'relative'}}>
+        {
+          this.error ? (
+            <div className="idyll-document-error" style={{position: 'absolute', left: 0, right: 0, top: 0}}>
+              {
+                this.error
+              }
+            </div>
+          ) : null
+        }
+        <Runtime
+          {...this.props}
+          key={ this.state.hash }
+          context={(context) => { this.idyllContext = context; this.props.context && this.props.context(context); }}
+          initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
+          ast={ this.props.ast || this.state.ast }
+          />
+      </div>
     )
   }
 }
