@@ -111,10 +111,22 @@ const modifyNodesByName = function(ast, name, modifier) {
 };
 
 const getProperty = function(node, key) {
+  let retProp;
   node[1].forEach((element) => {
     if (element[0] === key) {
-      return element[1];
+      retProp = element[0];
     }
+  });
+  return retProp;
+};
+
+const getProperties = function(node) {
+  return node[1] || [];
+};
+
+const getPropertiesByType = function(node, type) {
+  return node[1].filter((element) => {
+    return element[1][0] === type;
   });
 };
 
@@ -183,6 +195,8 @@ module.exports = {
   modifyChildren,
   modifyNodesByName,
   getProperty,
+  getProperties,
+  getPropertiesByType,
   prependNode,
   prependNodes,
   removeNodesByName,
