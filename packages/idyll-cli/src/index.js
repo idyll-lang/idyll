@@ -43,7 +43,7 @@ const idyll = (options = {}, cb) => {
         '_index.html'
       ),
       transform: [],
-      compilerOptions: {
+      compiler: {
       },
     },
     options
@@ -59,7 +59,8 @@ const idyll = (options = {}, cb) => {
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
   const inputConfig = Object.assign({
     components: {},
-    transform: []
+    transform: [],
+    compiler: {}
   }, inputPackage.idyll || {});
   for (let key in inputConfig.components) {
     inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
@@ -69,6 +70,19 @@ const idyll = (options = {}, cb) => {
 
   // Handle options that can be provided via options or via package.json
   opts.transform = options.transform || inputConfig.transform || opts.transform;
+  opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
+
+  // Resolve compiler plugins:
+  if (opts.compiler.postProcessors) {
+    opts.compiler.postProcessors = opts.compiler.postProcessors.map((processor) => {
+      try {
+        return require(processor, { basedir: paths.INPUT_DIR });
+      } catch(e) {
+        console.log(e);
+        console.warn('\n\nCould not find post-processor plugin: ', processor);
+      }
+    })
+  }
 
   let bs;
 

@@ -1,206 +1,5 @@
 [
   [
-    "h1",
-    [],
-    [
-      "Welcome to Idyll"
-    ]
-  ],
-  [
-    "h3",
-    [],
-    [
-      "Idyll is a language for creating interactive documents on the web."
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      "This document is being rendered from ",
-      [
-        "strong",
-        [],
-        [
-          "Idyll markup"
-        ]
-      ],
-      ". If you’ve used ",
-      [
-        "a",
-        [
-          [
-            "href",
-            [
-              "value",
-              "https://daringfireball.net/projects/markdown/"
-            ]
-          ]
-        ],
-        [
-          "markdown"
-        ]
-      ],
-      ", Idyll should look pretty familiar, but it has some additional features. Write text in the box on the left and the output on the right will automatically update."
-    ]
-  ],
-  [
-    "data",
-    [
-      [
-        "name",
-        [
-          "value",
-          "myData"
-        ]
-      ],
-      [
-        "source",
-        [
-          "value",
-          "myData.csv"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "p",
-    [],
-    [
-      "To make things a little more interesting you can add JavaScript components to your text.\nFor example, a ",
-      [
-        "code",
-        [],
-        [
-          "[Chart /]"
-        ]
-      ],
-      " component can be used to render a simple visualization:"
-    ]
-  ],
-  [
-    "Chart",
-    [
-      [
-        "type",
-        [
-          "value",
-          "scatter"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "p",
-    [],
-    [
-      "Try changing the chart’s type from ",
-      [
-        "code",
-        [],
-        [
-          "scatter"
-        ]
-      ],
-      " to ",
-      [
-        "code",
-        [],
-        [
-          "line"
-        ]
-      ],
-      ", ",
-      [
-        "code",
-        [],
-        [
-          "area"
-        ]
-      ],
-      ", or ",
-      [
-        "code",
-        [],
-        [
-          "pie"
-        ]
-      ],
-      "."
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      "A component’s properties can be strings (“I’m a string!”), numbers (1.569), or evaluated JavaScript expressions (",
-      [
-        "code",
-        [],
-        [
-          "`2 * Math.PI`"
-        ]
-      ],
-      ")."
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      "There are a number of components available — see ",
-      [
-        "a",
-        [
-          [
-            "href",
-            [
-              "value",
-              "https://idyll-lang.github.io/components-built-in"
-            ]
-          ]
-        ],
-        [
-          "Idyll’s documentation"
-        ]
-      ],
-      " for a full list — Additional components can be installed via ",
-      [
-        "code",
-        [],
-        [
-          "npm"
-        ]
-      ],
-      " (any React component should work), and if you are comfortable with JavaScript you can write ",
-      [
-        "a",
-        [
-          [
-            "href",
-            [
-              "value",
-              "https://idyll-lang.github.io/components-custom"
-            ]
-          ]
-        ],
-        [
-          "custom components"
-        ]
-      ],
-      " as well."
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      "Idyll also provides a reactive variable system that can be used to dynamically update the text based on input from a reader."
-    ]
-  ],
-  [
     "var",
     [
       [
@@ -215,351 +14,6 @@
         [
           "value",
           2
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "p",
-    [],
-    [
-      "Instantiating a variable is similar to instantiating a component:"
-    ]
-  ],
-  [
-    "code",
-    [],
-    [
-      "[var name:\"x\" value:1 /]"
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      "Once you’ve created a variable, it can be displayed inline with text\n(x = ",
-      [
-        "Display",
-        [
-          [
-            "var",
-            [
-              "variable",
-              "x"
-            ]
-          ]
-        ],
-        []
-      ],
-      "),\nor be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:"
-    ]
-  ],
-  [
-    "derived",
-    [
-      [
-        "name",
-        [
-          "value",
-          "xSquared"
-        ]
-      ],
-      [
-        "value",
-        [
-          "expression",
-          "x * x"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "code",
-    [],
-    [
-      "[derived name:\"xSquared\" value:`x * x` /]"
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      "Here I bind the value of ",
-      [
-        "code",
-        [],
-        [
-          "x"
-        ]
-      ],
-      " to a range slider. Move the slider and watch the variables update."
-    ]
-  ],
-  [
-    "Range",
-    [
-      [
-        "value",
-        [
-          "variable",
-          "x"
-        ]
-      ],
-      [
-        "min",
-        [
-          "value",
-          0
-        ]
-      ],
-      [
-        "max",
-        [
-          "value",
-          100
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "p",
-    [],
-    [
-      [
-        "equation",
-        [],
-        [
-          "x"
-        ]
-      ],
-      ":\n ",
-      [
-        "Display",
-        [
-          [
-            "var",
-            [
-              "expression",
-              "x"
-            ]
-          ]
-        ],
-        []
-      ]
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      [
-        "equation",
-        [],
-        [
-          "x^2"
-        ]
-      ],
-      ":",
-      [
-        "Display",
-        [
-          [
-            "var",
-            [
-              "expression",
-              "xSquared"
-            ]
-          ]
-        ],
-        []
-      ]
-    ]
-  ],
-  [
-    "p",
-    [],
-    [
-      "Test expression, displays:"
-    ]
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "varDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "expression",
-          "x"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "derivedVarDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "expression",
-          "xSquared"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "strDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "expression",
-          "\"string\""
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "staticObjectDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "expression",
-          "{ static: \"object\" }"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "dynamicObjectDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "expression",
-          "{ dynamic: x }"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "dataDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "expression",
-          "myData"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "bareDataDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "variable",
-          "myData"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "bareVarDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "variable",
-          "x"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "bareDerivedDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "variable",
-          "xSquared"
         ]
       ]
     ],
@@ -586,56 +40,24 @@
     []
   ],
   [
-    "Display",
+    "var",
     [
       [
-        "id",
+        "name",
         [
           "value",
-          "objectVarDisplay"
+          "arrayVar"
         ]
       ],
       [
         "value",
         [
           "expression",
-          " objectVar "
+          " [ \"array\" ] "
         ]
       ]
     ],
     []
-  ],
-  [
-    "Display",
-    [
-      [
-        "id",
-        [
-          "value",
-          "bareObjectVarDisplay"
-        ]
-      ],
-      [
-        "value",
-        [
-          "variable",
-          "objectVar"
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "br",
-    [],
-    []
-  ],
-  [
-    "p",
-    [],
-    [
-      "Here is an example of how you could use a variable to control the frequency of a sine wave:"
-    ]
   ],
   [
     "var",
@@ -658,85 +80,410 @@
     []
   ],
   [
-    "Chart",
+    "var",
     [
       [
-        "equation",
-        [
-          "expression",
-          "(t) => Math.sin(t * frequency)"
-        ]
-      ],
-      [
-        "domain",
-        [
-          "expression",
-          "[0, 2 * Math.PI]"
-        ]
-      ],
-      [
-        "samplePoints",
+        "name",
         [
           "value",
-          1000
+          "lateVar"
         ]
-      ]
-    ],
-    []
-  ],
-  [
-    "Range",
-    [
+      ],
       [
         "value",
         [
-          "variable",
-          "frequency"
-        ]
-      ],
-      [
-        "min",
-        [
           "value",
-          0.5
-        ]
-      ],
-      [
-        "max",
-        [
-          "expression",
-          "2 * Math.PI"
-        ]
-      ],
-      [
-        "step",
-        [
-          "value",
-          0.0001
+          50
         ]
       ]
     ],
     []
   ],
   [
-    "p",
+    "data",
+    [
+      [
+        "name",
+        [
+          "value",
+          "myData"
+        ]
+      ],
+      [
+        "source",
+        [
+          "value",
+          "myData.csv"
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "derived",
+    [
+      [
+        "name",
+        [
+          "value",
+          "xSquared"
+        ]
+      ],
+      [
+        "value",
+        [
+          "expression",
+          "x * x"
+        ]
+      ]
+    ],
+    []
+  ],
+  [
+    "TextContainer",
     [],
     [
       [
-        "var",
+        "h1",
+        [],
+        [
+          "Welcome to Idyll"
+        ]
+      ],
+      [
+        "h3",
+        [],
+        [
+          "Idyll is a language for creating interactive documents on the web."
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "This document is being rendered from ",
+          [
+            "strong",
+            [],
+            [
+              "Idyll markup"
+            ]
+          ],
+          ". If you’ve used ",
+          [
+            "a",
+            [
+              [
+                "href",
+                [
+                  "value",
+                  "https://daringfireball.net/projects/markdown/"
+                ]
+              ]
+            ],
+            [
+              "markdown"
+            ]
+          ],
+          ", Idyll should look pretty familiar, but it has some additional features. Write text in the box on the left and the output on the right will automatically update."
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "To make things a little more interesting you can add JavaScript components to your text.\nFor example, a ",
+          [
+            "code",
+            [],
+            [
+              "[Chart /]"
+            ]
+          ],
+          " component can be used to render a simple visualization:"
+        ]
+      ],
+      [
+        "Chart",
         [
           [
-            "name",
+            "type",
             [
               "value",
-              "lateVar"
+              "scatter"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "p",
+        [],
+        [
+          "Try changing the chart’s type from ",
+          [
+            "code",
+            [],
+            [
+              "scatter"
+            ]
+          ],
+          " to ",
+          [
+            "code",
+            [],
+            [
+              "line"
+            ]
+          ],
+          ", ",
+          [
+            "code",
+            [],
+            [
+              "area"
+            ]
+          ],
+          ", or ",
+          [
+            "code",
+            [],
+            [
+              "pie"
+            ]
+          ],
+          "."
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "A component’s properties can be strings (“I’m a string!”), numbers (1.569), or evaluated JavaScript expressions (",
+          [
+            "code",
+            [],
+            [
+              "`2 * Math.PI`"
+            ]
+          ],
+          ")."
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "There are a number of components available — see ",
+          [
+            "a",
+            [
+              [
+                "href",
+                [
+                  "value",
+                  "https://idyll-lang.github.io/components-built-in"
+                ]
+              ]
+            ],
+            [
+              "Idyll’s documentation"
+            ]
+          ],
+          " for a full list — Additional components can be installed via ",
+          [
+            "code",
+            [],
+            [
+              "npm"
+            ]
+          ],
+          " (any React component should work), and if you are comfortable with JavaScript you can write ",
+          [
+            "a",
+            [
+              [
+                "href",
+                [
+                  "value",
+                  "https://idyll-lang.github.io/components-custom"
+                ]
+              ]
+            ],
+            [
+              "custom components"
+            ]
+          ],
+          " as well."
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "Idyll also provides a reactive variable system that can be used to dynamically update the text based on input from a reader."
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "Instantiating a variable is similar to instantiating a component:"
+        ]
+      ],
+      [
+        "code",
+        [],
+        [
+          "[var name:\"x\" value:1 /]"
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "Once you’ve created a variable, it can be displayed inline with text\n(x = ",
+          [
+            "Display",
+            [
+              [
+                "var",
+                [
+                  "variable",
+                  "x"
+                ]
+              ]
+            ],
+            []
+          ],
+          "),\nor be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:"
+        ]
+      ],
+      [
+        "code",
+        [],
+        [
+          "[derived name:\"xSquared\" value:`x * x` /]"
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "Here I bind the value of ",
+          [
+            "code",
+            [],
+            [
+              "x"
+            ]
+          ],
+          " to a range slider. Move the slider and watch the variables update."
+        ]
+      ],
+      [
+        "Range",
+        [
+          [
+            "value",
+            [
+              "variable",
+              "x"
+            ]
+          ],
+          [
+            "min",
+            [
+              "value",
+              0
+            ]
+          ],
+          [
+            "max",
+            [
+              "value",
+              100
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "p",
+        [],
+        [
+          [
+            "equation",
+            [],
+            [
+              "x"
+            ]
+          ],
+          ":\n ",
+          [
+            "Display",
+            [
+              [
+                "var",
+                [
+                  "expression",
+                  "x"
+                ]
+              ]
+            ],
+            []
+          ]
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          [
+            "equation",
+            [],
+            [
+              "x^2"
+            ]
+          ],
+          ":",
+          [
+            "Display",
+            [
+              [
+                "var",
+                [
+                  "expression",
+                  "xSquared"
+                ]
+              ]
+            ],
+            []
+          ]
+        ]
+      ],
+      [
+        "p",
+        [],
+        [
+          "Test expression, displays:"
+        ]
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "varDisplay"
             ]
           ],
           [
             "value",
             [
-              "value",
-              50
+              "expression",
+              "x"
             ]
           ]
         ],
@@ -749,86 +496,405 @@
             "id",
             [
               "value",
-              "lateVarDisplay"
+              "derivedVarDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "expression",
+              "xSquared"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "strDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "expression",
+              "\"string\""
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "staticObjectDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "expression",
+              "{ static: \"object\" }"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "dynamicObjectDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "expression",
+              "{ dynamic: x }"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "dataDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "expression",
+              "myData"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "bareDataDisplay"
             ]
           ],
           [
             "value",
             [
               "variable",
-              "lateVar"
+              "myData"
             ]
           ]
         ],
         []
       ],
-      "\nLate Var Range:"
-    ]
-  ],
-  [
-    "Range",
-    [
       [
-        "value",
-        [
-          "variable",
-          "lateVar"
-        ]
-      ],
-      [
-        "min",
-        [
-          "value",
-          2
-        ]
-      ],
-      [
-        "max",
-        [
-          "value",
-          100
-        ]
-      ]
-    ],
-    []
-  ],
-  [
-    "p",
-    [],
-    [
-      "Read more about Idyll at ",
-      [
-        "a",
+        "Display",
         [
           [
-            "href",
+            "id",
             [
               "value",
+              "bareVarDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "variable",
+              "x"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "bareDerivedDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "variable",
+              "xSquared"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "objectVarDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "expression",
+              " objectVar "
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "bareObjectVarDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "variable",
+              "objectVar"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "arrayVarDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "expression",
+              " arrayVar "
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Display",
+        [
+          [
+            "id",
+            [
+              "value",
+              "bareArrayVarDisplay"
+            ]
+          ],
+          [
+            "value",
+            [
+              "variable",
+              "arrayVar"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "br",
+        [],
+        []
+      ],
+      [
+        "p",
+        [],
+        [
+          "Here is an example of how you could use a variable to control the frequency of a sine wave:"
+        ]
+      ],
+      [
+        "Chart",
+        [
+          [
+            "equation",
+            [
+              "expression",
+              "(t) => Math.sin(t * frequency)"
+            ]
+          ],
+          [
+            "domain",
+            [
+              "expression",
+              "[0, 2 * Math.PI]"
+            ]
+          ],
+          [
+            "samplePoints",
+            [
+              "value",
+              1000
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "Range",
+        [
+          [
+            "value",
+            [
+              "variable",
+              "frequency"
+            ]
+          ],
+          [
+            "min",
+            [
+              "value",
+              0.5
+            ]
+          ],
+          [
+            "max",
+            [
+              "expression",
+              "2 * Math.PI"
+            ]
+          ],
+          [
+            "step",
+            [
+              "value",
+              0.0001
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "p",
+        [],
+        [
+          [
+            "Display",
+            [
+              [
+                "id",
+                [
+                  "value",
+                  "lateVarDisplay"
+                ]
+              ],
+              [
+                "value",
+                [
+                  "variable",
+                  "lateVar"
+                ]
+              ]
+            ],
+            []
+          ],
+          "\nLate Var Range:"
+        ]
+      ],
+      [
+        "Range",
+        [
+          [
+            "value",
+            [
+              "variable",
+              "lateVar"
+            ]
+          ],
+          [
+            "min",
+            [
+              "value",
+              2
+            ]
+          ],
+          [
+            "max",
+            [
+              "value",
+              100
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "p",
+        [],
+        [
+          "Read more about Idyll at ",
+          [
+            "a",
+            [
+              [
+                "href",
+                [
+                  "value",
+                  "https://idyll-lang.github.io/"
+                ]
+              ]
+            ],
+            [
               "https://idyll-lang.github.io/"
             ]
-          ]
-        ],
-        [
-          "https://idyll-lang.github.io/"
-        ]
-      ],
-      ", and come say “Hi!” in our ",
-      [
-        "a",
-        [
+          ],
+          ", and come say “Hi!” in our ",
           [
-            "href",
+            "a",
             [
-              "value",
-              "https://gitter.im/idyll-lang/Lobby"
+              [
+                "href",
+                [
+                  "value",
+                  "https://gitter.im/idyll-lang/Lobby"
+                ]
+              ]
+            ],
+            [
+              "chatroom on gitter"
             ]
-          ]
-        ],
-        [
-          "chatroom on gitter"
+          ],
+          "."
         ]
-      ],
-      "."
+      ]
     ]
   ]
 ]

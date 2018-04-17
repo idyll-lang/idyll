@@ -6,7 +6,7 @@ class Link extends React.PureComponent {
   }
 
   render() {
-    let props = this.props;
+    let props = {...this.props};
     if (props.url) {
       props.href = props.url;
     }
@@ -16,6 +16,20 @@ class Link extends React.PureComponent {
       </a>
     );
   }
+}
+
+Link._idyll = {
+  name: "Link",
+  tagType: "closed",
+  props: [{
+    name: "text",
+    type: "string",
+    example: '"Link Text"'
+  }, {
+    name: 'url',
+    type: 'string',
+    example: '"https://some.url/"'
+  }]
 }
 
 export default Link;

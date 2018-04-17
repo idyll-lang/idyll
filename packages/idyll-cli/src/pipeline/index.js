@@ -25,73 +25,71 @@ const build = (opts, paths, resolvers) => {
     opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
   }
 
-  return Promise.try(
-    // this is all synchronous so we wrap it with Promise.try
-    // to start a Promise chain and turn any synchronous exceptions into a rejection
-    () => {
-      const ast = compile(opts.inputString, opts.compilerOptions);
-      const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
+  return compile(opts.inputString, opts.compiler || opts.compilerOptions)
+    .then((ast) => {
+      return Promise.try(() => {
+        // opts.compilerOptions is kept for backwards compatability
+        const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
-      // Set -> Array to remove duplicate entries.
-      const components = Array.from(new Set(getComponentNodes(ast).map(node => {
-        const name = pascalCase(paramCase(node[0].split('.')[0]));
-        return resolvers.get('components').resolve(name)
-      })));
-      const data = getDataNodes(ast).map(({ name, source }) => {
-        return resolvers.get('data').resolve(name, source)
-      });
-      const css = resolvers.get('css').resolve();
+        // Set -> Array to remove duplicate entries.
+        const components = Array.from(new Set(getComponentNodes(ast).map(node => {
+          const name = pascalCase(paramCase(node[0].split('.')[0]));
+          return resolvers.get('components').resolve(name)
+        })));
+        const data = getDataNodes(ast).map(({ name, source }) => {
+          return resolvers.get('data').resolve(name, source)
+        });
+        const css = resolvers.get('css').resolve();
 
-      output = {
-        ast: getASTJSON(ast),
-        components,
-        data,
-        css,
-        syntaxHighlighting: getHighlightJS(ast, paths),
-        opts: {
-          ssr: opts.ssr,
-          theme: opts.theme,
-          layout: opts.layout
-        }
-      };
-      if (!opts.ssr) {
-        output.html = getBaseHTML(ast, template);
-      } else {
-        output.html = getHTML(
-          paths,
-          ast,
-          output.components,
-          output.data,
-          template,
-          {
+        output = {
+          ast: getASTJSON(ast),
+          components,
+          data,
+          css,
+          syntaxHighlighting: getHighlightJS(ast, paths),
+          opts: {
             ssr: opts.ssr,
             theme: opts.theme,
             layout: opts.layout
           }
-        );
+        };
+        if (!opts.ssr) {
+          output.html = getBaseHTML(ast, template);
+        } else {
+          output.html = getHTML(
+            paths,
+            ast,
+            output.components,
+            output.data,
+            template,
+            {
+              ssr: opts.ssr,
+              theme: opts.theme,
+              layout: opts.layout
+            })
+        }
+      })
+    })
+    .then(() => {
+      return bundleJS(opts, paths, output); // create index.js bundle
+    })
+    .then((js) => {
+      // minify bundle if necessary and store it
+      if (opts.minify) {
+        js = UglifyJS.minify(js, {fromString: true, mangle: { keep_fnames: true}}).code;
       }
-    }
-  )
-  .then(() => {
-    return bundleJS(opts, paths, output); // create index.js bundle
-  })
-  .then((js) => {
-    // minify bundle if necessary and store it
-    if (opts.minify) {
-      js = UglifyJS.minify(js, {fromString: true, mangle: { keep_fnames: true}}).code;
-    }
-    output.js = js;
-  })
-  .then(() => {
-    return Promise.all([
-      writeFile(paths.JS_OUTPUT_FILE, output.js),
-      writeFile(paths.CSS_OUTPUT_FILE, output.css),
-      writeFile(paths.HTML_OUTPUT_FILE, output.html),
-    ]);
-  })
-  .then(() => {
-    return output; // return all results
-  });
+      output.js = js;
+    })
+    .then(() => {
+      return Promise.all([
+        writeFile(paths.JS_OUTPUT_FILE, output.js),
+        writeFile(paths.CSS_OUTPUT_FILE, output.css),
+        writeFile(paths.HTML_OUTPUT_FILE, output.html),
+      ]);
+    })
+    .then(() => {
+      return output; // return all results
+    });
 }
 
 const updateCSS = (paths, css) => {

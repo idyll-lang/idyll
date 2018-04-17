@@ -19,7 +19,7 @@ The \`idyll\` command line tool accepts the following options
 * \`--no-ssr\` turn server-side rendering off when building for production.
 * \`--output\` the folder in which to place build output.
 * \`--theme\` the name of the theme to use. By default this is \`idyll\`. More on themes below.
-* \`--template\` a custom HTML template to use.
+* \`--template\` a custom HTML template to use. The default template is can be found [here](https://github.com/idyll-lang/idyll/blob/master/packages/idyll-cli/src/client/_index.html).
 * \`--watch\` the watch flag tells Idyll if it should watch files for changes, or just run once and exit.
 
 If you are using Idyll via the project generator, open \`package.json\` to change these options.

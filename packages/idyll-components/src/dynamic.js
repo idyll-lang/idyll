@@ -16,8 +16,8 @@ class Dynamic extends React.PureComponent {
     }
     this.drag = Drag.drag().on('drag', () => {
       const dx = Selection.event.dx;
-      const { interval, value } = this.props;
-      const newValue = Math.max(Math.min(value + interval * dx, this.props.max), this.props.min);
+      const { step, value, interval } = this.props;
+      const newValue = Math.max(Math.min(value + (step || interval) * dx, this.props.max), this.props.min);
       this.props.updateProps({ value: newValue });
     });
     this.drag(Selection.select(node));
@@ -38,7 +38,30 @@ Dynamic.defaultProps = {
   format: '.2f',
   min: Number.NEGATIVE_INFINITY,
   max: Number.POSITIVE_INFINITY,
-  interval: 1
+  step: 1
 };
+
+
+Dynamic._idyll = {
+  name: "Dynamic",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "number",
+    example: "x"
+  }, {
+    name: "step",
+    type: "string",
+    example: '1'
+  }, {
+    name: "min",
+    type: "number",
+    example: '-100'
+  }, {
+    name: "max",
+    type: "number",
+    example: '100'
+  }]
+}
 
 export default Dynamic;

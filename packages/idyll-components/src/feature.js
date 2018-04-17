@@ -156,4 +156,16 @@ Feature.defaultProps = {
   children: []
 };
 
+
+
+Feature._idyll = {
+  name: "Feature",
+  tagType: "open",
+  props: [{
+    name: "value",
+    type: "number",
+    example: "x"
+  }]
+}
+
 export { Content, Feature as default };

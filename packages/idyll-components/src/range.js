@@ -26,4 +26,26 @@ Range.defaultProps = {
   step: 1
 };
 
+Range._idyll = {
+  name: "Range",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "number",
+    example: "x"
+  }, {
+    name: "min",
+    type: "number",
+    example: '0'
+  }, {
+    name: "max",
+    type: "number",
+    example: '100'
+  }, {
+    name: "step",
+    type: "number",
+    example: '1'
+  }]
+}
+
 export default Range;

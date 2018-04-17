@@ -12,10 +12,21 @@ class TextInput extends React.PureComponent {
   }
 
   render() {
+    const { idyll, hasError, updateProps, ...props } = this.props;
     return (
-      <input type="text" onChange={this.onChange} {...this.props} />
+      <input type="text" onChange={this.onChange} {...props} />
     );
   }
+}
+
+TextInput._idyll = {
+  name: "TextInput",
+  tagType: "closed",
+  props: [{
+    name: "value",
+    type: "string",
+    example: '"Hello"'
+  }]
 }
 
 export default TextInput;

@@ -28,12 +28,31 @@ const toStream = (k, o) => {
   return s;
 };
 
-const getTransform = (opts) => {
+/**
+ * Returns the input package's node_modules directory.
+ */
+const getLocalModules = (paths) => {
+  return path.join(paths.INPUT_DIR, 'node_modules')
+}
+
+/**
+ * Returns Idyll's node_modules directory.
+ */
+const getGlobalModules = (paths) => {
+  return path.join(paths.APP_PATH, 'node_modules')
+}
+
+const getTransform = (opts, paths) => {
   const _getTransform = (name) => {
     return (opts[name] || []).map(d => require(d));
   };
 
-  return [[ babelify, { presets: [ envPreset, stage2Preset, reactPreset ], babelrc: false } ]]
+  return [[ babelify, {
+    presets: [ envPreset, stage2Preset, reactPreset ],
+    babelrc: false,
+    // Ensure that Babel doesn't process both the local and global node_modules.
+    ignore: new RegExp(`(${getLocalModules(paths)}|${getGlobalModules(paths)})`)
+  } ]]
     .concat(_getTransform('transform'))
     .concat([[ brfs ]]);
 };
@@ -47,12 +66,10 @@ module.exports = function (opts, paths, output) {
     packageCache: {},
     fullPaths: true,
     cacheFile: path.join(paths.TMP_DIR, `browserify-cache${opts.minify ? '-min' : ''}.json`),
-    transform: getTransform(opts),
+    transform: getTransform(opts, paths),
     paths: [
-      // Input package's NODE_MODULES
-      path.join(paths.INPUT_DIR, 'node_modules'),
-      // Idyll's NODE_MODULES
-      path.resolve(paths.APP_PATH, 'node_modules')
+      getLocalModules(paths),
+      getGlobalModules(paths)
     ],
     plugin: [
       (b) => {

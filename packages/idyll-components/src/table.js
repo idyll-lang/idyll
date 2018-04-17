@@ -45,4 +45,26 @@ TableComponent.defaultProps = {
   showPageJump: false
 }
 
+TableComponent._idyll = {
+  name: "Table",
+  tagType: "closed",
+  props: [{
+    name: "data",
+    type: "array",
+    example: 'x'
+  }, {
+    name: "showPagination",
+    type: "boolean",
+    example: 'false'
+  }, {
+    name: "showPageSizeOptions",
+    type: "boolean",
+    example: 'false'
+  }, {
+    name: "showPageJump",
+    type: "boolean",
+    example: 'false'
+  }]
+}
+
 module.exports = TableComponent;

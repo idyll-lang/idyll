@@ -719,4 +719,17 @@ hr {
   border-bottom-color: #eee;
 }
 
+.idyll-dynamic {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.idyll-action {
+  text-decoration: underline;
+}
+
+.idyll-document-error {
+  color: red;
+  font-family: monospace;
+}
 `

@@ -20,7 +20,7 @@ export default class LandingPage extends React.PureComponent {
     super(props);
 
     this.state = {
-      hasError: false,
+      error: null,
       exampleValue: `
 # Hello World
 
@@ -45,7 +45,7 @@ The value of x is [Display value:x format:"d" /].
   }
 
   componentDidCatch(error, info) {
-    this.setState({ hasError: true });
+    this.setState({ error });
   }
 
   handleExampleValueChange(event) {
@@ -56,13 +56,8 @@ The value of x is [Display value:x format:"d" /].
 
   render() {
     const { url } = this.props;
-    const { exampleValue } = this.state;
-    let ast, error;
-    try {
-      ast = compile(exampleValue);
-    } catch(e) {
-      error = e;
-    }
+    const { exampleValue, error } = this.state;
+
     return (
       <div>
         <Head>
@@ -103,11 +98,7 @@ The value of x is [Display value:x format:"d" /].
 
               <div className="label">Output</div>
               <div className="output">
-              {
-                ast ?
-                <IdyllDocument layout='blog' ast={ast} components={IdyllComponents} key={ exampleValue }  />
-                : null
-              }
+                <IdyllDocument layout='centered' markup={exampleValue} components={IdyllComponents} />
               {
                 error ? (
                   <pre>

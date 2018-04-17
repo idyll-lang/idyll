@@ -17,12 +17,32 @@
 */
 
 
+const appendNode = function(ast, node) {
+  return appendNodes(ast, [node]);
+};
+
 const appendNodes = function(ast, nodes) {
   return [].concat(ast, nodes);
 };
 
+const createNode = function(name, props, children) {
+  let node = [name, [], children || []];
+  node = setProperties(node, props || {});
+  return node;
+};
+
 const getChildren = function(node) {
+  if (typeof node === 'string') {
+    return [];
+  }
   return node[2] || [];
+};
+
+const walkNodes = function(ast, f) {
+  (ast || []).forEach((node) => {
+    getChildren(node).forEach(c => walkNodes(c, f));
+    f(node);
+  });
 };
 
 const modifyChildren = function(node, modifier) {
@@ -94,11 +114,36 @@ const modifyNodesByName = function(ast, name, modifier) {
 };
 
 const getProperty = function(node, key) {
+  if (typeof node === 'string') {
+    return null;
+  }
+  let retProp;
   node[1].forEach((element) => {
     if (element[0] === key) {
-      return element[1];
+      retProp = element[0];
     }
   });
+  return retProp;
+};
+
+const getProperties = function(node) {
+  if (typeof node === 'string') {
+    return [];
+  }
+  return node[1] || [];
+};
+
+const getPropertiesByType = function(node, type) {
+  if (typeof node === 'string') {
+    return [];
+  }
+  return (node[1] || []).filter((element) => {
+    return element[1][0] === type;
+  });
+};
+
+const prependNode = function(ast, node) {
+  return prependNodes(ast, [node]);
 };
 
 const prependNodes = function(ast, nodes) {
@@ -119,13 +164,16 @@ const removeNodesByName = function(ast, name) {
 
 const setProperty = function(node, key, value) {
   let hasSet = false;
-  node[1].forEach((element) => {
+  const isArr = Array.isArray(value);
+  node[1] = node[1].map((element) => {
       if (element[0] === key) {
         hasSet = true;
+        return [element[0], isArr ? value : ['value', value]];
       }
+      return element;
   });
   if (!hasSet) {
-    node[1] = node[1].concat([[key, value]]);
+    node[1] = node[1].concat([[key, isArr ? value : ['value', value]]]);
   }
 
   return node;
@@ -149,7 +197,9 @@ const removeProperty = function(node, key) {
 };
 
 module.exports = {
+  appendNode,
   appendNodes,
+  createNode,
   getChildren,
   getNodesByName,
   filterChildren,
@@ -157,9 +207,13 @@ module.exports = {
   modifyChildren,
   modifyNodesByName,
   getProperty,
+  getProperties,
+  getPropertiesByType,
+  prependNode,
   prependNodes,
   removeNodesByName,
   setProperties,
   setProperty,
-  removeProperty
+  removeProperty,
+  walkNodes
 }

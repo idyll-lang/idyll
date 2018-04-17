@@ -26,7 +26,7 @@ Block -> (BreakBlock | NoBreakBlock) {%
   }
 %}
 
-NoBreakBlock -> (Header | MultilineCode | UnorderedList | OrderedList) {%
+NoBreakBlock -> (Header | Quote | MultilineCode | UnorderedList | OrderedList) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -46,6 +46,17 @@ Header -> "HEADER_" [1-6] (__ ParagraphItem):+ __ "HEADER_END" {%
     });
 
     return ["h" + data[1], [], children];
+  }
+%}
+
+Quote -> "QUOTE_START" (__ ParagraphItem):+ __ "QUOTE_END" {%
+  function(data, location, reject) {
+    var children = [];
+    data[1].map(function (child) {
+      children.push(child[1]);
+    });
+
+    return ["blockquote", [], children];
   }
 %}
 

@@ -1,21 +1,35 @@
+import { Link } from '../routes';
 
 const imageUrl = (url) => /^http/.test(url) ? url : `/static/images/${url}`
+
+function slugify(text)
+{
+  return text.toString().split(/([A-Z][a-z]+)/).join('-').toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
 
 
 export default ({ href, label, image }) => (
   <div className="example">
-    <a href={ href } target="_blank">
-      <div
-        className="example-image"
-        style={{ backgroundImage: `url(${imageUrl(image)})` }}
-      ></div>
-      <div className="example-label">{ label }</div>
-    </a>
+    <Link route='gallery-item' params={{slug: slugify(label)}}>
+      <a>
+        <div
+          className="example-image"
+          style={{ backgroundImage: `url(${imageUrl(image)})` }}
+        ></div>
+        <div className="example-label">{ label }</div>
+      </a>
+    </Link>
 
     <style jsx>{`
       .example {
         border: solid 2px #efefef;
         transition: border 0.25s;
+        cursor: pointer;
       }
 
       .example:hover {

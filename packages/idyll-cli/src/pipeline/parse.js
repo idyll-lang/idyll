@@ -177,7 +177,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
       layout: opts.layout
     })
   ).trim();
-  return mustache.render(template, meta);
+  return mustache.render(template, Object.assign({ usesTex: components.equation }, meta));
 }
 
 exports.getASTJSON = (ast) => {

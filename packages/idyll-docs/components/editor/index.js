@@ -1,45 +1,29 @@
 import React from 'react'
 import IdyllEditArea from './edit-area'
 import IdyllRenderer from './renderer'
-import compile from 'idyll-compiler'
 import GlobalStyles from '../global-styles'
-import { hashCode } from './utils'
 import styles from './styles'
 
 class LiveIdyllEditor extends React.PureComponent {
+
   constructor(props) {
     super(props)
     const { markup } = props
     this.state = {
-      ...this.stateObjectForMarkup(markup),
+      error: null,
       initialMarkup: markup,
+      currentMarkup: markup
     }
   }
 
-  stateObjectForMarkup = (idyllMarkup, hash = null) => ({
-    idyllHash: hash || hashCode(idyllMarkup),
-    error: null,
-    ast: compile(idyllMarkup),
-  })
-
   setContent(value) {
-    // console.log('setting content ', value);
-    try {
-      const hash = hashCode(value)
-      if (hash !== this.state.idyllHash) {
-        this.setState(this.stateObjectForMarkup(value, hash))
-      }
-    } catch (e) {
-      this.setState({ error: e.message })
-    }
+    this.setState({ currentMarkup: value });
   }
 
   componentDidCatch(error, info) {
-    // console.log(error);
-    this.setState({ error: error.message });
-  }
 
-  componentDidMount() {
+    console.log(error);
+    this.setState({ error: error.message });
   }
 
   componentWillReceiveProps() {
@@ -55,13 +39,13 @@ class LiveIdyllEditor extends React.PureComponent {
 
   render() {
     const { fullscreen } = this.props;
-    const { initialMarkup, ast, error, idyllHash } = this.state
+    const { initialMarkup, currentMarkup, error, idyllHash } = this.state
     return (
       <div className='container'>
         {
           fullscreen ? null : <IdyllEditArea initialContent={ initialMarkup } onChange={ this.handleChange } />
         }
-        <IdyllRenderer ast={ ast } idyllHash={ idyllHash } />
+        <IdyllRenderer markup={ currentMarkup } />
         { error && this.renderError() }
         <style jsx global>{styles}</style>
         <style jsx>{`

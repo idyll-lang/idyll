@@ -115,6 +115,12 @@ const lex = function(options) {
     return ['BREAK', 'HEADER_' + hashes.length].concat(recurse(text, { skipLists: true })).concat(['HEADER_END']);
   });
 
+  lexer.addRule(/[\s\n]*>\s*([^\n\[]+)[\n\s]*/gm, function(lexeme, text) {
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['BREAK', 'QUOTE_START'].concat(recurse(text, { skipLists: true })).concat(['QUOTE_END']);
+  });
+
 
   lexer.addRule(/\*\*([^\s\n][^\*]*[^\s\n])\*\*(\s*)/g, function(lexeme, text, trailingSpace) {
     this.reject = inComponent;
@@ -309,6 +315,12 @@ const lex = function(options) {
     if (this.reject) return;
     updatePosition(lexeme);
     return ['STRING'].concat(formatToken(lexeme));
+  });
+  lexer.addRule(/'([^']*)'/, function(lexeme, str) {
+    this.reject = !inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['STRING'].concat(formatToken('"' + str + '"'));
   });
 
   lexer.addRule(/:/, function(lexeme) {

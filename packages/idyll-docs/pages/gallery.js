@@ -1,70 +1,7 @@
 import Link from 'next/link'
 import Layout from '../components/basic-layout'
 import ExampleGroup from '../components/example-group'
-
-const exampleGroups = [
-  {
-    title: 'Full articles',
-    examples: [
-      {
-        label: 'The Etymology of Trig Functions',
-        href: 'https://mathisonian.github.io/trig/etymology/',
-        image: 'trig.png',
-      },
-      {
-        label: 'Seattle PD’s Dashcam Problem',
-        href: 'https://mathisonian.github.io/dashcam/',
-        image: 'https://mathisonian.github.io/dashcam/images/share.png',
-      },
-      {
-        label: 'The United Complaints of America',
-        href: 'https://mathisonian.github.io/consumer-complaints/',
-        image: 'complaints-2.gif',
-      },
-    ],
-  },
-  {
-    title: 'With popular JavaScript libraries',
-    examples: [
-      {
-        label: 'D3',
-        href: 'https://idyll-lang.github.io/idyll-d3-component/',
-        image: 'd3.png',
-      },
-      {
-        label: 'regl',
-        href: 'https://idyll-lang.github.io/idyll-regl-component/',
-        image: 'regl.png',
-      },
-      {
-        label: 'Vega Lite',
-        href: 'https://idyll-lang.github.io/examples/csv/',
-        image: 'vl.png',
-      },
-    ],
-  },
-  {
-    title: 'Other examples',
-    examples: [
-      {
-        label: 'Lorenz Attractor',
-        href: 'https://mathisonian.github.io/lorenz/',
-        image: 'lorenz.png',
-      },
-      {
-        label: 'Nonlinear Sliders',
-        href: 'https://mathisonian.github.io/idyll/nonlinear-sliders/',
-        image: 'nonlinear.png',
-      },
-      {
-        label: 'Scrolly Idyll',
-        href: 'https://idyll-lang.github.io/idyll/scroll/',
-        image: 'scroll.gif',
-      },
-    ],
-  },
-]
-
+import exampleGroups from '../gallery/contents';
 
 const Examples = () => (
   <section>
