@@ -1,6 +1,6 @@
 {
   "name": "idyll-compiler",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "Compiler for idyll",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "gray-matter": "^3.1.1",
-    "idyll-ast": "^1.2.2",
+    "idyll-ast": "^1.2.3",
     "lex": "^1.7.9",
     "nearley": "^2.7.12",
     "smartquotes": "^2.0.0"

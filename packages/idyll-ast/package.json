@@ -1,6 +1,6 @@
 {
   "name": "idyll-ast",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Utilities for manipulating Idyll's AST",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
