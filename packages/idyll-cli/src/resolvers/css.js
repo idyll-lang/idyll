@@ -36,4 +36,4 @@ class CSSResolver {
   }
 }
 
-module.exports = CSSResolver
+module.exports.CSSResolver = CSSResolver

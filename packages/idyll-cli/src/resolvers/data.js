@@ -28,4 +28,4 @@ class DataResolver {
   }
 }
 
-module.exports = DataResolver
+module.exports.DataResolver = DataResolver

@@ -45,6 +45,14 @@ const walkNodes = function(ast, f) {
   });
 };
 
+const findNodes = function(ast, filter) {
+  var result = [];
+  walkNodes(ast, node => {
+    if (filter(node)) result.push(node);
+  })
+  return result;
+}
+
 const modifyChildren = function(node, modifier) {
   if (typeof node === 'string') {
     return node;
@@ -215,5 +223,6 @@ module.exports = {
   setProperties,
   setProperty,
   removeProperty,
-  walkNodes
+  walkNodes,
+  findNodes
 }

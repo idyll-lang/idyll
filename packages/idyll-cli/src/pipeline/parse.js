@@ -10,19 +10,27 @@ const debug = require('debug')('idyll-cli')
 const {
   getNodesByName,
   getProperty,
-  filterNodes
+  filterNodes,
+  findNodes
 } = require('idyll-ast')
 
 const getFilteredAST = (ast) => {
-  const ignoreNames = ['meta'];
-  return ast.filter((node) => {
-    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
+  const ignoreNames = new Set(['meta']);
+  return filterNodes(ast, node => {
+    return (typeof node === 'string') || !ignoreNames.has(paramCase(node[0].toLowerCase()));
   });
 }
 
 exports.getComponentNodes = (ast) => {
-  const ignoreNames = ['var', 'data', 'meta', 'derived'];
-  return filterNodes(ast, s => !ignoreNames.includes(s));
+  console.log('AST IS:', JSON.stringify(ast))
+  const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
+  return findNodes(ast, node => {
+    if (typeof node === 'string') {
+      return false
+    }
+    console.log('NODE:', node)
+    return !ignoreNames.has(node[0].toLowerCase())
+  });
 }
 
 exports.getDataNodes = (ast) => {
@@ -35,43 +43,6 @@ exports.getDataNodes = (ast) => {
     }
   });
 }
-
-exports.getDataJS = (ast, DATA_DIR, o) => {
-  // can be multiple data nodes
-  const dataNodes = getNodesByName(ast, 'data');
-
-  // turn each data node into a field on an object
-  // whose key is the name prop
-  // and whose value is the parsed data
-  const data = dataNodes.reduce(
-    (acc, dataNode) => {
-      const props = dataNode[1];
-      const { name, source } = props.reduce(
-        (hash, val) => {
-          hash[val[0]] = val[1][1];
-          return hash;
-        },
-        {}
-      );
-
-      if (source.endsWith('.csv')) {
-        debug(`Loading ${source} as a CSV into data variable ${name}`)
-        acc[name] = Papa.parse(slash(path.join(DATA_DIR, source)), { header: true }).data;
-      } else if (source.endsWith('.json')) {
-        debug(`Loading ${source} as a JSON document into data variable ${name}`)
-        acc[name] = require(slash(path.join(DATA_DIR, source)));
-      } else {
-        throw new Error('Unknown data file type: ' + source);
-      }
-
-      return acc;
-    },
-    {}
-  );
-
-  return data;
-}
-
 
 exports.getHighlightJS = (ast, paths, server) => {
   // load react-syntax-highlighter from idyll's node_modules directory

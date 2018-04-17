@@ -3,8 +3,10 @@ const fs = require('fs');
 
 const htmlTags = require('html-tags');
 const slash = require('slash');
+const { paramCase, pascalCase } = require('change-case');
 
 const errors = require('../errors');
+const debug = require('debug')('idyll-cli')
 
 class ComponentResolver {
   constructor(options, paths) {
@@ -32,9 +34,17 @@ class ComponentResolver {
   _loadPaths() {
     var componentsMap = new Map();
     var prioritizedDirs = [this.paths.DEFAULT_COMPONENT_DIRS, this.paths.COMPONENT_DIRS];
+    debug(`Component directories (prioritized in ascending order): ${prioritizedDirs}`)
 
     prioritizedDirs.forEach(dirs => {
       dirs.forEach(dir => {
+        try {
+          fs.statSync(dir);
+        } catch (err) {
+          // If the custom component directory doesn't exist, silently proceed to the next directory.
+          return;
+        }
+        debug(`Searching directory ${dir} for components...`);
         var componentFiles = fs.readdirSync(dir);
         componentFiles.forEach(name => {
           var path = p.join(dir, name);
@@ -42,6 +52,12 @@ class ComponentResolver {
         });
       });
     });
+    if (debug.enabled) {
+      debug('Resolved components:');
+      debug([...componentsMap].reduce((s, p) => {
+        return s += `  ${p[0]} => ${p[1]}\n`;
+      }, ''));
+    }
     this.componentsMap = componentsMap;
   }
 
@@ -56,27 +72,45 @@ class ComponentResolver {
    * 6) Else, return nothing (this is a failure).
    */
   resolve(name) {
-    var lowerName = name.toLowerCase();
-    if (this.inputConfig.components[name]) {
-      return slash(p.join(this.paths.INPUT_DIR, this.inputConfig.components[name]));
-    }
-    var resolved = this.componentsMap.get(lowerName + '.js');
-    if (resolved) {
-      return slash(resolved);
-    }
-    try {
-      // npm modules are required via relative paths to support working with a locally linked idyll
-      return slash(resolve.sync(name, {basedir: INPUT_DIR}));
-    } catch (err) {
+    const self = this
+    const candidates = [pascalCase(name), paramCase(name), name.toLowerCase()];
+    debug(`Searching for component: ${name} with candidates: ${candidates}`);
+
+    var resolved = null
+
+    candidates.forEach(name => {
+      if (resolved) return
+      if (self.inputConfig.components[name]) {
+        resolved = slash(p.join(self.paths.INPUT_DIR, self.inputConfig.components[name]));
+      }
+      resolved = self.componentsMap.get(name + '.js');
+      if (resolved) {
+        resolved = slash(resolved);
+      }
+      try {
+        // npm modules are required via relative paths to support working with a locally linked idyll
+        resolved = slash(resolve.sync(name, {basedir: INPUT_DIR}));
+      } catch (err) {
+        // Import errors are silently discarded
+        return
+      }
+    })
+
+    if (!resolved) {
       if (htmlTags.indexOf(name) === -1) {
-        if (['fullwidth', 'textcontainer'].indexOf(node[0].toLowerCase()) > -1) {
+        if (['fullwidth', 'textcontainer'].indexOf(name) > -1) {
           throw new errors.OutOfDateError(name);
         }
-        throw new errors.InvalidComponentError(name);
       }
       // At this point, it is a valid HTML tag.
-      return name;
+      debug('At this point for name: ' + name)
+      resolved = name;
     }
+
+    if (!resolved) throw new errors.InvalidComponentError(name);
+
+    debug(`Resolved component ${name} to ${resolved}`)
+    return resolved;
   }
 
   getDirectories() {
@@ -84,4 +118,4 @@ class ComponentResolver {
   }
 }
 
-module.exports = ComponentResolver
+module.exports.ComponentResolver = ComponentResolver

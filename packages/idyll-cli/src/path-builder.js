@@ -20,7 +20,7 @@ module.exports = function (opts) {
   }
 
   const getComponentDirs = (paths) => {
-    if (paths.length) return paths.map(p => getPath(p));
+    if (paths instanceof Array) return paths.map(p => getPath(p));
     return [getPath(paths)];
   }
 
