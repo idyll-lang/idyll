@@ -18,6 +18,7 @@ const {
   DataResolver,
   CSSResolver
 } = require('./resolvers')
+
 function createDirectories(paths) {
   mkdirp.sync(paths.OUTPUT_DIR);
   mkdirp.sync(paths.TMP_DIR);

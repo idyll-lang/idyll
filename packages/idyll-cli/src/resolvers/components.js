@@ -12,7 +12,7 @@ class ComponentResolver {
     this.inputConfig = options.inputConfig;
 
     // Set in `_loadPaths`.
-    this.componentsMap = null
+    this.componentsMap = null;
 
     this._loadPaths();
   }
@@ -60,9 +60,9 @@ class ComponentResolver {
     if (this.inputConfig.components[name]) {
       return slash(p.join(this.paths.INPUT_DIR, this.inputConfig.components[name]));
     }
-    var resolved = this.componentsMap.get(lowerName + '.js')
+    var resolved = this.componentsMap.get(lowerName + '.js');
     if (resolved) {
-      return slash(resolved)
+      return slash(resolved);
     }
     try {
       // npm modules are required via relative paths to support working with a locally linked idyll
