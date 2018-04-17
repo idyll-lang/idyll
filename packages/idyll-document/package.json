@@ -30,7 +30,6 @@
   "dependencies": {
     "change-case": "^3.0.1",
     "cross-env": "^5.0.5",
-    "debug": "^3.1.0",
     "html-tags": "^2.0.0",
     "idyll-compiler": "^3.1.4",
     "idyll-layouts": "^2.5.1",
