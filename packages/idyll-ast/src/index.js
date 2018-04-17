@@ -40,7 +40,7 @@ const getChildren = function(node) {
 
 const walkNodes = function(ast, f) {
   (ast || []).forEach((node) => {
-    getChildren(node).forEach(c => walkNodes(c, f));
+    walkNodes(getChildren(node), f);
     f(node);
   });
 };
@@ -145,8 +145,8 @@ const getPropertiesByType = function(node, type) {
   if (typeof node === 'string') {
     return [];
   }
-  return (node[1] || []).filter((element) => {
-    return element[1][0] === type;
+  return (node[1] || []).filter(([propName, [propType, propValue]]) => {
+    return propType === type;
   });
 };
 
