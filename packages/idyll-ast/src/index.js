@@ -126,9 +126,10 @@ const getProperty = function(node, key) {
     return null;
   }
   let retProp;
+  console.log('GETTING PROPERTY FROM NODE:', node)
   node[1].forEach((element) => {
     if (element[0] === key) {
-      retProp = element[0];
+      retProp = element[1];
     }
   });
   return retProp;

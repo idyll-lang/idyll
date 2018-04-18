@@ -4,7 +4,9 @@ const Papa = require('papaparse');
 const slash = require('slash');
 
 const errors = require('../errors.js');
-const debug = require('debug')('idyll-cli');
+var debug = require('debug')('idyll-cli');
+
+debug = console.error
 
 class DataResolver {
   constructor(options, paths) {
@@ -12,6 +14,18 @@ class DataResolver {
   }
 
   resolve(name, source) {
+    debug(`Resolving data with name ${name} and source ${source}`);
+
+    if (name[0] !== 'value') {
+      throw new errors.UnsupportedDataTypeError(name[0]);
+    }
+    if (source[0] !== 'value') {
+      throw new errors.UnsupportedDataTypeError(source[0]);
+    }
+
+    name = name[1];
+    source = source[1];
+
     if (source.endsWith('.csv')) {
       debug(`Loading ${source} as a CSV into data variable ${name}`)
       return Papa.parse(slash(p.join(this.paths.DATA_DIR, source)), { header: true }).data;

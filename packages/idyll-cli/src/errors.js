@@ -38,3 +38,9 @@ exports.UnknownDataError = class UnknownDataError extends ExtendableError {
     super(`Unknown data file type: ${source}`)
   }
 }
+
+exports.UnsupportedDataTypeError = class UnsupportedDataTypeError extends ExtendableError {
+  constructor(type) {
+    super(`The data tag type: ${type} is currently unsupported. Please use 'value'.`);
+  }
+}

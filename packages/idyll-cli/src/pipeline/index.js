@@ -34,10 +34,13 @@ const build = (opts, paths, resolvers) => {
         const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
           return node[0].split('.')[0];
         })));
+        console.log(`UNIQUE COMPONENTS: ${uniqueComponents}`)
         const components = uniqueComponents.reduce((acc, name) => {
-          acc[name] = resolvers.get('components').resolve(name);
+          var resolved = resolvers.get('components').resolve(name);
+          if (resolved) acc[name] = resolved;
           return acc;
         }, {});
+        console.log(`COMPONENTS: ${components}`)
         const data = getDataNodes(ast).map(({ name, source }) => {
           return resolvers.get('data').resolve(name, source)
         });

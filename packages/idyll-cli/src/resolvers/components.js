@@ -1,6 +1,7 @@
 const p = require('path');
 const fs = require('fs');
 
+const resolve = require('resolve');
 const htmlTags = require('html-tags');
 const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
@@ -79,17 +80,24 @@ class ComponentResolver {
     var resolved = null
 
     candidates.forEach(name => {
+      // Once one of the candidates has been found, don't continue searching.
       if (resolved) return
+
+      debug('inputConfig:', self.inputConfig)
       if (self.inputConfig.components[name]) {
         resolved = slash(p.join(self.paths.INPUT_DIR, self.inputConfig.components[name]));
+        return
       }
+
       resolved = self.componentsMap.get(name + '.js');
       if (resolved) {
         resolved = slash(resolved);
+        return
       }
+
       try {
         // npm modules are required via relative paths to support working with a locally linked idyll
-        resolved = slash(resolve.sync(name, {basedir: INPUT_DIR}));
+        resolved = slash(resolve.sync(name, {basedir: self.paths.INPUT_DIR}));
       } catch (err) {
         // Import errors are silently discarded
         return
@@ -97,17 +105,16 @@ class ComponentResolver {
     })
 
     if (!resolved) {
-      if (htmlTags.indexOf(name) === -1) {
+      if (htmlTags.indexOf(name) !== -1) {
+        // It is a valid HTML component, but should not be added to the map.
+        return
+      } else {
         if (['fullwidth', 'textcontainer'].indexOf(name) > -1) {
           throw new errors.OutOfDateError(name);
         }
+        throw new errors.InvalidComponentError(name);
       }
-      // At this point, it is a valid HTML tag.
-      debug('At this point for name: ' + name)
-      resolved = name;
     }
-
-    if (!resolved) throw new errors.InvalidComponentError(name);
 
     debug(`Resolved component ${name} to ${resolved}`)
     return resolved;

@@ -60,10 +60,10 @@ beforeAll(done => {
   }).build();
 })
 
-test('creates the expected files', () => {
+test.skip('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 })
-test('should construct the AST properly', () => {
+test.skip('should construct the AST properly', () => {
   const ast = [
     ["var",[["name",["value","exampleVar"]],["value",["value",5]]],[]],
     ['TextContainer', [], [
