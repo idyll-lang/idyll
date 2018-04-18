@@ -127,7 +127,6 @@ exports.getBaseHTML = (ast, template) => {
 
 exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const components = {};
-  console.log('_components:', _components)
   Object.keys(_components).forEach(key => {
     delete require.cache[require.resolve(_components[key])];
     components[key] = require(_components[key]);

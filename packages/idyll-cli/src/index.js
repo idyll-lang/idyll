@@ -141,7 +141,6 @@ const idyll = (options = {}, cb) => {
 
             // Each resolver is responsible for generating a list of directories to watch for
             // their corresponding data types.
-            console.log('resolvers:', resolvers)
             resolvers.forEach((resolver, name) => {
               bs.watch(resolver.getDirectories(), { ignoreInitial: true }, () => {
                 inst.build();
