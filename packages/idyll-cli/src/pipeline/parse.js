@@ -5,7 +5,7 @@ const resolve = require('resolve');
 const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
 
-const debug = require('debug')('idyll-cli')
+const debug = require('debug')('idyll:cli')
 
 const {
   getNodesByName,

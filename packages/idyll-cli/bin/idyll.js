@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const idyll = require('../src/');
-const debug = require('debug')('idyll-cli')
+const debug = require('debug')('idyll:cli')
 
 var argv = require('yargs')
   .usage('Usage: idyll index.idl')

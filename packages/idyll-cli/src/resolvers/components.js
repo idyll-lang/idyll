@@ -7,7 +7,7 @@ const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
 
 const errors = require('../errors');
-const debug = require('debug')('idyll-cli')
+const debug = require('debug')('idyll:cli')
 
 class ComponentResolver {
   constructor(options, paths) {

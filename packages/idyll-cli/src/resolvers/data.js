@@ -4,7 +4,7 @@ const Papa = require('papaparse');
 const slash = require('slash');
 
 const errors = require('../errors.js');
-var debug = require('debug')('idyll-cli');
+var debug = require('debug')('idyll:cli');
 
 class DataResolver {
   constructor(options, paths) {

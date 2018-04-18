@@ -7,7 +7,6 @@ const {
 } = require('path');
 const EventEmitter = require('events');
 const changeCase = require('change-case');
-const debug = require('debug')('idyll-cli')
 const mkdirp = require('mkdirp')
 
 const pathBuilder = require('./path-builder');
@@ -18,6 +17,8 @@ const {
   DataResolver,
   CSSResolver
 } = require('./resolvers')
+
+const debug = require('debug')('idyll:cli')
 
 function createDirectories(paths) {
   mkdirp.sync(paths.OUTPUT_DIR);

@@ -3,8 +3,6 @@ const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
-const debug = require('debug')('idyll-cli')
-
 const { paramCase } = require('change-case');
 
 const {
@@ -17,6 +15,8 @@ const {
 } = require('./parse');
 const css = require('./css');
 const bundleJS = require('./bundle-js');
+
+const debug = require('debug')('idyll:cli')
 
 let output;
 
