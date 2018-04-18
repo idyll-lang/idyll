@@ -83,23 +83,25 @@ class ComponentResolver {
       // Once one of the candidates has been found, don't continue searching.
       if (resolved) return
 
-      debug('inputConfig:', self.inputConfig)
+      // If an alias is specified, use that.
       if (self.inputConfig.components[name]) {
         resolved = slash(p.join(self.paths.INPUT_DIR, self.inputConfig.components[name]));
         return
       }
 
+      // Otherwise check to see if this is a custom component (in a component directory).
       resolved = self.componentsMap.get(name + '.js');
       if (resolved) {
         resolved = slash(resolved);
         return
       }
 
+      // Else try to import it as a node module.
       try {
-        // npm modules are required via relative paths to support working with a locally linked idyll
+        // npm modules are required via relative paths to support working with a locally linked idyll.
         resolved = slash(resolve.sync(name, {basedir: self.paths.INPUT_DIR}));
       } catch (err) {
-        // Import errors are silently discarded
+        // Import errors are silently discarded.
         return
       }
     })

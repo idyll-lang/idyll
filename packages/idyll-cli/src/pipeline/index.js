@@ -5,6 +5,8 @@ const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
 const debug = require('debug')('idyll-cli')
 
+const { paramCase } = require('change-case');
+
 const {
   getASTJSON,
   getComponentNodes,
@@ -34,19 +36,19 @@ const build = (opts, paths, resolvers) => {
         const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
           return node[0].split('.')[0];
         })));
-        console.log(`UNIQUE COMPONENTS: ${uniqueComponents}`)
         const components = uniqueComponents.reduce((acc, name) => {
-          var resolved = resolvers.get('components').resolve(name);
-          if (resolved) acc[name] = resolved;
+          let resolved = resolvers.get('components').resolve(name);
+          if (resolved) acc[paramCase(name)] = resolved;
           return acc;
         }, {});
-        console.log(`COMPONENTS: ${components}`)
-        const data = getDataNodes(ast).map(({ name, source }) => {
-          return resolvers.get('data').resolve(name, source)
-        });
-        const css = resolvers.get('css').resolve();
 
-        debug(`AST JSON: ${JSON.stringify(getASTJSON(ast))}`)
+        const data = getDataNodes(ast).reduce((acc, { name, source }) => {
+          let { resolvedName, data } = resolvers.get('data').resolve(name, source)
+          acc[resolvedName] = data;
+          return acc;
+        }, {});
+
+        const css = resolvers.get('css').resolve();
 
         output = {
           ast: getASTJSON(ast),

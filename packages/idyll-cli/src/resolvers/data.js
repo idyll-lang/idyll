@@ -6,8 +6,6 @@ const slash = require('slash');
 const errors = require('../errors.js');
 var debug = require('debug')('idyll-cli');
 
-debug = console.error
-
 class DataResolver {
   constructor(options, paths) {
     this.paths = paths
@@ -26,14 +24,21 @@ class DataResolver {
     name = name[1];
     source = source[1];
 
+    var data = null
+
     if (source.endsWith('.csv')) {
       debug(`Loading ${source} as a CSV into data variable ${name}`)
-      return Papa.parse(slash(p.join(this.paths.DATA_DIR, source)), { header: true }).data;
+      data = Papa.parse(slash(p.join(this.paths.DATA_DIR, source)), { header: true }).data;
     } else if (source.endsWith('.json')) {
       debug(`Loading ${source} as a JSON document into data variable ${name}`)
-      return require(slash(p.join(this.paths.DATA_DIR, source)));
+      data = require(slash(p.join(this.paths.DATA_DIR, source)));
     } else {
       throw new errors.UnknownDataError(source);
+    }
+
+    return {
+      resolvedName: name,
+      data
     }
   }
 

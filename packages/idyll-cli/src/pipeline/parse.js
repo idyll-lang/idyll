@@ -15,7 +15,7 @@ const {
 } = require('idyll-ast')
 
 const getFilteredAST = (ast) => {
-  const ignoreNames = new Set(['meta']);
+  const ignoreNames = new Set();
   return filterNodes(ast, node => {
     return (typeof node === 'string') || !ignoreNames.has(paramCase(node[0].toLowerCase()));
   });
