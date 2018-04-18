@@ -6,7 +6,6 @@ const UglifyJS = require('uglify-js');
 const { paramCase } = require('change-case');
 
 const {
-  getASTJSON,
   getComponentNodes,
   getDataNodes,
   getHighlightJS,
@@ -51,7 +50,7 @@ const build = (opts, paths, resolvers) => {
         const css = resolvers.get('css').resolve();
 
         output = {
-          ast: getASTJSON(ast),
+          ast: ast,
           components,
           data,
           css,

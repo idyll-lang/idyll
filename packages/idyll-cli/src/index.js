@@ -135,7 +135,7 @@ const idyll = (options = {}, cb) => {
             // when CSS changes we reassemble and inject it
             bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, () => {
               pipeline.updateCSS(paths, resolvers.get('css')).then(() => {
-                bs.reload('styles.css')
+                bs.reload('styles.css');
               });
             });
 

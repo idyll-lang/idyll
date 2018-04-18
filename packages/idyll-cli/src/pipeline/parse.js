@@ -14,13 +14,6 @@ const {
   findNodes
 } = require('idyll-ast')
 
-const getFilteredAST = (ast) => {
-  const ignoreNames = new Set();
-  return filterNodes(ast, node => {
-    return (typeof node === 'string') || !ignoreNames.has(paramCase(node[0].toLowerCase()));
-  });
-}
-
 exports.getComponentNodes = (ast) => {
   const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
   return findNodes(ast, node => {
@@ -139,7 +132,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
-      ast: getFilteredAST(ast),
+      ast: ast,
       components,
       datasets,
       theme: opts.theme,
@@ -147,8 +140,4 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
     })
   ).trim();
   return mustache.render(template, Object.assign({ usesTex: components.equation }, meta));
-}
-
-exports.getASTJSON = (ast) => {
-  return getFilteredAST(ast);
 }
