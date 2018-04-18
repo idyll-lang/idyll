@@ -11,7 +11,7 @@ const debug = require('debug')('idyll:cli')
 
 class ComponentResolver {
   constructor(options, paths) {
-    this.paths = paths
+    this.paths = paths;
     this.inputConfig = options.inputConfig;
 
     // Set in `_loadPaths`.
@@ -81,19 +81,19 @@ class ComponentResolver {
 
     candidates.forEach(name => {
       // Once one of the candidates has been found, don't continue searching.
-      if (resolved) return
+      if (resolved) return;
 
       // If an alias is specified, use that.
       if (self.inputConfig.components[name]) {
         resolved = slash(p.join(self.paths.INPUT_DIR, self.inputConfig.components[name]));
-        return
+        return;
       }
 
       // Otherwise check to see if this is a custom component (in a component directory).
       resolved = self.componentsMap.get(name + '.js');
       if (resolved) {
         resolved = slash(resolved);
-        return
+        return;
       }
 
       // Else try to import it as a node module.
@@ -102,7 +102,7 @@ class ComponentResolver {
         resolved = slash(resolve.sync(name, {basedir: self.paths.INPUT_DIR}));
       } catch (err) {
         // Import errors are silently discarded.
-        return
+        return;
       }
     })
 
@@ -127,4 +127,4 @@ class ComponentResolver {
   }
 }
 
-module.exports.ComponentResolver = ComponentResolver
+module.exports.ComponentResolver = ComponentResolver;

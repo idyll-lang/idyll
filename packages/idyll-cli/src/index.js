@@ -119,7 +119,7 @@ const idyll = (options = {}, cb) => {
         .then((output) => {
           debug('Build completed');
           // Leaving the following timing statement in for backwards-compatibility.
-          if (opts.debug) console.timeEnd('Build Time')
+          if (opts.debug) console.timeEnd('Build Time');
           this.emit('update', output);
         })
         .then(() => {

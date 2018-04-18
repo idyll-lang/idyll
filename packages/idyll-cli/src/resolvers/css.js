@@ -14,7 +14,7 @@ const cleanPath = (str) => {
 
 class CSSResolver {
   constructor(options) {
-    this.options = options
+    this.options = options;
   }
 
   resolve() {
@@ -36,4 +36,4 @@ class CSSResolver {
   }
 }
 
-module.exports.CSSResolver = CSSResolver
+module.exports.CSSResolver = CSSResolver;

@@ -24,13 +24,13 @@ class DataResolver {
     name = name[1];
     source = source[1];
 
-    var data = null
+    var data = null;
 
     if (source.endsWith('.csv')) {
-      debug(`Loading ${source} as a CSV into data variable ${name}`)
+      debug(`Loading ${source} as a CSV into data variable ${name}`);
       data = Papa.parse(slash(p.join(this.paths.DATA_DIR, source)), { header: true }).data;
     } else if (source.endsWith('.json')) {
-      debug(`Loading ${source} as a JSON document into data variable ${name}`)
+      debug(`Loading ${source} as a JSON document into data variable ${name}`);
       data = require(slash(p.join(this.paths.DATA_DIR, source)));
     } else {
       throw new errors.UnknownDataError(source);
@@ -39,7 +39,7 @@ class DataResolver {
     return {
       resolvedName: name,
       data
-    }
+    };
   }
 
   getDirectories() {
@@ -47,4 +47,4 @@ class DataResolver {
   }
 }
 
-module.exports.DataResolver = DataResolver
+module.exports.DataResolver = DataResolver;
