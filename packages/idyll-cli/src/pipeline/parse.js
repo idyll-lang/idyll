@@ -22,7 +22,6 @@ const getFilteredAST = (ast) => {
 }
 
 exports.getComponentNodes = (ast) => {
-  console.log('AST IS:', JSON.stringify(ast))
   const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
   return findNodes(ast, node => {
     if (typeof node === 'string') {
