@@ -1,0 +1,18 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "idyll index.idl --watch --css styles.css --layout centered --theme github --spellcheck",
+    "build": "idyll index.idl --layout centered --theme ./custom-theme.css --css styles.css"
+  },
+  "idyll": {
+    "components": {
+      "PackageJsonComponentTest": "components-1/custom-component.js"
+    }
+  },
+  "dependencies": {
+    "idyll-component": "^1.1.0",
+    "react-simple-pie-chart": "^0.4.1"
+  },
+  "devDependencies": {}
+}
