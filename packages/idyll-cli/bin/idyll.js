@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const idyll = require('../src/');
+const debug = require('debug')('idyll:cli')
 
 var argv = require('yargs')
   .usage('Usage: idyll index.idl')
@@ -24,10 +25,12 @@ var argv = require('yargs')
   })
   .describe('components', 'Directory where components are located')
   .default('components', 'components')
+  .array('components')
   .describe('css', 'Custom CSS file to include in output')
   .describe('datasets', 'Directory where data files are located')
   .default('datasets', 'data')
   .describe('default-components', 'Directory where default set of components are located')
+  .array('default-components')
   .describe('input-file', 'File containing Idyll source')
   .describe('input-string', 'Idyll source as a string')
   .describe('layout', 'Name of (or path to) the layout to use')
@@ -73,5 +76,7 @@ delete argv['no-ssr'];
 Object.keys(argv).forEach((key) => {
   if (argv[key] === undefined) delete argv[key];
 })
+
+debug('Using CLI arguments:', argv)
 
 idyll(argv).build();

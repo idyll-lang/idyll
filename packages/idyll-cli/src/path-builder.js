@@ -5,7 +5,6 @@ const {
   parse,
   resolve
 } = require('path');
-const mkdirp = require('mkdirp');
 
 module.exports = function (opts) {
   const basedir = opts.inputFile
@@ -20,18 +19,20 @@ module.exports = function (opts) {
     return join(basedir, p);
   }
 
+  const getComponentDirs = (paths) => {
+    if (paths instanceof Array) return paths.map(p => getPath(p));
+    return [getPath(paths)];
+  }
+
   const OUTPUT_DIR = getPath(opts.output);
   const TMP_DIR = getPath(opts.temp);
-
-  mkdirp.sync(OUTPUT_DIR);
-  mkdirp.sync(TMP_DIR);
 
   return {
     APP_PATH: resolve(__dirname, '..'),
     CSS_INPUT_FILE: getPath(opts.css),
-    COMPONENTS_DIR: getPath(opts.components),
     DATA_DIR: getPath(opts.datasets),
-    DEFAULT_COMPONENTS_DIR: getPath(opts.defaultComponents),
+    COMPONENT_DIRS: getComponentDirs(opts.components),
+    DEFAULT_COMPONENT_DIRS: getComponentDirs(opts.defaultComponents),
     HTML_TEMPLATE_FILE: getPath(opts.template),
     IDYLL_INPUT_FILE: getPath(opts.inputFile),
     INPUT_DIR: basedir,

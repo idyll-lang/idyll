@@ -1,146 +1,39 @@
 const fs = require('fs');
 const path = require('path');
-const htmlTags = require('html-tags');
 const mustache = require('mustache');
 const resolve = require('resolve');
 const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
-const Papa = require('papaparse');
 
-const getFilteredAST = (ast) => {
-  const ignoreNames = ['meta'];
-  return ast.filter((node) => {
-    return typeof node === 'string' || !ignoreNames.includes(paramCase(node[0]));
+const debug = require('debug')('idyll:cli')
+
+const {
+  getNodesByName,
+  getProperty,
+  filterNodes,
+  findNodes
+} = require('idyll-ast')
+
+exports.getComponentNodes = (ast) => {
+  const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
+  return findNodes(ast, node => {
+    if (typeof node === 'string') {
+      return false
+    }
+    return !ignoreNames.has(node[0].toLowerCase())
   });
 }
 
-const getNodesByName = (name, tree) => {
-  const predicate = typeof name === 'string' ? (s) => s === name : name;
-
-  const byName = (acc, val) => {
-    if (typeof val === 'string') return acc;
-    if (predicate(val[0])) acc.push(val);
-
-    if (val[2] && typeof val[2] !== 'string') acc = val[2].reduce(byName, acc);
-
-    return acc;
-  }
-
-  return tree.reduce(
-    byName,
-    []
-  )
-}
-
-exports.getComponentsJS = (ast, paths, inputConfig) => {
-  const ignoreNames = ['var', 'data', 'meta', 'derived'];
-  const componentNodes = getNodesByName(s => !ignoreNames.includes(s), ast);
-  const {
-    COMPONENTS_DIR,
-    DEFAULT_COMPONENTS_DIR,
-    INPUT_DIR,
-    TMP_DIR
-  } = paths;
-
-  const componentFiles = fs.readdirSync(DEFAULT_COMPONENTS_DIR);
-  const caseInsensitive = componentFiles.map(s => s.toLowerCase());
-  const customComponentFiles = fs.existsSync(COMPONENTS_DIR) ? fs.readdirSync(COMPONENTS_DIR) : [];
-  const customCaseInsensitive = customComponentFiles.map(s => s.toLowerCase());
-
-  const checkFile = (name) => {
-    const customIdx = customCaseInsensitive.indexOf(name.toLowerCase() + '.js');
-    const defaultIdx = caseInsensitive.indexOf(name.toLowerCase() + '.js');
-    if (inputConfig.components[name]) {
-      return slash(path.join(INPUT_DIR, inputConfig.components[name]));
-    } else if (customIdx > -1) {
-      return slash(path.join(COMPONENTS_DIR, customComponentFiles[customIdx]));
-    } else if (defaultIdx > -1) {
-      return slash(path.join(DEFAULT_COMPONENTS_DIR, componentFiles[defaultIdx]));
-    } else {
-      try {
-        // npm modules are required via relative paths to support working with a locally linked idyll
-        return slash(resolve.sync(name, {basedir: INPUT_DIR}));
-      } catch (err) {
-        return;
-      }
+exports.getDataNodes = (ast) => {
+  const nodes = getNodesByName(ast, 'data');
+  return nodes.map(node => {
+    return {
+      node,
+      name: getProperty(node, 'name'),
+      source: getProperty(node, 'source')
     }
-  }
-
-  const components = componentNodes.reduce(
-    (acc, node) => {
-      const name = paramCase(node[0].split('.')[0]);
-      if (!acc[name]) {
-        const p = checkFile(pascalCase(name));
-        if (p) {
-          acc[name] = p;
-        } else {
-          const r = checkFile(name);
-          if (r) {
-            acc[name] = r;
-          }
-          else if (htmlTags.indexOf(node[0].toLowerCase()) === -1) {
-            if (['fullwidth', 'textcontainer'].indexOf(node[0].toLowerCase()) > -1) {
-              const msg = `
-                Could not find component ${node[0]}.
-
-                This error can occur if you are using an out of date version of the Idyll
-                components with a newer version of the Idyll build tool. To install the
-                latest idyll-component, run \`npm install idyll-components@latest\`.
-
-                If you are reading the components from a local folder (e.g. ./components/default),
-                you can refresh components in that folder by copying from ./node_modules/idyll-components/src/
-                to your local directory.
-              `
-              console.warn(msg);
-              acc[name] = node[0];
-            } else {
-              throw new Error(`Component named ${node[0]} could not be found.`)
-            }
-          }
-        }
-      }
-      return acc;
-    },
-    {}
-  );
-
-  return components;
+  });
 }
-
-exports.getDataJS = (ast, DATA_DIR, o) => {
-  // can be multiple data nodes
-  const dataNodes = getNodesByName('data', ast);
-
-  // turn each data node into a field on an object
-  // whose key is the name prop
-  // and whose value is the parsed data
-  const data = dataNodes.reduce(
-    (acc, dataNode) => {
-      const props = dataNode[1];
-      const { name, source } = props.reduce(
-        (hash, val) => {
-          hash[val[0]] = val[1][1];
-          return hash;
-        },
-        {}
-      );
-
-      if (source.endsWith('.csv')) {
-        acc[name] = Papa.parse(slash(path.join(DATA_DIR, source)), { header: true }).data;
-      } else if (source.endsWith('.json')) {
-        acc[name] = require(slash(path.join(DATA_DIR, source)));
-      } else {
-        throw new Error('Unknown data file type: ' + source);
-      }
-
-      return acc;
-    },
-    {}
-  );
-
-  return data;
-}
-
 
 exports.getHighlightJS = (ast, paths, server) => {
   // load react-syntax-highlighter from idyll's node_modules directory
@@ -149,7 +42,7 @@ exports.getHighlightJS = (ast, paths, server) => {
     html: 'htmlbars'
   };
 
-  const codeHighlightNodes = getNodesByName('CodeHighlight', ast);
+  const codeHighlightNodes = getNodesByName(ast, 'CodeHighlight');
   if (!codeHighlightNodes.length) {
     return ' ';
   }
@@ -209,7 +102,7 @@ exports.getHighlightJS = (ast, paths, server) => {
 
 const parseMeta = (ast) => {
   // there should only be one meta node
-  const metaNodes = getNodesByName('meta', ast);
+  const metaNodes = getNodesByName(ast, 'meta');
 
   // data is stored in props, hence [1]
   return metaNodes.length ? metaNodes[0][1].reduce(
@@ -239,7 +132,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
-      ast: getFilteredAST(ast),
+      ast: ast,
       components,
       datasets,
       theme: opts.theme,
@@ -247,8 +140,4 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
     })
   ).trim();
   return mustache.render(template, Object.assign({ usesTex: components.equation }, meta));
-}
-
-exports.getASTJSON = (ast) => {
-  return getFilteredAST(ast);
 }
