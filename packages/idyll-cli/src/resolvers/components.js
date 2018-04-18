@@ -73,7 +73,6 @@ class ComponentResolver {
    * 6) Else, return nothing (this is a failure).
    */
   resolve(name) {
-    const self = this
     const candidates = [pascalCase(name), paramCase(name), name.toLowerCase()];
     debug(`Searching for component: ${name} with candidates: ${candidates}`);
 
@@ -84,13 +83,13 @@ class ComponentResolver {
       if (resolved) return;
 
       // If an alias is specified, use that.
-      if (self.inputConfig.components[name]) {
-        resolved = slash(p.join(self.paths.INPUT_DIR, self.inputConfig.components[name]));
+      if (this.inputConfig.components[name]) {
+        resolved = slash(p.join(this.paths.INPUT_DIR, this.inputConfig.components[name]));
         return;
       }
 
       // Otherwise check to see if this is a custom component (in a component directory).
-      resolved = self.componentsMap.get(name + '.js');
+      resolved = this.componentsMap.get(name + '.js');
       if (resolved) {
         resolved = slash(resolved);
         return;
@@ -99,7 +98,7 @@ class ComponentResolver {
       // Else try to import it as a node module.
       try {
         // npm modules are required via relative paths to support working with a locally linked idyll.
-        resolved = slash(resolve.sync(name, {basedir: self.paths.INPUT_DIR}));
+        resolved = slash(resolve.sync(name, {basedir: this.paths.INPUT_DIR}));
       } catch (err) {
         // Import errors are silently discarded.
         return;
