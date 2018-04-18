@@ -13,8 +13,12 @@ const cleanPath = (str) => {
 }
 
 class CSSResolver {
-  constructor(options, path) {
-    let { layout, theme, css } = options;
+  constructor(options) {
+    this.options = options
+  }
+
+  resolve() {
+    let { layout, theme, css } = this.options;
     layout = layout.trim();
     theme = theme.trim();
     css = css ? css.trim() : css;
@@ -24,11 +28,7 @@ class CSSResolver {
     const themeCSS = isPath(theme) ? readFileSync(join(pathPrefix, cleanPath(theme))) : themes[theme].styles;
     const customCSS = css ? readFileSync(join(pathPrefix, cleanPath(css))) : '';
 
-    this.css = [layoutCSS, themeCSS, customCSS].join('\n');
-  }
-
-  resolve() {
-    return this.css;
+    return [layoutCSS, themeCSS, customCSS].join('\n');
   }
 
   getDirectories() {

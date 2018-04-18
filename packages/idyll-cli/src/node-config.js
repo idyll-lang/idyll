@@ -7,7 +7,7 @@ const os = require('os');
 const debug = require('debug')('idyll:cli')
 
 module.exports = (paths) => {
-  const transformFolders = [paths.COMPONENT_DIRS, paths.DEFAULT_COMPONENT_DIRS];
+  const transformFolders = [...paths.COMPONENT_DIRS, ...paths.DEFAULT_COMPONENT_DIRS];
 
   debug('Reading components from directories:', transformFolders);
 

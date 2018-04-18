@@ -134,14 +134,15 @@ const idyll = (options = {}, cb) => {
             bs.watch(paths.JS_OUTPUT_FILE, {awaitWriteFinish: {stabilityThreshold: 499}}, bs.reload);
             // when CSS changes we reassemble and inject it
             bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, () => {
-              pipeline.updateCSS(opts, resolvers.get('css')).then(() => {
+              pipeline.updateCSS(paths, resolvers.get('css')).then(() => {
                 bs.reload('styles.css')
               });
             });
 
             // Each resolver is responsible for generating a list of directories to watch for
             // their corresponding data types.
-            resolvers.forEach(({ resolver, name }) => {
+            console.log('resolvers:', resolvers)
+            resolvers.forEach((resolver, name) => {
               bs.watch(resolver.getDirectories(), { ignoreInitial: true }, () => {
                 inst.build();
               });
