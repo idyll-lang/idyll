@@ -21,7 +21,7 @@ following [these instructions](https://www.npmjs.com/get-npm).
 $ npm install -g idyll
 \`\`\`
 
-Once the installation has finished, the \`idyll\` command will be available in your shell. To compile a file run \`$ idyll <input-file>\`, this will compile and open the resulting webpage in your browser.
+Note that depending on how \`npm\` is installed, you may have to run the above command prefixed with \`sudo\`. Once the installation has finished, the \`idyll\` command will be available in your shell. To compile a file run \`$ idyll <input-file>\`, this will compile and open the resulting webpage in your browser.
 
 ## Project generator
 

@@ -75,6 +75,7 @@ The value of x is [Display value:x format:"d" /].
           <meta name="twitter:title" content="Idyll" />
           <meta name="twitter:description" content="A markup language for interactive documents." />
           <meta name="twitter:image" content="https://idyll-lang.org/static/images/twitter-share.png" />
+          <script async defer src="https://buttons.github.io/buttons.js"></script>
         </Head>
         <section>
           <div className="panel alt">
@@ -147,6 +148,9 @@ The value of x is [Display value:x format:"d" /].
                 Support Us
               </a>
               {/* <a className="github-button" href="https://github.com/idyll-lang/idyll" data-icon="octicon-star" data-show-count="true" aria-label="Star idyll-lang/idyll on GitHub">Star</a> */}
+            </div>
+            <div style={{marginTop: 20, textAlign: 'center'}}>
+                <a className="github-button" href="https://github.com/idyll-lang/idyll" data-icon="octicon-star" data-show-count="true" aria-label="Star idyll-lang/idyll on GitHub">Star</a>
             </div>
             <div>
               <p>

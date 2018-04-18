@@ -10,7 +10,7 @@ const Content = () => markdown`
 
 The \`idyll\` command line tool accepts the following options
 
-* \`--components\` the path to your custom components. By default this points to \`components/\`.
+* \`--components\` the path to your custom components. By default this points to \`components/\`. This can be a string (a single path), or an array.
 * \`--css\` the path to your CSS file. You can use this to override Idyll's default styles, e.g. \`$ idyll index.idl --css my-custom-styles.css\`.
 * \`--datasets\` the path to the folder containing your datasets. By default this points to \`data/\`.
 * \`--inputString\` a string of Idyll markup. Use this flag to compile a string instead of a file.
