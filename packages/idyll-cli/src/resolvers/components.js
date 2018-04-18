@@ -33,8 +33,8 @@ class ComponentResolver {
    * above order of precedence.
    */
   _loadPaths() {
-    var componentsMap = new Map();
-    var prioritizedDirs = [this.paths.DEFAULT_COMPONENT_DIRS, this.paths.COMPONENT_DIRS];
+    const componentsMap = new Map();
+    const prioritizedDirs = [this.paths.DEFAULT_COMPONENT_DIRS, this.paths.COMPONENT_DIRS];
     debug(`Component directories (prioritized in ascending order): ${prioritizedDirs}`)
 
     prioritizedDirs.forEach(dirs => {
@@ -46,9 +46,9 @@ class ComponentResolver {
           return;
         }
         debug(`Searching directory ${dir} for components...`);
-        var componentFiles = fs.readdirSync(dir);
+        let componentFiles = fs.readdirSync(dir);
         componentFiles.forEach(name => {
-          var path = p.join(dir, name);
+          let path = p.join(dir, name);
           componentsMap.set(name.toLowerCase(), path);
         });
       });
