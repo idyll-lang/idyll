@@ -23,7 +23,7 @@ describe('IdyllDocument', () => {
   });
 
   it('wraps the right components', () => {
-    expect(astDoc.find('Wrapper').length).toBe(20);
+    expect(astDoc.find('Wrapper').length).toBe(23);
   });
 
   it('wraps both of the charts', () => {

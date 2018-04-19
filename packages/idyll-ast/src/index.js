@@ -32,8 +32,26 @@ const createNode = function(name, props, children) {
 };
 
 const getChildren = function(node) {
+  if (typeof node === 'string') {
+    return [];
+  }
   return node[2] || [];
 };
+
+const walkNodes = function(ast, f) {
+  (ast || []).forEach((node) => {
+    walkNodes(getChildren(node), f);
+    f(node);
+  });
+};
+
+const findNodes = function(ast, filter) {
+  var result = [];
+  walkNodes(ast, node => {
+    if (filter(node)) result.push(node);
+  })
+  return result;
+}
 
 const modifyChildren = function(node, modifier) {
   if (typeof node === 'string') {
@@ -104,10 +122,31 @@ const modifyNodesByName = function(ast, name, modifier) {
 };
 
 const getProperty = function(node, key) {
+  if (typeof node === 'string') {
+    return null;
+  }
+  let retProp;
   node[1].forEach((element) => {
     if (element[0] === key) {
-      return element[1];
+      retProp = element[1];
     }
+  });
+  return retProp;
+};
+
+const getProperties = function(node) {
+  if (typeof node === 'string') {
+    return [];
+  }
+  return node[1] || [];
+};
+
+const getPropertiesByType = function(node, type) {
+  if (typeof node === 'string') {
+    return [];
+  }
+  return (node[1] || []).filter(([propName, [propType, propValue]]) => {
+    return propType === type;
   });
 };
 
@@ -176,10 +215,14 @@ module.exports = {
   modifyChildren,
   modifyNodesByName,
   getProperty,
+  getProperties,
+  getPropertiesByType,
   prependNode,
   prependNodes,
   removeNodesByName,
   setProperties,
   setProperty,
-  removeProperty
+  removeProperty,
+  walkNodes,
+  findNodes
 }

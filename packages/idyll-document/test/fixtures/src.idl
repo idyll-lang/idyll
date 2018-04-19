@@ -62,8 +62,12 @@ Test expression, displays:
 [Display id:"bareDerivedDisplay" value:xSquared /]
 
 [var name:"objectVar" value:` { an: "object" } `  /]
+[var name:"arrayVar" value:` [ "array" ] `  /]
 [Display id:"objectVarDisplay" value:` objectVar `  /]
 [Display id:"bareObjectVarDisplay" value:objectVar  /]
+
+[Display id:"arrayVarDisplay" value:` arrayVar `  /]
+[Display id:"bareArrayVarDisplay" value:arrayVar  /]
 
 [br /]
 

@@ -13,7 +13,7 @@ function slugify(text)
 }
 
 
-export default ({ href, label, image }) => (
+export default ({ href, label, subtitle, image }) => (
   <div className="example">
     <Link route='gallery-item' params={{slug: slugify(label)}}>
       <a>
@@ -21,19 +21,27 @@ export default ({ href, label, image }) => (
           className="example-image"
           style={{ backgroundImage: `url(${imageUrl(image)})` }}
         ></div>
-        <div className="example-label">{ label }</div>
+        <div className="example-label">{ label }
+          {
+            subtitle ? (
+            <div className="subtitle">{subtitle}</div>
+            ) : null
+          }
+        </div>
       </a>
     </Link>
 
     <style jsx>{`
       .example {
         border: solid 2px #efefef;
-        transition: border 0.25s;
+        background: #efefef;
+        transition: border 0.25s, background 0.25s, color 0.25s;
         cursor: pointer;
       }
 
       .example:hover {
         border: solid 2px #6122FB;
+        background: #6122FB;
       }
       .example:hover .example-label {
         background: #6122FB;
@@ -53,6 +61,9 @@ export default ({ href, label, image }) => (
         background: #efefef;
         padding: 15px;
         transition: background 0.25s, color 0.25s;
+      }
+      .example-label .subtitle {
+        font-weight: normal;
       }
 
       .example-image {

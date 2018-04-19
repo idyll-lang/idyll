@@ -2,6 +2,7 @@
 import { Link } from '../routes';
 import Layout from '../components/basic-layout';
 import { indexedItems } from '../gallery/contents';
+import { logPageView, initGA } from '../components/analytics';
 
 
 export default class IdyllComponentPage extends React.PureComponent {
@@ -11,6 +12,14 @@ export default class IdyllComponentPage extends React.PureComponent {
   //     slug: query.slug
   //   }
   // }
+
+  componentDidMount() {
+    if (!window.GA_INITIALIZED) {
+      initGA()
+      window.GA_INITIALIZED = true
+    }
+    logPageView()
+  }
 
   constructor(props) {
     super(props)
@@ -23,12 +32,14 @@ export default class IdyllComponentPage extends React.PureComponent {
     return (
       <div>
         <div className="toolbar">
-          <div><Link href="/gallery"><a>← Back</a></Link></div>
+          <div><Link href="/gallery"><a>← More Articles</a></Link></div>
+          <div>{item.label} <a href={item.href} style={{textDecoration: 'underline'}}>(url)</a></div>
+          <div>
           {
-            item.sourceUrl ?
-            <div><a href={item.sourceUrl}>View Source Code</a></div>
-            : null
+            item.sourceUrl ? <a href={item.sourceUrl}>View Source Code</a>
+            : <div style={{width: 100}}></div>
           }
+          </div>
         </div>
           <iframe src={item.href} frameBorder={0} />
         <style jsx>{`

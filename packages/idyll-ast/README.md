@@ -60,4 +60,5 @@ module.exports = (inputAST) => {
 * `setProperties(node, { prop1: value, prop2: value })`
 * `setProperty(node, 'prop', value)`
 * `removeProperty(node, 'prop')`
+* `walkNodes(ast, func)`
 

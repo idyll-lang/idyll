@@ -3,7 +3,6 @@ import * as components from 'idyll-components'
 import IdyllDocument from 'idyll-document'
 import { resolveScopedStyles } from './utils';
 import styles from './styles/idyll';
-import VegaLite from 'idyll-vega-lite';
 
 const scopedStyles = resolveScopedStyles(
   <scope>
@@ -35,7 +34,7 @@ class Renderer extends React.PureComponent {
           ) :
           <IdyllDocument
             markup={ markup }
-            components={ Object.assign({}, components, { 'vega-lite': VegaLite }) }
+            components={ components }
             layout={ 'centered' }
             context={(context) => {
               window.IDYLL_CONTEXT = context;

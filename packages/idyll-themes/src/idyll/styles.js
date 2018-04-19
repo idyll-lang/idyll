@@ -122,4 +122,12 @@ span.action {
   text-decoration-style: dotted;
 }
 
+.idyll-action {
+  text-decoration: underline;
+}
+
+.idyll-document-error {
+  color: red;
+  font-family: monospace;
+}
 `

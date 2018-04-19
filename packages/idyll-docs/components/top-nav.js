@@ -11,7 +11,7 @@ export default ({ selected }) => (
 
     <div className="link-group">
       <Link href="/docs"><a className={`link ${selected === 'docs' ? 'selected' : ''}`}>Docs</a></Link>
-      <Link href="/gallery"><a className={`link ${selected === 'gallery' ? 'selected' : ''}`}>Gallery</a></Link>
+      <Link href="/gallery"><a className={`link ${selected === 'gallery' ? 'selected' : ''}`}>Examples</a></Link>
       <Link href="/editor"><a className={`link ${selected === 'editor' ? 'selected' : ''}`}>Editor</a></Link>
     </div>
     <style jsx>{`

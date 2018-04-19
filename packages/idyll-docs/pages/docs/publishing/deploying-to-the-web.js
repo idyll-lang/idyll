@@ -21,7 +21,7 @@ $ npm run deploy
 
 this will compile the assets and push it to github
 pages. Note that
-the [meta component](https://idyll-lang.github.io/components-built-in#meta) is
+the [meta component](https://idyll-lang.org/docs/components/default/meta) is
 useful for inserting metadata into the compiled output.
 
 ## Other hosting

@@ -5,7 +5,7 @@ module.exports = `
 
 ## This application helps you compose Idyll documents.
 
-Type in the textbox on the left, and the output on the right will update. If you want to save your changes, hit the "Save" button that appears in the lower right corner, and a unique URL will be genereated. To view your post, click "Fullscreen."
+Type in the textbox on the left, and the output on the right will update. If you want to save your changes, hit the "Save" button that appears in the lower right corner, and a unique URL will be generated. To view your post, click "Fullscreen."
 
 To include components, use the notation \`[Name prop:value /]\`. See the docs for [a list of available components](https://idyll-lang.org/docs/components).
 

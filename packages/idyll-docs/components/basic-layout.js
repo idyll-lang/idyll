@@ -38,7 +38,7 @@ class IdyllDocsLayout extends React.Component {
   }
 
   render() {
-    const { title = 'Idyll', selected = "", children } = this.props
+    const { title = 'Idyll', selected = "", shareImage, description ="A markup language for interactive documents.", children } = this.props
     return (
       <div id="master" className={ this.state.navOpen ?  'nav-open' : 'nav-closed' }>
         <Head>
@@ -46,9 +46,10 @@ class IdyllDocsLayout extends React.Component {
           <meta charSet='utf-8' />
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
           <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-          <meta property='og:image' content='https://idyll-lang.org/static/images/twitter-share.png' />
-          <meta property='og:description' content="A markup language for interactive documents." />
-          <meta property='og:title' content="Idyll" />
+          <meta property='og:image' content={shareImage || 'https://idyll-lang.org/static/images/twitter-share.png'} />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta property='og:description' content={description} />
+          <meta property='og:title' content={title} />
           <meta property='og:url' content='https://idyll-lang.org' />
           <meta property='og:type' content='website' />
         </Head>

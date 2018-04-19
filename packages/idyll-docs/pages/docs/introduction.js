@@ -14,8 +14,7 @@ Idyll is an open-source markup language and toolkit for producing interactive we
 
 ## Familiar Markup
 
-Idyll starts with the same principles as markdown, and uses a lot of the same syntax. If you want text to appear in your output, just start writing text, save the mucking about with div’s, containers, and p tags for a different time. Markup should be written to be read by humans, not just computers.
-For a complete listing of markdown syntax that can be used within Idyll documents see the “Repertoire” example, and the markup used to create it.
+Idyll starts with the same principles as markdown, and uses a lot of the same syntax. If you want text to appear in your output, just start writing.
 
 ## Beyond Static Text
 

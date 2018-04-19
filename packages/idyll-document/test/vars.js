@@ -25,6 +25,7 @@ describe('Component state initialization', () => {
       xSquared: 4,
       myData: FAKE_DATA,
       objectVar: {an: "object"},
+      arrayVar: [ "array" ],
       lateVar: 50
     });
   });
@@ -79,6 +80,12 @@ describe('Component state initialization', () => {
     }, {
       id: 'bareObjectVarDisplay',
       html: `<span>${JSON.stringify({an: "object"})}</span>`
+    }, {
+      id: 'arrayVarDisplay',
+      html: `<span>${JSON.stringify([ "array" ])}</span>`
+    }, {
+      id: 'bareArrayVarDisplay',
+      html: `<span>${JSON.stringify([ "array" ])}</span>`
     }];
 
     checks.forEach((check) => {
@@ -98,6 +105,7 @@ describe('Component state initialization', () => {
       xSquared: 16,
       myData: FAKE_DATA,
       objectVar: {an: "object"},
+      arrayVar: [ "array" ],
       lateVar: 50
     });
   })
@@ -117,6 +125,7 @@ describe('Component state initialization', () => {
       xSquared: 16,
       myData: FAKE_DATA,
       objectVar: {an: "object"},
+      arrayVar: [ "array" ],
       lateVar: 50
     });
   });
@@ -158,6 +167,12 @@ describe('Component state initialization', () => {
     }, {
       id: 'bareObjectVarDisplay',
       html: `<span>${JSON.stringify({an: "object"})}</span>`
+    }, {
+      id: 'arrayVarDisplay',
+      html: `<span>${JSON.stringify([ "array" ])}</span>`
+    }, {
+      id: 'bareArrayVarDisplay',
+      html: `<span>${JSON.stringify([ "array" ])}</span>`
     }, {
       id: 'lateVarDisplay',
       html: `<span>50.00</span>`

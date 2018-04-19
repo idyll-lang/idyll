@@ -92,7 +92,14 @@ test('options work as expected', () => {
     compiler: {
       spellcheck: false
     },
-    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
+    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8'),
+    inputConfig: {
+      compiler: {},
+      components: {
+        'package-json-component-test': 'components/custom-component.js'
+      },
+      transform: []
+    }
   })
 })
 
