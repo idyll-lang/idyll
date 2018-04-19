@@ -19,7 +19,7 @@ SVG._idyll = {
   props: [{
     name: "src",
     type: "string",
-    example: '"https://path/to/file.svg"'
+    example: '"https://upload.wikimedia.org/wikipedia/commons/f/fd/Ghostscript_Tiger.svg"'
   }]
 }
 

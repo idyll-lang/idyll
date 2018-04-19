@@ -79,7 +79,7 @@ const exampleGroups = [
         sourceUrl: "https://github.com/mathisonian/idyll/tree/master/fall-colors"
       },
       {
-        label: 'Who Shaps the Open Web?',
+        label: 'Who Shapes the Open Web?',
         subtitle: 'An interactive tool to explore membership in W3C working groups.',
         href: 'https://mathisonian.github.io/who-shapes-the-open-web/',
         image: 'https://mathisonian.github.io/who-shapes-the-open-web//images/share.png',

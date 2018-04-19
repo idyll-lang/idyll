@@ -27,7 +27,7 @@ const Examples = () => (
 
 
 export default ({ url }) => (
-  <Layout url={ url } selected="gallery" >
+  <Layout url={ url } title="Idyll Example Gallery" description="Explorable explanations and interactive blog posts, made with Idyll." selected="gallery" shareImage={"https://idyll-lang.org/static/images/example-share.png"} >
     <Examples />
   </Layout>
 )
