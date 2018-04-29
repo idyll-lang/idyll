@@ -32,6 +32,7 @@ const idyll = (options = {}, cb) => {
       minify: true,
       ssr: true,
       components: 'components',
+      static: 'static',
       defaultComponents: dirname(require.resolve('idyll-components')),
       layout: 'centered',
       theme: 'github',
@@ -138,6 +139,8 @@ const idyll = (options = {}, cb) => {
                 bs.reload('styles.css');
               });
             });
+            // when any static files change we do a full rebuild.
+            bs.watch(paths.STATIC_DIR, {ignoreInitial: true}, () => inst.build());
 
             // Each resolver is responsible for generating a list of directories to watch for
             // their corresponding data types.

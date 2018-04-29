@@ -31,6 +31,7 @@ module.exports = function (opts) {
     APP_PATH: resolve(__dirname, '..'),
     CSS_INPUT_FILE: getPath(opts.css),
     DATA_DIR: getPath(opts.datasets),
+    STATIC_DIR: getPath(opts.static),
     COMPONENT_DIRS: getComponentDirs(opts.components),
     DEFAULT_COMPONENT_DIRS: getComponentDirs(opts.defaultComponents),
     HTML_TEMPLATE_FILE: getPath(opts.template),
@@ -42,6 +43,7 @@ module.exports = function (opts) {
     CSS_OUTPUT_FILE: join(OUTPUT_DIR, 'styles.css'),
     HTML_OUTPUT_FILE: join(OUTPUT_DIR, 'index.html'),
     JS_OUTPUT_FILE: join(OUTPUT_DIR, 'index.js'),
+    STATIC_OUTPUT_DIR: join(OUTPUT_DIR, 'static'),
     TMP_DIR
   };
 }
