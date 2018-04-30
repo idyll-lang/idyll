@@ -51,7 +51,7 @@ beforeAll(done => {
   idyll = Idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
-    htmlTemplate: join(PROJECT_DIR, '_index.html'),
+    htmlTemplate: join(PROJECT_DIR, 'index.html'),
     components: join(PROJECT_DIR, 'components'),
     datasets: join(PROJECT_DIR, 'data'),
     layout: 'centered',
@@ -80,7 +80,7 @@ test('options work as expected', () => {
     watch: false,
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
-    htmlTemplate: join(PROJECT_DIR, '_index.html'),
+    htmlTemplate: join(PROJECT_DIR, 'index.html'),
     components: join(PROJECT_DIR, 'components'),
     css: join(PROJECT_DIR, 'styles.css'),
     defaultComponents: dirname(require.resolve('idyll-components')),

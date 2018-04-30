@@ -1,6 +1,9 @@
 const fs = require('fs');
 const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
+const {
+  copy
+} = require('fs-extra')
 const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
 const { paramCase } = require('change-case');
@@ -93,6 +96,7 @@ const build = (opts, paths, resolvers) => {
         writeFile(paths.JS_OUTPUT_FILE, output.js),
         writeFile(paths.CSS_OUTPUT_FILE, output.css),
         writeFile(paths.HTML_OUTPUT_FILE, output.html),
+        copy(paths.STATIC_DIR, paths.STATIC_OUTPUT_DIR)
       ]);
     })
     .then(() => {

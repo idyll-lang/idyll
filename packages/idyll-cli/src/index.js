@@ -155,7 +155,7 @@ const idyll = (options = {}, cb) => {
               logLevel: 'warn',
               logPrefix: 'Idyll',
               notify: false,
-              server: [paths.OUTPUT_DIR, paths.INPUT_DIR],
+              server: [paths.OUTPUT_DIR, paths.INPUT_DIR, paths.STATIC_OUTPUT_DIR],
               ui: false,
               port: opts.port
             });
