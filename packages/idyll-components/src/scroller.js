@@ -2,8 +2,6 @@ const React = require('react');
 const { filterChildren, mapChildren } = require('idyll-component-children');
 const d3 = require('d3');
 
-const SCROLL_STEP_MAP = {};
-const SCROLL_NAME_MAP = {};
 
 const styles = {
   SCROLL_GRAPHIC: {
@@ -44,6 +42,9 @@ class Scroller extends React.Component {
       graphicHeight: 0,
       graphicWidth: 0
     };
+
+    this.SCROLL_STEP_MAP = {};
+    this.SCROLL_NAME_MAP = {};
   }
 
 
@@ -72,13 +73,13 @@ class Scroller extends React.Component {
   }
 
   handleStepEnter({ element, index, direction }) {
-    SCROLL_STEP_MAP[index] && SCROLL_STEP_MAP[index]();
+    this.SCROLL_STEP_MAP[index] && this.SCROLL_STEP_MAP[index]();
     let update = { currentStep: index };
-    if (SCROLL_NAME_MAP[index]) {
-      update.currentState = SCROLL_NAME_MAP[index];
+    if (this.SCROLL_NAME_MAP[index]) {
+      update.currentState = this.SCROLL_NAME_MAP[index];
     }
     this.props.updateProps && this.props.updateProps(update);
-    if (index === Object.keys(SCROLL_STEP_MAP).length - 1) {
+    if (index === Object.keys(this.SCROLL_STEP_MAP).length - 1) {
       d3.select('body').style('overflow', 'auto');
     }
   }
@@ -90,7 +91,7 @@ class Scroller extends React.Component {
     });
   }
   handleContainerEnter(response) {
-    if (this.props.disableScroll && (!this.props.currentStep || this.props.currentStep < Object.keys(SCROLL_STEP_MAP).length - 1)) {
+    if (this.props.disableScroll && (!this.props.currentStep || this.props.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)) {
       d3.select('body').style('overflow', 'hidden');
     }
     this.setState({ isFixed: true, isBottom: false });
@@ -102,20 +103,25 @@ class Scroller extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.currentStep !== nextProps.currentStep) {
-      d3.selectAll(`#idyll-scroll-${this.id} .idyll-scroll-step`)
+      d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
         .filter(function (d, i) { return i === nextProps.currentStep;})
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
     if (this.props.currentState !== nextProps.currentState) {
-      d3.selectAll(`#idyll-scroll-${this.id} .idyll-scroll-step`)
-        .filter(function (d, i) { return nextProps.currentState === SCROLL_NAME_MAP[i] })
+      d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
+        .filter(function (d, i) { return nextProps.currentState === this.SCROLL_NAME_MAP[i] })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
-    if (nextProps.disableScroll && (!nextProps.currentStep || nextProps.currentStep < Object.keys(SCROLL_STEP_MAP).length - 1)) {
+    if (nextProps.disableScroll && (!nextProps.currentStep || nextProps.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)) {
       d3.select('body').style('overflow', 'hidden');
     }
+  }
+
+  registerStep(elt, name, val)  {
+    this.SCROLL_STEP_MAP[elt] = val;
+    this.SCROLL_NAME_MAP[elt] = name;
   }
 
   render() {
@@ -139,12 +145,18 @@ class Scroller extends React.Component {
           </div>
         </div>
         <div className="idyll-scroll-text">
-          {filterChildren(
+          {mapChildren(filterChildren(
               children,
               (c) => {
-                return !c.type.name || c.type.name.toLowerCase() !== 'scrollgraphic';
+                console.log('name, ', c.type.name)
+                return !c.type.name || c.type.name.toLowerCase() === 'step';
               }
-            )}
+            ), (c) => {
+              console.log(this.registerStep.bind(this));
+              return React.cloneElement(c, {
+                registerStep: this.registerStep.bind(this)
+              });
+            })}
         </div>
       </div>
     );
@@ -152,8 +164,4 @@ class Scroller extends React.Component {
 }
 
 
-Scroller.registerStep = (elt, name, val) => {
-  SCROLL_STEP_MAP[elt] = val;
-  SCROLL_NAME_MAP[elt] = name;
-}
 module.exports = Scroller;
