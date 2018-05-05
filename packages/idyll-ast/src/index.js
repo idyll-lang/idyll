@@ -171,6 +171,11 @@ const removeNodesByName = function(ast, name) {
 };
 
 const setProperty = function(node, key, value) {
+  if (typeof node === 'string') {
+    console.warn('Cannot setPropery on string node.')
+    return node;
+  }
+
   let hasSet = false;
   const isArr = Array.isArray(value);
   node[1] = node[1].map((element) => {
@@ -188,6 +193,10 @@ const setProperty = function(node, key, value) {
 };
 
 const setProperties = function(node, properties) {
+  if (typeof node === 'string') {
+    console.warn('Cannot setProperties of string node.')
+    return node;
+  }
   Object.keys(properties).forEach((key) => {
     node = setProperty(node, key, properties[key]);
   })
@@ -195,6 +204,10 @@ const setProperties = function(node, properties) {
 };
 
 const removeProperty = function(node, key) {
+  if (typeof node === 'string') {
+    console.warn('Cannot removePropery of string node.')
+    return node;
+  }
   node[1] = node[1].filter(([propName, propVal]) => {
     if (propName === key) {
       return false;
