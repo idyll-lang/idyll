@@ -10,7 +10,7 @@ class Step extends React.Component {
   render() {
     const { idyll, updateProps, hasError, registerStep, onEnter, state, className, ...props } = this.props;
     return (
-      <div ref={(ref) => this.ref = ref} className={`idyll-step ${className || ''}`}  style={{margin: '10vh 0 60vh 0'}} {...props} />
+      <div ref={(ref) => this.ref = ref} className={`idyll-step ${className || ''}`} {...props} />
     );
   }
 }

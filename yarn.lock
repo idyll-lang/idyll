@@ -4326,10 +4326,6 @@ iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@~0.4.13:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
-idyll-component-children@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/idyll-component-children/-/idyll-component-children-1.0.2.tgz#2c501f15d55aea8d5ca62b855aedf05560fa9920"
-
 idyll-component-children@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/idyll-component-children/-/idyll-component-children-1.0.3.tgz#3eb2c73d76561b0bf06177e8e0fc87d934e60541"
