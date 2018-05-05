@@ -181,12 +181,12 @@ span.action {
 
 .idyll-stepper-control-button-previous {
   position: absolute;
-  left: 10px;
+  left: 0;
 }
 
 .idyll-stepper-control-button-next {
   position: absolute;
-  right: 10px;
+  right: 0;
 }
 
 .idyll-stepper {
