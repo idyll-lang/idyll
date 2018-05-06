@@ -117,8 +117,20 @@ describe('Component state initialization', () => {
     const updateProps = rangeComponents.first().prop('updateProps');
     expect(updateProps).toEqual(expect.any(Function));
 
-    updateProps({ value: 4 });
+    idyllContext.onUpdate((newState) => {
+      console.log('NEW STATE IN THE CONTEXT')
+      expect(newState).toEqual({
+        x: 4,
+        frequency: 1,
+        xSquared: 16,
+        myData: FAKE_DATA,
+        objectVar: {an: "object"},
+        arrayVar: [ "array" ],
+        lateVar: 50
+      })
+    })
 
+    updateProps({ value: 4 });
     expect(idyllContext.data()).toEqual({
       x: 4,
       frequency: 1,

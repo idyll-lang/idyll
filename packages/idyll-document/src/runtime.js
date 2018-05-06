@@ -200,7 +200,6 @@ class IdyllRuntime extends React.PureComponent {
 
     const Wrapper = createWrapper({ theme: props.theme, layout: props.layout });
 
-
     const initialState = Object.assign({}, {
       ...getVars(vars),
       ...getData(data, props.datasets),
@@ -233,6 +232,8 @@ class IdyllRuntime extends React.PureComponent {
       state = Object.assign(state, nextState);
       // pass the new doc state to all listeners aka component wrappers
       updatePropsCallbacks.forEach(f => f(state, changedKeys));
+
+      this._onUpdateState && this._onUpdateState(state);
     };
 
     evalContext.update = this.updateState;
@@ -252,7 +253,7 @@ class IdyllRuntime extends React.PureComponent {
 
     Object.keys(internalComponents).forEach((key) => {
       if (props.components[key]) {
-        console.warn(`Warning! You are including a component named ${key}, but this conflicts with an internal component. Please rename your component.`);
+        console.warn(`Warning! You are including a component named ${key}, but this is a reserved Idyll component. Please rename your component.`);
       }
     })
 
@@ -396,7 +397,10 @@ class IdyllRuntime extends React.PureComponent {
     if (typeof this.props.context === 'function') {
       this.props.context({
         update: this.updateState.bind(this),
-        data: () => this.state
+        data: () => this.state,
+        onUpdate: (cb) => {
+          this._onUpdateState = cb;
+        }
       });
     }
   }
