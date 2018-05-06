@@ -8,6 +8,7 @@ const styles = {
     position: 'absolute',
     top: 0,
     left: 0,
+    right: 0,
     bottom: 'auto',
     height: '100vh',
     width: '100%',
@@ -24,7 +25,9 @@ const styles = {
 
   SCROLL_GRAPHIC_INNER: {
     position: 'absolute',
-    right: '1rem',
+    // right: '1rem',
+    left: 0,
+    right: 0,
     top: '50%',
     transform: 'translateY(-50%)'
   }
@@ -58,7 +61,7 @@ class Scroller extends React.Component {
     // setup the instance, pass callback functions
     scroller
       .setup({
-        step: '.idyll-scroll-text .idyll-scroll-step', // required
+        step: '.idyll-scroll-text .idyll-step', // required
         container: `#idyll-scroll-${this.id}`, // required (for sticky)
         graphic: '.idyll-scroll-graphic' // required (for sticky)
       })
@@ -139,7 +142,7 @@ class Scroller extends React.Component {
             {filterChildren(
               children,
               (c) => {
-                return c.type.name && c.type.name.toLowerCase() === 'scrollgraphic';
+                return c.type.name && c.type.name.toLowerCase() === 'graphic';
               }
             )}
           </div>
@@ -148,11 +151,10 @@ class Scroller extends React.Component {
           {mapChildren(filterChildren(
               children,
               (c) => {
-                console.log('name, ', c.type.name)
+                console.log('name,', c.type.name)
                 return !c.type.name || c.type.name.toLowerCase() === 'step';
               }
             ), (c) => {
-              console.log(this.registerStep.bind(this));
               return React.cloneElement(c, {
                 registerStep: this.registerStep.bind(this)
               });
