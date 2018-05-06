@@ -118,7 +118,6 @@ describe('Component state initialization', () => {
     expect(updateProps).toEqual(expect.any(Function));
 
     idyllContext.onUpdate((newState) => {
-      console.log('NEW STATE IN THE CONTEXT')
       expect(newState).toEqual({
         x: 4,
         frequency: 1,
