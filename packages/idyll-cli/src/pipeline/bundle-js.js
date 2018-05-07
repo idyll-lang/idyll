@@ -101,6 +101,17 @@ module.exports = function (opts, paths, output) {
             basedir: paths.TMP_DIR
           })
         }
+
+
+        if (opts.context) {
+          b.require(opts.context, {
+            expose: '__IDYLL_CONTEXT__'
+          })
+        } else {
+          b.require(__dirname + '/../client/context', {
+            expose: '__IDYLL_CONTEXT__'
+          })
+        }
       }
     ]
   });

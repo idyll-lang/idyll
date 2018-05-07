@@ -119,21 +119,16 @@ describe('Component state initialization', () => {
 
     idyllContext.onUpdate((newState) => {
       expect(newState).toEqual({
-        x: 4,
-        frequency: 1,
-        xSquared: 16,
-        myData: FAKE_DATA,
-        objectVar: {an: "object"},
-        arrayVar: [ "array" ],
-        lateVar: 50
+        x: 8,
+        xSquared: 64
       })
     })
 
-    updateProps({ value: 4 });
+    updateProps({ value: 8 });
     expect(idyllContext.data()).toEqual({
-      x: 4,
+      x: 8,
       frequency: 1,
-      xSquared: 16,
+      xSquared: 64,
       myData: FAKE_DATA,
       objectVar: {an: "object"},
       arrayVar: [ "array" ],
@@ -147,10 +142,10 @@ describe('Component state initialization', () => {
 
     const checks = [{
       id: 'varDisplay',
-      html: '<span>4.00</span>'
+      html: '<span>8.00</span>'
     }, {
       id: 'derivedVarDisplay',
-      html: '<span>16.00</span>'
+      html: '<span>64.00</span>'
     }, {
       id: 'strDisplay',
       html: '<span>string</span>'
@@ -159,7 +154,7 @@ describe('Component state initialization', () => {
       html: `<span>${JSON.stringify({static: 'object'})}</span>`
     }, {
       id: 'dynamicObjectDisplay',
-      html: `<span>${JSON.stringify({dynamic: 4.0})}</span>`
+      html: `<span>${JSON.stringify({dynamic: 8.0})}</span>`
     }, {
       id: 'dataDisplay',
       html: `<span>${FAKE_DATA}</span>`
@@ -168,10 +163,10 @@ describe('Component state initialization', () => {
       html: `<span>${FAKE_DATA}</span>`
     }, {
       id: 'bareDerivedDisplay',
-      html: '<span>16.00</span>'
+      html: '<span>64.00</span>'
     }, {
       id: 'bareVarDisplay',
-      html: '<span>4.00</span>'
+      html: '<span>8.00</span>'
     }, {
       id: 'objectVarDisplay',
       html: `<span>${JSON.stringify({an: "object"})}</span>`
