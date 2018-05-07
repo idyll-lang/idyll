@@ -14,9 +14,11 @@ const toStream = (k, o) => {
 
   if (['ast', 'data', 'opts'].indexOf(k) > -1) {
     if (k === 'opts') {
-      src = `module.exports = Object.assign(${JSON.stringify(o)}, {
-        context: ${(o.context || function() {}).toString()}
-      })`
+
+      src = `
+      var out = ${JSON.stringify(o)};
+      out.context = ${(o.context || function() {}).toString()};
+      module.exports = out;`
     } else {
       src = `module.exports = ${JSON.stringify(o)}`;
     }
