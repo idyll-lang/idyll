@@ -225,7 +225,7 @@ class IdyllRuntime extends React.PureComponent {
         (acc, k) => {
           if (state[k] !== nextState[k]) {
             acc.push(k);
-            changedMap[k] = nextState[k];
+            changedMap[k] = nextState[k] || state[k];
           }
           return acc;
         },
