@@ -233,7 +233,7 @@ class IdyllRuntime extends React.PureComponent {
       // pass the new doc state to all listeners aka component wrappers
       updatePropsCallbacks.forEach(f => f(state, changedKeys));
 
-      this._onUpdateState && this._onUpdateState(state);
+      this._onUpdateState && this._onUpdateState(newState);
     };
 
     evalContext.update = this.updateState;

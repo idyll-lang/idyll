@@ -119,13 +119,7 @@ describe('Component state initialization', () => {
 
     idyllContext.onUpdate((newState) => {
       expect(newState).toEqual({
-        x: 4,
-        frequency: 1,
-        xSquared: 16,
-        myData: FAKE_DATA,
-        objectVar: {an: "object"},
-        arrayVar: [ "array" ],
-        lateVar: 50
+        x: 4
       })
     })
 
