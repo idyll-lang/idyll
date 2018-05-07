@@ -219,13 +219,19 @@ class IdyllRuntime extends React.PureComponent {
         getVars(derived, newMergedState),
       );
       const nextState = {...newMergedState, ...newDerivedValues};
+
+      const changedMap = {};
       const changedKeys = Object.keys(state).reduce(
         (acc, k) => {
-          if (state[k] !== nextState[k]) acc.push(k);
+          if (state[k] !== nextState[k]) {
+            acc.push(k);
+            changedMap[k] = nextState[k];
+          }
           return acc;
         },
         []
       )
+
       // Update doc state reference.
       // We re-use the same object here so that
       // IdyllRuntime.state can be accurately checked in tests
@@ -233,7 +239,7 @@ class IdyllRuntime extends React.PureComponent {
       // pass the new doc state to all listeners aka component wrappers
       updatePropsCallbacks.forEach(f => f(state, changedKeys));
 
-      this._onUpdateState && this._onUpdateState(newState);
+      this._onUpdateState && this._onUpdateState(changedMap);
     };
 
     evalContext.update = this.updateState;
@@ -397,7 +403,9 @@ class IdyllRuntime extends React.PureComponent {
     if (typeof this.props.context === 'function') {
       this.props.context({
         update: this.updateState.bind(this),
-        data: () => this.state,
+        data: () => {
+          return this.state
+        },
         onUpdate: (cb) => {
           this._onUpdateState = cb;
         }
