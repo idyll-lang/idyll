@@ -14,7 +14,6 @@ const { layout, theme } = opts;
 
 const context = require('__IDYLL_CONTEXT__');
 
-
 const mountMethod = opts.ssr ? 'hydrate' : 'render';
 ReactDOM[mountMethod](
   React.createElement(IdyllDocument, { ast, components, context, datasets, layout, theme }),

@@ -108,10 +108,7 @@ module.exports = function (opts, paths, output) {
             expose: '__IDYLL_CONTEXT__'
           })
         } else {
-          const s = new stream.Readable;
-          s.push(`module.exports = () => {}`);
-          s.push(null);
-          b.require(s, {
+          b.require(__dirname + '/../client/context', {
             expose: '__IDYLL_CONTEXT__'
           })
         }
