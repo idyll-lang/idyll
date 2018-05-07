@@ -13,7 +13,13 @@ const toStream = (k, o) => {
   let src;
 
   if (['ast', 'data', 'opts'].indexOf(k) > -1) {
-    src = `module.exports = ${JSON.stringify(o)}`;
+    if (k === 'opts') {
+      src = `module.exports = Object.assign(${JSON.stringify(o)}, {
+        context: ${(o.context || function() {}).toString()}
+      })`
+    } else {
+      src = `module.exports = ${JSON.stringify(o)}`;
+    }
   } else if (k === 'syntaxHighlighting') {
     src = `module.exports = (function (){${o}})()`;
   } else {
@@ -21,6 +27,7 @@ const toStream = (k, o) => {
     src = `module.exports = {\n\t${src}\n}\n`;
   }
 
+  console.log(src);
   const s = new stream.Readable;
   s.push(src);
   s.push(null);
@@ -87,6 +94,7 @@ module.exports = function (opts, paths, output) {
 
         for (const key in aliases) {
           const data = output[key];
+          console.log('DATA: ', data);
           b.exclude(aliases[key]);
           b.require(toStream(key, data), {
             expose: aliases[key],
