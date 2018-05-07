@@ -101,6 +101,20 @@ module.exports = function (opts, paths, output) {
             basedir: paths.TMP_DIR
           })
         }
+
+
+        if (opts.context) {
+          b.require(opts.context, {
+            expose: '__IDYLL_CONTEXT__'
+          })
+        } else {
+          const s = new stream.Readable;
+          s.push(`module.exports = () => {}`);
+          s.push(null);
+          b.require(s, {
+            expose: '__IDYLL_CONTEXT__'
+          })
+        }
       }
     ]
   });

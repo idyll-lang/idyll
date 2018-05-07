@@ -10,7 +10,10 @@ const datasets = require('__IDYLL_DATA__');
 require('__IDYLL_SYNTAX_HIGHLIGHT__');
 
 const opts = require('__IDYLL_OPTS__');
-const { context, layout, theme } = opts;
+const { layout, theme } = opts;
+
+const context = require('__IDYLL_CONTEXT__');
+
 
 const mountMethod = opts.ssr ? 'hydrate' : 'render';
 ReactDOM[mountMethod](

@@ -55,8 +55,8 @@ const build = (opts, paths, resolvers) => {
           data,
           css,
           syntaxHighlighting: getHighlightJS(ast, paths),
+          context: opts.context,
           opts: {
-            context: opts.context,
             ssr: opts.ssr,
             theme: opts.theme,
             layout: opts.layout

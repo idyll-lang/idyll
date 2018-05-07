@@ -88,16 +88,8 @@ const idyll = (options = {}, cb) => {
 
   // Resolve context:
   if (opts.context) {
-    try {
-        const context = opts.context;
-        if (context.indexOf('./') > -1) {
-          opts.context = require(join(paths.INPUT_DIR, context));
-        } else {
-          opts.context = require(context);
-        }
-    } catch(e) {
-      console.log(e);
-      console.warn('\n\nCould not find context plugin: ', opts.context);
+    if (opts.context.indexOf('./') > -1) {
+      opts.context = join(paths.INPUT_DIR, opts.context);
     }
   }
 
