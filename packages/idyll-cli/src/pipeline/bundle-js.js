@@ -13,7 +13,15 @@ const toStream = (k, o) => {
   let src;
 
   if (['ast', 'data', 'opts'].indexOf(k) > -1) {
-    src = `module.exports = ${JSON.stringify(o)}`;
+    if (k === 'opts') {
+
+      src = `
+      var out = ${JSON.stringify(o)};
+      out.context = ${(o.context || function() {}).toString()};
+      module.exports = out;`
+    } else {
+      src = `module.exports = ${JSON.stringify(o)}`;
+    }
   } else if (k === 'syntaxHighlighting') {
     src = `module.exports = (function (){${o}})()`;
   } else {

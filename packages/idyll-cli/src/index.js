@@ -72,6 +72,7 @@ const idyll = (options = {}, cb) => {
   // Handle options that can be provided via options or via package.json
   opts.transform = options.transform || inputConfig.transform || opts.transform;
   opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
+  opts.context = options.context || inputConfig.context || opts.context;
 
   // Resolve compiler plugins:
   if (opts.compiler.postProcessors) {
@@ -83,6 +84,21 @@ const idyll = (options = {}, cb) => {
         console.warn('\n\nCould not find post-processor plugin: ', processor);
       }
     })
+  }
+
+  // Resolve context:
+  if (opts.context) {
+    try {
+        const context = opts.context;
+        if (context.indexOf('./') > -1) {
+          opts.context = require(join(paths.INPUT_DIR, context));
+        } else {
+          opts.context = require(context);
+        }
+    } catch(e) {
+      console.log(e);
+      console.warn('\n\nCould not find context plugin: ', opts.context);
+    }
   }
 
   let bs;
