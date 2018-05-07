@@ -27,7 +27,6 @@ const toStream = (k, o) => {
     src = `module.exports = {\n\t${src}\n}\n`;
   }
 
-  console.log(src);
   const s = new stream.Readable;
   s.push(src);
   s.push(null);
@@ -94,7 +93,6 @@ module.exports = function (opts, paths, output) {
 
         for (const key in aliases) {
           const data = output[key];
-          console.log('DATA: ', data);
           b.exclude(aliases[key]);
           b.require(toStream(key, data), {
             expose: aliases[key],

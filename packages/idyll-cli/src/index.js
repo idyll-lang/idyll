@@ -90,21 +90,16 @@ const idyll = (options = {}, cb) => {
   if (opts.context) {
     try {
         const context = opts.context;
-        console.log('context', context);
         if (context.indexOf('./') > -1) {
-          console.log('updating context');
           opts.context = require(join(paths.INPUT_DIR, context));
         } else {
           opts.context = require(context);
         }
-        console.log('context', opts.context);
     } catch(e) {
       console.log(e);
       console.warn('\n\nCould not find context plugin: ', opts.context);
     }
   }
-
-  console.log(opts.context);
 
   let bs;
 
