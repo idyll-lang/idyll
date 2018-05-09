@@ -75,7 +75,7 @@ beforeAll(done => {
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
     // Timeout required to ensure browsersync is running.
-    setTimeout(done, 1000);
+    setTimeout(done, 2000);
   }).build();
 })
 

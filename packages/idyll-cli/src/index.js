@@ -168,6 +168,8 @@ const idyll = (options = {}, cb) => {
               logLevel: 'warn',
               logPrefix: 'Idyll',
               notify: false,
+              // TODO: In the next major version bump, stop watching INPUT_DIR (all static assets
+              // should be in the static assets directory).
               server: [paths.OUTPUT_DIR, paths.INPUT_DIR],
               ui: false,
               port: opts.port,
