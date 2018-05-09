@@ -1,20 +1,28 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
+/**
+ * NOTE - this file does not get compiled from
+ * ES6 --> ES5. Everything in here should be
+ * standards compliant old-school JavaScript, with
+ * the exception of the require() function.
+ */
 
-const IdyllDocument = require('idyll-document').default;
-const mountNode = document.getElementById('idyll-mount');
+var React = require('react');
+var ReactDOM = require('react-dom');
 
-const ast = require('__IDYLL_AST__');
-const components = require('__IDYLL_COMPONENTS__');
-const datasets = require('__IDYLL_DATA__');
+var IdyllDocument = require('idyll-document').default;
+var mountNode = document.getElementById('idyll-mount');
+
+var ast = require('__IDYLL_AST__');
+var components = require('__IDYLL_COMPONENTS__');
+var datasets = require('__IDYLL_DATA__');
 require('__IDYLL_SYNTAX_HIGHLIGHT__');
 
-const opts = require('__IDYLL_OPTS__');
-const { layout, theme } = opts;
+var opts = require('__IDYLL_OPTS__');
+var layout = opts.layout;
+var theme = opts.theme;
 
-const context = require('__IDYLL_CONTEXT__');
+var context = require('__IDYLL_CONTEXT__');
 
-const mountMethod = opts.ssr ? 'hydrate' : 'render';
+var mountMethod = opts.ssr ? 'hydrate' : 'render';
 ReactDOM[mountMethod](
   React.createElement(IdyllDocument, { ast, components, context, datasets, layout, theme }),
   mountNode
