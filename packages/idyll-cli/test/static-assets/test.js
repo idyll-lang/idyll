@@ -132,7 +132,6 @@ test('creates the expected HTML', done => {
     const svgNode = document.querySelector('svg');
     const imgNode = document.querySelector('img');
     expect(imgNode.src).toEqual('http://localhost:3000/static/images/wearable.jpg');
-    expect(imgNode.complete).toBeTruthy();
     expect(svgNode.childNodes.length).toEqual(5);
     dom.window.close();
     done();
