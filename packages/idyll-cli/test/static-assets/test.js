@@ -62,7 +62,6 @@ beforeAll(done => {
     output: PROJECT_BUILD_DIR,
     template: join(PROJECT_DIR, 'index.html'),
     components: join(PROJECT_DIR, 'components'),
-    datasets: join(PROJECT_DIR, 'data'),
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
@@ -91,7 +90,6 @@ test('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
-    static: 'static',
     minify: false,
     ssr: true,
     watch: true,
@@ -102,8 +100,9 @@ test('options work as expected', () => {
     components: join(PROJECT_DIR, 'components'),
     css: join(PROJECT_DIR, 'styles.css'),
     defaultComponents: dirname(require.resolve('idyll-components')),
-    temp: ".idyll",
-    datasets: join(PROJECT_DIR, 'data'),
+    temp: '.idyll',
+    static: 'static',
+    datasets: 'data',
     transform: [],
     port: 3000,
     compiler: {

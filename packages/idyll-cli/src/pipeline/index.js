@@ -2,7 +2,8 @@ const fs = require('fs');
 const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const {
-  copy
+  copy,
+  pathExists
 } = require('fs-extra')
 const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
@@ -96,7 +97,12 @@ const build = (opts, paths, resolvers) => {
         writeFile(paths.JS_OUTPUT_FILE, output.js),
         writeFile(paths.CSS_OUTPUT_FILE, output.css),
         writeFile(paths.HTML_OUTPUT_FILE, output.html),
-        copy(paths.STATIC_DIR, paths.STATIC_OUTPUT_DIR)
+        pathExists(paths.STATIC_DIR).then(exists => {
+          if (exists) {
+            return copy(paths.STATIC_DIR, paths.STATIC_OUTPUT_DIR)
+          }
+          return null;
+        })
       ]);
     })
     .then(() => {

@@ -78,6 +78,7 @@ test('options work as expected', () => {
     minify: false,
     ssr: true,
     watch: false,
+    open: true,
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
     htmlTemplate: join(PROJECT_DIR, '_index.html'),
@@ -87,6 +88,7 @@ test('options work as expected', () => {
     temp: ".idyll",
     template: resolve(join(__dirname, '/../../src/client/_index.html')),
     datasets: join(PROJECT_DIR, 'data'),
+    static: 'static',
     transform: [],
     port: 3000,
     compiler: {

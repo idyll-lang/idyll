@@ -52,11 +52,3 @@ This adds support for indexed components: [CustomComponent.IndexedComponent /]
 
 
 [CapitalPascal /]
-
-Images and other static assets can be loaded from the `static` directory.
-
-[img src: 'images/wearable.jpg' /]
-
-The static directory can contain javascript that is then used by custom components.
-
-[RoughComponent /]
