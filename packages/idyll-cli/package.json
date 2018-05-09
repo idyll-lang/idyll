@@ -61,6 +61,7 @@
     "yargs": "8.0.1"
   },
   "devDependencies": {
+    "canvas-prebuilt": "^1.6.5-prerelease.1",
     "jest": "20.0.4",
     "jsdom": "^11.10.0",
     "rimraf": "2.6.2"

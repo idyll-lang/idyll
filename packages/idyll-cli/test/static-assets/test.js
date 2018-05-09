@@ -45,9 +45,6 @@ const EXPECTED_BUILD_DIR = join(EXPECTED_DIR, 'build');
 const EXPECTED_BUILD_FILENAMES = getFilenames(EXPECTED_BUILD_DIR);
 const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
-beforeAll(() => {
-})
-
 let output;
 let idyll;
 
@@ -126,14 +123,16 @@ test('creates the expected HTML', done => {
     url: 'http://localhost:3000',
     referrer: 'http://localhost:3000',
     runScripts: 'dangerously',
-    resources: 'usable'
+    resources: 'usable',
+    pretendToBeVisual: true
   });
   // Timeout required to ensure that the JSDOM page load completes.
   setTimeout(() => {
     const document = dom.window.document;
     const svgNode = document.querySelector('svg');
     const imgNode = document.querySelector('img');
-    expect(imgNode.src).toEqual('http://localhost:3000/images/wearable.jpg');
+    expect(imgNode.src).toEqual('http://localhost:3000/static/images/wearable.jpg');
+    expect(imgNode.complete).toBeTruthy();
     expect(svgNode.childNodes.length).toEqual(5);
     dom.window.close();
     done();
