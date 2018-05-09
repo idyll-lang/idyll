@@ -3,8 +3,11 @@ const {
   isAbsolute,
   join,
   parse,
-  resolve
+  resolve,
+  relative
 } = require('path');
+
+const debug = require('debug')('idyll:cli')
 
 module.exports = function (opts) {
   const basedir = opts.inputFile

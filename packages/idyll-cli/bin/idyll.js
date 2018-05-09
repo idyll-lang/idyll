@@ -53,6 +53,8 @@ var argv = require('yargs')
   .boolean('watch')
   .describe('watch', 'Monitor input files and rebuild on changes')
   .default('watch', false)
+  .describe('open', 'Automatically open the page in the default browser during watch mode.')
+  .default('open', true)
   .alias('h', 'help')
   .argv;
 

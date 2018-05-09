@@ -1,9 +1,15 @@
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
 
-const Idyll = require('../../');
 const fs = require('fs');
+const http = require('http');
 const { join, resolve, dirname } = require('path');
+
 const rimraf = require('rimraf');
+const {
+  JSDOM
+} = require('jsdom');
+
+const Idyll = require('../../');
 
 const getFilenames = (dir) => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');
@@ -40,12 +46,15 @@ const EXPECTED_BUILD_FILENAMES = getFilenames(EXPECTED_BUILD_DIR);
 const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
 beforeAll(() => {
-  rimraf.sync(PROJECT_BUILD_DIR);
-  rimraf.sync(PROJECT_IDYLL_CACHE);
 })
 
 let output;
 let idyll;
+
+beforeAll(() => {
+  rimraf.sync(PROJECT_BUILD_DIR);
+  rimraf.sync(PROJECT_IDYLL_CACHE);
+})
 
 beforeAll(done => {
   idyll = Idyll({
@@ -60,24 +69,33 @@ beforeAll(done => {
     compiler: {
       spellcheck: false
     },
-    minify: false
+    minify: false,
+    watch: true,
+    open: false
   });
 
   idyll.on('update', (o) => {
     output = o;
     projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
     projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
-    done();
+    // Timeout required to ensure browsersync is running.
+    setTimeout(done, 1000);
   }).build();
+})
+
+afterAll(() => {
+  idyll.stopWatching();
 })
 
 test('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
+    static: 'static',
     minify: false,
     ssr: true,
-    watch: false,
+    watch: true,
+    open: false,
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
     template: join(PROJECT_DIR, 'index.html'),
@@ -104,32 +122,21 @@ test('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 })
 
-test('creates the expected HTML', () => {
-  expect(projectBuildResults['index.html']).toEqual(EXPECTED_BUILD_RESULTS['index.html']);
-});
-
-// test('creates the expected build artifacts', () => {
-//   Object.keys(EXPECTED_IDYLL_RESULTS).forEach((key) => {
-//     expect(projectIdyllResults[key]).toEqual(EXPECTED_IDYLL_RESULTS[key]);
-//   })
-// })
-test('should construct the AST properly', () => {
-  const ast = [
-    ["var", [["name", ["value", "exampleVar"]], ["value", ["value", 5]]], []],
-    ["data", [["name", ["value", "myData"]], ["source", ["value", "example-data.json"]]], []],
-    ['TextContainer', [], [
-      ["Header", [["title", ["value", "Welcome to Idyll"]], ["subtitle", ["value", "Open index.idl to start writing"]], ["author", ["value", "Your Name Here"]], ["authorLink", ["value", "https://idyll-lang.github.io"]]], []], ["p", [], ["This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text."]], ["Table", [["data", ["variable", "myData"]]], []], ["p", [], ["Here is how you can use a variable:"]],
-      ["Range", [["min", ["value", 0]], ["max", ["value", 10]], ["value", ["variable", "exampleVar"]]], []], ["Display", [["value", ["variable", "exampleVar"]]], []], ["CodeHighlight", [["language", ["value", "js"]]], ["var code = true;"]], ["p", [], ["And here is a custom component:"]], ["CustomComponent", [], []], ["p", [], ["You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist."]], ["ReactSimplePieChart",[["slices",["expression","[{\n    color: '#7b3af5',\n    value: 0.1,\n  }, {\n    color: '#EAE7D6',\n    value: 0.9, },\n  ]"]]],[]], ["PackageJsonComponentTest", [], []], ["p", [], ["This adds support for indexed components: ", ["CustomComponent.IndexedComponent", [], []]]], ["FunctionalComponent", [], []], ["FunctionalDefaultComponent", [], []], ["CapitalPascal", [], []]
-    ]]
-  ];
-
-  expect(output.ast).toEqual(ast);
-});
-
-test('should include npm components', () => {
-  expect(Object.keys(output.components)).toContain('react-simple-pie-chart');
-})
-
-test('should include components configured in package.json', () => {
-  expect(Object.keys(output.components)).toContain('package-json-component-test');
+test('creates the expected HTML', done => {
+  const dom = new JSDOM(projectBuildResults['index.html'], {
+    url: 'http://localhost:3000',
+    referrer: 'http://localhost:3000',
+    runScripts: 'dangerously',
+    resources: 'usable'
+  });
+  // Timeout required to ensure that the JSDOM page load completes.
+  setTimeout(() => {
+    const document = dom.window.document;
+    const svgNode = document.querySelector('svg');
+    const imgNode = document.querySelector('img');
+    expect(imgNode.src).toEqual('http://localhost:3000/images/wearable.jpg');
+    expect(svgNode.childNodes.length).toEqual(5);
+    dom.window.close();
+    done();
+  }, 2000);
 })
