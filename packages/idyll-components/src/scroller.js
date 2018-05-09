@@ -1,5 +1,6 @@
 const React = require('react');
 const { filterChildren, mapChildren } = require('idyll-component-children');
+import TextContainer from './text-container';
 const d3 = require('d3');
 
 
@@ -128,10 +129,10 @@ class Scroller extends React.Component {
   }
 
   render() {
-    const { hasError, updateProps, children, ...props } = this.props;
+    const { hasError, updateProps, idyll, children, ...props } = this.props;
     const { isFixed, isBottom, graphicHeight, graphicWidth } = this.state;
     return (
-      <div ref={(ref) => this.ref = ref} id={`idyll-scroll-${this.id}`} style={{position: 'relative'}}>
+      <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`} style={{position: 'relative'}}>
         <div className="idyll-scroll-graphic"
           style={Object.assign({ height: graphicHeight },
             styles.SCROLL_GRAPHIC,
@@ -147,19 +148,21 @@ class Scroller extends React.Component {
             )}
           </div>
         </div>
-        <div className="idyll-scroll-text">
-          {mapChildren(filterChildren(
-              children,
-              (c) => {
-                console.log('name,', c.type.name)
-                return !c.type.name || c.type.name.toLowerCase() === 'step';
-              }
-            ), (c) => {
-              return React.cloneElement(c, {
-                registerStep: this.registerStep.bind(this)
-              });
-            })}
-        </div>
+        <TextContainer idyll={idyll}>
+          <div className="idyll-scroll-text">
+            {mapChildren(filterChildren(
+                children,
+                (c) => {
+                  console.log('name,', c.type.name)
+                  return !c.type.name || c.type.name.toLowerCase() === 'step';
+                }
+              ), (c) => {
+                return React.cloneElement(c, {
+                  registerStep: this.registerStep.bind(this)
+                });
+              })}
+          </div>
+        </TextContainer>
       </div>
     );
   }

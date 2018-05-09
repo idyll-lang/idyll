@@ -733,6 +733,8 @@ hr {
   font-family: monospace;
 }
 
+
+
 .idyll-step-graphic {
   top: 0;
   left: 0;
@@ -746,8 +748,14 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: black;
 }
 
+.idyll-scroll-graphic {
+
+  text-align: center;
+  width: 100%;
+}
 
 .idyll-step-graphic img {
   flex-shrink: 0;
@@ -782,15 +790,30 @@ hr {
 
 .idyll-stepper-control-button-previous {
   position: absolute;
-  left: 0;
+  left: 10px;
 }
 
 .idyll-stepper-control-button-next {
   position: absolute;
-  right: 0;
+  right: 10px;
 }
 
 .idyll-stepper {
   margin: 60px 0;
 }
+
+.idyll-scroll {
+  margin-top: 25vh;
+}
+
+.idyll-scroll-text {
+  padding: 50vh 0;
+}
+
+.idyll-scroll-text .idyll-step {
+  margin: 75vh 0 75vh 0;
+  padding: 50px;
+  background: white;
+}
+
 `

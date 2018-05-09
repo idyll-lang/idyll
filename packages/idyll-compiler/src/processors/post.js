@@ -74,7 +74,7 @@ const makeFullWidth = (ast) => {
     }
     const attrs = attrConvert(child[1] || []);
     const childName = child[0].toLowerCase();
-    if (['derived', 'var', 'data', 'fullwidth'].indexOf(childName) > -1 || attrs.fullWidth) {
+    if (['derived', 'var', 'data', 'fullwidth', 'scroller'].indexOf(childName) > -1 || attrs.fullWidth) {
       if (childName === 'fullwidth') {
         child[0] = 'div';
         const className = getProperty(child, 'className');

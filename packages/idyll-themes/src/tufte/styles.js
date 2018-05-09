@@ -41,14 +41,9 @@ body {
   background-color: #fffff8;
 }
 
-body { width: 87.5%;
-       margin-left: auto;
-       margin-right: auto;
-       padding-left: 12.5%;
-       font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+body { font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
        background-color: #fffff8;
        color: #111;
-       max-width: 1400px;
        counter-reset: sidenote-counter; }
 
 
@@ -213,7 +208,7 @@ blockquote .sidenote, blockquote .marginnote, blockquote .aside { margin-right: 
                                                min-width: 59%;
                                                text-align: left; }
 
-p, footer, table, .aside-container { width: 55%; }
+.aside-container { width: 55%; }
 .aside-container {
   position: static;
 }
@@ -312,8 +307,14 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
   display: flex;
   justify-content: center;
   align-items: center;
+  background: black;
 }
 
+.idyll-scroll-graphic {
+
+  text-align: center;
+  width: 100%;
+}
 
 .idyll-step-graphic img {
   flex-shrink: 0;
@@ -348,15 +349,31 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
 
 .idyll-stepper-control-button-previous {
   position: absolute;
-  left: 0;
+  left: 10px;
 }
 
 .idyll-stepper-control-button-next {
   position: absolute;
-  right: 0;
+  right: 10px;
 }
 
 .idyll-stepper {
   margin: 60px 0;
 }
+
+.idyll-scroll {
+  margin-top: 25vh;
+}
+
+.idyll-scroll-text {
+  padding: 50vh 0;
+}
+
+.idyll-scroll-text .idyll-step {
+  margin: 75vh 0 75vh 0;
+  padding: 50px;
+  background: #fffff8;
+  border: solid 1px #111;
+}
+
 `
