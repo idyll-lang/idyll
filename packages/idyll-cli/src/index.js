@@ -187,7 +187,7 @@ const idyll = (options = {}, cb) => {
     }
 
     stopWatching() {
-      if (watchers && watchers.length) {
+      if (watchers.length) {
         watchers.forEach(w => w.close());
         watchers = null;
       }

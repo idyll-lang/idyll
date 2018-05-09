@@ -1,14 +1,12 @@
+
 body {
   margin: 0;
 }
 
 .idyll-root {
   box-sizing: border-box;
-  max-width: 600px;
-  margin: 0 auto;
   padding: 60px 0;
   margin-bottom: 60px;
-  width: calc(100vw - 2 * 250px);
 }
 
 .article-header {
@@ -56,6 +54,7 @@ input {
   }
 
 }
+
 
 @font-face {
   font-family: octicons-link;
