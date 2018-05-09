@@ -55,7 +55,6 @@ class Stepper extends React.PureComponent {
 
   render() {
     const { children, height, ...props } = this.props;
-    console.log(this.props);
     return (
       <div className="idyll-stepper" style={{position: 'relative', height: height}}>
         <div className="idyll-step-graphic">

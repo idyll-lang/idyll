@@ -153,7 +153,6 @@ class Scroller extends React.Component {
             {mapChildren(filterChildren(
                 children,
                 (c) => {
-                  console.log('name,', c.type.name)
                   return !c.type.name || c.type.name.toLowerCase() === 'step';
                 }
               ), (c) => {
