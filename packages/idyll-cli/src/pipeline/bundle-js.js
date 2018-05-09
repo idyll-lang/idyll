@@ -13,7 +13,15 @@ const toStream = (k, o) => {
   let src;
 
   if (['ast', 'data', 'opts'].indexOf(k) > -1) {
-    src = `module.exports = ${JSON.stringify(o)}`;
+    if (k === 'opts') {
+
+      src = `
+      var out = ${JSON.stringify(o)};
+      out.context = ${(o.context || function() {}).toString()};
+      module.exports = out;`
+    } else {
+      src = `module.exports = ${JSON.stringify(o)}`;
+    }
   } else if (k === 'syntaxHighlighting') {
     src = `module.exports = (function (){${o}})()`;
   } else {
@@ -91,6 +99,17 @@ module.exports = function (opts, paths, output) {
           b.require(toStream(key, data), {
             expose: aliases[key],
             basedir: paths.TMP_DIR
+          })
+        }
+
+
+        if (opts.context) {
+          b.require(opts.context, {
+            expose: '__IDYLL_CONTEXT__'
+          })
+        } else {
+          b.require(__dirname + '/../client/context', {
+            expose: '__IDYLL_CONTEXT__'
           })
         }
       }

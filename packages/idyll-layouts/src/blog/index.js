@@ -2,7 +2,7 @@ import createStyles from './styles';
 
 const config = {
   maxWidth: 600,
-  marginLeft: 50
+  margin: '0 0 0 50px'
 };
 
 export default {

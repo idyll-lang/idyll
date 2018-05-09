@@ -200,7 +200,6 @@ class IdyllRuntime extends React.PureComponent {
 
     const Wrapper = createWrapper({ theme: props.theme, layout: props.layout });
 
-
     const initialState = Object.assign({}, {
       ...getVars(vars),
       ...getData(data, props.datasets),
@@ -220,19 +219,27 @@ class IdyllRuntime extends React.PureComponent {
         getVars(derived, newMergedState),
       );
       const nextState = {...newMergedState, ...newDerivedValues};
+
+      const changedMap = {};
       const changedKeys = Object.keys(state).reduce(
         (acc, k) => {
-          if (state[k] !== nextState[k]) acc.push(k);
+          if (state[k] !== nextState[k]) {
+            acc.push(k);
+            changedMap[k] = nextState[k] || state[k];
+          }
           return acc;
         },
         []
       )
+
       // Update doc state reference.
       // We re-use the same object here so that
       // IdyllRuntime.state can be accurately checked in tests
       state = Object.assign(state, nextState);
       // pass the new doc state to all listeners aka component wrappers
       updatePropsCallbacks.forEach(f => f(state, changedKeys));
+
+      changedKeys.length && this._onUpdateState && this._onUpdateState(changedMap);
     };
 
     evalContext.update = this.updateState;
@@ -252,7 +259,7 @@ class IdyllRuntime extends React.PureComponent {
 
     Object.keys(internalComponents).forEach((key) => {
       if (props.components[key]) {
-        console.warn(`Warning! You are including a component named ${key}, but this conflicts with an internal component. Please rename your component.`);
+        console.warn(`Warning! You are including a component named ${key}, but this is a reserved Idyll component. Please rename your component.`);
       }
     })
 
@@ -396,7 +403,12 @@ class IdyllRuntime extends React.PureComponent {
     if (typeof this.props.context === 'function') {
       this.props.context({
         update: this.updateState.bind(this),
-        data: () => this.state
+        data: () => {
+          return this.state
+        },
+        onUpdate: (cb) => {
+          this._onUpdateState = cb;
+        }
       });
     }
   }
