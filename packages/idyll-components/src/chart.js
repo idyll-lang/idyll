@@ -24,7 +24,7 @@ class Chart extends React.PureComponent {
     const { id, props } = this;
     const type = props.type.toUpperCase();
     const INNER_CHART = types[type];
-    let { scale, data, domain, ...customProps } = props;
+    let { scale, data, domain, animate, ...customProps } = props;
 
     if (props.equation) {
       const d = domain;
@@ -54,7 +54,7 @@ class Chart extends React.PureComponent {
     return (
       <div className={props.className}>
         {type !== 'PIE' ? (
-          <V.VictoryChart domainPadding={10} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
+          <V.VictoryChart domainPadding={10} animate={animate} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
             <INNER_CHART
               data={data}
               x={props.x}
