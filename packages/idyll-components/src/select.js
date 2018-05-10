@@ -12,13 +12,14 @@ class Select extends React.PureComponent {
   }
 
   render() {
+    const { idyll, hasError, updateProps, ...props } = this.props;
     return (
-      <select onChange={this.onChange} {...this.props}>
+      <select onChange={this.onChange} {...props}>
         {this.props.options.map((d) => {
           if (typeof d === 'string') {
-            return <option value={d}>{d}</option>;
+            return <option key={d} value={d}>{d}</option>;
           }
-          return <option value={d.value}>{d.label || d.value}</option>;
+          return <option key={d.label || d.value} value={d.value}>{d.label || d.value}</option>;
         })}
       </select>
     );
