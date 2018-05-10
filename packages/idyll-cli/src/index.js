@@ -28,10 +28,12 @@ function createDirectories(paths) {
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
       watch: false,
+      open: true,
       datasets: 'data',
       minify: true,
       ssr: true,
       components: 'components',
+      static: 'static',
       defaultComponents: dirname(require.resolve('idyll-components')),
       layout: 'centered',
       theme: 'github',
@@ -94,6 +96,7 @@ const idyll = (options = {}, cb) => {
   }
 
   let bs;
+  let watchers;
 
   const createResolvers = () => {
     return new Map([
@@ -135,24 +138,29 @@ const idyll = (options = {}, cb) => {
             bs = require('browser-sync').create();
             // any time an input files changes we will recompile .idl source
             // and write ast.json, components.js, and data.js to disk
-            bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, () => inst.build());
-            // that will cause watchify to rebuild so we just watch the output bundle file
-            // and reload when it is updated. Watch options are to prevent multiple change
-            // events since the bundle file can be somewhat large
-            bs.watch(paths.JS_OUTPUT_FILE, {awaitWriteFinish: {stabilityThreshold: 499}}, bs.reload);
-            // when CSS changes we reassemble and inject it
-            bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, () => {
-              pipeline.updateCSS(paths, resolvers.get('css')).then(() => {
-                bs.reload('styles.css');
-              });
-            });
+            watchers = [
+              bs.watch(paths.IDYLL_INPUT_FILE, {ignoreInitial: true}, () => inst.build()),
+              // that will cause watchify to rebuild so we just watch the output bundle file
+              // and reload when it is updated. Watch options are to prevent multiple change
+              // events since the bundle file can be somewhat large
+              bs.watch(paths.JS_OUTPUT_FILE, {awaitWriteFinish: {stabilityThreshold: 499}}, bs.reload),
+              // when CSS changes we reassemble and inject it
+              bs.watch(paths.CSS_INPUT_FILE, {ignoreInitial: true}, () => {
+                pipeline.updateCSS(paths, resolvers.get('css')).then(() => {
+                  bs.reload('styles.css');
+                });
+              }),
+              // when any static files change we do a full rebuild.
+              bs.watch(paths.STATIC_DIR, {ignoreInitial: true}, () => inst.build()),
+            ];
 
             // Each resolver is responsible for generating a list of directories to watch for
             // their corresponding data types.
             resolvers.forEach((resolver, name) => {
-              bs.watch(resolver.getDirectories(), { ignoreInitial: true }, () => {
+              let watcher = bs.watch(resolver.getDirectories(), { ignoreInitial: true }, () => {
                 inst.build();
               });
+              watchers.push(watcher);
             });
 
             bs.init({
@@ -160,9 +168,12 @@ const idyll = (options = {}, cb) => {
               logLevel: 'warn',
               logPrefix: 'Idyll',
               notify: false,
+              // TODO: In the next major version bump, stop watching INPUT_DIR (all static assets
+              // should be in the static assets directory).
               server: [paths.OUTPUT_DIR, paths.INPUT_DIR],
               ui: false,
-              port: opts.port
+              port: opts.port,
+              open: opts.open
             });
           }
         })
@@ -175,6 +186,14 @@ const idyll = (options = {}, cb) => {
           }
         });
       return this;
+    }
+
+    stopWatching() {
+      if (watchers.length) {
+        watchers.forEach(w => w.close());
+        watchers = null;
+      }
+      if (bs) bs.exit();
     }
   }
 

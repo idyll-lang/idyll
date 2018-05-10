@@ -1,0 +1,15 @@
+[meta title:"Page Title" description:"Short description of your project" /]
+
+[Header
+  title:"Idyll Static Assets Test"
+  subtitle:"Testing static assets in Idyll"
+  author:"Your Name Here"
+  authorLink:"https://idyll-lang.github.io" /]
+
+Images and other static assets can be loaded from the `static` directory.
+
+[img src: 'static/images/wearable.jpg' /]
+
+The static directory can contain javascript that is then used by custom components.
+
+[RoughComponent /]
