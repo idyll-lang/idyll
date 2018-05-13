@@ -1,6 +1,6 @@
 import React from 'react';
-import { filterChildren, mapChildren } from 'idyll-component-children';
 import { getProperty } from 'idyll-ast';
+const { filterChildren, mapChildren } = require('idyll-component-children');
 
 const Step = require('./step');
 
