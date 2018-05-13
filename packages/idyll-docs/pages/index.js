@@ -108,21 +108,47 @@ The value of x is [Display value:x format:"d" /].
                 ) : null
               }
               </div>
-
+              <div className="editor-link-container">
+                <a className="editor-link" href="/editor">
+                  Try Idyll in your browser
+                </a>
+              </div>
             </div>
             {/* <div className="learn-more">
               Learn More
             </div> */}
           </div>
           <div className="panel">
+            <Link href="/gallery">
+              <div className="gallery">
+                {/* <a href="./gallery" className="gallery-image-block" style={{display: 'block'}}> */}
+                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/barnes-hut.png)' }}>
+                    <div className="title"></div>
+                  </div>
+                  <div className="gallery-item" style={{ backgroundImage: 'url(https://mathisonian.github.io/dashcam/images/share.png)' }}>
+                    <div className="title"></div>
+                  </div>
+                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/kde.png)' }}>
+                    <div className="title"></div>
+                  </div>
+                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/trig.png)' }}>
+                    <div className="title"></div>
+                  </div>
+                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/travelling-salesman.png)' }}>
+                    <div className="title"></div>
+                  </div>
+                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/complaints-2.gif)' }}>
+                    <div className="title"></div>
+                  </div>
+                {/* </a> */}
+                <div className="gallery-title">
+                  <a href="./gallery">View Example Gallery</a>
+                </div>
+              </div>
+            </Link>
             {/* <div className="alert">
               Support the project by <a href="">buying a sticker</a>.
             </div> */}
-            <div className="editor-link-container">
-              <a className="editor-link" href="/editor">
-                Try Idyll in your browser
-              </a>
-            </div>
             <div className="links">
               <Link href="/docs/getting-started"><a>
                 Quick Start
@@ -149,46 +175,20 @@ The value of x is [Display value:x format:"d" /].
               </a>
               {/* <a className="github-button" href="https://github.com/idyll-lang/idyll" data-icon="octicon-star" data-show-count="true" aria-label="Star idyll-lang/idyll on GitHub">Star</a> */}
             </div>
-            <div style={{marginTop: 20, textAlign: 'center'}}>
-                <a className="github-button" href="https://github.com/idyll-lang/idyll" data-icon="octicon-star" data-show-count="true" aria-label="Star idyll-lang/idyll on GitHub">Star</a>
-            </div>
             <div>
               <p>
                 <b>Idyll</b> extends the ubiquitous Markdown format to enable the creation of dynamic, interactive narratives for the web. The language and toolchain aim to empower journalists, researchers, and technical experts to create compelling content using familiar tools and processes.
-              </p>
-              <p>
+                <br/><br/>
                 Idyll can be used to create explorable explanations, to power blog engines and content management systems, and to generate dynamic technical reports. The tool can generate standalone webpages or be embedded inside of your existing site.
 
+                <img style={{display: 'block', width: '75%', margin: '0 auto'}} src="/static/images/sponsors.png"/>
+
+                Idyll is supported by the Interactive Data Lab at the University of Washington, and by Rhizome and The Eutopia Foundation.
               </p>
             </div>
-            <Link href="/gallery">
-              <div className="gallery">
-                <div className="gallery-title">
-                  <a href="./gallery">Example Gallery</a>
-                  <img src="/static/images/arrow.svg" alt="scroll for more"/>
-                </div>
-                {/* <a href="./gallery" className="gallery-image-block" style={{display: 'block'}}> */}
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/trig.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(https://mathisonian.github.io/dashcam/images/share.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/complaints-2.gif)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/lorenz.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/regl.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/d3.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                {/* </a> */}
-              </div>
-            </Link>
+          </div>
+          <div style={{ position: 'absolute', left: 20, top: 20 }}>
+              <a className="github-button" href="https://github.com/idyll-lang/idyll" data-show-count="true" data-icon="octicon-star" aria-label="Star idyll-lang/idyll on GitHub">Star</a>
           </div>
         </section>
         {/* <section>
@@ -319,10 +319,9 @@ The value of x is [Display value:x format:"d" /].
             display: block;
             width: 100%;
             margin: 0 auto;
-            margin-top: 160px;
+            margin-top: 2em;
             // margin-top: 84px;
             text-align: center;
-            margin-bottom: 2em;
           }
 
           .editor-link {
@@ -336,6 +335,14 @@ The value of x is [Display value:x format:"d" /].
             background: #4C4B63;
             padding: 10px 10px;
             transition: color 0.5s, background 0.5s;
+          }
+
+          .links {
+            background: #efefef;
+            padding: 0.5em;
+          }
+          .links a {
+            color: white;
           }
 
           .other-links {
@@ -360,11 +367,7 @@ The value of x is [Display value:x format:"d" /].
           }
 
           .gallery {
-            // height: 25vh;
-            // position: absolute;
-            // bottom: 0;
-            margin-top: 0.5em;
-            // margin-top: calc(100vh - 160px - 150px - 100px - 150px);
+            position: relative;
             font-size: 22px;
             // background: #84828F;
             width: 100%;
@@ -373,16 +376,18 @@ The value of x is [Display value:x format:"d" /].
             flex-wrap: wrap;
             overflow: hidden;
             cursor: pointer;
-
+          }
+          .gallery .gallery-item .title {
+            opacity: 0.5;
           }
           .gallery:hover .gallery-item .title {
-            opacity: 0.5;
+            opacity: 0.25;
           }
 
           .gallery-item {
             width: 33%;
             flex-grow: 1;
-            height: 275px;
+            height: calc(100vh / 6);
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -394,7 +399,7 @@ The value of x is [Display value:x format:"d" /].
             transition: opacity 1s;
             width: 100%;
             height: 100%;
-            background: rgba(132, 130, 143, 0.7);
+            background: rgba(132, 130, 143, 1.0);
             display: block;
             text-decoration: none;
             color: white;
@@ -404,15 +409,18 @@ The value of x is [Display value:x format:"d" /].
           }
 
           .gallery-title {
-            // position: absolute;
-            padding: 2em 0;
-            // height: 100%;
-            // background: rgba(132, 130, 143, 0.7);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 20px;
+            background: rgba(255, 255, 255, 1.0);
+            border: solid 1px #333;
             font-family: 'Fira Mono';
-            // color: white;
             font-size: 0.9em;
-            width: 100%;
-            // pointer-events: none;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            width: 300px;
             opacity: 1;
             transition: opacity 1s;
             text-align: center;
@@ -490,11 +498,11 @@ The value of x is [Display value:x format:"d" /].
             }
 
             .editor-link-container {
-              margin-top: 3em;
+              margin-top: 0.5em;
             }
-            .gallery {
-              margin-top: 1em;
-            }
+            // .gallery {
+            //   margin-top: 1em;
+            // }
 
             .links {
               font-size: 0.9em;
