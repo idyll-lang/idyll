@@ -4,6 +4,12 @@ const exampleGroups = [
     title: 'Explorable Explanations',
     examples: [
       {
+        label: 'How to Tune a Guitar',
+        subtitle: "An interactive audio guide with guitars and a little music theory.",
+        href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
+        image: 'how-to-tune-a-guitar.png'
+      },
+      {
         label: 'The Barnes-Hut Approximation',
         subtitle: "Efficient computation of N-body forces",
         href: 'https://jheer.github.io/barnes-hut/',
@@ -121,7 +127,13 @@ const exampleGroups = [
   },
   {
     title: 'Tutorials',
-    examples: [
+    examples: [{
+      label: 'Scaffolding Interactives',
+      subtitle: 'Rapidly create scroll- and step-based interactives with Idyll',
+      href: 'https://mathisonian.github.io/idyll/scaffolding-interactives/',
+      image: 'scaffolding-interactives.gif',
+      sourceUrl: "https://github.com/mathisonian/scaffolding-interactives"
+      },
       {
         label: 'Take a Walk on the Idyll Side',
         subtitle: 'Exploring new ways to create interactive documents',
