@@ -1,6 +1,6 @@
 {
   "name": "idyll",
-  "version": "2.13.0",
+  "version": "2.13.1",
   "description": "Command line interface for idyll lang",
   "main": "src/index.js",
   "bin": {
@@ -44,7 +44,7 @@
     "html-tags": "^1.1.1",
     "idyll-ast": "^1.3.1",
     "idyll-compiler": "^3.1.8",
-    "idyll-components": "^2.8.0",
+    "idyll-components": "^2.8.1",
     "idyll-document": "^2.10.5",
     "idyll-layouts": "^2.5.2",
     "idyll-themes": "^2.3.4",
