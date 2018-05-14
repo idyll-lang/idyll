@@ -1,7 +1,8 @@
-const p = require('path')
-
-const Papa = require('papaparse');
+const { join } = require('path')
 const slash = require('slash');
+const fs = require('fs');
+
+const parse = require('csv-parse/lib/sync')
 
 const errors = require('../errors.js');
 var debug = require('debug')('idyll:cli');
@@ -28,10 +29,15 @@ class DataResolver {
 
     if (source.endsWith('.csv')) {
       debug(`Loading ${source} as a CSV into data variable ${name}`);
-      data = Papa.parse(slash(p.join(this.paths.DATA_DIR, source)), { header: true }).data;
+      debug(slash(join(this.paths.DATA_DIR, source)));
+      const inputString = fs.readFileSync(slash(join(this.paths.DATA_DIR, source)));
+      debug(inputString);
+      debug(parse(inputString, { cast: true }));
+      data = parse(inputString, { cast: true });
+      debug(`${JSON.stringify(data)}`);
     } else if (source.endsWith('.json')) {
       debug(`Loading ${source} as a JSON document into data variable ${name}`);
-      data = require(slash(p.join(this.paths.DATA_DIR, source)));
+      data = require(slash(join(this.paths.DATA_DIR, source)));
     } else {
       throw new errors.UnknownDataError(source);
     }
