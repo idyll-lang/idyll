@@ -125,7 +125,7 @@ The value of x is [Display value:x format:"d" /].
                   <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/barnes-hut.png)' }}>
                     <div className="title"></div>
                   </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(https://mathisonian.github.io/dashcam/images/share.png)' }}>
+                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/how-to-tune-a-guitar.png)' }}>
                     <div className="title"></div>
                   </div>
                   <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/kde.png)' }}>
