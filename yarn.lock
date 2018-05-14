@@ -2450,6 +2450,10 @@ cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   dependencies:
     cssom "0.3.x"
 
+csv-parse@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-2.4.0.tgz#d4c72a1533734b2c2a65f486d13091264cacc115"
+
 currently-unhandled@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/currently-unhandled/-/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -4365,6 +4369,10 @@ iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@~0.4.13:
 idyll-component-children@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/idyll-component-children/-/idyll-component-children-1.0.5.tgz#8ce14ed3e24d8977d38e85b111c53a7428819edf"
+
+idyll-component-children@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/idyll-component-children/-/idyll-component-children-1.0.7.tgz#9e4b6c44eb24c45f64caeb5e45fe0fa5a59a9248"
 
 ieee754@1.1.8, ieee754@^1.1.4:
   version "1.1.8"
@@ -6584,10 +6592,6 @@ package-json@^4.0.1:
 pako@~1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.6.tgz#0101211baa70c4bca4a0f63f2206e97b7dfaf258"
-
-papaparse@^4.3.6:
-  version "4.3.7"
-  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-4.3.7.tgz#ed1e7183320d1e0839dfe9f7186185cfc5097b8d"
 
 param-case@^2.1.0:
   version "2.1.1"
