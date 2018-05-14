@@ -4370,6 +4370,10 @@ idyll-component-children@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/idyll-component-children/-/idyll-component-children-1.0.5.tgz#8ce14ed3e24d8977d38e85b111c53a7428819edf"
 
+idyll-component-children@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/idyll-component-children/-/idyll-component-children-1.0.7.tgz#9e4b6c44eb24c45f64caeb5e45fe0fa5a59a9248"
+
 ieee754@1.1.8, ieee754@^1.1.4:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.8.tgz#be33d40ac10ef1926701f6f08a2d86fbfd1ad3e4"
