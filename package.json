@@ -15,5 +15,8 @@
     "type": "opencollective",
     "url": "https://opencollective.com/idyll",
     "logo": "https://opencollective.com/opencollective/logo.txt"
+  },
+  "dependencies": {
+    "idyll-ast": "^1.3.0"
   }
 }
