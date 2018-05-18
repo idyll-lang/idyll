@@ -35,8 +35,21 @@ const getChildren = function(node) {
   if (typeof node === 'string') {
     return [];
   }
+  if (typeof node[2] === 'string') {
+    return [node[2]];
+  }
   return node[2] || [];
 };
+
+const getText = function(node) {
+  const texts = [];
+  walkNodes(getChildren(node), (n) => {
+    if(typeof n === 'string') {
+      texts.push(n);
+    }
+  })
+  return texts.join('');
+}
 
 const walkNodes = function(ast, f) {
   (ast || []).forEach((node) => {
@@ -63,6 +76,7 @@ const modifyChildren = function(node, modifier) {
   return node;
 };
 
+// TODO: wrap string in array so that the reduce doesn't err 
 const getNodesByName = function(ast, name) {
   const handleNode = (acc, node) => {
     if (node[0].toLowerCase() === name.toLowerCase()) {
@@ -77,6 +91,10 @@ const getNodesByName = function(ast, name) {
 
     return children.reduce(handleNode, acc);
   };
+
+  // if (typeof ast === 'string') {
+  //   ast = [ast];
+  // }
 
   return ast.reduce(handleNode, []);
 };
@@ -230,6 +248,7 @@ module.exports = {
   getProperty,
   getProperties,
   getPropertiesByType,
+  getText,
   prependNode,
   prependNodes,
   removeNodesByName,
