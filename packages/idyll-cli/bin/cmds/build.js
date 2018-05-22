@@ -45,7 +45,7 @@ function buildOptions (yargs) {
       c: 'css',
       d: 'datasets',
       q: 'default-components',
-      f: 'input-file',
+      i: 'input-file',
       s: 'input-string',
       l: 'layout',
       n: 'no-minify',
