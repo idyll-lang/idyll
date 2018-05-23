@@ -7,6 +7,7 @@ const { exec } = require('child_process');
 const yargs = require('yargs');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
+const ora = require('ora');
 
 const PROJECT_ROOT = p.join(__dirname, '../../../../')
 const TEMPLATES_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-template-projects')
@@ -81,14 +82,28 @@ async function createProject (answers) {
 \ does not exist.';
   let errorMessage = `Could not create Idyll project in ${dir}`;
 
+  let stages = [
+    ['Ensuring that the target directory is valid', ensureEmptyProject],
+    ['Copying files from template directory into the target directory', copyFiles],
+    ['Configuring project', fillTemplates],
+    ['Installing dependencies', installDependencies]
+  ];
+
   console.log(colors.success(startMessage));
+  var spinner
   try {
-    await ensureEmptyProject();
-    await copyFiles();
-    await fillTemplates();
-    await installDependencies();
+    for (var i = 0; i < stages.length; i++) {
+      let stage = stages[i]
+      spinner = ora({
+        text: colors.progress(' ' + stage[0])
+      });
+      spinner.start();
+      await stage[1]();
+      spinner.succeed()
+    }
   } catch (err) {
-    console.error(colors.failure(`${errorMessage}: ${err}`));
+    if (spinner) spinner.fail(colors.failure(err));
+    return
   }
   console.log();
   console.log(colors.success(successMessage));
@@ -98,21 +113,18 @@ async function createProject (answers) {
     return fs.pathExists(dir)
       .then(exists => {
         if (exists) {
-          console.log(colors.failure(dirExistsMessage));
-          throw new Error('Directory already exists');
+          throw new Error(dirExistsMessage);
         }
         return true
       });
   }
 
   async function copyFiles (proceed) {
-    console.log(colors.progress('  Copying files from template directory into target directory...'))
     await fs.copy(getTemplatePath(template), dir);
     await fs.copy(DEFAULT_COMPONENTS_DIR, p.join(dir, 'components', 'default'));
   }
 
   async function fillTemplates () {
-    console.log(colors.progress('  Configuring project...'));
     let packagePath = p.join(dir, 'package.json');
     let package = JSON.parse(await fs.readFile(packagePath));
     package.name = name;
@@ -120,7 +132,6 @@ async function createProject (answers) {
   }
 
   async function installDependencies () {
-    console.log(colors.progress('  Installing dependencies...'));
     return new Promise((resolve, reject) => {
       exec('npm i', {
         cwd: p.join(__dirname, dir)
