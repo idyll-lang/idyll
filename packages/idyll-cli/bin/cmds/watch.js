@@ -10,8 +10,7 @@ exports.description = 'Build then start the development server'
 
 exports.builder = (yargs) => {
   return buildOptions(yargs)
-    .example('$0 watch -f index.idl', 'Build a single .idl file and start the dev server')
-    .demandCommand(1)
+    .example('$0 watch -i index.idl', 'Build a single .idl file and start the dev server')
     .alias({
       p: 'port'
     })
@@ -22,6 +21,6 @@ exports.builder = (yargs) => {
 }
 
 exports.handler = (argv) => {
-  argv.w = true
+  argv.watch = true
   handler(argv);
 }

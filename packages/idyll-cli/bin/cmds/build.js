@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+const chalk = require('chalk')
 const idyll = require('../../src/');
 const debug = require('debug')('idyll:cli')
 
@@ -8,7 +9,7 @@ exports.description = 'Turn index.idl into output'
 exports.builder = (yargs) => {
   return buildOptions(yargs)
     .usage('Usage: idyll build')
-    .example('$0 build -f index.idl', 'Turn a .idl file or project into output')
+    .example('$0 build -i index.idl', 'Turn a .idl file or project into output')
     .demandCommand(1)
 }
 
@@ -34,6 +35,7 @@ exports.handler = (argv) => {
   })
 
   debug('Building with CLI arguments:', argv);
+  console.log(chalk.green(`Building Idyll project with output directory: ${argv['output']}...`))
   idyll(argv).build();
 }
 
@@ -65,6 +67,7 @@ function buildOptions (yargs) {
     .describe('default-components', 'Directory where default set of components are located')
     .array('default-components')
     .describe('input-file', 'File containing Idyll source')
+    .default('input-file', 'index.idyll')
     .describe('input-string', 'Idyll source as a string')
     .describe('layout', 'Name of (or path to) the layout to use')
     .default('layout', 'blog')

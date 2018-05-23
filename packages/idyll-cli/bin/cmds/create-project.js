@@ -31,7 +31,7 @@ function builder (yargs) {
 }
 
 function main (argv) {
-  let projectDir = argv._[0];
+  let projectDir = argv._[1];
 
   getAllTemplates()
     .then(askQuestions)
@@ -134,7 +134,7 @@ async function createProject (answers) {
   async function installDependencies () {
     return new Promise((resolve, reject) => {
       exec('npm i', {
-        cwd: p.join(__dirname, dir)
+        cwd: p.join(process.cwd(), dir)
       }, function (err) {
         if (err) return reject(err);
         return resolve();
