@@ -9,15 +9,15 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const PROJECT_ROOT = p.join(__dirname, '../../../../')
-const TEMPLATES_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-template-projects')
+const PROJECT_ROOT = p.join(__dirname, '../../../../');
+const TEMPLATES_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-template-projects');
 const DEFAULT_COMPONENTS_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-components', 'dist', 'cjs');
 
 const colors = {
   progress: chalk.hex('#6122fb'),
   success: chalk.green,
   failure: chalk.red
-}
+};
 
 exports.command = 'create [project-name]';
 exports.description = 'Create a new project';
@@ -27,7 +27,7 @@ exports.handler = main;
 function builder (yargs) {
   return yargs
     .usage('Usage: $0 create <project-name>')
-    .example('$0 create example-project')
+    .example('$0 create example-project');
 }
 
 function main (argv) {
@@ -103,7 +103,7 @@ async function createProject (answers) {
     }
   } catch (err) {
     if (spinner) spinner.fail(colors.failure(err));
-    return
+    return;
   }
   console.log();
   console.log(colors.success(successMessage));
@@ -115,7 +115,7 @@ async function createProject (answers) {
         if (exists) {
           throw new Error(dirExistsMessage);
         }
-        return true
+        return true;
       });
   }
 
