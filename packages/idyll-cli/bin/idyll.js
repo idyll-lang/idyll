@@ -83,7 +83,7 @@ Object.keys(argv).forEach((key) => {
 
 debug('Using CLI arguments:', argv)
 
-idyll(argv).build().then(() => {
+idyll(argv).build().on('complete', () => {
   if (!argv.watch) {
     process.exit(0);
   }
