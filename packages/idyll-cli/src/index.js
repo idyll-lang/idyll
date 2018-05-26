@@ -126,7 +126,7 @@ const idyll = (options = {}, cb) => {
       // Leaving the following timing statement in for backwards-compatibility.
       if (opts.debug) console.time('Build Time');
 
-      return pipeline.build(opts, paths, resolvers)
+      pipeline.build(opts, paths, resolvers)
         .then((output) => {
           debug('Build completed');
           // Leaving the following timing statement in for backwards-compatibility.
