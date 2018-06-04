@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const p = require('path');
-const { exec } = require('child_process');
+const { spawn } = require('child_process');
 
 const yargs = require('yargs');
 const inquirer = require('inquirer');
@@ -126,18 +126,30 @@ async function createProject (answers) {
 
   async function fillTemplates () {
     let packagePath = p.join(dir, 'package.json');
-    let package = JSON.parse(await fs.readFile(packagePath));
-    package.name = name;
-    await fs.writeFile(packagePath, JSON.stringify(package, null, 2));
+    let indexPath = p.join(dir, 'index.idyll');
+
+    let packageJson = JSON.parse(await fs.readFile(packagePath));
+    let indexIdyll = await fs.readFile(indexPath, { encoding: 'utf-8' });
+
+    packageJson.name = name;
+    var title = name.split('-').join(' ').replace(/\b\w/g, l => l.toUpperCase())
+
+    await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
+    // TODO: could add more templating.
+    await fs.writeFile(indexPath, indexIdyll.replace(/\{\{title\}\}/g, title));
   }
 
   async function installDependencies () {
     return new Promise((resolve, reject) => {
-      exec('npm i', {
-        cwd: p.join(process.cwd(), dir)
-      }, function (err) {
-        if (err) return reject(err);
-        return resolve();
+      let installer = spawn('yarn', ['install'], {
+        cwd: p.join(process.cwd(), dir),
+        stdio: 'ignore'
+      })
+      installer.on('close', code => {
+        if (code !== 0) {
+          return reject(new Error('Could not install Idyll dependencies.'))
+        }
+        return resolve()
       })
     });
   }

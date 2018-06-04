@@ -1,11 +1,13 @@
 #! /usr/bin/env node
+const { getLocalIdyll } = require('../util');
+
 const {
   handler,
   buildOptions
 } = require('./build');
 
 exports.command = 'watch'
-exports.aliases = ['*']
+exports.aliases = getLocalIdyll() ? ['*'] : []
 exports.description = 'Build then start the development server'
 
 exports.builder = (yargs) => {
