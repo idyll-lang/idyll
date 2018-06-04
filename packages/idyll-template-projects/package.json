@@ -1,0 +1,21 @@
+{
+  "name": "idyll-template-projects",
+  "version": "1.0.0",
+  "description": "Template projects for Idyll",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idyll-lang/idyll.git"
+  },
+  "keywords": [
+    "Idyll"
+  ],
+  "authors": [
+    "Matthew Conlen",
+    "Ben Clinkinbeard"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/idyll-lang/idyll/issues"
+  },
+  "homepage": "https://github.com/idyll-lang/idyll#readme"
+}
