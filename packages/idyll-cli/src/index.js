@@ -177,6 +177,9 @@ const idyll = (options = {}, cb) => {
             });
           }
         })
+        .then(() => {
+          this.emit('complete')
+        })
         .catch((error) => {
           // pass along errors if anyone is listening
           if (this.listenerCount('error')) {

@@ -29,11 +29,8 @@ class DataResolver {
 
     if (source.endsWith('.csv')) {
       debug(`Loading ${source} as a CSV into data variable ${name}`);
-      debug(slash(join(this.paths.DATA_DIR, source)));
       const inputString = fs.readFileSync(slash(join(this.paths.DATA_DIR, source)));
-      debug(inputString);
-      debug(parse(inputString, { cast: true }));
-      data = parse(inputString, { cast: true });
+      data = parse(inputString, { cast: true, columns:true });
       debug(`${JSON.stringify(data)}`);
     } else if (source.endsWith('.json')) {
       debug(`Loading ${source} as a JSON document into data variable ${name}`);

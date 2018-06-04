@@ -1,10 +1,10 @@
 #! /usr/bin/env node
-const chalk = require('chalk')
+const chalk = require('chalk');
 const idyll = require('../../src/');
-const debug = require('debug')('idyll:cli')
+const debug = require('debug')('idyll:cli');
 
-exports.command = 'build'
-exports.description = 'Turn index.idl into output'
+exports.command = 'build';
+exports.description = 'Turn index.idl into output';
 
 exports.builder = (yargs) => {
   return buildOptions(yargs)
@@ -35,8 +35,12 @@ exports.handler = (argv) => {
   })
 
   debug('Building with CLI arguments:', argv);
-  console.log(chalk.green(`Building Idyll project with output directory: ${argv['output']}...`))
-  idyll(argv).build();
+  console.log(chalk.green(`Building Idyll project with output directory: ${argv['output']}...`));
+  idyll(argv).build().on('complete', () => {
+    if (!argv.watch) {
+      process.exit(0);
+    }
+  });
 }
 
 exports.buildOptions = buildOptions

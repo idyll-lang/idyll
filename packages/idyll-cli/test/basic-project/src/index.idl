@@ -12,7 +12,11 @@ as you please in here. To add interactivity,
 you can add  different components to the text.
 
 [data name:"myData" source:"example-data.json" /]
+[data name:"myCSVData" source:"example-file.csv" /]
+
 [Table data:myData /]
+
+[Table data:myCSVData /]
 
 Here is how you can use a variable:
 

@@ -20,4 +20,4 @@ resolve('idyll', {
   spawnSync(cmd, process.argv.slice(2), {
     stdio: 'inherit'
   });
-});
+})
