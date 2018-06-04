@@ -10,7 +10,7 @@ const chalk = require('chalk');
 const ora = require('ora');
 
 const PROJECT_ROOT = p.join(__dirname, '../../../../');
-const TEMPLATES_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-template-projects');
+const TEMPLATES_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-template-projects', 'templates');
 const DEFAULT_COMPONENTS_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-components', 'dist', 'cjs');
 
 const colors = {
