@@ -1,4 +1,4 @@
-[var name:"state" value:0]
+[var name:"state" value:0 /]
 
 [Waypoint onEnterView:`state = 0`]
   Initial state!
