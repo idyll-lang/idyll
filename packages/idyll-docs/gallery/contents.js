@@ -4,6 +4,13 @@ const exampleGroups = [
     title: 'Explorable Explanations',
     examples: [
       {
+        label: 'The Math of Card Shuffling',
+        subtitle: "Riffling from factory order to complete randomness.",
+        href: 'http://fredhohman.com/card-shuffling/',
+        image: 'cards.png',
+        sourceUrl: "https://github.com/jheer/barnes-hut"
+      },
+      {
         label: 'How to Tune a Guitar',
         subtitle: "An interactive audio guide with guitars and a little music theory.",
         href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
