@@ -30,8 +30,8 @@ class TableComponent extends React.PureComponent {
     return (
       <Table
         className={`table ${this.props.className || ''}`}
-        // minRows={(this.props.data || []).length}
         showPagination={this.props.data.length > this.props.defaultPageSize}
+        minRows={this.props.data.length <= this.props.defaultPageSize ? this.props.data.length}
         {...this.props}
         children={undefined}
         columns={this.getColumns()}
