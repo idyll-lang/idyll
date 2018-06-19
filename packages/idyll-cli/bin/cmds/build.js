@@ -9,8 +9,7 @@ exports.description = 'Turn index.idl into output';
 exports.builder = (yargs) => {
   return buildOptions(yargs)
     .usage('Usage: idyll build')
-    .example('$0 build -i index.idl', 'Turn a .idl file or project into output')
-    .demandCommand(1)
+    .example('$0 build -i index.idl', 'Turn a .idl file or project into output');
 }
 
 exports.handler = (argv) => {
