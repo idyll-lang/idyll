@@ -19,7 +19,7 @@ idyll create-project
 
 ## Available Templates
 
-1. `basic`: A barebones Idyll project.
+1. [`basic`](templates/basic): a barebones Idyll project.
 
 
 *See http://idyll-lang.org for complete documentation.*
