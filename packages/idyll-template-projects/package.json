@@ -1,29 +1,7 @@
 {
-<<<<<<< Updated upstream
   "name": "idyll-template-projects",
   "version": "1.0.0",
   "description": "Template projects for Idyll",
-=======
-  "name": "idyll-themes",
-  "version": "2.3.4",
-  "description": "Default themes for Idyll",
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
-  "scripts": {
-    "prebuild": "rimraf dist",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
-    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
-    "build": "npm run build:cjs && npm run build:es",
-    "dev": "yarn run build:es --watch",
-    "prepublishOnly": "npm run build",
-    "test": "jest"
-  },
-  "jest": {
-    "testMatch": [
-      "**/test/**/*.js"
-    ]
-  },
->>>>>>> Stashed changes
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idyll-lang/idyll.git"
@@ -39,17 +17,5 @@
   "bugs": {
     "url": "https://github.com/idyll-lang/idyll/issues"
   },
-<<<<<<< Updated upstream
   "homepage": "https://github.com/idyll-lang/idyll#readme"
-=======
-  "homepage": "https://github.com/idyll-lang/idyll#readme",
-  "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "cross-env": "^5.0.5",
-    "jest": "^20.0.4",
-    "rimraf": "^2.6.2"
-  }
->>>>>>> Stashed changes
 }
