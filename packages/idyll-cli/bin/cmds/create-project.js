@@ -141,7 +141,7 @@ async function createProject (answers) {
 
   async function installDependencies () {
     return new Promise((resolve, reject) => {
-      let installer = spawn('yarn', ['install'], {
+      let installer = spawn('npm', ['install'], {
         cwd: p.join(process.cwd(), dir),
         stdio: 'ignore'
       })
