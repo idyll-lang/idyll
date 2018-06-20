@@ -6,7 +6,7 @@ const exampleGroups = [
       {
         label: 'The Math of Card Shuffling',
         subtitle: "Riffling from factory order to complete randomness.",
-        href: 'http://fredhohman.com/card-shuffling/',
+        href: 'https://fredhohman.com/card-shuffling/',
         image: 'cards.png',
         sourceUrl: "https://github.com/fredhohman/card-shuffling"
       },
