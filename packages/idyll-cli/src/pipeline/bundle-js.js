@@ -84,6 +84,9 @@ module.exports = function (opts, paths, output) {
         if (opts.minify) {
           b.require('react/umd/react.production.min.js', { expose: 'react' });
           b.require('react-dom/umd/react-dom.production.min.js', { expose: 'react-dom' });
+        } else {
+          b.require('react', { expose: 'react' });
+          b.require('react-dom', { expose: 'react-dom' });
         }
         const aliases = {
           ast: '__IDYLL_AST__',
