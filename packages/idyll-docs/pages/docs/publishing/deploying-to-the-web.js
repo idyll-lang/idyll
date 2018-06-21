@@ -10,17 +10,16 @@ Once you are happy with your project, the \`idyll\` command-line tool can also b
 build a stand alone bundle. If you used the Idyll project generator, npm tasks
 to build and deploy the project to github pages are available.
 
-## GitHub pages
+## idyll.pub
 
 Once you've initialized your
 project with a repo on github, run the command
 
 \`\`\`sh
-$ npm run deploy
+$ idyll build && idyll publish
 \`\`\`
 
-this will compile the assets and push it to github
-pages. Note that
+this will compile the assets and push it to the idyll.pub server. Note that
 the [meta component](https://idyll-lang.org/docs/components/default/meta) is
 useful for inserting metadata into the compiled output.
 
@@ -31,7 +30,7 @@ Idyll's generated output is compatible with other static hosting services as wel
 To compile the project, run
 
 \`\`\`sh
-$ npm run build
+$ idyll build
 \`\`\`
 
 this will compile files and place them inside of the \`build/\` folder.
