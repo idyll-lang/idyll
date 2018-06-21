@@ -89,7 +89,7 @@ The value of x is [Display value:x format:"d" /].
             <div className="example">
               {/* Idyll turns markup into interactive HTML and JavaScript. */}
 
-              <div className="label">Input</div>
+              <div className="label">Input (editable)</div>
               <div className="textarea-container">
                 <textarea rows={9} defaultValue={exampleValue} onChange={this.handleExampleValueChange} />
                 <div className="edit-label">

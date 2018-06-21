@@ -13,13 +13,14 @@ to build and deploy the project to github pages are available.
 ## idyll.pub
 
 Once you've initialized your
-project with a repo on github, run the command
+project with a repo on github, run the commands
 
 \`\`\`sh
-$ idyll build && idyll publish
+$ idyll build
+$ idyll publish
 \`\`\`
 
-this will compile the assets and push it to the idyll.pub server. Note that
+this will compile the assets and then publish it on the idyll.pub server. Note that
 the [meta component](https://idyll-lang.org/docs/components/default/meta) is
 useful for inserting metadata into the compiled output.
 
