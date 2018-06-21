@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
- <a href="https://travis-ci.org/idyll-lang/idyll"><img src="https://travis-ci.org/idyll-lang/idyll.svg?branch=master" /></a> 
- <a href="https://ci.appveyor.com/project/mathisonian/idyll"><img src="https://ci.appveyor.com/api/projects/status/6e89g4xdbq5twr1o/branch/master?svg=true" /></a> 
+ <a href="https://travis-ci.org/idyll-lang/idyll"><img src="https://travis-ci.org/idyll-lang/idyll.svg?branch=master" /></a>
+ <a href="https://ci.appveyor.com/project/mathisonian/idyll"><img src="https://ci.appveyor.com/api/projects/status/6e89g4xdbq5twr1o/branch/master?svg=true" /></a>
  <a href="#backers"><img src="https://opencollective.com/idyll/backers/badge.svg" /></a>
  <a href="#sponsors"><img src="https://opencollective.com/idyll/sponsors/badge.svg" /></a>
 </p>
@@ -65,16 +65,16 @@ Idyll attempts to adhere to the [open open source](http://openopensource.org/) p
 
 To work with Idyll's codebase, you must have [Lerna](https://github.com/lerna/lerna) and [yarn](https://yarnpkg.com/en/docs/install) installed.
 
-## Making Changes 
+## Making Changes
 
 To submit a PR do the following:
 
 * [Fork the repo](https://help.github.com/articles/fork-a-repo/) and [clone it](https://help.github.com/articles/cloning-a-repository/) onto to your computer.
-* Run `lerna bootstrap` from inside the `idyll` folder to install the dependencies and link all of the packages together. 
+* Run `lerna bootstrap` from inside the `idyll` folder to install the dependencies and link all of the packages together.
 * Make your changes.
 * Test your changes:
   * Make sure the tests pass by running `npm test`. If you add a feature, add a test for it.
-  * If you'd like to test these changes in a local Idyll project, first navigate to the `idyll-cli` package locally and run `yarn link`, then you can run `yarn link idyll` inside of your project, and your local dev version of idyll will be used. 
+  * If you'd like to test these changes in a local Idyll project, first navigate to the `idyll-cli` package locally and run `yarn link`, then you can run `yarn link idyll` inside of your project, and your local dev version of idyll will be used.
 * Submit the PR!
 
 If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
@@ -97,4 +97,22 @@ Thank you to all our backers!
 Support this project by [becoming a sponsor](https://opencollective.com/idyll). Your logo will show up here with a link to your website.
 
 
+# Changelog / Upgrade Guide
+
+## V3
+
+### Breaking Changes
+
+* The input file option shortcut `-f` has been changed to `-i`.
+* Deprecated components have been removed, including:
+  * `FullScreen`, `Waypoint`, `Feature`, `Panel`
+  * these are superseded by `Scroller` and `Stepper` components.
+
+### New Features
+
+* Project generator is now built into the `idyll` command line tool, no more `yo idyll`. Instead run `idyll create` to create a new idyll project.
+* No more `npm` scripts (`npm start`, `npm build`, etc) instead do the following:
+  * For dev, run `idyll` in the root of your project
+  * To build out static files, run `idyll build`
+  * To publish to the web, run `idyll publish`, this will give you a unique URL that can be used to share your project.
 
