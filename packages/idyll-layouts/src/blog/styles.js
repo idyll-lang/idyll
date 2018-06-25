@@ -103,6 +103,9 @@ input {
     bottom: 0;
     width: 100vw;
     top: initial;
+    background: white;
+    padding: 20px 0;
+    border-top: solid 2px black;
   }
 }
 `

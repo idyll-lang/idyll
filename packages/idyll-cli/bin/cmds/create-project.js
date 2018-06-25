@@ -9,7 +9,7 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const DEFAULT_COMPONENTS_DIR = p.join(p.dirname(require.resolve('idyll-components')), 'src');
+const DEFAULT_COMPONENTS_DIR = p.join(p.dirname(require.resolve('idyll-components')), '..', '..', 'src');
 const TEMPLATES_DIR = p.join(p.dirname(require.resolve('idyll-template-projects')), 'templates');
 
 const colors = {

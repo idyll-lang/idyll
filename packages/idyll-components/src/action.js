@@ -2,8 +2,10 @@ import React from 'react';
 
 class Action extends React.PureComponent {
   render() {
+    const { onClick, idyll, hasError, updateProps, ...props } = this.props;
+
     return (
-      <span {...this.props} className={'idyll-action'}>{this.props.children}</span>
+      <span {...props} className={'idyll-action'}>{this.props.children}</span>
     );
   }
 }

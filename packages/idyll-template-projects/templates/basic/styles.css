@@ -1,3 +1,11 @@
 
-/* Put your custom styles here */
+svg {
+  background: #ddd;
+  max-height: 400px;
+}
 
+@media all and (max-width: 1000px) {
+  svg {
+    max-height: 200px;
+  }
+}
