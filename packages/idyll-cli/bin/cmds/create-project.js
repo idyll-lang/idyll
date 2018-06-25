@@ -61,6 +61,7 @@ function main (argv) {
     //   message: 'Which project template would you like to use?',
     //   choices: templates
     // });
+    console.log();
     return inquirer.prompt(questions);
   }
 
@@ -75,12 +76,10 @@ async function createProject (answers) {
   let template = _template.value; // answers['template'];
   let dir = answers['project-dir'];
 
-  let startMessage = `Creating a new Idyll project in ${dir} using the ${template} template...`
+  let startMessage = `\nCreating a new Idyll project in ${dir} using the ${template} template...`
   let successMessage = 'Finished creating the project!';
-  let doneInstructions = `To start developing, run the following commands in your terminal:
-    cd ${dir}
-    idyll
-  `;
+  let doneInstructionsText = `To start developing, run the following commands in your terminal:`;
+  let doneInstructionsCommand = `\tcd ${dir}\n\tidyll`;
   let dirExistsMessage = 'That directory already exists. Please ensure that your target directory\
 \ does not exist.';
   let errorMessage = `Could not create Idyll project in ${dir}`;
@@ -110,7 +109,8 @@ async function createProject (answers) {
   }
   console.log();
   console.log(colors.success(successMessage));
-  console.log(colors.progress(doneInstructions));
+  console.log(doneInstructionsText);
+  console.log(colors.progress(doneInstructionsCommand));
 
   async function ensureEmptyProject () {
     return fs.pathExists(dir)
