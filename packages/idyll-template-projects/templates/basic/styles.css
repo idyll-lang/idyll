@@ -1,11 +1,11 @@
 
-svg {
+.d3-component svg {
   background: #ddd;
-  max-height: 400px;
+  max-height: 300px;
 }
 
 @media all and (max-width: 1000px) {
-  svg {
+  .d3-component svg {
     max-height: 200px;
   }
 }

@@ -48,7 +48,7 @@ You can also load files from your `static/` directory.
 
 This component is implemented using D3:
 
-[CustomD3Component state:state /]
+[CustomD3Component className:"d3-component" state:state /]
 [button onClick:`state++`]
   Click Me.
 [/button]
