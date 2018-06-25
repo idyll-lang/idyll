@@ -47,7 +47,7 @@ exports.handler = async (yargs) => {
       json: true
     });
 
-    spinner.succeed(colors.success(`Project deployed at https://idyll.pub/post/${alias}`));
+    spinner.succeed(colors.success(`Project deployed at https://idyll.pub/post/${alias}/`));
   } catch (err) {
     spinner.fail(colors.failure(`Could not deploy your project: ${err}`));
   }
