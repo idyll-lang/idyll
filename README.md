@@ -117,3 +117,5 @@ Support this project by [becoming a sponsor](https://opencollective.com/idyll). 
   * To build out static files, run `idyll build`
   * To publish to the web, run `idyll publish`, this will give you a unique URL that can be used to share your project.
 
+
+To see the old v2 docs, visit [https://v2.idyll-lang.org].

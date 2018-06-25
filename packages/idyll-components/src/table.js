@@ -69,4 +69,4 @@ TableComponent._idyll = {
   }]
 }
 
-module.exports = TableComponent;
+export default TableComponent;

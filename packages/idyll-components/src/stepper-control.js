@@ -22,4 +22,4 @@ class StepperControl extends React.Component {
   }
 }
 
-module.exports = StepperControl;
+export default StepperControl;

@@ -2,7 +2,6 @@ import Link from 'next/link'
 
 import IdyllDocument from 'idyll-document';
 import * as IdyllComponents from 'idyll-components';
-import compile from 'idyll-compiler';
 import Head from 'next/head'
 import Fonts from '../components/fonts';
 import { logPageView, initGA } from '../components/analytics';

@@ -14,4 +14,4 @@ class Step extends React.Component {
   }
 }
 
-module.exports = Step;
+export default Step;

@@ -167,5 +167,4 @@ class Scroller extends React.Component {
   }
 }
 
-
-module.exports = Scroller;
+export default Scroller;
