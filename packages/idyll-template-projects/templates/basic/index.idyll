@@ -41,5 +41,5 @@ doesn't exist.
 You can also load files from your `static/` directory.
 [img
   src:'static/images/quill.svg'
-  style:`{ width: 300, display: 'block', margin: '0 auto' }
+  style:`{ width: 300, display: 'block', margin: '0 auto' }`
   /]
