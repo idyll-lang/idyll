@@ -49,6 +49,7 @@
     "idyll-components": "^3.0.0",
     "idyll-document": "^2.10.7",
     "idyll-layouts": "^2.5.3",
+    "idyll-template-projects": "^1.0.1",
     "idyll-themes": "^2.3.4",
     "inquirer": "^5.2.0",
     "insert-css": "^2.0.0",
