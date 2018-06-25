@@ -34,7 +34,7 @@ exports.handler = (argv) => {
   })
 
   debug('Building with CLI arguments:', argv);
-  console.log(`${chalk.green('Building Idyll project with output directory:')} ${chalk.hex(argv['output'])}`);
+  console.log(`\n${chalk.green('Building Idyll project with output directory:')} ${chalk.hex('#6122fb')(argv['output'])}\n`);
   idyll(argv).build().on('complete', () => {
     if (!argv.watch) {
       process.exit(0);

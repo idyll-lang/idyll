@@ -49,12 +49,13 @@ input {
   position: fixed;
   display: flex;
   align-self: center;
-  /*flex-direction: column;*/
+  flex-direction: column;
   align-items: center;
   right: 25px;
   top: 0;
   bottom: 0;
   width: calc((80vw - 600px) - 50px);
+  justify-content: center;
 }
 
 .fixed div {

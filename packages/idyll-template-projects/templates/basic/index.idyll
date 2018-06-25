@@ -10,6 +10,7 @@ This is an Idyll file. Write text
 as you please in here. To add interactivity,
 you can add  different components to the text.
 
+
 Here is how you can use a variable:
 
 [var name:"exampleVar" value:5 /]
@@ -17,8 +18,11 @@ Here is how you can use a variable:
 [Range min:0 max:10 value:exampleVar /]
 [Display value:exampleVar /]
 
-```js
-var code = true;
+```
+[var name:"exampleVar" value:5 /]
+
+[Range min:0 max:10 value:exampleVar /]
+[Display value:exampleVar /]
 ```
 
 And here is a custom component:
@@ -31,15 +35,22 @@ doesn't exist.
 
 * *markdown* syntax is supported.
 
+
+You can also load files from your `static/` directory.
+[img
+  src:'static/images/quill.svg'
+  style:`{ width: 75, display: 'block', margin: '30px auto' }`
+  /]
+
+[Fixed]
+
 [var name:"state" value:0 /]
+
+This component is implemented using D3:
 
 [CustomD3Component state:state /]
 [button onClick:`state++`]
   Click Me.
 [/button]
 
-You can also load files from your `static/` directory.
-[img
-  src:'static/images/quill.svg'
-  style:`{ width: 300, display: 'block', margin: '0 auto' }`
-  /]
+[/Fixed]
