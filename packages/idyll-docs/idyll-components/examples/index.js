@@ -1,14 +1,11 @@
 import Aside from './Aside.idl'
-import Feature from './Feature.idl'
+import FullWidth from './FullWidth.idl'
 import Fixed from './Fixed.idl'
 import Float from './Float.idl'
-import FullScreen from './FullScreen.idl'
 import Inline from './Inline.idl'
-import Panel from './Panel.idl'
-import Waypoint from './Waypoint.idl'
 
 import Action from './Action.idl'
-// import Boolean from './Boolean.idl'
+import Boolean from './Boolean.idl'
 import Button from './Button.idl'
 import Chart from './Chart.idl'
 import Display from './Display.idl'
@@ -20,7 +17,8 @@ import Link from './Link.idl'
 import Radio from './Radio.idl'
 import Range from './Range.idl'
 import Select from './Select.idl'
-import Slideshow from './Slideshow.idl'
+import Scroller from './Scroller.idl'
+import Stepper from './Stepper.idl'
 import SVG from './SVG.idl'
 import Table from './Table.idl'
 import TextInput from './TextInput.idl'
@@ -33,16 +31,13 @@ import Analytics from './Analytics.idl'
 
 export {
   Aside,
-  Feature,
+  FullWidth,
   Fixed,
   Float,
-  FullScreen,
   Inline,
-  Panel,
-  Waypoint,
 
   Action,
-  // Boolean,
+  Boolean,
   Button,
   Chart,
   Display,
@@ -54,7 +49,8 @@ export {
   Radio,
   Range,
   Select,
-  Slideshow,
+  Scroller,
+  Stepper,
   SVG,
   Table,
   TextInput,

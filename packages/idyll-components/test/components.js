@@ -12,30 +12,22 @@ import {
   Display,
   Dynamic,
   Equation,
-  FeatureContent,
-  Feature,
   Fixed,
   Float,
-  FullScreen,
   Gist,
   Header,
   Inline,
   Link,
-  Panel,
   Preload,
   Radio,
   Range,
   Select,
-  Slide,
-  Slideshow,
+  Step,
+  Stepper,
   SVG,
   Table,
-  TextInput,
-  Waypoint
+  TextInput
 } from '../src/';
-
-import Container from '../src/utils/container';
-import Screen from '../src/utils/screen';
 
 describe('Sanity Check', () => {
 
@@ -44,29 +36,14 @@ describe('Sanity Check', () => {
       it('<Aside />', () => {
         expect(() => shallow(<Aside />)).not.toThrow();
       });
-      it('<FeatureContent />', () => {
-        expect(() => shallow(<FeatureContent />)).not.toThrow();
-      });
-      it('<Feature />', () => {
-        expect(() => shallow(<Feature />)).not.toThrow();
-      });
       it('<Fixed />', () => {
         expect(() => shallow(<Fixed />)).not.toThrow();
       });
       it('<Float />', () => {
         expect(() => shallow(<Float />)).not.toThrow();
       });
-      it('<FullScreen />', () => {
-        expect(() => shallow(<FullScreen />)).not.toThrow();
-      });
       it('<Inline />', () => {
         expect(() => shallow(<Inline />)).not.toThrow();
-      });
-      it('<Panel />', () => {
-        expect(() => shallow(<Panel />)).not.toThrow();
-      });
-      it('<Waypoint />', () => {
-        expect(() => shallow(<Waypoint />)).not.toThrow();
       });
     })
 
@@ -110,11 +87,11 @@ describe('Sanity Check', () => {
       it('<Select />', () => {
         expect(() => shallow(<Select />)).not.toThrow();
       });
-      it('<Slide />', () => {
-        expect(() => shallow(<Slide />)).not.toThrow();
+      it('<Step />', () => {
+        expect(() => shallow(<Step />)).not.toThrow();
       });
-      it('<Slideshow />', () => {
-        expect(() => shallow(<Slideshow />)).not.toThrow();
+      it('<Stepper />', () => {
+        expect(() => shallow(<Stepper />)).not.toThrow();
       });
       it('<SVG />', () => {
         expect(() => shallow(<SVG />)).not.toThrow();
@@ -134,14 +111,8 @@ describe('Sanity Check', () => {
       it('<CodeHighlight />', () => {
         expect(() => shallow(<CodeHighlight />)).not.toThrow();
       });
-      it('<Container />', () => {
-        expect(() => shallow(<Container />)).not.toThrow();
-      });
       it('<Preload />', () => {
         expect(() => shallow(<Preload />)).not.toThrow();
-      });
-      it('<Screen />', () => {
-        expect(() => shallow(<Screen />)).not.toThrow();
       });
     });
   });
@@ -152,29 +123,14 @@ describe('Sanity Check', () => {
       it('<Aside />', () => {
         expect(() => mount(<Aside />)).not.toThrow();
       });
-      it('<FeatureContent />', () => {
-        expect(() => mount(<FeatureContent />)).not.toThrow();
-      });
-      it('<Feature />', () => {
-        expect(() => mount(<Feature />)).not.toThrow();
-      });
       it('<Fixed />', () => {
         expect(() => mount(<Fixed />)).not.toThrow();
       });
       it('<Float />', () => {
         expect(() => mount(<Float />)).not.toThrow();
       });
-      it('<FullScreen />', () => {
-        expect(() => mount(<FullScreen />)).not.toThrow();
-      });
       it('<Inline />', () => {
         expect(() => mount(<Inline />)).not.toThrow();
-      });
-      it('<Panel />', () => {
-        expect(() => mount(<Panel />)).not.toThrow();
-      });
-      it('<Waypoint />', () => {
-        expect(() => mount(<Waypoint />)).not.toThrow();
       });
     })
 
@@ -218,11 +174,11 @@ describe('Sanity Check', () => {
       it('<Select />', () => {
         expect(() => mount(<Select />)).not.toThrow();
       });
-      it('<Slide />', () => {
-        expect(() => mount(<Slide />)).not.toThrow();
+      it('<Step />', () => {
+        expect(() => mount(<Step />)).not.toThrow();
       });
-      it('<Slideshow />', () => {
-        expect(() => mount(<Slideshow />)).not.toThrow();
+      it('<Stepper />', () => {
+        expect(() => mount(<Stepper />)).not.toThrow();
       });
       it('<SVG />', () => {
         expect(() => mount(<SVG />)).not.toThrow();
@@ -242,14 +198,8 @@ describe('Sanity Check', () => {
       it('<CodeHighlight />', () => {
         expect(() => mount(<CodeHighlight />)).not.toThrow();
       });
-      it('<Container />', () => {
-        expect(() => mount(<Container />)).not.toThrow();
-      });
       it('<Preload />', () => {
         expect(() => mount(<Preload />)).not.toThrow();
-      });
-      it('<Screen />', () => {
-        expect(() => mount(<Screen />)).not.toThrow();
       });
     });
   });

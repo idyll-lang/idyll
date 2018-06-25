@@ -1,0 +1,19 @@
+[var name:"stepperIndex" value:0 /]
+
+[Stepper currentStep:stepperIndex]
+  [Graphic]
+     [img src:`"static/images/examples/" + stepperIndex + ".png"` /]
+  [/Graphic]
+
+  [Step]
+    [The Barnes-Hut Approximation: Efficient computation of N-body forces](https://idyll-lang.org/gallery/the-barnes-hut-approximation)
+  [/Step]
+  [Step]
+    [Kernel Density Estimation: An Interactive Explanation of the Statistical Technique](https://idyll-lang.org/gallery/kernel-density-estimation)
+  [/Step]
+  [Step]
+    [The Etymology of Trig Functions](https://idyll-lang.org/gallery/the-etymology-of-trig-functions)
+  [/Step]
+
+  [StepperControl /]
+[/Stepper]

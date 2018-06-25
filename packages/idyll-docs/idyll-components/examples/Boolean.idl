@@ -1,0 +1,5 @@
+[var name:"myVar" value:false /]
+
+[Boolean value:myVar /]
+
+Checkbox [Display value:`myVar ? "is checked." : "isn't checked."  `/]

@@ -11,14 +11,11 @@ const components = [
           }
         },
         {
-          "Feature": {
-            "description": "A `feature` component will lock a component in place on the reader's screen while a specified set of content scrolls by.",
-            "image": "feature.gif",
+          "FullWidth": {
+            "description": "A `FullWidth` component will break out of the text container and expand to fill the full width of the reader's browser.",
+            "image": "feature.png",
             "thumbnail": "feature.png",
             "idyllProps": [
-              {
-                "value": "the percentage of the the feature that the user has scrolled through. Bind a variable to this and it will be updated automatically."
-              }
             ]
           }
         },
@@ -43,35 +40,36 @@ const components = [
             ]
           }
         },
-        // {
-        //   "FullScreen": {
-        //     "thumbnail": "full-screen.png",
-        //     "description": "This container component will break out of the article column and take up the readers entire viewport.",
-        //     "idyllProps": [
-        //       {
-        //         "backgroundImage": "an image to be displayed."
-        //       }
-        //     ]
-        //   }
-        // },
         {
           "Inline": {
             "thumbnail": "inline.png",
             "description": "The `inline` component adds the `display: inline-block` style property, so that items inside of `inline` component will be displayed next to each other. For example, this code will display three images side by side:"
           }
         },
-        // {
-        //   "Panel": {
-        //     "thumbnail": "panel.png",
-        //     "description": "A panel is a section that will \"slide up\" after a the end of a `Feature` was reached. This component must be used directly after a `Feature` component for it to work properly."
-        //   }
-        // },
         {
-          "Waypoint": {
-            "thumbnail": "waypoint.png",
-            "description": "A `Waypoint` component just adds some padding around your text to make it easier to trigger events when a certain section has been reached."
+          "Scroller": {
+            "description": "The `Scroller` component is used to create scroll-based presentations. See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.",
+            "thumbnail": "scroller.gif",
+            "image": "scroller.gif",
+            "idyllProps": [
+              {
+                "currentStep": "the index of the currently selected step."
+              }
+            ]
           }
-        }
+        },
+        {
+          "Stepper": {
+            "description": "The `Step` component is used to create step-based presentations, like slideshows.  See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.",
+            "thumbnail": "stepper.gif",
+            "image": "stepper.gif",
+            "idyllProps": [
+              {
+                "currentStep": "the index of the currently selected step."
+              }
+            ]
+          }
+        },
       ]
     }
   },
@@ -99,6 +97,7 @@ const components = [
         {
           "Boolean": {
             "thumbnail": "boolean.png",
+            "image": "boolean.gif",
             "description": "This will display a checkbox.",
             "idyllProps": [
               {
@@ -254,13 +253,6 @@ const components = [
           "Link": {
             "thumbnail": "link.png",
             "description": "This component just acts as syntactic sugar for displaying links inline in your text."
-          }
-        },
-        {
-          "Slideshow": {
-            "thumbnail": "slideshow.png",
-            "description": "This component is used to dynamically display different content. It can be used to make slideshows, but is generally useful for dynamically displaying different content of any type.",
-            "image": "slides.gif"
           }
         },
         {

@@ -1,8 +1,5 @@
 import React from 'react';
-import { getProperty } from 'idyll-ast';
 const { filterChildren, mapChildren } = require('idyll-component-children');
-
-const Step = require('./step');
 
 class Stepper extends React.PureComponent {
 
@@ -20,11 +17,11 @@ class Stepper extends React.PureComponent {
 
   getSteps() {
     return filterChildren(
-        this.props.children,
+        this.props.children || [],
         (c) => {
           return c.type.name && c.type.name.toLowerCase() === 'step';
       }
-    )
+    ) || []
   }
 
   next() {
