@@ -27,6 +27,12 @@ exports.OutOfDateError = class OutOfDateError extends ExtendableError {
   }
 }
 
+exports.OutsideOfProjectError = class OutsideOfProjectError extends ExtendableError {
+  constructor(name) {
+    super(`\n\nThis directory doesn't appear to be an Idyll project.\nTo create a new project, run \`idyll create\`.\n\n\n`)
+  }
+}
+
 exports.InvalidComponentError = class InvalidComponentError extends ExtendableError {
   constructor(name) {
     super(`Component named ${name} could not be found.`)

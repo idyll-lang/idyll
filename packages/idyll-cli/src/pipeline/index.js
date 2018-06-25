@@ -18,6 +18,7 @@ const {
 } = require('./parse');
 const css = require('./css');
 const bundleJS = require('./bundle-js');
+const errors = require('../errors');
 
 const debug = require('debug')('idyll:cli')
 
@@ -26,7 +27,11 @@ let output;
 const build = (opts, paths, resolvers) => {
   // always store source in opts.inputString
   if (paths.IDYLL_INPUT_FILE) {
-    opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
+    try {
+      opts.inputString = fs.readFileSync(paths.IDYLL_INPUT_FILE, 'utf8');
+    } catch(e) {
+      throw new errors.OutsideOfProjectError();
+    }
   }
 
   // opts.compilerOptions is kept for backwards compatability
