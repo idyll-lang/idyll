@@ -2,6 +2,7 @@
   "name": "idyll-template-projects",
   "version": "1.0.1",
   "description": "Template projects for Idyll",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idyll-lang/idyll.git"
@@ -11,7 +12,8 @@
   ],
   "authors": [
     "Matthew Conlen",
-    "Ben Clinkinbeard"
+    "Ben Clinkinbeard",
+    "Andrew Osheroff"
   ],
   "license": "MIT",
   "bugs": {
