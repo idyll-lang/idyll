@@ -79,7 +79,7 @@ async function createProject (answers) {
   let startMessage = `\nCreating a new Idyll project in ${dir} using the ${template} template...`
   let successMessage = 'Finished creating the project!';
   let doneInstructionsText = `To start developing, run the following commands in your terminal:`;
-  let doneInstructionsCommand = `\tcd ${dir}\n\tidyll`;
+  let doneInstructionsCommand = `    cd ${dir}\n    idyll`;
   let dirExistsMessage = 'That directory already exists. Please ensure that your target directory\
 \ does not exist.';
   let errorMessage = `Could not create Idyll project in ${dir}`;
