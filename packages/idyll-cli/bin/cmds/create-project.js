@@ -10,8 +10,8 @@ const chalk = require('chalk');
 const ora = require('ora');
 
 const PROJECT_ROOT = p.join(__dirname, '../../../../');
-const TEMPLATES_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-template-projects', 'templates');
-const DEFAULT_COMPONENTS_DIR = p.join(PROJECT_ROOT, 'packages', 'idyll-components', 'dist', 'cjs');
+const TEMPLATES_DIR = p.join(require.resolve('idyll-template-projects'), 'templates');
+const DEFAULT_COMPONENTS_DIR = p.join(require.resolve('idyll-components'), 'src');
 
 const colors = {
   progress: chalk.hex('#6122fb'),
