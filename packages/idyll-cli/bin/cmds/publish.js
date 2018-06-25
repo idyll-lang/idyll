@@ -7,7 +7,7 @@ const urljoin = require('url-join');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const IDYLL_PUB_API = 'https://idyll-pub-api.now.sh';
+const IDYLL_PUB_API = 'https://api.idyll.pub';
 
 const colors = {
   progress: chalk.hex('#6122fb'),
@@ -36,7 +36,7 @@ exports.handler = async (yargs) => {
     let files = await readdir(buildDir);
 
     let formData = files.reduce((acc, f) => {
-      acc[p.relative(projectDir, f)] = fs.createReadStream(f);
+      acc[p.relative(buildDir, f)] = fs.createReadStream(f);
       return acc;
     }, {});
     formData.token = token;
@@ -47,7 +47,7 @@ exports.handler = async (yargs) => {
       json: true
     });
 
-    spinner.succeed(colors.success(`Project deployed at https://${alias}.now.sh`));
+    spinner.succeed(colors.success(`Project deployed at https://idyll.pub/post/${alias}`));
   } catch (err) {
     spinner.fail(colors.failure(`Could not deploy your project: ${err}`));
   }
