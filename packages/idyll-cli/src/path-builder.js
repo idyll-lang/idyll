@@ -28,6 +28,7 @@ module.exports = function (opts) {
   }
 
   const OUTPUT_DIR = getPath(opts.output);
+  const STATIC_OUTPUT_DIR = join(OUTPUT_DIR, 'static');
   const TMP_DIR = getPath(opts.temp);
 
   return {
@@ -43,10 +44,12 @@ module.exports = function (opts) {
     PACKAGE_FILE: getPath('package.json'),
 
     OUTPUT_DIR,
-    CSS_OUTPUT_FILE: join(OUTPUT_DIR, 'styles.css'),
     HTML_OUTPUT_FILE: join(OUTPUT_DIR, 'index.html'),
-    JS_OUTPUT_FILE: join(OUTPUT_DIR, 'index.js'),
-    STATIC_OUTPUT_DIR: join(OUTPUT_DIR, 'static'),
+
+    STATIC_OUTPUT_DIR,
+    CSS_OUTPUT_FILE: join(STATIC_OUTPUT_DIR, '__idyll_styles.css'),
+    JS_OUTPUT_FILE: join(STATIC_OUTPUT_DIR, '__idyll_index.js'),
+
     TMP_DIR
   };
 }

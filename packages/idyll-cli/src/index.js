@@ -22,6 +22,7 @@ const debug = require('debug')('idyll:cli')
 
 function createDirectories(paths) {
   mkdirp.sync(paths.OUTPUT_DIR);
+  mkdirp.sync(paths.STATIC_OUTPUT_DIR);
   mkdirp.sync(paths.TMP_DIR);
 }
 

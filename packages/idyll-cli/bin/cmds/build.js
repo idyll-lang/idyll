@@ -34,7 +34,7 @@ exports.handler = (argv) => {
   })
 
   debug('Building with CLI arguments:', argv);
-  console.log(chalk.green(`Building Idyll project with output directory: ${argv['output']}...`));
+  console.log(`${chalk.green('Building Idyll project with output directory:')} ${chalk.hex(argv['output'])}`);
   idyll(argv).build().on('complete', () => {
     if (!argv.watch) {
       process.exit(0);
@@ -65,6 +65,7 @@ function buildOptions (yargs) {
     .describe('static', 'Directory where static assets are located')
     .default('static', 'static')
     .describe('css', 'Custom CSS file to include in output')
+    .default('css', 'styles.css')
     .describe('datasets', 'Directory where data files are located')
     .default('datasets', 'data')
     .describe('default-components', 'Directory where default set of components are located')
@@ -85,7 +86,7 @@ function buildOptions (yargs) {
     .describe('transform', 'Custom browserify transforms to apply.')
     .default('transform', [])
     .describe('theme', 'Name of (or path to) the theme to use')
-    .default('theme', 'idyll')
+    .default('theme', 'github')
     .alias('h', 'help')
 }
 

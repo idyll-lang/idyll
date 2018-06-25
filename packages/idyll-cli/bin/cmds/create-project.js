@@ -52,12 +52,12 @@ function main (argv) {
       message: 'What would you like to name your project?',
       default: answers => answers['project-dir'] || projectDir
     });
-    questions.push({
-      name: 'template',
-      type: 'list',
-      message: 'Which project template would you like to use?',
-      choices: templates
-    });
+    // questions.push({
+    //   name: 'template',
+    //   type: 'list',
+    //   message: 'Which project template would you like to use?',
+    //   choices: templates
+    // });
     return inquirer.prompt(questions);
   }
 
@@ -69,7 +69,7 @@ function main (argv) {
 
 async function createProject (answers) {
   let name = answers['package-name'];
-  let template = answers['template'];
+  let template = templates[0]; // answers['template'];
   let dir = answers['project-dir'];
 
   let startMessage = `Creating a new Idyll project in ${dir} using the ${template} template...`
