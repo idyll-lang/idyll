@@ -106,7 +106,7 @@ Support this project by [becoming a sponsor](https://opencollective.com/idyll). 
 * The input file option shortcut `-f` has been changed to `-i`.
 * Deprecated components have been removed, including:
   * `FullScreen`, `Waypoint`, `Feature`, `Panel`
-  * these are superseded by `Scroller` and `Stepper` components.
+  * these are superseded by `FullWidth`, `Scroller`, and `Stepper` components.
 * The path of the static assets that Idyll generates has changed. This will only affect people using a custom HTML template, find the new default template [here](https://github.com/idyll-lang/idyll/blob/master/packages/idyll-cli/src/client/_index.html).
 
 ### New Features
