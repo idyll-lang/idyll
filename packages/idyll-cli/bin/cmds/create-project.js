@@ -24,6 +24,8 @@ exports.description = 'Create a new project';
 exports.builder = builder;
 exports.handler = main;
 
+let _template;
+
 function builder (yargs) {
   return yargs
     .usage('Usage: $0 create <project-name>')
@@ -39,6 +41,7 @@ function main (argv) {
     .then(createProject);
 
   async function askQuestions (templates) {
+    _template = templates[0];
     let questions = [];
     if (!projectDir) {
       questions.push({
@@ -69,7 +72,7 @@ function main (argv) {
 
 async function createProject (answers) {
   let name = answers['package-name'];
-  let template = templates[0]; // answers['template'];
+  let template = _template.value; // answers['template'];
   let dir = answers['project-dir'];
 
   let startMessage = `Creating a new Idyll project in ${dir} using the ${template} template...`
