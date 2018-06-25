@@ -8,9 +8,6 @@ const chalk = require('chalk');
 const ora = require('ora');
 
 const IDYLL_PUB_API = 'https://idyll-pub-api.now.sh';
-const PROJECT_DIR = process.cwd();
-const TOKEN_PATH = p.join(PROJECT_DIR, '.idyll', 'token');
-const CONFIG = require(p.join(PROJECT_DIR, 'package.json'))
 
 const colors = {
   progress: chalk.hex('#6122fb'),
@@ -22,6 +19,10 @@ exports.command = 'publish'
 exports.description = 'Publish your project to idyll.pub'
 exports.builder = {}
 exports.handler = async (yargs) => {
+  const projectDir = process.cwd();
+  const tokenPath = p.join(PROJECT_DIR, '.idyll', 'token');
+  const config = require(p.join(PROJECT_DIR, 'package.json'))
+
   let spinner = ora({
     text: colors.progress('Deploying your project to idyll.pub...')
   });
@@ -30,9 +31,9 @@ exports.handler = async (yargs) => {
 
   try {
     // TODO: configurable build path.
-    let projectDir = p.join(PROJECT_DIR, 'build');
-    let token = await getProjectToken();
-    let files = await readdir(projectDir);
+    let buildDir = p.join(projectDir, 'build');
+    let token = await getProjectToken(tokenPath, config);
+    let files = await readdir(buildDir);
 
     let formData = files.reduce((acc, f) => {
       acc[p.relative(projectDir, f)] = fs.createReadStream(f);
@@ -56,20 +57,20 @@ exports.handler = async (yargs) => {
  * Try to read the project token from the .idyll directory.
  * If it does not exist, create/save one into .idyll/token.
  */
-async function getProjectToken () {
+async function getProjectToken (tokenPath, config) {
   var token;
   try {
-    token = await fs.readFile(TOKEN_PATH, { encoding: 'utf-8' });
+    token = await fs.readFile(tokenPath, { encoding: 'utf-8' });
   } catch (err) {
     let deployment = await request.post({
       url: urljoin(IDYLL_PUB_API, 'create'),
       body: {
-        name: CONFIG.name
+        name: config.name
       },
       json: true
     });
     token = deployment.token;
-    await fs.writeFile(TOKEN_PATH, token, { encoding: 'utf-8' });
+    await fs.writeFile(tokenPath, token, { encoding: 'utf-8' });
   }
   return token;
 }
