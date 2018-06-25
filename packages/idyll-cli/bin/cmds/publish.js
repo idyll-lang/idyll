@@ -20,8 +20,8 @@ exports.description = 'Publish your project to idyll.pub'
 exports.builder = {}
 exports.handler = async (yargs) => {
   const projectDir = process.cwd();
-  const tokenPath = p.join(PROJECT_DIR, '.idyll', 'token');
-  const config = require(p.join(PROJECT_DIR, 'package.json'))
+  const tokenPath = p.join(projectDir, '.idyll', 'token');
+  const config = require(p.join(projectDir, 'package.json'))
 
   let spinner = ora({
     text: colors.progress('Deploying your project to idyll.pub...')
