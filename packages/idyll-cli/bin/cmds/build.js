@@ -2,6 +2,8 @@
 const chalk = require('chalk');
 const idyll = require('../../src/');
 const debug = require('debug')('idyll:cli');
+const fs = require('fs');
+const pathBuilder = require('../../src/path-builder');
 
 exports.command = 'build';
 exports.description = 'Turn index.idl into output';
@@ -11,6 +13,9 @@ exports.builder = (yargs) => {
     .usage('Usage: idyll build')
     .example('$0 build -i index.idl', 'Turn a .idl file or project into output');
 }
+
+
+
 
 exports.handler = (argv) => {
   // API checks the inverse
@@ -32,6 +37,11 @@ exports.handler = (argv) => {
   Object.keys(argv).forEach((key) => {
     if (argv[key] === undefined) delete argv[key];
   })
+
+  const paths = pathBuilder(argv);
+  const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
+
+  argv = Object.assign({}, argv, inputPackage.idyll);
 
   debug('Building with CLI arguments:', argv);
   console.log(`\n${chalk.green('Building Idyll project with output directory:')} ${chalk.hex('#6122fb')(argv['output'])}\n`);
