@@ -21,6 +21,35 @@ class Header extends React.PureComponent {
             </div>
           )
         }
+        {
+          this.props.authors ? (
+            <div className={'byline'}>
+              By: {
+                this.props.authors.map((author, i) => {
+                  if (typeof author === 'string') {
+                    return author;
+                  }
+                  return author.link ? (
+                    <span key={author.name}>
+                      <a href={author.link} >{author.name}</a>{
+                        i < this.props.authors.length -1 ? (
+                          i === this.props.authors.length - 2 ? ' and ' :  ', ' )
+                        : ''}
+                    </span>
+                  ) : author.name;
+                })
+              }
+              {}
+            </div>
+          ) : null
+        }
+        {
+          this.props.date && (
+          <div className={'idyll-pub-date'}>
+            {this.props.date}
+          </div>
+          )
+        }
 
       </div>
     );
