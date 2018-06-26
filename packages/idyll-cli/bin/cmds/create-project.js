@@ -123,7 +123,7 @@ async function createProject (answers) {
 
   async function copyFiles (proceed) {
     await fs.copy(getTemplatePath(template), dir);
-    await fs.move(path.join(dir, 'gitignore'), path.join(dir, '.gitignore'));
+    await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
     await fs.copy(DEFAULT_COMPONENTS_DIR, p.join(dir, 'components', 'default'));
   }
 
