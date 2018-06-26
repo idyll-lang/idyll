@@ -330,8 +330,9 @@ The value of x is [Display value:x format:"d" /].
             color: black;
             font-size: 14px;
             color: white;
+            // background: #6122FB;
+            // background: #4C4B63;
             background: #6122FB;
-            background: #4C4B63;
             padding: 10px 10px;
             transition: color 0.5s, background 0.5s;
           }

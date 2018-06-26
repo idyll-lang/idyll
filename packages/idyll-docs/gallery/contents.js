@@ -135,6 +135,12 @@ const exampleGroups = [
   {
     title: 'Tutorials',
     examples: [{
+      label: 'Announcing idyll.pub',
+      subtitle: "Publish interactive blog posts and explorable explanations with Idyll's free hosting service.",
+      href: 'https://idyll.pub/post/announcing-idyll-pub-0a3eff0661df3446a915700d/',
+      image: 'https://idyll.pub/post/announcing-idyll-pub-0a3eff0661df3446a915700d/static/images/share.png',
+      sourceUrl: "https://github.com/mathisonian/announcing-idyll-pub"
+      },{
       label: 'Scaffolding Interactives',
       subtitle: 'Rapidly create scroll- and step-based interactives with Idyll',
       href: 'https://mathisonian.github.io/idyll/scaffolding-interactives/',

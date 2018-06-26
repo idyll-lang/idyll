@@ -1,8 +1,6 @@
 module.exports = `
 # Welcome!
 
-![idyll painting](https://upload.wikimedia.org/wikipedia/commons/3/3d/Leighton%2C_Frederic_-_Idyll_-_c._1880-81.jpg)
-
 ## This application helps you compose Idyll documents.
 
 Type in the textbox on the left, and the output on the right will update. If you want to save your changes, hit the "Save" button that appears in the lower right corner, and a unique URL will be generated. To view your post, click "Fullscreen."
