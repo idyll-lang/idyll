@@ -12,7 +12,13 @@ var cmd
 if (!idyll) {
   cmd = p.join(__dirname, './cli.js');
 } else {
-  cmd = p.join(idyll, '..', '..', 'bin', 'cli.js');
+  var idyllBin = p.join(idyll, '..', '..', 'bin')
+  cmd = p.join(idyllBin, 'cli.js');
+  try {
+    p.statSync(cmd)
+  } catch (err) {
+    cmd = p.join(idyllBin, 'idyll.js')
+  }
 }
 spawnSync(cmd, process.argv.slice(2), {
   stdio: 'inherit'
