@@ -25,6 +25,15 @@ const appendNodes = function(ast, nodes) {
   return [].concat(ast, nodes);
 };
 
+/**
+ * function that returns the names of the passed node
+ * @param {*} node 
+ * @return {String} name of the node 
+ */
+const getNodeName = function(node) {
+  return node[0]; 
+};
+
 const createNode = function(name, props, children) {
   let node = [name, [], children || []];
   node = setProperties(node, props || {});
@@ -53,11 +62,30 @@ const getText = function(node) {
 
 const walkNodes = function(ast, f) {
   (ast || []).forEach((node) => {
-    walkNodes(getChildren(node), f);
+    walkNodes(getChildren(node), f); 
     f(node);
   });
 };
 
+/**
+ * function to do a depth first traversal on the ast tree. 
+ * @param {*} ast     Array that forms the tree structure 
+ * @param {*} f       call-back function 
+ */
+const dfsTraversal = function (ast, f) {
+  (ast || []).forEach((node) => {
+    if(typeof node !== 'string') {    
+      f(node); 
+      childAst = getChildren(node); 
+      (childAst || []).forEach((node) => {
+          f(node);
+      });
+      (childAst || []).forEach((node) => {
+          dfsTraversal(getChildren(node), f); 
+      });
+   }
+  });
+}
 const findNodes = function(ast, filter) {
   var result = [];
   walkNodes(ast, node => {
@@ -239,12 +267,14 @@ module.exports = {
   appendNode,
   appendNodes,
   createNode,
+  dfsTraversal, 
   getChildren,
   getNodesByName,
   filterChildren,
   filterNodes,
   modifyChildren,
   modifyNodesByName,
+  getNodeName,
   getProperty,
   getProperties,
   getPropertiesByType,
