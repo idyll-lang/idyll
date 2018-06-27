@@ -62,7 +62,7 @@ const getText = function(node) {
 
 const walkNodes = function(ast, f) {
   (ast || []).forEach((node) => {
-    walkNodes(getChildren(node), f); 
+    walkNodes(getChildren(node), f);
     f(node);
   });
 };
@@ -72,19 +72,16 @@ const walkNodes = function(ast, f) {
  * @param {*} ast     Array that forms the tree structure 
  * @param {*} f       call-back function 
  */
-const dfsTraversal = function (ast, f) {
+const walkNodesBreadthFirst = function (ast, f) {
+  let childAst = [];
+  //console.log(ast + " length of the ast is: " + ast.length);
   (ast || []).forEach((node) => {
-    if(typeof node !== 'string') {    
-      f(node); 
-      childAst = getChildren(node); 
-      (childAst || []).forEach((node) => {
-          f(node);
-      });
-      (childAst || []).forEach((node) => {
-          dfsTraversal(getChildren(node), f); 
-      });
-   }
+    f(node);
+    childAst = childAst.concat(getChildren(node));
   });
+  if(childAst.length !== 0) {
+      walkNodesBreadthFirst(childAst, f);
+  }
 }
 const findNodes = function(ast, filter) {
   var result = [];
@@ -267,7 +264,7 @@ module.exports = {
   appendNode,
   appendNodes,
   createNode,
-  dfsTraversal, 
+  walkNodesBreadthFirst, 
   getChildren,
   getNodesByName,
   filterChildren,

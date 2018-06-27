@@ -18,14 +18,18 @@ describe('getText', function() {
   });
 });
 
-/*describe('dfsTraversal', function() {
-  it('dfsTraversal does a breath first traversal of the abstract syntax tree', function() {
-    const input = [['var', [['name', ['value', 'v1']], ['value', ['value', 5]]], []], ['TextContainer', [], [['p', [], ['just a simple string plus a component ']], ['VarDisplay', [['var', ['variable', 'v1']]] , []]]]]; 
-    ast.dfsTraversal(input, (node) => {
-     console.log(ast.getNodeName(node)); 
+/*describe('walkNodesBreadthFirst', function() {
+  it('walkNodesBreadthFirst does a breath first traversal of the abstract syntax tree', function() {
+    const input = [['TextContainer1', [], [['p1', [], [['p3', [], ['just a simple string plus a component ']]]], ['VarDisplay1', [['var', ['variable', 'v1']]] , []]]], ['TextContainer2', [], [['p2', [], ['just a simple string plus a component ']], ['VarDisplay2', [['var', ['variable', 'v1']]] , []]]]];
+    ast.walkNodesBreadthFirst(input, (node) => {
+      if(typeof node === 'string') {
+        console.log(node); 
+      } else { 
+        console.log(ast.getNodeName(node)); 
+      }
     }); 
-  }); 
-}); */
+  });
+});*/
 
   //TODO:
   //modifyNodesbyName, getChildren, walkNodes, prependNodes, setProperties, removeProperty, removeNodesbyName
