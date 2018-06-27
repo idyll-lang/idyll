@@ -1,7 +1,7 @@
 const React = require('react');
 const { filterChildren, mapChildren } = require('idyll-component-children');
 import TextContainer from './text-container';
-const d3 = require('d3');
+const d3 = require('d3-selection');
 
 
 const styles = {
