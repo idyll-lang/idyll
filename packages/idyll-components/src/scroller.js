@@ -114,7 +114,7 @@ class Scroller extends React.Component {
     }
     if (this.props.currentState !== nextProps.currentState) {
       d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
-        .filter(function (d, i) { return nextProps.currentState === this.SCROLL_NAME_MAP[i] })
+        .filter( (d, i) => { return nextProps.currentState === this.SCROLL_NAME_MAP[i] })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
