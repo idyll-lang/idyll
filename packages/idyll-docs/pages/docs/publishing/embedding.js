@@ -2,10 +2,13 @@ import Link from 'next/link'
 import markdown from 'markdown-in-js'
 import Layout from '../../../components/layout'
 
-
-
 export default ({ url }) => (
+  
   <Layout url={ url }>
+    <link rel="stylesheet"
+    href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <div>
       <h1>Embedding Idyll in an existing web page</h1>
 
@@ -61,6 +64,7 @@ ReactDOM.render(
 )
 `}
       </code></pre>
+      <pre><code>var deleteMe = 5;</code></pre>
     </div>
   </Layout>
 )
