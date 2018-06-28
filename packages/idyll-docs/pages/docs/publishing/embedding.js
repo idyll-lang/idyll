@@ -3,6 +3,9 @@ import markdown from 'markdown-in-js'
 import Layout from '../../../components/layout'
 // TODO ask if we should keep the local css/highlight.js file if we're just gonna end up using server instead
 // cause if we can get the local stuff to work, we can easily change the background color.
+// Also, flipping between pages does not make highlight load (possibly bc of highlightOnLoad command)
+// so must have a work around
+
 var codeStyle = {
     background: '#4C4B63'
 };
@@ -12,7 +15,7 @@ export default ({ url }) => (
     <Layout url={url}>
         <div>
             <link rel="stylesheet"
-                href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/ocean.min.css" />
+                href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow-night-eighties.min.css" />
             <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
             <script>hljs.initHighlightingOnLoad();</script>
             <h1>Embedding Idyll in an existing web page</h1>
@@ -73,3 +76,4 @@ ReactDOM.render(
         </div>
     </Layout>
 )
+
