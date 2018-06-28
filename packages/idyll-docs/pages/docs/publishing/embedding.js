@@ -4,7 +4,7 @@ import Layout from '../../../components/layout'
 // TODO ask if we should keep the local css/highlight.js file if we're just gonna end up using server instead
 // cause if we can get the local stuff to work, we can easily change the background color.
 var codeStyle = {
-  background: '#4C4B63'
+    background: '#4C4B63'
 };
 
 export default ({ url }) => (
@@ -23,7 +23,7 @@ export default ({ url }) => (
 
             <p>To do this, you must first install the dependencies:</p>
 
-            <pre><code class="sh language-sh">$ npm i --save idyll-document idyll-components
+            <pre><code class="sh language-sh" style={codeStyle}>$ npm i --save idyll-document idyll-components
       </code></pre>
 
             <p>then, add it to your page. If you are already using React, you
