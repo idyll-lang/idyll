@@ -11,7 +11,7 @@ const idyll = getLocalIdyll()
 
 var cmd
 if (!idyll) {
-  cmd = p.join(__dirname, './cli.js');
+  cmd = p.join(__dirname, 'cli.js');
 } else {
   var idyllBin = p.join(idyll, '..', '..', 'bin')
   cmd = p.join(idyllBin, 'cli.js');
