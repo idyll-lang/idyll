@@ -57,13 +57,7 @@
   color: #b48ead;
 }
 
-.hljs {
-  display: block;
-  overflow-x: auto;
-  background: #2b303b;
-  color: #c0c5ce;
-  padding: 0.5em;
-}
+
 
 .hljs-emphasis {
   font-style: italic;
