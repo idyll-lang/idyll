@@ -72,7 +72,7 @@ ReactDOM.render(
 )
 `}
       </Highlight>
-      <Highlight className='javascript'>var deleteMe = 5;</Highlight>
+
     </div>
   </Layout>
 )
