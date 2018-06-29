@@ -15,7 +15,7 @@ var codeStyle = {
 
 export default ({ url }) => (
   <Layout url={url}>
-    <link rel="stylesheet" href="../../../../../node_modules/highlight.js/styles/darcula.css" />
+    <link rel="stylesheet" href="../../../static/darcula.css" />
     <div>
 
       <h1>Embedding Idyll in an existing web page</h1>
