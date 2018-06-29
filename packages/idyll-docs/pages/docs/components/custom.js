@@ -91,7 +91,7 @@ The \`Incrementer\` component could then be used as follows:
 [Display value:clickCount /]
 \`\`\`
 
-Notice that even thought the \`Incrementer\` component doesn't know
+Notice that even though the \`Incrementer\` component doesn't know
 anything about the variable \`clickCount\`, it will still correctly
 update.
 
