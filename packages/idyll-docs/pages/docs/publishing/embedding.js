@@ -26,8 +26,8 @@ export default ({ url }) => (
 
       <p>To do this, you must first install the dependencies:</p>
 
-      <Highlight className='javascript'>$ npm i --save idyll-document idyll-components
-      </Highlight>
+      <pre><code>$ npm i --save idyll-document idyll-components
+      </code></pre>
 
       <p>then, add it to your page. If you are already using React, you
       can include this as a standard component:</p>
