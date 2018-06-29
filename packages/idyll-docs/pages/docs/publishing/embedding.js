@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import markdown from 'markdown-in-js'
 import Layout from '../../../components/layout'
-import React from 'react'
 import Highlight from 'react-highlight'
 
 // TODO ask if we should keep the local css/highlight.js file if we're just gonna end up using server instead
