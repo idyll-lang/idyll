@@ -46,7 +46,7 @@ Idyll includes a number of useful components by default, for example here is a c
   samplePoints:1000 /]
 \`\`\`
 
-Currently its static, but variables can be used to parameterize the output, allowing the chart to dynamically update. For example, we can give it a
+Currently it's static, but variables can be used to parameterize the output, allowing the chart to dynamically update. For example, we can give it a
 variable domain, and a variable function to plot.
 
 [var name:"func" value:\`Math.sin\` /]

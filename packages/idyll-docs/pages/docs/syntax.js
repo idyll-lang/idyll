@@ -137,7 +137,7 @@ Use backticks to pass an evaluated expression:
 [Component propName:\\\`{ an: 'object' }\\\` /]
 \`\`\`
 
-Note that because Idyll is reactive, if a variable changes any expressions that reference that
+Note that because Idyll is reactive, if a variable changes, any expressions that reference that
 variable will immediately be recomputed. See this utilized to create reactive vega-lite specifications:
 https://idyll-lang.github.io/examples/csv/.
 
