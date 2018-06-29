@@ -4,7 +4,7 @@
 
 const p = require('path');
 const fs = require('fs');
-const { spawnSync } = require('cross-spawn');
+const spawn = require('cross-spawn');
 const { getLocalIdyll } = require('./util');
 
 const idyll = getLocalIdyll();
@@ -22,6 +22,6 @@ if (!idyll) {
   }
 }
 
-spawnSync(cmd, process.argv.slice(2), {
+spawn.sync(cmd, process.argv.slice(2), {
   stdio: 'inherit'
 });
