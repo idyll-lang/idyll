@@ -62,7 +62,6 @@ ReactDOM.render(
 )
 `}
       </Highlight>
-
     </div>
   </Layout>
 )
