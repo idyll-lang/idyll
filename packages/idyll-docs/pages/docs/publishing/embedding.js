@@ -74,7 +74,7 @@ ReactDOM.render(
       </code></pre>
       <pre><code>var deleteMe = 5;</code></pre>
       <Highlight className='javascript'>
-        {"var x = 5;"}
+        {"var iHopeIAmHighlighted = 5;"}
       </Highlight>
     </div>
   </Layout>
