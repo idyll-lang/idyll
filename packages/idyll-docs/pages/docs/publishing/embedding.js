@@ -26,7 +26,7 @@ export default ({ url }) => (
 
             <p>To do this, you must first install the dependencies:</p>
 
-            <pre><code class="sh language-sh" style={codeStyle}>$ npm i --save idyll-document idyll-components
+            <pre><code class="sh language-sh">$ npm i --save idyll-document idyll-components
       </code></pre>
 
             <p>then, add it to your page. If you are already using React, you
