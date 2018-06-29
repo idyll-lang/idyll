@@ -3,15 +3,6 @@ import markdown from 'markdown-in-js'
 import Layout from '../../../components/layout'
 import Highlight from 'react-highlight'
 
-// TODO ask if we should keep the local css/highlight.js file if we're just gonna end up using server instead
-// cause if we can get the local stuff to work, we can easily change the background color.
-// Also, flipping between pages does not make highlight load (possibly bc of highlightOnLoad command)
-// so must have a work around
-
-var codeStyle = {
-  background: '#4C4B63'
-};
-
 export default ({ url }) => (
   <Layout url={url}>
     <link rel="stylesheet" href="../../../static/styles/tomorrow-night-eighties.css" />
