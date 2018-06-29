@@ -15,7 +15,7 @@ var codeStyle = {
 
 export default ({ url }) => (
   <Layout url={url}>
-    <link rel="stylesheet" href="../../../static/darcula.css" />
+    <link rel="stylesheet" href="../../../static/styles/tomorrow-night-eighties.css" />
     <div>
 
       <h1>Embedding Idyll in an existing web page</h1>
@@ -26,14 +26,14 @@ export default ({ url }) => (
 
       <p>To do this, you must first install the dependencies:</p>
 
-      <pre><code class="sh language-sh">$ npm i --save idyll-document idyll-components
-      </code></pre>
+      <Highlight className='javascript'>$ npm i --save idyll-document idyll-components
+      </Highlight>
 
       <p>then, add it to your page. If you are already using React, you
       can include this as a standard component:</p>
 
-      <pre><code class="javascript language-javascript">
-          {`import IdyllDocument from 'idyll-document';
+      <Highlight className='javascript'>
+        {`import IdyllDocument from 'idyll-document';
 import * as components from 'idyll-components';
 
 // An example functional component
@@ -46,12 +46,12 @@ import * as components from 'idyll-components';
   )
 }
 `}
-      </code></pre>
+      </Highlight>
 
       <p>If not, you'll also need to install <code>react</code> and <code>react-dom</code>:</p>
 
-      <pre><code class="sh language-sh">$ npm i --save react react-dom
-      </code></pre>
+      <Highlight className='javascript'>$ npm i --save react react-dom
+      </Highlight>
 
       <p>and can embed it like this:</p>
 
@@ -73,23 +73,6 @@ ReactDOM.render(
 `}
       </code></pre>
       <pre><code>var deleteMe = 5;</code></pre>
-      <Highlight className='javascript'>
-      {`import React from 'react';
-import ReactDOM from 'react-dom';
-import IdyllDocument from 'idyll-document';
-import * as components from 'idyll-components';
-
-// You must provide idyllMarkup
-// and the container element (a DOM node).
-ReactDOM.render(
-  <IdyllDocument
-    markup={ idyllMarkup }
-    components={ components }
-    datasets={ {} } />,
-  containerElement
-)
-`}
-      </Highlight>
     </div>
   </Layout>
 )
