@@ -55,7 +55,7 @@ import * as components from 'idyll-components';
 
       <p>and can embed it like this:</p>
 
-      <pre><code class="javascript language-javascript">
+      <Highlight className='javascript'>
         {`import React from 'react';
 import ReactDOM from 'react-dom';
 import IdyllDocument from 'idyll-document';
@@ -71,8 +71,8 @@ ReactDOM.render(
   containerElement
 )
 `}
-      </code></pre>
-      <pre><code>var deleteMe = 5;</code></pre>
+      </Highlight>
+      <Highlight className='javascript'>var deleteMe = 5;</Highlight>
     </div>
   </Layout>
 )
