@@ -15,7 +15,7 @@ var codeStyle = {
 
 export default ({ url }) => (
   <Layout url={url}>
-    <link rel="stylesheet" href="../../../../idyll/node_modules/highlight.js/styles/tomorrow-night-eighties.css" />
+    <link rel="stylesheet" href="../../../../../node_modules/highlight.js/styles/tomorrow-night-eighties.css" />
     <div>
 
       <h1>Embedding Idyll in an existing web page</h1>
@@ -26,14 +26,14 @@ export default ({ url }) => (
 
       <p>To do this, you must first install the dependencies:</p>
 
-      <pre><code class="sh language-sh" style={codeStyle}>$ npm i --save idyll-document idyll-components
+      <pre><code class="sh language-sh">$ npm i --save idyll-document idyll-components
       </code></pre>
 
       <p>then, add it to your page. If you are already using React, you
       can include this as a standard component:</p>
 
       <pre><code class="javascript language-javascript">
-        <Highlight className='React'>
+        <Highlight className='javascript'>
           {`import IdyllDocument from 'idyll-document';
 import * as components from 'idyll-components';
 
@@ -75,6 +75,9 @@ ReactDOM.render(
 `}
       </code></pre>
       <pre><code>var deleteMe = 5;</code></pre>
+      <Highlight className='javascript'>
+        {"var x = 5;"}
+      </Highlight>
     </div>
   </Layout>
 )

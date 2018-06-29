@@ -36,6 +36,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-ga": "^2.4.1",
+    "react-highlight": "^0.12.0",
     "showdown": "^1.8.6",
     "superagent": "^3.8.2",
     "uuid": "^3.2.1",
