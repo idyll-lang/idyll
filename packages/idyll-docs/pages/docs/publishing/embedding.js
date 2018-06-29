@@ -74,7 +74,21 @@ ReactDOM.render(
       </code></pre>
       <pre><code>var deleteMe = 5;</code></pre>
       <Highlight className='javascript'>
-        {"var iHopeIAmHighlighted = 5;"}
+      {`import React from 'react';
+import ReactDOM from 'react-dom';
+import IdyllDocument from 'idyll-document';
+import * as components from 'idyll-components';
+
+// You must provide idyllMarkup
+// and the container element (a DOM node).
+ReactDOM.render(
+  <IdyllDocument
+    markup={ idyllMarkup }
+    components={ components }
+    datasets={ {} } />,
+  containerElement
+)
+`}
       </Highlight>
     </div>
   </Layout>
