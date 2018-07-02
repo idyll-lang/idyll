@@ -21,7 +21,7 @@ export const evalExpression = (acc, expr, key, context) => {
           })
           ${falafel(expr, (node) => {
             if (node.type === 'Identifier') {
-              if (acc.indexOf(node.name) > -1) {
+              if (Object.keys(acc).indexOf(node.name) > -1) {
                 node.update('_idyllStateProxy.' + node.source());
               }
             }
@@ -47,7 +47,7 @@ export const evalExpression = (acc, expr, key, context) => {
         })
         return ${falafel(expr, (node) => {
           if (node.type === 'Identifier') {
-            if (acc.indexOf(node.name) > -1) {
+            if (Object.keys(acc).indexOf(node.name) > -1) {
               node.update('_idyllStateProxy.' + node.source());
             }
           }
