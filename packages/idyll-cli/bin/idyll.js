@@ -4,14 +4,14 @@
 
 const p = require('path');
 const fs = require('fs');
-const { spawnSync } = require('child_process');
+const spawn = require('cross-spawn');
 const { getLocalIdyll } = require('./util');
 
-const idyll = getLocalIdyll()
+const idyll = getLocalIdyll();
 
-var cmd
+var cmd;
 if (!idyll) {
-  cmd = p.join(__dirname, './cli.js');
+  cmd = p.join(__dirname, 'cli.js');
 } else {
   var idyllBin = p.join(idyll, '..', '..', 'bin')
   cmd = p.join(idyllBin, 'cli.js');
@@ -22,6 +22,6 @@ if (!idyll) {
   }
 }
 
-spawnSync(cmd, process.argv.slice(2), {
+spawn.sync(cmd, process.argv.slice(2), {
   stdio: 'inherit'
 });
