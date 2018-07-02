@@ -1,7 +1,7 @@
 
 const smartquotes = require('smartquotes');
 
-const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty } = require('idyll-ast');
+const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode } = require('idyll-ast');
 
 
 const attrConvert = (list) => {
@@ -142,6 +142,84 @@ const wrapText = (ast) => {
       return child;
     })
   })
+}; 
+
+
+/**
+ * Plugin to find find valid urls in text nodes and make them hyperlinks. 
+ * @param {*} ast     AST passes from the parser representing the document. 
+ * @return A new modified AST with all hyperlinks linkified. 
+ */
+const autoLinkify = (ast) => {
+  return (ast || []).map(autoLinkifyHelper); 
+}; 
+
+/**
+ * Helper function for autoLinkify to check the type of node and modify them if necessary. 
+ * @param {*} node    node to be checked and modified if necessary. 
+ * @return modified node, if modification was required, else returns node. 
+ */
+function autoLinkifyHelper(node) {
+  if(typeof node === 'string') {
+    return hyperLinkifiedVersion(node); 
+  } else if(getNodeName(node).toLowerCase() === ('a' || 'code' || 'pre' || 'equation')) {
+    return node; 
+  } else {
+    return modifyChildren(node, autoLinkifyHelper); 
+  }
+}
+
+/**
+ * Helper function for autoLinkifyHelper that modfies the text node if any hyperlinks are present. 
+ * @param {*} node 
+ * @return a modified node if any hyperlinks are present in the node, else returns node
+ */
+function hyperLinkifiedVersion(node) {
+  let hyperLinks = getHyperLinksFromText(node); 
+  if(hyperLinks) {
+    return seperateTextAndHyperLink(node, hyperLinks); 
+  } else {
+    return node; 
+  }
+}
+
+/**
+ * Helper function that seperates hyperlinks from textnodes
+ * @param {*} textnode 
+ * @param {*} hyperlinks  Hyperlink array that has all te hyperlinks occuring in the textnode in order of appearance. 
+ * @return a new span element encampassing all the new textnodes and anchor tag. 
+ */
+function seperateTextAndHyperLink(textnode, hyperlinks) {
+  console.log(textnode);
+  let match;                           
+  let hyperLinkIndex = 0;              
+  let substringIndex = 0;            
+  while(hyperLinkIndex < hyperlinks.length) {
+    let regexURL = new RegExp(hyperlinks[hyperLinkIndex]); 
+    if(match = regexURL.exec(textnode.substring(substringIndex))) {
+      let linkEndIndex = regexURL.lastIndex;
+      let linkStartIndex = linkEndIndex - hyperlinks[hyperLinkIndex].length;
+      newChildNodes.push(createTextNode(textnode.substring(substringIndex, linkStartIndex)));
+      newChildNodes.push(createNode("a", ["href", ["value", hyperlinks[hyperLinkIndex]]], 
+      [hyperlinks[hyperLinkIndex]])); 
+      textnode.substring(linkEndIndex);
+      substringIndex = linkEndIndex;   
+    }
+    hyperLinkIndex++;
+  }
+  return createNode("span", [], newChildNodes); 
+}
+
+
+/**
+ * This function returns an array with any hyperlinks in the passed textNode. 
+ * @param {*} textNode the text node to be tested for hyperlinks
+ * @return List of URL's from the textNode 
+ */
+function getHyperLinksFromText(textNode) {
+  //Regular experession for matching URL's
+  let regexURL = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g; 
+  return textNode.match(regexURL);
 }
 
 module.exports = {
@@ -149,5 +227,6 @@ module.exports = {
   flattenChildren,
   hoistVariables,
   makeFullWidth,
-  wrapText
+  wrapText, 
+  autoLinkify
 }

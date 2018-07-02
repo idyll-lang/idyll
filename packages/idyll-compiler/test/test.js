@@ -867,5 +867,11 @@ End text
       });
     });
 
-  })
+    it('should handle one link in text', function() {
+      const input = "Here is a link to website https://www.google.com/"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], ['Here is a link to website', [ 'a', ['href', ['value', 'https://www.google.com/']], ['https://www.google.com/']]]]]]]] 
+      ]); 
+    }); 
+  }); 
 });

@@ -3,7 +3,7 @@ const parse = require('./parser');
 const Lexer = require('./lexer');
 const Processor = require('./processors');
 const { cleanNewlines } = require('./processors/pre');
-const { hoistVariables, flattenChildren, cleanResults, makeFullWidth, wrapText } = require('./processors/post');
+const { hoistVariables, flattenChildren, cleanResults, makeFullWidth, wrapText, autoLinkify } = require('./processors/post');
 const matter = require('gray-matter');
 
 module.exports = function(input, options, callback) {
@@ -33,6 +33,7 @@ module.exports = function(input, options, callback) {
     .pipe(makeFullWidth)
     .pipe(wrapText)
     .pipe(cleanResults)
+    .pipe(autoLinkify)
     .end();
 
   if (options.postProcessors) {

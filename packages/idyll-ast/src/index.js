@@ -40,6 +40,17 @@ const createNode = function(name, props, children) {
   return node;
 };
 
+/**
+ * Creates a textnode with the text passed 
+ * @param {*} text      the text inside a textnode 
+ */
+const createTextNode = function(text) { 
+  if(typeof text === 'string') {
+    let node = [text]; 
+    return node; 
+  }
+}
+
 const getChildren = function(node) {
   if (typeof node === 'string') {
     return [];
@@ -74,7 +85,6 @@ const walkNodes = function(ast, f) {
  */
 const walkNodesBreadthFirst = function (ast, f) {
   let childAst = [];
-  //console.log(ast + " length of the ast is: " + ast.length);
   (ast || []).forEach((node) => {
     f(node);
     childAst = childAst.concat(getChildren(node));
@@ -82,14 +92,14 @@ const walkNodesBreadthFirst = function (ast, f) {
   if(childAst.length !== 0) {
       walkNodesBreadthFirst(childAst, f);
   }
-}
+}; 
 const findNodes = function(ast, filter) {
   var result = [];
   walkNodes(ast, node => {
     if (filter(node)) result.push(node);
   })
   return result;
-}
+}; 
 
 const modifyChildren = function(node, modifier) {
   if (typeof node === 'string') {
@@ -264,6 +274,7 @@ module.exports = {
   appendNode,
   appendNodes,
   createNode,
+  createTextNode,
   walkNodesBreadthFirst, 
   getChildren,
   getNodesByName,
