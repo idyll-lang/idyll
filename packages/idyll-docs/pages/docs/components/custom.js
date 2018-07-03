@@ -46,7 +46,7 @@ following code:</p>
       <p>Idyll provides a way for your components to push state changes back up to the
 document. This is how a component is able to affect change through the document.
 An <code>updateProps</code> method is injected onto the <code>props</code> object that your
-                                                                                                                                                                                                        custom component receives. This function can be called to update variable values
+                                                                                                                                                                                                                                                custom component receives. This function can be called to update variable values
 and propagate those changes to the rest of the Idyll document.</p>
 
       <h3>Example</h3>
@@ -109,7 +109,7 @@ inside of a folder called <code>components/</code>. If you wish to change the cu
         Continue to learn how to use{' '}
         <Link href="/docs/components/scrolling-and-refs"><a>references</a></Link>
         {' '}to make your page more dynamic.
-    </p>
+      </p>
     </div>
   </Layout>
 )
