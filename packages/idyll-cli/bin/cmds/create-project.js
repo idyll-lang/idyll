@@ -2,7 +2,7 @@
 
 const fs = require('fs-extra');
 const p = require('path');
-const { spawn } = require('child_process');
+const spawn = require('cross-spawn');
 
 const yargs = require('yargs');
 const inquirer = require('inquirer');

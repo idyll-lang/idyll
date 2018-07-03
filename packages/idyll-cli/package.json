@@ -1,6 +1,6 @@
 {
   "name": "idyll",
-  "version": "3.0.18",
+  "version": "3.0.19",
   "description": "Command line interface for idyll lang",
   "main": "src/index.js",
   "bin": {
@@ -39,6 +39,7 @@
     "browserify-incremental": "^3.1.1",
     "chalk": "^2.4.1",
     "change-case": "^3.0.1",
+    "cross-spawn": "^6.0.5",
     "csv-parse": "^2.4.0",
     "debug": "^3.1.0",
     "dev-null": "^0.1.1",
