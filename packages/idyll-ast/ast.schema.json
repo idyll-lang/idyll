@@ -1,0 +1,48 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema", 
+    "title": "AST Schema V1", 
+    "description": "Structure of an AST object",
+    "type": "object",
+    "properties": {
+        "elementType" : {
+            "description": "The type category of the element (html/component/textnode)",
+            "type": "string"
+        },
+        "elementName" : {
+            "description": "The name of the element", 
+            "type": "string"
+        }, 
+        "elementValue" : {
+            "description": "Type of value to which the element should be evaluated (value/variable/expression)",
+            "type": "string"
+        }, 
+        "elementProperties" : {
+            "description": "The properties/attributes of the element", 
+            "type": "array", 
+            "items": {
+                "type": "object", 
+                "properties": {
+                    "propertyName": {
+                        "description": "Name of the property", 
+                        "type": "string"
+                    }, 
+                    "propertyValue": {
+                        "description": "Value for the particular property", 
+                        "type": "string"
+                    }
+                },
+                "required": [ "propertyName", "propertyValue"]
+            }, 
+            "minItems": 1, 
+            "uniqueItems": true
+        }, 
+        "children": {
+            "description": "The children of the element.",
+            "type": "array", 
+            "items": {
+                "$ref": "#"
+            }
+        }
+    },
+    "required" : [ "elementType", "elementName", "elementValue" ]
+}
