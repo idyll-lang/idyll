@@ -5,6 +5,13 @@ const falafel = require('falafel');
 export const evalExpression = (acc, expr, key, context) => {
 
   let e;
+
+  // console.log(expr);
+  // try {
+  //   falafel(expr, () => {})
+  // } catch(e) {
+  //   console.log('couldn\'t parse', expr);
+  // }
   if (key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/))) {
     let setState = setState;
     e = `
@@ -16,7 +23,7 @@ export const evalExpression = (acc, expr, key, context) => {
             set: (_, prop, value) => {
               var newState = {};
               newState[prop] = value;
-              context.update(newState);
+              return true;
             }
           })
           ${falafel(expr, (node) => {
@@ -29,6 +36,8 @@ export const evalExpression = (acc, expr, key, context) => {
       })()
     `;
 
+
+    // console.log(e);
     return (function() {
       eval(e);
     }).bind(Object.assign({}, acc, context || {}));
@@ -43,6 +52,7 @@ export const evalExpression = (acc, expr, key, context) => {
             var newState = {};
             newState[prop] = value;
             context.update(newState);
+            return true;
           }
         })
         return ${falafel(expr, (node) => {
@@ -55,6 +65,8 @@ export const evalExpression = (acc, expr, key, context) => {
       })(this)
     `;
   }
+
+  // console.log(e);
 
   try {
     return (function(evalString){
