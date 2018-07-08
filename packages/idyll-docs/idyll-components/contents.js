@@ -217,6 +217,12 @@ const components = [
               },
               {
                 "type": "The type of the chart to display, can be `line`, `scatter`, `bar`, `pie`, or `time`. The time type is a line chart that expects the `x` values in the data to be in the temporal domain."
+              },
+              {
+                "domain": "The chart extent along the x dimension."
+              }
+              {
+                "range": "The chart extent along the y dimension."
               }
             ]
           }
