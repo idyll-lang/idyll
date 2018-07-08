@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import markdown from 'markdown-in-js'
 import Layout from '../../components/layout'
-
+import Highlight from 'react-highlight'
 
 const Content = () => markdown`
 # Configuration and Styles
@@ -98,6 +98,7 @@ idyll
 
 export default ({ url }) => (
   <Layout url={ url }>
+    <link rel="stylesheet" href="../../static/styles/tomorrow-night-eighties.css" />
     <Content />
 
     <section>
@@ -107,9 +108,9 @@ export default ({ url }) => (
         For example, you could make a static blog engine that uses Idyll to compile the blog posts.
       </p>
       <h3>Example</h3>
-      <pre>
-        <code className="lang-js">{ ExampleCodeA }</code>
-      </pre>
+      <Highlight className='javascript'>
+        { ExampleCodeA }
+      </Highlight>
       <p>
         If you pass <code>live: true</code> to Idyll, it will continue to watch the input files for changes,
         and will emit the update event each time that the output is rebuilt.
@@ -117,9 +118,9 @@ export default ({ url }) => (
       <p>
         You can also compile an input string directly instead of a file:
       </p>
-      <pre>
-        <code className="lang-js">{ ExampleCodeB }</code>
-      </pre>
+      <Highlight className='javascript'>
+        { ExampleCodeB }
+      </Highlight>
     </section>
 
     <p>
