@@ -66,7 +66,7 @@ class Chart extends React.PureComponent {
     return (
       <div className={props.className}>
         {type !== 'PIE' ? (
-          <V.VictoryChart domainPadding={10} {...formattedRange} animate={animate} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
+          <V.VictoryChart domainPadding={domainPadding} {...formattedRange} animate={animate} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
             <INNER_CHART
               data={data}
               x={props.x}
