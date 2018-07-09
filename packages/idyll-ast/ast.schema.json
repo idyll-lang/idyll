@@ -4,34 +4,38 @@
     "description": "Structure of an AST object",
     "type": "object",
     "properties": {
-        "elementType" : {
+        "id": {
+            "desceription": "A unique identifier for the current element", 
+            "id" : "integer"
+        }, 
+        "type" : {
             "description": "The type category of the element (html/component/textnode)",
             "type": "string"
         },
-        "elementName" : {
+        "name" : {
             "description": "The name of the element", 
             "type": "string"
         }, 
-        "elementValue" : {
+        "value" : {
             "description": "Type of value to which the element should be evaluated (value/variable/expression)",
             "type": "string"
         }, 
-        "elementProperties" : {
+        "properties" : {
             "description": "The properties/attributes of the element", 
             "type": "array", 
             "items": {
                 "type": "object", 
                 "properties": {
-                    "propertyName": {
+                    "name": {
                         "description": "Name of the property", 
                         "type": "string"
                     }, 
-                    "propertyValue": {
+                    "value": {
                         "description": "Value for the particular property", 
                         "type": "string"
                     }
                 },
-                "required": [ "propertyName", "propertyValue"]
+                "required": [ "name", "value"]
             }, 
             "minItems": 1, 
             "uniqueItems": true
@@ -41,8 +45,9 @@
             "type": "array", 
             "items": {
                 "$ref": "#"
-            }
+            }, 
+            "uniqueItems": true
         }
     },
-    "required" : [ "elementType", "elementName", "elementValue" ]
+    "required" : [ "id", "type", "name", "value" ]
 }
