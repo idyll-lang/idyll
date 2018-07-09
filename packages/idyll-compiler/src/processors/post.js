@@ -1,7 +1,7 @@
 
 const smartquotes = require('smartquotes');
 
-const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode } = require('idyll-ast');
+const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode, createNode} = require('idyll-ast');
 
 
 const attrConvert = (list) => {
@@ -190,18 +190,20 @@ function hyperLinkifiedVersion(node) {
  * @return a new span element encampassing all the new textnodes and anchor tag. 
  */
 function seperateTextAndHyperLink(textnode, hyperlinks) {
-  console.log(textnode);
   let match;                           
   let hyperLinkIndex = 0;              
-  let substringIndex = 0;            
+  let substringIndex = 0; 
+  let newChildNodes = [];           
   while(hyperLinkIndex < hyperlinks.length) {
-    let regexURL = new RegExp(hyperlinks[hyperLinkIndex]); 
-    if(match = regexURL.exec(textnode.substring(substringIndex))) {
+    let regexURL = new RegExp(hyperlinks[hyperLinkIndex], "g"); 
+    match = regexURL.exec(textnode.substring(substringIndex));
+    if(match) {
       let linkEndIndex = regexURL.lastIndex;
       let linkStartIndex = linkEndIndex - hyperlinks[hyperLinkIndex].length;
       newChildNodes.push(createTextNode(textnode.substring(substringIndex, linkStartIndex)));
-      newChildNodes.push(createNode("a", ["href", ["value", hyperlinks[hyperLinkIndex]]], 
-      [hyperlinks[hyperLinkIndex]])); 
+      let anchorElement = createNode("a", [], [hyperlinks[hyperLinkIndex]]); 
+      setProperty(anchorElement, "href", hyperlinks[hyperLinkIndex]);
+      newChildNodes.push(anchorElement); 
       textnode.substring(linkEndIndex);
       substringIndex = linkEndIndex;   
     }
@@ -217,8 +219,8 @@ function seperateTextAndHyperLink(textnode, hyperlinks) {
  * @return List of URL's from the textNode 
  */
 function getHyperLinksFromText(textNode) {
-  //Regular experession for matching URL's
-  let regexURL = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/g; 
+  //Regular experession for matching URLs
+  let regexURL = /(http|https|ftp|ftps)\:\/\/([a-zA-Z0-9\-\.]+\.)+[a-zA-Z]{2,3}(\/\S*)?/g; 
   return textNode.match(regexURL);
 }
 
@@ -228,5 +230,9 @@ module.exports = {
   hoistVariables,
   makeFullWidth,
   wrapText, 
-  autoLinkify
+  autoLinkify, 
+  autoLinkifyHelper,
+  hyperLinkifiedVersion, 
+  seperateTextAndHyperLink, 
+  getHyperLinksFromText
 }
