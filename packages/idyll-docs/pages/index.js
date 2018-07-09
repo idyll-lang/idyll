@@ -65,14 +65,16 @@ The value of x is [Display value:x format:"d" /].
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
           <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
           <meta property='og:image' content='https://idyll-lang.org/static/images/twitter-share.png' />
-          <meta property='og:description' content="A markup language for interactive documents." />
+          <meta property='og:description' content="Create data-driven stories, explorable explanations, and interactive blog posts." />
           <meta property='og:title' content="Idyll" />
           <meta property='og:url' content='https://idyll-lang.org' />
           <meta property='og:type' content='website' />
+          <meta name='description' content="Create data-driven stories, explorable explanations, and interactive blog posts." />
+          <meta name="keywords" content="idyll, explorable explanation, data-driven, scrollytelling, interactive" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:creator" content="@mathisonian" />
           <meta name="twitter:title" content="Idyll" />
-          <meta name="twitter:description" content="A markup language for interactive documents." />
+          <meta name="twitter:description" content="Create data-driven stories, explorable explanations, and interactive blog posts." />
           <meta name="twitter:image" content="https://idyll-lang.org/static/images/twitter-share.png" />
           <script async defer src="https://buttons.github.io/buttons.js"></script>
         </Head>
@@ -83,7 +85,7 @@ The value of x is [Display value:x format:"d" /].
               idyll
             </div>
             <div className="intro">
-              A markup language for interactive documents.
+              Create data-driven stories, explorable explanations, and interactive blog posts.
             </div>
             <div className="example">
               {/* Idyll turns markup into interactive HTML and JavaScript. */}
@@ -176,7 +178,7 @@ The value of x is [Display value:x format:"d" /].
             </div>
             <div>
               <p>
-                <b>Idyll</b> extends the ubiquitous Markdown format to enable the creation of dynamic, interactive narratives for the web. The language and toolchain aim to empower journalists, researchers, and technical experts to create compelling content using familiar tools and processes.
+                <b>Idyll</b> extends Markdown to enable the creation of dynamic, interactive narratives for the web. The language and toolchain aim to empower journalists, researchers, and technical experts to create compelling content using familiar tools and processes.
                 <br/><br/>
                 Idyll can be used to create explorable explanations, to power blog engines and content management systems, and to generate dynamic technical reports. The tool can generate standalone webpages or be embedded inside of your existing site.
 
@@ -460,7 +462,7 @@ The value of x is [Display value:x format:"d" /].
             margin: 0 auto;
             margin-top: 1em;
             font-family: 'Source Sans Pro';
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 300;
             // letter-spacing: 0.3em;
             line-height: 1.1em;

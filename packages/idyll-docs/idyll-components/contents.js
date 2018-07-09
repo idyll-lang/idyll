@@ -220,7 +220,7 @@ const components = [
               },
               {
                 "domain": "The chart extent along the x dimension."
-              }
+              },
               {
                 "range": "The chart extent along the y dimension."
               }
