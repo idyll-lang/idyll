@@ -178,9 +178,9 @@ The value of x is [Display value:x format:"d" /].
             </div>
             <div>
               <p>
-                <b>Idyll</b> extends Markdown to enable the creation of dynamic, interactive narratives for the web. The language and toolchain aim to empower journalists, researchers, and technical experts to create compelling content using familiar tools and processes.
+                 <b>Idyll</b> empowers journalists, researchers, and technical experts to create compelling interactive content for the web. The markup language extends Markdown with JavaScript components. Custom components can be written using familiar JavaScript tools like D3 or React.
                 <br/><br/>
-                Idyll can be used to create explorable explanations, to power blog engines and content management systems, and to generate dynamic technical reports. The tool can generate standalone webpages or be embedded inside of your existing site.
+                Idyll can be used to create explorable explanations, and to add interactivity to blog engines and content management systems. The tool can generate standalone webpages or be embedded inside of an existing page, and can be fully themed to match your styleguide.
 
                 <img style={{display: 'block', width: '75%', margin: '0 auto'}} src="/static/images/sponsors.png"/>
 
@@ -333,8 +333,7 @@ The value of x is [Display value:x format:"d" /].
             font-size: 14px;
             color: white;
             // background: #6122FB;
-            // background: #4C4B63;
-            background: #6122FB;
+            background: #4C4B63;
             padding: 10px 10px;
             transition: color 0.5s, background 0.5s;
           }

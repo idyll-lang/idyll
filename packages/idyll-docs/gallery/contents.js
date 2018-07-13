@@ -85,6 +85,13 @@ const exampleGroups = [
     title : 'Articles and Blog Posts',
     examples: [
       {
+        label: 'A Comic Introduction to Idyll',
+        subtitle: 'See how Idyll can be used with CSS grid to create a comic-style layout.',
+        href: 'https://mathisonian.github.io/idyll-comic/',
+        image: 'https://mathisonian.github.io/idyll-comic/static/share.png',
+        sourceUrl: "https://github.com/mathisonian/idyll-comic/"
+      },
+      {
         label: 'Autumn Colormaps',
         subtitle: 'A look at trees, colormaps, and chroma.js',
         href: 'https://mathisonian.github.io/idyll/fall-colors/',
