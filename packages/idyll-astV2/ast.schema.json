@@ -9,7 +9,7 @@
             "id" : "integer"
         }, 
         "type" : {
-            "description": "The type category of the element (html/component/textnode)",
+            "description": "The type category of the element (component/textnode)",
             "type": "string"
         },
         "name" : {
