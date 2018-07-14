@@ -102,13 +102,13 @@ describe('compiler', function() {
         Text. / Not a comment.
         // Comment
         // Second comment
-        [component]
+        [component]//not a comment
           // comment inside components
         [/component]// is a comment
 
         not a comment: https://stuff.com
       `);
-      expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK WORDS TOKEN_VALUE_START "not a comment: https:" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/stuff.com" TOKEN_VALUE_END EOF');
+      expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/not a comment\n          " TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK WORDS TOKEN_VALUE_START "not a comment: https:" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/stuff.com" TOKEN_VALUE_END EOF');
     });
 
     it('ordered lists with a space after the bullet are parsed as a list', function() {
@@ -407,7 +407,7 @@ End text
         Text. / Not a comment.
         // Comment
         // Second comment
-        [component]
+        [component]//not a comment
           // comment inside components
         [/component]// is a comment
 
@@ -416,7 +416,7 @@ End text
       expect(compile(input, { async: false })).to.eql(
       [
         ['TextContainer', [], [
-          ['p', [], ["Text. / Not a comment.\n        ", ["component", [], []]]],
+          ['p', [], ["Text. / Not a comment.\n        ", ["component", [], ["//not a comment\n          "]]]],
           ['p', [], ["not a comment: https://stuff.com"]]
         ]]
       ]);
