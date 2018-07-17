@@ -10,7 +10,8 @@
         }, 
         "type" : {
             "description": "The type category of the element (component/textnode)",
-            "type": "string"
+            "type": "string",
+            "enum": ["component", "textnode"]
         },
         "name" : {
             "description": "The name of the element", 
@@ -18,7 +19,7 @@
         }, 
         "value" : {
             "description": "Type of value to which the element should be evaluated (value/variable/expression)",
-            "type": "string"
+            "type": "string",
         }, 
         "properties" : {
             "description": "The properties/attributes of the element", 
