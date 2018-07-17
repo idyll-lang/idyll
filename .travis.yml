@@ -14,9 +14,6 @@ env:
   - PACKAGE=idyll-layouts
   - PACKAGE=idyll-themes
 
-install:
-  - yarn install
-
 cache: yarn
 
 script: cd packages/$PACKAGE && npm test
