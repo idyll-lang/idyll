@@ -203,7 +203,7 @@ const lex = function(options) {
     return ['LINK'].concat(formatToken(text)).concat(formatToken(link));
   });
 
-  lexer.addRule(/\s?\/\/[^\n]*/gm, function(lexeme) {
+  lexer.addRule(/(\n\s*\/\/[^\n]*|\/\/\s+[^\n]*)/, function(lexeme) {
     updatePosition(lexeme);
   });
 
