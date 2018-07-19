@@ -124,6 +124,7 @@ async function createProject (answers) {
   async function copyFiles (proceed) {
     await fs.copy(getTemplatePath(template), dir);
     await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    await fs.move(p.join(dir, 'nojekyll'), p.join(dir, '.nojekyll'));
     await fs.copy(DEFAULT_COMPONENTS_DIR, p.join(dir, 'components', 'default'));
   }
 
