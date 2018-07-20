@@ -16,27 +16,30 @@
         "name" : {
             "description": "The name of the element", 
             "type": "string"
-        }, 
-        "value" : {
-            "description": "Type of value to which the element should be evaluated (value/variable/expression)",
-            "type": "string",
-        }, 
+        },
         "properties" : {
             "description": "The properties/attributes of the element", 
-            "type": "array", 
-            "items": {
-                "type": "object", 
-                "properties": {
-                    "name": {
-                        "description": "Name of the property", 
-                        "type": "string"
-                    }, 
-                    "value": {
-                        "description": "Value for the particular property", 
-                        "type": "string"
+            "type": "object", 
+            "properties": {
+                "name": {
+                    "description": "Name of the property", 
+                    "type": "string"
+                }, 
+                "data": {
+                    "description": "Object containing data for the particular property", 
+                    "type": "object",
+                    "properties": {
+                    	"type": {
+                    		"description": "The evaluation type of the property. Can be value/variable/expression",
+                    		"type": "string",
+                    		"enum": ["value", "variable", "expression"]
+                    	}, 
+                    	"value": {
+                    		"description": "Property value", 
+                    		"type": "string"
+                    	}
                     }
-                },
-                "required": [ "name", "value"]
+                }
             }, 
             "minItems": 1, 
             "uniqueItems": true
@@ -45,8 +48,11 @@
             "description": "The children of the element.",
             "type": "array", 
             "items": {
-                "$ref": "#"
-            }, 
+            	"anyof": [
+            		{"$ref": "#"}, 
+            		{"$ref": ""}
+            	]
+                            }, 
             "uniqueItems": true
         }
     },
