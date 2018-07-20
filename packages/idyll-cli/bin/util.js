@@ -1,6 +1,8 @@
+const resolve = require('resolve');
+
 module.exports.getLocalIdyll = function () {
   try {
-    return require.resolve('idyll', { paths: [process.cwd()] });
+    return resolve.sync('idyll', { basedir: process.cwd() });
   } catch (err) {
     return null;
   }
