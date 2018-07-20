@@ -6,12 +6,12 @@
     "properties": {
         "id": {
             "desceription": "A unique identifier for the current element", 
-            "id" : "integer"
+            "type" : "integer"
         }, 
         "type" : {
             "description": "The type category of the element (component/textnode)",
             "type": "string",
-            "enum": ["component", "textnode"]
+            "enum": ["component"]
         },
         "name" : {
             "description": "The name of the element", 
@@ -50,11 +50,31 @@
             "items": {
             	"anyof": [
             		{"$ref": "#"}, 
-            		{"$ref": ""}
+            		{
+            			"description": "Structure for a textnode", 
+            			"type": "object",
+            			"properties": {
+            				"id": {
+            					"desceription": "A unique identifier for the current element", 
+            					"id" : "integer"
+            				}, 
+            				"type": {
+            					"description": "The type category of the element (component/textnode)",
+            					"type": "string",
+            					"enum": ["textnode"]
+            				},
+            				"value": {
+            					"description": "Property value", 
+                    			"type": "string"
+            				}	
+            			},
+            			"additionalProperties": false
+            		}
             	]
                             }, 
             "uniqueItems": true
         }
     },
-    "required" : [ "id", "type", "name", "value" ]
+    "required" : [ "id", "type", "name"],
+    "additionalProperties": false
 }
