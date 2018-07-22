@@ -5,7 +5,6 @@ const d3 = require('d3-selection');
 
 const styles = {
   SCROLL_GRAPHIC: {
-    position: '-webkit-sticky',
     position: 'sticky',
     top: 0,
     left: 0,
@@ -122,7 +121,7 @@ class Scroller extends React.Component {
       <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`} 
         style={Object.assign({ position: 'relative' }, { marginLeft: leftMarginAdjust})}>
         <div className="idyll-scroll-graphic"
-          style={Object.assign({ height: graphicHeight, position: '-webkit-sticky' }, styles.SCROLL_GRAPHIC)} >
+          style={Object.assign({ height: graphicHeight }, styles.SCROLL_GRAPHIC)} >
           <div style={Object.assign({ width: graphicWidth }, styles.SCROLL_GRAPHIC_INNER)}>
             {filterChildren(
               children,
