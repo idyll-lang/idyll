@@ -35,6 +35,28 @@ describe('Detect global variables', () => {
     `));
   })
 
+  it('Handles an empty string', () => {
+    const expression = buildExpression({ x: 10 }, '', 'key', context, false);
+
+    expect(whitespace(expression)).toBe(whitespace(`
+      ((context) => {
+        var __idyllStateProxy = new Proxy({}, {
+          get: (_, prop) => {
+            return context[prop];
+          },
+          set: (_, prop, value) => {
+            var newState = {};
+            newState[prop] = value;
+            context.update(newState);
+            return true;
+          }
+        })
+        var __idyllReturnValue = undefined;
+        return __idyllReturnValue;
+      })(this)
+    `));
+  })
+
   it('Evals a basic variable', () => {
     const output = evalExpression({ x: 10 }, `x`, 'key', context);
     expect(output).toBe(10);

@@ -2,7 +2,6 @@ const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
 
-
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
   return `
     ((context) => {
@@ -17,7 +16,7 @@ export const buildExpression = (acc, expr, key, context, isEventHandler) => {
             return true;
           }
         })
-        ${falafel(isEventHandler ? expr : `var __idyllReturnValue = ${expr}`, (node) => {
+        ${falafel(isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`, (node) => {
           switch(node.type) {
             case 'Identifier':
               if (Object.keys(acc).indexOf(node.name) > -1) {
