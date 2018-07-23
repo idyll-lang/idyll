@@ -104,20 +104,4 @@ describe('Detect global variables', () => {
     `));
   })
 
-  // it('Handles ++ incrementer', () => {
-  //   const output = falafel(`x++; ++y`, function (node) {
-  //     if (node.type === 'Identifier') {
-  //       // if (node.name === 'x') {
-  //         node.update('p.' + node.source());
-  //       // }
-  //     }
-  //     // else if (node.type === 'UpdateExpression') {
-  //     //   console.log(node);
-  //     // }
-  //   });
-
-  //   console.log('transformed code: ', '' + output);
-  //   expect('' + output).toContain('p.x');
-  // })
-
 });
