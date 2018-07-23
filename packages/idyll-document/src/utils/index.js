@@ -3,7 +3,7 @@ const entries = require('object.entries');
 const falafel = require('falafel');
 
 
-const buildExpression = (acc, expr, key, context, isEventHandler) => {
+export const buildExpression = (acc, expr, key, context, isEventHandler) => {
   return `
     ((context) => {
         var __idyllStateProxy = new Proxy({}, {
