@@ -16,18 +16,19 @@ describe('Detect global variables', () => {
     expect('' + output).toContain('p.x');
   })
 
-  it.only('Handles ++ incrementer', () => {
-    const output = falafel(`x++`, function (node) {
+  it('Handles ++ incrementer', () => {
+    const output = falafel(`x++; ++y`, function (node) {
       if (node.type === 'Identifier') {
-        if (node.name === 'x') {
+        // if (node.name === 'x') {
           node.update('p.' + node.source());
-        }
+        // }
       }
-      else if (node.type === 'UpdateExpression') {
-        console.log(node);
-      }
+      // else if (node.type === 'UpdateExpression') {
+      //   console.log(node);
+      // }
     });
 
+    console.log('transformed code: ', '' + output);
     expect('' + output).toContain('p.x');
   })
 

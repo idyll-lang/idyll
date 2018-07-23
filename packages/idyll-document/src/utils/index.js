@@ -16,21 +16,24 @@ export const evalExpression = (acc, expr, key, context) => {
     let setState = setState;
     e = `
       (() => {
-          var _idyllStateProxy = new Proxy({}, {
+          var __idyllStateProxy = new Proxy({}, {
             get: (_, prop) => {
               return context[prop];
             },
             set: (_, prop, value) => {
               var newState = {};
               newState[prop] = value;
+              context.update(newState);
               return true;
             }
           })
           ${falafel(expr, (node) => {
-            if (node.type === 'Identifier') {
-              if (Object.keys(acc).indexOf(node.name) > -1) {
-                node.update('_idyllStateProxy.' + node.source());
-              }
+            switch(node.type) {
+              case 'Identifier':
+                if (Object.keys(acc).indexOf(node.name) > -1) {
+                  node.update('__idyllStateProxy.' + node.source());
+                }
+                break;
             }
           })};
       })()
@@ -44,7 +47,7 @@ export const evalExpression = (acc, expr, key, context) => {
   } else {
     e = `
       ((context) => {
-        var _idyllStateProxy = new Proxy({}, {
+        var __idyllStateProxy = new Proxy({}, {
           get: (_, prop) => {
             return context[prop];
           },
@@ -58,15 +61,13 @@ export const evalExpression = (acc, expr, key, context) => {
         return ${falafel(expr, (node) => {
           if (node.type === 'Identifier') {
             if (Object.keys(acc).indexOf(node.name) > -1) {
-              node.update('_idyllStateProxy.' + node.source());
+              node.update('__idyllStateProxy.' + node.source());
             }
           }
         })};
       })(this)
     `;
   }
-
-  // console.log(e);
 
   try {
     return (function(evalString){
