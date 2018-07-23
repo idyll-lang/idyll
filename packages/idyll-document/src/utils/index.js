@@ -2,51 +2,10 @@ const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
 
-export const evalExpression = (acc, expr, key, context) => {
 
-  let e;
-
-  // console.log(expr);
-  // try {
-  //   falafel(expr, () => {})
-  // } catch(e) {
-  //   console.log('couldn\'t parse', expr);
-  // }
-  if (key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/))) {
-    let setState = setState;
-    e = `
-      (() => {
-          var __idyllStateProxy = new Proxy({}, {
-            get: (_, prop) => {
-              return context[prop];
-            },
-            set: (_, prop, value) => {
-              var newState = {};
-              newState[prop] = value;
-              context.update(newState);
-              return true;
-            }
-          })
-          ${falafel(expr, (node) => {
-            switch(node.type) {
-              case 'Identifier':
-                if (Object.keys(acc).indexOf(node.name) > -1) {
-                  node.update('__idyllStateProxy.' + node.source());
-                }
-                break;
-            }
-          })};
-      })()
-    `;
-
-
-    // console.log(e);
-    return (function() {
-      eval(e);
-    }).bind(Object.assign({}, acc, context || {}));
-  } else {
-    e = `
-      ((context) => {
+const buildExpression = (acc, expr, key, context, isEventHandler) => {
+  return `
+    ((context) => {
         var __idyllStateProxy = new Proxy({}, {
           get: (_, prop) => {
             return context[prop];
@@ -58,15 +17,29 @@ export const evalExpression = (acc, expr, key, context) => {
             return true;
           }
         })
-        return ${falafel(expr, (node) => {
-          if (node.type === 'Identifier') {
-            if (Object.keys(acc).indexOf(node.name) > -1) {
-              node.update('__idyllStateProxy.' + node.source());
-            }
+        ${falafel(isEventHandler ? expr : `var __idyllReturnValue = ${expr}`, (node) => {
+          switch(node.type) {
+            case 'Identifier':
+              if (Object.keys(acc).indexOf(node.name) > -1) {
+                node.update('__idyllStateProxy.' + node.source());
+              }
+              break;
           }
         })};
-      })(this)
-    `;
+        ${isEventHandler ? '' : 'return __idyllReturnValue;'}
+    })(this)
+  `;
+}
+
+
+export const evalExpression = (acc, expr, key, context) => {
+  const isEventHandler = (key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/)));
+  let e = buildExpression(acc, expr, key, context, isEventHandler);
+
+  if (isEventHandler) {
+    return (function() {
+      eval(e);
+    }).bind(Object.assign({}, acc, context || {}));
   }
 
   try {
