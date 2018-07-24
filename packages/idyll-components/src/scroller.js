@@ -5,7 +5,6 @@ const d3 = require('d3-selection');
 
 const styles = {
   SCROLL_GRAPHIC: {
-    position: 'sticky',
     top: 0,
     left: 0,
     right: 0,
