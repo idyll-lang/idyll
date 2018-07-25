@@ -115,10 +115,9 @@ class Scroller extends React.Component {
   render() {
     const { hasError, updateProps, idyll, children, ...props } = this.props;
     const { graphicHeight, graphicWidth } = this.state;
-    const leftMarginAdjust = -this.props.idyll.layout.marginLeft; // for adjusting graphic to match outer div
     return (
       <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`} 
-        style={Object.assign({ position: 'relative' }, { marginLeft: leftMarginAdjust})}>
+        style={Object.assign({ position: 'relative' })}>
         <div className="idyll-scroll-graphic"
           style={Object.assign({ height: graphicHeight }, styles.SCROLL_GRAPHIC)} >
           <div style={Object.assign({ width: graphicWidth }, styles.SCROLL_GRAPHIC_INNER)}>
