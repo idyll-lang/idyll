@@ -34,8 +34,8 @@ input {
 }
 
 .idyll-scroll-graphic {
-	position: -webkit-sticky;
-	position: sticky;
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 @media all and (max-width: 1000px) {
