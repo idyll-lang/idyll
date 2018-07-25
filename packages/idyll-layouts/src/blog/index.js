@@ -5,7 +5,7 @@ const config = {
   marginTop: 0,
   marginRight: 0,
   marginBottom: 0,
-  marginLeft: '50'
+  marginLeft: 50
 };
 
 export default {
