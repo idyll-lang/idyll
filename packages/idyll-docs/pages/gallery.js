@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Layout from '../components/basic-layout'
 import ExampleGroup from '../components/example-group'
 import exampleGroups from '../gallery/contents';
+import Donate from '../components/donate-link'
+
 
 const Examples = () => (
   <section>
@@ -19,6 +21,7 @@ const Examples = () => (
       <b>...or scroll down to see them all.</b> If you've made something with Idyll and would like to post it here,
       please <a href="https://github.com/idyll-lang/idyll/issues" target="_blank">open an issue on GitHub</a> with the title "Gallery Example".
     </p>
+    <Donate />
     {
       exampleGroups.map(eg => <ExampleGroup { ...eg } key={ eg.title } />)
     }

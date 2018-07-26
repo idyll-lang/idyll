@@ -167,8 +167,8 @@ The value of x is [Display value:x format:"d" /].
                 Chat
               </a>
               |
-              <a href="https://groups.google.com/forum/#!forum/idyll-lang" target="_blank">
-                Mailing List
+              <a href="https://twitter.com/idyll_lang" target="_blank">
+                Twitter
               </a>
               |
               <a href="https://opencollective.com/idyll" target="_blank">
@@ -178,7 +178,7 @@ The value of x is [Display value:x format:"d" /].
             </div>
             <div>
               <p>
-                <b>Idyll</b> is an open-source markup language and interactive web-runtime. You write a markup file, and it is compiled to code that can run in anyone’s web browser. Idyll extends <em>Markdown</em> with a reactive component system.
+                <b>Idyll</b> is an open-source markup language and web runtime. You write markup and Idyll converts it to interactive code that can run in anyone’s web browser. Idyll extends <em>Markdown</em> with a reactive component system.
 
                 <br/><br/>
                 Idyll allows non-experts to publish compelling interactive stories on the web, and enables collaboration between programmers and journalists, researchers and designers. Those familiar with JavaScript can write custom components using tools like D3 or React.
