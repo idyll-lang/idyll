@@ -85,7 +85,7 @@ The value of x is [Display value:x format:"d" /].
               idyll
             </div>
             <div className="intro">
-              Create data-driven stories, explorable explanations, and interactive blog posts.
+              A toolkit for creating data-driven stories and explorable explanations.
             </div>
             <div className="example">
               {/* Idyll turns markup into interactive HTML and JavaScript. */}
@@ -177,11 +177,12 @@ The value of x is [Display value:x format:"d" /].
               {/* <a className="github-button" href="https://github.com/idyll-lang/idyll" data-icon="octicon-star" data-show-count="true" aria-label="Star idyll-lang/idyll on GitHub">Star</a> */}
             </div>
             <div>
-              <p>
-                 <b>Idyll</b> empowers journalists, researchers, and technical experts to create compelling interactive content for the web. The markup language extends Markdown with JavaScript components. Custom components can be written using familiar JavaScript tools like D3 or React.
-                <br/><br/>
-                Idyll can be used to create explorable explanations, and to add interactivity to blog engines and content management systems. The tool can generate standalone webpages or be embedded inside of an existing page, and can be fully themed to match your styleguide.
+              <p style={{marginBottom: 45}}>
+                <b>Idyll</b> is an open-source markup language and runtime for producing interactive web pages. You give Idyll a markup file, and it compiles that file to a full bundle of HTML, JavaScript, and CSS that can run in anyone’s web browser. Idyll extends markdown with a reactive component system
+                built on React.
 
+                <br/><br/>
+                Idyll enables collaboration between programmers and journalists, researchers and designers, and allows non-experts to publish compelling interactive stories on the web. Those familiar with web-development can write custom components using familiar JavaScript tools like D3 or React.
                 <img style={{display: 'block', width: '75%', margin: '0 auto'}} src="/static/images/sponsors.png"/>
 
                 Idyll is supported by the Interactive Data Lab at the University of Washington, and by Rhizome and The Eutopia Foundation.
