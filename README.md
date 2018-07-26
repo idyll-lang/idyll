@@ -13,17 +13,16 @@
 
 # What is Idyll?
 
-To learn more about using Idyll, and see examples, please see https://idyll-lang.org/.
+For an introduction to Idyll, API reference, and examples, please see https://idyll-lang.org/.
 
-# Contributing to Idyll
-
-Idyll attempts to adhere to the [open open source](http://openopensource.org/) philosophy as much as reasonably possible. Pull requests are very welcome!
+# Contributor's Guide
 
 See [CONTRIBUTING](./CONTRIBUTING.md) for details on the development workflow. If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
 
+# Support Idyll
+
 This project exists thanks to all the people who contribute.
 <a href="https://github.com/idyll-lang/idyll/graphs/contributors"><img src="https://opencollective.com/idyll/contributors.svg?width=890" /></a>
-
 
 ## Backers
 
