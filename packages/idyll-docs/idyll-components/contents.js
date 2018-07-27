@@ -53,7 +53,9 @@ const components = [
             "image": "scroller.gif",
             "idyllProps": [
               {
-                "currentStep": "the index of the currently selected step.",
+                "currentStep": "the index of the currently selected step."
+              },
+              {
                 "currentState": "the state value associated with the currently selected step. Note you must set the state property on the step components for this value to update."
               }
             ]
