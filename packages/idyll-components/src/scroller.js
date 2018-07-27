@@ -23,7 +23,7 @@ const styles = {
     top: '50%',
     transform: 'translateY(-50%)',
     objectFit: 'cover',
-    backgroundColor: 'blue' // for debugging
+    backgroundColor: 'blue', // for debugging,
   }
 }
 
