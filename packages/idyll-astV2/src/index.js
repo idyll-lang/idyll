@@ -6,7 +6,7 @@
  * the package idyll-astV2. 
  */
 
-
+const error = require('./error'); 
 const Ajv = require("ajv");
 const ajv = new Ajv();
 const schema = require("../ast.schema.json");
@@ -25,16 +25,17 @@ const validatorProps = ajv.compile(schema.properties.properties);
  */
 const appendNode = function (ast, node) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (!validator(ast)) {
-    throw new MalformedAstError("Ast must be well-deinfed and follow the AST schema.");
+    console.log("Error message from validator: " + validator.errors[0].message);
+    throw new error.MalformedAstError("Ast must be well-defined and follow the AST schema.");
   }
   if (!validator(node)) {
-    throw new MalformedAstError("Passed node must be well-deinfed and follow the AST schema.");
+    throw new error.MalformedAstError("Passed node must be well-deinfed and follow the AST schema.");
   }
   return appendNodes(ast, [node]);
 };
@@ -51,17 +52,17 @@ const appendNode = function (ast, node) {
  */
 const appendNodes = function (ast, nodes) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
-  }
-  if (!validator(ast)) {
-    throw new MalformedAstError("Ast must be well-deinfed and follow the AST schema.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (!nodes.isArray()) {
-    throw new InvalidParameterError("Parameter nodes must be an array of node/children following the AST schema.");
+    throw new error.InvalidParameterError("Parameter nodes must be an array of node/children following the AST schema.");
+  }
+  if (!validator(ast)) {
+    throw new error.MalformedAstError("Ast must be well-deinfed and follow the AST schema.");
   }
   nodes.foreach((element) => {
     if (!validator(element)) {
-      throw new MalformedAstError("Value: " + element + "is not a well-defined node following the AST schema in nodes.");
+      throw new error.MalformedAstError("Value: " + element + "is not a well-defined node following the AST schema in nodes.");
     }
   });
   ast.children = ([]).concat(ast.children, nodes);
@@ -83,36 +84,36 @@ const appendNodes = function (ast, nodes) {
  */
 const createNode = function (id, name, type, props = null, children = null) {
   if (typeof id !== "integer") {
-    throw new InvalidParameterError("Paramter id must be an integer. ")
+    throw new error.InvalidParameterError("Paramter id must be an integer. ")
   }
   if (typeof name !== "string") {
-    throw new InvalidParameterError("Parameter name must be a string.");
+    throw new error.InvalidParameterError("Parameter name must be a string.");
   }
   if (typeof type != "string") {
-    throw new InvalidParameterError("Parameter type must be a string.");
+    throw new error.InvalidParameterError("Parameter type must be a string.");
   }
 
   if (type === "component") {
     if ((["value", "variable", "expression"]).indexOf(value) === -1) {
-      throw new InvalidParameterError("Value can only be value, expression or variable.");
+      throw new error.InvalidParameterError("Value can only be value, expression or variable.");
     }
   }
 
   if (props) {
     if (typeof props !== "object") {
-      throw new InvalidParameterError("Parameter props must be a Map of properties (name-data pair objects) of a node.");
+      throw new error.InvalidParameterError("Parameter props must be a Map of properties (name-data pair objects) of a node.");
     }
     if (validatorProps(props)) {
-      throw new InvalidParameterError("Paramete props is not a well-defined JSON according to the the AST schema. Look at schema.properties.properties!");
+      throw new error.InvalidParameterError("Paramete props is not a well-defined JSON according to the the AST schema. Look at schema.properties.properties!");
     };
   }
   if (children) {
     if (!children.isArray()) {
-      throw new InvalidParameterError("Parameter children must be an array of node/children following the AST schema.");
+      throw new error.InvalidParameterError("Parameter children must be an array of node/children following the AST schema.");
     }
     children.foreach((element) => {
       if (!validator(element)) {
-        throw new MalformedAstError("Value: " + element + "is not a well-defined node following the AST schema in children.");
+        throw new error.MalformedAstError("Value: " + element + "is not a well-defined node following the AST schema in children.");
       }
     });
   }
@@ -140,10 +141,10 @@ const createNode = function (id, name, type, props = null, children = null) {
  */
 const createTextNode = function (id, value) {
   if (typeof id !== "integer") {
-    throw new InvalidParameterError("Paramter id should be of type integer");
+    throw new error.InvalidParameterError("Paramter id should be of type integer");
   }
   if (typeof value !== "string") {
-    throw new InvalidParameterError("Paramter value should be of type string");
+    throw new error.InvalidParameterError("Paramter value should be of type string");
   }
   let texnode = new Object();
   textnode.id = id;
@@ -163,10 +164,10 @@ const createTextNode = function (id, value) {
  */
 const getChildren = function (node) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (!validator(node)) {
-    throw new MalformedAstError("Passed node must be a well-defined JSON object and must follow the AST schema.");
+    throw new error.MalformedAstError("Passed node must be a well-defined JSON object and must follow the AST schema.");
   }
   if (node.type === "textnode") {
     return [];
@@ -185,13 +186,13 @@ const getChildren = function (node) {
  */
 const getNodesByName = function (ast, name) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (typeof name !== "string") {
-    throw new InvalidParameterError("Parameter name must be a string");
+    throw new error.InvalidParameterError("Parameter name must be a string");
   }
   if (validator(ast)) {
-    throw new MalformedAstError("Passed node must be a well-defined JSON object and must follow the AST schema.");
+    throw new error.MalformedAstError("Passed node must be a well-defined JSON object and must follow the AST schema.");
   }
   let node = ast.children.filter((element) => (element.name === name));
   node = node.map((element) => Object.assign({}, element));
@@ -213,10 +214,10 @@ const getNodesByName = function (ast, name) {
  */
 const getText = function (node) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Passed node must be a well-defined JSON object and must follow the AST schema.");
+    throw new error.MalformedAstError("Passed node must be a well-defined JSON object and must follow the AST schema.");
   }
   const texts = [];
   walknodes(getChildren(node), (n) => {
@@ -241,13 +242,13 @@ Change findNodes ==> filterNodes
  */
 const filterNodes = function (ast, filter) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (typeof filter !== "function") {
-    throw new InvalidParameterError("Parameter filter must be a function.");
+    throw new error.InvalidParameterError("Parameter filter must be a function.");
   }
   if (validate(ast)) {
-    throw new MalformedAstError("Passed ast must be a well-defined JSON object and must follow the AST schema.");
+    throw new error.MalformedAstError("Passed ast must be a well-defined JSON object and must follow the AST schema.");
   }
   let result = [];
   walknodes(ast, node => {
@@ -267,13 +268,13 @@ const filterNodes = function (ast, filter) {
  */
 const modifyChildren = function (node, modifier) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (typeof modifier !== "function") {
-    throw new InvalidParameterError("Parameter modifier needs to be a function.");
+    throw new error.InvalidParameterError("Parameter modifier needs to be a function.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
   }
   //Keeping the functionality same as before for textnode
   if (node.type === "textnode") {
@@ -296,13 +297,13 @@ const modifyChildren = function (node, modifier) {
  */
 const filterChildren = function (node, filter) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (typeof filter !== "function") {
-    throw new InvalidParameterError("Parameter modifier needs to be a function.");
+    throw new error.InvalidParameterError("Parameter modifier needs to be a function.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
   }
   if (node.type === "textnode") {
     return node;
@@ -324,13 +325,13 @@ const filterChildren = function (node, filter) {
  */
 const pruneNodes = function (ast, filter) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (typeof filter !== "function") {
-    throw new InvalidParameterError("Parameter filter needs to be a function.");
+    throw new error.InvalidParameterError("Parameter filter needs to be a function.");
   }
   if (validator(ast)) {
-    throw new MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
   }
   let result = [ast].filter(filter).map((node) => {
     if (node.type === "textnode") {
@@ -352,16 +353,16 @@ const pruneNodes = function (ast, filter) {
  */
 const modifyNodesByName = function (ast, name, modifier) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (typeof name !== "object") {
-    throw new InvalidParameterError("Paramter name must be a string.");
+    throw new error.InvalidParameterError("Paramter name must be a string.");
   }
   if (typeof modifier !== "function") {
-    throw new InvalidParameterError("Parameter filter needs to be a function.");
+    throw new error.InvalidParameterError("Parameter filter needs to be a function.");
   }
   if (validator(ast)) {
-    throw new MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
   }
   ([ast] || []).map((node) => {
     modifyHelper(getChildren(node), name, modifier);
@@ -406,7 +407,7 @@ const handleNodeByName = function (node, name, modifier) {
  */
 const getNodeName = function(node) {
   if(node.type !== "compoenent") {
-    throw InvalidParameterError("PAramter node must be a component"); 
+    throw error.InvalidParameterError("PAramter node must be a component"); 
   }
   return node.name;
 }; 
@@ -421,13 +422,13 @@ const getNodeName = function(node) {
  */
 const getProperty = function (node, key) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (typeof key !== "string") {
-    throw new InvalidParameterError("Parameter key must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter key must be a well-defined JSON object.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
   }
   if (node.properties) {
     return node.properties.foreach((prop) => {
@@ -448,10 +449,10 @@ const getProperty = function (node, key) {
  */
 const getProperties = function (node) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
   }
   if (node.properties) {
     return node.properties;
@@ -469,13 +470,13 @@ const getProperties = function (node) {
  */
 const getPropertiesByType = function (node, type) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
   }
   if (typeof type !== "string" && (["value", "expression", "variable"].indexOf(type) === -1)) {
-    throw new InvalidParameterError("Type should be a value, expression or variable");
+    throw new error.InvalidParameterError("Type should be a value, expression or variable");
   }
   let res = [];
   if (node.properties) {
@@ -498,16 +499,16 @@ const getPropertiesByType = function (node, type) {
  */
 const prependNode = function (ast, node) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter node must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter node must be a well-defined JSON object.");
   }
   if (validator(ast)) {
-    throw new MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter node needs to be a JSON structure according to the schema.")
   }
   prependNodes(ast, [node]);
 };
@@ -522,17 +523,17 @@ const prependNode = function (ast, node) {
  */
 const prependNodes = function (ast, nodes) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (validator(ast)) {
-    throw new MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
   }
   if (!nodes.isArray()) {
-    throw new InvalidParameterError("Parameter nodes must be an array of node/children following the AST schema.");
+    throw new error.InvalidParameterError("Parameter nodes must be an array of node/children following the AST schema.");
   }
   nodes.foreach((element) => {
     if (!validator(element)) {
-      throw new MalformedAstError("Value: " + element + "is not a well-defined node following the AST schema in nodes.");
+      throw new error.MalformedAstError("Value: " + element + "is not a well-defined node following the AST schema in nodes.");
     }
   });
 
@@ -584,16 +585,16 @@ const removeProperty = function (node, key) {
  */
 const setProperty = function (node, name, data) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
   }
   if (typeof data !== "object") {
-    throw new InvalidParameterError("Parameter data must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter data must be a well-defined JSON object.");
   }
   if (typeof name !== "string") {
-    throw new InvalidParameterError("Parameter name must be a string.");
+    throw new error.InvalidParameterError("Parameter name must be a string.");
   }
   if (node.properties) {
     if (node.properties.hasOwnProperty(name)) {
@@ -622,16 +623,16 @@ const setProperty = function (node, name, data) {
  */
 const setProperties = function (node, properties) {
   if (typeof node !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (validator(node)) {
-    throw new MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
+    throw new error.MalformedAstError("Parameter ast needs to be a JSON structure according to the schema.")
   }
   if (typeof porperties !== "object") {
-    throw new InvalidParameterError("Parameter paramter must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter paramter must be a well-defined JSON object.");
   }
   if (validatorProps(properties)) {
-    throw new InvalidParameterError("Paramete props is not a well-defined JSON according to the the AST schema. Look at schema.properties.properties!");
+    throw new error.InvalidParameterError("Paramete props is not a well-defined JSON according to the the AST schema. Look at schema.properties.properties!");
   }
   if (node.properties) {
     node.properties = Object.assign({}, node.properties, properties);
@@ -651,13 +652,13 @@ const setProperties = function (node, properties) {
  */
 const walkNodes = function (ast, f) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (typeof f !== "function") {
-    throw new InvalidParameterError("Parameter f must be a function.");
+    throw new error.InvalidParameterError("Parameter f must be a function.");
   }
   if (validator(ast)) {
-    throw new MalformedAstError("Passed ast must be a well-defined JSON object and must follow the AST schema.");
+    throw new error.MalformedAstError("Passed ast must be a well-defined JSON object and must follow the AST schema.");
   }
   walkNodesHelper(ast, f);
 };
@@ -672,13 +673,13 @@ function walkNodesHelper(ast, f) {
 
 const walkNodesBreadthFirst = function (ast, f) {
   if (typeof ast !== "object") {
-    throw new InvalidParameterError("Parameter ast must be a well-defined JSON object.");
+    throw new error.InvalidParameterError("Parameter ast must be a well-defined JSON object.");
   }
   if (typeof f !== "function") {
-    throw new InvalidParameterError("Parameter f must be a function.");
+    throw new error.InvalidParameterError("Parameter f must be a function.");
   }
   if (validator(ast)) {
-    throw new MalformedAstError("Passed ast must be a well-defined JSON object and must follow the AST schema.");
+    throw new error.MalformedAstError("Passed ast must be a well-defined JSON object and must follow the AST schema.");
   }
   walkNodesBreadthFirstHelper();
 };
@@ -708,7 +709,7 @@ module.exports = {
   getProperties,
   getPropertiesByType,
   getText,
-  modfiyChildren,
+  modifyChildren,
   modifyNodesByName,
   prependNode,
   prependNodes,
