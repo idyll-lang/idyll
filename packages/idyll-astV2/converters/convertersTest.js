@@ -13,17 +13,14 @@ const example1 = {
             "id": 2, 
             "name": "TextConatiner", 
             "type": "component", 
-            "value": "value",
             "children": [
                 {
                     "id": 3,
                     "name": "p",
                     "type": "component", 
-                    "value": "value", 
                     "children": [
                         {
                             "id": 4, 
-                            "name": "textnode", 
                             "type": "textnode", 
                             "value": "This is the first paragraphs's text!"
                         }
@@ -36,23 +33,23 @@ const example1 = {
             "id": 5, 
             "name": "TextConatiner",
             "type": "component",
-            "value": "value",
             "children": [
                 {
                     "id": 6,
                     "name": "p",
                     "type": "component",
-                    "value": "value", 
                     "children": [
                         {   
                             "id": 7,
                             "type": "component",
                             "name": "a",
-                            "value": "value", 
                             "properties": [
                                 {
                                     "name": "href", 
-                                    "value": "https://www.example.com"
+                                    "data": {
+                                        "type": "value",
+                                        "value": "https://www.example.com"
+                                    }
                                 }
                             ],
                             "children" : [
@@ -60,11 +57,13 @@ const example1 = {
                                     "id": 8, 
                                     "type": "component", 
                                     "name": "img", 
-                                    "value": "value", 
                                     "properties": [
                                         {
                                             "name": "src", 
-                                            "value": "https://www.example.com/example-img.jpg"
+                                            "data": {
+                                                "type": "value",
+                                                "value": "https://www.example.cosm/example.jpg"
+                                            }
                                         }
                                     ]
                                 }

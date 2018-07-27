@@ -29,11 +29,11 @@ function convertHelper(jsonElement) {
         elementArray.push(jsonElement.name); 
         let propertiesArray = []; 
         if('properties' in jsonElement) {
-            jsonElement.properties.forEach(element => {
-                let propertyArray = [element.name];
-                propertyArray.push([jsonElement.value, element.value]); 
+            for(let property in jsonElement.properties) {
+                let propertyArray = [property.name];
+                propertyArray.push([property.data.type, property.data.value]); 
                 propertiesArray.push(propertyArray);
-            })
+            }
         }
         elementArray.push(propertiesArray); 
         if('children' in jsonElement) {
@@ -58,7 +58,6 @@ const inverseConvert = function(arrayAst) {
     jsonAst.id = 1;
     jsonAst.type = "component"; 
     jsonAst.name = "root"; 
-    jsonAst.value = "value"; 
     jsonAst.children = [];
     let id = 1; 
     arrayAst.forEach((element) => {
@@ -80,24 +79,20 @@ function inverseConvertHelper(arrayElement, id) {
     id++; 
     if(typeof arrayElement === 'string') {
         elementJson.type = "textnode"; 
-        elementJson.name = "textnode"; 
         elementJson.value = arrayElement; 
     } else {
         elementJson.type = "component"; 
         elementJson.name = arrayElement[0];
-        if(arrayElement[1].length === 0) {
-            elementJson.value = "value"; 
-        } else {
-            console.log("right here:" + arrayElement);
-            elementJson.value = arrayElement[1][0][1][0]; 
-            let properties = []; 
-            arrayElement[1].forEach((element) => {
-                let property = new Object(); 
-                property.name = element[0]; 
-                property.value = element[1][1]; 
-                properties.push(property); 
+        if(arrayElement[1].length !== 0) {
+            elementJson.properties = {}; 
+            arrayElement[1].forEach((property) => {
+                let value = new Object; 
+                value.name = property[1]; 
+                value.data = new Object(); 
+                value.data.type = property[1][0]; 
+                value.data.value = property[1][1];  
+                elementJson.properties = Object.assign(value, elementJson.properties); 
             }); 
-            elementJson.properties = properties; 
         }
         if(arrayElement[2]) {
             let children = []; 
