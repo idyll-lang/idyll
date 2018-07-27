@@ -29,7 +29,7 @@ const Contents = [
     pages: [
       { title: 'Github', route: 'https://github.com/idyll-lang/idyll' },
       { title: 'Chat', route: 'https://gitter.im/idyll-lang/Lobby' },
-      { title: 'Mailing List', route: 'https://groups.google.com/forum/#!forum/idyll-lang' },
+      { title: 'Twitter', route: 'https://twitter.com/idyll_lang' },
       { title: 'Support Us', route: 'https://opencollective.com/idyll' }
     ],
   },

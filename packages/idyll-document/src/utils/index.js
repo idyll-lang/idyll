@@ -1,61 +1,44 @@
 const values = require('object.values');
 const entries = require('object.entries');
+const falafel = require('falafel');
+
+export const buildExpression = (acc, expr, key, context, isEventHandler) => {
+  return `
+    ((context) => {
+        var __idyllStateProxy = new Proxy({}, {
+          get: (_, prop) => {
+            return context[prop];
+          },
+          set: (_, prop, value) => {
+            var newState = {};
+            newState[prop] = value;
+            context.update(newState);
+            return true;
+          }
+        })
+        ${falafel(isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`, (node) => {
+          switch(node.type) {
+            case 'Identifier':
+              if (Object.keys(acc).indexOf(node.name) > -1) {
+                node.update('__idyllStateProxy.' + node.source());
+              }
+              break;
+          }
+        })};
+        ${isEventHandler ? '' : 'return __idyllReturnValue;'}
+    })(this)
+  `;
+}
+
 
 export const evalExpression = (acc, expr, key, context) => {
-  let e;
-  if (key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/))) {
-    let setState = setState;
-    e = `
-      (() => {
-          ${
-            Object.keys(acc)
-              .filter(key => expr.includes(key))
-              .map(key => {
-                if (key === 'refs') {
-                  // delete each ref's domNode property
-                  // because it can't be serialized
-                  values(acc[key]).forEach(v => {
-                    delete v.domNode;
-                  })
-                }
-                return `var ${key} = this.${key};`;
-              })
-              .join('\n')
-          }
-          ${expr};
-          context.update({ ${
-            Object.keys(acc)
-              .filter(key => expr.includes(key) && key !== 'refs')
-              .map(key => `${key}: ${key}`)
-              .join(', ')
-          }});
-      })()
-    `;
+  const isEventHandler = (key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/)));
+  let e = buildExpression(acc, expr, key, context, isEventHandler);
 
+  if (isEventHandler) {
     return (function() {
       eval(e);
     }).bind(Object.assign({}, acc, context || {}));
-  } else {
-    e = `
-      ((context) => {
-        ${
-          Object.keys(acc)
-            .filter(key => expr.includes(key))
-            .map(key => {
-              if (key === 'refs') {
-                // delete each ref's domNode property
-                // because it can't be serialized
-                values(acc[key]).forEach(v => {
-                  delete v.domNode;
-                })
-              }
-              return `var ${key} = context.${key};`;
-            })
-            .join('\n')
-        }
-        return ${expr};
-      })(this)
-    `;
   }
 
   try {

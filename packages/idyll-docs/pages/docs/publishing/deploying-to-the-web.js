@@ -23,7 +23,9 @@ this will compile the assets and then publish it on the idyll.pub server. Note t
 the [meta component](https://idyll-lang.org/docs/components/default/meta) is
 useful for inserting metadata into the compiled output.
 
-If you wish to update the post,
+If you wish to update the post, simply rerun the \`idyll publish\` command.
+
+*Note: running \`idyll publish\` does not automatically rebuild your project.*
 
 ## Other hosting
 

@@ -53,7 +53,8 @@ const components = [
             "image": "scroller.gif",
             "idyllProps": [
               {
-                "currentStep": "the index of the currently selected step."
+                "currentStep": "the index of the currently selected step.",
+                "currentState": "the state value associated with the currently selected step. Note you must set the state property on the step components for this value to update."
               }
             ]
           }
@@ -217,6 +218,12 @@ const components = [
               },
               {
                 "type": "The type of the chart to display, can be `line`, `scatter`, `bar`, `pie`, or `time`. The time type is a line chart that expects the `x` values in the data to be in the temporal domain."
+              },
+              {
+                "domain": "The chart extent along the x dimension."
+              },
+              {
+                "range": "The chart extent along the y dimension."
               }
             ]
           }

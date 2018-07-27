@@ -2,6 +2,11 @@
   "name": "idyll-basic-template",
   "version": "1.0.0",
   "license": "MIT",
+  "idyll": {
+    "theme": "github",
+    "layout": "blog",
+    "css": "styles.css"
+  },
   "dependencies": {
     "idyll": "^3.0.0",
     "idyll-d3-component": "^2.0.0",

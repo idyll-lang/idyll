@@ -2,14 +2,13 @@
 
 const fs = require('fs-extra');
 const p = require('path');
-const { spawn } = require('child_process');
+const spawn = require('cross-spawn');
 
 const yargs = require('yargs');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const ora = require('ora');
 
-const DEFAULT_COMPONENTS_DIR = p.join(p.dirname(require.resolve('idyll-components')), '..', '..', 'src');
 const TEMPLATES_DIR = p.join(p.dirname(require.resolve('idyll-template-projects')), 'templates');
 
 const colors = {
@@ -18,8 +17,8 @@ const colors = {
   failure: chalk.red
 };
 
-exports.command = 'create [project-name]';
-exports.description = 'Create a new project';
+exports.command = 'create [post-name]';
+exports.description = 'Create a new post';
 exports.builder = builder;
 exports.handler = main;
 
@@ -27,8 +26,8 @@ let _template;
 
 function builder (yargs) {
   return yargs
-    .usage('Usage: $0 create <project-name>')
-    .example('$0 create example-project');
+    .usage('Usage: $0 create <post-name>')
+    .example('$0 create example-post');
 }
 
 function main (argv) {
@@ -44,15 +43,15 @@ function main (argv) {
     let questions = [];
     if (!projectDir) {
       questions.push({
-        name: 'project-dir',
-        message: 'Which directory would you like to install your project in?',
-        default: 'my-idyll-project'
+        name: 'post-dir',
+        message: 'In which directory would you like to install your post?',
+        default: 'my-idyll-post'
       })
     }
     questions.push({
       name: 'package-name',
-      message: 'What would you like to name your project?',
-      default: answers => answers['project-dir'] || projectDir
+      message: 'What would you like to name your post?',
+      default: answers => answers['post-dir'] || projectDir
     });
     // questions.push({
     //   name: 'template',
@@ -65,7 +64,7 @@ function main (argv) {
   }
 
   async function ensureDefaults (answers) {
-    if (!answers['project-dir']) answers['project-dir'] = projectDir;
+    if (!answers['post-dir']) answers['post-dir'] = projectDir;
     return answers;
   }
 }
@@ -73,20 +72,20 @@ function main (argv) {
 async function createProject (answers) {
   let name = answers['package-name'];
   let template = _template.value; // answers['template'];
-  let dir = answers['project-dir'];
+  let dir = answers['post-dir'];
 
-  let startMessage = `\nCreating a new Idyll project in ${dir} using the ${template} template...`
-  let successMessage = 'Finished creating the project!';
+  let startMessage = `\nCreating a new Idyll post in ${dir} using the ${template} template...`
+  let successMessage = 'Finished creating the post!';
   let doneInstructionsText = `To start developing, run the following commands in your terminal:`;
   let doneInstructionsCommand = `    cd ${dir}\n    idyll`;
   let dirExistsMessage = 'That directory already exists. Please ensure that your target directory\
 \ does not exist.';
-  let errorMessage = `Could not create Idyll project in ${dir}`;
+  let errorMessage = `Could not create Idyll post in ${dir}`;
 
   let stages = [
     ['Ensuring that the target directory is valid', ensureEmptyProject],
     ['Copying files from template directory into the target directory', copyFiles],
-    ['Configuring project', fillTemplates],
+    ['Configuring post', fillTemplates],
     ['Installing dependencies', installDependencies]
   ];
 
@@ -123,7 +122,8 @@ async function createProject (answers) {
 
   async function copyFiles (proceed) {
     await fs.copy(getTemplatePath(template), dir);
-    await fs.copy(DEFAULT_COMPONENTS_DIR, p.join(dir, 'components', 'default'));
+    await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    await fs.move(p.join(dir, 'nojekyll'), p.join(dir, '.nojekyll'));
   }
 
   async function fillTemplates () {

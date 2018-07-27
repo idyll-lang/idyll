@@ -12,6 +12,8 @@ const idyllMarkup = `
 
 Idyll is an open-source markup language and toolkit for producing interactive web pages. You give Idyll a markup file, and it compiles that file to a full bundle of HTML, JavaScript, and CSS that can run in anyone’s web browser.
 
+Idyll can be used to create explorable explanations, and to add interactivity to blog engines and content management systems. The tool can generate standalone webpages or be embedded inside of an existing page, and can be fully themed to match your styleguide.
+
 ## Familiar Markup
 
 Idyll starts with the same principles as markdown, and uses a lot of the same syntax. If you want text to appear in your output, just start writing.
@@ -46,7 +48,7 @@ Idyll includes a number of useful components by default, for example here is a c
   samplePoints:1000 /]
 \`\`\`
 
-Currently its static, but variables can be used to parameterize the output, allowing the chart to dynamically update. For example, we can give it a
+Currently it's static, but variables can be used to parameterize the output, allowing the chart to dynamically update. For example, we can give it a
 variable domain, and a variable function to plot.
 
 [var name:"func" value:\`Math.sin\` /]
