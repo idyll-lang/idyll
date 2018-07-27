@@ -67,6 +67,10 @@ input {
   position: sticky;
 }
 
+.idyll-scroll-graphic img {
+  max-height: 100vh;
+}
+
 @media all and (max-width: 1600px) {
   .fixed {
     width: calc((85vw - 600px) - 50px);

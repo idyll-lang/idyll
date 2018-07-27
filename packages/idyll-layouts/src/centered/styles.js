@@ -38,6 +38,10 @@ input {
   position: sticky;
 }
 
+.idyll-scroll-graphic {
+  max-height: 100vh;
+}
+
 @media all and (max-width: 1000px) {
 
   .idyll-root {
