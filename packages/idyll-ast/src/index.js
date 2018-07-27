@@ -90,7 +90,7 @@ const walkNodesBreadthFirst = function (ast, f) {
     childAst = childAst.concat(getChildren(node));
   });
   if(childAst.length !== 0) {
-      walkNodesBreadthFirst(childAst, f);
+    walkNodesBreadthFirst(childAst, f);
   }
 }; 
 const findNodes = function(ast, filter) {

@@ -6,11 +6,9 @@ const { cleanNewlines } = require('./processors/pre');
 const { hoistVariables, flattenChildren, cleanResults, makeFullWidth, wrapText, autoLinkify } = require('./processors/post');
 const matter = require('gray-matter');
 
-module.exports = function(input, options, callback) {
-  input = Processor(input).pipe(cleanNewlines).end();
-
+module.exports = function(input, options, callback) { 
+  input = Processor(input).pipe(cleanNewlines).end();  
   const { content, data } = matter(input.trim());
-
   options = Object.assign({}, { spellcheck: false, smartquotes: true, async: true }, options || {});
   const lex = Lexer();
   let lexResults = '', output = [];
@@ -26,8 +24,12 @@ module.exports = function(input, options, callback) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
     return new Promise((resolve, reject) => reject(err));
   }
-
+ 
   let astTransform = Processor(output, options)
+    .pipe((ast) => {
+      console.log(ast + "");
+      return ast;  
+    })  
     .pipe(hoistVariables)
     .pipe(flattenChildren)
     .pipe(makeFullWidth)
