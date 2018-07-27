@@ -40,9 +40,7 @@
                     	}
                     }
                 }
-            }, 
-            "minItems": 1, 
-            "uniqueItems": true
+            }
         }, 
         "children": {
             "description": "The children of the element.",
@@ -59,7 +57,7 @@
             					"id" : "integer"
             				}, 
             				"type": {
-            					"description": "The type category of the element (component/textnode)",
+            					"description": "The type category of the element",
             					"type": "string",
             					"enum": ["textnode"]
             				},
