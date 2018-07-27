@@ -3,10 +3,8 @@ const { filterChildren, mapChildren } = require('idyll-component-children');
 import TextContainer from './text-container';
 const d3 = require('d3-selection');
 
-
 const styles = {
   SCROLL_GRAPHIC: {
-    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -15,13 +13,6 @@ const styles = {
     width: '100%',
     transform: `translate3d(0, 0, 0)`,
     zIndex: -1
-  },
-  SCROLL_GRAPHIC_FIXED: {
-    position: 'fixed'
-  },
-  SCROLL_GRAPHIC_BOTTOM: {
-    bottom: 0,
-    top: 'auto'
   },
 
   SCROLL_GRAPHIC_INNER: {
@@ -41,8 +32,6 @@ class Scroller extends React.Component {
     super(props);
     this.id = id++;
     this.state = {
-      isFixed: false,
-      isBottom: false,
       graphicHeight: 0,
       graphicWidth: 0
     };
@@ -50,7 +39,6 @@ class Scroller extends React.Component {
     this.SCROLL_STEP_MAP = {};
     this.SCROLL_NAME_MAP = {};
   }
-
 
   componentDidMount() {
     require('intersection-observer');
@@ -69,7 +57,7 @@ class Scroller extends React.Component {
       .onStepEnter(this.handleStepEnter.bind(this))
       // .onStepExit(handleStepExit)
       .onContainerEnter(this.handleContainerEnter.bind(this))
-      .onContainerExit(this.handleContainerExit.bind(this));
+      //.onContainerExit(this.handleContainerExit.bind(this));
 
 
     // setup resize event
@@ -94,27 +82,23 @@ class Scroller extends React.Component {
       graphicWidth: window.innerWidth + 'px',
     });
   }
+
   handleContainerEnter(response) {
     if (this.props.disableScroll && (!this.props.currentStep || this.props.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)) {
       d3.select('body').style('overflow', 'hidden');
     }
-    this.setState({ isFixed: true, isBottom: false });
-  }
-
-  handleContainerExit(response) {
-    this.setState({ isFixed: false, isBottom: response.direction === 'down'});
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.disableScroll && this.props.currentStep !== nextProps.currentStep) {
       d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
-        .filter(function (d, i) { return i === nextProps.currentStep;})
+        .filter(function (d, i) { return i === nextProps.currentStep; })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
     if (nextProps.disableScroll && this.props.currentState !== nextProps.currentState) {
       d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
-        .filter( (d, i) => { return nextProps.currentState === this.SCROLL_NAME_MAP[i] })
+        .filter((d, i) => { return nextProps.currentState === this.SCROLL_NAME_MAP[i] })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
@@ -123,22 +107,19 @@ class Scroller extends React.Component {
     }
   }
 
-  registerStep(elt, name, val)  {
+  registerStep(elt, name, val) {
     this.SCROLL_STEP_MAP[elt] = val;
     this.SCROLL_NAME_MAP[elt] = name;
   }
 
   render() {
     const { hasError, updateProps, idyll, children, ...props } = this.props;
-    const { isFixed, isBottom, graphicHeight, graphicWidth } = this.state;
+    const { graphicHeight, graphicWidth } = this.state;
     return (
-      <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`} style={{position: 'relative'}}>
+      <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`} 
+        style={Object.assign({ position: 'relative' })}>
         <div className="idyll-scroll-graphic"
-          style={Object.assign({ height: graphicHeight },
-            styles.SCROLL_GRAPHIC,
-            isFixed ? styles.SCROLL_GRAPHIC_FIXED : {},
-            isBottom ? styles.SCROLL_GRAPHIC_BOTTOM : {})} >
-
+          style={Object.assign({ height: graphicHeight }, styles.SCROLL_GRAPHIC)} >
           <div style={Object.assign({ width: graphicWidth }, styles.SCROLL_GRAPHIC_INNER)}>
             {filterChildren(
               children,
@@ -151,15 +132,15 @@ class Scroller extends React.Component {
         <TextContainer idyll={idyll}>
           <div className="idyll-scroll-text">
             {mapChildren(filterChildren(
-                children,
-                (c) => {
-                  return !c.type.name || c.type.name.toLowerCase() === 'step';
-                }
-              ), (c) => {
-                return React.cloneElement(c, {
-                  registerStep: this.registerStep.bind(this)
-                });
-              })}
+              children,
+              (c) => {
+                return !c.type.name || c.type.name.toLowerCase() === 'step';
+              }
+            ), (c) => {
+              return React.cloneElement(c, {
+                registerStep: this.registerStep.bind(this)
+              });
+            })}
           </div>
         </TextContainer>
       </div>
