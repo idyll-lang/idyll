@@ -12,7 +12,7 @@ const styles = {
     height: '100vh',
     width: '100%',
     transform: `translate3d(0, 0, 0)`,
-    zIndex: -1
+    zIndex: -1,
   },
 
   SCROLL_GRAPHIC_INNER: {
@@ -22,8 +22,7 @@ const styles = {
     right: 0,
     top: '50%',
     transform: 'translateY(-50%)',
-    objectFit: 'cover',
-    backgroundColor: 'blue', // for debugging,
+    objectFit: 'cover', // TODO might remove
   }
 }
 
@@ -122,7 +121,7 @@ class Scroller extends React.Component {
         style={Object.assign({ position: 'relative' })}>
         <div className="idyll-scroll-graphic"
           style={Object.assign({ height: graphicHeight }, styles.SCROLL_GRAPHIC)} >
-          <div style={Object.assign({ width: graphicWidth }, styles.SCROLL_GRAPHIC_INNER)}>
+          <div style={Object.assign({ width: graphicWidth}, styles.SCROLL_GRAPHIC_INNER)}>
             {filterChildren(
               children,
               (c) => {
