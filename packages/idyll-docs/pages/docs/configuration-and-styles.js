@@ -4,31 +4,13 @@ import Layout from '../../components/layout'
 import Highlight from 'react-highlight'
 
 const Content = () => markdown`
-# Configuration and Styles
-
-## Command line options
-
-The \`idyll\` command line tool accepts the following options
-
-* \`--components\` the path to your custom components. By default this points to \`components/\`. This can be a string (a single path), or an array.
-* \`--defaultComponents\` the path to Idyll's built-in components. By default this isn't set and it uses the latest package from npm.
-* \`--css\` the path to your CSS file. You can use this to override Idyll's default styles, e.g. \`$ idyll index.idl --css my-custom-styles.css\`.
-* \`--datasets\` the path to the folder containing your datasets. By default this points to \`data/\`.
-* \`--inputString\` a string of Idyll markup. Use this flag to compile a string instead of a file.
-* \`--layout\` the name of the layout to use. By default this is \`blog\`. More on layouts below.
-* \`--no-minify\` turn code minification off when building for production.
-* \`--no-ssr\` turn server-side rendering off when building for production.
-* \`--output\` the folder in which to place build output.
-* \`--theme\` the name of the theme to use. By default this is \`idyll\`. More on themes below.
-* \`--template\` a custom HTML template to use. The default template is can be found [here](https://github.com/idyll-lang/idyll/blob/master/packages/idyll-cli/src/client/_index.html).
-* \`--watch\` the watch flag tells Idyll if it should watch files for changes, or just run once and exit.
-
-If you are using Idyll via the project generator, open \`package.json\` to change these options.
 
 ## Themes and page layout
 
 Idyll exposes two options to help you style your project, \`layout\` and \`theme\`. \`layout\` deals with CSS styles related to how your content is
 layed out on the page: width, columns, etc. The \`theme\` option allows you to choose different stylesheets to change the style of the content itself (text color, font, and so on).
+
+If more customization is required, you can provide a custom HTML template, and Idyll will generate articles within that custom template (see the "template" option above).
 
 ### Layout
 
@@ -94,11 +76,30 @@ idyll
   .on('update', () => { console.log('Finished.') });
 `
 
-
-
 export default ({ url }) => (
   <Layout url={ url }>
     <link rel="stylesheet" href="../../static/styles/tomorrow-night-eighties.css" />
+
+    <h1>Configuration and Styles</h1>
+
+    <p>Idyll is typically configured via options set in package.json, but all these same options can be configured via command line flags or when using Idyll as an API.</p>
+
+    <h2>Options</h2>
+
+
+    <ul>
+      <li><b>layout</b> - the name of the layout to use. By default this is "blog". More on layouts below.</li>
+      <li><b>theme</b> - the name of the theme to use. By default this is "github". More on themes below.</li>
+      <li><b>template</b> - a custom HTML template to use. The default template is can be found <a href="https://github.com/idyll-lang/idyll/blob/master/packages/idyll-cli/src/client/_index.html">here</a></li>
+      <li><b>components</b> - the path to your custom components. By default this points to "components". This can be a string (a single path), or an array.</li>
+      <li><b>css</b> - the path to a CSS file. You can use this to override Idyll's default styles.</li>
+      <li><b>datasets</b> - the path to the folder containing your datasets. By default this points to "data/".</li>
+      <li><b>no-minify</b> - turn code minification off when building for production.</li>
+      <li><b>no-ssr</b> - turn server-side rendering off when building for production.</li>
+      <li><b>output</b> - the folder in which to place build output..</li>
+      <li><b>inputString</b> - string of Idyll markup. Use this flag to compile a string instead of a file.</li>
+    </ul>
+
     <Content />
 
     <section>

@@ -113,6 +113,7 @@ class IdyllDocsLayout extends React.Component {
             position: fixed;
             left: 0;
             top: 70px;
+            overflow-y: 'auto';
             bottom: 0;
             width: ${NavWidth}%;
             min-width: 130px;
