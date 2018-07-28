@@ -38,7 +38,7 @@ input {
   position: sticky;
 }
 
-.idyll-scroll-graphic {
+.idyll-scroll-graphic img {
   max-height: 100vh;
 }
 
