@@ -123,18 +123,19 @@ const getGoogleFontsUrl = ({ googleFonts }) => {
     return null;
   }
 
-  let url = 'https://fonts.googleapis.com/css?';
+  let url = 'https://fonts.googleapis.com/css?family=';
 
   if (googleFonts && typeof googleFonts === 'string') {
     return url + formatFont(googleFonts);
   } else if (googleFonts && googleFonts.length) {
-    return googleFonts + googleFonts.map(formatFont).join('|');
+    return url + googleFonts.map(formatFont).join('|');
   }
 
   return null;
 }
 
 exports.getBaseHTML = (ast, template, opts) => {
+
   return mustache.render(template, Object.assign({ googleFontsUrl: getGoogleFontsUrl(opts) }, parseMeta(ast)));
 }
 
