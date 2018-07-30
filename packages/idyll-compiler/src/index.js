@@ -25,11 +25,7 @@ module.exports = function(input, options, callback) {
     return new Promise((resolve, reject) => reject(err));
   }
  
-  let astTransform = Processor(output, options)
-    .pipe((ast) => {
-      console.log(ast + "");
-      return ast;  
-    })  
+  let astTransform = Processor(output, options) 
     .pipe(hoistVariables)
     .pipe(flattenChildren)
     .pipe(makeFullWidth)
