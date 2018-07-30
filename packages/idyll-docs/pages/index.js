@@ -60,9 +60,10 @@ The value of x is [Display value:x format:"d" /].
     return (
       <div>
         <Head>
-          <title>Idyll</title>
+          <title>Idyll | A markup language for interactive and data-driven blogging.</title>
           <meta charSet='utf-8' />
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+          <meta name="google-site-verification" content="x8iagm4GsmQYhR6hLHmcKjtgHqDxEvTbQ19FiggLTv0" />
           <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
           <meta property='og:image' content='https://idyll-lang.org/static/images/twitter-share.png' />
           <meta property='og:description' content="Create data-driven stories, explorable explanations, and interactive blog posts." />

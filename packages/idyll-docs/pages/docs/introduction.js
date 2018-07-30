@@ -165,7 +165,7 @@ Idyll is supported by the Interactive Data Lab at the University of Washington, 
 `
 
 export default ({ url }) => (
-  <Layout url={ url }>
+  <Layout url={ url } title={'Idyll Documentation | An overview.'}>
     <IdyllDocument layout='centered' markup={idyllMarkup} components={Object.assign({}, components, { Donate })} />
     <p style={{marginBottom: 30}}>
       Continue to the <Link href="/docs/getting-started"><a>next section</a></Link> to start using Idyll.

@@ -207,7 +207,7 @@ converted to a JSON object.
 
 
 export default ({ url }) => (
-  <Layout url={ url }>
+  <Layout url={ url } title={'Idyll Documentation | Markup Syntax'}>
     <Content />
     <p>
       Continue to the next section to learn about{' '}

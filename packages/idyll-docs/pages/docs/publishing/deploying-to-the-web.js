@@ -42,7 +42,7 @@ this will compile files and place them inside of the \`build/\` folder.
 
 
 export default ({ url }) => (
-  <Layout url={ url }>
+  <Layout url={ url } title={'Idyll Documentation | Deploying an Idyll article to the web.'} >
     <Content />
   </Layout>
 )

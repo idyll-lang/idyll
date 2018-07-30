@@ -3,7 +3,10 @@ import { Link } from '../routes';
 import Layout from '../components/basic-layout';
 import { indexedItems } from '../gallery/contents';
 import { logPageView, initGA } from '../components/analytics';
+import Head from 'next/head'
 
+const imageUrl = (url) => /^http/.test(url) ? url : `https://idyll-lang.org/static/images/${url}`;
+const description = (item) => `Idyll Example | ${item.label} - ${item}`;
 
 export default class IdyllComponentPage extends React.PureComponent {
 
@@ -31,6 +34,19 @@ export default class IdyllComponentPage extends React.PureComponent {
     const item = indexedItems[url.query.slug];
     return (
       <div>
+        <Head>
+          <title>Idyll Example | {item.label}</title>
+          <meta property='og:title' content="Idyll" />
+
+          <meta property='og:url' content={`https://idyll-lang.org/gallery/${url.query.slug}`} />
+
+          <meta name='description' content={description(item)} />
+          <meta name="twitter:description" content={description(item)} />
+          <meta property='og:description' content={description(item)} />
+
+          <meta name="twitter:image" content={imageUrl(item.image)} />
+          <meta property='og:image' content={imageUrl(item.image)} />
+        </Head>
         <div className="toolbar">
           <div><Link href="/gallery"><a>← More Articles</a></Link></div>
           <div>{item.label} <a href={item.href} style={{textDecoration: 'underline'}}>(url)</a></div>
