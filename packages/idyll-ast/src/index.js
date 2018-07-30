@@ -46,8 +46,7 @@ const createNode = function(name, props, children) {
  */
 const createTextNode = function(text) { 
   if(typeof text === 'string') {
-    let node = [text]; 
-    return node; 
+     return text;
   }
 }
 

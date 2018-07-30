@@ -186,10 +186,10 @@ function hyperLinkifiedVersion(node) {
 /**
  * Helper function that seperates hyperlinks from textnodes
  * @param {*} textnode 
- * @param {*} hyperlinks  Hyperlink array that has all te hyperlinks occuring in the textnode in order of appearance. 
+ * @param {*} hyperlinks  Hyperlink array that has all the hyperlinks occuring in the textnode in order of appearance. 
  * @return a new span element encampassing all the new textnodes and anchor tag. 
  */
-function seperateTextAndHyperLink(textnode, hyperlinks) {
+function seperateTextAndHyperLink(textnode, hyperlinks) { 
   let match;                           
   let hyperLinkIndex = 0;              
   let substringIndex = 0; 
@@ -204,10 +204,13 @@ function seperateTextAndHyperLink(textnode, hyperlinks) {
       let anchorElement = createNode("a", [], [hyperlinks[hyperLinkIndex]]); 
       setProperty(anchorElement, "href", hyperlinks[hyperLinkIndex]);
       newChildNodes.push(anchorElement); 
-      textnode.substring(linkEndIndex);
-      substringIndex = linkEndIndex;   
+      textnode = textnode.substring(linkEndIndex);
+      substringIndex = 0;   
     }
     hyperLinkIndex++;
+  }
+  if(textnode != "") {
+    newChildNodes.push(createTextNode(textnode)); 
   }
   return createNode("span", [], newChildNodes); 
 }
