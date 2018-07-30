@@ -63,7 +63,7 @@ update one of these components or their styles, feel free - Idyll is built to be
 
 
 export default ({ url }) => (
-  <Layout url={ url }>
+  <Layout url={ url } title={'Idyll Documentation | Installation and Getting Started'}>
     <Content />
     <p>
       Continue to the <Link href="/docs/syntax"><a>next section</a></Link> to learn how to use Idyll's syntax.

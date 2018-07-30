@@ -4,7 +4,7 @@ import Layout from '../../../components/layout'
 import Highlight from 'react-highlight'
 
 export default ({ url }) => (
-  <Layout url={url}>
+  <Layout url={url} title={'Idyll Documentation | Embedding Idyll on a webpage'}>
     <link rel="stylesheet" href="../../../static/styles/tomorrow-night-eighties.css" />
     <div>
 

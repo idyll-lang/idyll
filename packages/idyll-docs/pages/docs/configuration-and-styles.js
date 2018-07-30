@@ -77,7 +77,7 @@ idyll
 `
 
 export default ({ url }) => (
-  <Layout url={ url }>
+  <Layout url={ url } title={'Idyll Documentation | Configuration and Styles'}>
     <link rel="stylesheet" href="../../static/styles/tomorrow-night-eighties.css" />
 
     <h1>Configuration and Styles</h1>
@@ -99,6 +99,18 @@ export default ({ url }) => (
       <li><b>output</b> - the folder in which to place build output..</li>
       <li><b>inputString</b> - string of Idyll markup. Use this flag to compile a string instead of a file.</li>
     </ul>
+
+    For example, package.json might contain the following:
+
+    <Highlight className='javascript'>
+{`
+  "idyll": {
+    "layout": "blog",
+    "theme": "my-custom-theme.css",
+    "components": ["./components/", "../some-other-components/"]
+  }
+`}
+    </Highlight>
 
     <Content />
 

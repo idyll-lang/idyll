@@ -4,7 +4,7 @@ import Highlight from 'react-highlight'
 import markdown from 'markdown-in-js'
 
 export default ({ url }) => (
-  <Layout url={url}>
+  <Layout url={url} title={'Idyll Documentation | Creating a custom component'} >
     <link rel="stylesheet" href="../../../static/styles/tomorrow-night-eighties.css" />
     <div>
       <h1>Custom Components</h1>
@@ -90,7 +90,7 @@ module.exports = Incrementer;`}
       <h2>Name resolution</h2>
 
       <p>Components lookup is based on filenames. If your component name
-      is <code>MyComponent</code>, it will match files like 
+      is <code>MyComponent</code>, it will match files like
       <code>mycomponent.js</code> or <code>my-component.js</code>.
       The component filenames are case insensitive.</p>
 

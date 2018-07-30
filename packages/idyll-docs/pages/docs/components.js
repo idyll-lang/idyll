@@ -175,7 +175,7 @@ class IdyllComponentSection extends React.Component {
 const groups = Contents.map(groupObj => new IdyllComponentGroup(groupObj))
 
 export default ({ url }) => (
-  <Layout url={ url }>
+  <Layout url={ url } title={'Idyll Documentation | Standard Component Library'}>
     <h1>Built-In Components</h1>
     <p>
       Idyll ships with a handful of components that handle common tasks. They are broken into four categories:{' '}

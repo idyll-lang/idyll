@@ -4,7 +4,7 @@ import markdown from 'markdown-in-js'
 import Highlight from 'react-highlight'
 
 export default ({ url }) => (
-  <Layout url={url}>
+  <Layout url={url} title={'Idyll Documentation | Scrolling and DOM References'} >
     <link rel="stylesheet" href="../../../static/styles/tomorrow-night-eighties.css" />
     <div>
       <h1>Viewport Events</h1>

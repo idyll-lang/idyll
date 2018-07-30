@@ -4,7 +4,7 @@ import Layout from '../../components/layout'
 import Highlight from 'react-highlight'
 
 export default ({ url }) => (
-  <Layout url={url}>
+  <Layout url={url} title={'Idyll Documentation | Advanced Configuration'}>
     <link rel="stylesheet" href="../../../static/styles/tomorrow-night-eighties.css" />
     <div>
 
@@ -22,6 +22,14 @@ export default ({ url }) => (
       </p>
 
       <p>
+        See available plugins:
+
+        <ul>
+          <li><a href="https://github.com/idyll-lang/idyll-plugins">https://github.com/idyll-lang/idyll-plugins</a></li>
+        </ul>
+      </p>
+
+      <p>
       These transformations are implemented as JavaScript modules.
       </p>
 
@@ -34,7 +42,7 @@ module.exports = (ast) => {
 };`}
       </Highlight>
 
-      <p>The above is code for a simple plugin that will append a div to the end of any AST that is provided. See <a href="https://github.com/idyll-lang/idyll-postprocessors">https://github.com/idyll-lang/idyll-postprocessors</a> for more useful real-world plugins. The <a href="https://github.com/idyll-lang/idyll/tree/master/packages/idyll-ast">idyll-ast</a> module provides useful helper functions for manipulating the AST structure.</p>
+      <p>The above is code for a simple plugin that will append a div to the end of any AST that is provided. The <a href="https://github.com/idyll-lang/idyll/tree/master/packages/idyll-ast">idyll-ast</a> module provides useful helper functions for manipulating the AST structure.</p>
 
       <p>
         To add a compiler postprocessor to your project, update the configuration in package.json.
