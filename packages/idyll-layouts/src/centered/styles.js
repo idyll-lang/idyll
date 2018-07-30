@@ -39,6 +39,7 @@ input {
 }
 
 .idyll-scroll-graphic img {
+  display: block;
   max-height: 100vh;
 }
 
