@@ -1,4 +1,3 @@
-const inspector = require('inspector');
 var expect = require('expect.js');
 var Lexer = require('../src/lexer');
 var compile = require('../src');
