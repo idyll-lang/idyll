@@ -162,7 +162,7 @@ const autoLinkify = (ast) => {
 function autoLinkifyHelper(node) {
   if(typeof node === 'string') {
     return hyperLinkifiedVersion(node); 
-  } else if(getNodeName(node).toLowerCase() === ('a' || 'code' || 'pre' || 'equation')) {
+  } else if (['a', 'code', 'pre', 'equation'].indexOf(getNodeName(node).toLowerCase()) > -1){
     return node; 
   } else {
     return modifyChildren(node, autoLinkifyHelper); 
@@ -200,7 +200,10 @@ function seperateTextAndHyperLink(textnode, hyperlinks) {
     if(match) {
       let linkEndIndex = regexURL.lastIndex;
       let linkStartIndex = linkEndIndex - hyperlinks[hyperLinkIndex].length;
-      newChildNodes.push(createTextNode(textnode.substring(substringIndex, linkStartIndex)));
+      let textNodeValue = textnode.substring(substringIndex, linkStartIndex); 
+      if(textNodeValue !== "") {
+        newChildNodes.push(createTextNode(textnode.substring(substringIndex, linkStartIndex)));
+      }
       let anchorElement = createNode("a", [], [hyperlinks[hyperLinkIndex]]); 
       setProperty(anchorElement, "href", hyperlinks[hyperLinkIndex]);
       newChildNodes.push(anchorElement); 
