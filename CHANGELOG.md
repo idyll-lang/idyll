@@ -1,5 +1,22 @@
 
-## V3
+
+## v3.5
+
+- Add "autolinkification" logic to compilers (things which look like links will automatically be treated as such).
+
+## v3.4
+
+- Add options for `googleFonts` and `favicon`.
+
+## v3.3
+
+- Small updates to the default project templates
+
+## v3.2
+
+- Updates idyll runtime to use Object proxies rather than directly calling `setState`, this fixes a handleful of bugs related to asynchronous updates in Idyll expressions.
+
+# V3
 
 ### Breaking Changes
 
