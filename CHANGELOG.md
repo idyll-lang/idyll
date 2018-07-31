@@ -2,7 +2,8 @@
 
 ## v3.5
 
-- Add "autolinkification" logic to compilers (things which look like links will automatically be treated as such).
+- Adds "autolinkification" logic to compilers (things which look like links will automatically be treated as such).
+- Adds new `Conditional` component to standard lib 
 
 ## v3.4
 
