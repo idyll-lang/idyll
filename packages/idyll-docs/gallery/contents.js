@@ -4,6 +4,13 @@ const exampleGroups = [
     title: 'Explorable Explanations',
     examples: [
       {
+        label: "The Beginner's Guide to Dimensionality Reduction",
+        subtitle: "Explore the methods that data scientists use to visualize high-dimensional data.",
+        href: 'https://idyll.pub/post/dimensionality-reduction-293e465c2a3443e8941b016d/',
+        image: 'https://idyll.pub/post/dimensionality-reduction-293e465c2a3443e8941b016d/static/images/share.png',
+        sourceUrl: "https://github.com/mathisonian/dimensionality-reduction"
+      },
+      {
         label: 'The Math of Card Shuffling',
         subtitle: "Riffling from factory order to complete randomness.",
         href: 'https://fredhohman.com/card-shuffling/',
