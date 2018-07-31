@@ -58,6 +58,7 @@ beforeAll(done => {
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
     googleFonts:["Hanalei Fill"],
+    favicon: "static/favicon.ico",
     compiler: {
       spellcheck: false
     },
@@ -93,6 +94,7 @@ test('options work as expected', () => {
     transform: [],
     port: 3000,
     googleFonts:["Hanalei Fill"],
+    favicon: "static/favicon.ico",
     compiler: {
       spellcheck: false
     },

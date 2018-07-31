@@ -80,12 +80,7 @@ const build = (opts, paths, resolvers) => {
             output.components,
             output.data,
             template,
-            {
-              ssr: opts.ssr,
-              theme: opts.theme,
-              layout: opts.layout,
-              googleFonts: opts.googleFonts
-            })
+            opts)
         }
       })
     })
