@@ -38,9 +38,12 @@ input {
   position: sticky;
 }
 
-.idyll-scroll-graphic * {
-  display: block;
+.idyll-scroll-graphic img {
   max-height: 100vh;
+}
+
+.idyll-scroll-graphic > * {
+  display: block;
 }
 
 @media all and (max-width: 1000px) {
