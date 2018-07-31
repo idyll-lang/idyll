@@ -231,6 +231,17 @@ const components = [
           }
         },
         {
+          "Conditional": {
+            "thumbnail": "conditional.png",
+            "description": "This component will conditionally display its children.",
+            "idyllProps": [
+              {
+                "if": "An expression; if this evaluates to true, the children will be rendered, otherwise nothing will be drawn to the screen"
+              }
+            ]
+          }
+        },
+        {
           "Display": {
             "thumbnail": "display.png",
             "description": "This will render the value of a variable to the screen. It is mostly useful for debugging:",

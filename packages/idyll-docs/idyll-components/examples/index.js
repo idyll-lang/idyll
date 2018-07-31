@@ -24,6 +24,8 @@ import Table from './Table.idl'
 import TextInput from './TextInput.idl'
 
 import Analytics from './Analytics.idl'
+
+import Conditional from './Conditional.idl'
 // import Meta from './Meta.idl'
 // import Preload from './Preload.idl'
 
@@ -56,6 +58,7 @@ export {
   TextInput,
 
   Analytics,
+  Conditional
   // Meta,
   // Preload,
 }
