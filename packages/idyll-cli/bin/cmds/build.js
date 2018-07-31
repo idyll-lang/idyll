@@ -67,7 +67,8 @@ function buildOptions (yargs) {
       o: 'output',
       r: 'no-ssr',
       t: 'template',
-      e: 'theme'
+      e: 'theme',
+      g: 'googleFonts'
     })
     .describe('components', 'Directory where components are located')
     .default('components', 'components')
@@ -95,6 +96,9 @@ function buildOptions (yargs) {
     .array('transform')
     .describe('transform', 'Custom browserify transforms to apply.')
     .default('transform', [])
+    .array('googleFonts')
+    .describe('googleFonts', 'List of google fonts to include.')
+    .default('googleFonts', [])
     .describe('theme', 'Name of (or path to) the theme to use')
     .default('theme', 'github')
     .alias('h', 'help')

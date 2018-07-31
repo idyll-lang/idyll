@@ -90,6 +90,7 @@ export default ({ url }) => (
     <ul>
       <li><b>layout</b> - the name of the layout to use. By default this is "blog". More on layouts below.</li>
       <li><b>theme</b> - the name of the theme to use. By default this is "github". More on themes below.</li>
+      <li><b>googleFonts</b> - a list of Google font names to include via CSS. This can be an array of strings or a single string.</li>
       <li><b>template</b> - a custom HTML template to use. The default template is can be found <a href="https://github.com/idyll-lang/idyll/blob/master/packages/idyll-cli/src/client/_index.html">here</a></li>
       <li><b>components</b> - the path to your custom components. By default this points to "components". This can be a string (a single path), or an array.</li>
       <li><b>css</b> - the path to a CSS file. You can use this to override Idyll's default styles.</li>

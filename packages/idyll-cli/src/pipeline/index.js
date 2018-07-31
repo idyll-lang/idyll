@@ -72,7 +72,7 @@ const build = (opts, paths, resolvers) => {
           }
         };
         if (!opts.ssr) {
-          output.html = getBaseHTML(ast, template);
+          output.html = getBaseHTML(ast, template, opts);
         } else {
           output.html = getHTML(
             paths,
@@ -83,7 +83,8 @@ const build = (opts, paths, resolvers) => {
             {
               ssr: opts.ssr,
               theme: opts.theme,
-              layout: opts.layout
+              layout: opts.layout,
+              googleFonts: opts.googleFonts
             })
         }
       })
