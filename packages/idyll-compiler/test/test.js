@@ -1,4 +1,3 @@
-
 var expect = require('expect.js');
 var Lexer = require('../src/lexer');
 var compile = require('../src');
@@ -417,7 +416,7 @@ End text
       [
         ['TextContainer', [], [
           ['p', [], ["Text. / Not a comment.\n        ", ["component", [], ["//not a comment\n          "]]]],
-          ['p', [], ["not a comment: https://stuff.com"]]
+          ['p', [], [['span', [], ['not a comment: ', ['a', [['href', ['value', 'https://stuff.com']]], ['https://stuff.com']]]]]]
         ]]
       ]);
     });
@@ -891,5 +890,39 @@ End text
       });
     });
 
-  })
+    it('should handle a link', function() {
+      const input = "https://www.google.com/"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], [[ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']]]]]]]]
+      ]);
+    });
+
+    it('should handle one link in text', function() {
+      const input = "Here is a link to website https://www.google.com/"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], ['Here is a link to website ', [ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']]]]]]]]
+      ]);
+    }); 
+
+    it('should handle one links in between text', function() {
+      const input = "Here is a link to website https://www.google.com/ Click here!"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], ['Here is a link to website ', [ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']], ' Click here!']]]]]]
+      ]);
+    });
+
+    it('should handle two links in between text', function() {
+      const input = "Here is a link to website https://www.google.com/ Click here! https://www.go.com/"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], ['Here is a link to website ', [ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']], ' Click here! ', [ 'a', [['href', ['value', 'https://www.go.com/']]], ['https://www.go.com/']]]]]]]]
+      ]);
+    });
+
+    it('should handle a link before any text', function() {
+      const input = "https://www.google.com/ . Hello World"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], [[ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']], ' . Hello World']]]]]]
+      ]);
+    });
+  }); 
 });
