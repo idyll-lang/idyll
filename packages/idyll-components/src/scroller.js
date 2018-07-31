@@ -115,20 +115,26 @@ class Scroller extends React.Component {
   render() {
     const { hasError, updateProps, idyll, children, ...props } = this.props;
     const { graphicHeight, graphicWidth } = this.state;
+
+    const graphicChildren = filterChildren(
+      children,
+      (c) => {
+        return c.type.name && c.type.name.toLowerCase() === 'graphic';
+      }
+    );
+
     return (
-      <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`} 
+      <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`}
         style={Object.assign({ position: 'relative' })}>
-        <div className="idyll-scroll-graphic"
-          style={Object.assign({ height: graphicHeight }, styles.SCROLL_GRAPHIC)} >
-          <div style={Object.assign({ width: graphicWidth }, styles.SCROLL_GRAPHIC_INNER)}>
-            {filterChildren(
-              children,
-              (c) => {
-                return c.type.name && c.type.name.toLowerCase() === 'graphic';
-              }
-            )}
-          </div>
-        </div>
+        {
+          (graphicChildren && graphicChildren.length) ?
+            <div className="idyll-scroll-graphic"
+              style={Object.assign({ height: graphicHeight }, styles.SCROLL_GRAPHIC)} >
+              <div style={Object.assign({ width: graphicWidth }, styles.SCROLL_GRAPHIC_INNER)}>
+                {graphicChildren}
+              </div>
+            </div> : null
+        }
         <TextContainer idyll={idyll}>
           <div className="idyll-scroll-text">
             {mapChildren(filterChildren(
