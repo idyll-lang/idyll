@@ -1,0 +1,7 @@
+[var name:"showChart" value:false /]
+
+[Button onClick:` showChart = true `]Show Chart[/Button]
+
+[Conditional if:` showChart `]
+  [Chart /]
+[/Conditional]
