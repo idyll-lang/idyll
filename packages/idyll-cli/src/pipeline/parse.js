@@ -135,8 +135,10 @@ const getGoogleFontsUrl = ({ googleFonts }) => {
 }
 
 exports.getBaseHTML = (ast, template, opts) => {
-
-  return mustache.render(template, Object.assign({ googleFontsUrl: getGoogleFontsUrl(opts) }, parseMeta(ast)));
+  return mustache.render(template, Object.assign({
+    googleFontsUrl: getGoogleFontsUrl(opts),
+    favicon: opts.favicon
+  }, parseMeta(ast)));
 }
 
 exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
@@ -160,5 +162,9 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
       layout: opts.layout
     })
   ).trim();
-  return mustache.render(template, Object.assign({ usesTex: components.equation, googleFontsUrl: getGoogleFontsUrl(opts) }, meta));
+  return mustache.render(template, Object.assign({
+    favicon: opts.favicon,
+    usesTex: components.equation,
+    googleFontsUrl: getGoogleFontsUrl(opts)
+  }, meta));
 }

@@ -68,7 +68,8 @@ function buildOptions (yargs) {
       r: 'no-ssr',
       t: 'template',
       e: 'theme',
-      g: 'googleFonts'
+      g: 'googleFonts',
+      f: 'favicon'
     })
     .describe('components', 'Directory where components are located')
     .default('components', 'components')
@@ -99,6 +100,7 @@ function buildOptions (yargs) {
     .array('googleFonts')
     .describe('googleFonts', 'List of google fonts to include.')
     .default('googleFonts', [])
+    .describe('favicon', 'A .ico file to use as article favicon. This should be in the static folder, e.g. "static/favicon.ico"')
     .describe('theme', 'Name of (or path to) the theme to use')
     .default('theme', 'github')
     .alias('h', 'help')
