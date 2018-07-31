@@ -57,6 +57,7 @@ beforeAll(done => {
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
+    googleFonts:["Hanalei Fill"],
     compiler: {
       spellcheck: false
     },
@@ -91,6 +92,7 @@ test('options work as expected', () => {
     static: 'static',
     transform: [],
     port: 3000,
+    googleFonts:["Hanalei Fill"],
     compiler: {
       spellcheck: false
     },
