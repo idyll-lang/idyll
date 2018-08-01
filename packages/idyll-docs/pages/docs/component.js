@@ -89,7 +89,7 @@ export default class IdyllComponentPage extends React.PureComponent {
     const { url } = this.props;
     const comp = indexedComponents[url.query.slug];
     return (
-      <Layout url={ url }>
+      <Layout url={ url } title={`Idyll Documentation | Component - ${comp.name}`}>
         <div>
           <Link href={'/docs/components'}><a>← Back</a></Link>
           <IdyllComponentDoc component={ comp } />

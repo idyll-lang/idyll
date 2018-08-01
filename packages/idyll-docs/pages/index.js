@@ -60,19 +60,22 @@ The value of x is [Display value:x format:"d" /].
     return (
       <div>
         <Head>
-          <title>Idyll</title>
+          <title>Idyll | A markup language for interactive and data-driven blogging.</title>
           <meta charSet='utf-8' />
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+          <meta name="google-site-verification" content="x8iagm4GsmQYhR6hLHmcKjtgHqDxEvTbQ19FiggLTv0" />
           <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
           <meta property='og:image' content='https://idyll-lang.org/static/images/twitter-share.png' />
-          <meta property='og:description' content="A markup language for interactive documents." />
+          <meta property='og:description' content="Create data-driven stories, explorable explanations, and interactive blog posts." />
           <meta property='og:title' content="Idyll" />
           <meta property='og:url' content='https://idyll-lang.org' />
           <meta property='og:type' content='website' />
+          <meta name='description' content="Create data-driven stories, explorable explanations, and interactive blog posts." />
+          <meta name="keywords" content="idyll, explorable explanation, data-driven, scrollytelling, interactive" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:creator" content="@mathisonian" />
           <meta name="twitter:title" content="Idyll" />
-          <meta name="twitter:description" content="A markup language for interactive documents." />
+          <meta name="twitter:description" content="Create data-driven stories, explorable explanations, and interactive blog posts." />
           <meta name="twitter:image" content="https://idyll-lang.org/static/images/twitter-share.png" />
           <script async defer src="https://buttons.github.io/buttons.js"></script>
         </Head>
@@ -83,7 +86,7 @@ The value of x is [Display value:x format:"d" /].
               idyll
             </div>
             <div className="intro">
-              A markup language for interactive documents.
+              A toolkit for creating data-driven stories and explorable explanations.
             </div>
             <div className="example">
               {/* Idyll turns markup into interactive HTML and JavaScript. */}
@@ -165,8 +168,8 @@ The value of x is [Display value:x format:"d" /].
                 Chat
               </a>
               |
-              <a href="https://groups.google.com/forum/#!forum/idyll-lang" target="_blank">
-                Mailing List
+              <a href="https://twitter.com/idyll_lang" target="_blank">
+                Twitter
               </a>
               |
               <a href="https://opencollective.com/idyll" target="_blank">
@@ -176,10 +179,10 @@ The value of x is [Display value:x format:"d" /].
             </div>
             <div>
               <p>
-                <b>Idyll</b> extends the ubiquitous Markdown format to enable the creation of dynamic, interactive narratives for the web. The language and toolchain aim to empower journalists, researchers, and technical experts to create compelling content using familiar tools and processes.
-                <br/><br/>
-                Idyll can be used to create explorable explanations, to power blog engines and content management systems, and to generate dynamic technical reports. The tool can generate standalone webpages or be embedded inside of your existing site.
+                <b>Idyll</b> is an open-source markup language and web runtime. You write markup and Idyll converts it to interactive code that can run in anyone’s web browser. Idyll extends <em>Markdown</em> with a reactive component system.
 
+                <br/><br/>
+                Idyll allows non-experts to publish compelling interactive stories on the web, and enables collaboration between programmers and journalists, researchers and designers. Those familiar with JavaScript can write custom components using tools like D3 or React.
                 <img style={{display: 'block', width: '75%', margin: '0 auto'}} src="/static/images/sponsors.png"/>
 
                 Idyll is supported by the Interactive Data Lab at the University of Washington, and by Rhizome and The Eutopia Foundation.
@@ -331,8 +334,7 @@ The value of x is [Display value:x format:"d" /].
             font-size: 14px;
             color: white;
             // background: #6122FB;
-            // background: #4C4B63;
-            background: #6122FB;
+            background: #4C4B63;
             padding: 10px 10px;
             transition: color 0.5s, background 0.5s;
           }
@@ -460,7 +462,7 @@ The value of x is [Display value:x format:"d" /].
             margin: 0 auto;
             margin-top: 1em;
             font-family: 'Source Sans Pro';
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 300;
             // letter-spacing: 0.3em;
             line-height: 1.1em;

@@ -114,8 +114,31 @@ const parseMeta = (ast) => {
   ) : {};
 }
 
-exports.getBaseHTML = (ast, template) => {
-  return mustache.render(template, parseMeta(ast));
+const formatFont = (fontName) => {
+  return fontName.split(' ').join('+');
+}
+
+const getGoogleFontsUrl = ({ googleFonts }) => {
+  if(!googleFonts) {
+    return null;
+  }
+
+  let url = 'https://fonts.googleapis.com/css?family=';
+
+  if (googleFonts && typeof googleFonts === 'string') {
+    return url + formatFont(googleFonts);
+  } else if (googleFonts && googleFonts.length) {
+    return url + googleFonts.map(formatFont).join('|');
+  }
+
+  return null;
+}
+
+exports.getBaseHTML = (ast, template, opts) => {
+  return mustache.render(template, Object.assign({
+    googleFontsUrl: getGoogleFontsUrl(opts),
+    favicon: opts.favicon
+  }, parseMeta(ast)));
 }
 
 exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
@@ -139,5 +162,9 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
       layout: opts.layout
     })
   ).trim();
-  return mustache.render(template, Object.assign({ usesTex: components.equation }, meta));
+  return mustache.render(template, Object.assign({
+    favicon: opts.favicon,
+    usesTex: components.equation,
+    googleFontsUrl: getGoogleFontsUrl(opts)
+  }, meta));
 }

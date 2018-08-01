@@ -16,7 +16,8 @@ To submit a PR do the following:
 * Run `lerna bootstrap` from inside the `idyll` folder to install the dependencies and link all of the packages together.
 * Make your changes.
 * Test your changes:
-  * Make sure the tests pass by running `npm test`. If you add a feature, add a test for it.
+  * Make sure the tests pass by running `lerna run test` from the top level. If you add a feature, add a test for it.
+    * This runs all the tests; if you just want to run tests in a single package, run `yarn test` inside of the specific `packages/idyll-<package-name>` folder.
   * If you'd like to test these changes in a local Idyll project, first navigate to the `idyll-cli` package locally and run `yarn link`, then you can run `yarn link idyll` inside of your project, and your local dev version of idyll will be used.
 * Submit the PR!
 

@@ -57,6 +57,8 @@ beforeAll(done => {
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
+    googleFonts:["Hanalei Fill"],
+    favicon: "static/favicon.ico",
     compiler: {
       spellcheck: false
     },
@@ -73,6 +75,9 @@ beforeAll(done => {
 
 test('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
+    alias: {
+      'PackageJsonComponentTest': 'CustomComponent'
+    },
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     minify: false,
@@ -91,17 +96,12 @@ test('options work as expected', () => {
     static: 'static',
     transform: [],
     port: 3000,
+    googleFonts:["Hanalei Fill"],
+    favicon: "static/favicon.ico",
     compiler: {
       spellcheck: false
     },
-    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8'),
-    inputConfig: {
-      compiler: {},
-      components: {
-        'package-json-component-test': 'components/custom-component.js'
-      },
-      transform: []
-    }
+    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
   })
 })
 

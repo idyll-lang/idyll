@@ -1,28 +1,26 @@
 import Link from 'next/link'
 import Layout from '../../../components/layout'
-import showdown from 'showdown'
+import markdown from 'markdown-in-js'
+import Highlight from 'react-highlight'
 
-showdown.setFlavor('github')
+export default ({ url }) => (
+  <Layout url={url} title={'Idyll Documentation | Scrolling and DOM References'} >
+    <link rel="stylesheet" href="../../../static/styles/tomorrow-night-eighties.css" />
+    <div>
+      <h1>Viewport Events</h1>
 
+      <p>The following events are added as properties to all Idyll components:</p>
+      <ul>
+        <li><code>onEnterView</code> - triggered when a component partially enters the viewport.</li>
+        <li><code>onEnterViewFully</code> - triggered when a component fully enters the viewport.</li>
+        <li><code>onExitView</code> - triggered when a component partially exits the viewport.</li>
+        <li><code>onExitViewFully</code> - triggered when a component fully enters the viewport.</li>
+      </ul>
 
-const mdConverter = new showdown.Converter()
+      <p>To customize the position at which these events get triggered (e.g. to trigger the <code>onEnterView</code> event only
+      after a component is already 100 pixels inside the viewport), the <code>scrollOffset</code> property can be used.</p>
 
-
-const Content = () => mdConverter.makeHtml(`
-# Viewport Events
-
-The following events are added as properties to all Idyll components:
-
-* \`onEnterView\` - triggered when a component partially enters the viewport.
-* \`onEnterViewFully\` - triggered when a component fully enters the viewport.
-* \`onExitView\` - triggered when a component partially exits the viewport.
-* \`onExitViewFully\`  - triggered when a component fully enters the viewport.
-
-To customize the position at which these events get triggered (e.g. to trigger the \`onEnterView\` event only
-after a component is already 100 pixels inside the viewport), the \`scrollOffset\` property can be used.
-
-\`\`\`
-A standard trigger
+      <pre><code>{`A standard trigger
 [MyComponent onEnterView:\`stateVar++\` /]
 
 Add a scroll offset of -100 pixels to both the top and bottom of the viewport.
@@ -31,28 +29,22 @@ outside of the viewport.
 [MyComponent onEnterView:\`stateVar++\` scrollOffset:-100 /]
 
 Add a different offset to the top and bottom of the viewport
-[MyComponent onEnterView:\`stateVar++\` scrollOffset:\`{ top: -200, bottom: 200 }\` /]
-\`\`\`
+[MyComponent onEnterView:\`stateVar++\` scrollOffset:\`{ top: -200, bottom: 200 }\` /]`}</code></pre>
 
+      <h1>Refs</h1>
+      <p>Idyll exposes the <code>ref</code> property to allow you to refer to specific components in
+      property expressions.</p>
 
-# Refs
+      <pre><code>[Component ref:"thisComponent" propName:`refs.thisComponent`  /]</code></pre>
 
-Idyll exposes the \`ref\` property to allow you to refer to specific components in
-property expressions.
+      <p>The <code>ref</code> property allows you to update the state of one component based on properties of another. Idyll
+      provides some utilities automatically, for example keeping track of the position
+      of a component on the page, and how far through a component's content the reader has
+      scrolled.</p>
 
-\`\`\`
-[Component ref:"thisComponent" propName:\`refs.thisComponent\`  /]
-\`\`\`
+      <p>Each <code>ref</code> object has the following properties:</p>
 
-The ref property allows you to update the state of one component based on properties of another. Idyll
-provides some utilities automatically, for example keeping track of the position
-of a component on the page, and how far through a component's content the reader has
-scrolled.
-
-Each ref object has the following properties:
-
-\`\`\`js
-{
+      <Highlight className='javascript'>{`{
   domNode: node,
   isInViewport: boolean,
   isFullyInViewport: boolean,
@@ -61,19 +53,13 @@ Each ref object has the following properties:
   top: number // distance from the top of the document to the top of this element.
   bottom: number // distance from the top of the document to the bottom of this watcher.
   height: number // top - bottom.
-}
-\`\`\`
-`)
+}`}</Highlight>
 
-
-export default ({ url }) => (
-  <Layout url={ url }>
-    <div dangerouslySetInnerHTML={ {__html: Content()} } />
-    <p>
-      You've learned all about Idyll! All that's left is{' '}
-      <Link href="/docs/publishing/deploying-to-the-web">
-        <a>deploying your project to the web</a>
-      </Link>.
-    </p>
+      <p>
+        You've learned all about Idyll! All that's left is{' '}
+        <Link href="/docs/publishing/deploying-to-the-web">
+          <a>deploying your project to the web</a>
+        </Link>.</p>
+    </div>
   </Layout>
 )

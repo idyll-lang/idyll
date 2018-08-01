@@ -1,7 +1,7 @@
 ![idyll-logo](https://user-images.githubusercontent.com/1074773/30891039-807308e2-a2e5-11e7-827e-bce391ad9b1b.png)
 
 <p align="center">
- <a href="https://idyll-lang.github.io/editor">Try Idyll in your browser</a> | <a href="https://idyll-lang.org">Documentation</a> | <a href="https://gitter.im/idyll-lang/Lobby">Chatroom</a> | <a href="https://groups.google.com/forum/#!forum/idyll-lang">Mailing List</a>
+ <a href="https://idyll-lang.github.io/editor">Try Idyll in your browser</a> | <a href="https://idyll-lang.org">Documentation</a> | <a href="https://gitter.im/idyll-lang/Lobby">Chatroom</a> | <a href="https://groups.google.com/forum/#!forum/idyll-lang">Mailing list</a> | <a href="https://twitter.com/idyll_lang">Twitter</a>
 </p>
 
 <p align="center">
@@ -13,17 +13,16 @@
 
 # What is Idyll?
 
-To learn more about using Idyll, and see examples, please see https://idyll-lang.org/.
+For an introduction to Idyll, API reference, and examples, please see https://idyll-lang.org/.
 
-# Contributing to Idyll
-
-Idyll attempts to adhere to the [open open source](http://openopensource.org/) philosophy as much as reasonably possible. Pull requests are very welcome!
+# Contributor's Guide
 
 See [CONTRIBUTING](./CONTRIBUTING.md) for details on the development workflow. If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
 
+# Support Idyll
+
 This project exists thanks to all the people who contribute.
 <a href="https://github.com/idyll-lang/idyll/graphs/contributors"><img src="https://opencollective.com/idyll/contributors.svg?width=890" /></a>
-
 
 ## Backers
 

@@ -4231,7 +4231,7 @@ header-case@^1.0.0:
     no-case "^2.2.0"
     upper-case "^1.1.3"
 
-highlight.js@~9.12.0:
+highlight.js@^9.11.0, highlight.js@~9.12.0:
   version "9.12.0"
   resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.12.0.tgz#e6d9dbe57cbefe60751f02af336195870c90c01e"
 
@@ -7185,6 +7185,12 @@ react-ga@^2.4.1:
   optionalDependencies:
     prop-types "^15.6.0"
     react "^15.6.2 || ^16.0"
+
+react-highlight@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/react-highlight/-/react-highlight-0.12.0.tgz#34de986a0bfdf228904d0c269b69538d95b35802"
+  dependencies:
+    highlight.js "^9.11.0"
 
 react-hot-loader@3.1.1:
   version "3.1.1"

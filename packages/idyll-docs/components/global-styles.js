@@ -59,7 +59,7 @@ code:after {
   content: "\00a0";
 }
 
-pre {
+Highlight, pre {
   padding: 15px 10px;
   overflow: auto;
   line-height: 1.45;

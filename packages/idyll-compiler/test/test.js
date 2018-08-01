@@ -1,4 +1,3 @@
-
 var expect = require('expect.js');
 var Lexer = require('../src/lexer');
 var compile = require('../src');
@@ -102,11 +101,13 @@ describe('compiler', function() {
         Text. / Not a comment.
         // Comment
         // Second comment
-        [component]
+        [component]//not a comment
           // comment inside components
-        [/component]
+        [/component]// is a comment
+
+        not a comment: https://stuff.com
       `);
-      expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF');
+      expect(results.tokens.join(' ')).to.eql('WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/not a comment\n          " TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK WORDS TOKEN_VALUE_START "not a comment: https:" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/stuff.com" TOKEN_VALUE_END EOF');
     });
 
     it('ordered lists with a space after the bullet are parsed as a list', function() {
@@ -398,6 +399,28 @@ End text
           ]]
         ]);
     });
+
+
+    it('should ignore comments', function() {
+      var input = `
+        Text. / Not a comment.
+        // Comment
+        // Second comment
+        [component]//not a comment
+          // comment inside components
+        [/component]// is a comment
+
+        not a comment: https://stuff.com
+      `;
+      expect(compile(input, { async: false })).to.eql(
+      [
+        ['TextContainer', [], [
+          ['p', [], ["Text. / Not a comment.\n        ", ["component", [], ["//not a comment\n          "]]]],
+          ['p', [], [['span', [], ['not a comment: ', ['a', [['href', ['value', 'https://stuff.com']]], ['https://stuff.com']]]]]]
+        ]]
+      ]);
+    });
+
 
 
     it('should accept negative numbers', function() {
@@ -867,5 +890,39 @@ End text
       });
     });
 
-  })
+    it('should handle a link', function() {
+      const input = "https://www.google.com/"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], [[ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']]]]]]]]
+      ]);
+    });
+
+    it('should handle one link in text', function() {
+      const input = "Here is a link to website https://www.google.com/"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], ['Here is a link to website ', [ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']]]]]]]]
+      ]);
+    }); 
+
+    it('should handle one links in between text', function() {
+      const input = "Here is a link to website https://www.google.com/ Click here!"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], ['Here is a link to website ', [ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']], ' Click here!']]]]]]
+      ]);
+    });
+
+    it('should handle two links in between text', function() {
+      const input = "Here is a link to website https://www.google.com/ Click here! https://www.go.com/"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], ['Here is a link to website ', [ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']], ' Click here! ', [ 'a', [['href', ['value', 'https://www.go.com/']]], ['https://www.go.com/']]]]]]]]
+      ]);
+    });
+
+    it('should handle a link before any text', function() {
+      const input = "https://www.google.com/ . Hello World"; 
+      expect(compile(input, {async: false})).to.eql([
+        ['TextContainer', [], [['p', [], [ ['span', [], [[ 'a', [['href', ['value', 'https://www.google.com/']]], ['https://www.google.com/']], ' . Hello World']]]]]]
+      ]);
+    });
+  }); 
 });

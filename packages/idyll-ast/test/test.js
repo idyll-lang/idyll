@@ -2,6 +2,7 @@
 var expect = require('expect.js');
 var ast = require('../src');
 
+
 describe('sanity check', function() {
   it('should not blow up', function() {
     const input = [['div', [], []]];
@@ -15,9 +16,7 @@ describe('getText', function() {
     expect(ast.getText(input[0])).to.eql('Hello');
     expect(ast.getText(input[1])).to.eql('Goodbye');
   });
+});
 
-
-  //TODO:
-  //modifyNodesbyName, getChildren, walkNodes, prependNodes, setProperties, removeProperty, removeNodesbyName
-
-})
+//TODO:
+//modifyNodesbyName, getChildren, walkNodes, prependNodes, setProperties, removeProperty, removeNodesbyName

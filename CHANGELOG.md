@@ -1,5 +1,26 @@
 
-## V3
+## v3.6
+
+- Adds `alias` option
+
+## v3.5
+
+- Adds "autolinkification" logic to compilers (things which look like links will automatically be treated as such).
+- Adds new `Conditional` component to standard lib 
+
+## v3.4
+
+- Add options for `googleFonts` and `favicon`.
+
+## v3.3
+
+- Small updates to the default project templates
+
+## v3.2
+
+- Updates idyll runtime to use Object proxies rather than directly calling `setState`, this fixes a handleful of bugs related to asynchronous updates in Idyll expressions.
+
+# V3
 
 ### Breaking Changes
 

@@ -56,6 +56,7 @@ exports.buildOptions = buildOptions
 function buildOptions (yargs) {
   return yargs
     .alias({
+      a: 'alias',
       m: 'components',
       c: 'css',
       d: 'datasets',
@@ -67,7 +68,9 @@ function buildOptions (yargs) {
       o: 'output',
       r: 'no-ssr',
       t: 'template',
-      e: 'theme'
+      e: 'theme',
+      g: 'googleFonts',
+      f: 'favicon'
     })
     .describe('components', 'Directory where components are located')
     .default('components', 'components')
@@ -95,8 +98,13 @@ function buildOptions (yargs) {
     .array('transform')
     .describe('transform', 'Custom browserify transforms to apply.')
     .default('transform', [])
+    .array('googleFonts')
+    .describe('googleFonts', 'List of google fonts to include.')
+    .default('googleFonts', [])
+    .describe('favicon', 'A .ico file to use as article favicon. This should be in the static folder, e.g. "static/favicon.ico"')
     .describe('theme', 'Name of (or path to) the theme to use')
     .default('theme', 'github')
+    .describe('alias', 'A list of component aliases')
     .alias('h', 'help')
 }
 

@@ -12,6 +12,7 @@ const debug = require('debug')('idyll:cli')
 class ComponentResolver {
   constructor(options, paths) {
     this.paths = paths;
+    this.options = options;
     this.inputConfig = options.inputConfig;
 
     // Set in `_loadPaths`.
@@ -73,6 +74,10 @@ class ComponentResolver {
    * 6) Else, return nothing (this is a failure).
    */
   resolve(name) {
+    if (this.options.alias[name]) {
+      name = this.options.alias[name];
+    }
+
     const candidates = [pascalCase(name), paramCase(name), name.toLowerCase()];
     debug(`Searching for component: ${name} with candidates: ${candidates}`);
 
@@ -81,12 +86,6 @@ class ComponentResolver {
     candidates.forEach(name => {
       // Once one of the candidates has been found, don't continue searching.
       if (resolved) return;
-
-      // If an alias is specified, use that.
-      if (this.inputConfig.components[name]) {
-        resolved = slash(p.join(this.paths.INPUT_DIR, this.inputConfig.components[name]));
-        return;
-      }
 
       // Otherwise check to see if this is a custom component (in a component directory).
       resolved = this.componentsMap.get(name + '.js');

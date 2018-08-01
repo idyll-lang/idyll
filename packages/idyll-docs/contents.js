@@ -5,7 +5,8 @@ const Contents = [
       {title: 'Introduction', route: '/docs' },
       {title: 'Getting started', route: '/docs/getting-started' },
       {title: 'Syntax', route: '/docs/syntax' },
-      {title: 'Customizing', route: '/docs/configuration-and-styles' }
+      {title: 'Customizing', route: '/docs/configuration-and-styles' },
+      {title: 'Advanced Configuration', route: '/docs/advanced-configuration' }
     ],
   },
   {
@@ -29,7 +30,7 @@ const Contents = [
     pages: [
       { title: 'Github', route: 'https://github.com/idyll-lang/idyll' },
       { title: 'Chat', route: 'https://gitter.im/idyll-lang/Lobby' },
-      { title: 'Mailing List', route: 'https://groups.google.com/forum/#!forum/idyll-lang' },
+      { title: 'Twitter', route: 'https://twitter.com/idyll_lang' },
       { title: 'Support Us', route: 'https://opencollective.com/idyll' }
     ],
   },

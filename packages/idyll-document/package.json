@@ -1,6 +1,6 @@
 {
   "name": "idyll-document",
-  "version": "2.10.8",
+  "version": "2.12.0",
   "license": "MIT",
   "authors": [
     "Matthew Conlen",
@@ -30,9 +30,10 @@
   "dependencies": {
     "change-case": "^3.0.1",
     "cross-env": "^5.0.5",
+    "falafel": "^2.1.0",
     "html-tags": "^2.0.0",
-    "idyll-compiler": "^3.1.9",
-    "idyll-layouts": "^2.5.4",
+    "idyll-compiler": "^3.3.0",
+    "idyll-layouts": "^2.5.5",
     "idyll-themes": "^2.3.4",
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",

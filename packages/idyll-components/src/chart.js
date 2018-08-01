@@ -1,3 +1,4 @@
+
 import React from 'react';
 const V = require('victory');
 const d3Arr = require('d3-array');
@@ -58,10 +59,14 @@ class Chart extends React.PureComponent {
         });
       });
     }
+
+    let formattedRange = { domain: { x: domain, y: range } };
+
+
     return (
       <div className={props.className}>
         {type !== 'PIE' ? (
-          <V.VictoryChart domainPadding={domainPadding} domain={domain} range={range} animate={animate} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
+          <V.VictoryChart domainPadding={domainPadding} {...formattedRange} animate={animate} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
             <INNER_CHART
               data={data}
               x={props.x}

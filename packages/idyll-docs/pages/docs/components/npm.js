@@ -44,7 +44,7 @@ This is equivalent to \`require('some-react-component').nested.Property\`.
 
 
 export default ({ url }) => (
-  <Layout url={ url }>
+  <Layout url={ url } title={'Idyll Documentation | NPM Components'} >
     <Content />
     <p>
       Continue to{' '}

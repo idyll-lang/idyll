@@ -25,11 +25,30 @@ const appendNodes = function(ast, nodes) {
   return [].concat(ast, nodes);
 };
 
+/**
+ * function that returns the names of the passed node
+ * @param {*} node 
+ * @return {String} name of the node 
+ */
+const getNodeName = function(node) {
+  return node[0]; 
+};
+
 const createNode = function(name, props, children) {
   let node = [name, [], children || []];
   node = setProperties(node, props || {});
   return node;
 };
+
+/**
+ * Creates a textnode with the text passed 
+ * @param {*} text      the text inside a textnode 
+ */
+const createTextNode = function(text) { 
+  if(typeof text === 'string') {
+     return text;
+  }
+}
 
 const getChildren = function(node) {
   if (typeof node === 'string') {
@@ -58,13 +77,28 @@ const walkNodes = function(ast, f) {
   });
 };
 
+/**
+ * function to do a depth first traversal on the ast tree. 
+ * @param {*} ast     Array that forms the tree structure 
+ * @param {*} f       call-back function 
+ */
+const walkNodesBreadthFirst = function (ast, f) {
+  let childAst = [];
+  (ast || []).forEach((node) => {
+    f(node);
+    childAst = childAst.concat(getChildren(node));
+  });
+  if(childAst.length !== 0) {
+    walkNodesBreadthFirst(childAst, f);
+  }
+}; 
 const findNodes = function(ast, filter) {
   var result = [];
   walkNodes(ast, node => {
     if (filter(node)) result.push(node);
   })
   return result;
-}
+}; 
 
 const modifyChildren = function(node, modifier) {
   if (typeof node === 'string') {
@@ -239,12 +273,15 @@ module.exports = {
   appendNode,
   appendNodes,
   createNode,
+  createTextNode,
+  walkNodesBreadthFirst, 
   getChildren,
   getNodesByName,
   filterChildren,
   filterNodes,
   modifyChildren,
   modifyNodesByName,
+  getNodeName,
   getProperty,
   getProperties,
   getPropertiesByType,
