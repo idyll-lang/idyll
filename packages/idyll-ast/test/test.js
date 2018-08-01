@@ -13,8 +13,7 @@ describe('sanity check', function() {
 describe('getText', function() {
   it('getText returns text of node', function() {
     const input = [['h1', [],'Hello' ],['h1',[],'Goodbye']]
-    expect(ast.getText(input[0])).to.eql('Hello');
-    expect(ast.getText(input[1])).to.eql('Goodbye');
+    expect(ast.getText(input)).to.eql('Hello Goodbye');
   });
 });
 

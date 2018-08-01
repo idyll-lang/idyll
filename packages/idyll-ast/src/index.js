@@ -27,11 +27,11 @@ const appendNodes = function(ast, nodes) {
 
 /**
  * function that returns the names of the passed node
- * @param {*} node 
- * @return {String} name of the node 
+ * @param {*} node
+ * @return {String} name of the node
  */
 const getNodeName = function(node) {
-  return node[0]; 
+  return node[0];
 };
 
 const createNode = function(name, props, children) {
@@ -41,10 +41,10 @@ const createNode = function(name, props, children) {
 };
 
 /**
- * Creates a textnode with the text passed 
- * @param {*} text      the text inside a textnode 
+ * Creates a textnode with the text passed
+ * @param {*} text      the text inside a textnode
  */
-const createTextNode = function(text) { 
+const createTextNode = function(text) {
   if(typeof text === 'string') {
      return text;
   }
@@ -62,12 +62,12 @@ const getChildren = function(node) {
 
 const getText = function(node) {
   const texts = [];
-  walkNodes(getChildren(node), (n) => {
+  walkNodes(node, (n) => {
     if(typeof n === 'string') {
       texts.push(n);
     }
   })
-  return texts.join('');
+  return texts.join(' ');
 }
 
 const walkNodes = function(ast, f) {
@@ -78,9 +78,9 @@ const walkNodes = function(ast, f) {
 };
 
 /**
- * function to do a depth first traversal on the ast tree. 
- * @param {*} ast     Array that forms the tree structure 
- * @param {*} f       call-back function 
+ * function to do a depth first traversal on the ast tree.
+ * @param {*} ast     Array that forms the tree structure
+ * @param {*} f       call-back function
  */
 const walkNodesBreadthFirst = function (ast, f) {
   let childAst = [];
@@ -91,14 +91,14 @@ const walkNodesBreadthFirst = function (ast, f) {
   if(childAst.length !== 0) {
     walkNodesBreadthFirst(childAst, f);
   }
-}; 
+};
 const findNodes = function(ast, filter) {
   var result = [];
   walkNodes(ast, node => {
     if (filter(node)) result.push(node);
   })
   return result;
-}; 
+};
 
 const modifyChildren = function(node, modifier) {
   if (typeof node === 'string') {
@@ -110,7 +110,7 @@ const modifyChildren = function(node, modifier) {
   return node;
 };
 
-// TODO: wrap string in array so that the reduce doesn't err 
+// TODO: wrap string in array so that the reduce doesn't err
 const getNodesByName = function(ast, name) {
   const handleNode = (acc, node) => {
     if (node[0].toLowerCase() === name.toLowerCase()) {
@@ -274,7 +274,7 @@ module.exports = {
   appendNodes,
   createNode,
   createTextNode,
-  walkNodesBreadthFirst, 
+  walkNodesBreadthFirst,
   getChildren,
   getNodesByName,
   filterChildren,
