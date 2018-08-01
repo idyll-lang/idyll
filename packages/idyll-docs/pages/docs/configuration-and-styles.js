@@ -105,19 +105,17 @@ export default ({ url }) => (
 
     For example, package.json might contain the following:
 
-    <Highlight className='javascript'>
-{`
-  "idyll": {
-    "layout": "blog",
-    "theme": "my-custom-theme.css",
-    "components": ["./components/", "../some-other-components/"],
-    "googleFonts": ["Hanalei Fill"],
-    "favicon": "static/favicon.ico",
-    "alias": {
-      "VL": "IdyllVegaLite"
-    }
+    <Highlight className='json'>
+{`"idyll": {
+  "layout": "blog",
+  "theme": "my-custom-theme.css",
+  "components": ["./components/", "../some-other-components/"],
+  "googleFonts": ["Hanalei Fill"],
+  "favicon": "static/favicon.ico",
+  "alias": {
+    "VL": "IdyllVegaLite"
   }
-`}
+}`}
     </Highlight>
 
     <p>
