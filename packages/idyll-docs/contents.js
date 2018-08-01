@@ -4,7 +4,7 @@ const Contents = [
     pages: [
       {title: 'Introduction', route: '/docs' },
       {title: 'Getting started', route: '/docs/getting-started' },
-      {title: 'Syntax', route: '/docs/syntax' },
+      {title: 'Markup Syntax', route: '/docs/syntax' },
       {title: 'Build Options', route: '/docs/configuration-and-styles' },
       {title: 'Advanced Configuration', route: '/docs/advanced-configuration' }
     ],
