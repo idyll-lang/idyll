@@ -150,7 +150,7 @@ const getText = function (node) {
 
   const texts = [];
   walknodes(getChildren(node), (n) => {
-    if (typeof n === "string") {
+    if (n.type === "textnode") {
       texts.push(n);
     }
   });
