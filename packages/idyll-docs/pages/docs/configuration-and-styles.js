@@ -92,6 +92,7 @@ export default ({ url }) => (
       <li><b>theme</b> - the name of the theme to use. By default this is "github". More on themes below.</li>
       <li><b>googleFonts</b> - a list of Google font names to include via CSS. This can be an array of strings or a single string.</li>
       <li><b>favicon</b> - an ico file to use as the favicon, should be inside of the static folder, e.g. "static/favicon.ico".</li>
+      <li><b>alias</b> - Customize component resolution, for example <Highlight className="javascript">{`{ "VL": "IdyllVegaLite"}`}</Highlight>.</li>
       <li><b>template</b> - a custom HTML template to use. The default template is can be found <a href="https://github.com/idyll-lang/idyll/blob/master/packages/idyll-cli/src/client/_index.html">here</a></li>
       <li><b>components</b> - the path to your custom components. By default this points to "components". This can be a string (a single path), or an array.</li>
       <li><b>css</b> - the path to a CSS file. You can use this to override Idyll's default styles.</li>
@@ -115,6 +116,10 @@ export default ({ url }) => (
   }
 `}
     </Highlight>
+
+    <p>
+      <em>Note, when modifying these options you may need to restart the idyll server for the change to take effect.</em>
+    </p>
 
     <Content />
 

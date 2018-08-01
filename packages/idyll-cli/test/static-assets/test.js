@@ -106,12 +106,7 @@ test('options work as expected', () => {
     compiler: {
       spellcheck: false
     },
-    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8'),
-    inputConfig: {
-      compiler: {},
-      components: {},
-      transform: []
-    }
+    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
   })
 })
 
