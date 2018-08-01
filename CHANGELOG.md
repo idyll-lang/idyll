@@ -1,4 +1,7 @@
 
+## v3.6
+
+- Adds `alias` option
 
 ## v3.5
 
