@@ -6,8 +6,8 @@
     "build": "idyll index.idl --layout centered --theme ./custom-theme.css --css styles.css"
   },
   "idyll": {
-    "components": {
-      "PackageJsonComponentTest": "components/custom-component.js"
+    "alias": {
+      "PackageJsonComponentTest": "CustomComponent"
     }
   },
   "dependencies": {

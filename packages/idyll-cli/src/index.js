@@ -28,6 +28,7 @@ function createDirectories(paths) {
 
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
+      alias: {},
       watch: false,
       open: true,
       datasets: 'data',
@@ -73,6 +74,7 @@ const idyll = (options = {}, cb) => {
   opts.inputConfig = inputConfig
 
   // Handle options that can be provided via options or via package.json
+  opts.alias = options.alias || inputConfig.alias || opts.alias;
   opts.transform = options.transform || inputConfig.transform || opts.transform;
   opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
   opts.context = options.context || inputConfig.context || opts.context;

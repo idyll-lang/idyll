@@ -85,6 +85,7 @@ afterAll(() => {
 
 test('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
+    alias: {},
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     minify: false,

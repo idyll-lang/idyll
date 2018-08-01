@@ -75,6 +75,9 @@ beforeAll(done => {
 
 test('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
+    alias: {
+      'PackageJsonComponentTest': 'CustomComponent'
+    },
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     minify: false,
@@ -100,10 +103,11 @@ test('options work as expected', () => {
     },
     inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8'),
     inputConfig: {
-      compiler: {},
-      components: {
-        'package-json-component-test': 'components/custom-component.js'
+      alias: {
+        'PackageJsonComponentTest': 'CustomComponent'
       },
+      compiler: {},
+      components: {},
       transform: []
     }
   })
