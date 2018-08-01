@@ -28,6 +28,7 @@ function createDirectories(paths) {
 
 const idyll = (options = {}, cb) => {
   const opts = Object.assign({}, {
+      alias: {},
       watch: false,
       open: true,
       datasets: 'data',
@@ -61,18 +62,10 @@ const idyll = (options = {}, cb) => {
   configureNode(paths);
 
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE) ? require(paths.PACKAGE_FILE) : {};
-  const inputConfig = Object.assign({
-    components: {},
-    transform: [],
-    compiler: {}
-  }, inputPackage.idyll || {});
-  for (let key in inputConfig.components) {
-    inputConfig.components[changeCase.paramCase(key)] = inputConfig.components[key];
-    delete inputConfig.components[key];
-  };
-  opts.inputConfig = inputConfig
+  const inputConfig = inputPackage.idyll || {};
 
   // Handle options that can be provided via options or via package.json
+  opts.alias = options.alias || inputConfig.alias || opts.alias;
   opts.transform = options.transform || inputConfig.transform || opts.transform;
   opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
   opts.context = options.context || inputConfig.context || opts.context;
