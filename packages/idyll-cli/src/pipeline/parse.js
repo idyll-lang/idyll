@@ -12,7 +12,7 @@ const {
   getProperty,
   filterNodes,
   findNodes
-} = require('idyll-ast')
+} = require('idyll-astV2')
 
 exports.getComponentNodes = (ast) => {
   const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);

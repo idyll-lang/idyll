@@ -50,10 +50,16 @@ export const evalExpression = (acc, expr, key, context) => {
   } catch (err) {}
 }
 
+/* change here */
+/*
+arr -> list of vars 
+retun -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
-    const [ variableType, attrs = [], ] = val;
-
+    //const [ variableType, attrs = [], ] = val;
+    const variableType = val.name; 
+    const attr = val.properties; 
+   //["var", [[namearr],[valuearr]], []]
     const [nameArr, valueArr] = attrs;
     if (!nameArr || !valueArr) return acc;
 
@@ -84,7 +90,6 @@ export const getVars = (arr, context = {}, evalContext) => {
           }
         }
     }
-
     return acc;
   }
 
@@ -114,7 +119,10 @@ export const filterIdyllProps = (props, filterInjected) => {
   return rest;
 }
 
+/* change here */
+
 export const getData = (arr, datasets = {}) => {
+  // ["data", [[nameArr], [sourceArr]], []]
   const pluck = (acc, val) => {
     const [ , attrs, ] = val
     const [nameArr, ] = attrs;
@@ -132,6 +140,7 @@ export const getData = (arr, datasets = {}) => {
   )
 }
 
+/* change here */
 export const splitAST = (ast) => {
   const state = {
     vars: [],
@@ -140,6 +149,7 @@ export const splitAST = (ast) => {
     elements: [],
   }
 
+  /* change here */
   const handleNode = (storeElements) => {
     return (node) => {
       const [ name, props, children ] = node;
@@ -175,6 +185,7 @@ export const scrollMonitorEvents = {
   'onExitViewFully': 'exitViewport'
 }
 
+/* change here */
 export const translate = (arr) => {
   const attrConvert = (list) => {
     return list.reduce(

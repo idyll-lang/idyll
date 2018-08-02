@@ -62,11 +62,11 @@ const getChildren = function(node) {
 
 const getText = function(node) {
   const texts = [];
-  walkNodes(getChildren(node), (n) => {
+  walkNodes(node, (n) => {
     if(typeof n === 'string') {
       texts.push(n);
     }
-  })
+  }); 
   return texts.join('');
 }
 
