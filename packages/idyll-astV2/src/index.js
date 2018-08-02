@@ -6,6 +6,7 @@
  * the package idyll-astV2. 
  */
 
+const { convert, inverseConvert } = require('./converters/converters'); 
 const error = require('./error');
 const Ajv = require("ajv");
 const ajv = new Ajv();
@@ -725,5 +726,7 @@ module.exports = {
   setProperty,
   setProperties,
   walkNodes,
-  walkNodesBreadthFirst
+  walkNodesBreadthFirst,
+  convert, 
+  inverseConvert
 };
