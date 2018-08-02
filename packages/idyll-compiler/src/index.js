@@ -4,6 +4,7 @@ const Lexer = require('./lexer');
 const Processor = require('./processors');
 const { cleanNewlines } = require('./processors/pre');
 const { hoistVariables, flattenChildren, cleanResults, makeFullWidth, wrapText, autoLinkify } = require('./processors/post');
+const { inverseConvert } = require('idyll-astV2'); 
 const matter = require('gray-matter');
 
 module.exports = function(input, options, callback) { 
@@ -58,8 +59,8 @@ module.exports = function(input, options, callback) {
       return promise.then((val) => {
         return f(val);
       });
-    }, Promise.resolve(astTransform));
+    }, Promise.resolve(inverseConvert(astTransform)));
   } else {
-    return options.async ? new Promise((resolve) => resolve(astTransform)) : astTransform;
+    return options.async ? new Promise((resolve) => resolve(inverseConvert(astTransform))) : inverseConvert(astTransform);
   }
 }

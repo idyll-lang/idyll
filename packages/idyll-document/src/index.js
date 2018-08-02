@@ -2,6 +2,7 @@
 import React from 'react';
 import Runtime from './runtime';
 import compile from 'idyll-compiler';
+import { convert } from 'idyll-astV2'
 
 export const hashCode = (str) => {
   var hash = 0, i, chr;
@@ -19,8 +20,8 @@ class IdyllDocument extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ast: props.ast || [],
-      previousAST: props.ast || [],
+      ast: props.ast || {},
+      previousAST: props.ast || {},
       hash: '',
       error: null
     }
@@ -76,7 +77,7 @@ class IdyllDocument extends React.Component {
             typeof this.props.context === 'function' && this.props.context(context);
           }}
           initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
-          ast={ this.props.ast || this.state.ast }
+          ast={ convert(this.props.ast) || convert(this.state.ast) }
           />
         { this.getErrorComponent() }
       </div>
