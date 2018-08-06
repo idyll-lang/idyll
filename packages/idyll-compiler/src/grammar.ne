@@ -1,5 +1,7 @@
 @builtin "whitespace.ne"
-
+@{% 
+  let idCounter = 0; 
+%}
 Sourcefile -> Blocks "EOF" {%
   function(data, location, reject) {
     return data[0];
@@ -44,8 +46,13 @@ Header -> "HEADER_" [1-6] (__ ParagraphItem):+ __ "HEADER_END" {%
     data[2].map(function (child) {
       children.push(child[1]);
     });
-
-    return ["h" + data[1], [], children];
+    let header = {
+      "id": idCounter++,
+      "type": "component", 
+      "name": "h" + data[1], 
+      "children": children
+    };
+    return header;
   }
 %}
 
@@ -56,27 +63,52 @@ Quote -> "QUOTE_START" (__ ParagraphItem):+ __ "QUOTE_END" {%
       children.push(child[1]);
     });
 
-    return ["blockquote", [], children];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "blockquote", 
+      "children": children
+    };
   }
 %}
 
 UnorderedList -> "UNORDERED_LIST" (__ ListItem):+ __ "LIST_END"  {%
   function(data, location, reject) {
+    let ul = {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "ul", 
+    }; 
     var children = [];
     data[1].map(function (child) {
-      children.push(["li", [], child[1]]);
+      children.push({
+        "id": idCounter++, 
+        "type": "component", 
+        "name": "li", 
+        "children": child[1]});
     });
-    return ["ul", [], children];
+    ul.children = children; 
+    return ul; 
   }
 %}
 
 OrderedList -> "ORDERED_LIST" (__ ListItem):+ __ "LIST_END" {%
   function(data, location, reject) {
+    let ol = {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "ol", 
+    };
     var children = [];
     data[1].map(function (child) {
-      children.push(["li", [], child[1]]);
+      children.push({
+        "id": idCounter++, 
+        "type": "component", 
+        "name": "li", 
+        "children": child[1]});
     });
-    return ["ol", [], children];
+    ol.children = children; 
+    return ol;
   }
 %}
 
@@ -93,9 +125,32 @@ ListItem -> "LIST_ITEM" (__ ParagraphItem):+ {%
 MultilineCode -> "MULTILINE_CODE" (__ TokenValue):+ {%
   function(data, location, reject) {
     if (data[1].length > 1 && data[1][0][1].trim() !== '') {
-      return ["CodeHighlight", [['language', ['value', data[1][0][1]]]], [data[1][1][1]]];
+      return {
+        "id": idCounter++, 
+        "type": "component", 
+        "name": "CodeHighlight", 
+        "properties": {
+          "language": {
+            "type": "value", 
+            "value": data[1][0][1]
+          }
+        }, 
+        "children": [data[1][1][1]]
+      };
     } else {
-      return ["pre", [], [["code", [], [data[1][data[1].length - 1][1]]]]];
+      return {
+        "id": idCounter++, 
+        "type": "component", 
+        "name": "pre", 
+        "children": [
+          {
+            "id": idCounter++,
+            "type": "component",
+            "name": "code", 
+            "children": [data[1][data[1].length - 1][1]]
+          }
+        ]
+      };
     }
   }
 %}
@@ -129,10 +184,22 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
     if (children.length === 1 && typeof children[0] !== 'string') {
       return children[0];
     } else if (children.filter(function (c) { return typeof c === 'string' }).length === 0) {
-      return ["_idyllContainer", [], children];
+      //Doubt
+      //return ["_idyllContainer", [], children];
+      return {
+        "id": idCounter++, 
+        "type": "component", 
+        "name": "_idyllContainer", 
+        "children": children
+      };
     }
 
-    return ["p", [], children];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "p", 
+      "children": children
+    };
   }
 %}
 
@@ -160,8 +227,12 @@ BoldInline -> "STRONG" (__ ParagraphItem):+ __ "STRONG_END" {%
     data[1].map(function (child) {
       children.push(child[1]);
     });
-
-    return ["strong", [], children];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "strong", 
+      "children": children
+    }; 
   }
 %}
 
@@ -171,26 +242,61 @@ EmInline -> "EM" (__ ParagraphItem):+ __ "EM_END" {%
     data[1].map(function (child) {
       children.push(child[1]);
     });
-
-    return ["em", [], children];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "em", 
+      "children": children
+    };
   }
 %}
 
 CodeInline -> "INLINE_CODE" __ TokenValue {%
   function(data, location, reject) {
-    return ['code', [], [data[2]]];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "code", 
+      "children": [data[2]]
+    };
   }
 %}
 
 ImageInline -> "IMAGE" __ TokenValue __ TokenValue {%
   function(data, location, reject) {
     return ['img', [["src", ["value", data[4]]], ["alt", ["value", data[2]]]], []];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "img",
+      "properties": {
+        "src": {
+          "type": "value", 
+          "value": data[4]
+        }, 
+        "alt": {
+          "type": "value", 
+          "value": data[2]
+        }
+      } 
+    }; 
   }
 %}
 
 LinkInline -> "LINK" __ TokenValue __ TokenValue {%
   function(data, location, reject) {
-    return ['a', [["href", ["value", data[4]]]], [data[2]]];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": "a",
+      "properties": {
+        "href": {
+          "type": "value", 
+          "value": data[4]
+        }
+      }, 
+      "children": [data[2]] 
+    };
   }
 %}
 
