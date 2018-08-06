@@ -324,8 +324,8 @@ const getNodeName = function (node) {
  * @name getProperty
  * @description
  * Getter function to a return a specific property of a node based on a key. 
- * @param {*} node 
- * @param {*} key 
+ * @param {object} node 
+ * @param {string} key 
  * @return null, if the property does not exist, else property.data. 
  */
 const getProperty = function (node, key) {
@@ -333,12 +333,8 @@ const getProperty = function (node, key) {
   typeCheckObject(node, "node");
   runValidator(node, "node");
 
-  if (node.properties) {
-    return node.properties.foreach((prop) => {
-      if (prop.name === key) {
-        return prop.data;
-      }
-    });
+  if (node.properties.hasOwnProperty(key)) {
+    return node.properties[key]; 
   }
   return null
 };
@@ -484,19 +480,9 @@ const setProperty = function (node, name, data) {
     throw new error.InvalidParameterError("Parameter name must be a string.");
   }
   if (node.properties) {
-    if (node.properties.hasOwnProperty(name)) {
-      node.properties.name = data;
-    } else {
-      node.properties = Object.assign({
-        name: data
-      }, getProperties(node));
+      node.properties[name] = data; 
     }
-
-  } else {
-    node.properties = Object.assign({
-      name: data
-    }, {});
-  }
+  } 
   return Object.assign({}, node);
 };
 
@@ -529,7 +515,6 @@ const setProperties = function (node, properties) {
 
 /**
  * @name walkNodes
- * @type {function}
  * @description 
  * Function to do a depth-first traversal of the AST. 
  * @param {object} ast  AST node 

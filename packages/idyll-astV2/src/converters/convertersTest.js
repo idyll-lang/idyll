@@ -83,7 +83,7 @@ function testConverter() {
 function testInverseConverter() {
     console.log(JSON.stringify(inverseConvert(example1Array)));  
 }
-/*
+
 function test1() {
     let input = `
     ## This is a header
@@ -104,7 +104,4 @@ function test1() {
   console.log(JSON.stringify((convert(inverseConvert(value))))); 
 }
 
-//test1();
-
-*/
 testConverter(); 

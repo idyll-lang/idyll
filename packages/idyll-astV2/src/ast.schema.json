@@ -1,76 +1,77 @@
-{   
-    "$schema": "http://json-schema.org/draft-06/schema#", 
-    "title": "AST Schema V1", 
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "AST Schema V1",
     "description": "Structure of an AST object",
     "type": "object",
     "properties": {
         "id": {
-            "desceription": "A unique identifier for the current element", 
-            "type" : "integer"
-        }, 
-        "type" : {
+            "desceription": "A unique identifier for the current element",
+            "type": "integer"
+        },
+        "type": {
             "description": "The type category of the element (component/textnode)",
             "type": "string",
             "enum": ["component"]
         },
-        "name" : {
-            "description": "The name of the element", 
+        "name": {
+            "description": "The name of the element",
             "type": "string"
         },
-        "properties" : {
-            "description": "The properties/attributes of the element", 
-            "type": "object", 
+        "properties": {
+            "description": "The properties/attributes of the element",
+            "type": "object",
             "patternProperties": {
-                "^w+" : {
-                    "description": "Object containing data for the particular property", 
+                "^w+": {
+                    "description": "Object containing data for the particular property",
                     "type": "object",
                     "properties": {
                         "type": {
                             "description": "The evaluation type of the property. Can be value/variable/expression",
                             "type": "string",
                             "enum": ["value", "variable", "expression"]
-                        }, 
+                        },
                         "value": {
-                            "description": "Property value", 
+                            "description": "Property value",
                             "type": "string"
                         }
                     },
                     "additionalProperties": false
                 }
             }
-        }, 
+        },
         "children": {
             "description": "The children of the element.",
-            "type": "array", 
+            "type": "array",
             "items": {
-            	"anyof": [
-            		{"$ref": "#"}, 
-            		{
-            			"description": "Structure for a textnode", 
-            			"type": "object",
-            			"properties": {
-            				"id": {
-            					"desceription": "A unique identifier for the current element", 
-            					"id" : "integer"
-            				}, 
-            				"type": {
-            					"description": "The type category of the element",
-            					"type": "string",
-            					"enum": ["textnode"]
-            				},
-            				"value": {
-            					"description": "Property value", 
-                    			"type": "string"
-            				}	
-            			},
-            			"additionalProperties": false
-            		}
-            	]
-                            }, 
+                "anyof": [{
+                        "$ref": "#"
+                    },
+                    {
+                        "description": "Structure for a textnode",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "desceription": "A unique identifier for the current element",
+                                "id": "integer"
+                            },
+                            "type": {
+                                "description": "The type category of the element",
+                                "type": "string",
+                                "enum": ["textnode", "var", "derive", "data"]
+                            },
+                            "value": {
+                                "description": "Element value",
+                                "type": "string"
+                            }
+                        },
+                        "required": ["id", "type", "value"],
+                        "additionalProperties": false
+                    }
+                ]
+            },
             "uniqueItems": true
         }
     },
-    "required" : [ "id", "type", "name"],
+    "required": ["id", "type", "name"],
     "additionalProperties": false
 }
-
