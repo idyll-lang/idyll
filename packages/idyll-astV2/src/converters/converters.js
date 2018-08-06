@@ -29,11 +29,11 @@ function convertHelper(jsonElement) {
         elementArray.push(jsonElement.name); 
         let propertiesArray = []; 
         if('properties' in jsonElement) {
-            for(let property in jsonElement.properties) {
-                let propertyArray = [property.name];
-                propertyArray.push([property.data.type, property.data.value]); 
+            Object.keys(jsonElement.properties).forEach((key) => {
+                let propertyArray = [key];           
+                propertyArray.push([jsonElement.properties[key].type, jsonElement.properties[key].value]); 
                 propertiesArray.push(propertyArray);
-            }
+            }); 
         }
         elementArray.push(propertiesArray); 
         if('children' in jsonElement) {
@@ -86,12 +86,10 @@ function inverseConvertHelper(arrayElement, id) {
         if(arrayElement[1].length !== 0) {
             elementJson.properties = {}; 
             arrayElement[1].forEach((property) => {
-                let value = new Object; 
-                value.name = property[1]; 
-                value.data = new Object(); 
-                value.data.type = property[1][0]; 
-                value.data.value = property[1][1];  
-                elementJson.properties = Object.assign(value, elementJson.properties); 
+                elementJson.properties[property[0]] = {
+                    "type": property[1][0],
+                    "value": property[1][1]
+                }; 
             }); 
         }
         if(arrayElement[2]) {

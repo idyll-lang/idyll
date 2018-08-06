@@ -42,8 +42,9 @@ const build = (opts, paths, resolvers) => {
 
         // Set -> Array to remove duplicate entries.
         const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
-          return node[0].split('.')[0];
+          return node.name.split('.')[0];
         })));
+        
         const components = uniqueComponents.reduce((acc, name) => {
           let resolved = resolvers.get('components').resolve(name);
           if (resolved) acc[paramCase(name)] = resolved;

@@ -1,5 +1,5 @@
-{
-    "$schema": "http://json-schema.org/draft-06/schema", 
+{   
+    "$schema": "http://json-schema.org/draft-06/schema#", 
     "title": "AST Schema V1", 
     "description": "Structure of an AST object",
     "type": "object",
@@ -20,25 +20,22 @@
         "properties" : {
             "description": "The properties/attributes of the element", 
             "type": "object", 
-            "properties": {
-                "name": {
-                    "description": "Name of the property", 
-                    "type": "string"
-                }, 
-                "data": {
+            "patternProperties": {
+                "^w+" : {
                     "description": "Object containing data for the particular property", 
                     "type": "object",
                     "properties": {
-                    	"type": {
-                    		"description": "The evaluation type of the property. Can be value/variable/expression",
-                    		"type": "string",
-                    		"enum": ["value", "variable", "expression"]
-                    	}, 
-                    	"value": {
-                    		"description": "Property value", 
-                    		"type": "string"
-                    	}
-                    }
+                        "type": {
+                            "description": "The evaluation type of the property. Can be value/variable/expression",
+                            "type": "string",
+                            "enum": ["value", "variable", "expression"]
+                        }, 
+                        "value": {
+                            "description": "Property value", 
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": false
                 }
             }
         }, 
@@ -76,3 +73,4 @@
     "required" : [ "id", "type", "name"],
     "additionalProperties": false
 }
+

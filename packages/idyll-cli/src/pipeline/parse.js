@@ -11,16 +11,16 @@ const {
   getNodesByName,
   getProperty,
   filterNodes,
-  findNodes
+  convert
 } = require('idyll-astV2')
 
 exports.getComponentNodes = (ast) => {
   const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
-  return findNodes(ast, node => {
+  return filterNodes(ast, node => {
     if (typeof node === 'string') {
       return false
     }
-    return !ignoreNames.has(node[0].toLowerCase())
+    return !ignoreNames.has(node.name.toLowerCase())
   });
 }
 
@@ -155,7 +155,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
-      ast: ast,
+      ast: convert(ast),
       components,
       datasets,
       theme: opts.theme,

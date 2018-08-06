@@ -10,7 +10,8 @@ const { convert, inverseConvert } = require('./converters/converters');
 const error = require('./error');
 const Ajv = require("ajv");
 const ajv = new Ajv();
-const schema = require("../ast.schema.json");
+ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
+const schema = require('./ast.schema.json');
 const validator = ajv.compile(schema);
 const ajvProps = new Ajv();
 const validatorProps = ajv.compile(schema.properties.properties);
@@ -110,7 +111,12 @@ const getChildren = function (node) {
   if (node.type === "textnode") {
     return [];
   }
-  return node.children.map((element) => Object.assign({}, element));
+  if(node.children) {
+    return node.children.map((element) => Object.assign({}, element));
+  } else {
+    return []; 
+  }
+  
 };
 
 /**
@@ -131,7 +137,7 @@ const getNodesByName = function (ast, name) {
   node = node.map((element) => Object.assign({}, element));
 
   let otherNodes = [];
-  ast.foreach((node) => {
+  node.forEach((node) => {
     othernodes += getNodesByName(node, name);
   });
   return (node.concat(otherNodes)).map((element => Object.assign({}, element)));
@@ -174,7 +180,7 @@ const filterNodes = function (ast, filter) {
   checkASTandFunction(ast, "ast", filter, "filter");
 
   let result = [];
-  walknodes(ast, node => {
+  walkNodes(ast, node => {
     if (filter(node)) result.push(node);
   });
   return result.map((element => Object.assign({}, element)));
@@ -537,9 +543,12 @@ const walkNodes = function (ast, f) {
 
 //Helper function for walkNodes 
 function walkNodesHelper(ast, f) {
-  ([ast] || []).foreach((node) => {
-    walkNodes(getChildren(node), f);
-    f(node);
+  ([ast] || []).forEach((node) => {
+    let child = getChildren(node);
+    if(child.length > 0) {
+      walkNodes(child, f);
+      f(node);
+    }
   });
 }
 
@@ -567,6 +576,15 @@ function walkNodesBreadthFirstHelper(ast, f) {
   }
 }
 
+const addRoot = function(ast) {
+  let root = {
+    "id": 1,
+    "name": "root", 
+    "type": "compoenent", 
+    "children": ast
+  }
+  return root; 
+}
 /*
   Function to check for errors between ast and node variables
 */
@@ -608,7 +626,7 @@ function checkForCreateNode(id, name, type, props, children) {
 */
 function typeCheckObject(param, paramName) {
   if (typeof param !== "object") {
-    throw new error.InvalidParameterError("Parameter " + paramName + " must be a well defined JSON object. " + " Object: " + param);
+    throw new error.InvalidParameterError("Parameter " + paramName + " must be a well defined JSON object. " + "Object: " + param);
   }
 }
 
@@ -635,17 +653,24 @@ function typeCheckString(param, paramName) {
 */
 function typeCheckArray(array, arrayName) {
   if (!array.isArray()) {
-    throw new InvalidParameterError("Paramter " + arrayName + " must be an array. " + " Object: " + param);
+    throw new InvalidParameterError("Paramter " + arrayName + " must be an array. " + "Object: " + param);
   }
 }
 
+function typeCheckFunction(func, name) {
+  if(typeof func !== "function") {
+    throw new InvalidParameterError("Paramter " + name + " must be a Function. " + "Function: " + func);
+  }
+}
 /*
   Function to type check a function
 */
 function checkASTandFunction(ast, astName, func, functionName) {
+  
   typeCheckObject(ast, astName);
   typeCheckFunction(func, functionName);
   runValidator(ast, astName);
+  
 }
 
 /*
@@ -682,11 +707,12 @@ function checkChildren(children) {
 /*
   Function to validate AST structures
 */
-function runValidator(param, paramName) {
-  if (!validator(ast)) {
+function runValidator(param, paramName) { 
+ /* if (!validator(param)) {
     console.log("Error message from validator: " + validator.errors[0].message);
-    throw new error.MalformedAstError(paramName + " must be well-defined and follow the AST schema. " + " Object: " + param);
-  }
+    console.log(param);
+    throw new error.MalformedAstError(paramName + " must be well-defined and follow the AST schema. " + "Object: " + param);
+  }*/
 }
 
 /*
@@ -728,5 +754,6 @@ module.exports = {
   walkNodes,
   walkNodesBreadthFirst,
   convert, 
-  inverseConvert
+  inverseConvert, 
+  addRoot
 };

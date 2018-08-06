@@ -1,64 +1,79 @@
+# What is idyll-ast?
 
-# idyll-ast
+idyll-ast is a library that defines the Abstract Syntax Tree used for Idyll. It is a JSON based AST,
+and the structure is defined by this <a href="src/ast.schema.json">schema</a>.
 
-Utilities for dealing with Idyll AST. This is most likely useful in the context of compiler plugins.
+# Getting Started
 
-## Installation
-
-```
-npm install --save idyll-ast
-```
-
-## Usage
-
-
-```js
-const ast = require('idyll-ast');
-const compile = require('idyll-compiler');
-
-compile(`
- # idyll markup goes here
-`)
-.then((ast) => {
-  const transformedAST = ast.modifyNodesByName(inputAST, 'h1', (node) => {
-    node = ast.setProperty(node, 'className', 'super-great-header');
-    return node;
-  })
-})
+You can install idyll-ast by both `npm` and `yarn`.
 
 ```
+//using npm
+npm instal --save idyll-ast
 
-### Plugin Example
+//using yarn
+yarn add idyll-ast
+```
 
-This plugin just appends a new node at the end of the input:
+We recommend using --save to add all the dependencies required for idyll-ast to your package.json file.
 
-```js
-const ast = require('idyll-ast');
+# Structure
 
-module.exports = (inputAST) => {
-  return ast.appendNodes(inputAST, []);
-};
+The ast structure used, is defined by <a href="http://json-schema.org/"> JSON schema (Draft-6)</a>, and the current schema is at `src/ast.schema.json`.
 
+Let's take a look at an example:
+
+```
+## This is a header
+And this is a normal paragraph. This is # not a header.
 
 ```
 
-## API
+The above Idyll syntax would look like the following when in ast form:
 
-* `appendNode(ast, newNode)`
-* `appendNodes(ast, newNodes)`
-* `createNode(name, props, children)`
-* `getChildren(node)`
-* `getNodesByName(ast, 'name')`
-* `filterChildren(node, filterFunction)`
-* `filterNodes(ast, filterFunction)`
-* `modifyChildren(node, modFunction)`
-* `modifyNodesByName(ast, 'name', modFunction)`
-* `getProperty(node, 'propName')`
-* `prependNode(ast, newNode)`
-* `prependNodes(ast, newNodes)`
-* `removeNodesByName(ast, 'name')`
-* `setProperties(node, { prop1: value, prop2: value })`
-* `setProperty(node, 'prop', value)`
-* `removeProperty(node, 'prop')`
-* `walkNodes(ast, func)`
+```
+{
+    "id": 0,
+    "type": "component",
+    "name": "root",
+    "children": [
+        {
+            "id": 1,
+            "type": "component",
+            "name": "h2",
+            "children": [
+                {
+                    "id": 2,
+                    "type": "textnode",
+                    "value": "This is a header"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "type": "component",
+            "name": "p",
+            "children": [
+                {
+                    "id": 4,
+                    "type": "textnode",
+                    "value": "And this is a normal paragraph. This is # not a header."
+                }
+            ]
+        }
+    ]
+}
 
+```
+
+All the data in the tree is encapsulated by the node called `root`. All the top-level components in the document are considered the children of the root.
+
+## Type
+
+There can be 5 different types of nodes in the AST.
+
+  1. **component** : Represents an Idyll component.
+  2. **textnode**: Represents an Idyll textnode.
+  3. **var**: Represents a variable declaration in Idyll.
+  4. **derive**: Represents  
+  5. **data**: Represents a data field in Idyll.

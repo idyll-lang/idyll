@@ -1,6 +1,6 @@
 const { convert, inverseConvert } = require('./converters'); 
 let expect = require('expect.js');
-let compile = require('../../idyll-compiler/src');
+let compile = require('../../../idyll-compiler/src');
 let fs = require('fs');
 
 const example1 = {
@@ -43,29 +43,27 @@ const example1 = {
                             "id": 7,
                             "type": "component",
                             "name": "a",
-                            "properties": [
-                                {
-                                    "name": "href", 
-                                    "data": {
-                                        "type": "value",
-                                        "value": "https://www.example.com"
-                                    }
+                            "properties": {
+                                "href": {
+                                    "type": "value", 
+                                    "value": "https://www.example.com"
+                                }, 
+                                "hr": {
+                                    "type": "value", 
+                                    "value": "asdfadsf"
                                 }
-                            ],
+                            },
                             "children" : [
                                 {   
                                     "id": 8, 
                                     "type": "component", 
                                     "name": "img", 
-                                    "properties": [
-                                        {
-                                            "name": "src", 
-                                            "data": {
-                                                "type": "value",
-                                                "value": "https://www.example.cosm/example.jpg"
-                                            }
+                                    "properties": {
+                                        "src": {
+                                            "type": "value", 
+                                            "value": "src/image"
                                         }
-                                    ]
+                                    }
                                 }
                             ] 
                         }
@@ -77,7 +75,7 @@ const example1 = {
     ]
 }; 
 
-const example1Array = [["TextConatiner",[],[["p",[],["This is the first paragraphs's text!"]]]],["TextConatiner",[],[["p",[],[["a",[["href",["value","https://www.example.com"]]],[["img",[["src",["value","https://www.example.com/example-img.jpg"]]]]]]]]]]]; 
+const example1Array = [["TextConatiner",[],[["p",[],["This is the first paragraphs's text!"]]]],["TextConatiner",[],[["p",[],[["a",[["href",["value","https://www.example.com"]], ["hr",["value","https://www.mple.com"]]],[["img",[["src",["value","https://www.example.com/example-img.jpg"]]]]]]]]]]]; 
 function testConverter() {
     console.log(JSON.stringify(convert(example1)));    
 }
@@ -85,7 +83,7 @@ function testConverter() {
 function testInverseConverter() {
     console.log(JSON.stringify(inverseConvert(example1Array)));  
 }
-
+/*
 function test1() {
     let input = `
     ## This is a header
@@ -106,4 +104,7 @@ function test1() {
   console.log(JSON.stringify((convert(inverseConvert(value))))); 
 }
 
-test1();
+//test1();
+
+*/
+testConverter(); 
