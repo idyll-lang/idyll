@@ -53,9 +53,10 @@ export const evalExpression = (acc, expr, key, context) => {
 /* change here */
 /*
 arr -> list of vars 
-retun -> Object(key-> name value -> value of the var)*/
+return -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
+    /*
     //const [ variableType, attrs = [], ] = val;
     const variableType = val.name; 
     const attr = val.properties; 
@@ -65,7 +66,11 @@ export const getVars = (arr, context = {}, evalContext) => {
 
     const [, [, nameValue]] = nameArr
     const [, [valueType, valueValue]] = valueArr;
-
+    */
+    const variableType = val.type; 
+    const attr = val.properties; 
+    const nameValue = attr.name.value; 
+    const valueValue = attr.value.value; 
     switch(valueType) {
       case 'value':
         acc[nameValue] = valueValue;
@@ -124,10 +129,15 @@ export const filterIdyllProps = (props, filterInjected) => {
 export const getData = (arr, datasets = {}) => {
   // ["data", [[nameArr], [sourceArr]], []]
   const pluck = (acc, val) => {
+    const attr = val; 
+    const nameValue = val.name.value; 
+    
+    /*
     const [ , attrs, ] = val
     const [nameArr, ] = attrs;
 
     const [, [, nameValue]] = nameArr
+    */
 
     acc[nameValue] = datasets[nameValue];
 
@@ -143,10 +153,10 @@ export const getData = (arr, datasets = {}) => {
 /* change here */
 export const splitAST = (ast) => {
   const state = {
-    vars: [],
-    derived: [],
-    data: [],
-    elements: [],
+    vars: {},
+    derived: {},
+    data: {},
+    elements: {},
   }
 
   /* change here */
