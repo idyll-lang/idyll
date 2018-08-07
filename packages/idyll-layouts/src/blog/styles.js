@@ -67,6 +67,16 @@ input {
   position: sticky;
 }
 
+.overlay-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.overlay-div {
+  position: relative;
+}
+
 @media all and (max-width: 1600px) {
   .fixed {
     width: calc((85vw - 600px) - 50px);
