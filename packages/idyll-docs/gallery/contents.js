@@ -149,6 +149,13 @@ const exampleGroups = [
   {
     title: 'Tutorials',
     examples: [{
+      label: 'Using Mapbox with Idyll',
+      subtitle: "Add interactive maps to your Idyll posts.",
+      href: 'https://mathisonian.github.io/idyll-map-example/',
+      image: 'mapbox.png',
+      sourceUrl: "https://github.com/mathisonian/idyll-map-example"
+      },
+      {
       label: 'Announcing idyll.pub',
       subtitle: "Publish interactive blog posts and explorable explanations with Idyll's free hosting service.",
       href: 'https://idyll.pub/post/announcing-idyll-pub-0a3eff0661df3446a915700d/',
