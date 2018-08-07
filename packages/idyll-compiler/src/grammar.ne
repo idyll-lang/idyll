@@ -13,8 +13,7 @@ Blocks -> ("BREAK" __):* ((BreakBlock __ ("BREAK" __):+) | (NoBreakBlock __ ("BR
     var blocks = [];
     data[1].forEach(function(d) {
       blocks.push(d[0][0]);
-    })
-
+    }); 
     if (data[2]) {
       blocks.push(data[2][0]);
     }
@@ -52,6 +51,7 @@ Header -> "HEADER_" [1-6] (__ ParagraphItem):+ __ "HEADER_END" {%
       "name": "h" + data[1], 
       "children": children
     };
+    console.log(JSON.stringify(header)); 
     return header;
   }
 %}
@@ -184,8 +184,6 @@ Paragraph -> (ParagraphItem __):* ParagraphItem  {%
     if (children.length === 1 && typeof children[0] !== 'string') {
       return children[0];
     } else if (children.filter(function (c) { return typeof c === 'string' }).length === 0) {
-      //Doubt
-      //return ["_idyllContainer", [], children];
       return {
         "id": idCounter++, 
         "type": "component", 
@@ -211,7 +209,11 @@ ParagraphItem -> (Text | ClosedComponent | OpenComponent | TextInline) {%
 
 Text -> "WORDS" __ TokenValue {%
   function(data, location, reject) {
-    return data[2];
+    return {
+      "id": idCounter++, 
+      "type": "textnode", 
+      "value": data[2]
+    }
   }
 %}
 
@@ -264,7 +266,6 @@ CodeInline -> "INLINE_CODE" __ TokenValue {%
 
 ImageInline -> "IMAGE" __ TokenValue __ TokenValue {%
   function(data, location, reject) {
-    return ['img', [["src", ["value", data[4]]], ["alt", ["value", data[2]]]], []];
     return {
       "id": idCounter++, 
       "type": "component", 
@@ -302,7 +303,13 @@ LinkInline -> "LINK" __ TokenValue __ TokenValue {%
 
 OpenComponent -> OpenComponentStart __ Blocks:? OpenComponentEnd {%
   function(data, location, reject) {
-    return [data[0][0], data[0][1], data[2] || []];
+    return {
+      "id": idCounter++, 
+      "type": "component", 
+      "name": data[0][0], 
+      "properties": data[0][1], 
+      "children": data[2] || []
+    }
   }
 %}
 
@@ -316,7 +323,12 @@ OpenComponentEnd -> "OPEN_BRACKET" __ "FORWARD_SLASH" __ ComponentName __ "CLOSE
 
 ClosedComponent -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties "FORWARD_SLASH" __ "CLOSE_BRACKET" {%
   function(data, location, reject) {
-    return [data[2], data[4], []];
+    return {
+      "id" : idCounter++,
+      "type" : "component",
+      "name" : data[2],
+      "properties" : data[4] 
+    };
   }
 %}
 
@@ -328,15 +340,20 @@ ComponentName -> "COMPONENT_NAME" __ TokenValue {%
 
 ComponentProperties -> (ComponentProperty __):* {%
   function(data, location, reject) {
-    return data[0].map(function(d) { return d[0]; });
+    let properties = {}; 
+    data[0].forEach((prop) => {
+      properties[prop[0]] = {
+        "type": prop[1], 
+        "value": prop[2]
+      }; 
+    }); 
+    return properties;
   }
 %}
 
 ComponentProperty -> "COMPONENT_WORD" __ TokenValue __ "PARAM_SEPARATOR" __  ComponentPropertyValue {%
   function(data, location, reject) {
-    var key = data[2];
-    var val = data[6];
-    return [key, val];
+    return [data[2], data[6][0], data[6][1]]; 
   }
 %}
 

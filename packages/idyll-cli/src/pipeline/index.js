@@ -19,7 +19,7 @@ const {
 const css = require('./css');
 const bundleJS = require('./bundle-js');
 const errors = require('../errors');
-
+const { walkNodes } = require('idyll-astV2');
 const debug = require('debug')('idyll:cli')
 
 let output;
@@ -40,16 +40,26 @@ const build = (opts, paths, resolvers) => {
       return Promise.try(() => {
         const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
+        /* Change here */
         // Set -> Array to remove duplicate entries.
-        const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
+       /* const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
           return node.name.split('.')[0];
-        })));
+        })));*/
+
+        let nameArray = []; 
+        walkNodes(getComponentNodes(ast)[0], (node) => {
+          nameArray.push(node.name.split('.')[0]); 
+        }); 
+        console.log("names:", nameArray);
+        const uniqueComponents = Array.from(new Set(nameArray)); 
         
+        console.log('unique components', uniqueComponents)
         const components = uniqueComponents.reduce((acc, name) => {
           let resolved = resolvers.get('components').resolve(name);
           if (resolved) acc[paramCase(name)] = resolved;
           return acc;
         }, {});
+        console.log('components', components)
 
         const data = getDataNodes(ast).reduce((acc, { name, source }) => {
           let { resolvedName, data } = resolvers.get('data').resolve(name, source)
