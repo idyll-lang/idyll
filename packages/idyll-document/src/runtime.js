@@ -174,7 +174,10 @@ const createWrapper = ({ theme, layout }) => {
       });
 
       return (
-        <Overlay>{returnComponent}</Overlay>
+        <Overlay>
+          {returnComponent}
+          <button className="overlay-button">Button</button>
+        </Overlay>
       );
       
     }
