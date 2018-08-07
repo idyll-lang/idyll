@@ -6,6 +6,7 @@ import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
+import Overlay from './components/overlay';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -160,7 +161,7 @@ const createWrapper = ({ theme, layout }) => {
 
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
       const { children, ...passThruProps } = filterIdyllProps(this.props, this.props.isHTMLNode);
-      return React.Children.map(children, (c, i) => {
+      const returnComponent = React.Children.map(children, (c, i) => {
         return React.cloneElement(c, {
           key: `${this.key}-${i}`,
           idyll: {
@@ -170,7 +171,12 @@ const createWrapper = ({ theme, layout }) => {
           ...state,
           ...passThruProps,
         })
-      })
+      });
+
+      return (
+        <Overlay>{returnComponent}</Overlay>
+      );
+      
     }
   }
 };
