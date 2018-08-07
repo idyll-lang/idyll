@@ -16,12 +16,14 @@ const {
 
 exports.getComponentNodes = (ast) => {
   const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
-  return filterNodes(ast, node => {
-    if (typeof node === 'string') {
-      return false
+  let filter = filterNodes(ast, node => {
+    if(node.type === "textnode") {
+      return false; 
     }
     return !ignoreNames.has(node.name.toLowerCase())
   });
+  console.log("filter: ", JSON.stringify(filter[0])); 
+  return filter; 
 }
 
 exports.getDataNodes = (ast) => {
@@ -143,11 +145,12 @@ exports.getBaseHTML = (ast, template, opts) => {
 
 exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const components = {};
+  console.log(_components);
   Object.keys(_components).forEach(key => {
     delete require.cache[require.resolve(_components[key])];
     components[key] = require(_components[key]);
   });
-
+  console.log("parse: " + JSON.stringify(components));
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');

@@ -47,10 +47,6 @@ const example1 = {
                                 "href": {
                                     "type": "value", 
                                     "value": "https://www.example.com"
-                                }, 
-                                "hr": {
-                                    "type": "value", 
-                                    "value": "asdfadsf"
                                 }
                             },
                             "children" : [
@@ -71,11 +67,23 @@ const example1 = {
 
                 }
             ]
+        }, 
+        {
+            "id": 9, 
+            "type": "var",
+            "name": "testVariable", 
+            "value": "Hello!"
+        }, 
+        {
+            "id": 10, 
+            "type": "data", 
+            "name": "test-data", 
+            "source": "data/data.csv"
         }
     ]
 }; 
 
-const example1Array = [["TextConatiner",[],[["p",[],["This is the first paragraphs's text!"]]]],["TextConatiner",[],[["p",[],[["a",[["href",["value","https://www.example.com"]], ["hr",["value","https://www.mple.com"]]],[["img",[["src",["value","https://www.example.com/example-img.jpg"]]]]]]]]]]]; 
+const example1Array = [["TextConatiner",[],[["p",[],["This is the first paragraphs's text!"]]]],["TextConatiner",[],[["p",[],[["a",[["href",["value","https://www.example.com"]]],[["img",[["src",["value","src/image"]]]]]]]]]],["var",[["name",["value","testVariable"]],["value",["value","Hello!"]]],[]],["data",[["name",["value","test-data"]],["source",["value","data/data.csv"]]],[]]];
 function testConverter() {
     console.log(JSON.stringify(convert(example1)));    
 }
@@ -104,4 +112,4 @@ function test1() {
   console.log(JSON.stringify((convert(inverseConvert(value))))); 
 }
 
-testConverter(); 
+testInverseConverter(); 

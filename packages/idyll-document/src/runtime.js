@@ -264,7 +264,7 @@ class IdyllRuntime extends React.PureComponent {
     })
 
     const components = Object.assign(fallbackComponents, props.components, internalComponents);
-
+    console.log("components:" + JSON.stringify(components)); 
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
 

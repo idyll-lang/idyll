@@ -68,7 +68,7 @@
                         "additionalProperties": false
                     }, 
                     {
-                        "description": "Structure for var and derive",
+                        "description": "Structure for var and derived",
                         "type": "object",
                         "properties": {
                             "id": {
@@ -88,7 +88,8 @@
                                 "description": "Value assigned to the var/derive",
                                 "type": "string"
                             },
-                            "required": ["id", "type", "name", "value"]
+                            "required": ["id", "type", "name", "value"],
+                            "additionalProperties": false
                         }
                     }, 
                     {
@@ -112,8 +113,7 @@
                                 "description": "Source for the data",
                                 "type": "string"
                             },
-                            "required": ["id", "type", "name", "source"],
-                            "additionalProperties": false
+                            "required": ["id", "type", "name", "source"]
                         }
                     }
                 ]

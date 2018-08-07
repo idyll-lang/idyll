@@ -56,9 +56,9 @@ arr -> list of vars
 retun -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
-    //const [ variableType, attrs = [], ] = val;
-    const variableType = val.name; 
-    const attr = val.properties; 
+    const [ variableType, attrs = [], ] = val;
+    //const variableType = val.name; 
+    //const attrs = val.properties; 
    //["var", [[namearr],[valuearr]], []]
     const [nameArr, valueArr] = attrs;
     if (!nameArr || !valueArr) return acc;
