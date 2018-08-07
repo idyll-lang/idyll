@@ -7,7 +7,7 @@ class Overlay extends React.PureComponent {
     // I believe it should be looking at the component that this overlay is within, and then
     // insert whatever icon on the top right of this component, let's say.
     return (
-      <div class="overlay-div" {...props} />
+      <div className="overlay-div" {...props} />
     );
   }
 }
