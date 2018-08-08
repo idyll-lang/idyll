@@ -226,6 +226,9 @@ const components = [
               },
               {
                 "range": "The chart extent along the y dimension."
+              },
+              {
+                "theme": "The theme to use, e.g. `grayscale` or `material` or a custom object (see [an example here](https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js))"
               }
             ]
           }
