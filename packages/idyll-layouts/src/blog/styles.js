@@ -67,14 +67,20 @@ input {
   position: sticky;
 }
 
+.overlay-div {
+  position: relative;
+  border-style: dotted; // TODO for debugging
+}
+
 .overlay-button {
   position: absolute;
   top: 0;
   right: 0;
 }
 
-.overlay-div {
-  position: relative;
+.overlay-button img {
+  width:50%;
+  height:50%; // TODO should this icon size change as the page is shrunk/grown?
 }
 
 @media all and (max-width: 1600px) {
