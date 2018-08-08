@@ -133,7 +133,7 @@ async function createProject (answers) {
     let packageJson = JSON.parse(await fs.readFile(packagePath));
     let indexIdyll = await fs.readFile(indexPath, { encoding: 'utf-8' });
 
-    packageJson.name = name;
+    packageJson.name = name.split(' ').join('-').toLowerCase();
     var title = name.split('-').join(' ').replace(/\b\w/g, l => l.toUpperCase())
 
     await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
