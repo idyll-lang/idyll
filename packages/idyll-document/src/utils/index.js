@@ -68,9 +68,9 @@ export const getVars = (arr, context = {}, evalContext) => {
     const [, [valueType, valueValue]] = valueArr;
     */
     const variableType = val.type; 
-    const attr = val.properties; 
-    const nameValue = attr.name.value; 
-    const valueValue = attr.value.value; 
+    const nameValue = val.name; 
+    const valueValue = val.value; 
+    const valueType = attr.type; 
     switch(valueType) {
       case 'value':
         acc[nameValue] = valueValue;
@@ -153,10 +153,10 @@ export const getData = (arr, datasets = {}) => {
 /* change here */
 export const splitAST = (ast) => {
   const state = {
-    vars: {},
-    derived: {},
-    data: {},
-    elements: {},
+    vars: [],
+    derived: [],
+    data: [],
+    elements: [],
   }
 
   /* change here */
@@ -195,7 +195,6 @@ export const scrollMonitorEvents = {
   'onExitViewFully': 'exitViewport'
 }
 
-/* change here */
 export const translate = (arr) => {
   const attrConvert = (list) => {
     return list.reduce(
@@ -221,6 +220,7 @@ export const translate = (arr) => {
     )
   }
 
+  /* Change here */ 
   const tNode = (node) => {
     if (typeof node === 'string') return node;
 
