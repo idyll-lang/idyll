@@ -162,7 +162,7 @@ const createWrapper = ({ theme, layout }) => {
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
       const { children, ...passThruProps } = filterIdyllProps(this.props, this.props.isHTMLNode);
       const returnComponent = React.Children.map(children, (c, i) => {
-        return React.cloneElement(c, {
+        return React.cloneElement(c, { // c is a child component, c._idyll or something
           key: `${this.key}-${i}`,
           idyll: {
             theme: getTheme(theme),
@@ -176,7 +176,7 @@ const createWrapper = ({ theme, layout }) => {
       return (
         <Overlay>
           {returnComponent}
-          <button className="overlay-button">Button</button>
+          <button className="overlay-button"><img src='https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png' /></button>
         </Overlay>
       );
       
