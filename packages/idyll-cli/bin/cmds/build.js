@@ -6,12 +6,12 @@ const fs = require('fs');
 const pathBuilder = require('../../src/path-builder');
 
 exports.command = 'build';
-exports.description = 'Turn index.idl into output';
+exports.description = 'Turn index.idyll into standalone output';
 
 exports.builder = (yargs) => {
   return buildOptions(yargs)
     .usage('Usage: idyll build')
-    .example('$0 build -i index.idl', 'Turn a .idl file or project into output');
+    .example('$0 build -i index.idyll', 'Turn a .idl file or project into output');
 }
 
 
