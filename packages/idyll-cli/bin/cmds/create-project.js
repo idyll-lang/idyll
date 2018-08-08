@@ -123,7 +123,6 @@ async function createProject (answers) {
   async function copyFiles (proceed) {
     await fs.copy(getTemplatePath(template), dir);
     await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
-    await fs.move(p.join(dir, 'nojekyll'), p.join(dir, '.nojekyll'));
   }
 
   async function fillTemplates () {
