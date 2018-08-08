@@ -40,6 +40,8 @@ const idyll = (options = {}, cb) => {
       layout: 'centered',
       theme: 'github',
       output: 'build',
+      outputCSS: 'idyll_styles.css',
+      outputJS: 'idyll_index.js',
       port: process.env.PORT || 3000,
       temp: '.idyll',
       template: join(

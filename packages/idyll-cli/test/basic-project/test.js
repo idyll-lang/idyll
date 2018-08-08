@@ -97,6 +97,8 @@ test('options work as expected', () => {
     transform: [],
     port: 3000,
     googleFonts:["Hanalei Fill"],
+    outputCSS: "idyll_styles.css",
+    outputJS: "idyll_index.js",
     favicon: "static/favicon.ico",
     compiler: {
       spellcheck: false

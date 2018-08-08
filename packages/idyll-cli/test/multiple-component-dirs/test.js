@@ -85,6 +85,8 @@ test('options work as expected', () => {
     open: true,
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
+    outputCSS: "idyll_styles.css",
+    outputJS: "idyll_index.js",
     htmlTemplate: join(PROJECT_DIR, '_index.html'),
     components: [join(PROJECT_DIR, 'components-1'), join(PROJECT_DIR, 'components-2')],
     css: join(PROJECT_DIR, 'styles.css'),
