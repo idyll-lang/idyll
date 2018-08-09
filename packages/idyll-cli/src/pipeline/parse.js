@@ -22,7 +22,6 @@ exports.getComponentNodes = (ast) => {
     }
     return !ignoreNames.has(node.name.toLowerCase())
   });
-  console.log("filter: ", JSON.stringify(filter[0])); 
   return filter; 
 }
 
@@ -145,7 +144,7 @@ exports.getBaseHTML = (ast, template, opts) => {
 
 exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const components = {};
-  console.log(_components);
+  //console.log(_components);
   Object.keys(_components).forEach(key => {
     delete require.cache[require.resolve(_components[key])];
     components[key] = require(_components[key]);

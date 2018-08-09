@@ -522,6 +522,7 @@ const setProperties = function (node, properties) {
 const walkNodes = function (ast, f) {
   checkASTandFunction(ast, "ast", f, "f");
   walkNodesHelper(ast.children, f);
+  f(ast); 
 };
 
 //Helper function for walkNodes 
@@ -544,17 +545,19 @@ function walkNodesHelper(astArray, f) {
  */
 const walkNodesBreadthFirst = function (ast, f) {
   checkASTandFunction(ast, "ast", f, "f");
+  f(ast); 
   walkNodesBreadthFirstHelper(ast, f);
+
 };
 
 // Helper function for walkNodeBreadthFirst
 function walkNodesBreadthFirstHelper(ast, f) {
   let childAst = [];
-  ([ast] || []).forEach((node) => {
+  (ast || []).forEach((node) => {
     f(node);
     childAst = childAst.concat(getChildren(node));
   });
-  if (childAst.length !== 0) {
+  if (childAst.length > 0) {
     walkNodesBreadthFirstHelper(childAst, f);
   }
 }

@@ -41,16 +41,15 @@ const build = (opts, paths, resolvers) => {
         const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
         /* Change here */
-        // Set -> Array to remove duplicate entries.
-       /* const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
-          return node.name.split('.')[0];
-        })));*/
 
         let nameArray = []; 
-        walkNodes(getComponentNodes(ast)[0], (node) => {
-          nameArray.push(node.name.split('.')[0]); 
+        getComponentNodes(ast).forEach((node) => {
+          if(["var", "derived", "data"].indexOf(node.type) > -1) {
+            nameArray.push(node.type); 
+          } else {
+            nameArray.push(node.name.split(".")[0]);
+          }
         })
-        console.log("names:", nameArray);
         const uniqueComponents = Array.from(new Set(nameArray)); 
         
         console.log('unique components', uniqueComponents)

@@ -9,7 +9,7 @@
             "type": "integer"
         },
         "type": {
-            "description": "The type category of the element (component/textnode)",
+            "description": "The type category of the element (component/var/derived)",
             "type": "string",
             "enum": ["component"]
         },
@@ -66,32 +66,7 @@
                         },
                         "required": ["id", "type", "value"],
                         "additionalProperties": false
-                    }, 
-                    {
-                        "description": "Structure for var and derived",
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "desceription": "A unique identifier for the current element",
-                                "id": "integer"
-                            },
-                            "type": {
-                                "description": "The type category of the element",
-                                "type": "string",
-                                "enum": ["var", "derive"]
-                            },
-                            "name": {
-                                "description": "Name of the variable", 
-                                "type": "string"
-                            },
-                            "value": {
-                                "description": "Value assigned to the var/derive",
-                                "type": "string"
-                            },
-                            "required": ["id", "type", "name", "value"],
-                            "additionalProperties": false
-                        }
-                    }, 
+                    },  
                     {
                         "description": "Structure for data",
                         "type": "object",
