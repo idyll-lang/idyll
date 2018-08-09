@@ -44,6 +44,7 @@ class ReactJsonSchema {
 
   resolveComponent(schema) {
     const componentMap = this.getComponentMap();
+    console.log("MAP:" + JSON.stringify(componentMap)); 
     let Component;
 
     // bail early if there is no component name
@@ -74,7 +75,7 @@ class ReactJsonSchema {
       if (DOM.hasOwnProperty(name)) {
         Component = schema.component;
       } else {
-        console.warn(`Could not find an implementation for: {schema.component}`);
+        console.warn(`Could not find an implementation for: ${schema.component}`);
         return () => (
           <div style={{ color: 'black', border: 'solid 1px red'}}>
             <pre>Could not find an implementation for: {schema.component}</pre>

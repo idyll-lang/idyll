@@ -222,6 +222,7 @@ describe('compiler', function() {
 
         End text
       `;
+      console.log(compile(input, { async: false })); 
       expect(compile(input, { async: false })).to.eql([
         ['TextContainer', [],
           [['h2', [], [

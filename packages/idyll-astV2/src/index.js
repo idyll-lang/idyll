@@ -481,8 +481,7 @@ const setProperty = function (node, name, data) {
   }
   if (node.properties) {
       node.properties[name] = data; 
-    }
-  } 
+  }
   return Object.assign({}, node);
 };
 
@@ -522,18 +521,18 @@ const setProperties = function (node, properties) {
  */
 const walkNodes = function (ast, f) {
   checkASTandFunction(ast, "ast", f, "f");
-
-  walkNodesHelper(ast, f);
+  walkNodesHelper(ast.children, f);
+  f(ast); 
 };
 
 //Helper function for walkNodes 
-function walkNodesHelper(ast, f) {
-  ([ast] || []).forEach((node) => {
-    let child = getChildren(node);
-    if(child.length > 0) {
-      walkNodes(child, f);
-      f(node);
+function walkNodesHelper(astArray, f) {
+  (astArray || []).forEach((node) => {
+    let children = getChildren(node);
+    if(children.length > 0) {
+      walkNodesHelper(children, f);
     }
+    f(node);
   });
 }
 
@@ -546,30 +545,23 @@ function walkNodesHelper(ast, f) {
  */
 const walkNodesBreadthFirst = function (ast, f) {
   checkASTandFunction(ast, "ast", f, "f");
+  f(ast); 
   walkNodesBreadthFirstHelper(ast, f);
+
 };
 
 // Helper function for walkNodeBreadthFirst
 function walkNodesBreadthFirstHelper(ast, f) {
   let childAst = [];
-  ([ast] || []).forEach((node) => {
+  (ast || []).forEach((node) => {
     f(node);
     childAst = childAst.concat(getChildren(node));
   });
-  if (childAst.length !== 0) {
-    walkNodesBreadthFirst(childAst, f);
+  if (childAst.length > 0) {
+    walkNodesBreadthFirstHelper(childAst, f);
   }
 }
 
-const addRoot = function(ast) {
-  let root = {
-    "id": 1,
-    "name": "root", 
-    "type": "compoenent", 
-    "children": ast
-  }
-  return root; 
-}
 /*
   Function to check for errors between ast and node variables
 */
@@ -739,6 +731,5 @@ module.exports = {
   walkNodes,
   walkNodesBreadthFirst,
   convert, 
-  inverseConvert, 
-  addRoot
+  inverseConvert
 };

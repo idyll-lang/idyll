@@ -9,7 +9,7 @@
             "type": "integer"
         },
         "type": {
-            "description": "The type category of the element (component/textnode)",
+            "description": "The type category of the element (component/var/derived)",
             "type": "string",
             "enum": ["component"]
         },
@@ -57,15 +57,39 @@
                             "type": {
                                 "description": "The type category of the element",
                                 "type": "string",
-                                "enum": ["textnode", "var", "derive", "data"]
+                                "enum": ["textnode"]
                             },
                             "value": {
-                                "description": "Element value",
+                                "description": "Text value in the textnode",
                                 "type": "string"
                             }
                         },
                         "required": ["id", "type", "value"],
                         "additionalProperties": false
+                    },  
+                    {
+                        "description": "Structure for data",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "desceription": "A unique identifier for the current element",
+                                "id": "integer"
+                            },
+                            "type": {
+                                "description": "The type category of the element",
+                                "type": "string",
+                                "enum": ["data"]
+                            },
+                            "name": {
+                                "description": "Name of the variable", 
+                                "type": "string"
+                            },
+                            "source": {
+                                "description": "Source for the data",
+                                "type": "string"
+                            },
+                            "required": ["id", "type", "name", "source"]
+                        }
                     }
                 ]
             },

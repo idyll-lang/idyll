@@ -10,9 +10,11 @@ THIS FILE CONTAINS THE CONVERTER FUNCTIONS FOR THE TWO DIFFERENT TYPES OF AST ST
  */
 const convert = function(jsonAst) {
     let arrayAst = []; 
-    jsonAst.children.forEach(element => {
+    if(jsonAst.children) {
+        jsonAst.children.forEach(element => {
             arrayAst.push(convertHelper(element)); 
-    });
+        });
+    }
     return arrayAst; 
 };
 
@@ -25,6 +27,14 @@ function convertHelper(jsonElement) {
     let elementArray = [];
     if(jsonElement.type === 'textnode') {
         return jsonElement.value; 
+    } else if(jsonElement.type === 'var' || jsonElement.type === 'derived') {
+        elementArray = [jsonElement.type];
+        elementArray.push([['name', ['value', jsonElement.name]], ['value', ['value', jsonElement.value]]]); 
+        elementArray.push([]);  
+    } else if(jsonElement.type === 'data') {
+        elementArray = ['data'];
+        elementArray.push([['name', ['value', jsonElement.name]], ['source', ['value', jsonElement.source]]]); 
+        elementArray.push([]);  
     } else {
         elementArray.push(jsonElement.name); 
         let propertiesArray = []; 
@@ -57,7 +67,7 @@ const inverseConvert = function(arrayAst) {
     let jsonAst = new Object(); 
     jsonAst.id = 1;
     jsonAst.type = "component"; 
-    jsonAst.name = "root"; 
+    jsonAst.name = "div"; 
     jsonAst.children = [];
     let id = 1; 
     arrayAst.forEach((element) => {
@@ -80,6 +90,14 @@ function inverseConvertHelper(arrayElement, id) {
     if(typeof arrayElement === 'string') {
         elementJson.type = "textnode"; 
         elementJson.value = arrayElement; 
+    } else if(['var', 'derived', 'data'].indexOf(arrayElement[0]) > -1){ 
+        elementJson.type = arrayElement[0]; 
+        elementJson.name = arrayElement[1][0][1][1]; 
+        if(arrayElement === "data") {
+            elementJson.source = arrayElement[1][1][1][1]; 
+        } else {
+            elementJson.value = arrayElement[1][1][1][1];
+        }
     } else {
         elementJson.type = "component"; 
         elementJson.name = arrayElement[0];
