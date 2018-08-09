@@ -62,6 +62,8 @@ beforeAll(done => {
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
+    outputCSS: "__idyll_styles.css",
+    outputJS: "__idyll_index.js",
     compiler: {
       spellcheck: false
     },
@@ -100,6 +102,8 @@ test('options work as expected', () => {
     defaultComponents: dirname(require.resolve('idyll-components')),
     temp: '.idyll',
     static: 'static',
+    outputCSS: "__idyll_styles.css",
+    outputJS: "__idyll_index.js",
     datasets: 'data',
     transform: [],
     port: 3000,

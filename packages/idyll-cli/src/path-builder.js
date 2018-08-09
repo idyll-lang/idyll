@@ -47,8 +47,8 @@ module.exports = function (opts) {
     HTML_OUTPUT_FILE: join(OUTPUT_DIR, 'index.html'),
 
     STATIC_OUTPUT_DIR,
-    CSS_OUTPUT_FILE: join(STATIC_OUTPUT_DIR, '__idyll_styles.css'),
-    JS_OUTPUT_FILE: join(STATIC_OUTPUT_DIR, '__idyll_index.js'),
+    CSS_OUTPUT_FILE: join(STATIC_OUTPUT_DIR, opts.outputCSS),
+    JS_OUTPUT_FILE: join(STATIC_OUTPUT_DIR, opts.outputJS),
 
     TMP_DIR
   };
