@@ -1,7 +1,9 @@
+import { getCiphers } from 'tls';
+
 const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
-
+const { getChildren, getNodeName, getProperties, getType, setChildren } = require('idyll-astV2');
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
   return `
     ((context) => {
@@ -50,27 +52,20 @@ export const evalExpression = (acc, expr, key, context) => {
   } catch (err) {}
 }
 
-/* change here */
 /*
 arr -> list of vars 
 return -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
-    /*
-    //const [ variableType, attrs = [], ] = val;
-    const variableType = val.name; 
-    const attr = val.properties; 
-   //["var", [[namearr],[valuearr]], []]
-    const [nameArr, valueArr] = attrs;
-    if (!nameArr || !valueArr) return acc;
+    const variableType = getType(node); 
+    const attrs = getProperties(val)|| []; 
 
-    const [, [, nameValue]] = nameArr
-    const [, [valueType, valueValue]] = valueArr;
-    */
-    const variableType = val.type; 
-    const nameValue = val.name; 
-    const valueValue = val.value; 
-    const valueType = attr.type; 
+    if(!attrs.name || !attrs.value) return attrs; 
+
+    const nameValue = attrs.name.value; 
+    const valueType = attrs.value.type; 
+    const valueValue = attrs.value.value; 
+
     switch(valueType) {
       case 'value':
         acc[nameValue] = valueValue;
@@ -123,22 +118,9 @@ export const filterIdyllProps = (props, filterInjected) => {
   }
   return rest;
 }
-
-/* change here */
-
 export const getData = (arr, datasets = {}) => {
-  // ["data", [[nameArr], [sourceArr]], []]
-  const pluck = (acc, val) => {
-    const attr = val; 
-    const nameValue = val.name.value; 
-    
-    /*
-    const [ , attrs, ] = val
-    const [nameArr, ] = attrs;
-
-    const [, [, nameValue]] = nameArr
-    */
-
+  const pluck = (acc, val) => {    
+    const nameValue = getProperties(val).name.value;
     acc[nameValue] = datasets[nameValue];
 
     return acc;
@@ -150,7 +132,6 @@ export const getData = (arr, datasets = {}) => {
   )
 }
 
-/* change here */
 export const splitAST = (ast) => {
   const state = {
     vars: [],
@@ -159,18 +140,21 @@ export const splitAST = (ast) => {
     elements: [],
   }
 
-  /* change here */
   const handleNode = (storeElements) => {
     return (node) => {
-      const [ name, props, children ] = node;
-      if (name === 'var') {
+      const type = getType(node); 
+      const props = getProperties(node);
+      const children = getChildren(node); 
+
+      if (type === 'var') {
         state.vars.push(node);
-      } else if (state[name]) {
-        state[name].push(node);
+      } else if (state[type]) {
+        state[type].push(node);
       } else if (storeElements) {
         state.elements.push(node);
       }
-      if (!children || typeof children === 'string') {
+      //typeof children === 'string'; 
+      if (!children || (children.length === 1 && getType(children[0]) === "textnode")) {
         return;
       }
       children.forEach(handleNode(false));
@@ -197,8 +181,11 @@ export const scrollMonitorEvents = {
 
 export const translate = (arr) => {
   const attrConvert = (list) => {
-    return list.reduce(
-      (acc, [name, [type, val]]) => {
+    return Object.keys(list).reduce(
+      (acc, key) => {
+        const name = key; 
+        const type = list[key].type; 
+        const val = list[key].value;
         if (type === 'variable') {
           acc.__vars__ = acc.__vars__ || {};
           acc.__vars__[name] = val;
@@ -220,19 +207,24 @@ export const translate = (arr) => {
     )
   }
 
-  /* Change here */ 
   const tNode = (node) => {
-    if (typeof node === 'string') return node;
+    if (getType(node) === 'textnode') return node;
 
-    if (node.length === 3) {
-      const [ name, attrs, children ] = node;
-
+    //if (node.length === 3) {
+      //const [ name, attrs, children ] = node;
+      if(["var", "derived", "data"].indexOf(getType(node)) > -1 ) {
+        const name = getType(node); 
+      } else {
+        const name = getNodeName(name); 
+      }
+      const attrs = getProperties(node); 
+      const children = getChildren(node); 
       return {
         component: name,
         ...attrConvert(attrs),
         children: children.map(tNode),
       }
-    }
+    //}
   }
 
   return splitAST(arr).elements.map(tNode)
@@ -240,13 +232,13 @@ export const translate = (arr) => {
 
 export const mapTree = (tree, mapFn, filterFn = () => true) => {
   const walkFn = (acc, node) => {
-    if (typeof node !== 'string') {
-      if (node.children) {
+    if (getType(node) === "textnode") {
+      if (hasChildren(node)) {
         // translated schema
-        node.children = node.children.reduce(walkFn, []);
+        setChildren(node, getChildren(node.children).reduce(walkFn, []) );
       } else {
         // compiler AST
-        node[2] = node[2].reduce(walkFn, []);
+        setChildren(node, getChildren(node).reduce(walkFn, []));
       }
     }
 
@@ -272,7 +264,7 @@ export const findWrapTargets = (schema, state) => {
   // but collect and ultimately return just the nodes
   // we are interested in wrapping
   mapTree(schema, (node) => {
-    if (typeof node === 'string') return node;
+    if (getType(node) === "textnode") return node;
 
     if (node.hasHook) {
       targets.push(node);
