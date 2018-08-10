@@ -7,6 +7,7 @@ import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
 import Overlay from './components/overlay';
+import ReactTooltip from 'react-tooltip';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -150,6 +151,9 @@ const createWrapper = ({ theme, layout }) => {
     if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
   }
 
+  handleAuthorView() { // TODO add logic for this
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -161,8 +165,10 @@ const createWrapper = ({ theme, layout }) => {
 
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
       const { children, ...passThruProps } = filterIdyllProps(this.props, this.props.isHTMLNode);
+      let childComponent = null;
       const returnComponent = React.Children.map(children, (c, i) => {
-        return React.cloneElement(c, { // c is a child component, c._idyll or something
+        childComponent = c;
+        return React.cloneElement(c, {
           key: `${this.key}-${i}`,
           idyll: {
             theme: getTheme(theme),
@@ -176,9 +182,12 @@ const createWrapper = ({ theme, layout }) => {
       return (
         <Overlay>
           {returnComponent}
-          <button className="overlay-button">
+          <button className="overlay-button" data-tip data-for={`${this.key}-help`}>
             <img src='https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png' />
           </button>
+          <ReactTooltip id={`${this.key}-help`} type='error' effect='solid'>
+            {JSON.stringify(childComponent, null, 2)}
+          </ReactTooltip>
         </Overlay>
       );
       

@@ -79,7 +79,7 @@ input {
   opacity: .2;
 }
 
-.overlay-button img {
+.overlay-div img {
   width:50%;
   height:80%; // TODO should this icon size change as the page is shrunk/grown?
 }
