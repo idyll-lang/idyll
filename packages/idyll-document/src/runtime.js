@@ -176,7 +176,9 @@ const createWrapper = ({ theme, layout }) => {
       return (
         <Overlay>
           {returnComponent}
-          <button className="overlay-button"><img src='https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png' /></button>
+          <button className="overlay-button">
+            <img src='https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png' />
+          </button>
         </Overlay>
       );
       
