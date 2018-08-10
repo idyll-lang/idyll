@@ -84,7 +84,7 @@ input {
   height:80%; // TODO should this icon size change as the page is shrunk/grown?
 }
 
-.overlay-button:hover {
+.overlay-div:hover > .overlay-button {
   opacity: 1;
   transition: opacity 600ms linear;
 }
