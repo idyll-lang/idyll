@@ -76,11 +76,16 @@ input {
   position: absolute;
   top: 0;
   right: 0;
+  opacity: .5;
 }
 
 .overlay-button img {
   width:50%;
   height:50%; // TODO should this icon size change as the page is shrunk/grown?
+}
+
+.overlay-button:hover {
+  opacity: 1;
 }
 
 @media all and (max-width: 1600px) {
