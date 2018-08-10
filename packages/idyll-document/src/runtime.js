@@ -151,9 +151,6 @@ const createWrapper = ({ theme, layout }) => {
     if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
   }
 
-  handleAuthorView() { // TODO add logic for this
-  }
-
   render() {
     if (this.state.hasError) {
       return (
