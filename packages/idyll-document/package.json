@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "change-case": "^3.0.1",
-    "cross-env": "^5.0.5",
+    "cross-env": "^5.2.0",
     "falafel": "^2.1.0",
     "html-tags": "^2.0.0",
     "idyll-compiler": "^3.3.1",
@@ -38,6 +38,7 @@
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
     "react-dom-factories": "^1.0.1",
+    "react-tooltip": "^3.6.1",
     "scrollmonitor": "^1.2.3",
     "scrollparent": "^2.0.1",
     "styled-jsx": "^2.2.4"
