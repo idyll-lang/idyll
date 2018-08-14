@@ -66,7 +66,58 @@
                         },
                         "required": ["id", "type", "value"],
                         "additionalProperties": false
-                    },  
+                    },
+                    {
+                        "description": "Structure for var and derived",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "desceription": "A unique identifier for the current element",
+                                "id": "integer"
+                            },
+                            "type": {
+                                "description": "The type category of the element",
+                                "type": "string",
+                                "enum": ["var", "derived"]
+                            },
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the variable",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["value", "variable", "expression"]
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                },
+                                "value": {
+                                    "description": "Source for the data",
+                                    "type": "object",
+                                    "properties": {
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": ["value", "variable", "expression"]
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": ["id", "type", "properties"]
+                        }
+                    },
                     {
                         "description": "Structure for data",
                         "type": "object",
@@ -80,15 +131,41 @@
                                 "type": "string",
                                 "enum": ["data"]
                             },
-                            "name": {
-                                "description": "Name of the variable", 
-                                "type": "string"
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the variable",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["value", "variable", "expression"]
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                },
+                                "source": {
+                                    "description": "Source for the data",
+                                    "type": "object",
+                                    "properties": {
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": ["value", "variable", "expression"]
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                }
                             },
-                            "source": {
-                                "description": "Source for the data",
-                                "type": "string"
-                            },
-                            "required": ["id", "type", "name", "source"]
+                            "required": ["id", "type", "properties"]
                         }
                     }
                 ]

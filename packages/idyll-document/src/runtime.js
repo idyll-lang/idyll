@@ -189,7 +189,6 @@ class IdyllRuntime extends React.PureComponent {
     this.initScrollListener = this.initScrollListener.bind(this);
 
     const ast = filterASTForDocument(props.ast);
-
     const {
       vars,
       derived,
@@ -210,7 +209,6 @@ class IdyllRuntime extends React.PureComponent {
       ...initialState,
       ...getDerivedValues(derivedVars),
     };
-
     this.updateState = (newState) => {
       // merge new doc state with old
       const newMergedState = {...this.state, ...newState};
@@ -264,18 +262,18 @@ class IdyllRuntime extends React.PureComponent {
     })
 
     const components = Object.assign(fallbackComponents, props.components, internalComponents);
-    console.log("components:" + JSON.stringify(components)); 
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
-
     const wrapTargets = findWrapTargets(schema, this.state);
-
+    console.log("wrpapedTargets", wrapTargets);
     let refCounter = 0;
 
     const transformedSchema = mapTree(
       schema,
       node => {
-        if (typeof node === 'string') return node;
+        console.log("here");
+        console.log("node (ts)", node);
+        if (getType(node) === "textnode") return node;
 
         // transform refs from strings to functions and store them
         if (node.ref || node.hasHook) {
@@ -317,6 +315,7 @@ class IdyllRuntime extends React.PureComponent {
         });
 
         const resolvedComponent = rjs.resolveComponent(node);
+        console.log("resolved comp", resolvedComponent);
         const isHTMLNode = typeof resolvedComponent === 'string';
 
         return {
@@ -344,7 +343,7 @@ class IdyllRuntime extends React.PureComponent {
         };
       }
     );
-
+    console.log("transformedSchema", transformedSchema);
     this.kids = rjs.parseSchema(transformedSchema);
   }
 
@@ -414,6 +413,7 @@ class IdyllRuntime extends React.PureComponent {
   }
 
   render() {
+    console.log("kids", this.kids);
     return (
       <div className="idyll-root" ref={this.initScrollListener}>
         {this.kids}

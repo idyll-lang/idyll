@@ -65,7 +65,7 @@ function convertHelper(jsonElement) {
  */
 const inverseConvert = function(arrayAst) {
     let jsonAst = new Object(); 
-    jsonAst.id = 1;
+    jsonAst.id = 0;
     jsonAst.type = "component"; 
     jsonAst.name = "div"; 
     jsonAst.children = [];
@@ -85,19 +85,20 @@ const inverseConvert = function(arrayAst) {
  */
 function inverseConvertHelper(arrayElement, id) {
     let elementJson = new Object(); 
-    elementJson.id = id + 1; 
-    id++; 
+    elementJson.id = ++id; 
+
     if(typeof arrayElement === 'string') {
         elementJson.type = "textnode"; 
         elementJson.value = arrayElement; 
     } else if(['var', 'derived', 'data'].indexOf(arrayElement[0]) > -1){ 
         elementJson.type = arrayElement[0]; 
-        elementJson.name = arrayElement[1][0][1][1]; 
-        if(arrayElement === "data") {
-            elementJson.source = arrayElement[1][1][1][1]; 
-        } else {
-            elementJson.value = arrayElement[1][1][1][1];
-        }
+        elementJson.properties = {}; 
+        arrayElement[1].forEach((property) => {
+            elementJson.properties[property[0]] = {
+                "type": property[1][0],
+                "value": property[1][1]
+            }; 
+        }); 
     } else {
         elementJson.type = "component"; 
         elementJson.name = arrayElement[0];

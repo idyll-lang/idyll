@@ -11,7 +11,7 @@ const {
   getNodesByName,
   getProperty,
   filterNodes,
-  convert
+  getNodeName
 } = require('idyll-astV2')
 
 exports.getComponentNodes = (ast) => {
@@ -20,7 +20,7 @@ exports.getComponentNodes = (ast) => {
     if(node.type === "textnode") {
       return false; 
     }
-    return !ignoreNames.has(node.name.toLowerCase())
+    return !ignoreNames.has(getNodeName(node).toLowerCase())
   });
   return filter; 
 }
@@ -144,12 +144,10 @@ exports.getBaseHTML = (ast, template, opts) => {
 
 exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const components = {};
-  //console.log(_components);
   Object.keys(_components).forEach(key => {
     delete require.cache[require.resolve(_components[key])];
     components[key] = require(_components[key]);
   });
-  console.log("parse: " + JSON.stringify(components));
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
@@ -157,7 +155,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
-      ast: convert(ast),
+      ast: ast,
       components,
       datasets,
       theme: opts.theme,

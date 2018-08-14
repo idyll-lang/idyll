@@ -7,6 +7,7 @@ const _componentMap = new WeakMap();
 class ReactJsonSchema {
   constructor(componentMap) {
     if (componentMap) this.setComponentMap(componentMap);
+
   }
 
   parseSchema(schema) {

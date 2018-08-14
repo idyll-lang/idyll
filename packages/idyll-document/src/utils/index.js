@@ -3,7 +3,7 @@ import { getCiphers } from 'tls';
 const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
-const { getChildren, getNodeName, getProperties, getType, setChildren } = require('idyll-astV2');
+const { getChildren, getNodeName, getProperties, getType, setChildren, hasChildren, pruneNodes } = require('idyll-astV2');
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
   return `
     ((context) => {
@@ -57,7 +57,7 @@ arr -> list of vars
 return -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
-    const variableType = getType(node); 
+    const variableType = getType(val); 
     const attrs = getProperties(val)|| []; 
 
     if(!attrs.name || !attrs.value) return attrs; 
@@ -93,10 +93,11 @@ export const getVars = (arr, context = {}, evalContext) => {
     return acc;
   }
 
-  return arr.reduce(
+  let vars = arr.reduce(
     pluck,
     {}
-  )
+  ); 
+  return vars;
 }
 
 export const filterIdyllProps = (props, filterInjected) => {
@@ -180,6 +181,7 @@ export const scrollMonitorEvents = {
 }
 
 export const translate = (arr) => {
+
   const attrConvert = (list) => {
     return Object.keys(list).reduce(
       (acc, key) => {
@@ -212,12 +214,17 @@ export const translate = (arr) => {
 
     //if (node.length === 3) {
       //const [ name, attrs, children ] = node;
+      let name; 
       if(["var", "derived", "data"].indexOf(getType(node)) > -1 ) {
-        const name = getType(node); 
+        name = getType(node); 
       } else {
-        const name = getNodeName(name); 
+       name = node.name;//getNodeName(node); 
       }
-      const attrs = getProperties(node); 
+
+      let attrs = getProperties(node); 
+      if(!attrs) {
+        attrs = {}; 
+      }
       const children = getChildren(node); 
       return {
         component: name,
@@ -230,30 +237,57 @@ export const translate = (arr) => {
   return splitAST(arr).elements.map(tNode)
 }
 
+
 export const mapTree = (tree, mapFn, filterFn = () => true) => {
   const walkFn = (acc, node) => {
-    if (getType(node) === "textnode") {
+    if (getType(node) === "component") {
       if (hasChildren(node)) {
         // translated schema
-        setChildren(node, getChildren(node.children).reduce(walkFn, []) );
-      } else {
-        // compiler AST
-        setChildren(node, getChildren(node).reduce(walkFn, []));
-      }
+        node = setChildren(node, getChildren(node.children).reduce(walkFn, []) );
+      } 
     }
 
     if (filterFn(node)) acc.push(mapFn(node));
     return acc;
   };
-
-  return tree.reduce(
+  console.log("maptree: ", getChildren(tree)); 
+  return getChildren(tree).reduce(
     walkFn,
     []
   );
 };
 
+
+/*
+export const mapTree = (tree, mapfn, filterFn = () => true) => {
+
+  let root = tree; 
+  root = setChildren(mapTreeHelper(getChildren(root), mapfn, filterFn));
+  if(filterFn(root)) {
+    root = mapfn(root); 
+  } 
+}; 
+
+function mapTreeHelper(tree, mapfn, filterFn) {
+
+  (tree || []).forEach((node) => {
+    if (getType(node) === "component") {
+      if (hasChildren(node)) {
+        // translated schema
+        node = setChildren(node, getChildren(node.children));
+      } 
+    }
+  }); 
+}*/
+
 export const filterASTForDocument = (ast) => {
-  return mapTree(ast, n => n, ([name]) => name !== 'meta')
+  return pruneNodes(ast, (node) => {
+    if(node.name === "meta") {
+      return false;
+    }
+    return true; 
+  }); 
+  //return mapTree(ast, n => n, ([name]) => name !== 'meta')
 };
 
 export const findWrapTargets = (schema, state) => {
