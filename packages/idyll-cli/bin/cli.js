@@ -5,4 +5,5 @@ require('yargs')
   .commandDir('cmds')
   .demandCommand()
   .help()
+  .version()
   .argv

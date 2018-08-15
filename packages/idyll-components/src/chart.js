@@ -32,7 +32,12 @@ class Chart extends React.PureComponent {
       range,
       domainPadding = 10,
       animate,
+      theme = 'grayscale',
       ...customProps } = props;
+
+    if (typeof theme === 'string') {
+      theme = V.VictoryTheme[theme];
+    }
 
     if (props.equation) {
       const d = domain;
@@ -66,7 +71,7 @@ class Chart extends React.PureComponent {
     return (
       <div className={props.className}>
         {type !== 'PIE' ? (
-          <V.VictoryChart domainPadding={domainPadding} {...formattedRange} animate={animate} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} >
+          <V.VictoryChart domainPadding={domainPadding} {...formattedRange} animate={animate} scale={scale} containerId={`container-${id}`} clipId={`clip-${id}`} theme={theme} >
             <INNER_CHART
               data={data}
               x={props.x}

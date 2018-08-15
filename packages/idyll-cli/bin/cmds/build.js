@@ -6,12 +6,12 @@ const fs = require('fs');
 const pathBuilder = require('../../src/path-builder');
 
 exports.command = 'build';
-exports.description = 'Turn index.idl into output';
+exports.description = 'Turn index.idyll into standalone output';
 
 exports.builder = (yargs) => {
   return buildOptions(yargs)
     .usage('Usage: idyll build')
-    .example('$0 build -i index.idl', 'Turn a .idl file or project into output');
+    .example('$0 build -i index.idyll', 'Turn a .idl file or project into output');
 }
 
 
@@ -105,6 +105,10 @@ function buildOptions (yargs) {
     .describe('theme', 'Name of (or path to) the theme to use')
     .default('theme', 'github')
     .describe('alias', 'A list of component aliases')
+    .describe('outputCSS', 'Name of CSS file to generate')
+    .default('outputCSS', 'idyll_styles.css')
+    .describe('outputJS', 'Name of JS file to generate')
+    .default('outputJS', 'idyll_index.js')
     .alias('h', 'help')
 }
 

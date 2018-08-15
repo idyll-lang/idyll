@@ -1,4 +1,4 @@
-[var name:`dataToBeCharted` value:`[
+[var name:"dataToBeCharted" value:`[
   {x: 0, y: 0.5},
   {x: 3.5, y: 0.5},
   {x: 4, y: 0},
@@ -7,4 +7,4 @@
   {x: 8, y: 0.5}
 ]` /]
 
-[Chart type:"line" data:dataToBeCharted /]
+[Chart type:"line" data:dataToBeCharted domain:`[0, 8]` range:`[0, 1]` /]
