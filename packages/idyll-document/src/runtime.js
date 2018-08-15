@@ -151,6 +151,30 @@ const createWrapper = ({ theme, layout }) => {
     if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
   }
 
+  handleFormatComponent(info) {
+    debugger;
+    const allProps = Object.keys(info.props);
+    const valuesInParagraphs = allProps.map((prop) => {
+      const val = info.props[prop];
+      if (val) {
+        return (
+          <li key={prop.toString()}>
+            {prop.toString() + ": " + (val.toString ? val.toString() : val)}
+          </li>
+        )
+      }
+      return null;
+    });
+    // use JSON.stringify on objects
+    debugger;
+    return (
+      <p>
+        This component's type is {info.type.name ? info.type.name : info.type}
+        <ul>{valuesInParagraphs}</ul>
+      </p>
+    );
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -175,7 +199,6 @@ const createWrapper = ({ theme, layout }) => {
           ...passThruProps,
         })
       });
-
       return (
         <Overlay>
           {returnComponent}
@@ -183,11 +206,10 @@ const createWrapper = ({ theme, layout }) => {
             <img src='https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png' />
           </button>
           <ReactTooltip id={`${this.key}-help`} type='error' effect='solid'>
-            {JSON.stringify(childComponent, null, 2)}
+            {this.handleFormatComponent(childComponent)}
           </ReactTooltip>
         </Overlay>
       );
-      
     }
   }
 };
