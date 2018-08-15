@@ -69,7 +69,7 @@ input {
 
 .overlay-div {
   position: relative;
-  border-style: dotted; // TODO for debugging
+  border-style: dotted;
 }
 
 .overlay-button {
@@ -81,7 +81,7 @@ input {
 
 .overlay-div img {
   width:50%;
-  height:80%; // TODO should this icon size change as the page is shrunk/grown?
+  height:80%;
 }
 
 .overlay-div:hover > .overlay-button {
