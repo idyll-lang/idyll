@@ -67,6 +67,10 @@ input {
   position: sticky;
 }
 
+.idyll-scroll-graphic img {
+  max-height: 100vh;
+}
+
 .overlay-div {
   position: relative;
   border-style: dotted;
