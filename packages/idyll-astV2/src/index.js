@@ -265,7 +265,7 @@ const modifyChildren = function (node, modifier) {
   checkASTandFunction(node, "node", modifier, "modifier");
 
   //Keeping the functionality same as before for textnode
-  if (node.type === "textnode") {
+  if (["textnode", "var", "derived", "data"].indexOf(node.type) > -1) {
     return node;
   }
   node.children = getChildren(node).map((child) => {
@@ -286,35 +286,13 @@ const modifyChildren = function (node, modifier) {
 const filterChildren = function (node, filter) {
   checkASTandFunction(node, "node", filter, "filter");
 
-  if (node.type === "textnode") {
+  if (["textnode", "var", "derived", "data"].indexOf(node.type) > -1) {
     return node;
   }
   node.children = getChildren(node).filter((child) => {
     return filter(child);
   });
   return Object.assign({}, node);
-};
-
-/**
- * @name pruneNodes
- * @type {function}
- * @description
- * Function to prune nodes based on a filter and return a modified AST. 
- * @param {object} ast 
- * @param {functon} filter 
- * @return {object[]} An array with the ModifiedAST as it's 0th index.
- */
-const pruneNodes = function (ast, filter) {
-  checkASTandFunction(ast, "ast", filter, "filter");
-
-  let result = [ast].filter(filter).map((node) => {
-    if (["textnode", "var", "derived", "data"].indexOf(node.type) > -1 ) {
-      return node;
-    }
-    node.children = pruneNodes(getChildren(node) || [], filter);
-    return Object.assign({}, node);
-  });
-  return result;
 };
 
 /**
@@ -331,21 +309,27 @@ const modifyNodesByName = function (ast, name, modifier) {
   checkASTandFunction(ast, "ast", modifier, "modifier");
 
   ([ast] || []).map((node) => {
-    modifyHelper(getChildren(node), name, modifier);
-    node = handleNodeByName();
+    if (["textnode", "var", "derived", "data"].indexOf(node.type) === -1) {
+      node.children = modifyHelper(getChildren(node), name, modifier);
+    }
+    node = handleNodeByName(node, name, modifier);
   });
   return Object.assign({}, ast);
 };
 
 //Helper function for modifyHelper. 
-function modifyHelper(ast, name, modifier) {
+function modifyHelper(children, name, modifier) {
   typeCheckString(name, "name");
-  checkASTandFunction(ast, "ast", modifier, "modifier");
+  //checkASTandFunction(, "ast", modifier, "modifier");
 
-  ([ast] || []).map((node) => {
-    modifyHelper(getChildren(node, name, modifier));
-    node = handleNodeByName(node);
+  (children || []).map((node) => {
+    if (["textnode", "var", "derived", "data"].indexOf(node.type) === -1) {
+      node.children = modifyHelper(getChildren(node), name, modifier);
+    }
+    node = handleNodeByName(node, name, modifier);
   });
+
+  return children; 
 }
 
 /**
@@ -361,7 +345,7 @@ const handleNodeByName = function (node, name, modifier) {
   typeCheckString(name, "name");
   checkASTandFunction(node, "node", modifier, "modifier");
 
-  if (node.type === "textnode") {
+  if (["textnode", "var", "derived", "data"].indexOf(node.type) > -1) {
     return node;
   }
   if (node.name.toLowerCase() === name) {
@@ -386,6 +370,18 @@ const getNodeName = function (node) {
   }
   return node.name;
 };
+/**
+ * @name getPropertyKeys
+ * @description
+ * Function to return a the list of property keys of a node
+ * @param {object} node
+ * @return {string[]} keys 
+ */
+const getPropertyKeys = function (node) {
+  typeCheckObject(node, "node"); 
+  runValidator(node, "node"); 
+  return Object.keys(node.properties);
+};  
 
 /**
  * @name getProperty
@@ -399,8 +395,8 @@ const getProperty = function (node, key) {
   typeCheckString(key, "key");
   typeCheckObject(node, "node gp");
   runValidator(node, "node");
-
-  if (node.properties.hasOwnProperty(key)) {
+  
+  if (node.properties && node.properties.hasOwnProperty(key)) {
     return node.properties[key]; 
   }
   return null
@@ -792,6 +788,7 @@ module.exports = {
   getChildren,
   getNodesByName,
   getNodeName,
+  getPropertyKeys,
   getProperty,
   getProperties,
   getPropertiesByType,
@@ -802,7 +799,6 @@ module.exports = {
   modifyNodesByName,
   prependNode,
   prependNodes,
-  pruneNodes,
   removeNodesByName,
   removeProperty,
   setChildren,

@@ -9,7 +9,9 @@ const {
   createAnchorNode,
   createExampleData,
   createExampleTextNode,
-  createExampleVarNode
+  createExampleVarNode,
+  modifiedNode,
+  paraNode
 } = require('./testCases');
 
 describe('ast', function () {
@@ -166,8 +168,39 @@ describe('ast', function () {
     expect(util.getText(astTestVar)).to.eql("This is the first paragraph This is a header This is a link to a website");
   });
 
-  /*it('should find nodes based on a filter', function () {
-    expect(util.filterNodes((node) => hasChildren(node))).to.eql(); 
-  })*/
+  it('should find nodes based on a filter', function () { 
+    expect(util.filterNodes(astTestVar, (node) => util.hasChildren(node)).length).to.eql(7); 
+  });
 
+  it('should filter children of a passed node', function () {
+    expect(util.filterChildren(updatedASTWithNodes, (node) => (node.id < 12))).to.eql(updatedASTWithNode); 
+  }); 
+
+  it('should modify children of a passed node', function () {
+    expect(util.modifyChildren(updatedASTWithNode, (child) => {
+      let testnode = createComponent(child.id); 
+      return testnode;
+    })).to.eql(modifiedNode); 
+  }); 
+
+  it('it shoud modfiy nodes by name', function(){
+    expect(util.modifyNodesByName(astTestVar, "p", (node) => {
+      node.name = "paragraph"; 
+      return node; 
+    })).to.eql(paraNode); 
+  }); 
+
+  it('Return property names of a node', function() {
+    expect(util.getPropertyKeys(createAnchorNode())).to.eql(['href']); 
+  });
+
+  it('Returns property of a node', function() {
+    expect(util.getProperty(createAnchorNode(), "href")).to.eql({
+      "type": "value",
+      "value": "www.example.com"
+    }); 
+  });
+  it('Return null if proeprty does not exists', function() {
+    expect(util.getProperty(astTestVar, "name")).to.eql(null); 
+  })
 });
