@@ -154,7 +154,7 @@ const createWrapper = ({ theme, layout }) => {
   handleFormatComponent(info) {
     const allProps = Object.keys(info.props);
     // TODO -- should we display children prop? Probly not
-    const valuesInParagraphs = allProps.map((prop) => {
+    const valuesOfProps = allProps.map((prop) => {
       const val = info.props[prop];
       if (val) {
         let propertyValue = null;
@@ -175,7 +175,7 @@ const createWrapper = ({ theme, layout }) => {
     return (
       <p>
         This component's type is {info.type.name ? info.type.name : info.type}
-        <ul>{valuesInParagraphs}</ul>
+        <ul>{valuesOfProps}</ul>
       </p>
     );
   }
