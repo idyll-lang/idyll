@@ -154,28 +154,28 @@ const createWrapper = ({ theme, layout }) => {
   handleFormatComponent(info) {
     const allProps = Object.keys(info.props);
     // TODO -- should we display children prop? Probly not
-    const valuesOfProps = allProps.map((prop) => {
-      const val = info.props[prop];
-      if (val) {
-        let propertyValue = null;
-        if (val.constructor === Object) {
-          propertyValue = JSON.stringify(val);
+    const propValues = allProps.map((prop) => {
+      const propValue = info.props[prop];
+      if (propValue == null) {
+        return null;
+      } else {
+        let propValueString = null;
+        if (propValue.constructor === Object) {
+          propValueString = JSON.stringify(propValue);
         } else {
-          propertyValue = val.toString ? val.toString() : val;
+          propValueString = propValue.toString ? propValue.toString() : propValue;
         }
         return (
           <li key ={prop.toString()}>
-            {prop.toString() + ": " + propertyValue}
+            {prop.toString() + ": " + propValueString}
           </li>
         )
-      } else {
-        return null;
       }
     });
     return (
       <p>
         This component's type is {info.type.name ? info.type.name : info.type}
-        <ul>{valuesOfProps}</ul>
+        <ul>{propValues}</ul>
       </p>
     );
   }
