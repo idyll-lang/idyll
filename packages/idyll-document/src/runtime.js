@@ -162,7 +162,7 @@ const createWrapper = ({ theme, layout }) => {
         let propValueString = null;
         if (propValue.constructor === Object) {
           propValueString = JSON.stringify(propValue);
-        } else {
+        } else { // Components use toString() whereas regular HTML tags don't
           propValueString = propValue.toString ? propValue.toString() : propValue;
         }
         return (
