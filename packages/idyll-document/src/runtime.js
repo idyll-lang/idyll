@@ -157,9 +157,7 @@ const createWrapper = ({ theme, layout }) => {
     // TODO -- should we display children prop? Probly not
     const propValues = allProps.map((prop) => {
       const propValue = info.props[prop];
-      if (propValue == null) {
-        return null;
-      } else {
+      if (propValue != undefined) {
         let propValueString = null;
         if (propValue.constructor === Object) {
           propValueString = JSON.stringify(propValue);
@@ -171,6 +169,8 @@ const createWrapper = ({ theme, layout }) => {
             {prop.toString() + ": " + propValueString}
           </li>
         )
+      } else {
+        return null;
       }
     });
     return (
