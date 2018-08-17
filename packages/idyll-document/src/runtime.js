@@ -151,6 +151,7 @@ const createWrapper = ({ theme, layout }) => {
     if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
   }
 
+  // Returns a single <ul> containing each prop value of info as a <li> item
   handleFormatComponent(info) {
     const allProps = Object.keys(info.props);
     // TODO -- should we display children prop? Probly not
