@@ -5,7 +5,7 @@ class Conditional extends React.Component {
     const { idyll, hasError, updateProps, ...props } = this.props;
 
     if (!props.if) {
-      return null;
+      return <div style={{display: 'none'}}>{props.children}</div>;
     }
 
     return <div>{props.children}</div>;

@@ -50,9 +50,9 @@ class Scroller extends React.Component {
     // setup the instance, pass callback functions
     scroller
       .setup({
-        step: '.idyll-scroll-text .idyll-step', // required
+        step: `#idyll-scroll-${this.id} .idyll-step`, // required
         container: `#idyll-scroll-${this.id}`, // required (for sticky)
-        graphic: '.idyll-scroll-graphic' // required (for sticky)
+        graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic` // required (for sticky)
       })
       .onStepEnter(this.handleStepEnter.bind(this))
       // .onStepExit(handleStepExit)
