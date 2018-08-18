@@ -152,11 +152,17 @@ const createWrapper = ({ theme, layout }) => {
   }
 
   // Returns a single <ul> containing each prop value of info as a <li> item
-  handleFormatComponent(info) {
-    const allProps = Object.keys(info.props);
-    // TODO -- should we display children prop? Probly not
+  handleFormatComponent(runtimeValues, metaValues) { // TODO probly need two params -- the props along with storing the actual data
+    // if (!info || !info.props) {
+    //   return null;
+    // }
+    // const allProps = info.props;
+    // const propValues = allProps.map((propSet) => {
+    //   const value = info // I think I'm gonna need the previous c in order to get the *actual* values
+    // });
+    const allProps = Object.keys(runtimeValues.props);
     const propValues = allProps.map((prop) => {
-      const propValue = info.props[prop];
+      const propValue = runtimeValues.props[prop];
       if (propValue != undefined) {
         let propValueString = null;
         if (propValue.constructor === Object) {
@@ -175,7 +181,8 @@ const createWrapper = ({ theme, layout }) => {
     });
     return (
       <p>
-        This component's type is {info.type.name ? info.type.name : info.type}
+        This component's type is {runtimeValues.type.name ? runtimeValues.type.name : runtimeValues.type} 
+        { /* TODO use metaValues.name if possible */}
         <ul>{propValues}</ul>
       </p>
     );
@@ -195,6 +202,7 @@ const createWrapper = ({ theme, layout }) => {
       let childComponent = null;
       const returnComponent = React.Children.map(children, (c, i) => {
         childComponent = c;
+        debugger;
         return React.cloneElement(c, {
           key: `${this.key}-${i}`,
           idyll: {
@@ -212,7 +220,7 @@ const createWrapper = ({ theme, layout }) => {
             <img src='https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png' />
           </button>
           <ReactTooltip id={`${this.key}-help`} type='error' effect='solid'>
-            {this.handleFormatComponent(childComponent)}
+            {this.handleFormatComponent(childComponent, childComponent.type._idyll)}
           </ReactTooltip>
         </Overlay>
       );
