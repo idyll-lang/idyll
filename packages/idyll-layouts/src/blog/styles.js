@@ -80,11 +80,8 @@ input {
   top: 0;
   right: 0;
   opacity: .2;
-}
-
-.overlay-div img {
-  width:50%;
-  height:80%;
+  background: url(https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png);
+  background-repeat: no-repeat;
 }
 
 .overlay-div:hover > .overlay-button {
