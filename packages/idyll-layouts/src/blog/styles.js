@@ -73,7 +73,6 @@ input {
 
 .overlay-div {
   position: relative;
-  border-style: dotted;
 }
 
 .overlay-button {
