@@ -216,7 +216,9 @@ const createWrapper = ({ theme, layout }) => {
       return (
         <Overlay>
           {returnComponent}
-          <button className="overlay-button" data-tip data-for={`${this.key}-help`} />
+          <button className="overlay-button" data-tip data-for={`${this.key}-help`}>
+            <img src='https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png' />
+          </button>
           <ReactTooltip id={`${this.key}-help`} type='error' effect='solid'>
             {this.handleFormatComponent(childComponent, childComponent.type._idyll)}
           </ReactTooltip>
