@@ -152,14 +152,14 @@ const createWrapper = ({ theme, layout }) => {
   }
 
   // Returns a single <ul> containing each prop value of info as a <li> item
-  handleFormatComponent(runtimeValues, metaValues) { // TODO probly need two params -- the props along with storing the actual data
-    // if (!info || !info.props) {
-    //   return null;
-    // }
-    // const allProps = info.props;
-    // const propValues = allProps.map((propSet) => {
-    //   const value = info // I think I'm gonna need the previous c in order to get the *actual* values
-    // });
+  handleFormatComponent(runtimeValues, metaValues) {
+    const componentName = metaValues.name;
+
+    // Docs use lowercase component name for link
+    const componentLowerCase = componentName.charAt(0).toLowerCase()
+                                + componentName.slice(1);
+    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" + componentLowerCase;
+
     const allProps = Object.keys(runtimeValues.props);
     const propValues = allProps.map((prop) => {
       const propValue = runtimeValues.props[prop];
@@ -181,8 +181,8 @@ const createWrapper = ({ theme, layout }) => {
     });
     return (
       <p>
-        This component's type is {runtimeValues.type.name ? runtimeValues.type.name : runtimeValues.type} 
-        { /* TODO use metaValues.name if possible */}
+        {componentName} component 
+        <a href={componentDocsLink}>Docs</a>
         <ul>{propValues}</ul>
       </p>
     );
@@ -202,7 +202,6 @@ const createWrapper = ({ theme, layout }) => {
       let childComponent = null;
       const returnComponent = React.Children.map(children, (c, i) => {
         childComponent = c;
-        debugger;
         return React.cloneElement(c, {
           key: `${this.key}-${i}`,
           idyll: {
