@@ -151,7 +151,11 @@ const createWrapper = ({ theme, layout }) => {
     if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
   }
 
-  // Returns a single <ul> containing each prop value of info as a <li> item
+  /* Returns authoring information for the values in the form of
+    ComponentName
+    Link to Docs page
+    Information about each prop
+  */
   handleFormatComponent(runtimeValues, metaValues) {
     const componentName = metaValues.name;
 
@@ -160,31 +164,39 @@ const createWrapper = ({ theme, layout }) => {
                                 + componentName.slice(1);
     const componentDocsLink = "https://idyll-lang.org/docs/components/default/" + componentLowerCase;
 
-    const allProps = Object.keys(runtimeValues.props);
-    const propValues = allProps.map((prop) => {
-      const propValue = runtimeValues.props[prop];
-      if (propValue != undefined) {
-        let propValueString = null;
-        if (propValue.constructor === Object) {
-          propValueString = JSON.stringify(propValue);
-        } else { // Components use toString() whereas regular HTML tags don't
-          propValueString = propValue.toString ? propValue.toString() : propValue;
+    // For all available props in metaValues, display them
+    // If runtimeValues has a value for given prop, display it
+    const runtimeProps = Object.keys(runtimeValues.props);
+
+    const showProps = metaValues.props.map((prop) => {
+      const runtimeValue = runtimeValues.props[prop.name];
+      if (runtimeValue != undefined) {
+        let valueString = null;
+        if (runtimeValue.constructor === Object) {
+          valueString = JSON.stringify(runtimeValue);
+        } else {
+          valueString = runtimeValue;
         }
         return (
-          <li key ={prop.toString()}>
-            {prop.toString() + ": " + propValueString}
+          <li key={prop.toString()}>
+            name: {prop.name}, type: {prop.type}, current value: {valueString}
           </li>
         )
       } else {
-        return null;
+        return (
+          <li key={prop.toString()}>
+            name: {prop.name}, type: {prop.type}
+          </li>
+        )
       }
     });
     return (
-      <p>
-        {componentName} component 
-        <a href={componentDocsLink}>Docs</a>
-        <ul>{propValues}</ul>
-      </p>
+      <div>
+        <p>{componentName}</p>
+        <p><a href={componentDocsLink}>Docs</a></p>
+        <p>Props</p>
+        <ul>{showProps}</ul>
+      </div>
     );
   }
 
