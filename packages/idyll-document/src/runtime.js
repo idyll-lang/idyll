@@ -176,9 +176,8 @@ const createWrapper = ({ theme, layout }) => {
         } else {
           valueString = runtimeValue;
         }
-        debugger;
         return (
-          <tr key={prop.toString()}>
+          <tr key={JSON.stringify(prop)}>
             <td>{prop.name}</td>
             <td>{prop.type}</td>
             <td>{prop.example}</td>
@@ -187,7 +186,7 @@ const createWrapper = ({ theme, layout }) => {
         )
       } else {
         return (
-          <tr key={prop.toString()}>
+          <tr key={JSON.stringify(prop)}>
             <td>{prop.name}</td>
             <td>{prop.type}</td>
             <td>{prop.example}</td>
@@ -202,13 +201,15 @@ const createWrapper = ({ theme, layout }) => {
         <p>Link to <a href={componentDocsLink}>Docs</a></p>
         <p>Props</p>
         <table>
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Example</th>
-            <th>Current Value</th>
-          </tr>
-          {showProps}
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Example</th>
+              <th>Current Value</th>
+            </tr>
+            {showProps}
+          </tbody>
         </table>
       </div>
     );
