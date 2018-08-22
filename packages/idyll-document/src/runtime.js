@@ -176,25 +176,40 @@ const createWrapper = ({ theme, layout }) => {
         } else {
           valueString = runtimeValue;
         }
+        debugger;
         return (
-          <li key={prop.toString()}>
-            name: {prop.name}, type: {prop.type}, current value: {valueString}
-          </li>
+          <tr key={prop.toString()}>
+            <td>{prop.name}</td>
+            <td>{prop.type}</td>
+            <td>{prop.example}</td>
+            <td>{valueString}</td>
+          </tr>
         )
       } else {
         return (
-          <li key={prop.toString()}>
-            name: {prop.name}, type: {prop.type}
-          </li>
+          <tr key={prop.toString()}>
+            <td>{prop.name}</td>
+            <td>{prop.type}</td>
+            <td>{prop.example}</td>
+            <td></td>
+          </tr>
         )
       }
     });
     return (
-      <div>
-        <p>{componentName}</p>
-        <p><a href={componentDocsLink}>Docs</a></p>
+      <div className="author-component-view">
+        <p>{componentName} Component</p>
+        <p>Link to <a href={componentDocsLink}>Docs</a></p>
         <p>Props</p>
-        <ul>{showProps}</ul>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Example</th>
+            <th>Current Value</th>
+          </tr>
+          {showProps}
+        </table>
       </div>
     );
   }
@@ -228,9 +243,7 @@ const createWrapper = ({ theme, layout }) => {
           <Overlay>
             {returnComponent}
             <button className="overlay-button" />
-            <div>
-              {this.handleFormatComponent(childComponent, childComponent.type._idyll)}
-            </div>
+            {this.handleFormatComponent(childComponent, childComponent.type._idyll)}
           </Overlay>
         );
       } else {
