@@ -7,7 +7,6 @@ import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
 import Overlay from './components/overlay';
-import ReactTooltip from 'react-tooltip';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -228,10 +227,10 @@ const createWrapper = ({ theme, layout }) => {
         return (
           <Overlay>
             {returnComponent}
-            <button className="overlay-button" data-tip data-for={`${this.key}-help`} />
-            <ReactTooltip id={`${this.key}-help`} type='error' effect='solid'>
+            <button className="overlay-button" />
+            <div>
               {this.handleFormatComponent(childComponent, childComponent.type._idyll)}
-            </ReactTooltip>
+            </div>
           </Overlay>
         );
       } else {
