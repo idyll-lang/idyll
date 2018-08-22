@@ -80,9 +80,8 @@ input {
   top: 0;
   right: 0;
   opacity: .2;
-  background-color: #C0BFBF;
+  background-color: #E7E3D0;
   background-image: url('https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png');
-  background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
   width: 35px;
@@ -92,6 +91,10 @@ input {
 .overlay-div:hover > .overlay-button {
   opacity: 1;
   transition: opacity 600ms linear;
+}
+
+.author-component-view {
+
 }
 
 @media all and (max-width: 1600px) {
