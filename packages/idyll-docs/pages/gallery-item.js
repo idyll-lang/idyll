@@ -6,7 +6,7 @@ import { logPageView, initGA } from '../components/analytics';
 import Head from 'next/head'
 
 const imageUrl = (url) => /^http/.test(url) ? url : `https://idyll-lang.org/static/images/${url}`;
-const description = (item) => `Idyll Example | ${item.label} - ${item}`;
+const description = (item) => `Idyll Example | ${item.label}`;
 
 export default class IdyllComponentPage extends React.PureComponent {
 

@@ -13,14 +13,32 @@ function slugify(text)
 }
 
 
-export default ({ href, label, subtitle, image }) => (
+export default ({ href, label, subtitle, image, sourceUrl }) => (
   <div className="example">
     <Link route='gallery-item' params={{slug: slugify(label)}}>
       <a>
         <div
           className="example-image"
           style={{ backgroundImage: `url(${imageUrl(image)})` }}
-        ></div>
+        >
+          {
+            sourceUrl ? <div>
+              <div style={{
+                padding: 10,
+                background: '#fff',
+                width: 125,
+                margin: '0 auto',
+                textAlign: 'center',
+                border: 'solid 1px black',
+                color: 'black',
+                position: 'relative',
+                top: 5
+              }}>
+                Source Available
+              </div>
+            </div> : null
+          }
+        </div>
         <div className="example-label">{ label }
           {
             subtitle ? (
