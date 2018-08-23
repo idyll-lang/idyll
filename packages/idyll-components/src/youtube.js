@@ -1,6 +1,8 @@
 import React from 'react';
 let YouTube;
 
+const YT_PLAYING = 1;
+
 class YoutubeComponent extends React.Component {
 
   constructor(props) {
@@ -51,6 +53,13 @@ class YoutubeComponent extends React.Component {
     if (!this.props.audio) {
       this._player.mute();
     }
+    this._player.addEventListener('onStateChange', (event) => {
+      if (event.data === YT_PLAYING) {
+        this.props.updateProps({ play: true })
+      } else {
+        this.props.updateProps({ play: false })
+      }
+    })
     this.props.onReady && this.props.onReady();
   }
 }
