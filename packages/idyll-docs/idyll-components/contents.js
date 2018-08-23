@@ -294,8 +294,7 @@ const components = [
         {
           "Youtube": {
             "thumbnail": "youtube.png",
-            "description": "Plays a video from YouTube. See https://developers.google.com/youtube/player_parameters for all options.",
-            "image": "youtube.png",
+            "description": "Plays a video from YouTube. All of the parameters are optional except for id, which must be provided. See all available options at https://developers.google.com/youtube/player_parameters",
             "idyllProps": [
               {
                 "id": "YouTube video id. Required."
