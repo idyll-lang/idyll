@@ -81,7 +81,7 @@ input {
   right: 0;
   opacity: .2;
   background-color: #E7E3D0;
-  background-image: url('https://files.gitter.im/idyll-lang/Lobby/Zkzj/quill-icon.png');
+  background-image: url('https://idyll-lang.org/static/images/quill-icon.png');
   background-repeat: no-repeat;
   background-size: contain;
   width: 35px;
