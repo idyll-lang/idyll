@@ -26,7 +26,8 @@ import {
   Stepper,
   SVG,
   Table,
-  TextInput
+  TextInput,
+  Youtube
 } from '../src/';
 
 describe('Sanity Check', () => {
@@ -188,6 +189,9 @@ describe('Sanity Check', () => {
       });
       it('<TextInput />', () => {
         expect(() => mount(<TextInput />)).not.toThrow();
+      });
+      it('<Youtube />', () => {
+        expect(() => mount(<Youtube />)).not.toThrow();
       });
     });
 
