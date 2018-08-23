@@ -1,4 +1,4 @@
-Idyll attempts to adhere to the [open open source](http://openopensource.org/) philosophy as much as reasonably possible. Pull requests are very welcome!
+Thank you for your interest in contributing to Idyll. Pull requests are very welcome!
 
 ## Dev Dependencies
 
