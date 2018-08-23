@@ -1,0 +1,5 @@
+
+[Youtube id:"videoID" play:true audio:true width:500 height:300 options:`{ controls: 1 }` /]
+
+All of the parameters are optional except for id, which must be provided. See all available options at https://developers.google.com/youtube/player_parameters
+

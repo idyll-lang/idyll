@@ -290,6 +290,33 @@ const components = [
             "description": "Display tabular data. Uses https://github.com/react-tools/react-table under the hood to render the table.",
             "image": "table.png"
           }
+        },
+        {
+          "Youtube": {
+            "thumbnail": "youtube.png",
+            "description": "Plays a video from YouTube. See https://developers.google.com/youtube/player_parameters for all options.",
+            "image": "youtube.png",
+            "idyllProps": [
+              {
+                "id": "YouTube video id. Required."
+              },
+              {
+                "width": "width of the video"
+              },
+              {
+                "height": "height of the video"
+              },
+              {
+                "play": "Is the video playing? Default: false"
+              },
+              {
+                "audio": "Is the audio turned on? Default: true"
+              },
+              {
+                "options": "Dictionary of extra options. See YouTube docs for all options."
+              }
+            ]
+          }
         }
       ]
     }
