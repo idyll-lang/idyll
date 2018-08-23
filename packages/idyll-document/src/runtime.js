@@ -6,7 +6,7 @@ import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
-import Overlay from './components/overlay';
+import AuthorTool from './components/author-tool'
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -241,11 +241,7 @@ const createWrapper = ({ theme, layout }) => {
       });
       if (childComponent.type._idyll) { // display overlay only for idyll components with props
         return (
-          <Overlay>
-            {returnComponent}
-            <button className="overlay-button" />
-            {this.handleFormatComponent(childComponent, childComponent.type._idyll)}
-          </Overlay>
+          <AuthorTool component={returnComponent} authorComponent={childComponent} />
         );
       } else {
         return returnComponent;

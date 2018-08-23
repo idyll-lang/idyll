@@ -71,11 +71,11 @@ input {
   max-height: 100vh;
 }
 
-.overlay-div {
+.author-component {
   position: relative;
 }
 
-.overlay-button {
+.author-view-button {
   position: absolute;
   top: 0;
   right: 0;
@@ -88,13 +88,13 @@ input {
   height: 35px;
 }
 
-.overlay-div:hover > .overlay-button {
+.author-component:hover > .author-view-button {
   opacity: 1;
   transition: opacity 600ms linear;
 }
 
 .author-component-view {
-
+  background-color: #E7E3D0;
 }
 
 @media all and (max-width: 1600px) {
