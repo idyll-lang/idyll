@@ -44,10 +44,10 @@ class AuthorTool extends React.PureComponent {
     });
     return (
       <div className="author-component-view">
-        <p>{componentName} Component</p>
-        <p>Link to <a href={componentDocsLink}>Docs</a></p>
-        <p>Props</p>
-        <table>
+        <h2>{componentName} Component</h2>
+        <h3><a href={componentDocsLink}>Docs</a> Link</h3>
+        <h3>Props</h3>
+        <table className="props-table">
           <tbody>
             <tr>
               <th>Name</th>

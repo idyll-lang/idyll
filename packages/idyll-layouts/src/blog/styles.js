@@ -97,6 +97,11 @@ input {
   background-color: #E7E3D0;
 }
 
+.props-table {
+  width: 100%;
+  display: table;
+}
+
 @media all and (max-width: 1600px) {
   .fixed {
     width: calc((85vw - 600px) - 50px);
