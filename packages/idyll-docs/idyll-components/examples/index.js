@@ -22,6 +22,7 @@ import Stepper from './Stepper.idl'
 import SVG from './SVG.idl'
 import Table from './Table.idl'
 import TextInput from './TextInput.idl'
+import Youtube from './Youtube.idl'
 
 import Analytics from './Analytics.idl'
 
@@ -56,6 +57,7 @@ export {
   SVG,
   Table,
   TextInput,
+  Youtube,
 
   Analytics,
   Conditional
