@@ -27,8 +27,8 @@ class AuthorTool extends React.PureComponent {
       const runtimeValue = runtimeValues.props[prop.name];
       let currentPropValue = null;
       if (runtimeValue != undefined) {
-        if (runtimeValue.constructor === Object) {
-          currentPropValue = JSON.stringify(runtimeValue);
+        if (runtimeValue && {}.toString.call(runtimeValue) === '[object Function]') {
+          currentPropValue = <em>function</em>;
         } else {
           currentPropValue = runtimeValue;
         }
