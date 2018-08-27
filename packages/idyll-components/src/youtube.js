@@ -2,6 +2,7 @@ import React from 'react';
 let YouTube;
 
 const YT_PLAYING = 1;
+const YT_PAUSED = 2;
 
 class YoutubeComponent extends React.Component {
 
@@ -32,6 +33,7 @@ class YoutubeComponent extends React.Component {
 
     return (
       <YouTube
+        key={this.props.id}
         videoId={this.props.id}
         opts={opts}
         onReady={this._onReady.bind(this)}
@@ -39,12 +41,24 @@ class YoutubeComponent extends React.Component {
     );
   }
 
-  componentDidUpdate(props, newState) {
-    if (this._player && props.play !== this.props.play) {
-      this.props.play ? this._player.playVideo() : this._player.pauseVideo();
-    }
-    if (this._player && props.audio !== this.props.audio) {
-      this.props.audio ? this._player.unMute() : this._player.mute();
+  componentDidUpdate(prevProps, prevState) {
+    if (this._player && this.props.id !== prevProps.id) {
+      // // The video has changed
+      // this.props.audio ? this._player.unMute() : this._player.mute();
+      // if (this.props.play) {
+      //   console.log('playing video')
+      //   setTimeout(() => {
+      //     this._player.playVideo();
+      //   }, 1000)
+      // }
+    } else {
+      // Modify options to the same video
+      if (this._player && this.props.play !== prevProps.play) {
+        this.props.play ? this._player.playVideo() : this._player.pauseVideo();
+      }
+      if (this._player && this.props.audio !== prevProps.audio) {
+        this.props.audio ? this._player.unMute() : this._player.mute();
+      }
     }
   }
 
@@ -54,9 +68,9 @@ class YoutubeComponent extends React.Component {
       this._player.mute();
     }
     this._player.addEventListener('onStateChange', (event) => {
-      if (event.data === YT_PLAYING) {
+      if (event.data === YT_PLAYING && !this.props.play) {
         this.props.updateProps({ play: true })
-      } else {
+      } else if (event.data === YT_PAUSED && this.props.play) {
         this.props.updateProps({ play: false })
       }
     })
