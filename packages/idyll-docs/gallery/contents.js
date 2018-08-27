@@ -4,6 +4,13 @@ const exampleGroups = [
     title: 'Explorable Explanations',
     examples: [
       {
+        label: "Beat Basics",
+        subtitle: "Explore 3/4 and 6/8 time using John Varney's rhythm wheel.",
+        href: 'https://megan-vo.github.io/basic-beats/',
+        image: 'beat-basics.png',
+        sourceUrl: "https://github.com/megan-vo/basic-beats"
+      },
+      {
         label: "How does the eye work?",
         href: 'https://idyll.pub/post/the-eye-5b169094cce3bece5d95e964/',
         image: 'the-eye.png'
