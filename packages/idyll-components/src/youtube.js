@@ -5,7 +5,6 @@ const YT_PLAYING = 1;
 const YT_PAUSED = 2;
 
 class YoutubeComponent extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
