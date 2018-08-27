@@ -2,7 +2,7 @@ Thank you for your interest in contributing to Idyll. Pull requests are very wel
 
 ## What to develop
 
-If you are just getting started with the project, and can be daunting to figure out where to start. We keep a list of open issues with the tags ["help wanted"](https://github.com/idyll-lang/idyll/issues?q=is%3Aissue+is%3Aopen+label%3A%22Help+Wanted%22) and ["good first PR"](https://github.com/idyll-lang/idyll/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+PR%22). If you would like to work on a specific issue, feel free to post questions about it on Githb or our [chatroom on Gitter](https://gitter.im/idyll-lang/Lobby). Documentation improvements are also highly valued.
+If you are just getting started with the project, it can be daunting to figure out where to start. We keep a list of open issues with the tags ["help wanted"](https://github.com/idyll-lang/idyll/issues?q=is%3Aissue+is%3Aopen+label%3A%22Help+Wanted%22) and ["good first PR"](https://github.com/idyll-lang/idyll/issues?q=is%3Aissue+is%3Aopen+label%3A%22Good+First+PR%22). If you would like to work on a specific issue, feel free to post questions about it on Github or our [chatroom on Gitter](https://gitter.im/idyll-lang/Lobby). Documentation improvements are also highly valued.
 
 ## How to develop
 
@@ -12,7 +12,7 @@ To work with Idyll's codebase, you must have [Lerna](https://github.com/lerna/le
 
 ### Repository Overview
 
-This repository is structured as a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md), which means it contains several independent modules in one git repository. Each folder in the `packages` directory acts as an indipendent JavaScript module, and is published and versioned independently on npm. 
+This repository is structured as a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md), which means it contains several independent modules in one git repository. Each folder in the `packages` directory acts as an independent JavaScript module, and is published and versioned independently on npm. 
 
 ### Making Changes
 
