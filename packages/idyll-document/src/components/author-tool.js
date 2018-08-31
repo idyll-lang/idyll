@@ -3,7 +3,7 @@ import React from 'react';
 class AuthorTool extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { isAuthorView: false };
+    this.state = { isAuthorView: false};
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -42,8 +42,9 @@ class AuthorTool extends React.PureComponent {
         </tr>
       )
     });
+    let showComponentView = this.state.isAuthorView ? "author-component-view" : "author-component-hide-view";
     return (
-      <div className="author-component-view">
+      <div className={showComponentView}>
         <h2>{componentName} Component</h2>
         <h3><a href={componentDocsLink}>Docs</a> Link</h3>
         <h3>Props</h3>
@@ -70,11 +71,13 @@ class AuthorTool extends React.PureComponent {
 
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
+    let authorToolClass = this.state.isAuthorView ? "author-tool-view" : "author-tool";
     return (
-      <div className="author-component">
+      <div className={authorToolClass}>
         {props.component}
         <button className="author-view-button" onClick={this.handleClick} />
-        {this.state.isAuthorView ? this.handleFormatComponent(props.authorComponent) : null}
+        {/*{this.state.isAuthorView ? this.handleFormatComponent(props.authorComponent) : null */}
+        {this.handleFormatComponent(props.authorComponent)}
       </div>
     );
   }

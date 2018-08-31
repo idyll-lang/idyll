@@ -71,8 +71,14 @@ input {
   max-height: 100vh;
 }
 
-.author-component {
+.author-tool {
   position: relative;
+}
+
+.author-tool-view {
+  position: relative;
+  border: 1px solid #A4A2A2;
+  border-radius: 15px;
 }
 
 .author-view-button {
@@ -86,15 +92,31 @@ input {
   background-size: contain;
   width: 35px;
   height: 35px;
+  margin-right: 10px;
 }
 
-.author-component:hover > .author-view-button {
+.author-tool:hover > .author-view-button {
+  opacity: 1;
+  transition: opacity 600ms linear;
+}
+
+.author-tool-view:hover > .author-view-button {
   opacity: 1;
   transition: opacity 600ms linear;
 }
 
 .author-component-view {
   background-color: #E7E3D0;
+  -webkit-transition: all .25s ease-in;
+  transition: all .25s ease-in;
+}
+
+.author-component-hide-view {
+  opacity:0;
+  clear: both;
+  height: 0;
+  padding: 0 8px;
+  overflow: hidden;
 }
 
 .props-table {
