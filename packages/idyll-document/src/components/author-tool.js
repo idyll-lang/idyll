@@ -17,9 +17,9 @@ class AuthorTool extends React.PureComponent {
     const componentName = metaValues.name;
 
     // Docs use lowercase component name for link
-    const componentLowerCase = componentName.charAt(0).toLowerCase()
-                              + componentName.slice(1);
-    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" + componentLowerCase;
+    const componentLowerCase = componentName.charAt(0).toLowerCase() + componentName.slice(1);
+    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" +
+      componentLowerCase;
 
     // For all available props in metaValues, display them
     // If runtimeValues has a value for given prop, display it
@@ -44,8 +44,13 @@ class AuthorTool extends React.PureComponent {
     });
     const {isAuthorView, debugHeight} = this.state;
     const currentDebugHeight = isAuthorView ? debugHeight : 0;
+    const marginToGive = isAuthorView ? 15 : 0;
     return (
-      <div className="debug-collapse" style={{height: currentDebugHeight + 'px'}}>
+      <div className="debug-collapse" 
+        style={{
+          height: currentDebugHeight + 'px',
+          marginBottom: marginToGive + 'px'
+        }}>
         <div className="author-component-view" ref="inner">
           <h2>{componentName} Component</h2>
           <h3><a href={componentDocsLink}>Docs</a> Link</h3>
@@ -79,7 +84,6 @@ class AuthorTool extends React.PureComponent {
       <div className="component-debug-view">
         {props.component}
         <button className="author-view-button" onClick={this.handleClick} />
-        {/*{this.state.isAuthorView ? this.handleFormatComponent(props.authorComponent) : null */}
         {this.handleFormatComponent(props.authorComponent)}
       </div>
     );
