@@ -111,6 +111,11 @@ input {
   flex-direction: column;
 }
 
+.author-component-view h2, .author-component-view h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .props-table {
   width: 100%;
   display: table;
