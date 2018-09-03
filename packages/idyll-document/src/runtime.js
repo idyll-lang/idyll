@@ -176,7 +176,10 @@ const createWrapper = ({ theme, layout }) => {
       });
       if (childComponent.type._idyll) { // display overlay only for idyll components with props
         return (
-          <AuthorTool component={returnComponent} authorComponent={childComponent} />
+          <AuthorTool
+            component={returnComponent} 
+            authorComponent={childComponent}
+          />
         );
       } else {
         return returnComponent;

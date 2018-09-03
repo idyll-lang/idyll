@@ -124,7 +124,6 @@ input {
   transition: height 0.3s ease-out;
   margin: 0;
   box-sizing: border-box;
-  margin-bottom: 10px;
 }
 
 @media all and (max-width: 1600px) {
