@@ -3,7 +3,7 @@ import React from 'react';
 class AuthorTool extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { isAuthorView: false};
+    this.state = { isAuthorView: false, debugHeight: 0};
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -42,38 +42,41 @@ class AuthorTool extends React.PureComponent {
         </tr>
       )
     });
-    let showComponentView = this.state.isAuthorView ? "author-component-view" : "author-component-hide-view";
+    const {isAuthorView, debugHeight} = this.state;
+    const currentDebugHeight = isAuthorView ? debugHeight : 0;
     return (
-      <div className={showComponentView}>
-        <h2>{componentName} Component</h2>
-        <h3><a href={componentDocsLink}>Docs</a> Link</h3>
-        <h3>Props</h3>
-        <table className="props-table">
-          <tbody>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Example</th>
-              <th>Current Value</th>
-            </tr>
-            {showProps}
-          </tbody>
-        </table>
+      <div className="debug-collapse" style={{height: currentDebugHeight + 'px'}}>
+        <div className="author-component-view" ref="inner">
+          <h2>{componentName} Component</h2>
+          <h3><a href={componentDocsLink}>Docs</a> Link</h3>
+          <h3>Props</h3>
+          <table className="props-table">
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Example</th>
+                <th>Current Value</th>
+              </tr>
+              {showProps}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
 
   handleClick() {
     this.setState(prevState => ({
-      isAuthorView: !prevState.isAuthorView
+      isAuthorView: !prevState.isAuthorView,
+      debugHeight: this.refs.inner.clientHeight
     }));
   }
 
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
-    let authorToolClass = this.state.isAuthorView ? "author-tool-view" : "author-tool";
     return (
-      <div className={authorToolClass}>
+      <div className="component-debug-view">
         {props.component}
         <button className="author-view-button" onClick={this.handleClick} />
         {/*{this.state.isAuthorView ? this.handleFormatComponent(props.authorComponent) : null */}

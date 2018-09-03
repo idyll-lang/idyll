@@ -81,6 +81,10 @@ input {
   border-radius: 15px;
 }
 
+.component-debug-view {
+  position: relative;
+}
+
 .author-view-button {
   position: absolute;
   top: 0;
@@ -95,33 +99,25 @@ input {
   margin-right: 10px;
 }
 
-.author-tool:hover > .author-view-button {
-  opacity: 1;
-  transition: opacity 600ms linear;
-}
-
-.author-tool-view:hover > .author-view-button {
+.component-debug-view:hover > .author-view-button {
   opacity: 1;
   transition: opacity 600ms linear;
 }
 
 .author-component-view {
   background-color: #E7E3D0;
-  -webkit-transition: all .25s ease-in;
-  transition: all .25s ease-in;
-}
-
-.author-component-hide-view {
-  opacity:0;
-  clear: both;
-  height: 0;
-  padding: 0 8px;
-  overflow: hidden;
 }
 
 .props-table {
   width: 100%;
   display: table;
+  border: 1px solid #A4A2A2;
+  border-radius: 20px;
+}
+
+.debug-collapse {
+  overflow: hidden;
+  transition: height 0.3s ease-out;
 }
 
 @media all and (max-width: 1600px) {
