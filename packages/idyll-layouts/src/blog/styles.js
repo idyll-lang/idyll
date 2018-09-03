@@ -97,6 +97,7 @@ input {
   width: 35px;
   height: 35px;
   margin-right: 10px;
+  box-sizing: border-box;
 }
 
 .component-debug-view:hover > .author-view-button {
@@ -106,6 +107,8 @@ input {
 
 .author-component-view {
   background-color: #E7E3D0;
+  display: flex;
+  flex-direction: column;
 }
 
 .props-table {
@@ -113,11 +116,15 @@ input {
   display: table;
   border: 1px solid #A4A2A2;
   border-radius: 20px;
+  margin: 0;
 }
 
 .debug-collapse {
   overflow: hidden;
   transition: height 0.3s ease-out;
+  margin: 0;
+  box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 @media all and (max-width: 1600px) {
