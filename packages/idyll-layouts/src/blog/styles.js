@@ -71,19 +71,9 @@ input {
   max-height: 100vh;
 }
 
-.author-tool {
-  position: relative;
-}
-
-.author-tool-view {
-  position: relative;
-  border: 1px solid #A4A2A2;
-  border-radius: 15px;
-}
-
 .component-debug-view {
   position: relative;
-  transition: background-color 0.4s linear;
+  transition: background-color 0.3s ease-in;
 }
 
 .author-view-button {
@@ -126,7 +116,7 @@ input {
 
 .debug-collapse {
   overflow: hidden;
-  transition: height 0.4s ease-out;
+  transition: height 0.3s ease-in;
   margin: 0;
   box-sizing: border-box;
 }

@@ -80,8 +80,8 @@ class AuthorTool extends React.PureComponent {
 
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
-    const addBorder = this.state.isAuthorView ? {border: '2px dashed red',
-      borderRadius: '5px', backgroundColor: '#E7E3D0',
+    const addBorder = this.state.isAuthorView ? {outline: '2px dashed red',
+      backgroundColor: '#E7E3D0',
       transition: 'background-color 0.4s linear'} : null;
     return (
       <div className="component-debug-view" style={addBorder}>
