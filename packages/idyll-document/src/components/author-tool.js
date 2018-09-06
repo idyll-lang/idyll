@@ -54,7 +54,7 @@ class AuthorTool extends React.PureComponent {
         <div className="author-component-view" ref="inner">
           <h2>{componentName} Component</h2>
           <h3><a href={componentDocsLink}>Docs</a> Link</h3>
-          <h3>Props</h3>
+          <h3>Props:</h3>
           <table className="props-table">
             <tbody>
               <tr>
@@ -80,8 +80,10 @@ class AuthorTool extends React.PureComponent {
 
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
+    const addBorder = this.state.isAuthorView ? {border: '2px solid red',
+      borderRadius: '5px'} : null;
     return (
-      <div className="component-debug-view">
+      <div className="component-debug-view" style={addBorder}>
         {props.component}
         <button className="author-view-button" onClick={this.handleClick} />
         {this.handleFormatComponent(props.authorComponent)}
