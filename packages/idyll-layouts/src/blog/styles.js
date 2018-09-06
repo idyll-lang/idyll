@@ -83,6 +83,7 @@ input {
 
 .component-debug-view {
   position: relative;
+  transition: background-color 0.4s linear;
 }
 
 .author-view-button {
@@ -106,7 +107,6 @@ input {
 }
 
 .author-component-view {
-  background-color: #E7E3D0;
   display: flex;
   flex-direction: column;
 }
@@ -126,7 +126,7 @@ input {
 
 .debug-collapse {
   overflow: hidden;
-  transition: height 0.3s ease-out;
+  transition: height 0.4s ease-out;
   margin: 0;
   box-sizing: border-box;
 }
