@@ -89,6 +89,7 @@ input {
   height: 35px;
   margin-right: 10px;
   box-sizing: border-box;
+  border-radius: 17px;
 }
 
 .component-debug-view:hover > .author-view-button {
