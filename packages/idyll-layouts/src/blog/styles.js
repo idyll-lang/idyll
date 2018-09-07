@@ -80,7 +80,7 @@ input {
   position: absolute;
   top: 0;
   right: 0;
-  opacity: .2;
+  opacity: .3;
   background-color: #E7E3D0;
   background-image: url('https://idyll-lang.org/static/images/quill-icon.png');
   background-repeat: no-repeat;
