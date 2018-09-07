@@ -92,6 +92,10 @@ input {
   border-radius: 17px;
 }
 
+.author-view-button:focus {
+  outline: none;
+}
+
 .component-debug-view:hover > .author-view-button {
   opacity: 1;
   transition: opacity 600ms linear;
