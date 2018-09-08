@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 
 class AuthorTool extends React.PureComponent {
   constructor(props) {
@@ -86,7 +87,16 @@ class AuthorTool extends React.PureComponent {
     return (
       <div className="component-debug-view" style={addBorder}>
         {props.component}
-        <button className="author-view-button" onClick={this.handleClick} />
+        <button className="author-view-button"
+          onClick={this.handleClick}
+          data-tip data-for={props.uniqueKey}
+        />
+        <ReactTooltip id={props.uniqueKey} type='info' effect='solid'
+          place='right'
+        >
+          <h3>{props.authorComponent.type._idyll.name} Component</h3>
+          <p>Click for more info</p>
+        </ReactTooltip>
         {this.handleFormatComponent(props.authorComponent)}
       </div>
     );

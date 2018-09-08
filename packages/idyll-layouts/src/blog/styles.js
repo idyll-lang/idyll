@@ -90,6 +90,7 @@ input {
   margin-right: 10px;
   box-sizing: border-box;
   border-radius: 17px;
+  cursor: pointer;
 }
 
 .author-view-button:focus {

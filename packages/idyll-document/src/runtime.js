@@ -162,6 +162,7 @@ const createWrapper = ({ theme, layout }) => {
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
       const { children, ...passThruProps } = filterIdyllProps(this.props, this.props.isHTMLNode);
       let childComponent = null;
+      let uniqueKey = `${this.key}-help`;
       const returnComponent = React.Children.map(children, (c, i) => {
         childComponent = c;
         return React.cloneElement(c, {
@@ -179,6 +180,7 @@ const createWrapper = ({ theme, layout }) => {
           <AuthorTool
             component={returnComponent} 
             authorComponent={childComponent}
+            uniqueKey={uniqueKey}
           />
         );
       } else {
