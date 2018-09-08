@@ -80,7 +80,7 @@ input {
   position: absolute;
   top: 0;
   right: 0;
-  opacity: .3;
+  opacity: .38;
   background-color: #E7E3D0;
   background-image: url('https://idyll-lang.org/static/images/quill-icon.png');
   background-repeat: no-repeat;
@@ -98,7 +98,7 @@ input {
 }
 
 .component-debug-view:hover > .author-view-button {
-  opacity: 1;
+  opacity: 0.87;
   transition: opacity 600ms linear;
 }
 
