@@ -51,15 +51,13 @@ class AuthorTool extends React.PureComponent {
         style={{
           height: currentDebugHeight + 'px',
           marginBottom: marginToGive + 'px'
-        }}>
+        }}
+      >
         <div className="author-component-view" ref="inner">
-          <h2>{componentName} Component</h2>
-          <h3><a href={componentDocsLink}>Docs</a> Link</h3>
-          <h3>Props:</h3>
           <table className="props-table">
             <tbody>
               <tr>
-                <th>Name</th>
+                <th>Prop Name</th>
                 <th>Type</th>
                 <th>Example</th>
                 <th>Current Value</th>
@@ -67,6 +65,13 @@ class AuthorTool extends React.PureComponent {
               {showProps}
             </tbody>
           </table>
+          <div className="icon-links">
+            <a className="icon-link" href={componentDocsLink}>
+              <img className="icon-link-image"
+                src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/production/ic_description_24px.svg?sanitize=true"
+              />
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -81,7 +86,7 @@ class AuthorTool extends React.PureComponent {
 
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
-    const addBorder = this.state.isAuthorView ? {outline: '2px dashed red',
+    const addBorder = this.state.isAuthorView ? {outline: '2px solid grey',
       backgroundColor: '#E7E3D0',
       transition: 'background-color 0.4s linear'} : null;
     return (
@@ -91,7 +96,10 @@ class AuthorTool extends React.PureComponent {
           onClick={this.handleClick}
           data-tip data-for={props.uniqueKey}
         />
-        <ReactTooltip id={props.uniqueKey} type='info' effect='solid'
+        <ReactTooltip
+          id={props.uniqueKey}
+          type='info'
+          effect='solid'
           place='right'
         >
           <h3>{props.authorComponent.type._idyll.name} Component</h3>

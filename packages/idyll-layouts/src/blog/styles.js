@@ -127,6 +127,16 @@ input {
   box-sizing: border-box;
 }
 
+.icon-links {
+  text-align: right;
+}
+
+.icon-link-image {
+  cursor: pointer;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+
 @media all and (max-width: 1600px) {
   .fixed {
     width: calc((85vw - 600px) - 50px);
