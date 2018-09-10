@@ -68,7 +68,7 @@ class AuthorTool extends React.PureComponent {
           <div className="icon-links">
             <a className="icon-link" href={componentDocsLink}>
               <img className="icon-link-image"
-                src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/production/ic_description_24px.svg?sanitize=true"
+                src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/design/ic_description_24px.svg?sanitize=true"
               />
             </a>
           </div>
@@ -87,7 +87,7 @@ class AuthorTool extends React.PureComponent {
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
     const addBorder = this.state.isAuthorView ? {outline: '2px solid grey',
-      backgroundColor: '#E7E3D0',
+      backgroundColor: '#F5F5F5',
       transition: 'background-color 0.4s linear'} : null;
     return (
       <div className="component-debug-view" style={addBorder}>
@@ -101,6 +101,7 @@ class AuthorTool extends React.PureComponent {
           type='info'
           effect='solid'
           place='right'
+          disable={this.state.isAuthorView}
         >
           <h3>{props.authorComponent.type._idyll.name} Component</h3>
           <p>Click for more info</p>
