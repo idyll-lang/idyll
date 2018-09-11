@@ -159,6 +159,7 @@ input {
 .button-tooltip {
   background-color: black !important;
   padding: 0 5px;
+  line-height: 0.2;
 }
 
 @media all and (max-width: 1600px) {
