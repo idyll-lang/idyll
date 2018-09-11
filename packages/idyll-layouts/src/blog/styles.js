@@ -156,6 +156,11 @@ input {
   align-self: center;
 }
 
+.button-tooltip {
+  background-color: black !important;
+  padding: 0 5px;
+}
+
 @media all and (max-width: 1600px) {
   .fixed {
     width: calc((85vw - 600px) - 50px);

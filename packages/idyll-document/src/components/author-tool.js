@@ -98,13 +98,14 @@ class AuthorTool extends React.PureComponent {
           data-tip data-for={props.uniqueKey}
         />
         <ReactTooltip
+          className="button-tooltip"
           id={props.uniqueKey}
           type='info'
           effect='solid'
           place='right'
           disable={this.state.isAuthorView}
         >
-          <h3>{props.authorComponent.type._idyll.name} Component</h3>
+          <h4>{props.authorComponent.type._idyll.name} Component</h4>
           <p>Click for more info</p>
         </ReactTooltip>
         {this.handleFormatComponent(props.authorComponent)}
