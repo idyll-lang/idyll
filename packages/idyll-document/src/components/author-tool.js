@@ -71,6 +71,7 @@ class AuthorTool extends React.PureComponent {
                 src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/design/ic_description_24px.svg?sanitize=true"
               />
             </a>
+            <div className="icon-tooltip">docs</div>
           </div>
         </div>
       </div>

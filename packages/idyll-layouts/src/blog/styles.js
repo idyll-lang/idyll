@@ -128,7 +128,8 @@ input {
 }
 
 .icon-links {
-  text-align: center;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .icon-link {
@@ -138,8 +139,21 @@ input {
 
 .icon-link-image {
   cursor: pointer;
-  margin-top: 2px;
-  margin-right: 5px;
+}
+
+.icon-tooltip {
+  visibility: hidden;
+  font-family: 'Courier New';
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.icon-link:hover ~ .icon-tooltip {
+  visibility: visible;
+}
+
+.icon-link, .icon-tooltip {
+  align-self: center;
 }
 
 @media all and (max-width: 1600px) {
