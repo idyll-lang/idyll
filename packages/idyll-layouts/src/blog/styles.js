@@ -78,7 +78,7 @@ input {
 
 .author-view-button {
   position: absolute;
-  top: 0;
+  top: 3px;
   right: 0;
   opacity: .38;
   background-color: #E7E3D0;
