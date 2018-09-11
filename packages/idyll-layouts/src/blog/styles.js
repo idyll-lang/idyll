@@ -128,7 +128,12 @@ input {
 }
 
 .icon-links {
-  text-align: right;
+  text-align: center;
+}
+
+.icon-link {
+  width: 20px;
+  height: 20px;
 }
 
 .icon-link-image {
