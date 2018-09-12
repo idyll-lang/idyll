@@ -117,9 +117,7 @@ input {
   display: table;
   border: 1px solid #A4A2A2;
   border-radius: 20px;
-  margin: 0;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 .props-table-type {
