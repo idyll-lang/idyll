@@ -85,11 +85,11 @@ input {
   background-image: url('https://idyll-lang.org/static/images/quill-icon.png');
   background-repeat: no-repeat;
   background-size: contain;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   margin-right: 10px;
   box-sizing: border-box;
-  border-radius: 17px;
+  border-radius: 15px;
   cursor: pointer;
 }
 
