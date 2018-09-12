@@ -44,10 +44,12 @@ class AuthorTool extends React.PureComponent {
     });
     const {isAuthorView, debugHeight} = this.state;
     const currentDebugHeight = isAuthorView ? debugHeight : 0;
+    const marginToGive = isAuthorView ? 15 : 0;
     return (
       <div className="debug-collapse" 
         style={{
           height: currentDebugHeight + 'px',
+          marginBottom: marginToGive + 'px'
         }}
       >
         <div className="author-component-view" ref="inner"> 
