@@ -136,8 +136,11 @@ input {
 }
 
 .icon-links {
+  margin-top: 10px;
+  text-align: center;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .icon-link {
@@ -147,21 +150,6 @@ input {
 
 .icon-link-image {
   cursor: pointer;
-}
-
-.icon-tooltip {
-  visibility: hidden;
-  font-family: 'Courier New';
-  font-size: 12px;
-  margin-top: 3px;
-}
-
-.icon-link:hover ~ .icon-tooltip {
-  visibility: visible;
-}
-
-.icon-link, .icon-tooltip {
-  align-self: center;
 }
 
 .button-tooltip {
