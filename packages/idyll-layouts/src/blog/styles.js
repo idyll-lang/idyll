@@ -159,7 +159,16 @@ input {
 .button-tooltip {
   background-color: black !important;
   padding: 0 5px;
-  line-height: 0.2;
+}
+
+.tooltip-header {
+  line-height: 1;
+  margin: 6px 0;
+  font-size: 18px;
+}
+
+.tooltip-subtitle {
+  font-style: italic;
 }
 
 @media all and (max-width: 1600px) {
