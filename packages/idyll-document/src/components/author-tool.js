@@ -7,7 +7,6 @@ class AuthorTool extends React.PureComponent {
     this.state = { isAuthorView: false, debugHeight: 0};
     this.handleClick = this.handleClick.bind(this);
   }
-
   /* Returns authoring information for the values in the form of
     ComponentName
     Link to Docs page
@@ -53,7 +52,7 @@ class AuthorTool extends React.PureComponent {
           marginBottom: marginToGive + 'px'
         }}
       >
-        <div className="author-component-view" ref="inner">
+        <div className="author-component-view" ref="inner"> 
           <table className="props-table">
             <tbody>
               <tr>
@@ -87,9 +86,11 @@ class AuthorTool extends React.PureComponent {
 
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
-    const addBorder = this.state.isAuthorView ? {outline: '2px solid grey',
-      backgroundColor: '#F5F5F5',
-      transition: 'background-color 0.4s linear'} : null;
+    const addBorder = this.state.isAuthorView ? {
+      boxShadow: '5px 5px 5px 6px lightGray',
+      transition: 'box-shadow 0.4s linear',
+      padding: '10px',
+      margin: '-10px -10px 20px'} : null;
     return (
       <div className="component-debug-view" style={addBorder}>
         {props.component}
@@ -105,8 +106,8 @@ class AuthorTool extends React.PureComponent {
           place='right'
           disable={this.state.isAuthorView}
         >
-          <h4>{props.authorComponent.type._idyll.name} Component</h4>
-          <p>Click for more info</p>
+          <div className="tooltip-header">{props.authorComponent.type._idyll.name} Component</div>
+          <div className="tooltip-subtitle">Click for more info</div>
         </ReactTooltip>
         {this.handleFormatComponent(props.authorComponent)}
       </div>
