@@ -34,9 +34,9 @@ class AuthorTool extends React.PureComponent {
         }
       }
       return (
-        <tr key={JSON.stringify(prop)}>
+        <tr key={JSON.stringify(prop)} className="props-table-row">
           <td>{prop.name}</td>
-          <td>{prop.type}</td>
+          <td className="props-table-type">{prop.type}</td>
           <td>{prop.example}</td>
           <td>{currentPropValue}</td>
         </tr>
@@ -55,8 +55,8 @@ class AuthorTool extends React.PureComponent {
         <div className="author-component-view" ref="inner"> 
           <table className="props-table">
             <tbody>
-              <tr>
-                <th>Prop Name</th>
+              <tr className="props-table-row">
+                <th>Prop</th>
                 <th>Type</th>
                 <th>Example</th>
                 <th>Current Value</th>

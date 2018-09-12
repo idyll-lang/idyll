@@ -113,11 +113,21 @@ input {
 }
 
 .props-table {
-  width: 100%;
+  width: 90%;
   display: table;
   border: 1px solid #A4A2A2;
   border-radius: 20px;
   margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.props-table-type {
+  font-family: 'Courier-New';
+}
+
+.props-table-row {
+  text-align: center;
 }
 
 .debug-collapse {
