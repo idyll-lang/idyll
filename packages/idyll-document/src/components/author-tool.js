@@ -44,12 +44,10 @@ class AuthorTool extends React.PureComponent {
     });
     const {isAuthorView, debugHeight} = this.state;
     const currentDebugHeight = isAuthorView ? debugHeight : 0;
-    const marginToGive = isAuthorView ? 15 : 0;
     return (
       <div className="debug-collapse" 
         style={{
           height: currentDebugHeight + 'px',
-          marginBottom: marginToGive + 'px'
         }}
       >
         <div className="author-component-view" ref="inner"> 
@@ -65,12 +63,12 @@ class AuthorTool extends React.PureComponent {
             </tbody>
           </table>
           <div className="icon-links">
+            <span style={{fontFamily: 'courier', fontSize: '12px'}}>docs</span>
             <a className="icon-link" href={componentDocsLink}>
               <img className="icon-link-image"
                 src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/design/ic_description_24px.svg?sanitize=true"
               />
             </a>
-            <div className="icon-tooltip">docs</div>
           </div>
         </div>
       </div>
