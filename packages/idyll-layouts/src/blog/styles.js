@@ -144,8 +144,8 @@ input {
 }
 
 .icon-link {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .icon-link-image {
