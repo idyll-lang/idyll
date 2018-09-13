@@ -91,10 +91,17 @@ class AuthorTool extends React.PureComponent {
       transition: 'box-shadow 0.4s linear',
       padding: '10px',
       margin: '-10px -10px 20px'} : null;
+    // This border transitions the button, so this puts
+    // it back in place. Though it's affected by padding, like on Header
+    const putButtonBack = this.state.isAuthorView ? {
+      right: '10px',
+      top: '13px'
+    } : null;
     return (
       <div className="component-debug-view" style={addBorder}>
         {props.component}
         <button className="author-view-button"
+          style={putButtonBack}
           onClick={this.handleClick}
           data-tip data-for={props.uniqueKey}
         />
