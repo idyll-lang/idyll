@@ -4,7 +4,12 @@ import ReactTooltip from 'react-tooltip';
 class AuthorTool extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = { isAuthorView: false, debugHeight: 0};
+    this.state = {
+      isAuthorView: false,
+      debugHeight: 0,
+      componentHeight: 0,
+      hasPressedButton: false
+    };
     this.handleClick = this.handleClick.bind(this);
   }
   /* Returns authoring information for the values in the form of
@@ -42,14 +47,16 @@ class AuthorTool extends React.PureComponent {
         </tr>
       )
     });
-    const {isAuthorView, debugHeight} = this.state;
+    const {isAuthorView, debugHeight, componentHeight} = this.state;
     const currentDebugHeight = isAuthorView ? debugHeight : 0;
     const marginToGive = isAuthorView ? 15 : 0;
+    const marginAboveTable = componentHeight < 40 && isAuthorView ? 40 - componentHeight : 0;
     return (
       <div className="debug-collapse" 
         style={{
           height: currentDebugHeight + 'px',
-          marginBottom: marginToGive + 'px'
+          marginBottom: marginToGive + 'px',
+          marginTop: marginAboveTable + 'px'
         }}
       >
         <div className="author-component-view" ref="inner"> 
@@ -80,8 +87,16 @@ class AuthorTool extends React.PureComponent {
   handleClick() {
     this.setState(prevState => ({
       isAuthorView: !prevState.isAuthorView,
-      debugHeight: this.refs.inner.clientHeight
+      debugHeight: this.refs.inner.clientHeight,
     }));
+    // following is kinda hacky to get the orig height of component
+    // not sure what other way right now
+    if (!this.state.hasPressedButton) {
+      this.setState({
+        componentHeight: this.refs.componentHeight.clientHeight,
+        hasPressedButton: true
+      });
+    }
   }
 
   render() {
@@ -95,10 +110,12 @@ class AuthorTool extends React.PureComponent {
     // it back in place. Though it's affected by padding, like on Header
     const putButtonBack = this.state.isAuthorView ? {
       right: '10px',
-      top: '13px'
-    } : null;
+      top: '13px'} : null;
+
+    // If a component's height is too small, button will overlap will table
+    // so add margin to get a minimal height (40px seems fine)
     return (
-      <div className="component-debug-view" style={addBorder}>
+      <div className="component-debug-view" style={addBorder} ref="componentHeight">
         {props.component}
         <button className="author-view-button"
           style={putButtonBack}
