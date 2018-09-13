@@ -136,7 +136,7 @@ input {
 }
 
 .icon-links {
-  margin-top: 10px;
+  margin-top: 13px;
   text-align: center;
   display: flex;
   flex-direction: row;
