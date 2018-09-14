@@ -1,4 +1,12 @@
 
+## v3.8
+
+- Add `YouTube` component.
+
+## v3.7
+
+- Adds option to specify idyll output filenames. Changes default output to not have leading underscores, so they work better on GitHub.
+
 ## v3.6
 
 - Adds `alias` option
@@ -6,7 +14,7 @@
 ## v3.5
 
 - Adds "autolinkification" logic to compilers (things which look like links will automatically be treated as such).
-- Adds new `Conditional` component to standard lib 
+- Adds new `Conditional` component to standard lib
 
 ## v3.4
 

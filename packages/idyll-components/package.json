@@ -1,6 +1,6 @@
 {
   "name": "idyll-components",
-  "version": "3.2.0",
+  "version": "3.3.3",
   "description": "Components that ship by default in new Idyll projects",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -50,6 +50,7 @@
     "react-latex-patched": "^1.1.1",
     "react-syntax-highlighter": "^5.7.0",
     "react-table": "^6.6.0",
+    "react-youtube": "^7.6.0",
     "scrollama": "^1.4.1",
     "victory": "^0.23.0"
   },

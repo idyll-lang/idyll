@@ -6,7 +6,7 @@ import Donate from '../components/donate-link'
 
 
 const Examples = () => (
-  <section>
+  <section style={{position: 'relative'}}>
     <h1>Example Gallery</h1>
 
     <p><b>Browse by category</b></p>
@@ -21,7 +21,10 @@ const Examples = () => (
       <b>...or scroll down to see them all.</b> If you've made something with Idyll and would like to post it here,
       please <a href="https://github.com/idyll-lang/idyll/issues" target="_blank">open an issue on GitHub</a> with the title "Gallery Example".
     </p>
-    <Donate />
+    <div style={{position:'absolute', top:0, right: 0}}>
+      <Donate />
+    </div>
+
     {
       exampleGroups.map(eg => <ExampleGroup { ...eg } key={ eg.title } />)
     }

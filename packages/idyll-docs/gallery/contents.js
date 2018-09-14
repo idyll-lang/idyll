@@ -4,6 +4,18 @@ const exampleGroups = [
     title: 'Explorable Explanations',
     examples: [
       {
+        label: "Beat Basics",
+        subtitle: "Explore 3/4 and 6/8 time using John Varney's rhythm wheel.",
+        href: 'https://megan-vo.github.io/basic-beats/',
+        image: 'beat-basics.png',
+        sourceUrl: "https://github.com/megan-vo/basic-beats"
+      },
+      {
+        label: "How does the eye work?",
+        href: 'https://idyll.pub/post/the-eye-5b169094cce3bece5d95e964/',
+        image: 'the-eye.png'
+      },
+      {
         label: "The Beginner's Guide to Dimensionality Reduction",
         subtitle: "Explore the methods that data scientists use to visualize high-dimensional data.",
         href: 'https://idyll.pub/post/dimensionality-reduction-293e465c2a3443e8941b016d/',
@@ -91,6 +103,12 @@ const exampleGroups = [
   {
     title : 'Articles and Blog Posts',
     examples: [
+      {
+        label: 'The D-I-Y Data of Fugazi',
+        href: 'https://mathisonian.github.io/diy-data-fugazi/',
+        image: 'https://mathisonian.github.io/diy-data-fugazi/static/images/share.png',
+        sourceUrl: "https://github.com/mathisonian/diy-data-fugazi/"
+      },
       {
         label: 'A Comic Introduction to Idyll',
         subtitle: 'See how Idyll can be used with CSS grid to create a comic-style layout.',
