@@ -154,7 +154,23 @@ input {
 
 .button-tooltip {
   background-color: black !important;
-  padding: 0 5px;
+  padding: 0 5px; 
+}
+
+.button-tooltip.place-top:after {
+  border-top-color: black !important;
+}
+
+.button-tooltip.place-right:after {
+  border-right-color: black !important;
+}
+
+.button-tooltip.place-bottom:after {
+  border-bottom-color: black !important;
+}
+
+.button-tooltip.place-left:after {
+  border-left-color: black !important;
 }
 
 .tooltip-header {
