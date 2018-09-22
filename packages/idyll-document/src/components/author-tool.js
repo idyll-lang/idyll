@@ -72,12 +72,12 @@ class AuthorTool extends React.PureComponent {
             </tbody>
           </table>
           <div className="icon-links">
-            <span style={{fontFamily: 'courier', fontSize: '12px'}}>docs</span>
             <a className="icon-link" href={componentDocsLink}>
               <img className="icon-link-image"
                 src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/design/ic_description_24px.svg?sanitize=true"
               />
             </a>
+            <span style={{fontFamily: 'courier', fontSize: '12px', marginTop: '8px'}}>docs</span>
           </div>
         </div>
       </div>
