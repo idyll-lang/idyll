@@ -110,7 +110,7 @@ class AuthorTool extends React.PureComponent {
     // it back in place. Though it's affected by padding, like on Header
     const putButtonBack = this.state.isAuthorView ? {
       right: '10px',
-      top: '13px'} : null;
+      top: '3px'} : null;
 
     // If a component's height is too small, button will overlap will table
     // so add margin to get a minimal height (40px seems fine)
