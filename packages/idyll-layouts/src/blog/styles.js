@@ -146,6 +146,11 @@ input {
 .icon-link {
   width: 24px;
   height: 24px;
+  color: inherit;
+}
+
+.icon-link:hover {
+  text-decoration: none;
 }
 
 .icon-link-image {

@@ -77,7 +77,9 @@ class AuthorTool extends React.PureComponent {
                 src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/design/ic_description_24px.svg?sanitize=true"
               />
             </a>
-            <span style={{fontFamily: 'courier', fontSize: '12px', marginTop: '8px'}}>docs</span>
+            <a className="icon-link" href={componentDocsLink}>
+              <span style={{fontFamily: 'courier', fontSize: '12px', marginTop: '8px'}}>docs</span>
+            </a>
           </div>
         </div>
       </div>
