@@ -175,7 +175,7 @@ const createWrapper = ({ theme, layout }) => {
           ...passThruProps,
         })
       });
-      if (childComponent.type._idyll) { // display overlay only for idyll components with props
+      if (childComponent.type._idyll && childComponent.type._idyll.props) { // display overlay only for idyll components with props
         return (
           <AuthorTool
             component={returnComponent} 
