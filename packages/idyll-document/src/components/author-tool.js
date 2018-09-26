@@ -12,11 +12,9 @@ class AuthorTool extends React.PureComponent {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  /* Returns authoring information for the values in the form of
-    ComponentName
-    Link to Docs page
-    Information about each prop
-  */
+  
+  // Returns authoring information for the prop values in table format
+  // and includes a link to the docs page at the bottom
   handleFormatComponent(runtimeValues) {
     const metaValues = runtimeValues.type._idyll
     const componentName = metaValues.name;
@@ -50,6 +48,8 @@ class AuthorTool extends React.PureComponent {
     const {isAuthorView, debugHeight, componentHeight} = this.state;
     const currentDebugHeight = isAuthorView ? debugHeight : 0;
     const marginToGive = isAuthorView ? 15 : 0;
+    // If a component's height is too small, button will overlap with table
+    // so add margin to get a minimal height (40px seems fine)
     const marginAboveTable = componentHeight < 40 && isAuthorView ? 40 - componentHeight : 0;
     return (
       <div className="debug-collapse" 
@@ -86,12 +86,13 @@ class AuthorTool extends React.PureComponent {
     );
   }
 
+  // Flips between whether we are in the author view of a component
   handleClick() {
     this.setState(prevState => ({
       isAuthorView: !prevState.isAuthorView,
       debugHeight: this.refs.inner.clientHeight,
     }));
-    // following is kinda hacky to get the orig height of component
+    // following is kinda hacky to get the original height of component
     // not sure what other way right now
     if (!this.state.hasPressedButton) {
       this.setState({
@@ -101,6 +102,9 @@ class AuthorTool extends React.PureComponent {
     }
   }
 
+  // Returns an entire author view, including the component itself,
+  // a quill icon to indicate whether we're hovering in the component,
+  // and debugging information when the icon is pressed
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
     const addBorder = this.state.isAuthorView ? {
@@ -108,14 +112,10 @@ class AuthorTool extends React.PureComponent {
       transition: 'box-shadow 0.4s linear',
       padding: '0 10px 10px',
       margin: '0 -10px 20px'} : null;
-    // This border transitions the button, so this puts
-    // it back in place. Though it's affected by padding, like on Header
     const putButtonBack = this.state.isAuthorView ? {
       right: '10px',
       top: '3px'} : null;
 
-    // If a component's height is too small, button will overlap will table
-    // so add margin to get a minimal height (40px seems fine)
     return (
       <div className="component-debug-view" style={addBorder} ref="componentHeight">
         {props.component}
