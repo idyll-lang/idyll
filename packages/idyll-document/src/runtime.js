@@ -175,17 +175,20 @@ const createWrapper = ({ theme, layout }) => {
           ...passThruProps,
         })
       });
-      if (childComponent.type._idyll && childComponent.type._idyll.props) { // display overlay only for idyll components with props
-        return (
-          <AuthorTool
-            component={returnComponent} 
-            authorComponent={childComponent}
-            uniqueKey={uniqueKey}
-          />
-        );
-      } else {
-        return returnComponent;
+      const metaData = childComponent.type._idyll;
+      if (metaData && metaData.props) {
+        // ensure inline elements do not have this overlay
+        if (metaData.displayType === undefined || metaData.displayType !== "inline") {
+          return (
+            <AuthorTool
+              component={returnComponent} 
+              authorComponent={childComponent}
+              uniqueKey={uniqueKey}
+            />
+          );
+        }
       }
+      return returnComponent;
     }
   }
 };
