@@ -41,7 +41,6 @@ const getTheme = (theme) => {
   return themes[theme.trim()] || {};
 }
 
-
 const getRefs = () => {
   const refs = {};
   if (!scrollContainer) {
@@ -50,7 +49,7 @@ const getRefs = () => {
 
   scrollWatchers.forEach(watcher => {
     // left and right props assume no horizontal scrolling
-    const { watchItem, callbacks, container, recalculateLocation, offsets, ...watcherProps} = watcher;
+    const { watchItem, callbacks, container, recalculateLocation, offsets, ...watcherProps } = watcher;
     refs[watchItem.dataset.ref] = {
       ...watcherProps,
       domNode: watchItem
@@ -61,102 +60,102 @@ const getRefs = () => {
 };
 
 let wrapperKey = 0;
-const createWrapper = ({ theme, layout }) => {
+const createWrapper = ({ theme, layout, authorView }) => {
   return class Wrapper extends React.PureComponent {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+      super(props);
 
-    this.key = wrapperKey++;
-    this.ref = {};
-    this.onUpdateRefs = this.onUpdateRefs.bind(this);
-    this.onUpdateProps = this.onUpdateProps.bind(this);
+      this.key = wrapperKey++;
+      this.ref = {};
+      this.onUpdateRefs = this.onUpdateRefs.bind(this);
+      this.onUpdateProps = this.onUpdateProps.bind(this);
 
-    const vars = values(props.__vars__);
-    const exps = values(props.__expr__);
+      const vars = values(props.__vars__);
+      const exps = values(props.__expr__);
 
-    this.usesRefs = exps.some(v => v.includes('refs.'));
+      this.usesRefs = exps.some(v => v.includes('refs.'));
 
-    // listen for props updates IF we care about them
-    if (vars.length || exps.length) {
-      // called with new doc state
-      // when any component calls updateProps()
-      updatePropsCallbacks.push(this.onUpdateProps);
+      // listen for props updates IF we care about them
+      if (vars.length || exps.length) {
+        // called with new doc state
+        // when any component calls updateProps()
+        updatePropsCallbacks.push(this.onUpdateProps);
+      }
+
+      // listen for ref updates IF we care about them
+      if (props.hasHook || this.usesRefs) {
+        updateRefsCallbacks.push(this.onUpdateRefs);
+      }
+
+      this.state = { hasError: false, error: null };
     }
 
-    // listen for ref updates IF we care about them
-    if (props.hasHook || this.usesRefs) {
-      updateRefsCallbacks.push(this.onUpdateRefs);
+    componentDidCatch(error, info) {
+      this.setState({ hasError: true, error: error });
     }
 
-    this.state = { hasError: false, error: null };
-  }
+    onUpdateProps(newState, changedKeys) {
+      const { __vars__, __expr__ } = this.props;
 
-  componentDidCatch(error, info) {
-    this.setState({ hasError: true, error: error });
-  }
+      // were there changes to any vars we track?
+      // or vars our expressions reference?
+      const shouldUpdate = changedKeys.some(k => {
+        return (
+          values(__vars__).includes(k) ||
+          values(__expr__).some(expr => expr.includes(k))
+        );
+      });
+      // if nothing we care about changed bail out and don't re-render
+      if (!shouldUpdate) return;
 
-  onUpdateProps(newState, changedKeys) {
-    const { __vars__, __expr__ } = this.props;
-
-    // were there changes to any vars we track?
-    // or vars our expressions reference?
-    const shouldUpdate = changedKeys.some(k => {
-      return (
-        values(__vars__).includes(k) ||
-        values(__expr__).some(expr => expr.includes(k))
-      );
-    });
-    // if nothing we care about changed bail out and don't re-render
-    if (!shouldUpdate) return;
-
-    // update this component's state
-    const nextState = {};
-    // pull in the latest value for any tracked vars
-    Object.keys(__vars__).forEach(key => {
-      nextState[key] = newState[__vars__[key]];
-    });
-    // re-run this component's expressions using the latest doc state
-    Object.keys(__expr__).forEach(key => {
-      nextState[key] = evalExpression(newState, __expr__[key], key, evalContext);
-    });
-    // trigger a re-render of this component
-    // and more importantly, its wrapped component
-    this.setState(Object.assign({ hasError: false }, nextState));
-  }
-
-  onUpdateRefs(newState) {
-    const { __expr__ } = this.props;
-
-    if (this.usesRefs) {
-      const nextState = {refs: newState.refs};
-      entries(__expr__)
-        .forEach(([key, val]) => {
-          if (!key.includes('refs.')) {
-            return;
-          }
-          nextState[key] = evalExpression(newState, val, key, evalContext);
-        });
-
-      // trigger a render with latest state
-      this.setState(nextState);
+      // update this component's state
+      const nextState = {};
+      // pull in the latest value for any tracked vars
+      Object.keys(__vars__).forEach(key => {
+        nextState[key] = newState[__vars__[key]];
+      });
+      // re-run this component's expressions using the latest doc state
+      Object.keys(__expr__).forEach(key => {
+        nextState[key] = evalExpression(newState, __expr__[key], key, evalContext);
+      });
+      // trigger a re-render of this component
+      // and more importantly, its wrapped component
+      this.setState(Object.assign({ hasError: false }, nextState));
     }
-  }
 
-  componentWillUnmount() {
-    const propsIndex = updatePropsCallbacks.indexOf(this.onUpdateProps);
-    if (propsIndex > -1) updatePropsCallbacks.splice(propsIndex, 1);
+    onUpdateRefs(newState) {
+      const { __expr__ } = this.props;
 
-    const refsIndex = updateRefsCallbacks.indexOf(this.onUpdateRefs);
-    if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
-  }
+      if (this.usesRefs) {
+        const nextState = { refs: newState.refs };
+        entries(__expr__)
+          .forEach(([key, val]) => {
+            if (!key.includes('refs.')) {
+              return;
+            }
+            nextState[key] = evalExpression(newState, val, key, evalContext);
+          });
 
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ border: 'solid red 1px', padding: 10}}>
-          {this.state.error.message}
-        </div>
-      );
+        // trigger a render with latest state
+        this.setState(nextState);
+      }
+    }
+
+    componentWillUnmount() {
+      const propsIndex = updatePropsCallbacks.indexOf(this.onUpdateProps);
+      if (propsIndex > -1) updatePropsCallbacks.splice(propsIndex, 1);
+
+      const refsIndex = updateRefsCallbacks.indexOf(this.onUpdateRefs);
+      if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
+    }
+
+    render() {
+      if (this.state.hasError) {
+        return (
+          <div style={{ border: 'solid red 1px', padding: 10 }}>
+            {this.state.error.message}
+          </div>
+        );
       }
 
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
@@ -176,12 +175,13 @@ const createWrapper = ({ theme, layout }) => {
         })
       });
       const metaData = childComponent.type._idyll;
+      // give authorView default false value
       if (metaData && metaData.props) {
         // ensure inline elements do not have this overlay
         if (metaData.displayType === undefined || metaData.displayType !== "inline") {
           return (
             <AuthorTool
-              component={returnComponent} 
+              component={returnComponent}
               authorComponent={childComponent}
               uniqueKey={uniqueKey}
             />
@@ -216,7 +216,7 @@ class IdyllRuntime extends React.PureComponent {
     } = splitAST(ast);
 
 
-    const Wrapper = createWrapper({ theme: props.theme, layout: props.layout });
+    const Wrapper = createWrapper({ theme: props.theme, layout: props.layout, authorView: props.authorView });
 
     const initialState = Object.assign({}, {
       ...getVars(vars),
@@ -231,12 +231,12 @@ class IdyllRuntime extends React.PureComponent {
 
     this.updateState = (newState) => {
       // merge new doc state with old
-      const newMergedState = {...this.state, ...newState};
+      const newMergedState = { ...this.state, ...newState };
       // update derived values
       const newDerivedValues = getDerivedValues(
         getVars(derived, newMergedState),
       );
-      const nextState = {...newMergedState, ...newDerivedValues};
+      const nextState = { ...newMergedState, ...newDerivedValues };
 
       const changedMap = {};
       const changedKeys = Object.keys(state).reduce(
