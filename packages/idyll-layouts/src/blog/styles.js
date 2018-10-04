@@ -130,6 +130,7 @@ input {
 
 .debug-collapse {
   overflow: hidden;
+  overflow-y: scroll;
   transition: height 0.3s ease-in;
   margin: 0;
   box-sizing: border-box;
@@ -144,8 +145,6 @@ input {
 }
 
 .icon-link {
-  width: 24px;
-  height: 24px;
   color: inherit;
 }
 
