@@ -105,6 +105,7 @@ input {
 .author-component-view {
   display: flex;
   flex-direction: column;
+  overflow-x: scroll;
 }
 
 .author-component-view h2, .author-component-view h3 {
@@ -114,6 +115,7 @@ input {
 
 .props-table {
   width: 90%;
+  min-width: 500px;
   display: table;
   border: 1px solid #A4A2A2;
   border-radius: 20px;
