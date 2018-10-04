@@ -33,7 +33,8 @@ const exampleGroups = [
         label: 'How to Tune a Guitar',
         subtitle: "An interactive audio guide with guitars and a little music theory.",
         href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
-        image: 'how-to-tune-a-guitar.png'
+        image: 'how-to-tune-a-guitar.png',
+        sourceUrl: "https://github.com/mathisonian/how-to-tune-a-guitar"
       },
       {
         label: 'The Barnes-Hut Approximation',

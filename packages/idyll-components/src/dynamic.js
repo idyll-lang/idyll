@@ -45,6 +45,7 @@ Dynamic.defaultProps = {
 Dynamic._idyll = {
   name: "Dynamic",
   tagType: "closed",
+  displayType: "inline",
   props: [{
     name: "value",
     type: "number",

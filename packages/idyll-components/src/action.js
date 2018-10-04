@@ -13,6 +13,7 @@ class Action extends React.PureComponent {
 Action._idyll = {
   name: "Action",
   tagType: "open",
+  displayType: "inline",
   children: [
     "action text"
   ],

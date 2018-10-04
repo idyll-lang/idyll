@@ -35,6 +35,7 @@ class Display extends React.PureComponent {
 Display._idyll = {
   name: "Display",
   tagType: "closed",
+  displayType: "inline",
   props: [{
     name: "value",
     type: "number",
