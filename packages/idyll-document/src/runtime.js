@@ -69,7 +69,6 @@ const createWrapper = ({ theme, layout, authorView }) => {
       this.ref = {};
       this.onUpdateRefs = this.onUpdateRefs.bind(this);
       this.onUpdateProps = this.onUpdateProps.bind(this);
-      this.isAuthorView = authorView;
 
       const vars = values(props.__vars__);
       const exps = values(props.__expr__);
@@ -169,14 +168,15 @@ const createWrapper = ({ theme, layout, authorView }) => {
           key: `${this.key}-${i}`,
           idyll: {
             theme: getTheme(theme),
-            layout: getLayout(layout)
+            layout: getLayout(layout),
+            authorView: authorView
           },
           ...state,
           ...passThruProps,
         })
       });
       const metaData = childComponent.type._idyll;
-      if (this.isAuthorView != 'false' && metaData && metaData.props) {
+      if (authorView !== false && metaData && metaData.props) {
         // ensure inline elements do not have this overlay
         if (metaData.displayType === undefined || metaData.displayType !== "inline") {
           return (
@@ -441,7 +441,7 @@ class IdyllRuntime extends React.PureComponent {
 IdyllRuntime.defaultProps = {
   layout: 'blog',
   theme: 'github',
-  authorView: 'false',
+  authorView: false,
   insertStyles: false
 };
 
