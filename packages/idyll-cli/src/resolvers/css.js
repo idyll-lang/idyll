@@ -1,34 +1,54 @@
-const { readFileSync } = require('fs');
+const { readFileSync, existsSync } = require('fs');
 const { join, isAbsolute } = require('path');
 
 const themes = require('idyll-themes');
 const layouts = require('idyll-layouts');
 
-const isPath = (str) => {
-  return (str.indexOf('/') > -1 || str.indexOf('\\') > -1);
-};
+const cleanPath = (str) => str.replace(/;/g, '');
+const cleanKey = (key) => key ? key.trim() : key;
 
-const cleanPath = (str) => {
-  return str.replace(/;/g, '');
+const resourceLoader = (root) => (resource) => {
+  let { path, defaultContent } = resource;
+  if (!path) {
+    return defaultContent;
+  }
+  const resourceFilePath = isAbsolute(path) ? cleanPath(path) : join(root, cleanPath(path));
+  if (!existsSync(resourceFilePath)) {
+    return defaultContent;
+  }
+  return readFileSync(resourceFilePath);
 }
+
+const createResource = (key, defaultContent) => ({
+  path: key,
+  defaultContent
+})
 
 class CSSResolver {
   constructor(options) {
-    this.options = options;
+    const { layout, theme, css } = options;
+    this.resourceKeys = [layout, theme, css].map(cleanKey);
+    this.defaultSources = [layouts, themes, null];
+    this.resourceRoot = css && isAbsolute(css) ? '' : process.cwd();
+  }
+
+  getDefaults() {
+    return this.defaultSources.map((source, i) => {
+      if (!source || !this.resourceKeys[i] || !source[this.resourceKeys[i]]) {
+        return '';
+      }
+      return source[this.resourceKeys[i]].styles || '';
+    });
+  }
+
+  getResources() {
+    const defaults = this.getDefaults();
+    return this.resourceKeys.map((key, i) => createResource(key, defaults[i]))
   }
 
   resolve() {
-    let { layout, theme, css } = this.options;
-    layout = layout.trim();
-    theme = theme.trim();
-    css = css ? css.trim() : css;
-    const pathPrefix = css && isAbsolute(css) ? '' : process.cwd();
-
-    const layoutCSS = isPath(layout) ? readFileSync(join(pathPrefix, cleanPath(layout))) : layouts[layout].styles;
-    const themeCSS = isPath(theme) ? readFileSync(join(pathPrefix, cleanPath(theme))) : themes[theme].styles;
-    const customCSS = css ? readFileSync(join(pathPrefix, cleanPath(css))) : '';
-
-    return [layoutCSS, themeCSS, customCSS].join('\n');
+    const loadFromResource = resourceLoader(this.resourceRoot);
+    return this.getResources().map(loadFromResource).join('\n');
   }
 
   getDirectories() {
