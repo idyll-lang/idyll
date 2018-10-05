@@ -176,8 +176,7 @@ const createWrapper = ({ theme, layout, authorView }) => {
         })
       });
       const metaData = childComponent.type._idyll;
-      // give authorView default false value
-      if (this.isAuthorView && metaData && metaData.props) {
+      if (this.isAuthorView != 'false' && metaData && metaData.props) {
         // ensure inline elements do not have this overlay
         if (metaData.displayType === undefined || metaData.displayType !== "inline") {
           return (
@@ -215,7 +214,7 @@ class IdyllRuntime extends React.PureComponent {
       data,
       elements,
     } = splitAST(ast);
-    
+    debugger;
     const Wrapper = createWrapper({ theme: props.theme, layout: props.layout, authorView: props.authorView });
     const initialState = Object.assign({}, {
       ...getVars(vars),
@@ -442,6 +441,7 @@ class IdyllRuntime extends React.PureComponent {
 IdyllRuntime.defaultProps = {
   layout: 'blog',
   theme: 'github',
+  authorView: 'false',
   insertStyles: false
 };
 
