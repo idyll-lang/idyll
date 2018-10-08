@@ -202,7 +202,6 @@ const getDerivedValues = dVars => {
 class IdyllRuntime extends React.PureComponent {
   constructor(props) {
     super(props);
-
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
@@ -214,7 +213,6 @@ class IdyllRuntime extends React.PureComponent {
       data,
       elements,
     } = splitAST(ast);
-    debugger;
     const Wrapper = createWrapper({ theme: props.theme, layout: props.layout, authorView: props.authorView });
     const initialState = Object.assign({}, {
       ...getVars(vars),
