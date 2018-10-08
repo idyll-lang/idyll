@@ -68,7 +68,8 @@ const build = (opts, paths, resolvers) => {
           opts: {
             ssr: opts.ssr,
             theme: opts.theme,
-            layout: opts.layout
+            layout: opts.layout,
+            authorView: opts.authorView
           }
         };
         if (!opts.ssr) {
