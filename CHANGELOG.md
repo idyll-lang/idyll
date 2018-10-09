@@ -3,6 +3,11 @@
 
 - Add `YouTube` component.
 
+#### 3.8.1
+
+- Bugfix for crash when a non-existent styles or theme/layout is attempted to be used.
+- Improvements to the radio button component
+
 ## v3.7
 
 - Adds option to specify idyll output filenames. Changes default output to not have leading underscores, so they work better on GitHub.
