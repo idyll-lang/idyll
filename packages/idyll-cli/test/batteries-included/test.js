@@ -48,6 +48,7 @@ let projectBuildResults;
 beforeAll(done => {
   idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
+    output: PROJECT_BUILD_DIR,
     compiler: {
       spellcheck: false
     },
