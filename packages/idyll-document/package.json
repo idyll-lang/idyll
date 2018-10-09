@@ -38,6 +38,7 @@
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
     "react-dom-factories": "^1.0.1",
+    "react-tooltip": "^3.8.4",
     "scrollmonitor": "^1.2.3",
     "scrollparent": "^2.0.1",
     "styled-jsx": "^2.2.4"

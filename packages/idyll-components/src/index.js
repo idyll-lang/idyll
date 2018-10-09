@@ -5,6 +5,7 @@ export { default as Boolean } from './boolean';
 export { default as Button } from './button';
 export { default as Chart } from './chart';
 export { default as CodeHighlight } from './code-highlight';
+export { default as Conditional } from './conditional';
 export { default as Display } from './display';
 export { default as Dynamic } from './dynamic';
 export { default as Equation } from './equation';

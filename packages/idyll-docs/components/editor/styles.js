@@ -306,4 +306,8 @@ input {
   display: block;
   margin: 0 auto;
 }
+.idyll-action {
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
 `

@@ -14,7 +14,7 @@ const toStream = (k, o) => {
 
   if (['ast', 'data', 'opts'].indexOf(k) > -1) {
     if (k === 'opts') {
-
+      
       src = `
       var out = ${JSON.stringify(o)};
       out.context = ${(o.context || function() {}).toString()};

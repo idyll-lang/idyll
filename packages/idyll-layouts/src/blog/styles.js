@@ -71,35 +71,122 @@ input {
   max-height: 100vh;
 }
 
-.author-component {
+.component-debug-view {
   position: relative;
+  transition: background-color 0.3s ease-in;
 }
 
 .author-view-button {
   position: absolute;
-  top: 0;
+  top: 3px;
   right: 0;
-  opacity: .2;
+  opacity: .38;
   background-color: #E7E3D0;
   background-image: url('https://idyll-lang.org/static/images/quill-icon.png');
   background-repeat: no-repeat;
   background-size: contain;
-  width: 35px;
-  height: 35px;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  box-sizing: border-box;
+  border-radius: 12px;
+  cursor: pointer;
 }
 
-.author-component:hover > .author-view-button {
-  opacity: 1;
+.author-view-button:focus {
+  outline: none;
+}
+
+.component-debug-view:hover > .author-view-button {
+  opacity: 0.87;
   transition: opacity 600ms linear;
 }
 
 .author-component-view {
-  background-color: #E7E3D0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: scroll;
+}
+
+.author-component-view h2, .author-component-view h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .props-table {
-  width: 100%;
+  width: 90%;
+  min-width: 500px;
   display: table;
+  border: 1px solid #A4A2A2;
+  border-radius: 20px;
+  margin: 0 auto;
+}
+
+.props-table-type {
+  font-family: 'Courier-New';
+}
+
+.props-table-row {
+  text-align: center;
+}
+
+.debug-collapse {
+  overflow: hidden;
+  overflow-y: scroll;
+  transition: height 0.3s ease-in;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.icon-links {
+  margin-top: 13px;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.icon-link {
+  color: inherit;
+}
+
+.icon-link:hover {
+  text-decoration: none;
+}
+
+.icon-link-image {
+  cursor: pointer;
+}
+
+.button-tooltip {
+  background-color: black !important;
+  padding: 0 5px; 
+}
+
+.button-tooltip.place-top:after {
+  border-top-color: black !important;
+}
+
+.button-tooltip.place-right:after {
+  border-right-color: black !important;
+}
+
+.button-tooltip.place-bottom:after {
+  border-bottom-color: black !important;
+}
+
+.button-tooltip.place-left:after {
+  border-left-color: black !important;
+}
+
+.tooltip-header {
+  line-height: 1;
+  margin: 6px 0;
+  font-size: 18px;
+}
+
+.tooltip-subtitle {
+  font-style: italic;
 }
 
 @media all and (max-width: 1600px) {
