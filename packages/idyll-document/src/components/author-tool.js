@@ -54,9 +54,9 @@ class AuthorTool extends React.PureComponent {
     return (
       <div className="debug-collapse" 
         style={{
-          height: currentDebugHeight,
-          marginBottom: marginToGive,
-          marginTop: marginAboveTable
+          height: currentDebugHeight + 'px',
+          marginBottom: marginToGive + 'px',
+          marginTop: marginAboveTable + 'px'
         }}
       >
         <div className="author-component-view"> 
@@ -78,7 +78,7 @@ class AuthorTool extends React.PureComponent {
               />
             </a>
             <a className="icon-link" href={componentDocsLink}>
-              <span style={{fontFamily: 'courier', fontSize: '12', marginTop: '8'}}>docs</span>
+              <span style={{fontFamily: 'courier', fontSize: '12px', marginTop: '8px'}}>docs</span>
             </a>
           </div>
         </div>
@@ -92,9 +92,6 @@ class AuthorTool extends React.PureComponent {
       isAuthorView: !prevState.isAuthorView,
       debugHeight: this._refContainer.getBoundingClientRect().height,
     }));
-    // following is kinda hacky to get the original height of component
-    // not sure what other way right now
-    debugger;
     if (!this.state.hasPressedButton) {
       this.setState({
         componentHeight: this._refContainer.getBoundingClientRect().height,
@@ -109,10 +106,10 @@ class AuthorTool extends React.PureComponent {
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
     const addBorder = this.state.isAuthorView ? {
-      boxShadow: '5 5 10 1 lightGray',
+      boxShadow: '5px 5px 10px 1px lightGray',
       transition: 'box-shadow 0.4s linear',
-      padding: '0 10 10',
-      margin: '0 -10 20'} : null;
+      padding: '0px 10px 10px',
+      margin: '0[x] -10px 20px'} : null;
     const putButtonBack = this.state.isAuthorView ? {
       right: '10',
       top: '3'} : null;
