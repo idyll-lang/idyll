@@ -112,7 +112,7 @@ class AuthorTool extends React.PureComponent {
     const { idyll, updateProps, hasError, ...props } = this.props;
     const addBorder = this.state.isAuthorView ? {
       boxShadow: '5px 5px 10px 1px lightGray',
-      transition: 'box-shadow 0.4s linear',
+      transition: 'box-shadow 0.35s linear',
       padding: '0px 10px 10px',
       margin: '0px -10px 20px'} : null;
     const putButtonBack = this.state.isAuthorView ? {
