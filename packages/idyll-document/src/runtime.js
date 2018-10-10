@@ -202,6 +202,7 @@ const getDerivedValues = dVars => {
 class IdyllRuntime extends React.PureComponent {
   constructor(props) {
     super(props);
+    
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
