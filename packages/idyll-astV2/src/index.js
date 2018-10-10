@@ -112,6 +112,7 @@ const getChildren = function (node) {
     return [];
   }
   if(node.children) {
+    //console.log("node @ gc", node);
     return node.children.map((element) => Object.assign({}, element));
   } else {
     return []; 
@@ -153,6 +154,7 @@ const hasChildren = function (node) {
   }
 
   if(node.children) {
+    //console.log("@hasChildren", node);
     return true;
   } else {
     return false; 
@@ -192,6 +194,20 @@ function getNodesByNameHelper(childArray, name) {
     }
   }); 
   return nodes.concat(otherNodes);
+};
+
+/**
+ * @name hasType
+ * @type {function}
+ * Function to check if a node has type attribute or not
+ * @param {object} node
+ * @return {boolean} true if type exists, false otherwise
+ */
+const hasType = function (node) {
+  if(node.type) {
+    return true; 
+  }
+  return false; 
 }
 
 /**
@@ -412,7 +428,6 @@ const getProperty = function (node, key) {
 const getProperties = function (node) {
   typeCheckObject(node, "node");
   runValidator(node, "node");
-
   if (node.properties) {
     return node.properties;
   }
@@ -486,14 +501,24 @@ const removeNodesByName = function (ast, name) {
   typeCheckString(name, "name");
   typeCheckObject(ast, "ast");
   runValidator(ast, "ast");
-  return pruneNodes(ast, (node) => {
-    if (node.name.toLowerCase() === name.toLowerCase()) {
-      return false;
-    }
-    return true;
-  })
+  
+  if(hasChildren(ast)) {
+    let children = getChildren(ast); 
+    ast = setChildren(ast, removeHelper(children, name));
+  }
+  return ast; 
 };
 
+function removeHelper(children, name) {
+  children.forEach((child, index) => {
+    if(getNodeName(child) === name){
+      children.splice(index, 1); 
+    } else {
+      child = setChildren(child, removeHelper(getChildren(child), name)); 
+    }
+  });
+  return children;
+}
 /**
  * @name removeProperties
  * @description
@@ -793,6 +818,7 @@ module.exports = {
   getProperties,
   getPropertiesByType,
   getText,
+  hasType,
   getType,
   hasChildren,
   modifyChildren,

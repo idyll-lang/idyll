@@ -50,15 +50,13 @@ const build = (opts, paths, resolvers) => {
             nameArray.push(node.name.split(".")[0]);
           }
         })
-        const uniqueComponents = Array.from(new Set(nameArray)); 
+        const uniqueComponents = Array.from(new Set(nameArray));
         
-        console.log('unique components', uniqueComponents)
         const components = uniqueComponents.reduce((acc, name) => {
           let resolved = resolvers.get('components').resolve(name);
           if (resolved) acc[paramCase(name)] = resolved;
           return acc;
         }, {});
-        console.log('components', components)
 
         const data = getDataNodes(ast).reduce((acc, { name, source }) => {
           let { resolvedName, data } = resolvers.get('data').resolve(name, source)

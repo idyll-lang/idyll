@@ -11,7 +11,9 @@ const {
   getNodesByName,
   getProperty,
   filterNodes,
-  getNodeName
+  getNodeName,
+  getProperties,
+  getPropertyKeys
 } = require('idyll-astV2')
 
 exports.getComponentNodes = (ast) => {
@@ -104,15 +106,16 @@ exports.getHighlightJS = (ast, paths, server) => {
 const parseMeta = (ast) => {
   // there should only be one meta node
   const metaNodes = getNodesByName(ast, 'meta');
-
-  // data is stored in props, hence [1]
-  return metaNodes.length ? metaNodes[0][1].reduce(
-    (acc, prop) => {
-      acc[prop[0]] = prop[1][1];
-      return acc;
-    },
-    {}
-  ) : {};
+  
+  let metaProperties = {}; 
+  if(metaNodes.length > 1) {
+    console.warn("There are more than 1 meta nodes"); 
+  } else if (metaNodes.length === 1) {
+    getPropertyKeys(metaNodes[0]).forEach((key) => {
+      metaProperties[key] = getProperty(metaNodes[0], key).value; 
+    });
+  }
+  return metaProperties;
 }
 
 const formatFont = (fontName) => {

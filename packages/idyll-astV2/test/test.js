@@ -176,6 +176,10 @@ describe('ast', function () {
     expect(util.filterChildren(updatedASTWithNodes, (node) => (node.id < 12))).to.eql(updatedASTWithNode); 
   }); 
 
+  it('should filter children of a passed node', function () {
+    expect(util.filterChildren(updatedASTWithNodes, (node) => (node.name !== "meta"))).to.eql(updatedASTWithNode); 
+  }); 
+
   it('should modify children of a passed node', function () {
     expect(util.modifyChildren(updatedASTWithNode, (child) => {
       let testnode = createComponent(child.id); 
@@ -200,7 +204,24 @@ describe('ast', function () {
       "value": "www.example.com"
     }); 
   });
+
   it('Return null if proeprty does not exists', function() {
     expect(util.getProperty(astTestVar, "name")).to.eql(null); 
-  })
+  }); 
+
+  it('Returns true if a node has type attribute', function() {
+    expect(util.hasType({id: 8,
+      type: 'textnode',
+      value: 'This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text.'})).to.eql(true); 
+  }); 
+
+  it('Returns false if a node does not have type attribute', function() {
+    expect(util.hasType({ component: 'Header',
+    title: 'Test',
+    subtitle: 'Welcome to Idyll. Open index.idyll to start writing',
+    author: 'Your Name Here',
+    authorLink: 'https://idyll-lang.org',
+    children: [],
+    key: 0 })).to.eql(false); 
+  }); 
 });

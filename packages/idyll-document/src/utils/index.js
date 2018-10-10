@@ -1,9 +1,21 @@
-import { getCiphers } from 'tls';
+import {
+  getCiphers
+} from 'tls';
 
 const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
-const { getChildren, getNodeName, getProperties, getType, setChildren, hasChildren, pruneNodes } = require('idyll-astV2');
+const {
+  getChildren,
+  getNodeName,
+  getProperties,
+  getType,
+  setChildren,
+  hasChildren,
+  filterNodes,
+  filterChildren, 
+  removeNodesByName
+} = require('idyll-astV2');
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
   return `
     ((context) => {
@@ -38,16 +50,16 @@ export const evalExpression = (acc, expr, key, context) => {
   let e = buildExpression(acc, expr, key, context, isEventHandler);
 
   if (isEventHandler) {
-    return (function() {
+    return (function () {
       eval(e);
     }).bind(Object.assign({}, acc, context || {}));
   }
 
   try {
-    return (function(evalString){
+    return (function (evalString) {
       try {
         return eval('(' + evalString + ')');
-      } catch(err) {}
+      } catch (err) {}
     }).call(Object.assign({}, acc, context || {}), e);
   } catch (err) {}
 }
@@ -57,16 +69,16 @@ arr -> list of vars
 return -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
-    const variableType = getType(val); 
-    const attrs = getProperties(val)|| []; 
+    const variableType = getType(val);
+    const attrs = getProperties(val) || [];
 
-    if(!attrs.name || !attrs.value) return attrs; 
+    if (!attrs.name || !attrs.value) return attrs;
 
-    const nameValue = attrs.name.value; 
-    const valueType = attrs.value.type; 
-    const valueValue = attrs.value.value; 
+    const nameValue = attrs.name.value;
+    const valueType = attrs.value.type;
+    const valueValue = attrs.value.value;
 
-    switch(valueType) {
+    switch (valueType) {
       case 'value':
         acc[nameValue] = valueValue;
         break;
@@ -94,9 +106,8 @@ export const getVars = (arr, context = {}, evalContext) => {
   }
 
   let vars = arr.reduce(
-    pluck,
-    {}
-  ); 
+    pluck, {}
+  );
   return vars;
 }
 
@@ -114,13 +125,18 @@ export const filterIdyllProps = (props, filterInjected) => {
     ...rest
   } = props;
   if (filterInjected) {
-    const { idyll, hasError, updateProps, ...ret} = rest;
+    const {
+      idyll,
+      hasError,
+      updateProps,
+      ...ret
+    } = rest;
     return ret;
   }
   return rest;
 }
 export const getData = (arr, datasets = {}) => {
-  const pluck = (acc, val) => {    
+  const pluck = (acc, val) => {
     const nameValue = getProperties(val).name.value;
     acc[nameValue] = datasets[nameValue];
 
@@ -128,8 +144,7 @@ export const getData = (arr, datasets = {}) => {
   }
 
   return arr.reduce(
-    pluck,
-    {}
+    pluck, {}
   )
 }
 
@@ -143,26 +158,29 @@ export const splitAST = (ast) => {
 
   const handleNode = (storeElements) => {
     return (node) => {
-      const type = getType(node); 
+      const type = getType(node);
       const props = getProperties(node);
-      const children = getChildren(node); 
-
-      if (type === 'var') {
-        state.vars.push(node);
-      } else if (state[type]) {
-        state[type].push(node);
-      } else if (storeElements) {
-        state.elements.push(node);
+      //console.log("get node @ handleNode (splitAST)", node);
+      const children = getChildren(node);
+      if(node.id != 0) {
+        if (type === 'var') {
+          state.vars.push(node);
+        } else if (state[type]) {
+          state[type].push(node);
+        } else if (storeElements) {
+          state.elements.push(node);
+        }
+        //typeof children === 'string'; 
+        if (!children || (children.length === 1 && getType(children[0]) === "textnode")) {
+          return;
+        }
+        children.forEach(handleNode(false));
       }
-      //typeof children === 'string'; 
-      if (!children || (children.length === 1 && getType(children[0]) === "textnode")) {
-        return;
-      }
-      children.forEach(handleNode(false));
     }
-  }
 
+  }
   ast.forEach(handleNode(true));
+  //console.log("state: ", state);
   return state;
 }
 
@@ -180,8 +198,10 @@ export const scrollMonitorEvents = {
   'onExitViewFully': 'exitViewport'
 }
 
+/*
 export const translate = (arr) => {
 
+  //What does attrConvert do? 
   const attrConvert = (list) => {
     return Object.keys(list).reduce(
       (acc, key) => {
@@ -207,34 +227,56 @@ export const translate = (arr) => {
       },
       {}
     )
-  }
+  }*/
 
+export const translate = (ast) => {
+
+  const attrConvert = (props) => {
+    let reducedProps = {};
+    for (let propName in props) {
+      const name = propName;
+      const type = props[propName].type;
+      const value = props[propName].value;
+      if (type == "variable") {
+        if (!reducedProps.__vars__) {
+          reducedProps.__vars__ = {};
+        }
+        reducedProps.__vars__[name] = value;
+      }
+      if (type == "expression") {
+        if (!reducedProps.__expr__) {
+          reducedProps.__expr__ = {};
+        }
+        reducedProps.__expr__[name] = value;
+      }
+
+      if (hooks.includes(name)) {
+        reducedProps.hasHook = true;
+      };
+
+      reducedProps[name] = value;
+    }
+    return reducedProps;
+  }
+  //What does tnode do? 
   const tNode = (node) => {
     if (getType(node) === 'textnode') return node;
 
-    //if (node.length === 3) {
-      //const [ name, attrs, children ] = node;
-      let name; 
-      if(["var", "derived", "data"].indexOf(getType(node)) > -1 ) {
-        name = getType(node); 
-      } else {
-       name = node.name;//getNodeName(node); 
-      }
+    let name = getNodeName(node);
 
-      let attrs = getProperties(node); 
-      if(!attrs) {
-        attrs = {}; 
-      }
-      const children = getChildren(node); 
-      return {
-        component: name,
-        ...attrConvert(attrs),
-        children: children.map(tNode),
-      }
-    //}
+    let attrs = getProperties(node);
+    if (!attrs) {
+      attrs = {};
+    }
+    const children = getChildren(node);
+    return {
+      component: name,
+      ...attrConvert(attrs),
+      children: children.map(tNode),
+    }
   }
 
-  return splitAST(arr).elements.map(tNode)
+  return splitAST(getChildren(ast)).elements.map(tNode);
 }
 
 
@@ -243,50 +285,22 @@ export const mapTree = (tree, mapFn, filterFn = () => true) => {
     if (getType(node) === "component") {
       if (hasChildren(node)) {
         // translated schema
-        node = setChildren(node, getChildren(node.children).reduce(walkFn, []) );
-      } 
+        node = setChildren(node, getChildren(node.children).reduce(walkFn, []));
+      }
     }
 
     if (filterFn(node)) acc.push(mapFn(node));
     return acc;
   };
-  console.log("maptree: ", getChildren(tree)); 
-  return getChildren(tree).reduce(
-    walkFn,
-    []
+  return tree.reduce(
+    walkFn, []
   );
 };
 
-
-/*
-export const mapTree = (tree, mapfn, filterFn = () => true) => {
-
-  let root = tree; 
-  root = setChildren(mapTreeHelper(getChildren(root), mapfn, filterFn));
-  if(filterFn(root)) {
-    root = mapfn(root); 
-  } 
-}; 
-
-function mapTreeHelper(tree, mapfn, filterFn) {
-
-  (tree || []).forEach((node) => {
-    if (getType(node) === "component") {
-      if (hasChildren(node)) {
-        // translated schema
-        node = setChildren(node, getChildren(node.children));
-      } 
-    }
-  }); 
-}*/
-
 export const filterASTForDocument = (ast) => {
-  return pruneNodes(ast, (node) => {
-    if(node.name === "meta") {
-      return false;
-    }
-    return true; 
-  }); 
+  return removeNodesByName(ast, "meta");
+  //return filterChildren(ast, (node) => (node.name !== "meta")); 
+  //return filterNodes(ast, (node) => (node.name !== "meta" && node.id !== 0));
   //return mapTree(ast, n => n, ([name]) => name !== 'meta')
 };
 
@@ -304,7 +318,6 @@ export const findWrapTargets = (schema, state) => {
       targets.push(node);
       return node;
     }
-
     // wrap all custom components
     const startsWith = node.component.charAt(0);
     if (startsWith === startsWith.toUpperCase()) {
@@ -313,7 +326,13 @@ export const findWrapTargets = (schema, state) => {
     }
 
     // pull off the props we don't need to check
-    const { component, children, __vars__, __expr__, ...props } = node;
+    const {
+      component,
+      children,
+      __vars__,
+      __expr__,
+      ...props
+    } = node;
     const expressions = Object.keys(__expr__ || {});
     const variables = Object.keys(__vars__ || {});
 
