@@ -26,10 +26,10 @@ class AuthorTool extends React.PureComponent {
 
     // For all available props in metaValues, display them
     // If runtimeValues has a value for given prop, display it
-    const showProps = metaValues.props.map((prop) => {
+    const showProps = metaValues.props.map((prop) => { //todo factor into top leve
       const runtimeValue = runtimeValues.props[prop.name];
       let currentPropValue = null;
-      if (runtimeValue != undefined) {
+      if (runtimeValue !== undefined) {
         if (runtimeValue && {}.toString.call(runtimeValue) === '[object Function]') {
           currentPropValue = <em>function</em>;
         } else {
@@ -54,12 +54,12 @@ class AuthorTool extends React.PureComponent {
     return (
       <div className="debug-collapse" 
         style={{
-          height: currentDebugHeight + 'px',
-          marginBottom: marginToGive + 'px',
-          marginTop: marginAboveTable + 'px'
+          height: currentDebugHeight,
+          marginBottom: marginToGive,
+          marginTop: marginAboveTable
         }}
       >
-        <div className="author-component-view" ref="inner"> 
+        <div className="author-component-view"> 
           <table className="props-table">
             <tbody>
               <tr className="props-table-row">
@@ -78,7 +78,7 @@ class AuthorTool extends React.PureComponent {
               />
             </a>
             <a className="icon-link" href={componentDocsLink}>
-              <span style={{fontFamily: 'courier', fontSize: '12px', marginTop: '8px'}}>docs</span>
+              <span style={{fontFamily: 'courier', fontSize: '12', marginTop: '8'}}>docs</span>
             </a>
           </div>
         </div>
@@ -90,13 +90,14 @@ class AuthorTool extends React.PureComponent {
   handleClick() {
     this.setState(prevState => ({
       isAuthorView: !prevState.isAuthorView,
-      debugHeight: this.refs.inner.clientHeight,
+      debugHeight: this._refContainer.getBoundingClientRect().height,
     }));
     // following is kinda hacky to get the original height of component
     // not sure what other way right now
+    debugger;
     if (!this.state.hasPressedButton) {
       this.setState({
-        componentHeight: this.refs.componentHeight.clientHeight,
+        componentHeight: this._refContainer.getBoundingClientRect().height,
         hasPressedButton: true
       });
     }
@@ -108,16 +109,16 @@ class AuthorTool extends React.PureComponent {
   render() {
     const { idyll, updateProps, hasError, ...props } = this.props;
     const addBorder = this.state.isAuthorView ? {
-      boxShadow: '5px 5px 10px 1px lightGray',
+      boxShadow: '5 5 10 1 lightGray',
       transition: 'box-shadow 0.4s linear',
-      padding: '0 10px 10px',
-      margin: '0 -10px 20px'} : null;
+      padding: '0 10 10',
+      margin: '0 -10 20'} : null;
     const putButtonBack = this.state.isAuthorView ? {
-      right: '10px',
-      top: '3px'} : null;
+      right: '10',
+      top: '3'} : null;
 
     return (
-      <div className="component-debug-view" style={addBorder} ref="componentHeight">
+      <div className="component-debug-view" style={addBorder} ref={(ref) => this._refContainer = ref }>
         {props.component}
         <button className="author-view-button"
           style={putButtonBack}
