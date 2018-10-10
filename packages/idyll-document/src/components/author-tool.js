@@ -51,7 +51,6 @@ class AuthorTool extends React.PureComponent {
     // If a component's height is too small, button will overlap with table
     // so add margin to get a minimal height (40px seems fine)
     const marginAboveTable = componentHeight < 40 && isAuthorView ? 40 - componentHeight : 0;
-    console.log(componentHeight);
     return (
       <div className="debug-collapse" 
         style={{
@@ -110,10 +109,10 @@ class AuthorTool extends React.PureComponent {
       boxShadow: '5px 5px 10px 1px lightGray',
       transition: 'box-shadow 0.4s linear',
       padding: '0px 10px 10px',
-      margin: '0[x] -10px 20px'} : null;
+      margin: '0px -10px 20px'} : null;
     const putButtonBack = this.state.isAuthorView ? {
-      right: '10',
-      top: '3'} : null;
+      right: '10px',
+      top: '3px'} : null;
 
     return (
       <div className="component-debug-view" style={addBorder} ref={(ref) => this._refContainer = ref }>
