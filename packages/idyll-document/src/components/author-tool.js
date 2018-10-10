@@ -12,21 +12,12 @@ class AuthorTool extends React.PureComponent {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  
-  // Returns authoring information for the prop values in table format
-  // and includes a link to the docs page at the bottom
-  handleFormatComponent(runtimeValues) {
-    const metaValues = runtimeValues.type._idyll
-    const componentName = metaValues.name;
 
-    // Docs use lowercase component name for link
-    const componentLowerCase = componentName.charAt(0).toLowerCase() + componentName.slice(1);
-    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" +
-      componentLowerCase;
-
-    // For all available props in metaValues, display them
-    // If runtimeValues has a value for given prop, display it
-    const showProps = metaValues.props.map((prop) => { //todo factor into top leve
+  // For all available props in metaValues, display them
+  // If runtimeValues has a value for given prop, display it
+  // Returns this in a single table row <tr>
+  handleTableValues(metaValues, runtimeValues) {
+    return metaValues.props.map((prop) => {
       const runtimeValue = runtimeValues.props[prop.name];
       let currentPropValue = null;
       if (runtimeValue !== undefined) {
@@ -45,6 +36,20 @@ class AuthorTool extends React.PureComponent {
         </tr>
       )
     });
+  }
+  
+  // Returns authoring information for the prop values in table format
+  // and includes a link to the docs page at the bottom
+  handleFormatComponent(runtimeValues) {
+    const metaValues = runtimeValues.type._idyll
+    const componentName = metaValues.name;
+
+    // Docs use lowercase component name for link
+    const componentLowerCase = componentName.charAt(0).toLowerCase() + componentName.slice(1);
+    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" +
+      componentLowerCase;
+
+    const showProps = this.handleTableValues(metaValues, runtimeValues);
     const {isAuthorView, debugHeight, componentHeight} = this.state;
     const currentDebugHeight = isAuthorView ? debugHeight : 0;
     const marginToGive = isAuthorView ? 15 : 0;
