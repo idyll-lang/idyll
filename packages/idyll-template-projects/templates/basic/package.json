@@ -5,7 +5,8 @@
   "idyll": {
     "theme": "github",
     "layout": "blog",
-    "css": "styles.css"
+    "css": "styles.css",
+    "authorView": false
   },
   "dependencies": {
     "idyll": "^3.0.0",
