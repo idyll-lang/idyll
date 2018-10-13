@@ -159,7 +159,8 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
       components,
       datasets,
       theme: opts.theme,
-      layout: opts.layout
+      layout: opts.layout,
+      authorView: opts.authorView
     })
   ).trim();
   return mustache.render(template, Object.assign({

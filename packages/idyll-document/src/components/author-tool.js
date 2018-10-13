@@ -12,24 +12,15 @@ class AuthorTool extends React.PureComponent {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-  
-  // Returns authoring information for the prop values in table format
-  // and includes a link to the docs page at the bottom
-  handleFormatComponent(runtimeValues) {
-    const metaValues = runtimeValues.type._idyll
-    const componentName = metaValues.name;
 
-    // Docs use lowercase component name for link
-    const componentLowerCase = componentName.charAt(0).toLowerCase() + componentName.slice(1);
-    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" +
-      componentLowerCase;
-
-    // For all available props in metaValues, display them
-    // If runtimeValues has a value for given prop, display it
-    const showProps = metaValues.props.map((prop) => {
+  // For all available props in metaValues, display them
+  // If runtimeValues has a value for given prop, display it
+  // Returns this in a single table row <tr>
+  handleTableValues(metaValues, runtimeValues) {
+    return metaValues.props.map((prop) => {
       const runtimeValue = runtimeValues.props[prop.name];
       let currentPropValue = null;
-      if (runtimeValue != undefined) {
+      if (runtimeValue !== undefined) {
         if (runtimeValue && {}.toString.call(runtimeValue) === '[object Function]') {
           currentPropValue = <em>function</em>;
         } else {
@@ -45,6 +36,20 @@ class AuthorTool extends React.PureComponent {
         </tr>
       )
     });
+  }
+  
+  // Returns authoring information for the prop values in table format
+  // and includes a link to the docs page at the bottom
+  handleFormatComponent(runtimeValues) {
+    const metaValues = runtimeValues.type._idyll
+    const componentName = metaValues.name;
+
+    // Docs use lowercase component name for link
+    const componentLowerCase = componentName.charAt(0).toLowerCase() + componentName.slice(1);
+    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" +
+      componentLowerCase;
+
+    const showProps = this.handleTableValues(metaValues, runtimeValues);
     const {isAuthorView, debugHeight, componentHeight} = this.state;
     const currentDebugHeight = isAuthorView ? debugHeight : 0;
     const marginToGive = isAuthorView ? 15 : 0;
@@ -59,7 +64,7 @@ class AuthorTool extends React.PureComponent {
           marginTop: marginAboveTable + 'px'
         }}
       >
-        <div className="author-component-view" ref="inner"> 
+        <div className="author-component-view" ref={(inner) => this.innerHeight = inner}> 
           <table className="props-table">
             <tbody>
               <tr className="props-table-row">
@@ -90,13 +95,11 @@ class AuthorTool extends React.PureComponent {
   handleClick() {
     this.setState(prevState => ({
       isAuthorView: !prevState.isAuthorView,
-      debugHeight: this.refs.inner.clientHeight,
+      debugHeight: this.innerHeight.getBoundingClientRect().height
     }));
-    // following is kinda hacky to get the original height of component
-    // not sure what other way right now
     if (!this.state.hasPressedButton) {
       this.setState({
-        componentHeight: this.refs.componentHeight.clientHeight,
+        componentHeight: this._refContainer.getBoundingClientRect().height,
         hasPressedButton: true
       });
     }
@@ -109,15 +112,15 @@ class AuthorTool extends React.PureComponent {
     const { idyll, updateProps, hasError, ...props } = this.props;
     const addBorder = this.state.isAuthorView ? {
       boxShadow: '5px 5px 10px 1px lightGray',
-      transition: 'box-shadow 0.4s linear',
-      padding: '0 10px 10px',
-      margin: '0 -10px 20px'} : null;
+      transition: 'box-shadow 0.35s linear',
+      padding: '0px 10px 10px',
+      margin: '0px -10px 20px'} : null;
     const putButtonBack = this.state.isAuthorView ? {
       right: '10px',
       top: '3px'} : null;
 
     return (
-      <div className="component-debug-view" style={addBorder} ref="componentHeight">
+      <div className="component-debug-view" style={addBorder} ref={(ref) => this._refContainer = ref }>
         {props.component}
         <button className="author-view-button"
           style={putButtonBack}

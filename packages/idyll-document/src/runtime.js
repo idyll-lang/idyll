@@ -176,7 +176,7 @@ const createWrapper = ({ theme, layout, authorView }) => {
         })
       });
       const metaData = childComponent.type._idyll;
-      if (authorView !== false && metaData && metaData.props) {
+      if (authorView && metaData && metaData.props) {
         // ensure inline elements do not have this overlay
         if (metaData.displayType === undefined || metaData.displayType !== "inline") {
           return (
@@ -202,6 +202,7 @@ const getDerivedValues = dVars => {
 class IdyllRuntime extends React.PureComponent {
   constructor(props) {
     super(props);
+    
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
