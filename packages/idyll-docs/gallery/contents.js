@@ -168,6 +168,12 @@ const exampleGroups = [
   {
     title: 'Tutorials',
     examples: [{
+      label: 'Stacking Scroller Components',
+      subtitle: "Introduction to leveraging multiple Scrollers in Idyll",
+      href: 'https://idyll.pub/post/stack-scroll-0c3da7fb8e45f3ecb720bcf8/',
+      image: 'stacked-scroller.gif',
+      sourceUrl: "https://github.com/megan-vo/stacked-scrolling-tutorial"
+      },{
       label: 'Using Mapbox with Idyll',
       subtitle: "Add interactive maps to your Idyll posts.",
       href: 'https://mathisonian.github.io/idyll-map-example/',

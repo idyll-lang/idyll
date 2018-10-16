@@ -179,10 +179,13 @@ The value of x is [Display value:x format:"d" /].
             </div>
             <div>
               <p>
-                <b>Idyll</b> is an open-source markup language and web runtime. You write markup and Idyll converts it to interactive code that can run in anyone’s web browser. Idyll extends <em>Markdown</em> with a reactive component system.
+
+                <b>Idyll</b> is a markup language and toolkit for writing interactive articles. Idyll's reactive document model and standard component library decrease the amount of code needed to create high quality multimedia narratives. Idyll uses web standards to produce output that will load quickly in any web browser and is fully extensible.
 
                 <br/><br/>
-                Idyll allows non-experts to publish compelling interactive stories on the web, and enables collaboration between programmers and journalists, researchers and designers. Those familiar with JavaScript can write custom components using tools like D3 or React.
+                Idyll enables collaboration between programmers and journalists, researchers and designers. Those familiar with JavaScript can write custom components using tools like D3 or React.
+
+
                 <img style={{display: 'block', width: '75%', margin: '0 auto'}} src="/static/images/sponsors.png"/>
 
                 Idyll is supported by the Interactive Data Lab at the University of Washington, and by Rhizome and The Eutopia Foundation.

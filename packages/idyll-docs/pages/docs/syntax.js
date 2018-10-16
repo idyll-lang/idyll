@@ -13,6 +13,7 @@ const Content = () => markdown`
   * [Bold and Italic](#bold-italic)
   * [Headers](#headers)
   * [Code](#code)
+  * [Lists](#lists)
 * [Components](#components)
   * [Properties](#component-properties)
     * [Literals](#literals)
@@ -81,6 +82,19 @@ This is a code block
 \\\`\\\`\\\`
 \`\`\`
 
+<h4 id="lists">Lists</h4>
+
+Ordered and unordered lists are supported. Lists can be created by using an asterisk (\`*\`)
+or numbers. For example:
+\`\`\`
+* Unordered item one
+* Unordered item two
+* Unordered item three
+
+1. ordered item one
+2. ordered item two
+3. ordered item three
+\`\`\`
 
 <h2 id="components">Components</h2>
 

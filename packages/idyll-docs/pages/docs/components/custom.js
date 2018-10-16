@@ -23,7 +23,7 @@ const React = require('react');
 
 class Custom extends React.Component {
   render() {
-    const { hasError, updateProps, ...props } = this.props;
+    const { idyll, hasError, updateProps, ...props } = this.props;
 
     return (
       <div {...props}>

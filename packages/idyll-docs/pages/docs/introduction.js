@@ -10,9 +10,12 @@ import IdyllDocument from 'idyll-document';
 const idyllMarkup = `
 # Introduction
 
-Idyll is an open-source markup language and toolkit for producing interactive web pages. You give Idyll a markup file, and it compiles that file to a full bundle of HTML, JavaScript, and CSS that can run in anyone’s web browser.
 
-Idyll can be used to create explorable explanations, and to add interactivity to blog engines and content management systems. The tool can generate standalone webpages or be embedded inside of an existing page, and can be fully themed to match your styleguide.
+Idyll can be used to create [explorable explanations](https://explorabl.es/), write data-driven stories, and add interactivity to blog engines and content management systems. The tool can generate standalone webpages or be embedded in  existing pages. Choose from built-in themes or provide custom CSS.
+
+![/static/images/fugazi.gif](/static/images/fugazi.gif)
+
+We offer a [free public hosting service](https://idyll.pub) so that you can publish your creations to the web in a matter of seconds. Continue reading to learn more about the project, or see our [example gallery](/gallery).
 
 ## Familiar Markup
 

@@ -10,6 +10,8 @@ export default ({ url }) => (
 
       <h1>Embedding Idyll in an existing web page</h1>
 
+      <p>The following instructions assume you are working in a JavaScript environment that supports importing components from npm. If you prefer to embed Idyll using a script tag, see <a href="https://github.com/idyll-lang/idyll-embed">idyll-embed</a>.</p>
+
       <p>The Idyll runtime is available as a React
       component, allowing you to embed interactive
       Idyll content anywhere on the web.</p>
