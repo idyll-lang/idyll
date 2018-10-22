@@ -269,6 +269,7 @@ class IdyllRuntime extends React.PureComponent {
     const components = Object.assign(fallbackComponents, props.components, internalComponents);
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
+    console.log("Translated Shema @ runtime: ", schema);
     const wrapTargets = findWrapTargets(schema, this.state);
     let refCounter = 0;
 
@@ -276,7 +277,7 @@ class IdyllRuntime extends React.PureComponent {
       schema,
       node => {
         if(hasType(node)){
-          if(["textnode"].indexOf(getType(node)) > -1) return node.value;  
+          if(getType(node) === "textnode") return node.value;  
         }
 
         // transform refs from strings to functions and store them
@@ -293,7 +294,7 @@ class IdyllRuntime extends React.PureComponent {
             };
           };
         }
-
+        //Inspect for isHTMLNode  props and to check for dynamic components. 
         if (!wrapTargets.includes(node)) return node;
 
         const {

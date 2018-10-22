@@ -184,6 +184,7 @@ export const splitAST = (ast) => {
   return state;
 }
 
+//Properties that add logic to components for callbacks. 
 export const hooks = [
   'onEnterView',
   'onEnterViewFully',
@@ -197,37 +198,6 @@ export const scrollMonitorEvents = {
   'onExitView': 'partiallyExitViewport',
   'onExitViewFully': 'exitViewport'
 }
-
-/*
-export const translate = (arr) => {
-
-  //What does attrConvert do? 
-  const attrConvert = (list) => {
-    return Object.keys(list).reduce(
-      (acc, key) => {
-        const name = key; 
-        const type = list[key].type; 
-        const val = list[key].value;
-        if (type === 'variable') {
-          acc.__vars__ = acc.__vars__ || {};
-          acc.__vars__[name] = val;
-        }
-        // each node keeps a list of props that are expressions
-        if (type === 'expression') {
-          acc.__expr__ = acc.__expr__ || {};
-          acc.__expr__[name] = val;
-        }
-        // flag nodes that define a hook function
-        if (hooks.includes(name)) {
-          acc.hasHook = true;
-        };
-
-        acc[name] = val;
-        return acc;
-      },
-      {}
-    )
-  }*/
 
 export const translate = (ast) => {
 
@@ -282,7 +252,8 @@ export const translate = (ast) => {
 
 export const mapTree = (tree, mapFn, filterFn = () => true) => {
   const walkFn = (acc, node) => {
-    if (getType(node) === "component") {
+    console.log("node @ MAPTREE: ", JSON.stringify(node));
+    if (node.component) {
       if (hasChildren(node)) {
         // translated schema
         node = setChildren(node, getChildren(node.children).reduce(walkFn, []));
@@ -318,7 +289,11 @@ export const findWrapTargets = (schema, state) => {
       targets.push(node);
       return node;
     }
+
+    //Remove 
     // wrap all custom components
+    //components value (the one which was printing before) is a list of custom component, check from there. 
+    //console.log("node @ mapTree, wrapTargets: ", node);
     const startsWith = node.component.charAt(0);
     if (startsWith === startsWith.toUpperCase()) {
       targets.push(node);
