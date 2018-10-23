@@ -269,15 +269,18 @@ class IdyllRuntime extends React.PureComponent {
     const components = Object.assign(fallbackComponents, props.components, internalComponents);
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
-    console.log("Translated Shema @ runtime: ", schema);
+    //console.log("translate @ RUNTIME:", JSON.stringify(schema));
+   // console.log("this.state @ RUNTIME:", JSON.stringify(Object.keys(this.state))); 
     const wrapTargets = findWrapTargets(schema, this.state);
+    //console.log("wrapTargets @ RUNTIME:", JSON.stringify(wrapTargets));
     let refCounter = 0;
 
     const transformedSchema = mapTree(
       schema,
       node => {
-        if(hasType(node)){
-          if(getType(node) === "textnode") return node.value;  
+
+        if(!node.component) {
+          if(node.type && node.type === "textnode") return node.value;
         }
 
         // transform refs from strings to functions and store them
@@ -296,7 +299,6 @@ class IdyllRuntime extends React.PureComponent {
         }
         //Inspect for isHTMLNode  props and to check for dynamic components. 
         if (!wrapTargets.includes(node)) return node;
-
         const {
           component,
           children,
@@ -346,8 +348,8 @@ class IdyllRuntime extends React.PureComponent {
         };
       }
     );
-    console.log("transformedSchema: ");
-    console.log(JSON.stringify(transformedSchema));
+    //console.log("transformedSchema: ");
+    //console.log(JSON.stringify(transformedSchema));
     this.kids = rjs.parseSchema(transformedSchema);
   }
 

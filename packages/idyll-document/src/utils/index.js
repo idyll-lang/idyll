@@ -249,81 +249,90 @@ export const translate = (ast) => {
   return splitAST(getChildren(ast)).elements.map(tNode);
 }
 
-
 export const mapTree = (tree, mapFn, filterFn = () => true) => {
+
+
   const walkFn = (acc, node) => {
-    console.log("node @ MAPTREE: ", JSON.stringify(node));
-    if (node.component) {
-      if (hasChildren(node)) {
-        // translated schema
-        node = setChildren(node, getChildren(node.children).reduce(walkFn, []));
-      }
+    //To check for textnodes
+    if(node.component) {
+      //To check for childrens
+      if(node.children) {
+        node.children =  node.children.reduce(walkFn, []); 
+      } 
     }
 
-    if (filterFn(node)) acc.push(mapFn(node));
+    if(filterFn(node)) {
+      acc.push(mapFn(node)); 
+    }
     return acc;
   };
-  return tree.reduce(
-    walkFn, []
-  );
+
+  return tree.reduce(walkFn, []); 
 };
+
 
 export const filterASTForDocument = (ast) => {
   return removeNodesByName(ast, "meta");
-  //return filterChildren(ast, (node) => (node.name !== "meta")); 
-  //return filterNodes(ast, (node) => (node.name !== "meta" && node.id !== 0));
-  //return mapTree(ast, n => n, ([name]) => name !== 'meta')
 };
 
 export const findWrapTargets = (schema, state) => {
-  const targets = [];
+  //console.log("schema:", JSON.stringify(schema));
+  //Custom components
+  const targets = []; 
+
+  //Array of keys for the runtime state passed. 
   const stateKeys = Object.keys(state);
 
-  // always return node so we can walk the whole tree
-  // but collect and ultimately return just the nodes
-  // we are interested in wrapping
+  //Populating target with the custom componenets
+  //Walk the whole tree, collect and return the nodes 
+  //for wrapping
   mapTree(schema, (node) => {
-    if (getType(node) === "textnode") return node;
-
-    if (node.hasHook) {
-      targets.push(node);
-      return node;
+    if(node.component == "textnode") {
+      return node; 
     }
 
-    //Remove 
-    // wrap all custom components
-    //components value (the one which was printing before) is a list of custom component, check from there. 
-    //console.log("node @ mapTree, wrapTargets: ", node);
-    const startsWith = node.component.charAt(0);
-    if (startsWith === startsWith.toUpperCase()) {
-      targets.push(node);
-      return node;
+    //Custom components will have hooks attached to them
+    if(node.hasHook) {
+      targets.push(node); 
+      return node; 
     }
 
-    // pull off the props we don't need to check
+    //TODO: return components from cli/pipeline 
+    //TODO: Merger the above two results.
+    const components = ["header","range","display","custom-component","custom-d3-component","button","fixed","text-container"]; 
+    
+    if(node.component) {
+      if(components.includes(node.component.toLowerCase())) {     
+        targets.push(node); 
+        return node; 
+      }
+    }
+
     const {
-      component,
-      children,
+      component, 
+      children, 
       __vars__,
       __expr__,
       ...props
-    } = node;
-    const expressions = Object.keys(__expr__ || {});
-    const variables = Object.keys(__vars__ || {});
+    } = node; 
 
-    // iterate over the node's prop values
-    entries(props).forEach(([key, val]) => {
-      // avoid checking more props if we know it's a match
-      if (targets.includes(node)) return;
+    const expressions = Object.keys(__expr__ || {}); 
+    const variables = Object.keys(__vars__ || {}); 
 
-      // Include nodes that reference a variable or expression.
-      if (variables.includes(key) || expressions.includes(key)) {
+    for(let prop in props) {
+      
+      if(targets.includes(node)) {
+        return; 
+      }
+
+      if (variables.includes(prop) || expressions.includes(prop)) {
         targets.push(node);
       }
-    });
+  
+    }
 
-    return node;
-  })
+    return node; 
+  });
 
-  return targets;
-}
+  return targets; 
+};

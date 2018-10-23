@@ -50,8 +50,7 @@ const build = (opts, paths, resolvers) => {
             nameArray.push(node.name.split(".")[0]);
           }
         })
-        const uniqueComponents = Array.from(new Set(nameArray));
-        
+        const uniqueComponents = Array.from(new Set(nameArray)); 
         const components = uniqueComponents.reduce((acc, name) => {
           let resolved = resolvers.get('components').resolve(name);
           if (resolved) acc[paramCase(name)] = resolved;
