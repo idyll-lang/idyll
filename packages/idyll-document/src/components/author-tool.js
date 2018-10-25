@@ -37,7 +37,7 @@ class AuthorTool extends React.PureComponent {
       )
     });
   }
-  
+
   // Returns authoring information for the prop values in table format
   // and includes a link to the docs page at the bottom
   handleFormatComponent(runtimeValues) {
@@ -57,14 +57,14 @@ class AuthorTool extends React.PureComponent {
     // so add margin to get a minimal height (40px seems fine)
     const marginAboveTable = componentHeight < 40 && isAuthorView ? 40 - componentHeight : 0;
     return (
-      <div className="debug-collapse" 
+      <div className="debug-collapse"
         style={{
           height: currentDebugHeight + 'px',
           marginBottom: marginToGive + 'px',
           marginTop: marginAboveTable + 'px'
         }}
       >
-        <div className="author-component-view" ref={(inner) => this.innerHeight = inner}> 
+        <div className="author-component-view" ref={(inner) => this.innerHeight = inner}>
           <table className="props-table">
             <tbody>
               <tr className="props-table-row">
@@ -144,4 +144,4 @@ class AuthorTool extends React.PureComponent {
   }
 }
 
-module.exports = AuthorTool;
+export default AuthorTool;
