@@ -177,6 +177,7 @@ const getNodesByName = function (ast, name) {
   if(name === "article") {
     nodes.push(ast); 
   }
+  //console.log("ast.children: ", ast);
   let otherNodes = getNodesByNameHelper(ast.children, name); 
   return (nodes.concat(otherNodes)).map((element) => Object.assign({}, element)); 
 

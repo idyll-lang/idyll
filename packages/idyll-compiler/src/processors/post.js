@@ -1,11 +1,11 @@
 
 const smartquotes = require('smartquotes');
 
-const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode, createNode} = require('idyll-ast');
+const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode, createNode} = require('idyll-astV2');
 
-
+/*Change here  */
 const attrConvert = (list) => {
-  return (list || []).reduce(
+  return ([list] || []).reduce(
     (acc, [name, [type, val]]) => {
       if (type === 'value') {
         acc[name] = val;
@@ -54,8 +54,10 @@ const cleanResults = (ast, options) => {
   })
 };
 
+/* Change here */
 const flattenChildren = (ast) => {
-  return (ast || []).reduce((acc, child) => {
+  console.log("flattenChildren:", typeof ast);
+  return ([ast] || []).reduce((acc, child) => {
     if (child[0] === '_idyllContainer') {
       acc = acc.concat(child[2]);
     } else {
@@ -118,9 +120,9 @@ const makeFullWidth = (ast) => {
 };
 
 const hoistVariables = (ast) => {
-  const vars = getNodesByName(ast, 'var');
-  const derived = getNodesByName(ast, 'derived');
-  const data = getNodesByName(ast, 'data');
+  const vars = findNodesInArray(ast, 'var');
+  const derived = findNodesInArray(ast, 'derived');
+  const data = findNodesInArray(ast, 'data');
 
   ast = removeNodesByName(ast, 'var');
   ast = removeNodesByName(ast, 'derived');
@@ -133,6 +135,13 @@ const hoistVariables = (ast) => {
   return ast;
 };
 
+function findNodesInArray(nodes, name) {
+  return nodes.filter((node) => {
+    if(node.name === name) {
+      return true;
+    }
+  });
+}
 const wrapText = (ast) => {
   return modifyNodesByName(ast, 'TextContainer', (node) => {
     return modifyChildren(node, (child) => {
