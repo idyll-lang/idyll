@@ -25,13 +25,14 @@ module.exports = function(input, options, callback) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
     return new Promise((resolve, reject) => reject(err));
   }
- 
+  
+  console.log("output", output);
   let astTransform = Processor(output, options) 
     .pipe(hoistVariables)
     .pipe(flattenChildren)
     .pipe(makeFullWidth)
     .pipe(wrapText)
-    .pipe(cleanResults)
+    //.pipe(cleanResults)
     .pipe(autoLinkify)
     .end();
 
@@ -58,9 +59,11 @@ module.exports = function(input, options, callback) {
     return promises.reduce((promise, f, i) => {
       return promise.then((val) => {
         return f(val);
+        console.log("ast", astTransform); 
       });
-    }, Promise.resolve(inverseConvert(astTransform)));
+    }, Promise.resolve(astTransform));
   } else {
-    return options.async ? new Promise((resolve) => resolve(inverseConvert(astTransform))) : inverseConvert(astTransform);
+    console.log("ast", astTransform); 
+    return options.async ? new Promise((resolve) => resolve(astTransform)) : astTransform;
   }
 }

@@ -3,8 +3,10 @@ const smartquotes = require('smartquotes');
 
 const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode, createNode} = require('idyll-astV2');
 
-/*Change here  */
+/*Maps property to their values*/
+
 const attrConvert = (list) => {
+  console.log("list", list);
   return ([list] || []).reduce(
     (acc, [name, [type, val]]) => {
       if (type === 'value') {
@@ -16,6 +18,14 @@ const attrConvert = (list) => {
   )
 };
 
+/*
+const attrConvert = (list) => {
+  console.log("list", list); 
+}; */
+
+/* processing of the compiler output. Turn quotes into smarquotes
+  unwrapping and stuff. 
+*/
 const cleanResults = (ast, options) => {
   if (typeof ast === 'string') {
     if (options.smartquotes) {
@@ -56,7 +66,6 @@ const cleanResults = (ast, options) => {
 
 /* Change here */
 const flattenChildren = (ast) => {
-  console.log("flattenChildren:", typeof ast);
   return ([ast] || []).reduce((acc, child) => {
     if (child[0] === '_idyllContainer') {
       acc = acc.concat(child[2]);

@@ -342,9 +342,9 @@ ComponentProperties -> (ComponentProperty __):* {%
   function(data, location, reject) {
     let properties = {}; 
     data[0].forEach((prop) => {
-      properties[prop[0]] = {
-        "type": prop[1], 
-        "value": prop[2]
+      properties[prop[0][0]] = {
+        "type": prop[0][1], 
+        "value": prop[0][2]
       }; 
     }); 
     return properties;
