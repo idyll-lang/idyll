@@ -42,6 +42,14 @@ const build = (opts, paths, resolvers) => {
 
         /* Change here */
 
+        // Set -> Array to remove duplicate entries.
+       /* const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
+          return node.name.split('.')[0];
+        })));*/
+
+        /*
+          
+
         let nameArray = []; 
         getComponentNodes(ast).forEach((node) => {
           if(["var", "derived", "data"].indexOf(node.type) > -1) {
@@ -50,12 +58,21 @@ const build = (opts, paths, resolvers) => {
             nameArray.push(node.name.split(".")[0]);
           }
         })
+        const uniqueComponents = Array.from(new Set(nameArray));  
+        */
+        
+        let nameArray = []; 
+        walkNodes(getComponentNodes(ast)[0], (node) => {
+          nameArray.push(node.name.split('.')[0]); 
+        }); 
         const uniqueComponents = Array.from(new Set(nameArray)); 
+        
         const components = uniqueComponents.reduce((acc, name) => {
           let resolved = resolvers.get('components').resolve(name);
           if (resolved) acc[paramCase(name)] = resolved;
           return acc;
         }, {});
+        console.log('components', components)
 
         const data = getDataNodes(ast).reduce((acc, { name, source }) => {
           let { resolvedName, data } = resolvers.get('data').resolve(name, source)
