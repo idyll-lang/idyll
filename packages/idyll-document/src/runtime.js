@@ -269,12 +269,10 @@ class IdyllRuntime extends React.PureComponent {
     const components = Object.assign(fallbackComponents, props.components, internalComponents);
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
-    //console.log("translate @ RUNTIME:", JSON.stringify(schema));
-   // console.log("this.state @ RUNTIME:", JSON.stringify(Object.keys(this.state))); 
-    const wrapTargets = findWrapTargets(schema, this.state);
-    //console.log("wrapTargets @ RUNTIME:", JSON.stringify(wrapTargets));
+    const wrapTargets = findWrapTargets(schema, this.state, props.components);
+    console.log("wrapTargets: ", wrapTargets);
     let refCounter = 0;
-
+    console.log("transformedSchema");
     const transformedSchema = mapTree(
       schema,
       node => {
@@ -348,8 +346,6 @@ class IdyllRuntime extends React.PureComponent {
         };
       }
     );
-    //console.log("transformedSchema: ");
-    //console.log(JSON.stringify(transformedSchema));
     this.kids = rjs.parseSchema(transformedSchema);
   }
 
@@ -419,7 +415,6 @@ class IdyllRuntime extends React.PureComponent {
   }
 
   render() {
-   //console.log("kids", this.kids);
     return (
       <div className="idyll-root" ref={this.initScrollListener}>
         {this.kids}

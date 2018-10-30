@@ -263,11 +263,14 @@ export const mapTree = (tree, mapFn, filterFn = () => true) => {
 
     if(filterFn(node)) {
       acc.push(mapFn(node)); 
-    }
+      console.log("......");
+      console.log("node", JSON.stringify(node));
+      console.log("......"); 
+    } 
     return acc;
   };
-
-  return tree.reduce(walkFn, []); 
+  let value = tree.reduce(walkFn, []); 
+  return value;
 };
 
 
@@ -275,10 +278,19 @@ export const filterASTForDocument = (ast) => {
   return removeNodesByName(ast, "meta");
 };
 
-export const findWrapTargets = (schema, state) => {
-  //console.log("schema:", JSON.stringify(schema));
+export const findWrapTargets = (schema, state, components) => {
+  console.log("find wrap targets");
   //Custom components
   const targets = []; 
+  //Name of custom components
+  const componentNames = (Object.keys(components));
+  componentNames.forEach((component, i) => {
+    let words = component.split("-"); 
+    for(let i = 0; i < words.length; i++) {
+      words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
+    }
+    componentNames[i] = words.join("");
+  });
 
   //Array of keys for the runtime state passed. 
   const stateKeys = Object.keys(state);
@@ -296,13 +308,9 @@ export const findWrapTargets = (schema, state) => {
       targets.push(node); 
       return node; 
     }
-
-    //TODO: return components from cli/pipeline 
-    //TODO: Merger the above two results.
-    const components = ["header","range","display","custom-component","custom-d3-component","button","fixed","text-container"]; 
-    
+ 
     if(node.component) {
-      if(components.includes(node.component.toLowerCase())) {     
+      if(componentNames.includes(node.component.toLowerCase())) {  
         targets.push(node); 
         return node; 
       }
@@ -330,7 +338,6 @@ export const findWrapTargets = (schema, state) => {
       }
   
     }
-
     return node; 
   });
 
