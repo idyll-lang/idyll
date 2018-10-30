@@ -1,7 +1,21 @@
+import {
+  getCiphers
+} from 'tls';
+
 const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
-
+const {
+  getChildren,
+  getNodeName,
+  getProperties,
+  getType,
+  setChildren,
+  hasChildren,
+  filterNodes,
+  filterChildren, 
+  removeNodesByName
+} = require('idyll-astV2');
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
   return `
     ((context) => {
@@ -36,42 +50,35 @@ export const evalExpression = (acc, expr, key, context) => {
   let e = buildExpression(acc, expr, key, context, isEventHandler);
 
   if (isEventHandler) {
-    return (function() {
+    return (function () {
       eval(e);
     }).bind(Object.assign({}, acc, context || {}));
   }
 
   try {
-    return (function(evalString){
+    return (function (evalString) {
       try {
         return eval('(' + evalString + ')');
-      } catch(err) {}
+      } catch (err) {}
     }).call(Object.assign({}, acc, context || {}), e);
   } catch (err) {}
 }
 
-/* change here */
 /*
 arr -> list of vars 
 return -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
-    /*
-    //const [ variableType, attrs = [], ] = val;
-    const variableType = val.name; 
-    const attr = val.properties; 
-   //["var", [[namearr],[valuearr]], []]
-    const [nameArr, valueArr] = attrs;
-    if (!nameArr || !valueArr) return acc;
+    const variableType = getType(val);
+    const attrs = getProperties(val) || [];
 
-    const [, [, nameValue]] = nameArr
-    const [, [valueType, valueValue]] = valueArr;
-    */
-    const variableType = val.type; 
-    const attr = val.properties; 
-    const nameValue = attr.name.value; 
-    const valueValue = attr.value.value; 
-    switch(valueType) {
+    if (!attrs.name || !attrs.value) return attrs;
+
+    const nameValue = attrs.name.value;
+    const valueType = attrs.value.type;
+    const valueValue = attrs.value.value;
+
+    switch (valueType) {
       case 'value':
         acc[nameValue] = valueValue;
         break;
@@ -98,10 +105,10 @@ export const getVars = (arr, context = {}, evalContext) => {
     return acc;
   }
 
-  return arr.reduce(
-    pluck,
-    {}
-  )
+  let vars = arr.reduce(
+    pluck, {}
+  );
+  return vars;
 }
 
 export const filterIdyllProps = (props, filterInjected) => {
@@ -118,69 +125,66 @@ export const filterIdyllProps = (props, filterInjected) => {
     ...rest
   } = props;
   if (filterInjected) {
-    const { idyll, hasError, updateProps, ...ret} = rest;
+    const {
+      idyll,
+      hasError,
+      updateProps,
+      ...ret
+    } = rest;
     return ret;
   }
   return rest;
 }
-
-/* change here */
-
 export const getData = (arr, datasets = {}) => {
-  // ["data", [[nameArr], [sourceArr]], []]
   const pluck = (acc, val) => {
-    const attr = val; 
-    const nameValue = val.name.value; 
-    
-    /*
-    const [ , attrs, ] = val
-    const [nameArr, ] = attrs;
-
-    const [, [, nameValue]] = nameArr
-    */
-
+    const nameValue = getProperties(val).name.value;
     acc[nameValue] = datasets[nameValue];
 
     return acc;
   }
 
   return arr.reduce(
-    pluck,
-    {}
+    pluck, {}
   )
 }
 
-/* change here */
 export const splitAST = (ast) => {
   const state = {
-    vars: {},
-    derived: {},
-    data: {},
-    elements: {},
+    vars: [],
+    derived: [],
+    data: [],
+    elements: [],
   }
 
-  /* change here */
   const handleNode = (storeElements) => {
     return (node) => {
-      const [ name, props, children ] = node;
-      if (name === 'var') {
-        state.vars.push(node);
-      } else if (state[name]) {
-        state[name].push(node);
-      } else if (storeElements) {
-        state.elements.push(node);
+      const type = getType(node);
+      const props = getProperties(node);
+      //console.log("get node @ handleNode (splitAST)", node);
+      const children = getChildren(node);
+      if(node.id != 0) {
+        if (type === 'var') {
+          state.vars.push(node);
+        } else if (state[type]) {
+          state[type].push(node);
+        } else if (storeElements) {
+          state.elements.push(node);
+        }
+        //typeof children === 'string'; 
+        if (!children || (children.length === 1 && getType(children[0]) === "textnode")) {
+          return;
+        }
+        children.forEach(handleNode(false));
       }
-      if (!children || typeof children === 'string') {
-        return;
-      }
-      children.forEach(handleNode(false));
     }
-  }
 
+  }
   ast.forEach(handleNode(true));
+  //console.log("state: ", state);
   return state;
 }
 
+//Properties that add logic to components for callbacks. 
 export const hooks = [
   'onEnterView',
   'onEnterViewFully',
@@ -195,115 +199,147 @@ export const scrollMonitorEvents = {
   'onExitViewFully': 'exitViewport'
 }
 
-/* change here */
-export const translate = (arr) => {
-  const attrConvert = (list) => {
-    return list.reduce(
-      (acc, [name, [type, val]]) => {
-        if (type === 'variable') {
-          acc.__vars__ = acc.__vars__ || {};
-          acc.__vars__[name] = val;
+export const translate = (ast) => {
+
+  const attrConvert = (props) => {
+    let reducedProps = {};
+    for (let propName in props) {
+      const name = propName;
+      const type = props[propName].type;
+      const value = props[propName].value;
+      if (type == "variable") {
+        if (!reducedProps.__vars__) {
+          reducedProps.__vars__ = {};
         }
-        // each node keeps a list of props that are expressions
-        if (type === 'expression') {
-          acc.__expr__ = acc.__expr__ || {};
-          acc.__expr__[name] = val;
-        }
-        // flag nodes that define a hook function
-        if (hooks.includes(name)) {
-          acc.hasHook = true;
-        };
-
-        acc[name] = val;
-        return acc;
-      },
-      {}
-    )
-  }
-
-  const tNode = (node) => {
-    if (typeof node === 'string') return node;
-
-    if (node.length === 3) {
-      const [ name, attrs, children ] = node;
-
-      return {
-        component: name,
-        ...attrConvert(attrs),
-        children: children.map(tNode),
+        reducedProps.__vars__[name] = value;
       }
+      if (type == "expression") {
+        if (!reducedProps.__expr__) {
+          reducedProps.__expr__ = {};
+        }
+        reducedProps.__expr__[name] = value;
+      }
+
+      if (hooks.includes(name)) {
+        reducedProps.hasHook = true;
+      };
+
+      reducedProps[name] = value;
+    }
+    return reducedProps;
+  }
+  //What does tnode do? 
+  const tNode = (node) => {
+    if (getType(node) === 'textnode') return node;
+
+    let name = getNodeName(node);
+
+    let attrs = getProperties(node);
+    if (!attrs) {
+      attrs = {};
+    }
+    const children = getChildren(node);
+    return {
+      component: name,
+      ...attrConvert(attrs),
+      children: children.map(tNode),
     }
   }
 
-  return splitAST(arr).elements.map(tNode)
+  return splitAST(getChildren(ast)).elements.map(tNode);
 }
 
 export const mapTree = (tree, mapFn, filterFn = () => true) => {
+
+
   const walkFn = (acc, node) => {
-    if (typeof node !== 'string') {
-      if (node.children) {
-        // translated schema
-        node.children = node.children.reduce(walkFn, []);
-      } else {
-        // compiler AST
-        node[2] = node[2].reduce(walkFn, []);
-      }
+    //To check for textnodes
+    if(node.component) {
+      //To check for childrens
+      if(node.children) {
+        node.children =  node.children.reduce(walkFn, []); 
+      } 
     }
 
-    if (filterFn(node)) acc.push(mapFn(node));
+    if(filterFn(node)) {
+      acc.push(mapFn(node)); 
+      console.log("......");
+      console.log("node", JSON.stringify(node));
+      console.log("......"); 
+    } 
     return acc;
   };
-
-  return tree.reduce(
-    walkFn,
-    []
-  );
+  let value = tree.reduce(walkFn, []); 
+  return value;
 };
+
 
 export const filterASTForDocument = (ast) => {
-  return mapTree(ast, n => n, ([name]) => name !== 'meta')
+  return removeNodesByName(ast, "meta");
 };
 
-export const findWrapTargets = (schema, state) => {
-  const targets = [];
+export const findWrapTargets = (schema, state, components) => {
+  console.log("find wrap targets");
+  //Custom components
+  const targets = []; 
+  //Name of custom components
+  const componentNames = (Object.keys(components));
+  componentNames.forEach((component, i) => {
+    let words = component.split("-"); 
+    for(let i = 0; i < words.length; i++) {
+      words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
+    }
+    componentNames[i] = words.join("");
+  });
+
+  //Array of keys for the runtime state passed. 
   const stateKeys = Object.keys(state);
 
-  // always return node so we can walk the whole tree
-  // but collect and ultimately return just the nodes
-  // we are interested in wrapping
+  //Populating target with the custom componenets
+  //Walk the whole tree, collect and return the nodes 
+  //for wrapping
   mapTree(schema, (node) => {
-    if (typeof node === 'string') return node;
-
-    if (node.hasHook) {
-      targets.push(node);
-      return node;
+    if(node.component == "textnode") {
+      return node; 
     }
 
-    // wrap all custom components
-    const startsWith = node.component.charAt(0);
-    if (startsWith === startsWith.toUpperCase()) {
-      targets.push(node);
-      return node;
+    //Custom components will have hooks attached to them
+    if(node.hasHook) {
+      targets.push(node); 
+      return node; 
+    }
+ 
+    if(node.component) {
+      if(componentNames.includes(node.component.toLowerCase())) {  
+        targets.push(node); 
+        return node; 
+      }
     }
 
-    // pull off the props we don't need to check
-    const { component, children, __vars__, __expr__, ...props } = node;
-    const expressions = Object.keys(__expr__ || {});
-    const variables = Object.keys(__vars__ || {});
+    const {
+      component, 
+      children, 
+      __vars__,
+      __expr__,
+      ...props
+    } = node; 
 
-    // iterate over the node's prop values
-    entries(props).forEach(([key, val]) => {
-      // avoid checking more props if we know it's a match
-      if (targets.includes(node)) return;
+    const expressions = Object.keys(__expr__ || {}); 
+    const variables = Object.keys(__vars__ || {}); 
 
-      // Include nodes that reference a variable or expression.
-      if (variables.includes(key) || expressions.includes(key)) {
+    for(let prop in props) {
+      
+      if(targets.includes(node)) {
+        return; 
+      }
+
+      if (variables.includes(prop) || expressions.includes(prop)) {
         targets.push(node);
       }
-    });
+  
+    }
+    return node; 
+  });
 
-    return node;
-  })
-
-  return targets;
-}
+  return targets; 
+};

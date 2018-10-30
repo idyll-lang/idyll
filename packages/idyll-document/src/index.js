@@ -77,7 +77,7 @@ class IdyllDocument extends React.Component {
             typeof this.props.context === 'function' && this.props.context(context);
           }}
           initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
-          ast={ convert(this.props.ast) || convert(this.state.ast) }
+          ast={ this.props.ast || this.state.ast }
           />
         { this.getErrorComponent() }
       </div>

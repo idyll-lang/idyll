@@ -6,6 +6,7 @@ import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
+import { getChildren } from 'idyll-astV2';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -24,6 +25,11 @@ import {
   scrollMonitorEvents
 } from './utils';
 
+import {
+  getType,
+  hasType
+} from 'idyll-astV2';
+import { resolve } from 'dns';
 const updatePropsCallbacks = [];
 const updateRefsCallbacks = [];
 const scrollWatchers = [];
@@ -187,15 +193,13 @@ class IdyllRuntime extends React.PureComponent {
 
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
-
     const ast = filterASTForDocument(props.ast);
-
     const {
       vars,
       derived,
       data,
       elements,
-    } = splitAST(ast);
+    } = splitAST(getChildren(ast));
 
 
     const Wrapper = createWrapper({ theme: props.theme, layout: props.layout });
@@ -210,7 +214,6 @@ class IdyllRuntime extends React.PureComponent {
       ...initialState,
       ...getDerivedValues(derivedVars),
     };
-
     this.updateState = (newState) => {
       // merge new doc state with old
       const newMergedState = {...this.state, ...newState};
@@ -264,18 +267,19 @@ class IdyllRuntime extends React.PureComponent {
     })
 
     const components = Object.assign(fallbackComponents, props.components, internalComponents);
-
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
-
-    const wrapTargets = findWrapTargets(schema, this.state);
-
+    const wrapTargets = findWrapTargets(schema, this.state, props.components);
+    console.log("wrapTargets: ", wrapTargets);
     let refCounter = 0;
-
+    console.log("transformedSchema");
     const transformedSchema = mapTree(
       schema,
       node => {
-        if (typeof node === 'string') return node;
+
+        if(!node.component) {
+          if(node.type && node.type === "textnode") return node.value;
+        }
 
         // transform refs from strings to functions and store them
         if (node.ref || node.hasHook) {
@@ -291,9 +295,8 @@ class IdyllRuntime extends React.PureComponent {
             };
           };
         }
-
+        //Inspect for isHTMLNode  props and to check for dynamic components. 
         if (!wrapTargets.includes(node)) return node;
-
         const {
           component,
           children,
@@ -315,7 +318,6 @@ class IdyllRuntime extends React.PureComponent {
             node[k] = evalExpression(state, __expr__[k], k, evalContext);
           }
         });
-
         const resolvedComponent = rjs.resolveComponent(node);
         const isHTMLNode = typeof resolvedComponent === 'string';
 
@@ -344,7 +346,6 @@ class IdyllRuntime extends React.PureComponent {
         };
       }
     );
-
     this.kids = rjs.parseSchema(transformedSchema);
   }
 

@@ -41,6 +41,7 @@ const build = (opts, paths, resolvers) => {
         const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
         /* Change here */
+
         // Set -> Array to remove duplicate entries.
        /* const uniqueComponents = Array.from(new Set(getComponentNodes(ast).map(node => {
           return node.name.split('.')[0];
@@ -48,6 +49,7 @@ const build = (opts, paths, resolvers) => {
 
         /*
           
+
         let nameArray = []; 
         getComponentNodes(ast).forEach((node) => {
           if(["var", "derived", "data"].indexOf(node.type) > -1) {
@@ -58,6 +60,7 @@ const build = (opts, paths, resolvers) => {
         })
         const uniqueComponents = Array.from(new Set(nameArray));  
         */
+        
         let nameArray = []; 
         walkNodes(getComponentNodes(ast)[0], (node) => {
           nameArray.push(node.name.split('.')[0]); 

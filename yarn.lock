@@ -7209,6 +7209,10 @@ react-inlinesvg@^0.8.1:
     httpplease "^0.16.4"
     once "^1.4.0"
 
+react-is@^16.4.2:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.2.tgz#84891b56c2b6d9efdee577cc83501dfc5ecead88"
+
 react-latex-patched@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-latex-patched/-/react-latex-patched-1.1.1.tgz#d6a36c070c6d32feeb6e5625d9b44b306c920b71"
@@ -7244,7 +7248,16 @@ react-table@^6.6.0:
   dependencies:
     classnames "^2.2.5"
 
-react-test-renderer@^16.0.0, react-test-renderer@^16.0.0-0:
+react-test-renderer@^16.0.0:
+  version "16.4.2"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.4.2.tgz#4e03eca9359bb3210d4373f7547d1364218ef74e"
+  dependencies:
+    fbjs "^0.8.16"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+    react-is "^16.4.2"
+
+react-test-renderer@^16.0.0-0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.2.0.tgz#bddf259a6b8fcd8555f012afc8eacc238872a211"
   dependencies:

@@ -7,6 +7,7 @@ const _componentMap = new WeakMap();
 class ReactJsonSchema {
   constructor(componentMap) {
     if (componentMap) this.setComponentMap(componentMap);
+
   }
 
   parseSchema(schema) {
@@ -24,7 +25,7 @@ class ReactJsonSchema {
     const Components = [];
     let index = 0;
     for (const subSchema of subSchemas) {
-      if (typeof subSchema === 'string') {
+      if (typeof subSchema === "string") {
         Components.push(subSchema);
       } else {
         subSchema.key = typeof subSchema.key !== 'undefined' ? subSchema.key : index;
@@ -36,6 +37,9 @@ class ReactJsonSchema {
   }
 
   createComponent(schema) {
+    if(schema.type) {
+      if(schema.type === 'textnode') return schema.value;;
+    }
     const { component, children, text, ...rest } = schema;
     const Component = this.resolveComponent(schema);
     const Children = typeof text !== 'undefined' ? text : this.resolveComponentChildren(schema);
@@ -45,8 +49,9 @@ class ReactJsonSchema {
   resolveComponent(schema) {
     const componentMap = this.getComponentMap();
     let Component;
-
+    //console.log("schema", schema);
     // bail early if there is no component name
+    //console.log("schema: ", schema);
     if (!schema.hasOwnProperty('component')) {
       throw new Error('ReactJsonSchema could not resolve a component due to a missing component attribute in the schema.');
     }
@@ -74,7 +79,7 @@ class ReactJsonSchema {
       if (DOM.hasOwnProperty(name)) {
         Component = schema.component;
       } else {
-        console.warn(`Could not find an implementation for: {schema.component}`);
+        console.warn(`Could not find an implementation for: ${schema.component}`);
         return () => (
           <div style={{ color: 'black', border: 'solid 1px red'}}>
             <pre>Could not find an implementation for: {schema.component}</pre>

@@ -68,10 +68,10 @@ const createNode = function (id, name, type, props = null, children = null) {
   node.type = type;
   node.name = name;
   if (props) {
-    node.props = object.assign({}, props);
+    node.properties = Object.assign({}, props);
   }
   if (children) {
-    node.children = object.assign({}, children);
+    node.children = Object.assign({}, children);
   }
   return node;
 };
@@ -88,10 +88,10 @@ const createTextNode = function (id, value) {
   typeCheckInteger(id, "id");
   typeCheckString(value, "value");
 
-  let texnode = new Object();
+  let textnode = new Object();
   textnode.id = id;
   textnode.type = "textnode";
-  textNode.value = value;
+  textnode.value = value;
 
   return textnode;
 };
@@ -105,13 +105,14 @@ const createTextNode = function (id, value) {
  * @return {object[]} children of the node
  */
 const getChildren = function (node) {
-  typeCheckObject(node, "node");
+  typeCheckObject(node, "node (gc)");
   runValidator(node, "node");
 
   if (node.type === "textnode") {
     return [];
   }
   if(node.children) {
+    //console.log("node @ gc", node);
     return node.children.map((element) => Object.assign({}, element));
   } else {
     return []; 
@@ -119,6 +120,46 @@ const getChildren = function (node) {
   
 };
 
+/**
+ * @name setChildren
+ * @type { function }
+ * @description
+ * Function to set children of the passed node.
+ * @param { object } node
+ * @param { object } children
+ * @return { object } modified node
+ */
+const setChildren = function (node, children) {
+  typeCheckObject(node, "node (sc)"); 
+  runValidator(node, "node");
+  if(["textnode", "var", "derived", "data"].indexOf(getType(node)) > -1) {
+    return node;
+    //throw new error.InvalidParameterError(getType(node) + " cannot have any children"); 
+  }
+  
+  checkChildren(children); 
+
+  node.children = children; 
+
+  return Object.assign({}, node); 
+}
+
+
+const hasChildren = function (node) {
+  typeCheckObject(node, "node (hc)"); 
+  runValidator(node, "node");
+
+  if(["textnode", "var", "derived", "data"].indexOf(getType(node)) > -1) {
+    return false;  
+  }
+
+  if(node.children) {
+    //console.log("@hasChildren", node);
+    return true;
+  } else {
+    return false; 
+  }
+}
 /**
  * @name getNodesByName
  * @type {function}
@@ -132,16 +173,57 @@ const getNodesByName = function (ast, name) {
   typeCheckObject(ast, "ast");
   typeCheckString(name, "name");
   runValidator(ast, "ast");
+  let nodes = []; 
+  if(name === "article") {
+    nodes.push(ast); 
+  }
+  let otherNodes = getNodesByNameHelper(ast.children, name); 
+  return (nodes.concat(otherNodes)).map((element) => Object.assign({}, element)); 
 
-  let node = ast.children.filter((element) => (element.name === name));
-  node = node.map((element) => Object.assign({}, element));
+}
 
-  let otherNodes = [];
-  node.forEach((node) => {
-    othernodes += getNodesByName(node, name);
-  });
-  return (node.concat(otherNodes)).map((element => Object.assign({}, element)));
+/*
+  Helper function for getNodesBtName 
+*/
+function getNodesByNameHelper(childArray, name) {
+  let nodes = childArray.filter((element) => (element.name === name)); 
+  let otherNodes = []; 
+  childArray.forEach((node) => {
+    if(hasChildren(node)) {
+      otherNodes = otherNodes.concat(getNodesByNameHelper(node.children, name)); 
+    }
+  }); 
+  return nodes.concat(otherNodes);
 };
+
+/**
+ * @name hasType
+ * @type {function}
+ * Function to check if a node has type attribute or not
+ * @param {object} node
+ * @return {boolean} true if type exists, false otherwise
+ */
+const hasType = function (node) {
+  if(node.type) {
+    return true; 
+  }
+  return false; 
+}
+
+/**
+ * @name getType
+ * @type {function}
+ * @description
+ * Function to get the type information of a node
+ * @param {object} ast  AST object 
+ * @return {string} type of the node
+ */
+const getType = function (node) {
+  typeCheckObject(node, "node(Get type)");
+  runValidator(node, "node"); 
+  
+  return node.type; 
+}
 
 /**
  * @name getText 
@@ -156,12 +238,12 @@ const getText = function (node) {
   runValidator(node, "node");
 
   const texts = [];
-  walknodes(getChildren(node), (n) => {
+  walkNodes(node, (n) => {
     if (n.type === "textnode") {
-      texts.push(n);
+      texts.push(n.value);
     }
   });
-  return texts.join("");
+  return texts.join(" ");
 };
 
 /*
@@ -199,7 +281,7 @@ const modifyChildren = function (node, modifier) {
   checkASTandFunction(node, "node", modifier, "modifier");
 
   //Keeping the functionality same as before for textnode
-  if (node.type === "textnode") {
+  if (["textnode", "var", "derived", "data"].indexOf(node.type) > -1) {
     return node;
   }
   node.children = getChildren(node).map((child) => {
@@ -220,34 +302,13 @@ const modifyChildren = function (node, modifier) {
 const filterChildren = function (node, filter) {
   checkASTandFunction(node, "node", filter, "filter");
 
-  if (node.type === "textnode") {
+  if (["textnode", "var", "derived", "data"].indexOf(node.type) > -1) {
     return node;
   }
   node.children = getChildren(node).filter((child) => {
     return filter(child);
   });
   return Object.assign({}, node);
-};
-
-/**
- * @name pruneNodes
- * @type {function}
- * @description
- * Function to prune nodes based on a filter and return a modified AST. 
- * @param {object} ast 
- * @param {functon} filter 
- * @return {object[]} An array with the ModifiedAST as it's 0th index.
- */
-const pruneNodes = function (ast, filter) {
-  checkASTandFunction(ast, "ast", filter, "filter");
-
-  let result = [ast].filter(filter).map((node) => {
-    if (node.type === "textnode") {
-      return node;
-    }
-    node.children = pruneNodes(getChildren(node) || [], filter);
-    return Object.assign({}, node);
-  });
 };
 
 /**
@@ -264,21 +325,27 @@ const modifyNodesByName = function (ast, name, modifier) {
   checkASTandFunction(ast, "ast", modifier, "modifier");
 
   ([ast] || []).map((node) => {
-    modifyHelper(getChildren(node), name, modifier);
-    node = handleNodeByName();
+    if (["textnode", "var", "derived", "data"].indexOf(node.type) === -1) {
+      node.children = modifyHelper(getChildren(node), name, modifier);
+    }
+    node = handleNodeByName(node, name, modifier);
   });
   return Object.assign({}, ast);
 };
 
 //Helper function for modifyHelper. 
-function modifyHelper(ast, name, modifier) {
+function modifyHelper(children, name, modifier) {
   typeCheckString(name, "name");
-  checkASTandFunction(ast, "ast", modifier, "modifier");
+  //checkASTandFunction(, "ast", modifier, "modifier");
 
-  ([ast] || []).map((node) => {
-    modifyHelper(getChildren(node, name, modifier));
-    node = handleNodeByName(node);
+  (children || []).map((node) => {
+    if (["textnode", "var", "derived", "data"].indexOf(node.type) === -1) {
+      node.children = modifyHelper(getChildren(node), name, modifier);
+    }
+    node = handleNodeByName(node, name, modifier);
   });
+
+  return children; 
 }
 
 /**
@@ -294,7 +361,7 @@ const handleNodeByName = function (node, name, modifier) {
   typeCheckString(name, "name");
   checkASTandFunction(node, "node", modifier, "modifier");
 
-  if (node.type === "textnode") {
+  if (["textnode", "var", "derived", "data"].indexOf(node.type) > -1) {
     return node;
   }
   if (node.name.toLowerCase() === name) {
@@ -312,13 +379,25 @@ const handleNodeByName = function (node, name, modifier) {
  */
 const getNodeName = function (node) {
   typeCheckObject(node, "node");
-  runValidator(node, "node");
+  //runValidator(node, "node");
 
-  if (node.type !== "compoenent") {
-    throw error.InvalidParameterError("Paramter node must be a component");
+  if (node.type !== "component") {
+    return node.type;
   }
   return node.name;
 };
+/**
+ * @name getPropertyKeys
+ * @description
+ * Function to return a the list of property keys of a node
+ * @param {object} node
+ * @return {string[]} keys 
+ */
+const getPropertyKeys = function (node) {
+  typeCheckObject(node, "node"); 
+  runValidator(node, "node"); 
+  return Object.keys(node.properties);
+};  
 
 /**
  * @name getProperty
@@ -330,10 +409,10 @@ const getNodeName = function (node) {
  */
 const getProperty = function (node, key) {
   typeCheckString(key, "key");
-  typeCheckObject(node, "node");
+  typeCheckObject(node, "node gp");
   runValidator(node, "node");
-
-  if (node.properties.hasOwnProperty(key)) {
+  
+  if (node.properties && node.properties.hasOwnProperty(key)) {
     return node.properties[key]; 
   }
   return null
@@ -349,7 +428,6 @@ const getProperty = function (node, key) {
 const getProperties = function (node) {
   typeCheckObject(node, "node");
   runValidator(node, "node");
-
   if (node.properties) {
     return node.properties;
   }
@@ -423,14 +501,24 @@ const removeNodesByName = function (ast, name) {
   typeCheckString(name, "name");
   typeCheckObject(ast, "ast");
   runValidator(ast, "ast");
-  return pruneNodes(ast, (node) => {
-    if (node.name.toLowerCase() === name.toLowerCase()) {
-      return false;
-    }
-    return true;
-  })
+  
+  if(hasChildren(ast)) {
+    let children = getChildren(ast); 
+    ast = setChildren(ast, removeHelper(children, name));
+  }
+  return ast; 
 };
 
+function removeHelper(children, name) {
+  children.forEach((child, index) => {
+    if(getNodeName(child) === name){
+      children.splice(index, 1); 
+    } else {
+      child = setChildren(child, removeHelper(getChildren(child), name)); 
+    }
+  });
+  return children;
+}
 /**
  * @name removeProperties
  * @description
@@ -481,8 +569,7 @@ const setProperty = function (node, name, data) {
   }
   if (node.properties) {
       node.properties[name] = data; 
-    }
-  } 
+  }
   return Object.assign({}, node);
 };
 
@@ -496,7 +583,7 @@ const setProperty = function (node, name, data) {
  */
 const setProperties = function (node, properties) {
   typeCheckObject(node, "node");
-  runValidator(node, "node");
+  runValidator(node, "node sp");
   checkProps(props);
 
   if (typeof porperties !== "object") {
@@ -522,18 +609,18 @@ const setProperties = function (node, properties) {
  */
 const walkNodes = function (ast, f) {
   checkASTandFunction(ast, "ast", f, "f");
-
-  walkNodesHelper(ast, f);
+  walkNodesHelper(ast.children, f);
+  f(ast); 
 };
 
 //Helper function for walkNodes 
-function walkNodesHelper(ast, f) {
-  ([ast] || []).forEach((node) => {
-    let child = getChildren(node);
-    if(child.length > 0) {
-      walkNodes(child, f);
-      f(node);
+function walkNodesHelper(astArray, f) {
+  (astArray || []).forEach((node) => {
+    let children = getChildren(node);
+    if(children.length > 0) {
+      walkNodesHelper(children, f);
     }
+    f(node);
   });
 }
 
@@ -546,30 +633,23 @@ function walkNodesHelper(ast, f) {
  */
 const walkNodesBreadthFirst = function (ast, f) {
   checkASTandFunction(ast, "ast", f, "f");
+  f(ast); 
   walkNodesBreadthFirstHelper(ast, f);
+
 };
 
 // Helper function for walkNodeBreadthFirst
 function walkNodesBreadthFirstHelper(ast, f) {
   let childAst = [];
-  ([ast] || []).forEach((node) => {
+  (ast || []).forEach((node) => {
     f(node);
     childAst = childAst.concat(getChildren(node));
   });
-  if (childAst.length !== 0) {
-    walkNodesBreadthFirst(childAst, f);
+  if (childAst.length > 0) {
+    walkNodesBreadthFirstHelper(childAst, f);
   }
 }
 
-const addRoot = function(ast) {
-  let root = {
-    "id": 1,
-    "name": "root", 
-    "type": "compoenent", 
-    "children": ast
-  }
-  return root; 
-}
 /*
   Function to check for errors between ast and node variables
 */
@@ -599,9 +679,9 @@ function checkASTandNodeArray(ast, nodes) {
   Function to check for errors while creating a new Node
 */
 function checkForCreateNode(id, name, type, props, children) {
-  typeCheckInteger(id);
-  typeCheckString(name);
-  checkType(type);
+  typeCheckInteger(id, "id");
+  typeCheckString(name, "name");
+  checkNodeType(type);
   checkProps(props);
   checkChildren(children);
 }
@@ -619,8 +699,8 @@ function typeCheckObject(param, paramName) {
   Function to type check Integers
 */
 function typeCheckInteger(param, paramName) {
-  if (typeof parma !== "integer") {
-    throw new error.InvalidParameterError("Paramter: " + paramName + "must be an integer.");
+  if (typeof param !== "number") {
+    throw new error.InvalidParameterError("Paramter: " + paramName +  "must be an integer.");
   }
 }
 
@@ -637,7 +717,7 @@ function typeCheckString(param, paramName) {
   Function to type check an array
 */
 function typeCheckArray(array, arrayName) {
-  if (!array.isArray()) {
+  if (!Array.isArray(array)) {
     throw new InvalidParameterError("Paramter " + arrayName + " must be an array. " + "Object: " + param);
   }
 }
@@ -665,6 +745,16 @@ function checkType(type) {
   typeCheckString(type, "type");
   if ((["value", "expression", "variable"].indexOf(type) === -1)) {
     throw new error.InvalidParameterError("Type should be a value, expression or variable");
+  }
+}
+
+/*
+ Function to check type of a component
+*/
+function checkNodeType(type) {
+  typeCheckString(type, "type");
+  if ((["component", "textnode", "var", "derived", "data"].indexOf(type) === -1)) {
+    throw new error.InvalidParameterError("Type should be a component, textnode, var, derived or data");
   }
 }
 /*
@@ -723,22 +813,25 @@ module.exports = {
   getChildren,
   getNodesByName,
   getNodeName,
+  getPropertyKeys,
   getProperty,
   getProperties,
   getPropertiesByType,
   getText,
+  hasType,
+  getType,
+  hasChildren,
   modifyChildren,
   modifyNodesByName,
   prependNode,
   prependNodes,
-  pruneNodes,
   removeNodesByName,
   removeProperty,
+  setChildren,
   setProperty,
   setProperties,
   walkNodes,
   walkNodesBreadthFirst,
   convert, 
-  inverseConvert, 
-  addRoot
+  inverseConvert
 };

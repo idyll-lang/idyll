@@ -9,7 +9,7 @@
             "type": "integer"
         },
         "type": {
-            "description": "The type category of the element (component/textnode)",
+            "description": "The type category of the element (component/var/derived)",
             "type": "string",
             "enum": ["component"]
         },
@@ -57,15 +57,116 @@
                             "type": {
                                 "description": "The type category of the element",
                                 "type": "string",
-                                "enum": ["textnode", "var", "derive", "data"]
+                                "enum": ["textnode"]
                             },
                             "value": {
-                                "description": "Element value",
+                                "description": "Text value in the textnode",
                                 "type": "string"
                             }
                         },
                         "required": ["id", "type", "value"],
                         "additionalProperties": false
+                    },
+                    {
+                        "description": "Structure for var and derived",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "desceription": "A unique identifier for the current element",
+                                "id": "integer"
+                            },
+                            "type": {
+                                "description": "The type category of the element",
+                                "type": "string",
+                                "enum": ["var", "derived"]
+                            },
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the variable",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["value", "variable", "expression"]
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                },
+                                "value": {
+                                    "description": "Source for the data",
+                                    "type": "object",
+                                    "properties": {
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": ["value", "variable", "expression"]
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": ["id", "type", "properties"]
+                        }
+                    },
+                    {
+                        "description": "Structure for data",
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "desceription": "A unique identifier for the current element",
+                                "id": "integer"
+                            },
+                            "type": {
+                                "description": "The type category of the element",
+                                "type": "string",
+                                "enum": ["data"]
+                            },
+                            "properties": {
+                                "name": {
+                                    "description": "Name of the variable",
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["value", "variable", "expression"]
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                },
+                                "source": {
+                                    "description": "Source for the data",
+                                    "type": "object",
+                                    "properties": {
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": ["value", "variable", "expression"]
+                                            },
+                                            "value": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "required": ["name", "vale"],
+                                    "additionalProperties": false
+                                }
+                            },
+                            "required": ["id", "type", "properties"]
+                        }
                     }
                 ]
             },

@@ -11,17 +11,20 @@ const {
   getNodesByName,
   getProperty,
   filterNodes,
-  convert
+  getNodeName,
+  getProperties,
+  getPropertyKeys
 } = require('idyll-astV2')
 
 exports.getComponentNodes = (ast) => {
   const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
-  return filterNodes(ast, node => {
-    if (typeof node === 'string') {
-      return false
+  let filter = filterNodes(ast, node => {
+    if(node.type === "textnode") {
+      return false; 
     }
-    return !ignoreNames.has(node.name.toLowerCase())
+    return !ignoreNames.has(getNodeName(node).toLowerCase())
   });
+  return filter; 
 }
 
 exports.getDataNodes = (ast) => {
@@ -103,15 +106,16 @@ exports.getHighlightJS = (ast, paths, server) => {
 const parseMeta = (ast) => {
   // there should only be one meta node
   const metaNodes = getNodesByName(ast, 'meta');
-
-  // data is stored in props, hence [1]
-  return metaNodes.length ? metaNodes[0][1].reduce(
-    (acc, prop) => {
-      acc[prop[0]] = prop[1][1];
-      return acc;
-    },
-    {}
-  ) : {};
+  
+  let metaProperties = {}; 
+  if(metaNodes.length > 1) {
+    console.warn("There are more than 1 meta nodes"); 
+  } else if (metaNodes.length === 1) {
+    getPropertyKeys(metaNodes[0]).forEach((key) => {
+      metaProperties[key] = getProperty(metaNodes[0], key).value; 
+    });
+  }
+  return metaProperties;
 }
 
 const formatFont = (fontName) => {
@@ -147,7 +151,6 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
     delete require.cache[require.resolve(_components[key])];
     components[key] = require(_components[key]);
   });
-
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
@@ -155,7 +158,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const meta = parseMeta(ast);
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
-      ast: convert(ast),
+      ast: ast,
       components,
       datasets,
       theme: opts.theme,
