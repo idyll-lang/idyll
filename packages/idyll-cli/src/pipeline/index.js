@@ -46,14 +46,24 @@ const build = (opts, paths, resolvers) => {
           return node.name.split('.')[0];
         })));*/
 
+        /*
+          
+        let nameArray = []; 
+        getComponentNodes(ast).forEach((node) => {
+          if(["var", "derived", "data"].indexOf(node.type) > -1) {
+            nameArray.push(node.type); 
+          } else {
+            nameArray.push(node.name.split(".")[0]);
+          }
+        })
+        const uniqueComponents = Array.from(new Set(nameArray));  
+        */
         let nameArray = []; 
         walkNodes(getComponentNodes(ast)[0], (node) => {
           nameArray.push(node.name.split('.')[0]); 
         }); 
-        console.log("names:", nameArray);
         const uniqueComponents = Array.from(new Set(nameArray)); 
         
-        console.log('unique components', uniqueComponents)
         const components = uniqueComponents.reduce((acc, name) => {
           let resolved = resolvers.get('components').resolve(name);
           if (resolved) acc[paramCase(name)] = resolved;
