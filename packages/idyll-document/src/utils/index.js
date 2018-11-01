@@ -263,9 +263,6 @@ export const mapTree = (tree, mapFn, filterFn = () => true) => {
 
     if(filterFn(node)) {
       acc.push(mapFn(node)); 
-      console.log("......");
-      console.log("node", JSON.stringify(node));
-      console.log("......"); 
     } 
     return acc;
   };
@@ -289,9 +286,9 @@ export const findWrapTargets = (schema, state, components) => {
     for(let i = 0; i < words.length; i++) {
       words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
     }
-    componentNames[i] = words.join("");
+    componentNames[i] = words.join("").toLowerCase();
   });
-
+  console.log("componentNames", componentNames);
   //Array of keys for the runtime state passed. 
   const stateKeys = Object.keys(state);
 
@@ -310,7 +307,9 @@ export const findWrapTargets = (schema, state, components) => {
     }
  
     if(node.component) {
+      console.log("node.component", node.component);
       if(componentNames.includes(node.component.toLowerCase())) {  
+        console.log("node.component eval", componentNames.includes(node.component.toLowerCase()));
         targets.push(node); 
         return node; 
       }
