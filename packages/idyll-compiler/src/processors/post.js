@@ -17,6 +17,15 @@ const attrConvert = (list) => {
   )
 };
 
+const attrConvert = (props) => {
+  let mappedProps = {}; 
+  for(let prop in props) {
+    if(prop.type == "value") {
+      mappedProps[prop] = prop.value; 
+    }
+  }
+  return mappedProps; 
+}
 /* processing of the compiler output. Turn quotes into smarquotes
   unwrapping and stuff. 
 */
