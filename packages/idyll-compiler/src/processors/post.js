@@ -5,6 +5,7 @@ const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeN
 
 /*Maps property to their values*/
 
+/*
 const attrConvert = (list) => {
   return ([list] || []).reduce(
     (acc, [name, [type, val]]) => {
@@ -15,8 +16,12 @@ const attrConvert = (list) => {
     },
     {}
   )
-};
-
+};*/
+/**
+ * Converts props list to a map of property to valu where type == value
+ * @param {*} props 
+ * @return mappedProps -> map of prop - vlaue 
+ */
 const attrConvert = (props) => {
   let mappedProps = {}; 
   for(let prop in props) {
