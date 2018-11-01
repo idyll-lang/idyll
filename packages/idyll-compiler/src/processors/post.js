@@ -1,7 +1,7 @@
 
 const smartquotes = require('smartquotes');
 
-const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode, createNode} = require('idyll-astV2');
+const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeNodesByName, removeProperty, setProperty, getProperty, getNodeName, createTextNode, createNode, getChildren} = require('idyll-astV2');
 
 /*Maps property to their values*/
 
@@ -72,17 +72,23 @@ const cleanResults = (ast, options) => {
   })
 };
 
-/* Change here */
+/**
+ * Removes _idyllContainer from the ast and percolate-up it's children 
+ * as the parent's children 
+ * @param {Array} ast - Children of the ast (does not include id = 0)
+ * @return {Array} children array. 
+ */
 const flattenChildren = (ast) => {
-  return ([ast] || []).reduce((acc, child) => {
-    if (child[0] === '_idyllContainer') {
-      acc = acc.concat(child[2]);
+
+  return (children || []).reduce((acc, child) => {
+    if(getNodeName(child) === '_idyllContainer') {
+      acc = acc.concat(getChildren(child)); 
     } else {
-      acc.push(child);
+      acc.push(child); 
     }
-    return acc;
-  }, []);
-};
+    return acc; 
+  }, []); 
+}; 
 
 const makeFullWidth = (ast) => {
   let currentTextContainer = [];
