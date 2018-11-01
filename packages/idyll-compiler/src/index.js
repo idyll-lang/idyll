@@ -32,7 +32,7 @@ module.exports = function(input, options, callback) {
     .pipe(flattenChildren)
     .pipe(makeFullWidth)
     .pipe(wrapText)
-    //.pipe(cleanResults)
+    .pipe(cleanResults)
     .pipe(autoLinkify)
     .end();
 
@@ -59,11 +59,9 @@ module.exports = function(input, options, callback) {
     return promises.reduce((promise, f, i) => {
       return promise.then((val) => {
         return f(val);
-        console.log("ast", astTransform); 
       });
     }, Promise.resolve(astTransform));
   } else {
-    console.log("ast", astTransform); 
     return options.async ? new Promise((resolve) => resolve(astTransform)) : astTransform;
   }
 }

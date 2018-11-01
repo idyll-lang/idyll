@@ -64,9 +64,6 @@ export const evalExpression = (acc, expr, key, context) => {
   } catch (err) {}
 }
 
-/*
-arr -> list of vars 
-return -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
     const variableType = getType(val);
@@ -160,7 +157,6 @@ export const splitAST = (ast) => {
     return (node) => {
       const type = getType(node);
       const props = getProperties(node);
-      //console.log("get node @ handleNode (splitAST)", node);
       const children = getChildren(node);
       if(node.id != 0) {
         if (type === 'var') {
@@ -180,7 +176,6 @@ export const splitAST = (ast) => {
 
   }
   ast.forEach(handleNode(true));
-  //console.log("state: ", state);
   return state;
 }
 
@@ -276,7 +271,6 @@ export const filterASTForDocument = (ast) => {
 };
 
 export const findWrapTargets = (schema, state, components) => {
-  console.log("find wrap targets");
   //Custom components
   const targets = []; 
   //Name of custom components
@@ -288,7 +282,6 @@ export const findWrapTargets = (schema, state, components) => {
     }
     componentNames[i] = words.join("").toLowerCase();
   });
-  console.log("componentNames", componentNames);
   //Array of keys for the runtime state passed. 
   const stateKeys = Object.keys(state);
 
@@ -307,9 +300,7 @@ export const findWrapTargets = (schema, state, components) => {
     }
  
     if(node.component) {
-      console.log("node.component", node.component);
       if(componentNames.includes(node.component.toLowerCase())) {  
-        console.log("node.component eval", componentNames.includes(node.component.toLowerCase()));
         targets.push(node); 
         return node; 
       }

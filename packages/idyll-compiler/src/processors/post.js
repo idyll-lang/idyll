@@ -6,7 +6,6 @@ const { modifyNodesByName, modifyChildren, getNodesByName, prependNodes, removeN
 /*Maps property to their values*/
 
 const attrConvert = (list) => {
-  console.log("list", list);
   return ([list] || []).reduce(
     (acc, [name, [type, val]]) => {
       if (type === 'value') {
@@ -17,11 +16,6 @@ const attrConvert = (list) => {
     {}
   )
 };
-
-/*
-const attrConvert = (list) => {
-  console.log("list", list); 
-}; */
 
 /* processing of the compiler output. Turn quotes into smarquotes
   unwrapping and stuff. 
