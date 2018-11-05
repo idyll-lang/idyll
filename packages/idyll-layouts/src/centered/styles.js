@@ -11,6 +11,10 @@ body {
   margin-bottom: 60px;
 }
 
+.idyll-text-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
 .article-header {
   margin-bottom: 45px;
 }
@@ -135,7 +139,7 @@ input {
 
 .button-tooltip {
   background-color: black !important;
-  padding: 0 5px; 
+  padding: 0 5px;
 }
 
 .button-tooltip.place-top:after {
@@ -173,7 +177,10 @@ input {
     margin-bottom: 60px;
     width: 100%;
   }
-
+  .idyll-text-container {
+    max-width: calc(100% - 2em);
+    margin: 0 1em;
+  }
   .desktop {
     display: none;
   }
