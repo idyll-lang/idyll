@@ -1,6 +1,6 @@
 {
   "name": "idyll-layouts",
-  "version": "2.5.6",
+  "version": "2.6.0",
   "description": "Default layouts for Idyll",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
