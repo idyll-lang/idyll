@@ -202,7 +202,7 @@ const getDerivedValues = dVars => {
 class IdyllRuntime extends React.PureComponent {
   constructor(props) {
     super(props);
-    
+
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
 
@@ -215,10 +215,36 @@ class IdyllRuntime extends React.PureComponent {
       elements,
     } = splitAST(ast);
     const Wrapper = createWrapper({ theme: props.theme, layout: props.layout, authorView: props.authorView });
+
+    let hasInitialized = false;
+    let initialContext = {};
+    // Initialize a custom context
+    if (typeof props.context === 'function') {
+      props.context({
+        update: (newState) => {
+          if (!hasInitialized) {
+            initialContext = Object.assign(initialContext, newState);
+          } else {
+            this.updateState(newState)
+          }
+        },
+        data: () => {
+          return this.state
+        },
+        onInitialize: (cb) => {
+          this._onInitializeState = cb;
+        },
+        onUpdate: (cb) => {
+          this._onUpdateState = cb;
+        }
+      });
+    }
+
+
     const initialState = Object.assign({}, {
-      ...getVars(vars),
+      ...getVars(vars, initialContext),
       ...getData(data, props.datasets),
-    }, props.initialState ? props.initialState : {});
+    }, initialContext, props.initialState ? props.initialState : {});
     const derivedVars = this.derivedVars = getVars(derived, initialState);
 
     let state = this.state = {
@@ -258,7 +284,8 @@ class IdyllRuntime extends React.PureComponent {
     };
 
     evalContext.update = this.updateState;
-
+    hasInitialized = true;
+    this._onInitializeState && this._onInitializeState();
 
     // Put these in to avoid hard errors if people are on the latest
     // CLI but haven't updated their local default components
@@ -414,18 +441,6 @@ class IdyllRuntime extends React.PureComponent {
   componentDidMount() {
     const refs = getRefs();
     updateRefsCallbacks.forEach(f => f({ ...this.state, refs }));
-
-    if (typeof this.props.context === 'function') {
-      this.props.context({
-        update: this.updateState.bind(this),
-        data: () => {
-          return this.state
-        },
-        onUpdate: (cb) => {
-          this._onUpdateState = cb;
-        }
-      });
-    }
   }
 
   render() {
