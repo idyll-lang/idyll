@@ -77,7 +77,7 @@ class YoutubeComponent extends React.Component {
   }
 }
 
-Youtube._idyll = {
+YoutubeComponent._idyll = {
   name: "Youtube",
   tagType: "closed",
   props: [{
