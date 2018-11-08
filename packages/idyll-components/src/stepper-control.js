@@ -22,4 +22,10 @@ class StepperControl extends React.Component {
   }
 }
 
+
+StepperControl._idyll = {
+  name: "StepperControl",
+  tagType: "closed"
+}
+
 export default StepperControl;

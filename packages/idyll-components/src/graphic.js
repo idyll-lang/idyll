@@ -9,4 +9,9 @@ class Graphic extends React.Component {
   }
 }
 
+Graphic._idyll = {
+  name: "Graphic",
+  tagType: "open"
+}
+
 module.exports = Graphic;
