@@ -12,4 +12,9 @@ class TextContainer extends React.PureComponent {
   }
 }
 
+
+TextContainer._idyll = {
+  name: "TextContainer",
+  tagType: "open"
+}
 export default TextContainer;

@@ -77,4 +77,37 @@ class YoutubeComponent extends React.Component {
   }
 }
 
+Youtube._idyll = {
+  name: "Youtube",
+  tagType: "closed",
+  props: [{
+    name: "onReady",
+    type: "expression",
+    example: '`initialized = true`'
+  }, {
+    name: "width",
+    type: "integer",
+    example: '600'
+  }, {
+    name: "height",
+    type: "integer",
+    example: '400'
+  }, {
+    name: "audio",
+    type: "boolean",
+    example: 'true'
+  }, {
+    name: "play",
+    type: "boolean",
+    example: 'true'
+  }, {
+    name: "id",
+    type: "string",
+    example: '<youtube-video-id>'
+  }, {
+    name: "options",
+    type: "object",
+    example: '`{}`'
+  }, ]
+}
 export default YoutubeComponent;

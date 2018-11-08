@@ -154,4 +154,24 @@ class Scroller extends React.Component {
   }
 }
 
+
+Scroller._idyll = {
+  name: "Scroller",
+  tagType: "open",
+  children: [`
+  [Graphic] This graphic stays fixed in the background.[/Graphic]
+  [Step]This is the content for step 1[/Step]
+  [Step]This is the content for step 2[/Step]
+  [Step]This is the content for step 3[/Step]`],,
+  props: [{
+    name: "currentStep",
+    type: "integer",
+    example: "0"
+  }, {
+    name: "currentState",
+    type: "object",
+    example: "`{}`"
+  }]
+}
+
 export default Scroller;

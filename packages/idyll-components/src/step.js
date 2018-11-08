@@ -14,4 +14,9 @@ class Step extends React.Component {
   }
 }
 
+Step._idyll = {
+  name: "Step",
+  tagType: "open"
+}
+
 export default Step;
