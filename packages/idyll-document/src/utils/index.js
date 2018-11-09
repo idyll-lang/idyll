@@ -56,6 +56,19 @@ export const evalExpression = (acc, expr, key, context) => {
 };
 
 export const getVars = (arr, context = {}, evalContext) => {
+  const formatAccumulatedValues = acc => {
+    const ret = {};
+    Object.keys(acc).forEach(key => {
+      const accVal = acc[key];
+      if (accVal.update && accVal.value) {
+        ret[key] = accVal.value;
+      } else {
+        ret[key] = accVal;
+      }
+    });
+    return ret;
+  };
+
   const pluck = (acc, val) => {
     const [variableType, attrs = []] = val;
 
@@ -80,12 +93,15 @@ export const getVars = (arr, context = {}, evalContext) => {
         const expr = valueValue;
         if (variableType === 'var') {
           acc[nameValue] = evalExpression(
-            Object.assign({}, context, acc),
+            Object.assign({}, context, formatAccumulatedValues(acc)),
             expr
           );
         } else {
           acc[nameValue] = {
-            value: evalExpression(Object.assign({}, context, acc), expr),
+            value: evalExpression(
+              Object.assign({}, context, formatAccumulatedValues(acc)),
+              expr
+            ),
             update: (newState, oldState) => {
               return evalExpression(
                 Object.assign({}, oldState, newState),
