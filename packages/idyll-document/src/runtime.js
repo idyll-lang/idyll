@@ -6,7 +6,7 @@ import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
-import AuthorTool from './components/author-tool'
+import AuthorTool from './components/author-tool';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -33,13 +33,13 @@ const refCache = {};
 const evalContext = {};
 let scrollContainer;
 
-const getLayout = (layout) => {
+const getLayout = layout => {
   return layouts[layout.trim()] || {};
-}
+};
 
-const getTheme = (theme) => {
+const getTheme = theme => {
   return themes[theme.trim()] || {};
-}
+};
 
 const getRefs = () => {
   const refs = {};
@@ -49,7 +49,14 @@ const getRefs = () => {
 
   scrollWatchers.forEach(watcher => {
     // left and right props assume no horizontal scrolling
-    const { watchItem, callbacks, container, recalculateLocation, offsets, ...watcherProps } = watcher;
+    const {
+      watchItem,
+      callbacks,
+      container,
+      recalculateLocation,
+      offsets,
+      ...watcherProps
+    } = watcher;
     refs[watchItem.dataset.ref] = {
       ...watcherProps,
       domNode: watchItem
@@ -116,7 +123,12 @@ const createWrapper = ({ theme, layout, authorView }) => {
       });
       // re-run this component's expressions using the latest doc state
       Object.keys(__expr__).forEach(key => {
-        nextState[key] = evalExpression(newState, __expr__[key], key, evalContext);
+        nextState[key] = evalExpression(
+          newState,
+          __expr__[key],
+          key,
+          evalContext
+        );
       });
       // trigger a re-render of this component
       // and more importantly, its wrapped component
@@ -128,13 +140,12 @@ const createWrapper = ({ theme, layout, authorView }) => {
 
       if (this.usesRefs) {
         const nextState = { refs: newState.refs };
-        entries(__expr__)
-          .forEach(([key, val]) => {
-            if (!key.includes('refs.')) {
-              return;
-            }
-            nextState[key] = evalExpression(newState, val, key, evalContext);
-          });
+        entries(__expr__).forEach(([key, val]) => {
+          if (!key.includes('refs.')) {
+            return;
+          }
+          nextState[key] = evalExpression(newState, val, key, evalContext);
+        });
 
         // trigger a render with latest state
         this.setState(nextState);
@@ -159,7 +170,10 @@ const createWrapper = ({ theme, layout, authorView }) => {
       }
 
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
-      const { children, ...passThruProps } = filterIdyllProps(this.props, this.props.isHTMLNode);
+      const { children, ...passThruProps } = filterIdyllProps(
+        this.props,
+        this.props.isHTMLNode
+      );
       let childComponent = null;
       let uniqueKey = `${this.key}-help`;
       const returnComponent = React.Children.map(children, (c, i) => {
@@ -172,13 +186,16 @@ const createWrapper = ({ theme, layout, authorView }) => {
             authorView: authorView
           },
           ...state,
-          ...passThruProps,
-        })
+          ...passThruProps
+        });
       });
       const metaData = childComponent.type._idyll;
       if (authorView && metaData && metaData.props) {
         // ensure inline elements do not have this overlay
-        if (metaData.displayType === undefined || metaData.displayType !== "inline") {
+        if (
+          metaData.displayType === undefined ||
+          metaData.displayType !== 'inline'
+        ) {
           return (
             <AuthorTool
               component={returnComponent}
@@ -190,12 +207,12 @@ const createWrapper = ({ theme, layout, authorView }) => {
       }
       return returnComponent;
     }
-  }
+  };
 };
 
 const getDerivedValues = dVars => {
   const o = {};
-  Object.keys(dVars).forEach(key => o[key] = dVars[key].value);
+  Object.keys(dVars).forEach(key => (o[key] = dVars[key].value));
   return o;
 };
 
@@ -208,70 +225,70 @@ class IdyllRuntime extends React.PureComponent {
 
     const ast = filterASTForDocument(props.ast);
 
-    const {
-      vars,
-      derived,
-      data,
-      elements,
-    } = splitAST(ast);
-    const Wrapper = createWrapper({ theme: props.theme, layout: props.layout, authorView: props.authorView });
+    const { vars, derived, data, elements } = splitAST(ast);
+    const Wrapper = createWrapper({
+      theme: props.theme,
+      layout: props.layout,
+      authorView: props.authorView
+    });
 
     let hasInitialized = false;
     let initialContext = {};
     // Initialize a custom context
     if (typeof props.context === 'function') {
       props.context({
-        update: (newState) => {
+        update: newState => {
           if (!hasInitialized) {
             initialContext = Object.assign(initialContext, newState);
           } else {
-            this.updateState(newState)
+            this.updateState(newState);
           }
         },
         data: () => {
-          return this.state
+          return this.state;
         },
-        onInitialize: (cb) => {
+        onInitialize: cb => {
           this._onInitializeState = cb;
         },
-        onUpdate: (cb) => {
+        onUpdate: cb => {
           this._onUpdateState = cb;
         }
       });
     }
 
+    const initialState = Object.assign(
+      {},
+      {
+        ...getVars(vars, initialContext),
+        ...getData(data, props.datasets)
+      },
+      initialContext,
+      props.initialState ? props.initialState : {}
+    );
+    const derivedVars = (this.derivedVars = getVars(derived, initialState));
 
-    const initialState = Object.assign({}, {
-      ...getVars(vars, initialContext),
-      ...getData(data, props.datasets),
-    }, initialContext, props.initialState ? props.initialState : {});
-    const derivedVars = this.derivedVars = getVars(derived, initialState);
-
-    let state = this.state = {
+    let state = (this.state = {
       ...initialState,
-      ...getDerivedValues(derivedVars),
-    };
+      ...getDerivedValues(derivedVars)
+    });
 
-    this.updateState = (newState) => {
+    this.updateState = newState => {
       // merge new doc state with old
       const newMergedState = { ...this.state, ...newState };
       // update derived values
       const newDerivedValues = getDerivedValues(
-        getVars(derived, newMergedState),
+        getVars(derived, newMergedState)
       );
       const nextState = { ...newMergedState, ...newDerivedValues };
 
       const changedMap = {};
-      const changedKeys = Object.keys(state).reduce(
-        (acc, k) => {
-          if (state[k] !== nextState[k]) {
-            acc.push(k);
-            changedMap[k] = nextState[k] || state[k];
-          }
-          return acc;
-        },
-        []
-      )
+      const changedKeys = Object.keys(state).reduce((acc, k) => {
+        if (state[k] !== nextState[k]) {
+          acc.push(k);
+          changedMap[k] = nextState[k] || state[k];
+        }
+        return acc;
+      }, []);
 
       // Update doc state reference.
       // We re-use the same object here so that
@@ -280,7 +297,9 @@ class IdyllRuntime extends React.PureComponent {
       // pass the new doc state to all listeners aka component wrappers
       updatePropsCallbacks.forEach(f => f(state, changedKeys));
 
-      changedKeys.length && this._onUpdateState && this._onUpdateState(changedMap);
+      changedKeys.length &&
+        this._onUpdateState &&
+        this._onUpdateState(changedMap);
     };
 
     evalContext.update = this.updateState;
@@ -297,15 +316,21 @@ class IdyllRuntime extends React.PureComponent {
     // Components that the Document needs to function properly
     const internalComponents = {
       Wrapper
-    }
+    };
 
-    Object.keys(internalComponents).forEach((key) => {
+    Object.keys(internalComponents).forEach(key => {
       if (props.components[key]) {
-        console.warn(`Warning! You are including a component named ${key}, but this is a reserved Idyll component. Please rename your component.`);
+        console.warn(
+          `Warning! You are including a component named ${key}, but this is a reserved Idyll component. Please rename your component.`
+        );
       }
-    })
+    });
 
-    const components = Object.assign(fallbackComponents, props.components, internalComponents);
+    const components = Object.assign(
+      fallbackComponents,
+      props.components,
+      internalComponents
+    );
 
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
@@ -314,78 +339,73 @@ class IdyllRuntime extends React.PureComponent {
 
     let refCounter = 0;
 
-    const transformedSchema = mapTree(
-      schema,
-      node => {
-        if (typeof node === 'string') return node;
+    const transformedSchema = mapTree(schema, node => {
+      if (typeof node === 'string') return node;
 
-        // transform refs from strings to functions and store them
-        if (node.ref || node.hasHook) {
-          node.refName = node.ref || node.component + (refCounter++).toString();
-          node.ref = el => {
-            if (!el) return;
-            const domNode = ReactDOM.findDOMNode(el);
-            domNode.dataset.ref = node.refName;
-            scrollOffsets[node.refName] = node.scrollOffset || 0;
-            refCache[node.refName] = {
-              props: node,
-              domNode: domNode
-            };
+      // transform refs from strings to functions and store them
+      if (node.ref || node.hasHook) {
+        node.refName = node.ref || node.component + (refCounter++).toString();
+        node.ref = el => {
+          if (!el) return;
+          const domNode = ReactDOM.findDOMNode(el);
+          domNode.dataset.ref = node.refName;
+          scrollOffsets[node.refName] = node.scrollOffset || 0;
+          refCache[node.refName] = {
+            props: node,
+            domNode: domNode
           };
-        }
-
-        if (!wrapTargets.includes(node)) return node;
-
-        const {
-          component,
-          children,
-          key,
-          __vars__ = {},
-          __expr__ = {},
-          ...props // actual component props
-        } = node;
-
-        // assign the initial values for tracked vars and expressions
-        Object.keys(props).forEach(k => {
-          if (__vars__[k]) {
-            node[k] = state[__vars__[k]];
-          }
-          if (__expr__[k] && !__expr__[k].includes('refs.')) {
-            if (hooks.indexOf(k) > -1) {
-              return;
-            }
-            node[k] = evalExpression(state, __expr__[k], k, evalContext);
-          }
-        });
-
-        const resolvedComponent = rjs.resolveComponent(node);
-        const isHTMLNode = typeof resolvedComponent === 'string';
-
-        return {
-          component: Wrapper,
-          __vars__,
-          __expr__,
-          isHTMLNode: isHTMLNode,
-          hasHook: node.hasHook,
-          refName: node.refName,
-          updateProps: (newProps) => {
-            // init new doc state object
-            const newState = {};
-            // iterate over passed in updates
-            Object.keys(newProps).forEach(k => {
-              // if a tracked var was updated get its new value
-              if (__vars__[k]) {
-                newState[__vars__[k]] = newProps[k];
-              }
-            });
-            this.updateState(newState);
-          },
-          children: [
-            filterIdyllProps(node, isHTMLNode)
-          ],
         };
       }
-    );
+
+      if (!wrapTargets.includes(node)) return node;
+
+      const {
+        component,
+        children,
+        key,
+        __vars__ = {},
+        __expr__ = {},
+        ...props // actual component props
+      } = node;
+
+      // assign the initial values for tracked vars and expressions
+      Object.keys(props).forEach(k => {
+        if (__vars__[k]) {
+          node[k] = state[__vars__[k]];
+        }
+        if (__expr__[k] && !__expr__[k].includes('refs.')) {
+          if (hooks.indexOf(k) > -1) {
+            return;
+          }
+          node[k] = evalExpression(state, __expr__[k], k, evalContext);
+        }
+      });
+
+      const resolvedComponent = rjs.resolveComponent(node);
+      const isHTMLNode = typeof resolvedComponent === 'string';
+
+      return {
+        component: Wrapper,
+        __vars__,
+        __expr__,
+        isHTMLNode: isHTMLNode,
+        hasHook: node.hasHook,
+        refName: node.refName,
+        updateProps: newProps => {
+          // init new doc state object
+          const newState = {};
+          // iterate over passed in updates
+          Object.keys(newProps).forEach(k => {
+            // if a tracked var was updated get its new value
+            if (__vars__[k]) {
+              newState[__vars__[k]] = newProps[k];
+            }
+          });
+          this.updateState(newState);
+        },
+        children: [filterIdyllProps(node, isHTMLNode)]
+      };
+    });
 
     this.kids = rjs.parseSchema(transformedSchema);
   }
@@ -400,33 +420,40 @@ class IdyllRuntime extends React.PureComponent {
 
     let scroller = scrollparent(el);
     let scrollContainer;
-    if (scroller === document.documentElement || scroller === document.body || scroller === window) {
+    if (
+      scroller === document.documentElement ||
+      scroller === document.body ||
+      scroller === window
+    ) {
       scroller = window;
       scrollContainer = scrollMonitor;
     } else {
       scrollContainer = scrollMonitor.createContainer(scroller);
     }
-    Object.keys(refCache).forEach((key) => {
+    Object.keys(refCache).forEach(key => {
       const { props, domNode } = refCache[key];
       const watcher = scrollContainer.create(domNode, scrollOffsets[key]);
-      hooks.forEach((hook) => {
+      hooks.forEach(hook => {
         if (props[hook]) {
           watcher[scrollMonitorEvents[hook]](() => {
             evalExpression(this.state, props[hook], hook, evalContext)();
           });
         }
-      })
+      });
       scrollWatchers.push(watcher);
     });
     scroller.addEventListener('scroll', this.scrollListener);
   }
 
   updateDerivedVars(newState) {
+    const context = {};
     Object.keys(this.derivedVars).forEach(dv => {
       this.derivedVars[dv].value = this.derivedVars[dv].update(
         newState,
         this.state,
+        context
       );
+      context[dv] = this.derivedVars[dv].value;
     });
   }
 
@@ -448,7 +475,7 @@ class IdyllRuntime extends React.PureComponent {
       <div className="idyll-root" ref={this.initScrollListener}>
         {this.kids}
       </div>
-    )
+    );
   }
 }
 
