@@ -102,9 +102,9 @@ export const getVars = (arr, context = {}, evalContext) => {
               Object.assign({}, context, formatAccumulatedValues(acc)),
               expr
             ),
-            update: (newState, oldState) => {
+            update: (newState, oldState, context = {}) => {
               return evalExpression(
-                Object.assign({}, oldState, newState),
+                Object.assign({}, oldState, newState, context),
                 expr
               );
             }
