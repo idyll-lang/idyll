@@ -60,7 +60,10 @@ export const getVars = (arr, context = {}, evalContext) => {
     const ret = {};
     Object.keys(acc).forEach(key => {
       const accVal = acc[key];
-      if (accVal.update && accVal.value) {
+      if (
+        typeof accVal.update !== 'undefined' &&
+        typeof accVal.value !== 'undefined'
+      ) {
         ret[key] = accVal.value;
       } else {
         ret[key] = accVal;
