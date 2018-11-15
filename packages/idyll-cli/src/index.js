@@ -185,6 +185,23 @@ const idyll = (options = {}, cb) => {
       return this;
     }
 
+    // Returns an array of the default components
+    getComponents() {
+      var componentsFolder = this.getOptions().defaultComponents;
+      var components = [];
+
+      // Synchronous
+      fs.readdirSync(componentsFolder).forEach(file => {
+        components.push(file);
+      })
+      return components;
+    }
+
+    // Returns an array of the current datasets used in this IdyllInstace
+    getDatasets() {
+
+    }
+
     stopWatching() {
       if (watchers.length) {
         watchers.forEach(w => w.close());
