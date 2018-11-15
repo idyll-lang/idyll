@@ -14,7 +14,7 @@ body {
 }
 
 .idyll-text-container {
-  max-width: 600;
+  max-width: 600px;
   margin-top: 0;
   margin-right: 0;
   margin-bottom: 0;

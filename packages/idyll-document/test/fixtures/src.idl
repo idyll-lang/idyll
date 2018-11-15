@@ -31,7 +31,8 @@ Once you've created a variable, it can be displayed inline with text
 (x = [Display var:x /]),
 or be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:
 
-[derived name:"xSquared" value:`x * x` /]
+[derived name:"xSquared" value:`x * x ` /]
+[derived name:"xCubed" value:`x * xSquared ` /]
 
 ``[derived name:"xSquared" value:`x * x` /]``
 
@@ -52,6 +53,7 @@ Test expression, displays:
 
 [Display id:"varDisplay" value:`x` /]
 [Display id:"derivedVarDisplay" value:`xSquared` /]
+[Display id:"derivedVarDisplay2" value:`xCubed` /]
 [Display id:"strDisplay" value:`"string"` /]
 [Display id:"staticObjectDisplay" value:`{ static: "object" }` /]
 [Display id:"dynamicObjectDisplay" value:`{ dynamic: x }` /]
@@ -60,6 +62,7 @@ Test expression, displays:
 [Display id:"bareDataDisplay" value:myData /]
 [Display id:"bareVarDisplay" value:x /]
 [Display id:"bareDerivedDisplay" value:xSquared /]
+[Display id:"bareDerivedDisplay2" value:xCubed /]
 
 [var name:"objectVar" value:` { an: "object" } `  /]
 [var name:"arrayVar" value:` [ "array" ] `  /]

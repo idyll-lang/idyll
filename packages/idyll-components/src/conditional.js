@@ -12,4 +12,14 @@ class Conditional extends React.Component {
   }
 }
 
+Conditional._idyll = {
+  name: "Conditional",
+  tagType: "open",
+  children: ['Some text'],
+  props: [{
+    name: "if",
+    type: "expression",
+    example: "`x < 10`"
+  }]
+}
 module.exports = Conditional;
