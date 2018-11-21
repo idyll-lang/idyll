@@ -1,53 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0"
+    />
     {{#title}}
-      <title>
-        {{title}}
-      </title>
-      <meta property="og:title" content="{{title}}">
+    <title>{{title}}</title>
+    <meta property="og:title" content="{{title}}" />
+    {{/title}} {{^title}}
+    <title>Idyll</title>
+    <meta property="og:title" content="Idyll Project" />
     {{/title}}
-    {{^title}}
-      <title>Idyll</title>
-      <meta property="og:title" content="Idyll Project">
-    {{/title}}
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     {{#favicon}}
-      <link rel='shortcut icon' type='image/x-icon' href='{{favicon}}' />
-    {{/favicon}}
-    {{#shareImageUrl}}
-      <meta property="og:image" content="{{shareImageUrl}}">
-      <meta name="twitter:image:src" content="{{shareImageUrl}}">
-      <meta name="twitter:card" content="summary_large_image">
-    {{/shareImageUrl}}
-    {{#shareImageWidth}}
-      <meta property="og:image:width" content="{{shareImageWidth}}">
-    {{/shareImageWidth}}
-    {{#shareImageHeight}}
-      <meta property="og:image:width" content="{{shareImageHeight}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{favicon}}" />
+    {{/favicon}} {{#shareImageUrl}}
+    <meta property="og:image" content="{{shareImageUrl}}" />
+    <meta name="twitter:image:src" content="{{shareImageUrl}}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {{/shareImageUrl}} {{#shareImageWidth}}
+    <meta property="og:image:width" content="{{shareImageWidth}}" />
+    {{/shareImageWidth}} {{#shareImageHeight}}
+    <meta property="og:image:height" content="{{shareImageHeight}}" />
     {{/shareImageHeight}}
-    <meta property="og:type" content="article">
+    <meta property="og:type" content="article" />
 
     {{#description}}
-      <meta property="og:description" content="{{description}}">
-      <meta property="description" content="{{description}}">
-    {{/description}}
-    {{#url}}
-      <meta property="og:url" content="{{url}}">
-    {{/url}}
-    {{#twitterHandle}}
-      <meta property="twitter:creator" content="{{twitterHandle}}">
-    {{/twitterHandle}}
-    {{#usesTex}}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
-    {{/usesTex}}
-    {{#googleFontsUrl}}
-    <link rel="stylesheet" href="{{googleFontsUrl}}">
+    <meta property="og:description" content="{{description}}" />
+    <meta property="description" content="{{description}}" />
+    {{/description}} {{#url}}
+    <meta property="og:url" content="{{url}}" />
+    {{/url}} {{#twitterHandle}}
+    <meta property="twitter:creator" content="{{twitterHandle}}" />
+    {{/twitterHandle}} {{#usesTex}}
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css"
+    />
+    {{/usesTex}} {{#googleFontsUrl}}
+    <link rel="stylesheet" href="{{googleFontsUrl}}" />
     {{/googleFontsUrl}}
 
-
-    <link rel="stylesheet" href="static/idyll_styles.css">
+    <link rel="stylesheet" href="static/idyll_styles.css" />
   </head>
   <body>
     <div id="idyll-mount">{{{idyllContent}}}</div>
