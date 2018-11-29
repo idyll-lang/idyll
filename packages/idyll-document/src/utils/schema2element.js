@@ -49,9 +49,7 @@ class ReactJsonSchema {
   resolveComponent(schema) {
     const componentMap = this.getComponentMap();
     let Component;
-    //console.log("schema", schema);
     // bail early if there is no component name
-    //console.log("schema: ", schema);
     if (!schema.hasOwnProperty('component')) {
       throw new Error('ReactJsonSchema could not resolve a component due to a missing component attribute in the schema.');
     }

@@ -64,9 +64,6 @@ export const evalExpression = (acc, expr, key, context) => {
   } catch (err) {}
 }
 
-/*
-arr -> list of vars 
-return -> Object(key-> name value -> value of the var)*/
 export const getVars = (arr, context = {}, evalContext) => {
   const pluck = (acc, val) => {
     const variableType = getType(val);
@@ -160,7 +157,6 @@ export const splitAST = (ast) => {
     return (node) => {
       const type = getType(node);
       const props = getProperties(node);
-      //console.log("get node @ handleNode (splitAST)", node);
       const children = getChildren(node);
       if(node.id != 0) {
         if (type === 'var') {
@@ -170,7 +166,6 @@ export const splitAST = (ast) => {
         } else if (storeElements) {
           state.elements.push(node);
         }
-        //typeof children === 'string'; 
         if (!children || (children.length === 1 && getType(children[0]) === "textnode")) {
           return;
         }
@@ -180,7 +175,6 @@ export const splitAST = (ast) => {
 
   }
   ast.forEach(handleNode(true));
-  //console.log("state: ", state);
   return state;
 }
 
@@ -228,7 +222,6 @@ export const translate = (ast) => {
     }
     return reducedProps;
   }
-  //What does tnode do? 
   const tNode = (node) => {
     if (getType(node) === 'textnode') return node;
 
@@ -263,9 +256,6 @@ export const mapTree = (tree, mapFn, filterFn = () => true) => {
 
     if(filterFn(node)) {
       acc.push(mapFn(node)); 
-      console.log("......");
-      console.log("node", JSON.stringify(node));
-      console.log("......"); 
     } 
     return acc;
   };
@@ -279,7 +269,6 @@ export const filterASTForDocument = (ast) => {
 };
 
 export const findWrapTargets = (schema, state, components) => {
-  console.log("find wrap targets");
   //Custom components
   const targets = []; 
   //Name of custom components
@@ -289,7 +278,7 @@ export const findWrapTargets = (schema, state, components) => {
     for(let i = 0; i < words.length; i++) {
       words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
     }
-    componentNames[i] = words.join("");
+    componentNames[i] = words.join("").toLowerCase();
   });
 
   //Array of keys for the runtime state passed. 

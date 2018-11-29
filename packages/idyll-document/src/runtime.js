@@ -270,9 +270,7 @@ class IdyllRuntime extends React.PureComponent {
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
     const wrapTargets = findWrapTargets(schema, this.state, props.components);
-    console.log("wrapTargets: ", wrapTargets);
     let refCounter = 0;
-    console.log("transformedSchema");
     const transformedSchema = mapTree(
       schema,
       node => {
