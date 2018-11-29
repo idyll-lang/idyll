@@ -186,20 +186,41 @@ const idyll = (options = {}, cb) => {
     }
 
     // Returns an array of the default components
+    // Each element of the array is an object with keys 'name' and 'path'
+    // 'name' is the file name of the component
+    // 'path' is the absolute path to the component
     getComponents() {
       var componentsFolder = this.getOptions().defaultComponents;
       var components = [];
 
+      // This is a placeholder for the default components absolute path
+      //var absPath = this.getPaths().DEFAULT_COMPONENT_DIRS;
+      var absPath = this.getOptions().defaultComponents;
+
       // Synchronous
       fs.readdirSync(componentsFolder).forEach(file => {
-        components.push(file);
+        components.push({
+          name: file,
+          path: absPath
+        });
       })
       return components;
     }
 
-    // Returns an array of the current datasets used in this IdyllInstace
+    // Adds the given component (directory) to the components used
+    // in this IdyllInstance
+    addComponent(componentPath) {
+
+    }
+
+    // Returns an array of the current datasets used in this IdyllInstance
     getDatasets() {
 
+    }
+
+    // Adds a dataset to the current datasets used in this IdyllInstance
+    addDataset(datasetPath) {
+      
     }
 
     stopWatching() {
