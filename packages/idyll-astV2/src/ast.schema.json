@@ -11,7 +11,7 @@
         "type": {
             "description": "The type category of the element (component/var/derived)",
             "type": "string",
-            "enum": ["component"]
+            "enum": ["component", "var", "derived", "textnode"]
         },
         "name": {
             "description": "The name of the element",
@@ -93,7 +93,7 @@
                                             "type": "string"
                                         }
                                     },
-                                    "required": ["name", "vale"],
+                                    "required": ["name", "value"],
                                     "additionalProperties": false
                                 },
                                 "value": {
@@ -110,7 +110,7 @@
                                             }
                                         }
                                     },
-                                    "required": ["name", "vale"],
+                                    "required": ["name", "value"],
                                     "additionalProperties": false
                                 }
                             },
@@ -173,6 +173,5 @@
             "uniqueItems": true
         }
     },
-    "required": ["id", "type", "name"],
-    "additionalProperties": false
+    "required": ["id", "type"]
 }

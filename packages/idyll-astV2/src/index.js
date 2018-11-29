@@ -783,11 +783,11 @@ function checkChildren(children) {
   Function to validate AST structures
 */
 function runValidator(param, paramName) { 
- /* if (!validator(param)) {
+  if (!validator(param)) {
     console.log("Error message from validator: " + validator.errors[0].message);
-    console.log(param);
-    throw new error.MalformedAstError(paramName + " must be well-defined and follow the AST schema. " + "Object: " + param);
-  }*/
+    console.log("Error message from validator: " , validator.errors[0]);
+    throw new error.MalformedAstError(paramName + " must be well-defined and follow the AST schema. " + "Object: " + JSON.stringify(param));
+  }
 }
 
 /*
@@ -795,7 +795,8 @@ function runValidator(param, paramName) {
 */
 function runPropsValidator(props) {
   if (!validatorProps(props)) {
-    console.log("Error message from validator: " + validatorProps.error[0].message);
+    console.log("Error message from validator: " + validatorProps.errors[0].message);
+    console.log("Error message from validator: " , validatorProps.errors[0]);
     throw new error.InvalidParameterError("Parameter props is not a well-defined JSON according to the the AST schema. Look at schema.properties.properties!");
   }
 }
