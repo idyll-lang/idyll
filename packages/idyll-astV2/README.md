@@ -202,8 +202,8 @@ Function to create a new textnode
 
 | Param | Type |
 | --- | --- |
-| id | <code>\*</code> |
-| value | <code>\*</code> |
+| id | <code>\*</code> | 
+| value | <code>\*</code> | 
 
 <a name="module_idyll-astV2..getChildren"></a>
 
@@ -217,6 +217,19 @@ Function to return the children of the passed node.
 | --- | --- | --- |
 | node | <code>object</code> | AST node |
 
+<a name="module_idyll-astV2..setChildren"></a>
+
+### idyll-astV2~setChildren ⇒ <code>object</code>
+Function to set children of the passed node.
+
+**Kind**: inner property of [<code>idyll-astV2</code>](#module_idyll-astV2)  
+**Returns**: <code>object</code> - modified node  
+
+| Param | Type |
+| --- | --- |
+| node | <code>object</code> | 
+| children | <code>object</code> | 
+
 <a name="module_idyll-astV2..getNodesByName"></a>
 
 ### idyll-astV2~getNodesByName ⇒ <code>Array.&lt;object&gt;</code>
@@ -229,6 +242,30 @@ Function to get all the nodes with the passed name in the passed AST.
 | --- | --- | --- |
 | ast | <code>object</code> | AST object |
 | name | <code>string</code> | name of the nodes |
+
+<a name="module_idyll-astV2..hasType"></a>
+
+### idyll-astV2~hasType ⇒ <code>boolean</code>
+Function to check if a node has type attribute or not
+
+**Kind**: inner property of [<code>idyll-astV2</code>](#module_idyll-astV2)  
+**Returns**: <code>boolean</code> - true if type exists, false otherwise  
+
+| Param | Type |
+| --- | --- |
+| node | <code>object</code> | 
+
+<a name="module_idyll-astV2..getType"></a>
+
+### idyll-astV2~getType ⇒ <code>string</code>
+Function to get the type information of a node
+
+**Kind**: inner property of [<code>idyll-astV2</code>](#module_idyll-astV2)  
+**Returns**: <code>string</code> - type of the node  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ast | <code>object</code> | AST object |
 
 <a name="module_idyll-astV2..getText"></a>
 
@@ -264,8 +301,8 @@ Function to modify children of a passed AST node using a passed modifier.
 
 | Param | Type |
 | --- | --- |
-| node | <code>object</code> |
-| modifier | <code>function</code> |
+| node | <code>object</code> | 
+| modifier | <code>function</code> | 
 
 <a name="module_idyll-astV2..filterChildren"></a>
 
@@ -280,19 +317,6 @@ Function to pass in a filter function to the children.
 | node | <code>object</code> | AST node |
 | filter | <code>function</code> | Filter function |
 
-<a name="module_idyll-astV2..pruneNodes"></a>
-
-### idyll-astV2~pruneNodes ⇒ <code>Array.&lt;object&gt;</code>
-Function to prune nodes based on a filter and return a modified AST.
-
-**Kind**: inner property of [<code>idyll-astV2</code>](#module_idyll-astV2)  
-**Returns**: <code>Array.&lt;object&gt;</code> - An array with the ModifiedAST as it's 0th index.  
-
-| Param | Type |
-| --- | --- |
-| ast | <code>object</code> |
-| filter | <code>functon</code> |
-
 <a name="module_idyll-astV2..modifyNodesByName"></a>
 
 ### idyll-astV2~modifyNodesByName ⇒ <code>object</code>
@@ -303,9 +327,9 @@ Function to modfiy nodes based on the name property.
 
 | Param | Type |
 | --- | --- |
-| ast | <code>object</code> |
-| name | <code>string</code> |
-| modifier | <code>function</code> |
+| ast | <code>object</code> | 
+| name | <code>string</code> | 
+| modifier | <code>function</code> | 
 
 <a name="module_idyll-astV2..handleNodeByName"></a>
 
@@ -317,9 +341,9 @@ Function to modify a single node using a modifier and name property.
 
 | Param | Type |
 | --- | --- |
-| node | <code>Object</code> |
-| name | <code>string</code> |
-| modifier | <code>function</code> |
+| node | <code>Object</code> | 
+| name | <code>string</code> | 
+| modifier | <code>function</code> | 
 
 <a name="module_idyll-astV2..getNodeName"></a>
 
@@ -331,7 +355,19 @@ Function to get the name of a componenet
 
 | Param | Type |
 | --- | --- |
-| node | <code>object</code> |
+| node | <code>object</code> | 
+
+<a name="module_idyll-astV2..getPropertyKeys"></a>
+
+### idyll-astV2~getPropertyKeys ⇒ <code>Array.&lt;string&gt;</code>
+Function to return a the list of property keys of a node
+
+**Kind**: inner property of [<code>idyll-astV2</code>](#module_idyll-astV2)  
+**Returns**: <code>Array.&lt;string&gt;</code> - keys  
+
+| Param | Type |
+| --- | --- |
+| node | <code>object</code> | 
 
 <a name="module_idyll-astV2..getProperty"></a>
 
@@ -343,8 +379,8 @@ Getter function to a return a specific property of a node based on a key.
 
 | Param | Type |
 | --- | --- |
-| node | <code>\*</code> |
-| key | <code>\*</code> |
+| node | <code>object</code> | 
+| key | <code>string</code> | 
 
 <a name="module_idyll-astV2..getProperties"></a>
 
@@ -356,7 +392,7 @@ Function to return all the properties of a given node.
 
 | Param | Type |
 | --- | --- |
-| node | <code>\*</code> |
+| node | <code>\*</code> | 
 
 <a name="module_idyll-astV2..getPropertiesByType"></a>
 
@@ -368,8 +404,8 @@ Function to get properties of a particular type of a given node.
 
 | Param | Type |
 | --- | --- |
-| node | <code>object</code> |
-| type | <code>string</code> |
+| node | <code>object</code> | 
+| type | <code>string</code> | 
 
 <a name="module_idyll-astV2..prependNode"></a>
 
@@ -381,8 +417,8 @@ Function to prepend a node in the children array of root.
 
 | Param | Type |
 | --- | --- |
-| ast | <code>object</code> |
-| node | <code>object</code> |
+| ast | <code>object</code> | 
+| node | <code>object</code> | 
 
 <a name="module_idyll-astV2..prependNodes"></a>
 
@@ -394,8 +430,8 @@ Function to prepend multiple nodes in the children array of root.
 
 | Param | Type |
 | --- | --- |
-| ast | <code>object</code> |
-| nodes | <code>Array.&lt;object&gt;</code> |
+| ast | <code>object</code> | 
+| nodes | <code>Array.&lt;object&gt;</code> | 
 
 <a name="module_idyll-astV2..removeNodesByName"></a>
 
@@ -406,8 +442,8 @@ Function remove node with a particular name from the ast
 
 | Param | Type |
 | --- | --- |
-| ast | <code>\*</code> |
-| name | <code>\*</code> |
+| ast | <code>\*</code> | 
+| name | <code>\*</code> | 
 
 <a name="module_idyll-astV2..removeProperties"></a>
 
@@ -419,8 +455,8 @@ Function to remove a property from a node
 
 | Param | Type |
 | --- | --- |
-| node | <code>object</code> |
-| key | <code>string</code> |
+| node | <code>object</code> | 
+| key | <code>string</code> | 
 
 <a name="module_idyll-astV2..setProperty"></a>
 
@@ -432,9 +468,9 @@ Function to add a property to a node or change the value if the property already
 
 | Param | Type |
 | --- | --- |
-| node | <code>\*</code> |
-| name | <code>\*</code> |
-| data | <code>\*</code> |
+| node | <code>\*</code> | 
+| name | <code>\*</code> | 
+| data | <code>\*</code> | 
 
 <a name="module_idyll-astV2..setProperties"></a>
 
@@ -446,12 +482,12 @@ Function to add multiple properties to a node
 
 | Param | Type |
 | --- | --- |
-| node | <code>object</code> |
-| properties | <code>object</code> |
+| node | <code>object</code> | 
+| properties | <code>object</code> | 
 
 <a name="module_idyll-astV2..walkNodes"></a>
 
-### idyll-astV2~walkNodes : <code>function</code>
+### idyll-astV2~walkNodes
 Function to do a depth-first traversal of the AST.
 
 **Kind**: inner property of [<code>idyll-astV2</code>](#module_idyll-astV2)  
@@ -470,5 +506,6 @@ Function to breadth-first traversal on the AST.
 
 | Param | Type |
 | --- | --- |
-| ast | <code>object</code> |
-| f | <code>function</code> |
+| ast | <code>object</code> | 
+| f | <code>function</code> | 
+
