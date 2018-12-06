@@ -201,7 +201,7 @@ const idyll = (options = {}, cb) => {
       fs.readdirSync(componentsFolder).forEach(file => {
         components.push({
           name: file,
-          path: absPath
+          path: absPath + "/" + file
         });
       })
       return components;
