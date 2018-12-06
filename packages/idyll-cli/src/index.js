@@ -194,7 +194,7 @@ const idyll = (options = {}, cb) => {
       var components = [];
 
       // This is a placeholder for the default components absolute path
-      //var absPath = this.getPaths().DEFAULT_COMPONENT_DIRS;
+      //var absPath = this.getPaths().DEFAULT_COMPONENT_DIRS; // does the same thing I believe
       var absPath = this.getOptions().defaultComponents;
 
       // Synchronous
@@ -210,12 +210,18 @@ const idyll = (options = {}, cb) => {
     // Adds the given component (directory) to the components used
     // in this IdyllInstance
     addComponent(componentPath) {
-
+      // I think we may copy the component to the components folder of this IdyllInstance
     }
 
     // Returns an array of the current datasets used in this IdyllInstance
+    // Just default datasets for now
     getDatasets() {
-
+      var dataFolder = __dirname + "/../../idyll-template-projects/templates/basic/data/";
+      var defaultData = [];
+      fs.readdirSync(dataFolder).forEach(file => {
+        defaultData.push(file);
+      })
+      return defaultData;
     }
 
     // Adds a dataset to the current datasets used in this IdyllInstance
