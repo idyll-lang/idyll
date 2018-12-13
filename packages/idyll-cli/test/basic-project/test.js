@@ -146,13 +146,10 @@ test('Idyll getComponents() gets all default components', () => {
   var defaultComponentsDirectory = __dirname + '/../../../idyll-components/src/';
   var idyll = Idyll({});
   var idyllComponents = idyll.getComponents();
-  var componentPaths = [];
-  // Only grab the file names
-  idyllComponents.forEach(comp => {
-    componentPaths.push(comp.name);
-  });
+  var componentNames = idyllComponents.map(comp => comp.name);
+
   // Ensure that the getComponents() have all of the default component file names
   fs.readdirSync(defaultComponentsDirectory).forEach(file => {
-    expect(componentPaths).toContain(file + "");
+    expect(componentNames).toContain(file + "");
   })
 }) 
