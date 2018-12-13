@@ -190,20 +190,26 @@ const idyll = (options = {}, cb) => {
     // 'name' is the file name of the component
     // 'path' is the absolute path to the component
     getComponents() {
-      var componentsFolder = this.getOptions().defaultComponents;
       var components = [];
+      var defaultCompsDir = this.getPaths().DEFAULT_COMPONENT_DIRS;
+      var compsDir = this.getPaths().COMPONENT_DIRS; // grabs the `components` folder of their current directory
+      var componentDirs = [defaultCompsDir, compsDir];
 
-      // This is a placeholder for the default components absolute path
-      //var absPath = this.getPaths().DEFAULT_COMPONENT_DIRS; // does the same thing I believe
-      var absPath = this.getOptions().defaultComponents;
-
-      // Synchronous
-      fs.readdirSync(componentsFolder).forEach(file => {
-        components.push({
-          name: file,
-          path: absPath + "/" + file
-        });
-      })
+      componentDirs.forEach(dirs => {
+        dirs.forEach(dir => {
+          try {
+            fs.statSync(dir)
+          } catch (error) { // for when directory doesn't exist
+            return;
+          }
+          fs.readdirSync(dir + "").forEach(file => {
+            components.push({
+              name: file,
+              path: dir + "/" + file
+            });
+          });
+        });   
+      });
       return components;
     }
 
@@ -211,6 +217,11 @@ const idyll = (options = {}, cb) => {
     // in this IdyllInstance
     addComponent(componentPath) {
       // I think we may copy the component to the components folder of this IdyllInstance
+      // A state that keeps track of the components folder of this instance
+      // Yeah can just add to the folder this component path
+      // Use fs copy file to put it in the directory
+      // This means that we need access to the respective directory, which should either be something we can access
+      // or a field.
     }
 
     // Returns an array of the current datasets used in this IdyllInstance
@@ -227,6 +238,12 @@ const idyll = (options = {}, cb) => {
     // Adds a dataset to the current datasets used in this IdyllInstance
     addDataset(datasetPath) {
       
+    }
+
+    getResolver() {
+      // Look at the build() and perhaps add a field for the revolvers to have access to it.
+      // Then can return it here
+      return resolvers['components'];
     }
 
     stopWatching() {

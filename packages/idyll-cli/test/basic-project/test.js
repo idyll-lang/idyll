@@ -141,7 +141,7 @@ test('should include components configured in package.json', () => {
   expect(Object.keys(output.components)).toContain('package-json-component-test');
 })
 
-test('Idyll getComponents() gets all default components', () => {
+test('Idyll getComponents() gets all components', () => {
   var defaultComponentsDirectory = __dirname + '/../../../idyll-components/src/'; //__dirname exists
   var idyll = Idyll({});
   var idyllComponents = idyll.getComponents();
@@ -153,6 +153,4 @@ test('Idyll getComponents() gets all default components', () => {
   // for (var i = 0; i < components.length; i++) {
   //   expect(defaultComponentsDirectoryFiles[i]).toEqual(idyllComponents[i].name);
   // }
-})
-
-// make sure that there are objects with the name as we expect, and the path contains the filename that we expect
+}) 
