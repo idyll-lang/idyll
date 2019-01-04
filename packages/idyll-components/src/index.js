@@ -5,6 +5,7 @@ export { default as Boolean } from './boolean';
 export { default as Button } from './button';
 export { default as Chart } from './chart';
 export { default as CodeHighlight } from './code-highlight';
+export { default as Conditional } from './conditional';
 export { default as Display } from './display';
 export { default as Dynamic } from './dynamic';
 export { default as Equation } from './equation';
@@ -25,4 +26,5 @@ export { default as SVG } from './svg';
 export { default as Table } from './table';
 export { default as TextContainer } from './text-container';
 export { default as TextInput } from './text-input';
+export { default as Youtube } from './youtube';
 

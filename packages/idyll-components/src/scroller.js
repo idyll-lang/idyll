@@ -50,9 +50,9 @@ class Scroller extends React.Component {
     // setup the instance, pass callback functions
     scroller
       .setup({
-        step: '.idyll-scroll-text .idyll-step', // required
+        step: `#idyll-scroll-${this.id} .idyll-step`, // required
         container: `#idyll-scroll-${this.id}`, // required (for sticky)
-        graphic: '.idyll-scroll-graphic' // required (for sticky)
+        graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic` // required (for sticky)
       })
       .onStepEnter(this.handleStepEnter.bind(this))
       // .onStepExit(handleStepExit)
@@ -152,6 +152,26 @@ class Scroller extends React.Component {
       </div>
     );
   }
+}
+
+
+Scroller._idyll = {
+  name: "Scroller",
+  tagType: "open",
+  children: [`
+  [Graphic] This graphic stays fixed in the background.[/Graphic]
+  [Step]This is the content for step 1[/Step]
+  [Step]This is the content for step 2[/Step]
+  [Step]This is the content for step 3[/Step]`],
+  props: [{
+    name: "currentStep",
+    type: "integer",
+    example: "0"
+  }, {
+    name: "currentState",
+    type: "object",
+    example: "`{}`"
+  }]
 }
 
 export default Scroller;

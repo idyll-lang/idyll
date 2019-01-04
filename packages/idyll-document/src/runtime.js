@@ -7,6 +7,7 @@ import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
 import { getChildren } from 'idyll-astV2';
+import AuthorTool from './components/author-tool';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -38,14 +39,13 @@ const refCache = {};
 const evalContext = {};
 let scrollContainer;
 
-const getLayout = (layout) => {
+const getLayout = layout => {
   return layouts[layout.trim()] || {};
-}
+};
 
-const getTheme = (theme) => {
+const getTheme = theme => {
   return themes[theme.trim()] || {};
-}
-
+};
 
 const getRefs = () => {
   const refs = {};
@@ -55,7 +55,14 @@ const getRefs = () => {
 
   scrollWatchers.forEach(watcher => {
     // left and right props assume no horizontal scrolling
-    const { watchItem, callbacks, container, recalculateLocation, offsets, ...watcherProps} = watcher;
+    const {
+      watchItem,
+      callbacks,
+      container,
+      recalculateLocation,
+      offsets,
+      ...watcherProps
+    } = watcher;
     refs[watchItem.dataset.ref] = {
       ...watcherProps,
       domNode: watchItem
@@ -66,124 +73,152 @@ const getRefs = () => {
 };
 
 let wrapperKey = 0;
-const createWrapper = ({ theme, layout }) => {
+const createWrapper = ({ theme, layout, authorView }) => {
   return class Wrapper extends React.PureComponent {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+      super(props);
 
-    this.key = wrapperKey++;
-    this.ref = {};
-    this.onUpdateRefs = this.onUpdateRefs.bind(this);
-    this.onUpdateProps = this.onUpdateProps.bind(this);
+      this.key = wrapperKey++;
+      this.ref = {};
+      this.onUpdateRefs = this.onUpdateRefs.bind(this);
+      this.onUpdateProps = this.onUpdateProps.bind(this);
 
-    const vars = values(props.__vars__);
-    const exps = values(props.__expr__);
+      const vars = values(props.__vars__);
+      const exps = values(props.__expr__);
 
-    this.usesRefs = exps.some(v => v.includes('refs.'));
+      this.usesRefs = exps.some(v => v.includes('refs.'));
 
-    // listen for props updates IF we care about them
-    if (vars.length || exps.length) {
-      // called with new doc state
-      // when any component calls updateProps()
-      updatePropsCallbacks.push(this.onUpdateProps);
+      // listen for props updates IF we care about them
+      if (vars.length || exps.length) {
+        // called with new doc state
+        // when any component calls updateProps()
+        updatePropsCallbacks.push(this.onUpdateProps);
+      }
+
+      // listen for ref updates IF we care about them
+      if (props.hasHook || this.usesRefs) {
+        updateRefsCallbacks.push(this.onUpdateRefs);
+      }
+
+      this.state = { hasError: false, error: null };
     }
 
-    // listen for ref updates IF we care about them
-    if (props.hasHook || this.usesRefs) {
-      updateRefsCallbacks.push(this.onUpdateRefs);
+    componentDidCatch(error, info) {
+      this.setState({ hasError: true, error: error });
     }
 
-    this.state = { hasError: false, error: null };
-  }
+    onUpdateProps(newState, changedKeys) {
+      const { __vars__, __expr__ } = this.props;
 
-  componentDidCatch(error, info) {
-    this.setState({ hasError: true, error: error });
-  }
+      // were there changes to any vars we track?
+      // or vars our expressions reference?
+      const shouldUpdate = changedKeys.some(k => {
+        return (
+          values(__vars__).includes(k) ||
+          values(__expr__).some(expr => expr.includes(k))
+        );
+      });
+      // if nothing we care about changed bail out and don't re-render
+      if (!shouldUpdate) return;
 
-  onUpdateProps(newState, changedKeys) {
-    const { __vars__, __expr__ } = this.props;
+      // update this component's state
+      const nextState = {};
+      // pull in the latest value for any tracked vars
+      Object.keys(__vars__).forEach(key => {
+        nextState[key] = newState[__vars__[key]];
+      });
+      // re-run this component's expressions using the latest doc state
+      Object.keys(__expr__).forEach(key => {
+        nextState[key] = evalExpression(
+          newState,
+          __expr__[key],
+          key,
+          evalContext
+        );
+      });
+      // trigger a re-render of this component
+      // and more importantly, its wrapped component
+      this.setState(Object.assign({ hasError: false }, nextState));
+    }
 
-    // were there changes to any vars we track?
-    // or vars our expressions reference?
-    const shouldUpdate = changedKeys.some(k => {
-      return (
-        values(__vars__).includes(k) ||
-        values(__expr__).some(expr => expr.includes(k))
-      );
-    });
-    // if nothing we care about changed bail out and don't re-render
-    if (!shouldUpdate) return;
+    onUpdateRefs(newState) {
+      const { __expr__ } = this.props;
 
-    // update this component's state
-    const nextState = {};
-    // pull in the latest value for any tracked vars
-    Object.keys(__vars__).forEach(key => {
-      nextState[key] = newState[__vars__[key]];
-    });
-    // re-run this component's expressions using the latest doc state
-    Object.keys(__expr__).forEach(key => {
-      nextState[key] = evalExpression(newState, __expr__[key], key, evalContext);
-    });
-    // trigger a re-render of this component
-    // and more importantly, its wrapped component
-    this.setState(Object.assign({ hasError: false }, nextState));
-  }
-
-  onUpdateRefs(newState) {
-    const { __expr__ } = this.props;
-
-    if (this.usesRefs) {
-      const nextState = {refs: newState.refs};
-      entries(__expr__)
-        .forEach(([key, val]) => {
+      if (this.usesRefs) {
+        const nextState = { refs: newState.refs };
+        entries(__expr__).forEach(([key, val]) => {
           if (!key.includes('refs.')) {
             return;
           }
           nextState[key] = evalExpression(newState, val, key, evalContext);
         });
 
-      // trigger a render with latest state
-      this.setState(nextState);
+        // trigger a render with latest state
+        this.setState(nextState);
+      }
     }
-  }
 
-  componentWillUnmount() {
-    const propsIndex = updatePropsCallbacks.indexOf(this.onUpdateProps);
-    if (propsIndex > -1) updatePropsCallbacks.splice(propsIndex, 1);
+    componentWillUnmount() {
+      const propsIndex = updatePropsCallbacks.indexOf(this.onUpdateProps);
+      if (propsIndex > -1) updatePropsCallbacks.splice(propsIndex, 1);
 
-    const refsIndex = updateRefsCallbacks.indexOf(this.onUpdateRefs);
-    if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
-  }
+      const refsIndex = updateRefsCallbacks.indexOf(this.onUpdateRefs);
+      if (refsIndex > -1) updateRefsCallbacks.splice(refsIndex, 1);
+    }
 
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div style={{ border: 'solid red 1px', padding: 10}}>
-          {this.state.error.message}
-        </div>
-      );
+    render() {
+      if (this.state.hasError) {
+        return (
+          <div style={{ border: 'solid red 1px', padding: 10 }}>
+            {this.state.error.message}
+          </div>
+        );
       }
 
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
-      const { children, ...passThruProps } = filterIdyllProps(this.props, this.props.isHTMLNode);
-      return React.Children.map(children, (c, i) => {
+      const { children, ...passThruProps } = filterIdyllProps(
+        this.props,
+        this.props.isHTMLNode
+      );
+      let childComponent = null;
+      let uniqueKey = `${this.key}-help`;
+      const returnComponent = React.Children.map(children, (c, i) => {
+        childComponent = c;
         return React.cloneElement(c, {
           key: `${this.key}-${i}`,
           idyll: {
             theme: getTheme(theme),
-            layout: getLayout(layout)
+            layout: getLayout(layout),
+            authorView: authorView
           },
           ...state,
-          ...passThruProps,
-        })
-      })
+          ...passThruProps
+        });
+      });
+      const metaData = childComponent.type._idyll;
+      if (authorView && metaData && metaData.props) {
+        // ensure inline elements do not have this overlay
+        if (
+          metaData.displayType === undefined ||
+          metaData.displayType !== 'inline'
+        ) {
+          return (
+            <AuthorTool
+              component={returnComponent}
+              authorComponent={childComponent}
+              uniqueKey={uniqueKey}
+            />
+          );
+        }
+      }
+      return returnComponent;
     }
-  }
+  };
 };
 
 const getDerivedValues = dVars => {
   const o = {};
-  Object.keys(dVars).forEach(key => o[key] = dVars[key].value);
+  Object.keys(dVars).forEach(key => (o[key] = dVars[key].value));
   return o;
 };
 
@@ -194,46 +229,74 @@ class IdyllRuntime extends React.PureComponent {
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
     const ast = filterASTForDocument(props.ast);
-    const {
-      vars,
-      derived,
-      data,
-      elements,
-    } = splitAST(getChildren(ast));
 
+    const { vars, derived, data, elements } = splitAST(ast);
+    const Wrapper = createWrapper({
+      theme: props.theme,
+      layout: props.layout,
+      authorView: props.authorView
+    });
 
-    const Wrapper = createWrapper({ theme: props.theme, layout: props.layout });
+    let hasInitialized = false;
+    let initialContext = {};
+    // Initialize a custom context
+    if (typeof props.context === 'function') {
+      props.context({
+        update: newState => {
+          if (!hasInitialized) {
+            initialContext = Object.assign(initialContext, newState);
+          } else {
+            this.updateState(newState);
+          }
+        },
+        data: () => {
+          return this.state;
+        },
+        onInitialize: cb => {
+          this._onInitializeState = cb;
+        },
+        onMount: cb => {
+          this._onMount = cb;
+        },
+        onUpdate: cb => {
+          this._onUpdateState = cb;
+        }
+      });
+    }
 
-    const initialState = Object.assign({}, {
-      ...getVars(vars),
-      ...getData(data, props.datasets),
-    }, props.initialState ? props.initialState : {});
-    const derivedVars = this.derivedVars = getVars(derived, initialState);
+    const initialState = Object.assign(
+      {},
+      {
+        ...getVars(vars, initialContext),
+        ...getData(data, props.datasets)
+      },
+      initialContext,
+      props.initialState ? props.initialState : {}
+    );
+    const derivedVars = (this.derivedVars = getVars(derived, initialState));
 
-    let state = this.state = {
+    let state = (this.state = {
       ...initialState,
-      ...getDerivedValues(derivedVars),
-    };
-    this.updateState = (newState) => {
+      ...getDerivedValues(derivedVars)
+    });
+
+    this.updateState = newState => {
       // merge new doc state with old
-      const newMergedState = {...this.state, ...newState};
+      const newMergedState = { ...this.state, ...newState };
       // update derived values
       const newDerivedValues = getDerivedValues(
-        getVars(derived, newMergedState),
+        getVars(derived, newMergedState)
       );
-      const nextState = {...newMergedState, ...newDerivedValues};
+      const nextState = { ...newMergedState, ...newDerivedValues };
 
       const changedMap = {};
-      const changedKeys = Object.keys(state).reduce(
-        (acc, k) => {
-          if (state[k] !== nextState[k]) {
-            acc.push(k);
-            changedMap[k] = nextState[k] || state[k];
-          }
-          return acc;
-        },
-        []
-      )
+      const changedKeys = Object.keys(state).reduce((acc, k) => {
+        if (state[k] !== nextState[k]) {
+          acc.push(k);
+          changedMap[k] = nextState[k] || state[k];
+        }
+        return acc;
+      }, []);
 
       // Update doc state reference.
       // We re-use the same object here so that
@@ -242,11 +305,14 @@ class IdyllRuntime extends React.PureComponent {
       // pass the new doc state to all listeners aka component wrappers
       updatePropsCallbacks.forEach(f => f(state, changedKeys));
 
-      changedKeys.length && this._onUpdateState && this._onUpdateState(changedMap);
+      changedKeys.length &&
+        this._onUpdateState &&
+        this._onUpdateState(changedMap);
     };
 
     evalContext.update = this.updateState;
-
+    hasInitialized = true;
+    this._onInitializeState && this._onInitializeState();
 
     // Put these in to avoid hard errors if people are on the latest
     // CLI but haven't updated their local default components
@@ -258,15 +324,22 @@ class IdyllRuntime extends React.PureComponent {
     // Components that the Document needs to function properly
     const internalComponents = {
       Wrapper
-    }
+    };
 
-    Object.keys(internalComponents).forEach((key) => {
+    Object.keys(internalComponents).forEach(key => {
       if (props.components[key]) {
-        console.warn(`Warning! You are including a component named ${key}, but this is a reserved Idyll component. Please rename your component.`);
+        console.warn(
+          `Warning! You are including a component named ${key}, but this is a reserved Idyll component. Please rename your component.`
+        );
       }
-    })
+    });
 
-    const components = Object.assign(fallbackComponents, props.components, internalComponents);
+    const components = Object.assign(
+      fallbackComponents,
+      props.components,
+      internalComponents
+    );
+
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
     const wrapTargets = findWrapTargets(schema, this.state, props.components);
@@ -293,7 +366,7 @@ class IdyllRuntime extends React.PureComponent {
             };
           };
         }
-        //Inspect for isHTMLNode  props and to check for dynamic components. 
+        //Inspect for isHTMLNode  props and to check for dynamic components.
         if (!wrapTargets.includes(node)) return node;
         const {
           component,
@@ -357,33 +430,40 @@ class IdyllRuntime extends React.PureComponent {
 
     let scroller = scrollparent(el);
     let scrollContainer;
-    if (scroller === document.documentElement || scroller === document.body || scroller === window) {
+    if (
+      scroller === document.documentElement ||
+      scroller === document.body ||
+      scroller === window
+    ) {
       scroller = window;
       scrollContainer = scrollMonitor;
     } else {
       scrollContainer = scrollMonitor.createContainer(scroller);
     }
-    Object.keys(refCache).forEach((key) => {
+    Object.keys(refCache).forEach(key => {
       const { props, domNode } = refCache[key];
       const watcher = scrollContainer.create(domNode, scrollOffsets[key]);
-      hooks.forEach((hook) => {
+      hooks.forEach(hook => {
         if (props[hook]) {
           watcher[scrollMonitorEvents[hook]](() => {
             evalExpression(this.state, props[hook], hook, evalContext)();
           });
         }
-      })
+      });
       scrollWatchers.push(watcher);
     });
     scroller.addEventListener('scroll', this.scrollListener);
   }
 
   updateDerivedVars(newState) {
+    const context = {};
     Object.keys(this.derivedVars).forEach(dv => {
       this.derivedVars[dv].value = this.derivedVars[dv].update(
         newState,
         this.state,
+        context
       );
+      context[dv] = this.derivedVars[dv].value;
     });
   }
 
@@ -398,18 +478,7 @@ class IdyllRuntime extends React.PureComponent {
   componentDidMount() {
     const refs = getRefs();
     updateRefsCallbacks.forEach(f => f({ ...this.state, refs }));
-
-    if (typeof this.props.context === 'function') {
-      this.props.context({
-        update: this.updateState.bind(this),
-        data: () => {
-          return this.state
-        },
-        onUpdate: (cb) => {
-          this._onUpdateState = cb;
-        }
-      });
-    }
+    this._onMount && this._onMount();
   }
 
   render() {
@@ -417,13 +486,14 @@ class IdyllRuntime extends React.PureComponent {
       <div className="idyll-root" ref={this.initScrollListener}>
         {this.kids}
       </div>
-    )
+    );
   }
 }
 
 IdyllRuntime.defaultProps = {
   layout: 'blog',
   theme: 'github',
+  authorView: false,
   insertStyles: false
 };
 

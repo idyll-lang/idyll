@@ -14,13 +14,15 @@ class Radio extends React.PureComponent {
   }
 
   render() {
+    const { idyll, hasError, updateProps, options, value, ...props } = this.props;
+
     return (
-      <div {...this.props}>
-        {this.props.options.map((d) => {
+      <div {...props}>
+        {options.map((d) => {
           if (typeof d === 'string') {
-            return <label><input type="radio" checked={d === this.props.value} onChange={this.onChange} value={d} name={this.id} />{d}</label>;
+            return <label key={d}><input type="radio" checked={d === value} onChange={this.onChange} value={d} name={this.id} />{d}</label>;
           }
-          return <label><input type="radio" checked={d.value === this.props.value} onChange={this.onChange} value={d.value} name={this.id} />{d.label || d.value}</label>;
+          return <label key={d.value}><input type="radio" checked={d.value === value} onChange={this.onChange} value={d.value} name={this.id} />{d.label || d.value}</label>;
         })}
       </div>
     );

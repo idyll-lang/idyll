@@ -1,6 +1,6 @@
 {
   "name": "idyll-document",
-  "version": "2.12.0",
+  "version": "2.14.0",
   "license": "MIT",
   "authors": [
     "Matthew Conlen",
@@ -29,15 +29,16 @@
   },
   "dependencies": {
     "change-case": "^3.0.1",
-    "cross-env": "^5.0.5",
+    "cross-env": "^5.2.0",
     "falafel": "^2.1.0",
     "html-tags": "^2.0.0",
-    "idyll-compiler": "^3.3.0",
-    "idyll-layouts": "^2.5.5",
+    "idyll-compiler": "^3.3.1",
+    "idyll-layouts": "^2.6.1",
     "idyll-themes": "^2.3.4",
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
     "react-dom-factories": "^1.0.1",
+    "react-tooltip": "^3.8.4",
     "scrollmonitor": "^1.2.3",
     "scrollparent": "^2.0.1",
     "styled-jsx": "^2.2.4"

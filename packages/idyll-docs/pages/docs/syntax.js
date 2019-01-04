@@ -13,6 +13,7 @@ const Content = () => markdown`
   * [Bold and Italic](#bold-italic)
   * [Headers](#headers)
   * [Code](#code)
+  * [Lists](#lists)
 * [Components](#components)
   * [Properties](#component-properties)
     * [Literals](#literals)
@@ -81,6 +82,19 @@ This is a code block
 \\\`\\\`\\\`
 \`\`\`
 
+<h4 id="lists">Lists</h4>
+
+Ordered and unordered lists are supported. Lists can be created by using an asterisk (\`*\`)
+or numbers. For example:
+\`\`\`
+* Unordered item one
+* Unordered item two
+* Unordered item three
+
+1. ordered item one
+2. ordered item two
+3. ordered item three
+\`\`\`
 
 <h2 id="components">Components</h2>
 
@@ -139,7 +153,7 @@ Use backticks to pass an evaluated expression:
 
 Note that because Idyll is reactive, if a variable changes, any expressions that reference that
 variable will immediately be recomputed. See this utilized to create reactive vega-lite specifications:
-https://idyll-lang.github.io/examples/csv/.
+https://idyll-lang.org/examples/csv/.
 
 If the property expects a function,
 the expression will automatically be

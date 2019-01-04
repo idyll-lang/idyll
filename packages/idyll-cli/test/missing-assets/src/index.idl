@@ -1,0 +1,8 @@
+[meta title:"Page Title" description:"Short description of your project" /]
+
+[Header
+  title:"Idyll Static Assets Test"
+  subtitle:"Testing static assets in Idyll"
+  author:"Your Name Here"
+  authorLink:"https://idyll-lang.github.io" /]
+

@@ -222,10 +222,13 @@ const components = [
                 "type": "The type of the chart to display, can be `line`, `scatter`, `bar`, `pie`, or `time`. The time type is a line chart that expects the `x` values in the data to be in the temporal domain."
               },
               {
-                "domain": "The chart extent along the x dimension."
+                "domain": "The chart extent along the x dimension. *Default is [0, 1]*"
               },
               {
-                "range": "The chart extent along the y dimension."
+                "range": "The chart extent along the y dimension. *Default is [0, 1]*"
+              },
+              {
+                "theme": "The theme to use, e.g. `grayscale` or `material` or a custom object (see [an example here](https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js))"
               }
             ]
           }
@@ -286,6 +289,32 @@ const components = [
             "thumbnail": "table.png",
             "description": "Display tabular data. Uses https://github.com/react-tools/react-table under the hood to render the table.",
             "image": "table.png"
+          }
+        },
+        {
+          "Youtube": {
+            "thumbnail": "youtube.png",
+            "description": "Plays a video from YouTube. All of the parameters are optional except for id, which must be provided. See all available options at https://developers.google.com/youtube/player_parameters",
+            "idyllProps": [
+              {
+                "id": "YouTube video id. Required."
+              },
+              {
+                "width": "width of the video"
+              },
+              {
+                "height": "height of the video"
+              },
+              {
+                "play": "Is the video playing? Default: false"
+              },
+              {
+                "audio": "Is the audio turned on? Default: true"
+              },
+              {
+                "options": "Dictionary of extra options. See YouTube docs for all options."
+              }
+            ]
           }
         }
       ]
