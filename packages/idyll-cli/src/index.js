@@ -5,6 +5,7 @@ const {
   join,
   parse
 } = require('path');
+const path = require('path');
 const EventEmitter = require('events');
 const changeCase = require('change-case');
 const mkdirp = require('mkdirp')
@@ -213,8 +214,18 @@ const idyll = (options = {}, cb) => {
       return components;
     }
 
+    // Returns the directory of the `components` folder
+    // of this IdyllInstance
+    getComponentsDirectory() {
+      // note, this isn't guaranteed to exist
+      // it just adds "component" to the directory of this idyll instance
+      return this.getPaths().COMPONENT_DIRS;
+    }
+
     // Adds the given component (directory) to the components used
     // in this IdyllInstance
+    // If there is already a component for the given componentPath,
+    // it will be overwritten with the one from componentPath
     addComponent(componentPath) {
       // I think we may copy the component to the components folder of this IdyllInstance
       // A state that keeps track of the components folder of this instance
@@ -222,6 +233,14 @@ const idyll = (options = {}, cb) => {
       // Use fs copy file to put it in the directory
       // This means that we need access to the respective directory, which should either be something we can access
       // or a field.
+      const componentsDirectory = "" + this.getComponentsDirectory();
+      // We grab the name of the component, and put that in the components directory
+      const componentFileName = path.basename(componentPath);
+      if (fs.statSync(componentsDirectory) ) {
+        fs.copyFileSync(componentPath, componentsDirectory + "/" + componentFileName);
+      } else {
+        console.log("wut");
+      }
     }
 
     // Returns an array of the current datasets used in this IdyllInstance
