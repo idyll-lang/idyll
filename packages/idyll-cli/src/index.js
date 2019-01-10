@@ -226,21 +226,18 @@ const idyll = (options = {}, cb) => {
     // in this IdyllInstance
     // If there is already a component for the given componentPath,
     // it will be overwritten with the one from componentPath
+    // If there is no components/ directory, then it will be created
     addComponent(componentPath) {
-      // I think we may copy the component to the components folder of this IdyllInstance
-      // A state that keeps track of the components folder of this instance
-      // Yeah can just add to the folder this component path
-      // Use fs copy file to put it in the directory
-      // This means that we need access to the respective directory, which should either be something we can access
-      // or a field.
-      const componentsDirectory = "" + this.getComponentsDirectory();
+      const componentsDirectory = this.getComponentsDirectory();
       // We grab the name of the component, and put that in the components directory
       const componentFileName = path.basename(componentPath);
-      if (fs.statSync(componentsDirectory) ) {
-        fs.copyFileSync(componentPath, componentsDirectory + "/" + componentFileName);
-      } else {
-        console.log("wut");
+      // ensure components directory exists
+      try {
+        fs.statSync(componentsDirectory[0]);
+      } catch (err) {
+        fs.mkdirSync(componentsDirectory[0]);
       }
+      fs.copyFileSync(componentPath, componentsDirectory[0] + "/" + componentFileName);
     }
 
     // Returns an array of the current datasets used in this IdyllInstance
