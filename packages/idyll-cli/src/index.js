@@ -216,9 +216,9 @@ const idyll = (options = {}, cb) => {
 
     // Returns the directory of the `components` folder
     // of this IdyllInstance
+    // Note: this isn't guaranteed to exist
+    // It just adds "component" to the directory of this idyll instance
     getComponentsDirectory() {
-      // note, this isn't guaranteed to exist
-      // it just adds "component" to the directory of this idyll instance
       return this.getPaths().COMPONENT_DIRS;
     }
 
