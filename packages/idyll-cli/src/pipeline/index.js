@@ -16,7 +16,7 @@ const {
 const css = require('./css');
 const bundleJS = require('./bundle-js');
 const errors = require('../errors');
-const { walkNodes } = require('idyll-astV2');
+const { walkNodes } = require('idyll-ast');
 const debug = require('debug')('idyll:cli');
 
 let output;

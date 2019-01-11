@@ -1,4 +1,3 @@
-
 const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
@@ -12,7 +11,7 @@ const {
   filterNodes,
   filterChildren,
   removeNodesByName
-} = require('idyll-astV2');
+} = require('idyll-ast');
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
   return `
     ((context) => {
@@ -52,17 +51,17 @@ export const evalExpression = (acc, expr, key, context) => {
   let e = buildExpression(acc, expr, key, context, isEventHandler);
 
   if (isEventHandler) {
-    return (function () {
+    return function() {
       eval(e);
-    }).bind(Object.assign({}, acc, context || {}));
+    }.bind(Object.assign({}, acc, context || {}));
   }
 
   try {
-    return (function (evalString) {
+    return function(evalString) {
       try {
         return eval('(' + evalString + ')');
       } catch (err) {}
-    }).call(Object.assign({}, acc, context || {}), e);
+    }.call(Object.assign({}, acc, context || {}), e);
   } catch (err) {}
 };
 
@@ -146,16 +145,11 @@ export const filterIdyllProps = (props, filterInjected) => {
     ...rest
   } = props;
   if (filterInjected) {
-    const {
-      idyll,
-      hasError,
-      updateProps,
-      ...ret
-    } = rest;
+    const { idyll, hasError, updateProps, ...ret } = rest;
     return ret;
   }
   return rest;
-}
+};
 export const getData = (arr, datasets = {}) => {
   const pluck = (acc, val) => {
     const nameValue = getProperties(val).name.value;
@@ -175,12 +169,12 @@ export const splitAST = ast => {
     elements: []
   };
 
-  const handleNode = (storeElements) => {
-    return (node) => {
+  const handleNode = storeElements => {
+    return node => {
       const type = getType(node);
       const props = getProperties(node);
       const children = getChildren(node);
-      if(node.id != 0) {
+      if (node.id != 0) {
         if (type === 'var') {
           state.vars.push(node);
         } else if (state[type]) {
@@ -188,14 +182,16 @@ export const splitAST = ast => {
         } else if (storeElements) {
           state.elements.push(node);
         }
-        if (!children || (children.length === 1 && getType(children[0]) === "textnode")) {
+        if (
+          !children ||
+          (children.length === 1 && getType(children[0]) === 'textnode')
+        ) {
           return;
         }
         children.forEach(handleNode(false));
       }
-    }
-
-  }
+    };
+  };
   ast.forEach(handleNode(true));
   return state;
 };
@@ -209,27 +205,26 @@ export const hooks = [
 ];
 
 export const scrollMonitorEvents = {
-  'onEnterView': 'enterViewport',
-  'onEnterViewFully': 'fullyEnterViewport',
-  'onExitView': 'partiallyExitViewport',
-  'onExitViewFully': 'exitViewport'
-}
+  onEnterView: 'enterViewport',
+  onEnterViewFully: 'fullyEnterViewport',
+  onExitView: 'partiallyExitViewport',
+  onExitViewFully: 'exitViewport'
+};
 
-export const translate = (ast) => {
-
-  const attrConvert = (props) => {
+export const translate = ast => {
+  const attrConvert = props => {
     let reducedProps = {};
     for (let propName in props) {
       const name = propName;
       const type = props[propName].type;
       const value = props[propName].value;
-      if (type == "variable") {
+      if (type == 'variable') {
         if (!reducedProps.__vars__) {
           reducedProps.__vars__ = {};
         }
         reducedProps.__vars__[name] = value;
       }
-      if (type == "expression") {
+      if (type == 'expression') {
         if (!reducedProps.__expr__) {
           reducedProps.__expr__ = {};
         }
@@ -238,13 +233,13 @@ export const translate = (ast) => {
 
       if (hooks.includes(name)) {
         reducedProps.hasHook = true;
-      };
+      }
 
       reducedProps[name] = value;
     }
     return reducedProps;
-  }
-  const tNode = (node) => {
+  };
+  const tNode = node => {
     if (getType(node) === 'textnode') return node;
 
     let name = getNodeName(node);
@@ -257,26 +252,24 @@ export const translate = (ast) => {
     return {
       component: name,
       ...attrConvert(attrs),
-      children: children.map(tNode),
-    }
+      children: children.map(tNode)
+    };
   };
 
   return splitAST(getChildren(ast)).elements.map(tNode);
-}
+};
 
 export const mapTree = (tree, mapFn, filterFn = () => true) => {
-
-
   const walkFn = (acc, node) => {
     //To check for textnodes
-    if(node.component) {
+    if (node.component) {
       //To check for childrens
-      if(node.children) {
-        node.children =  node.children.reduce(walkFn, []);
+      if (node.children) {
+        node.children = node.children.reduce(walkFn, []);
       }
     }
 
-    if(filterFn(node)) {
+    if (filterFn(node)) {
       acc.push(mapFn(node));
     }
     return acc;
@@ -285,21 +278,21 @@ export const mapTree = (tree, mapFn, filterFn = () => true) => {
   return value;
 };
 
-export const filterASTForDocument = (ast) => {
-  return removeNodesByName(ast, "meta");
+export const filterASTForDocument = ast => {
+  return removeNodesByName(ast, 'meta');
 };
 
 export const findWrapTargets = (schema, state, components) => {
   //Custom components
   const targets = [];
   //Name of custom components
-  const componentNames = (Object.keys(components));
+  const componentNames = Object.keys(components);
   componentNames.forEach((component, i) => {
-    let words = component.split("-");
-    for(let i = 0; i < words.length; i++) {
+    let words = component.split('-');
+    for (let i = 0; i < words.length; i++) {
       words[i] = words[i].charAt(0).toUpperCase() + words[i].substring(1);
     }
-    componentNames[i] = words.join("").toLowerCase();
+    componentNames[i] = words.join('').toLowerCase();
   });
 
   //Array of keys for the runtime state passed.
@@ -308,45 +301,37 @@ export const findWrapTargets = (schema, state, components) => {
   //Populating target with the custom componenets
   //Walk the whole tree, collect and return the nodes
   //for wrapping
-  mapTree(schema, (node) => {
-    if(node.component == "textnode") {
+  mapTree(schema, node => {
+    if (node.component == 'textnode') {
       return node;
     }
 
     //Custom components will have hooks attached to them
-    if(node.hasHook) {
+    if (node.hasHook) {
       targets.push(node);
       return node;
     }
 
-    if(node.component) {
-      if(componentNames.includes(node.component.toLowerCase())) {
+    if (node.component) {
+      if (componentNames.includes(node.component.toLowerCase())) {
         targets.push(node);
         return node;
       }
     }
 
-    const {
-      component,
-      children,
-      __vars__,
-      __expr__,
-      ...props
-    } = node;
+    const { component, children, __vars__, __expr__, ...props } = node;
 
     const expressions = Object.keys(__expr__ || {});
     const variables = Object.keys(__vars__ || {});
 
-    for(let prop in props) {
-
-      if(targets.includes(node)) {
+    for (let prop in props) {
+      if (targets.includes(node)) {
         return;
       }
 
       if (variables.includes(prop) || expressions.includes(prop)) {
         targets.push(node);
       }
-
     }
     return node;
   });

@@ -6,7 +6,7 @@ import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
-import { getChildren } from 'idyll-astV2';
+import { getChildren } from 'idyll-ast';
 import AuthorTool from './components/author-tool';
 
 import * as layouts from 'idyll-layouts';
@@ -26,10 +26,7 @@ import {
   scrollMonitorEvents
 } from './utils';
 
-import {
-  getType,
-  hasType
-} from 'idyll-astV2';
+import { getType, hasType } from 'idyll-ast';
 import { resolve } from 'dns';
 const updatePropsCallbacks = [];
 const updateRefsCallbacks = [];
@@ -344,79 +341,73 @@ class IdyllRuntime extends React.PureComponent {
     const schema = translate(ast);
     const wrapTargets = findWrapTargets(schema, this.state, props.components);
     let refCounter = 0;
-    const transformedSchema = mapTree(
-      schema,
-      node => {
+    const transformedSchema = mapTree(schema, node => {
+      if (!node.component) {
+        if (node.type && node.type === 'textnode') return node.value;
+      }
 
-        if(!node.component) {
-          if(node.type && node.type === "textnode") return node.value;
-        }
-
-        // transform refs from strings to functions and store them
-        if (node.ref || node.hasHook) {
-          node.refName = node.ref || node.component + (refCounter++).toString();
-          node.ref = el => {
-            if (!el) return;
-            const domNode = ReactDOM.findDOMNode(el);
-            domNode.dataset.ref = node.refName;
-            scrollOffsets[node.refName] = node.scrollOffset || 0;
-            refCache[node.refName] = {
-              props: node,
-              domNode: domNode
-            };
+      // transform refs from strings to functions and store them
+      if (node.ref || node.hasHook) {
+        node.refName = node.ref || node.component + (refCounter++).toString();
+        node.ref = el => {
+          if (!el) return;
+          const domNode = ReactDOM.findDOMNode(el);
+          domNode.dataset.ref = node.refName;
+          scrollOffsets[node.refName] = node.scrollOffset || 0;
+          refCache[node.refName] = {
+            props: node,
+            domNode: domNode
           };
-        }
-        //Inspect for isHTMLNode  props and to check for dynamic components.
-        if (!wrapTargets.includes(node)) return node;
-        const {
-          component,
-          children,
-          key,
-          __vars__ = {},
-          __expr__ = {},
-          ...props // actual component props
-        } = node;
-
-        // assign the initial values for tracked vars and expressions
-        Object.keys(props).forEach(k => {
-          if (__vars__[k]) {
-            node[k] = state[__vars__[k]];
-          }
-          if (__expr__[k] && !__expr__[k].includes('refs.')) {
-            if (hooks.indexOf(k) > -1) {
-              return;
-            }
-            node[k] = evalExpression(state, __expr__[k], k, evalContext);
-          }
-        });
-        const resolvedComponent = rjs.resolveComponent(node);
-        const isHTMLNode = typeof resolvedComponent === 'string';
-
-        return {
-          component: Wrapper,
-          __vars__,
-          __expr__,
-          isHTMLNode: isHTMLNode,
-          hasHook: node.hasHook,
-          refName: node.refName,
-          updateProps: (newProps) => {
-            // init new doc state object
-            const newState = {};
-            // iterate over passed in updates
-            Object.keys(newProps).forEach(k => {
-              // if a tracked var was updated get its new value
-              if (__vars__[k]) {
-                newState[__vars__[k]] = newProps[k];
-              }
-            });
-            this.updateState(newState);
-          },
-          children: [
-            filterIdyllProps(node, isHTMLNode)
-          ],
         };
       }
-    );
+      //Inspect for isHTMLNode  props and to check for dynamic components.
+      if (!wrapTargets.includes(node)) return node;
+      const {
+        component,
+        children,
+        key,
+        __vars__ = {},
+        __expr__ = {},
+        ...props // actual component props
+      } = node;
+
+      // assign the initial values for tracked vars and expressions
+      Object.keys(props).forEach(k => {
+        if (__vars__[k]) {
+          node[k] = state[__vars__[k]];
+        }
+        if (__expr__[k] && !__expr__[k].includes('refs.')) {
+          if (hooks.indexOf(k) > -1) {
+            return;
+          }
+          node[k] = evalExpression(state, __expr__[k], k, evalContext);
+        }
+      });
+      const resolvedComponent = rjs.resolveComponent(node);
+      const isHTMLNode = typeof resolvedComponent === 'string';
+
+      return {
+        component: Wrapper,
+        __vars__,
+        __expr__,
+        isHTMLNode: isHTMLNode,
+        hasHook: node.hasHook,
+        refName: node.refName,
+        updateProps: newProps => {
+          // init new doc state object
+          const newState = {};
+          // iterate over passed in updates
+          Object.keys(newProps).forEach(k => {
+            // if a tracked var was updated get its new value
+            if (__vars__[k]) {
+              newState[__vars__[k]] = newProps[k];
+            }
+          });
+          this.updateState(newState);
+        },
+        children: [filterIdyllProps(node, isHTMLNode)]
+      };
+    });
     this.kids = rjs.parseSchema(transformedSchema);
   }
 
