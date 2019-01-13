@@ -193,7 +193,7 @@ const idyll = (options = {}, cb) => {
     getComponents() {
       var components = [];
       var defaultCompsDir = this.getPaths().DEFAULT_COMPONENT_DIRS;
-      var compsDir = this.getPaths().COMPONENT_DIRS; // grabs the `components` folder of their current directory
+      var compsDir = this.getComponentsDirectory(); // grabs the `components` folder of their current directory
       var componentDirs = [defaultCompsDir, compsDir];
 
       componentDirs.forEach(dirs => {
@@ -247,13 +247,21 @@ const idyll = (options = {}, cb) => {
       var defaultData = [];
       fs.readdirSync(dataFolder).forEach(file => {
         defaultData.push(file);
-      })
+      });
       return defaultData;
     }
 
     // Adds a dataset to the current datasets used in this IdyllInstance
+    // It will be added to the `data` directory of this IdyllInstance
     addDataset(datasetPath) {
-      
+      const datasetDirectory = this.getPaths().DATA_DIR;
+      const datasetName = path.basename(datasetPath);
+      try {
+        fs.statSync(datasetDirectory);
+      } catch (err) {
+        fs.mkdirSync(datasetDirectory);
+      }
+      fs.copyFileSync(datasetPath, datasetDirectory + "/" + datasetName);
     }
 
     getResolver() {
