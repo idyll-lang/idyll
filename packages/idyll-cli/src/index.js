@@ -240,10 +240,9 @@ const idyll = (options = {}, cb) => {
       fs.copyFileSync(componentPath, componentsDirectory[0] + "/" + componentFileName);
     }
 
-    // Returns an array of the current datasets used in this IdyllInstance
-    // Just default datasets for now
+    // Returns an array of the current datasets used in this IdyllInstance's data directory
     getDatasets() {
-      var dataFolder = __dirname + "/../../idyll-template-projects/templates/basic/data/";
+      var dataFolder = this.getPaths().DATA_DIR;
       var defaultData = [];
       fs.readdirSync(dataFolder).forEach(file => {
         defaultData.push(file);
