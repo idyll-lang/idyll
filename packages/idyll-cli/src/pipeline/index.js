@@ -13,11 +13,8 @@ const {
   getBaseHTML,
   getHTML
 } = require('./parse');
-const css = require('./css');
 const bundleJS = require('./bundle-js');
 const errors = require('../errors');
-const { walkNodes } = require('idyll-ast');
-const debug = require('debug')('idyll:cli');
 
 let output;
 
@@ -111,7 +108,7 @@ const build = (opts, paths, resolvers) => {
         writeFile(paths.CSS_OUTPUT_FILE, output.css),
         writeFile(paths.HTML_OUTPUT_FILE, output.html),
         pathExists(paths.STATIC_DIR).then(exists => {
-          if (exists) {
+          if (exists && paths.STATIC_DIR !== paths.STATIC_OUTPUT_DIR) {
             return copy(paths.STATIC_DIR, paths.STATIC_OUTPUT_DIR);
           }
           return null;

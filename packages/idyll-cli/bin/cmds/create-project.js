@@ -2,6 +2,7 @@
 
 const fs = require('fs-extra');
 const p = require('path');
+
 const spawn = require('cross-spawn');
 
 const yargs = require('yargs');
@@ -155,7 +156,7 @@ async function createProject(answers) {
   async function installDependencies() {
     return new Promise((resolve, reject) => {
       let installer = spawn('npm', ['install'], {
-        cwd: p.join(process.cwd(), dir),
+        cwd: p.isAbsolute(dir) ? dir : p.join(process.cwd(), dir),
         stdio: 'ignore'
       });
       installer.on('close', code => {
