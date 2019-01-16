@@ -144,7 +144,6 @@ test('should include components configured in package.json', () => {
 // This tests for just the *default* components being in getComponents
 test('Idyll getComponents() gets all default components', () => {
   var defaultComponentsDirectory = __dirname + '/../../../idyll-components/src/';
-  var idyll = Idyll({});
   var idyllComponents = idyll.getComponents();
   var componentNames = idyllComponents.map(comp => comp.name);
 
@@ -152,4 +151,10 @@ test('Idyll getComponents() gets all default components', () => {
   fs.readdirSync(defaultComponentsDirectory).forEach(file => {
     expect(componentNames).toContain(file + "");
   })
-}) 
+})
+
+// Tests that getDatasets returns all default datasets provided
+// in an Idyll project
+test('Idyll getDatasets() gets all default datasets', () => {
+  
+})
