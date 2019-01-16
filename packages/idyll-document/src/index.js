@@ -2,6 +2,12 @@ import React from 'react';
 import Runtime from './runtime';
 import compile from 'idyll-compiler';
 
+const defaultAST = {
+  id: 0,
+  type: 'component',
+  name: 'root'
+};
+
 export const hashCode = str => {
   var hash = 0,
     i,
@@ -19,8 +25,8 @@ class IdyllDocument extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ast: props.ast || {},
-      previousAST: props.ast || {},
+      ast: props.ast || defaultAST,
+      previousAST: props.ast || defaultAST,
       hash: '',
       error: null
     };

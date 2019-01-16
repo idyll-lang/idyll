@@ -6,9 +6,8 @@ import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
-import { getChildren } from 'idyll-ast';
 import AuthorTool from './components/author-tool';
-
+import { getChildren } from 'idyll-ast';
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
 
@@ -26,8 +25,6 @@ import {
   scrollMonitorEvents
 } from './utils';
 
-import { getType, hasType } from 'idyll-ast';
-import { resolve } from 'dns';
 const updatePropsCallbacks = [];
 const updateRefsCallbacks = [];
 const scrollWatchers = [];
@@ -227,7 +224,7 @@ class IdyllRuntime extends React.PureComponent {
     this.initScrollListener = this.initScrollListener.bind(this);
     const ast = filterASTForDocument(props.ast);
 
-    const { vars, derived, data, elements } = splitAST(ast);
+    const { vars, derived, data, elements } = splitAST(getChildren(ast));
     const Wrapper = createWrapper({
       theme: props.theme,
       layout: props.layout,

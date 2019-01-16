@@ -8,7 +8,7 @@ THIS FILE CONTAINS THE CONVERTER FUNCTIONS FOR THE TWO DIFFERENT TYPES OF AST ST
  * @param {*} jsonAst
  * @return Array structred AST
  */
-const convertV2ToV1 = function(jsonAst) {
+const convertV2ToV1 = jsonAst => {
   let arrayAst = [];
   if (jsonAst.children) {
     jsonAst.children.forEach(element => {
@@ -72,7 +72,7 @@ function convertHelper(jsonElement) {
  * @param {*} arrayAst
  * @return Json structred ast correspoding to the arrayAst.
  */
-const convertV1ToV2 = function(arrayAst) {
+const convertV1ToV2 = arrayAst => {
   let jsonAst = new Object();
   jsonAst.id = 0;
   jsonAst.type = 'component';

@@ -1,15 +1,9 @@
-const values = require('object.values');
-const entries = require('object.entries');
 const falafel = require('falafel');
 const {
   getChildren,
   getNodeName,
   getProperties,
   getType,
-  setChildren,
-  hasChildren,
-  filterNodes,
-  filterChildren,
   removeNodesByName
 } = require('idyll-ast');
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
@@ -192,6 +186,7 @@ export const splitAST = ast => {
       }
     };
   };
+
   ast.forEach(handleNode(true));
   return state;
 };
