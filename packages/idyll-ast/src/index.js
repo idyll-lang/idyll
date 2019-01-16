@@ -12,7 +12,6 @@ const ajv = new Ajv();
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
 const schema = require('./ast.schema.json');
 const validator = ajv.compile(schema);
-const ajvProps = new Ajv();
 const validatorProps = ajv.compile(schema.properties.properties);
 
 /**
