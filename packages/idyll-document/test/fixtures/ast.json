@@ -1,374 +1,1045 @@
-[
-  ["var", [["name", ["value", "x"]], ["value", ["value", 2]]], []],
-  [
-    "var",
-    [
-      ["name", ["value", "objectVar"]],
-      ["value", ["expression", " { an: \"object\" } "]]
-    ],
-    []
-  ],
-  [
-    "var",
-    [
-      ["name", ["value", "arrayVar"]],
-      ["value", ["expression", " [ \"array\" ] "]]
-    ],
-    []
-  ],
-  ["var", [["name", ["value", "frequency"]], ["value", ["value", 1]]], []],
-  ["var", [["name", ["value", "lateVar"]], ["value", ["value", 50]]], []],
-  [
-    "data",
-    [["name", ["value", "myData"]], ["source", ["value", "myData.csv"]]],
-    []
-  ],
-  [
-    "derived",
-    [["name", ["value", "xSquared"]], ["value", ["expression", "x * x "]]],
-    []
-  ],
-  [
-    "derived",
-    [["name", ["value", "xCubed"]], ["value", ["expression", "x * xSquared "]]],
-    []
-  ],
-  [
-    "TextContainer",
-    [],
-    [
-      ["h1", [], ["Welcome to Idyll"]],
-      [
-        "h3",
-        [],
-        ["Idyll is a language for creating interactive documents on the web."]
-      ],
-      [
-        "p",
-        [],
-        [
-          "This document is being rendered from ",
-          ["strong", [], ["Idyll markup"]],
-          ". If you’ve used ",
-          [
-            "a",
-            [
-              [
-                "href",
-                ["value", "https://daringfireball.net/projects/markdown/"]
+{
+  "id": 0,
+  "type": "component",
+  "name": "div",
+  "children": [
+    {
+      "id": 2,
+      "type": "var",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "x"
+        },
+        "value": {
+          "type": "value",
+          "value": 2
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "var",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "objectVar"
+        },
+        "value": {
+          "type": "expression",
+          "value": " { an: \"object\" } "
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "var",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "arrayVar"
+        },
+        "value": {
+          "type": "expression",
+          "value": " [ \"array\" ] "
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "var",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "frequency"
+        },
+        "value": {
+          "type": "value",
+          "value": 1
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "var",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "lateVar"
+        },
+        "value": {
+          "type": "value",
+          "value": 50
+        }
+      }
+    },
+    {
+      "id": 7,
+      "type": "data",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "myData"
+        },
+        "source": {
+          "type": "value",
+          "value": "myData.csv"
+        }
+      }
+    },
+    {
+      "id": 8,
+      "type": "derived",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "xSquared"
+        },
+        "value": {
+          "type": "expression",
+          "value": "x * x "
+        }
+      }
+    },
+    {
+      "id": 9,
+      "type": "derived",
+      "properties": {
+        "name": {
+          "type": "value",
+          "value": "xCubed"
+        },
+        "value": {
+          "type": "expression",
+          "value": "x * xSquared "
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": "component",
+      "name": "TextContainer",
+      "children": [
+        {
+          "id": 11,
+          "type": "component",
+          "name": "h1",
+          "children": [
+            {
+              "id": 12,
+              "type": "textnode",
+              "value": "Welcome to Idyll"
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "type": "component",
+          "name": "h3",
+          "children": [
+            {
+              "id": 14,
+              "type": "textnode",
+              "value": "Idyll is a language for creating interactive documents on the web."
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 16,
+              "type": "textnode",
+              "value": "This document is being rendered from "
+            },
+            {
+              "id": 17,
+              "type": "component",
+              "name": "strong",
+              "children": [
+                {
+                  "id": 18,
+                  "type": "textnode",
+                  "value": "Idyll markup"
+                }
               ]
-            ],
-            ["markdown"]
-          ],
-          ", Idyll should look pretty familiar, but it has some additional features. Write text in the box on the left and the output on the right will automatically update."
-        ]
-      ],
-      [
-        "p",
-        [],
-        [
-          "To make things a little more interesting you can add JavaScript components to your text.\nFor example, a ",
-          ["code", [], ["[Chart /]"]],
-          " component can be used to render a simple visualization:"
-        ]
-      ],
-      ["Chart", [["type", ["value", "scatter"]]], []],
-      [
-        "p",
-        [],
-        [
-          "Try changing the chart’s type from ",
-          ["code", [], ["scatter"]],
-          " to ",
-          ["code", [], ["line"]],
-          ", ",
-          ["code", [], ["area"]],
-          ", or ",
-          ["code", [], ["pie"]],
-          "."
-        ]
-      ],
-      [
-        "p",
-        [],
-        [
-          "A component’s properties can be strings (“I’m a string!”), numbers (1.569), or evaluated JavaScript expressions (",
-          ["code", [], ["`2 * Math.PI`"]],
-          ")."
-        ]
-      ],
-      [
-        "p",
-        [],
-        [
-          "There are a number of components available — see ",
-          [
-            "a",
-            [
-              [
-                "href",
-                ["value", "https://idyll-lang.github.io/components-built-in"]
+            },
+            {
+              "id": 19,
+              "type": "textnode",
+              "value": ". If you’ve used "
+            },
+            {
+              "id": 20,
+              "type": "component",
+              "name": "a",
+              "properties": {
+                "href": {
+                  "type": "value",
+                  "value": "https://daringfireball.net/projects/markdown/"
+                }
+              },
+              "children": [
+                {
+                  "id": 21,
+                  "type": "textnode",
+                  "value": "markdown"
+                }
               ]
-            ],
-            ["Idyll’s documentation"]
-          ],
-          " for a full list — Additional components can be installed via ",
-          ["code", [], ["npm"]],
-          " (any React component should work), and if you are comfortable with JavaScript you can write ",
-          [
-            "a",
-            [
-              [
-                "href",
-                ["value", "https://idyll-lang.github.io/components-custom"]
+            },
+            {
+              "id": 22,
+              "type": "textnode",
+              "value": ", Idyll should look pretty familiar, but it has some additional features. Write text in the box on the left and the output on the right will automatically update."
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 24,
+              "type": "textnode",
+              "value": "To make things a little more interesting you can add JavaScript components to your text.\nFor example, a "
+            },
+            {
+              "id": 25,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 26,
+                  "type": "textnode",
+                  "value": "[Chart /]"
+                }
               ]
-            ],
-            ["custom components"]
-          ],
-          " as well."
-        ]
-      ],
-      [
-        "p",
-        [],
-        [
-          "Idyll also provides a reactive variable system that can be used to dynamically update the text based on input from a reader."
-        ]
-      ],
-      [
-        "p",
-        [],
-        ["Instantiating a variable is similar to instantiating a component:"]
-      ],
-      ["code", [], ["[var name:\"x\" value:1 /]"]],
-      [
-        "p",
-        [],
-        [
-          "Once you’ve created a variable, it can be displayed inline with text\n(x = ",
-          ["Display", [["var", ["variable", "x"]]], []],
-          "),\nor be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:"
-        ]
-      ],
-      ["code", [], ["[derived name:\"xSquared\" value:`x * x` /]"]],
-      [
-        "p",
-        [],
-        [
-          "Here I bind the value of ",
-          ["code", [], ["x"]],
-          " to a range slider. Move the slider and watch the variables update."
-        ]
-      ],
-      [
-        "Range",
-        [
-          ["value", ["variable", "x"]],
-          ["min", ["value", 0]],
-          ["max", ["value", 100]]
-        ],
-        []
-      ],
-      [
-        "p",
-        [],
-        [
-          ["equation", [], ["x"]],
-          ":\n ",
-          ["Display", [["var", ["expression", "x"]]], []]
-        ]
-      ],
-      [
-        "p",
-        [],
-        [
-          ["equation", [], ["x^2"]],
-          ":",
-          ["Display", [["var", ["expression", "xSquared"]]], []]
-        ]
-      ],
-      ["p", [], ["Test expression, displays:"]],
-      [
-        "Display",
-        [["id", ["value", "varDisplay"]], ["value", ["expression", "x"]]],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "derivedVarDisplay"]],
-          ["value", ["expression", "xSquared"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "derivedVarDisplay2"]],
-          ["value", ["expression", "xCubed"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "strDisplay"]],
-          ["value", ["expression", "\"string\""]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "staticObjectDisplay"]],
-          ["value", ["expression", "{ static: \"object\" }"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "dynamicObjectDisplay"]],
-          ["value", ["expression", "{ dynamic: x }"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [["id", ["value", "dataDisplay"]], ["value", ["expression", "myData"]]],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "bareDataDisplay"]],
-          ["value", ["variable", "myData"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [["id", ["value", "bareVarDisplay"]], ["value", ["variable", "x"]]],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "bareDerivedDisplay"]],
-          ["value", ["variable", "xSquared"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "bareDerivedDisplay2"]],
-          ["value", ["variable", "xCubed"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "objectVarDisplay"]],
-          ["value", ["expression", " objectVar "]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "bareObjectVarDisplay"]],
-          ["value", ["variable", "objectVar"]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "arrayVarDisplay"]],
-          ["value", ["expression", " arrayVar "]]
-        ],
-        []
-      ],
-      [
-        "Display",
-        [
-          ["id", ["value", "bareArrayVarDisplay"]],
-          ["value", ["variable", "arrayVar"]]
-        ],
-        []
-      ],
-      ["br", [], []],
-      [
-        "p",
-        [],
-        [
-          "Here is an example of how you could use a variable to control the frequency of a sine wave:"
-        ]
-      ],
-      [
-        "Chart",
-        [
-          ["equation", ["expression", "(t) => Math.sin(t * frequency)"]],
-          ["domain", ["expression", "[0, 2 * Math.PI]"]],
-          ["samplePoints", ["value", 1000]]
-        ],
-        []
-      ],
-      [
-        "Range",
-        [
-          ["value", ["variable", "frequency"]],
-          ["min", ["value", 0.5]],
-          ["max", ["expression", "2 * Math.PI"]],
-          ["step", ["value", 0.0001]]
-        ],
-        []
-      ],
-      [
-        "p",
-        [],
-        [
-          [
-            "Display",
-            [
-              ["id", ["value", "lateVarDisplay"]],
-              ["value", ["variable", "lateVar"]]
-            ],
-            []
-          ],
-          "\nLate Var Range:"
-        ]
-      ],
-      [
-        "Range",
-        [
-          ["value", ["variable", "lateVar"]],
-          ["min", ["value", 2]],
-          ["max", ["value", 100]]
-        ],
-        []
-      ],
-      [
-        "p",
-        [],
-        [
-          "Read more about Idyll at ",
-          [
-            "a",
-            [["href", ["value", "https://idyll-lang.github.io/"]]],
-            ["https://idyll-lang.github.io/"]
-          ],
-          ", and come say “Hi!” in our ",
-          [
-            "a",
-            [["href", ["value", "https://gitter.im/idyll-lang/Lobby"]]],
-            ["chatroom on gitter"]
-          ],
-          "."
-        ]
+            },
+            {
+              "id": 27,
+              "type": "textnode",
+              "value": " component can be used to render a simple visualization:"
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "type": "component",
+          "name": "Chart",
+          "properties": {
+            "type": {
+              "type": "value",
+              "value": "scatter"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 29,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 30,
+              "type": "textnode",
+              "value": "Try changing the chart’s type from "
+            },
+            {
+              "id": 31,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 32,
+                  "type": "textnode",
+                  "value": "scatter"
+                }
+              ]
+            },
+            {
+              "id": 33,
+              "type": "textnode",
+              "value": " to "
+            },
+            {
+              "id": 34,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 35,
+                  "type": "textnode",
+                  "value": "line"
+                }
+              ]
+            },
+            {
+              "id": 36,
+              "type": "textnode",
+              "value": ", "
+            },
+            {
+              "id": 37,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 38,
+                  "type": "textnode",
+                  "value": "area"
+                }
+              ]
+            },
+            {
+              "id": 39,
+              "type": "textnode",
+              "value": ", or "
+            },
+            {
+              "id": 40,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 41,
+                  "type": "textnode",
+                  "value": "pie"
+                }
+              ]
+            },
+            {
+              "id": 42,
+              "type": "textnode",
+              "value": "."
+            }
+          ]
+        },
+        {
+          "id": 43,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 44,
+              "type": "textnode",
+              "value": "A component’s properties can be strings (“I’m a string!”), numbers (1.569), or evaluated JavaScript expressions ("
+            },
+            {
+              "id": 45,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 46,
+                  "type": "textnode",
+                  "value": "`2 * Math.PI`"
+                }
+              ]
+            },
+            {
+              "id": 47,
+              "type": "textnode",
+              "value": ")."
+            }
+          ]
+        },
+        {
+          "id": 48,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 49,
+              "type": "textnode",
+              "value": "There are a number of components available — see "
+            },
+            {
+              "id": 50,
+              "type": "component",
+              "name": "a",
+              "properties": {
+                "href": {
+                  "type": "value",
+                  "value": "https://idyll-lang.github.io/components-built-in"
+                }
+              },
+              "children": [
+                {
+                  "id": 51,
+                  "type": "textnode",
+                  "value": "Idyll’s documentation"
+                }
+              ]
+            },
+            {
+              "id": 52,
+              "type": "textnode",
+              "value": " for a full list — Additional components can be installed via "
+            },
+            {
+              "id": 53,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 54,
+                  "type": "textnode",
+                  "value": "npm"
+                }
+              ]
+            },
+            {
+              "id": 55,
+              "type": "textnode",
+              "value": " (any React component should work), and if you are comfortable with JavaScript you can write "
+            },
+            {
+              "id": 56,
+              "type": "component",
+              "name": "a",
+              "properties": {
+                "href": {
+                  "type": "value",
+                  "value": "https://idyll-lang.github.io/components-custom"
+                }
+              },
+              "children": [
+                {
+                  "id": 57,
+                  "type": "textnode",
+                  "value": "custom components"
+                }
+              ]
+            },
+            {
+              "id": 58,
+              "type": "textnode",
+              "value": " as well."
+            }
+          ]
+        },
+        {
+          "id": 59,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 60,
+              "type": "textnode",
+              "value": "Idyll also provides a reactive variable system that can be used to dynamically update the text based on input from a reader."
+            }
+          ]
+        },
+        {
+          "id": 61,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 62,
+              "type": "textnode",
+              "value": "Instantiating a variable is similar to instantiating a component:"
+            }
+          ]
+        },
+        {
+          "id": 63,
+          "type": "component",
+          "name": "code",
+          "children": [
+            {
+              "id": 64,
+              "type": "textnode",
+              "value": "[var name:\"x\" value:1 /]"
+            }
+          ]
+        },
+        {
+          "id": 65,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 66,
+              "type": "textnode",
+              "value": "Once you’ve created a variable, it can be displayed inline with text\n(x = "
+            },
+            {
+              "id": 67,
+              "type": "component",
+              "name": "Display",
+              "properties": {
+                "var": {
+                  "type": "variable",
+                  "value": "x"
+                }
+              },
+              "children": []
+            },
+            {
+              "id": 68,
+              "type": "textnode",
+              "value": "),\nor be used to parameterize components. Derived variables can be used to create values that depend on other variables, similar to a formula in Excel:"
+            }
+          ]
+        },
+        {
+          "id": 69,
+          "type": "component",
+          "name": "code",
+          "children": [
+            {
+              "id": 70,
+              "type": "textnode",
+              "value": "[derived name:\"xSquared\" value:`x * x` /]"
+            }
+          ]
+        },
+        {
+          "id": 71,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 72,
+              "type": "textnode",
+              "value": "Here I bind the value of "
+            },
+            {
+              "id": 73,
+              "type": "component",
+              "name": "code",
+              "children": [
+                {
+                  "id": 74,
+                  "type": "textnode",
+                  "value": "x"
+                }
+              ]
+            },
+            {
+              "id": 75,
+              "type": "textnode",
+              "value": " to a range slider. Move the slider and watch the variables update."
+            }
+          ]
+        },
+        {
+          "id": 76,
+          "type": "component",
+          "name": "Range",
+          "properties": {
+            "value": {
+              "type": "variable",
+              "value": "x"
+            },
+            "min": {
+              "type": "value",
+              "value": 0
+            },
+            "max": {
+              "type": "value",
+              "value": 100
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 77,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 78,
+              "type": "component",
+              "name": "equation",
+              "children": [
+                {
+                  "id": 79,
+                  "type": "textnode",
+                  "value": "x"
+                }
+              ]
+            },
+            {
+              "id": 80,
+              "type": "textnode",
+              "value": ":\n "
+            },
+            {
+              "id": 81,
+              "type": "component",
+              "name": "Display",
+              "properties": {
+                "var": {
+                  "type": "expression",
+                  "value": "x"
+                }
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 82,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 83,
+              "type": "component",
+              "name": "equation",
+              "children": [
+                {
+                  "id": 84,
+                  "type": "textnode",
+                  "value": "x^2"
+                }
+              ]
+            },
+            {
+              "id": 85,
+              "type": "textnode",
+              "value": ":"
+            },
+            {
+              "id": 86,
+              "type": "component",
+              "name": "Display",
+              "properties": {
+                "var": {
+                  "type": "expression",
+                  "value": "xSquared"
+                }
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 87,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 88,
+              "type": "textnode",
+              "value": "Test expression, displays:"
+            }
+          ]
+        },
+        {
+          "id": 89,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "varDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": "x"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 90,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "derivedVarDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": "xSquared"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 91,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "derivedVarDisplay2"
+            },
+            "value": {
+              "type": "expression",
+              "value": "xCubed"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 92,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "strDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": "\"string\""
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 93,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "staticObjectDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": "{ static: \"object\" }"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 94,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "dynamicObjectDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": "{ dynamic: x }"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 95,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "dataDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": "myData"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 96,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "bareDataDisplay"
+            },
+            "value": {
+              "type": "variable",
+              "value": "myData"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 97,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "bareVarDisplay"
+            },
+            "value": {
+              "type": "variable",
+              "value": "x"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 98,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "bareDerivedDisplay"
+            },
+            "value": {
+              "type": "variable",
+              "value": "xSquared"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 99,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "bareDerivedDisplay2"
+            },
+            "value": {
+              "type": "variable",
+              "value": "xCubed"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 100,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "objectVarDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": " objectVar "
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 101,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "bareObjectVarDisplay"
+            },
+            "value": {
+              "type": "variable",
+              "value": "objectVar"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 102,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "arrayVarDisplay"
+            },
+            "value": {
+              "type": "expression",
+              "value": " arrayVar "
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 103,
+          "type": "component",
+          "name": "Display",
+          "properties": {
+            "id": {
+              "type": "value",
+              "value": "bareArrayVarDisplay"
+            },
+            "value": {
+              "type": "variable",
+              "value": "arrayVar"
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 104,
+          "type": "component",
+          "name": "br",
+          "children": []
+        },
+        {
+          "id": 105,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 106,
+              "type": "textnode",
+              "value": "Here is an example of how you could use a variable to control the frequency of a sine wave:"
+            }
+          ]
+        },
+        {
+          "id": 107,
+          "type": "component",
+          "name": "Chart",
+          "properties": {
+            "equation": {
+              "type": "expression",
+              "value": "(t) => Math.sin(t * frequency)"
+            },
+            "domain": {
+              "type": "expression",
+              "value": "[0, 2 * Math.PI]"
+            },
+            "samplePoints": {
+              "type": "value",
+              "value": 1000
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 108,
+          "type": "component",
+          "name": "Range",
+          "properties": {
+            "value": {
+              "type": "variable",
+              "value": "frequency"
+            },
+            "min": {
+              "type": "value",
+              "value": 0.5
+            },
+            "max": {
+              "type": "expression",
+              "value": "2 * Math.PI"
+            },
+            "step": {
+              "type": "value",
+              "value": 0.0001
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 109,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 110,
+              "type": "component",
+              "name": "Display",
+              "properties": {
+                "id": {
+                  "type": "value",
+                  "value": "lateVarDisplay"
+                },
+                "value": {
+                  "type": "variable",
+                  "value": "lateVar"
+                }
+              },
+              "children": []
+            },
+            {
+              "id": 111,
+              "type": "textnode",
+              "value": "\nLate Var Range:"
+            }
+          ]
+        },
+        {
+          "id": 112,
+          "type": "component",
+          "name": "Range",
+          "properties": {
+            "value": {
+              "type": "variable",
+              "value": "lateVar"
+            },
+            "min": {
+              "type": "value",
+              "value": 2
+            },
+            "max": {
+              "type": "value",
+              "value": 100
+            }
+          },
+          "children": []
+        },
+        {
+          "id": 113,
+          "type": "component",
+          "name": "p",
+          "children": [
+            {
+              "id": 114,
+              "type": "textnode",
+              "value": "Read more about Idyll at "
+            },
+            {
+              "id": 115,
+              "type": "component",
+              "name": "a",
+              "properties": {
+                "href": {
+                  "type": "value",
+                  "value": "https://idyll-lang.github.io/"
+                }
+              },
+              "children": [
+                {
+                  "id": 116,
+                  "type": "textnode",
+                  "value": "https://idyll-lang.github.io/"
+                }
+              ]
+            },
+            {
+              "id": 117,
+              "type": "textnode",
+              "value": ", and come say “Hi!” in our "
+            },
+            {
+              "id": 118,
+              "type": "component",
+              "name": "a",
+              "properties": {
+                "href": {
+                  "type": "value",
+                  "value": "https://gitter.im/idyll-lang/Lobby"
+                }
+              },
+              "children": [
+                {
+                  "id": 119,
+                  "type": "textnode",
+                  "value": "chatroom on gitter"
+                }
+              ]
+            },
+            {
+              "id": 120,
+              "type": "textnode",
+              "value": "."
+            }
+          ]
+        }
       ]
-    ]
+    }
   ]
-]
+}
