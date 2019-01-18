@@ -3,10 +3,11 @@ import InlineSVG from 'react-inlinesvg';
 
 class SVG extends React.PureComponent {
   render() {
+    const { hasError, updateProps, idyll, ...props } = this.props;
     if (!this.props.src) {
-      return <svg {...this.props} />;
+      return <svg {...props} />;
     }
-    return <InlineSVG {...this.props} />;
+    return <InlineSVG {...props} />;
   }
 }
 
