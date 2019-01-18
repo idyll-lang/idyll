@@ -1159,7 +1159,7 @@ End text
       compile(input, {
         postProcessors: [
           ast => {
-            return AST.convertV1ToV2(ast).concat([
+            return AST.convertV2ToV1(ast).concat([
               ['TextContainer', [], [':)']]
             ]);
           }
@@ -1180,7 +1180,7 @@ End text
           (ast, callback) => {
             callback(
               null,
-              AST.convertV1ToV2(ast).concat([['TextContainer', [], [':)']]])
+              AST.convertV2ToV1(ast).concat([['TextContainer', [], [':)']]])
             );
           }
         ]
@@ -1198,7 +1198,7 @@ End text
       compile(input, {
         postProcessors: [
           ast => {
-            return AST.convertV1ToV2(ast).concat([
+            return AST.convertV2ToV1(ast).concat([
               ['TextContainer', [], [':)']]
             ]);
           },
@@ -1223,7 +1223,7 @@ End text
           (ast, callback) => {
             callback(
               null,
-              AST.convertV1ToV2(ast).concat([['TextContainer', [], [':)']]])
+              AST.convertV2ToV1(ast).concat([['TextContainer', [], [':)']]])
             );
           },
           (ast, callback) => {
@@ -1247,7 +1247,7 @@ End text
           (ast, callback) => {
             callback(
               null,
-              AST.convertV1ToV2(ast).concat([['TextContainer', [], ['1']]])
+              AST.convertV2ToV1(ast).concat([['TextContainer', [], ['1']]])
             );
           },
           ast => {
