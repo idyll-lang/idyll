@@ -213,7 +213,7 @@ describe('compiler', function() {
     it('should parse a simple string', function() {
       var input = 'Just a simple string';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['p', [], ['Just a simple string']]]]
         ])
       );
@@ -221,7 +221,7 @@ describe('compiler', function() {
     it('should handle multiple blocks', function() {
       var input = 'Just a simple string \n\n with some whitespace';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -236,14 +236,14 @@ describe('compiler', function() {
     it('should parse a closed var', function() {
       var input = '[var /]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([['var', [], []]])
+        AST.convertV1ToV2([['var', [], []]])
       );
     });
     it('should parse a closed component', function() {
       var input =
         '[var name:"v1" value:5 /]\n\nJust a simple string plus a component \n\n [VarDisplay var:v1 /]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['var', [['name', ['value', 'v1']], ['value', ['value', 5]]], []],
           [
             'TextContainer',
@@ -266,7 +266,7 @@ describe('compiler', function() {
       var input =
         '[Slideshow currentSlide:1]text and stuff \n\n lots of newlines.\n\n[OpenComponent key:"val" ][/OpenComponent][/Slideshow]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -289,7 +289,7 @@ describe('compiler', function() {
       var input =
         'This is a normal text paragraph that [VarDisplay var:var /] has a component embedded in it.';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -326,7 +326,7 @@ describe('compiler', function() {
       `;
       console.log(compile(input, { async: false }));
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -367,7 +367,7 @@ describe('compiler', function() {
         End text
       `;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -413,7 +413,7 @@ And this is a normal paragraph. This is # not a header.
 End text
       `;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -448,7 +448,7 @@ End text
         #### This is a header
       `;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -470,7 +470,7 @@ End text
         ### 3. This too.
       `;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -487,7 +487,7 @@ End text
     it('should parse an open component with a break at the end', function() {
       var input = '[Slideshow currentSlide:1]text and stuff \n\n [/Slideshow]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -506,7 +506,7 @@ End text
       var input =
         'text text text lots of text\n\n\n```\nvar code = true;\n```\n';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -522,7 +522,7 @@ End text
       var input =
         'text text text lots of text\n\n\n````\n```\nvar code = true;\n```\n````\n';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -537,7 +537,7 @@ End text
     it('should parse inline code with backticks inside', function() {
       var input = 'text text text lots of text `` `var code = true;` ``\n';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -558,7 +558,7 @@ End text
     it('should handle backticks in a paragraph', function() {
       var input = 'regular text and stuff, then some `code`';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -586,7 +586,7 @@ End text
         not a comment: https://stuff.com
       `;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -626,7 +626,7 @@ End text
     it('should accept negative numbers', function() {
       var input = '[component prop:-10 /]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['component', [['prop', ['value', -10]]], []]]]
         ])
       );
@@ -635,7 +635,7 @@ End text
     it('should accept positive numbers', function() {
       var input = '[component prop:10 /]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['component', [['prop', ['value', 10]]], []]]]
         ])
       );
@@ -644,7 +644,7 @@ End text
     it('should handle booleans', function() {
       const input = '[component prop:true /]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -657,7 +657,7 @@ End text
     it('should handle booleans in backticks', function() {
       const input = '[component prop:`true` /]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -671,7 +671,7 @@ End text
       const input =
         'regular text and stuff, then some *italics* and some **bold**.';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -697,7 +697,7 @@ End text
       const input =
         '* this is the first unordered list item\n* this is the second unordered list item';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -720,7 +720,7 @@ End text
       const input =
         '1. this is the first ordered list item\n2. this is the second ordered list item';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -743,7 +743,7 @@ End text
       const input =
         'If you want to define an [inline link](https://idyll-lang.github.io) in the standard markdown style, you can do that.';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -770,7 +770,7 @@ End text
       const input =
         'If you want to define an ![inline image](https://idyll-lang.github.io/logo-text.svg) in the standard markdown style, you can do that.';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -804,7 +804,7 @@ End text
       const input =
         '**If** I start a line with bold this should work,\nwhat if I\n\n*start with an italic*?';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -827,7 +827,7 @@ End text
       const input =
         'This component name has a period separator [component.val /].';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -850,7 +850,7 @@ End text
       const input =
         'This component name has a period separator [component.val.v /].';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -873,14 +873,14 @@ End text
     it('should handle strong text with a p', function() {
       const input = '**p a**';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([['TextContainer', [], [['strong', [], ['p a']]]]])
+        AST.convertV1ToV2([['TextContainer', [], [['strong', [], ['p a']]]]])
       );
     });
 
     it('should handle strong emphasized text using asterisks', function() {
       const input = '***test***';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['strong', [], [['em', [], ['test']]]]]]
         ])
       );
@@ -889,7 +889,7 @@ End text
     it('should handle strong emphasized text using underscores', function() {
       const input = '___test___';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['strong', [], [['em', [], ['test']]]]]]
         ])
       );
@@ -898,7 +898,7 @@ End text
     it('should handle strong emphasized text using mixed asterisks and underscores - 1', function() {
       const input = '_**test**_';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['em', [], [['strong', [], ['test']]]]]]
         ])
       );
@@ -906,7 +906,7 @@ End text
     it('should handle strong emphasized text using mixed asterisks and underscores - 2', function() {
       const input = '**_test_**';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['strong', [], [['em', [], ['test']]]]]]
         ])
       );
@@ -915,7 +915,7 @@ End text
     it('should merge consecutive word blocks', function() {
       const input = '[Equation]y = 0[/Equation]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['equation', [], ['y = 0']]]]
         ])
       );
@@ -924,7 +924,7 @@ End text
     it('should not put smartquotes in code blocks', function() {
       const input = "`Why 'hello' there`";
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['code', [], ["Why 'hello' there"]]]]
         ])
       );
@@ -932,7 +932,7 @@ End text
     it('should handle a language in a codeblock ', function() {
       const input = '```json\n{}\n```';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -945,7 +945,7 @@ End text
     it('should handle an i tag', function() {
       const input = '[i]not even em[/i]';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([['TextContainer', [], [['i', [], ['not even em']]]]])
+        AST.convertV1ToV2([['TextContainer', [], [['i', [], ['not even em']]]]])
       );
     });
 
@@ -958,7 +958,7 @@ End text
         [Slide/]
       [/Slideshow]`;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -977,7 +977,7 @@ End text
     it('should handle items nested in a header', function() {
       const input = `# My header is **bold**!`;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1000,7 +1000,7 @@ End text
         This is not full width
       `;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['p', [], ['This is text']]]],
           [
             'div',
@@ -1021,7 +1021,7 @@ End text
       `;
 
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1038,7 +1038,7 @@ End text
       const input = `*text* __other text__`;
 
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1057,7 +1057,7 @@ End text
       const input = `[em]text[/em] [b]other text[/b]`;
 
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1071,7 +1071,7 @@ End text
       const input = `[equation display:true]\sum_{j=0}^n x^{j} + \sum x^{k}[/equation]`;
 
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1094,7 +1094,7 @@ End text
       `;
 
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1113,7 +1113,7 @@ End text
     it('should handle code blocks with parens inside', function() {
       const input = `[code](n - 1)!/2 possible paths[/code]`;
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           ['TextContainer', [], [['code', [], ['(n - 1)!/2 possible paths']]]]
         ])
       );
@@ -1129,7 +1129,7 @@ End text
     //   on
     //   ?
     //   `;
-    //   expect(compile(input, { async: false })).to.eql(AST.convertV2ToV1(
+    //   expect(compile(input, { async: false })).to.eql(AST.convertV1ToV2(
     //   [
     //     ['TextContainer', [], [
     //       ['code', [], [
@@ -1159,7 +1159,7 @@ End text
       compile(input, {
         postProcessors: [
           ast => {
-            return AST.convertV2ToV1(ast).concat([
+            return AST.convertV1ToV2(ast).concat([
               ['TextContainer', [], [':)']]
             ]);
           }
@@ -1180,7 +1180,7 @@ End text
           (ast, callback) => {
             callback(
               null,
-              AST.convertV2ToV1(ast).concat([['TextContainer', [], [':)']]])
+              AST.convertV1ToV2(ast).concat([['TextContainer', [], [':)']]])
             );
           }
         ]
@@ -1198,7 +1198,7 @@ End text
       compile(input, {
         postProcessors: [
           ast => {
-            return AST.convertV2ToV1(ast).concat([
+            return AST.convertV1ToV2(ast).concat([
               ['TextContainer', [], [':)']]
             ]);
           },
@@ -1223,7 +1223,7 @@ End text
           (ast, callback) => {
             callback(
               null,
-              AST.convertV2ToV1(ast).concat([['TextContainer', [], [':)']]])
+              AST.convertV1ToV2(ast).concat([['TextContainer', [], [':)']]])
             );
           },
           (ast, callback) => {
@@ -1247,7 +1247,7 @@ End text
           (ast, callback) => {
             callback(
               null,
-              AST.convertV2ToV1(ast).concat([['TextContainer', [], ['1']]])
+              AST.convertV1ToV2(ast).concat([['TextContainer', [], ['1']]])
             );
           },
           ast => {
@@ -1275,7 +1275,7 @@ End text
     it('should handle a link', function() {
       const input = 'https://www.google.com/';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1306,7 +1306,7 @@ End text
     it('should handle one link in text', function() {
       const input = 'Here is a link to website https://www.google.com/';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1339,7 +1339,7 @@ End text
       const input =
         'Here is a link to website https://www.google.com/ Click here!';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1373,7 +1373,7 @@ End text
       const input =
         'Here is a link to website https://www.google.com/ Click here! https://www.go.com/';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
@@ -1411,7 +1411,7 @@ End text
     it('should handle a link before any text', function() {
       const input = 'https://www.google.com/ . Hello World';
       expect(compile(input, { async: false })).to.eql(
-        AST.convertV2ToV1([
+        AST.convertV1ToV2([
           [
             'TextContainer',
             [],
