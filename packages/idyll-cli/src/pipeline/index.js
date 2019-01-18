@@ -41,6 +41,7 @@ const build = (opts, paths, resolvers) => {
           if (['var', 'derived', 'data'].indexOf(node.type) > -1) {
             nameArray.push(node.type);
           } else {
+            // console.log('checking component names - ', node);
             nameArray.push(node.name.split('.')[0]);
           }
         });

@@ -51,12 +51,7 @@ exports.getHighlightJS = (ast, paths, server) => {
   }
 
   const languages = codeHighlightNodes.reduce((acc, dataNode) => {
-    const props = dataNode[1];
-    const { language } = props.reduce((hash, val) => {
-      hash[val[0]] = val[1][1];
-      return hash;
-    }, {});
-
+    const language = dataNode.properties.language.value;
     acc[language] = true;
     return acc;
   }, {});
