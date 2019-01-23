@@ -28,9 +28,9 @@ class AuthorTool extends React.PureComponent {
         }
       }
       return (
-        <tr key={JSON.stringify(prop)} className="props-table-row">
+        <tr key={JSON.stringify(prop)} className='props-table-row'>
           <td>{prop.name}</td>
-          <td className="props-table-type">{prop.type}</td>
+          <td className='props-table-type'>{prop.type}</td>
           <td>{prop.example}</td>
           <td>{currentPropValue}</td>
         </tr>
@@ -46,7 +46,7 @@ class AuthorTool extends React.PureComponent {
 
     // Docs use lowercase component name for link
     const componentLowerCase = componentName.charAt(0).toLowerCase() + componentName.slice(1);
-    const componentDocsLink = "https://idyll-lang.org/docs/components/default/" +
+    const componentDocsLink = 'https://idyll-lang.org/docs/components/default/' +
       componentLowerCase;
 
     const showProps = this.handleTableValues(metaValues, runtimeValues);
@@ -57,17 +57,17 @@ class AuthorTool extends React.PureComponent {
     // so add margin to get a minimal height (40px seems fine)
     const marginAboveTable = componentHeight < 40 && isAuthorView ? 40 - componentHeight : 0;
     return (
-      <div className="debug-collapse"
+      <div className='debug-collapse'
         style={{
           height: currentDebugHeight + 'px',
           marginBottom: marginToGive + 'px',
           marginTop: marginAboveTable + 'px'
         }}
       >
-        <div className="author-component-view" ref={(inner) => this.innerHeight = inner}>
-          <table className="props-table">
+        <div className='author-component-view' ref={(inner) => this.innerHeight = inner}>
+          <table className='props-table'>
             <tbody>
-              <tr className="props-table-row">
+              <tr className='props-table-row'>
                 <th>Prop</th>
                 <th>Type</th>
                 <th>Example</th>
@@ -76,13 +76,13 @@ class AuthorTool extends React.PureComponent {
               {showProps}
             </tbody>
           </table>
-          <div className="icon-links">
-            <a className="icon-link" href={componentDocsLink}>
-              <img className="icon-link-image"
-                src="https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/design/ic_description_24px.svg?sanitize=true"
+          <div className='icon-links'>
+            <a className='icon-link' href={componentDocsLink}>
+              <img className='icon-link-image'
+                src='https://raw.githubusercontent.com/google/material-design-icons/master/action/svg/design/ic_description_24px.svg?sanitize=true'
               />
             </a>
-            <a className="icon-link" href={componentDocsLink}>
+            <a className='icon-link' href={componentDocsLink}>
               <span style={{fontFamily: 'courier', fontSize: '12px', marginTop: '8px'}}>docs</span>
             </a>
           </div>
@@ -120,23 +120,23 @@ class AuthorTool extends React.PureComponent {
       top: '3px'} : null;
 
     return (
-      <div className="component-debug-view" style={addBorder} ref={(ref) => this._refContainer = ref }>
+      <div className='component-debug-view' style={addBorder} ref={(ref) => this._refContainer = ref }>
         {props.component}
-        <button className="author-view-button"
+        <button className='author-view-button'
           style={putButtonBack}
           onClick={this.handleClick}
           data-tip data-for={props.uniqueKey}
         />
         <ReactTooltip
-          className="button-tooltip"
+          className='button-tooltip'
           id={props.uniqueKey}
           type='info'
           effect='solid'
           place='bottom' // TODO not showing up ?
           disable={this.state.isAuthorView}
         >
-          <div className="tooltip-header">{props.authorComponent.type._idyll.name} Component</div>
-          <div className="tooltip-subtitle">Click for more info</div>
+          <div className='tooltip-header'>{props.authorComponent.type._idyll.name} Component</div>
+          <div className='tooltip-subtitle'>Click for more info</div>
         </ReactTooltip>
         {this.handleFormatComponent(props.authorComponent)}
       </div>
