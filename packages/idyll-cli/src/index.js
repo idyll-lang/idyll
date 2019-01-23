@@ -210,10 +210,13 @@ const idyll = (options = {}, cb) => {
             return;
           }
           fs.readdirSync(dir + '').forEach(file => {
-            components.push({
-              name: file.replace(/\.jsx?/g, ''),
-              path: dir + '/' + file
-            });
+            var compName = file.replace(/\.jsx?/g, '');
+            if (compName !== 'index') {
+              components.push({
+                name: compName,
+                path: dir + '/' + file
+              });
+            }
           });
         });
       });
