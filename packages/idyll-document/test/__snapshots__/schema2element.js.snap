@@ -2,7 +2,6 @@
 
 exports[`ReactJsonSchema can parse a schema 1`] = `
 ShallowWrapper {
-  "length": 1,
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <div>
     <TextContainer>
@@ -192,6 +191,15 @@ ShallowWrapper {
         <Display
             __expr__={
                 Object {
+                    "value": "xCubed",
+                  }
+            }
+            id="derivedVarDisplay2"
+            value="xCubed"
+        />
+        <Display
+            __expr__={
+                Object {
                     "value": "\\"string\\"",
                   }
             }
@@ -251,6 +259,15 @@ ShallowWrapper {
             }
             id="bareDerivedDisplay"
             value="xSquared"
+        />
+        <Display
+            __vars__={
+                Object {
+                    "value": "xCubed",
+                  }
+            }
+            id="bareDerivedDisplay2"
+            value="xCubed"
         />
         <Display
             __expr__={
@@ -568,6 +585,15 @@ ShallowWrapper {
           <Display
                     __expr__={
                               Object {
+                                        "value": "xCubed",
+                                      }
+                    }
+                    id="derivedVarDisplay2"
+                    value="xCubed"
+          />
+          <Display
+                    __expr__={
+                              Object {
                                         "value": "\\"string\\"",
                                       }
                     }
@@ -627,6 +653,15 @@ ShallowWrapper {
                     }
                     id="bareDerivedDisplay"
                     value="xSquared"
+          />
+          <Display
+                    __vars__={
+                              Object {
+                                        "value": "xCubed",
+                                      }
+                    }
+                    id="bareDerivedDisplay2"
+                    value="xCubed"
           />
           <Display
                     __expr__={
@@ -939,6 +974,15 @@ ShallowWrapper {
             <Display
               __expr__={
                             Object {
+                                          "value": "xCubed",
+                                        }
+              }
+              id="derivedVarDisplay2"
+              value="xCubed"
+/>,
+            <Display
+              __expr__={
+                            Object {
                                           "value": "\\"string\\"",
                                         }
               }
@@ -998,6 +1042,15 @@ ShallowWrapper {
               }
               id="bareDerivedDisplay"
               value="xSquared"
+/>,
+            <Display
+              __vars__={
+                            Object {
+                                          "value": "xCubed",
+                                        }
+              }
+              id="bareDerivedDisplay2"
+              value="xCubed"
 />,
             <Display
               __expr__={
@@ -1799,6 +1852,22 @@ or be used to parameterize components. Derived variables can be used to create v
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
+                "value": "xCubed",
+              },
+              "children": undefined,
+              "id": "derivedVarDisplay2",
+              "value": "xCubed",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "21",
+            "nodeType": "class",
+            "props": Object {
+              "__expr__": Object {
                 "value": "\\"string\\"",
               },
               "children": undefined,
@@ -1811,7 +1880,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "21",
+            "key": "22",
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
@@ -1827,7 +1896,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "22",
+            "key": "23",
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
@@ -1843,7 +1912,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "23",
+            "key": "24",
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
@@ -1859,7 +1928,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "24",
+            "key": "25",
             "nodeType": "class",
             "props": Object {
               "__vars__": Object {
@@ -1875,7 +1944,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "25",
+            "key": "26",
             "nodeType": "class",
             "props": Object {
               "__vars__": Object {
@@ -1891,7 +1960,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "26",
+            "key": "27",
             "nodeType": "class",
             "props": Object {
               "__vars__": Object {
@@ -1907,7 +1976,23 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "27",
+            "key": "28",
+            "nodeType": "class",
+            "props": Object {
+              "__vars__": Object {
+                "value": "xCubed",
+              },
+              "children": undefined,
+              "id": "bareDerivedDisplay2",
+              "value": "xCubed",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "29",
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
@@ -1923,7 +2008,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "28",
+            "key": "30",
             "nodeType": "class",
             "props": Object {
               "__vars__": Object {
@@ -1939,7 +2024,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "29",
+            "key": "31",
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
@@ -1955,7 +2040,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "30",
+            "key": "32",
             "nodeType": "class",
             "props": Object {
               "__vars__": Object {
@@ -1971,7 +2056,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "31",
+            "key": "33",
             "nodeType": "host",
             "props": Object {
               "children": undefined,
@@ -1982,7 +2067,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "32",
+            "key": "34",
             "nodeType": "host",
             "props": Object {
               "children": Array [
@@ -1997,7 +2082,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "33",
+            "key": "35",
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
@@ -2021,7 +2106,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "34",
+            "key": "36",
             "nodeType": "class",
             "props": Object {
               "__expr__": Object {
@@ -2042,7 +2127,7 @@ or be used to parameterize components. Derived variables can be used to create v
           },
           Object {
             "instance": null,
-            "key": "35",
+            "key": "37",
             "nodeType": "host",
             "props": Object {
               "children": Array [
@@ -2084,7 +2169,7 @@ Late Var Range:",
           },
           Object {
             "instance": null,
-            "key": "36",
+            "key": "38",
             "nodeType": "class",
             "props": Object {
               "__vars__": Object {
@@ -2102,7 +2187,7 @@ Late Var Range:",
           },
           Object {
             "instance": null,
-            "key": "37",
+            "key": "39",
             "nodeType": "host",
             "props": Object {
               "children": Array [
@@ -2361,6 +2446,15 @@ Late Var Range:",
             <Display
                         __expr__={
                                     Object {
+                                                "value": "xCubed",
+                                              }
+                        }
+                        id="derivedVarDisplay2"
+                        value="xCubed"
+            />
+            <Display
+                        __expr__={
+                                    Object {
                                                 "value": "\\"string\\"",
                                               }
                         }
@@ -2420,6 +2514,15 @@ Late Var Range:",
                         }
                         id="bareDerivedDisplay"
                         value="xSquared"
+            />
+            <Display
+                        __vars__={
+                                    Object {
+                                                "value": "xCubed",
+                                              }
+                        }
+                        id="bareDerivedDisplay2"
+                        value="xCubed"
             />
             <Display
                         __expr__={
@@ -2732,6 +2835,15 @@ Late Var Range:",
               <Display
                 __expr__={
                                 Object {
+                                                "value": "xCubed",
+                                              }
+                }
+                id="derivedVarDisplay2"
+                value="xCubed"
+/>,
+              <Display
+                __expr__={
+                                Object {
                                                 "value": "\\"string\\"",
                                               }
                 }
@@ -2791,6 +2903,15 @@ Late Var Range:",
                 }
                 id="bareDerivedDisplay"
                 value="xSquared"
+/>,
+              <Display
+                __vars__={
+                                Object {
+                                                "value": "xCubed",
+                                              }
+                }
+                id="bareDerivedDisplay2"
+                value="xCubed"
 />,
               <Display
                 __expr__={
@@ -3592,6 +3713,22 @@ or be used to parameterize components. Derived variables can be used to create v
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
+                  "value": "xCubed",
+                },
+                "children": undefined,
+                "id": "derivedVarDisplay2",
+                "value": "xCubed",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "21",
+              "nodeType": "class",
+              "props": Object {
+                "__expr__": Object {
                   "value": "\\"string\\"",
                 },
                 "children": undefined,
@@ -3604,7 +3741,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "21",
+              "key": "22",
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
@@ -3620,7 +3757,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "22",
+              "key": "23",
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
@@ -3636,7 +3773,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "23",
+              "key": "24",
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
@@ -3652,7 +3789,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "24",
+              "key": "25",
               "nodeType": "class",
               "props": Object {
                 "__vars__": Object {
@@ -3668,7 +3805,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "25",
+              "key": "26",
               "nodeType": "class",
               "props": Object {
                 "__vars__": Object {
@@ -3684,7 +3821,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "26",
+              "key": "27",
               "nodeType": "class",
               "props": Object {
                 "__vars__": Object {
@@ -3700,7 +3837,23 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "27",
+              "key": "28",
+              "nodeType": "class",
+              "props": Object {
+                "__vars__": Object {
+                  "value": "xCubed",
+                },
+                "children": undefined,
+                "id": "bareDerivedDisplay2",
+                "value": "xCubed",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "29",
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
@@ -3716,7 +3869,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "28",
+              "key": "30",
               "nodeType": "class",
               "props": Object {
                 "__vars__": Object {
@@ -3732,7 +3885,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "29",
+              "key": "31",
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
@@ -3748,7 +3901,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "30",
+              "key": "32",
               "nodeType": "class",
               "props": Object {
                 "__vars__": Object {
@@ -3764,7 +3917,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "31",
+              "key": "33",
               "nodeType": "host",
               "props": Object {
                 "children": undefined,
@@ -3775,7 +3928,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "32",
+              "key": "34",
               "nodeType": "host",
               "props": Object {
                 "children": Array [
@@ -3790,7 +3943,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "33",
+              "key": "35",
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
@@ -3814,7 +3967,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "34",
+              "key": "36",
               "nodeType": "class",
               "props": Object {
                 "__expr__": Object {
@@ -3835,7 +3988,7 @@ or be used to parameterize components. Derived variables can be used to create v
             },
             Object {
               "instance": null,
-              "key": "35",
+              "key": "37",
               "nodeType": "host",
               "props": Object {
                 "children": Array [
@@ -3877,7 +4030,7 @@ Late Var Range:",
             },
             Object {
               "instance": null,
-              "key": "36",
+              "key": "38",
               "nodeType": "class",
               "props": Object {
                 "__vars__": Object {
@@ -3895,7 +4048,7 @@ Late Var Range:",
             },
             Object {
               "instance": null,
-              "key": "37",
+              "key": "39",
               "nodeType": "host",
               "props": Object {
                 "children": Array [
@@ -3965,8 +4118,16 @@ Late Var Range:",
     "adapter": ReactSixteenAdapter {
       "options": Object {
         "enableComponentDidUpdateOnSetState": true,
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getSnapshotBeforeUpdate": true,
+        },
       },
     },
+    "attachTo": undefined,
+    "hydrateIn": undefined,
   },
 }
 `;

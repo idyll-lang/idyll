@@ -19,6 +19,7 @@ require('__IDYLL_SYNTAX_HIGHLIGHT__');
 var opts = require('__IDYLL_OPTS__');
 var layout = opts.layout;
 var theme = opts.theme;
+var authorView = opts.authorView;
 
 var context = require('__IDYLL_CONTEXT__');
 
@@ -30,7 +31,8 @@ ReactDOM[mountMethod](
     context: context,
     datasets: datasets,
     layout: layout,
-    theme: theme
+    theme: theme,
+    authorView: authorView
   }),
   mountNode
 );

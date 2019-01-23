@@ -1,20 +1,18 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
 import IdyllDocument from 'idyll-document';
 import * as IdyllComponents from 'idyll-components';
-import Head from 'next/head'
+import Head from 'next/head';
 import Fonts from '../components/fonts';
 import { logPageView, initGA } from '../components/analytics';
 
 // import markdown from 'markdown-in-js'
-
 
 // const Content = () => markdown`
 // # GitHub
 // `
 
 export default class LandingPage extends React.PureComponent {
-
   constructor(props) {
     super(props);
 
@@ -25,22 +23,22 @@ export default class LandingPage extends React.PureComponent {
 
 [var name:"x" value:5 /]
 
-The value of x is [Display value:x format:"d" /].
+The value of x is
+[Display value:x format:"d" /].
 
 [Range value:x min:0 max:10 /]
       `.trim()
-    }
+    };
     this.handleExampleValueChange = this.handleExampleValueChange.bind(this);
   }
-
 
   componentDidMount() {
     Fonts();
     if (!window.GA_INITIALIZED) {
-      initGA()
-      window.GA_INITIALIZED = true
+      initGA();
+      window.GA_INITIALIZED = true;
     }
-    logPageView()
+    logPageView();
   }
 
   componentDidCatch(error, info) {
@@ -48,7 +46,7 @@ The value of x is [Display value:x format:"d" /].
   }
 
   handleExampleValueChange(event) {
-    console.log(event)
+    console.log(event);
     console.log(event.target.value);
     this.setState({ exampleValue: event.target.value });
   }
@@ -60,55 +58,90 @@ The value of x is [Display value:x format:"d" /].
     return (
       <div>
         <Head>
-          <title>Idyll | A markup language for interactive and data-driven blogging.</title>
-          <meta charSet='utf-8' />
-          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-          <meta name="google-site-verification" content="x8iagm4GsmQYhR6hLHmcKjtgHqDxEvTbQ19FiggLTv0" />
-          <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-          <meta property='og:image' content='https://idyll-lang.org/static/images/twitter-share.png' />
-          <meta property='og:description' content="Create data-driven stories, explorable explanations, and interactive blog posts." />
-          <meta property='og:title' content="Idyll" />
-          <meta property='og:url' content='https://idyll-lang.org' />
-          <meta property='og:type' content='website' />
-          <meta name='description' content="Create data-driven stories, explorable explanations, and interactive blog posts." />
-          <meta name="keywords" content="idyll, explorable explanation, data-driven, scrollytelling, interactive" />
+          <title>
+            Idyll | A markup language for interactive and data-driven blogging.
+          </title>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <meta
+            name="google-site-verification"
+            content="x8iagm4GsmQYhR6hLHmcKjtgHqDxEvTbQ19FiggLTv0"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/favicon.ico"
+          />
+          <meta
+            property="og:image"
+            content="https://idyll-lang.org/static/images/twitter-share.png"
+          />
+          <meta
+            property="og:description"
+            content="Create data-driven stories, explorable explanations, and interactive blog posts."
+          />
+          <meta property="og:title" content="Idyll" />
+          <meta property="og:url" content="https://idyll-lang.org" />
+          <meta property="og:type" content="website" />
+          <meta
+            name="description"
+            content="Create data-driven stories, explorable explanations, and interactive blog posts."
+          />
+          <meta
+            name="keywords"
+            content="idyll, explorable explanation, data-driven, scrollytelling, interactive"
+          />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:creator" content="@mathisonian" />
           <meta name="twitter:title" content="Idyll" />
-          <meta name="twitter:description" content="Create data-driven stories, explorable explanations, and interactive blog posts." />
-          <meta name="twitter:image" content="https://idyll-lang.org/static/images/twitter-share.png" />
-          <script async defer src="https://buttons.github.io/buttons.js"></script>
+          <meta
+            name="twitter:description"
+            content="Create data-driven stories, explorable explanations, and interactive blog posts."
+          />
+          <meta
+            name="twitter:image"
+            content="https://idyll-lang.org/static/images/twitter-share.png"
+          />
+          <script async defer src="https://buttons.github.io/buttons.js" />
         </Head>
         <section>
           <div className="panel alt">
             <div className="logo-container">
-              <img src="/static/images/quill.svg" alt="idyll-lang" className="nav-logo" />
+              <img
+                src="/static/images/quill.svg"
+                alt="idyll-lang"
+                className="nav-logo"
+              />
               idyll
             </div>
             <div className="intro">
-              A toolkit for creating data-driven stories and explorable explanations.
+              A toolkit for creating data-driven stories and explorable
+              explanations.
             </div>
             <div className="example">
               {/* Idyll turns markup into interactive HTML and JavaScript. */}
 
               <div className="label">Input (editable)</div>
               <div className="textarea-container">
-                <textarea rows={9} defaultValue={exampleValue} onChange={this.handleExampleValueChange} />
-                <div className="edit-label">
-
-                </div>
+                <textarea
+                  rows={9}
+                  defaultValue={exampleValue}
+                  onChange={this.handleExampleValueChange}
+                />
+                <div className="edit-label" />
               </div>
 
               <div className="label">Output</div>
               <div className="output">
-                <IdyllDocument layout='centered' markup={exampleValue} components={IdyllComponents} />
-              {
-                error ? (
-                  <pre>
-                    {error.toString()}
-                  </pre>
-                ) : null
-              }
+                <IdyllDocument
+                  layout="centered"
+                  markup={exampleValue}
+                  components={IdyllComponents}
+                />
+                {error ? <pre>{error.toString()}</pre> : null}
               </div>
               <div className="editor-link-container">
                 <a className="editor-link" href="/editor">
@@ -124,24 +157,52 @@ The value of x is [Display value:x format:"d" /].
             <Link href="/gallery">
               <div className="gallery">
                 {/* <a href="./gallery" className="gallery-image-block" style={{display: 'block'}}> */}
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/barnes-hut.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/how-to-tune-a-guitar.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/kde.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/trig.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/travelling-salesman.png)' }}>
-                    <div className="title"></div>
-                  </div>
-                  <div className="gallery-item" style={{ backgroundImage: 'url(/static/images/complaints-2.gif)' }}>
-                    <div className="title"></div>
-                  </div>
+                <div
+                  className="gallery-item"
+                  style={{
+                    backgroundImage: 'url(/static/images/barnes-hut.png)'
+                  }}
+                >
+                  <div className="title" />
+                </div>
+                <div
+                  className="gallery-item"
+                  style={{
+                    backgroundImage:
+                      'url(/static/images/how-to-tune-a-guitar.png)'
+                  }}
+                >
+                  <div className="title" />
+                </div>
+                <div
+                  className="gallery-item"
+                  style={{ backgroundImage: 'url(/static/images/kde.png)' }}
+                >
+                  <div className="title" />
+                </div>
+                <div
+                  className="gallery-item"
+                  style={{ backgroundImage: 'url(/static/images/trig.png)' }}
+                >
+                  <div className="title" />
+                </div>
+                <div
+                  className="gallery-item"
+                  style={{
+                    backgroundImage:
+                      'url(/static/images/travelling-salesman.png)'
+                  }}
+                >
+                  <div className="title" />
+                </div>
+                <div
+                  className="gallery-item"
+                  style={{
+                    backgroundImage: 'url(/static/images/complaints-2.gif)'
+                  }}
+                >
+                  <div className="title" />
+                </div>
                 {/* </a> */}
                 <div className="gallery-title">
                   <a href="./gallery">View Example Gallery</a>
@@ -152,13 +213,13 @@ The value of x is [Display value:x format:"d" /].
               Support the project by <a href="">buying a sticker</a>.
             </div> */}
             <div className="links">
-              <Link href="/docs/getting-started"><a>
-                Quick Start
-              </a></Link>
+              <Link href="/docs/getting-started">
+                <a>Quick Start</a>
+              </Link>
               |
-              <Link href="/docs"><a>
-                Docs
-              </a></Link>
+              <Link href="/docs">
+                <a>Docs</a>
+              </Link>
               |
               <a href="https://github.com/idyll-lang/idyll" target="_blank">
                 GitHub
@@ -179,18 +240,37 @@ The value of x is [Display value:x format:"d" /].
             </div>
             <div>
               <p>
-                <b>Idyll</b> is an open-source markup language and web runtime. You write markup and Idyll converts it to interactive code that can run in anyone’s web browser. Idyll extends <em>Markdown</em> with a reactive component system.
-
-                <br/><br/>
-                Idyll allows non-experts to publish compelling interactive stories on the web, and enables collaboration between programmers and journalists, researchers and designers. Those familiar with JavaScript can write custom components using tools like D3 or React.
-                <img style={{display: 'block', width: '75%', margin: '0 auto'}} src="/static/images/sponsors.png"/>
-
-                Idyll is supported by the Interactive Data Lab at the University of Washington, and by Rhizome and The Eutopia Foundation.
+                <b>Idyll</b> is a markup language and toolkit for writing
+                interactive articles. Idyll's reactive document model and
+                standard component library decrease the amount of code needed to
+                create high quality multimedia narratives. Idyll uses web
+                standards to produce output that will load quickly in any web
+                browser and is fully extensible.
+                <br />
+                <br />
+                Idyll enables collaboration between programmers and journalists,
+                researchers and designers. Those familiar with JavaScript can
+                write custom components using tools like D3 or React.
+                <img
+                  style={{ display: 'block', width: '75%', margin: '0 auto' }}
+                  src="/static/images/sponsors.png"
+                />
+                Idyll is supported by the Interactive Data Lab at the University
+                of Washington, and by O'Reilly Media, Rhizome and The Eutopia
+                Foundation.
               </p>
             </div>
           </div>
           <div style={{ position: 'absolute', left: 20, top: 20 }}>
-              <a className="github-button" href="https://github.com/idyll-lang/idyll" data-show-count="true" data-icon="octicon-star" aria-label="Star idyll-lang/idyll on GitHub">Star</a>
+            <a
+              className="github-button"
+              href="https://github.com/idyll-lang/idyll"
+              data-show-count="true"
+              data-icon="octicon-star"
+              aria-label="Star idyll-lang/idyll on GitHub"
+            >
+              Star
+            </a>
           </div>
         </section>
         {/* <section>
@@ -202,8 +282,8 @@ The value of x is [Display value:x format:"d" /].
           </div>
         </section> */}
         <style jsx global>{`
-
-          html, body {
+          html,
+          body {
             margin: 0;
             padding: 0;
           }
@@ -238,33 +318,33 @@ The value of x is [Display value:x format:"d" /].
             top: 0;
             left: 0;
             width: 100%;
-            background: #4C4B63;
+            background: #4c4b63;
             color: white;
             padding: 5px 10px;
             font-size: 0.8em;
             font-family: 'Source Sans Pro';
             text-align: right;
           }
-          .alert a, .alert a:visited {
+          .alert a,
+          .alert a:visited {
             color: white;
           }
           textarea {
             display: block;
             width: 100%;
             font-family: 'Fira Mono', monospace;
-            background: #4C4B63;
+            background: #4c4b63;
             border: none;
             padding: 10px;
-            border:1px solid #4C4B63;
+            border: 1px solid #4c4b63;
             color: white;
           }
           textarea:focus {
             outline: none !important;
-            border:1px solid #222;
+            border: 1px solid #222;
           }
 
           .example {
-
           }
 
           section {
@@ -277,10 +357,10 @@ The value of x is [Display value:x format:"d" /].
             overflow-y: auto;
           }
           .panel.alt {
-            background: #E7E3D0;
+            background: #e7e3d0;
           }
           .panel.dark {
-            background: #4C4B63;
+            background: #4c4b63;
           }
 
           .output {
@@ -334,7 +414,7 @@ The value of x is [Display value:x format:"d" /].
             font-size: 14px;
             color: white;
             // background: #6122FB;
-            background: #4C4B63;
+            background: #4c4b63;
             padding: 10px 10px;
             transition: color 0.5s, background 0.5s;
           }
@@ -350,7 +430,8 @@ The value of x is [Display value:x format:"d" /].
           .other-links {
             font-style: italic;
           }
-          .links,.other-links {
+          .links,
+          .other-links {
             width: 100%;
             text-align: center;
             font-family: 'Source Sans Pro';
@@ -401,7 +482,7 @@ The value of x is [Display value:x format:"d" /].
             transition: opacity 1s;
             width: 100%;
             height: 100%;
-            background: rgba(132, 130, 143, 1.0);
+            background: rgba(132, 130, 143, 1);
             display: block;
             text-decoration: none;
             color: white;
@@ -415,7 +496,7 @@ The value of x is [Display value:x format:"d" /].
             top: 50%;
             transform: translateY(-50%);
             padding: 20px;
-            background: rgba(255, 255, 255, 1.0);
+            background: rgba(255, 255, 255, 1);
             border: solid 1px #333;
             font-family: 'Fira Mono';
             font-size: 0.9em;
@@ -435,25 +516,26 @@ The value of x is [Display value:x format:"d" /].
             margin-top: 15px;
           }
 
-          .gallery-title a,.gallery-title a:visited {
+          .gallery-title a,
+          .gallery-title a:visited {
             color: #000;
           }
           .gallery-title a:hover {
-            color: #6122FB;
+            color: #6122fb;
           }
 
           .gallery:hover .gallery-title {
             // opacity: 0;
           }
 
-           .links a:hover {
-            color: #6122FB;
+          .links a:hover {
+            color: #6122fb;
             font-weight: bold;
           }
 
           .editor-link:hover {
             // color: #6122FB;
-            background: #6122FB;
+            background: #6122fb;
           }
 
           .example,
@@ -481,7 +563,6 @@ The value of x is [Display value:x format:"d" /].
             font-size: 0.8em;
             margin-top: 30px;
           }
-
 
           @media (max-width: 960px) {
             section {
@@ -513,11 +594,8 @@ The value of x is [Display value:x format:"d" /].
               width: 95%;
             }
           }
-
         `}</style>
       </div>
-    )
+    );
   }
 }
-
-

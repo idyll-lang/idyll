@@ -12,4 +12,14 @@ CodeHighlight.defaultProps = {
   children: []
 }
 
+CodeHighlight._idyll = {
+  name: "CodeHighlight",
+  tagType: "open",
+  children: ['var x = 1;'],
+  props: [{
+    name: "language",
+    type: "string",
+    example: "javascript"
+  }]
+}
 export default CodeHighlight;

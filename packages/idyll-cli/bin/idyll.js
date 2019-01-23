@@ -1,6 +1,11 @@
 #! /usr/bin/env node
 // Lightly modified from the Ember CLI
-// (https://github.com/ember-cli/ember-cli/blob/master/bin/ember)
+// https://github.com/ember-cli/ember-cli/blob/master/bin/ember
+
+const updateNotifier = require('update-notifier');
+const pkg = require('../package.json');
+
+updateNotifier({pkg}).notify();
 
 const p = require('path');
 const fs = require('fs');

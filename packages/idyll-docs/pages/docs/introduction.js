@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import markdown from 'markdown-in-js'
-import Layout from '../../components/layout'
-import ExampleGroup from '../../components/example-group'
-import Donate from '../../components/donate-link'
+import Link from 'next/link';
+import markdown from 'markdown-in-js';
+import Layout from '../../components/layout';
+import ExampleGroup from '../../components/example-group';
+import Donate from '../../components/donate-link';
 import compile from 'idyll-compiler';
 import * as components from 'idyll-components';
 import IdyllDocument from 'idyll-document';
@@ -10,9 +10,12 @@ import IdyllDocument from 'idyll-document';
 const idyllMarkup = `
 # Introduction
 
-Idyll is an open-source markup language and toolkit for producing interactive web pages. You give Idyll a markup file, and it compiles that file to a full bundle of HTML, JavaScript, and CSS that can run in anyone’s web browser.
 
-Idyll can be used to create explorable explanations, and to add interactivity to blog engines and content management systems. The tool can generate standalone webpages or be embedded inside of an existing page, and can be fully themed to match your styleguide.
+Idyll can be used to create [explorable explanations](https://explorabl.es/), write data-driven stories, and add interactivity to blog engines and content management systems. The tool can generate standalone webpages or be embedded in  existing pages. Choose from built-in themes or provide custom CSS.
+
+![/static/images/fugazi.gif](/static/images/fugazi.gif)
+
+We offer a [free public hosting service](https://idyll.pub) so that you can publish your creations to the web in a matter of seconds. Continue reading to learn more about the project, or see our [example gallery](/gallery).
 
 ## Familiar Markup
 
@@ -158,17 +161,25 @@ select from one of the other one-time and recurring donation options on Open Col
 
 [Donate /]
 
-Idyll is supported by the Interactive Data Lab at the University of Washington, and by Rhizome and The Eutopia Foundation.
+Idyll is supported by the Interactive Data Lab at the University of Washington, and by O'Reilly Media, Rhizome and The Eutopia Foundation.
 ![sponsors](/static/images/sponsors.png)
 
 
-`
+`;
 
 export default ({ url }) => (
-  <Layout url={ url } title={'Idyll Documentation | An overview.'}>
-    <IdyllDocument layout='centered' markup={idyllMarkup} components={Object.assign({}, components, { Donate })} />
-    <p style={{marginBottom: 30}}>
-      Continue to the <Link href="/docs/getting-started"><a>next section</a></Link> to start using Idyll.
+  <Layout url={url} title={'Idyll Documentation | An overview.'}>
+    <IdyllDocument
+      layout="centered"
+      markup={idyllMarkup}
+      components={Object.assign({}, components, { Donate })}
+    />
+    <p style={{ marginBottom: 30 }}>
+      Continue to the{' '}
+      <Link href="/docs/getting-started">
+        <a>next section</a>
+      </Link>{' '}
+      to start using Idyll.
     </p>
     <style global jsx>{`
       .idyll-root img {
@@ -200,7 +211,7 @@ export default ({ url }) => (
         color: white;
       }
 
-      .idyll-root input[type=text] {
+      .idyll-root input[type='text'] {
         display: block;
         margin: 0 auto;
         padding: 10px 5px;
@@ -215,4 +226,4 @@ export default ({ url }) => (
       }
     `}</style>
   </Layout>
-)
+);

@@ -21,6 +21,7 @@ class Link extends React.PureComponent {
 Link._idyll = {
   name: "Link",
   tagType: "closed",
+  displayType: "inline",
   props: [{
     name: "text",
     type: "string",

@@ -21,9 +21,9 @@ export default ({ url }) => (
         {`// custom.js
 const React = require('react');
 
-class Custom extends React.Component {
+class Custom extends React.PureComponent {
   render() {
-    const { hasError, updateProps, ...props } = this.props;
+    const { idyll, hasError, updateProps, ...props } = this.props;
 
     return (
       <div {...props}>
@@ -40,6 +40,10 @@ module.exports = Custom;`}
       following code:</p>
 
       <pre><code>{`[Custom /]`}</code></pre>
+  
+      <p>Notice that the custom component inherits from <code>React.PureComponent</code> 
+      rather than <code>React.Component</code> so that rendering is updated only when 
+      properties or state change. This speeds up compilation in watch mode.</p>
 
       <h2>Updating the Document</h2>
 
@@ -56,7 +60,7 @@ module.exports = Custom;`}
 
       <Highlight className='javascript'>
         {`const React = require('react');
-class Incrementer extends React.Component {
+class Incrementer extends React.PureComponent {
 
   increment() {
     this.props.updateProps({

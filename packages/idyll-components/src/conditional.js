@@ -5,11 +5,21 @@ class Conditional extends React.Component {
     const { idyll, hasError, updateProps, ...props } = this.props;
 
     if (!props.if) {
-      return null;
+      return <div style={{display: 'none'}}>{props.children}</div>;
     }
 
     return <div>{props.children}</div>;
   }
 }
 
+Conditional._idyll = {
+  name: "Conditional",
+  tagType: "open",
+  children: ['Some text'],
+  props: [{
+    name: "if",
+    type: "expression",
+    example: "`x < 10`"
+  }]
+}
 module.exports = Conditional;
