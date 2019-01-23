@@ -132,7 +132,7 @@ class AuthorTool extends React.PureComponent {
           id={props.uniqueKey}
           type='info'
           effect='solid'
-          place='right'
+          place='bottom' // TODO not showing up ?
           disable={this.state.isAuthorView}
         >
           <div className="tooltip-header">{props.authorComponent.type._idyll.name} Component</div>
