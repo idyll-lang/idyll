@@ -142,6 +142,7 @@ test('should include components configured in package.json', () => {
 })
 
 // This tests for just the *default* components being in getComponents
+// TODO may need to hardcode *all* components, including custom ones
 test('Idyll getComponents() gets all default components', () => {
   var defaultComponentsDirectory = __dirname + '/../../../idyll-components/src/';
   var idyllComponents = idyll.getComponents();
@@ -153,8 +154,9 @@ test('Idyll getComponents() gets all default components', () => {
   })
 })
 
-// Tests that getDatasets returns all default datasets provided
+// Tests that getDatasets returns all datasets
 // in an Idyll project
 test('Idyll getDatasets() gets all default datasets', () => {
+  var datasets = idyll.getDatasets();
   
 })
