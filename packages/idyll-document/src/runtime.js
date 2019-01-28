@@ -196,8 +196,9 @@ const createWrapper = ({ theme, layout, authorView }) => {
           metaData.displayType === undefined ||
           metaData.displayType !== 'inline'
         ) {
+          const ViewComponent = this.props.userViewComponent || AuthorTool;
           return (
-            <AuthorTool
+            <ViewComponent
               component={returnComponent}
               authorComponent={childComponent}
               uniqueKey={uniqueKey}
