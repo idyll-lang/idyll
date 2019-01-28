@@ -2,6 +2,7 @@
 import React from 'react';
 import Runtime from './runtime';
 import compile from 'idyll-compiler';
+import UserViewPlaceholder from './components/user-view-placeholder';
 
 export const hashCode = (str) => {
   var hash = 0, i, chr;
@@ -77,6 +78,7 @@ class IdyllDocument extends React.Component {
           }}
           initialState={this.props.initialState || (this.idyllContext ? this.idyllContext.data() : {})}
           ast={ this.props.ast || this.state.ast }
+          userViewComponent={UserViewPlaceholder}
           />
         { this.getErrorComponent() }
       </div>
