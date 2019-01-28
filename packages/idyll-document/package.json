@@ -31,6 +31,7 @@
     "change-case": "^3.0.1",
     "cross-env": "^5.2.0",
     "falafel": "^2.1.0",
+    "fast-deep-equal": "^2.0.1",
     "html-tags": "^2.0.0",
     "idyll-compiler": "^3.3.1",
     "idyll-layouts": "^2.6.1",
