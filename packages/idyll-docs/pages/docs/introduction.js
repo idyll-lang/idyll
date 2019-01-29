@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import markdown from 'markdown-in-js'
-import Layout from '../../components/layout'
-import ExampleGroup from '../../components/example-group'
-import Donate from '../../components/donate-link'
+import Link from 'next/link';
+import markdown from 'markdown-in-js';
+import Layout from '../../components/layout';
+import ExampleGroup from '../../components/example-group';
+import Donate from '../../components/donate-link';
 import compile from 'idyll-compiler';
 import * as components from 'idyll-components';
 import IdyllDocument from 'idyll-document';
@@ -161,17 +161,25 @@ select from one of the other one-time and recurring donation options on Open Col
 
 [Donate /]
 
-Idyll is supported by the Interactive Data Lab at the University of Washington, and by Rhizome and The Eutopia Foundation.
+Idyll is supported by the Interactive Data Lab at the University of Washington, and by O'Reilly Media, Rhizome and The Eutopia Foundation.
 ![sponsors](/static/images/sponsors.png)
 
 
-`
+`;
 
 export default ({ url }) => (
-  <Layout url={ url } title={'Idyll Documentation | An overview.'}>
-    <IdyllDocument layout='centered' markup={idyllMarkup} components={Object.assign({}, components, { Donate })} />
-    <p style={{marginBottom: 30}}>
-      Continue to the <Link href="/docs/getting-started"><a>next section</a></Link> to start using Idyll.
+  <Layout url={url} title={'Idyll Documentation | An overview.'}>
+    <IdyllDocument
+      layout="centered"
+      markup={idyllMarkup}
+      components={Object.assign({}, components, { Donate })}
+    />
+    <p style={{ marginBottom: 30 }}>
+      Continue to the{' '}
+      <Link href="/docs/getting-started">
+        <a>next section</a>
+      </Link>{' '}
+      to start using Idyll.
     </p>
     <style global jsx>{`
       .idyll-root img {
@@ -203,7 +211,7 @@ export default ({ url }) => (
         color: white;
       }
 
-      .idyll-root input[type=text] {
+      .idyll-root input[type='text'] {
         display: block;
         margin: 0 auto;
         padding: 10px 5px;
@@ -218,4 +226,4 @@ export default ({ url }) => (
       }
     `}</style>
   </Layout>
-)
+);

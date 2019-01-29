@@ -1,6 +1,6 @@
 {
   "name": "idyll",
-  "version": "3.11.1",
+  "version": "3.12.6",
   "description": "Command line interface for idyll lang",
   "main": "src/index.js",
   "bin": {
@@ -48,8 +48,8 @@
     "html-tags": "^1.1.1",
     "idyll-ast": "^1.5.1",
     "idyll-compiler": "^3.3.1",
-    "idyll-components": "^3.4.1",
-    "idyll-document": "^2.13.4",
+    "idyll-components": "^3.5.1",
+    "idyll-document": "^2.14.2",
     "idyll-layouts": "^2.6.1",
     "idyll-template-projects": "^1.3.0",
     "idyll-themes": "^2.3.4",
@@ -65,6 +65,7 @@
     "request-promise-native": "^1.0.5",
     "resolve": "^1.3.3",
     "slash": "^1.0.0",
+    "svg-tags": "^1.0.0",
     "uglify-js": "^2.8.22",
     "update-notifier": "^2.5.0",
     "url-join": "^4.0.0",

@@ -7,6 +7,7 @@ import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
 import AuthorTool from './components/author-tool';
+import equal from 'fast-deep-equal';
 
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
@@ -252,6 +253,9 @@ class IdyllRuntime extends React.PureComponent {
         onInitialize: cb => {
           this._onInitializeState = cb;
         },
+        onMount: cb => {
+          this._onMount = cb;
+        },
         onUpdate: cb => {
           this._onUpdateState = cb;
         }
@@ -285,7 +289,7 @@ class IdyllRuntime extends React.PureComponent {
 
       const changedMap = {};
       const changedKeys = Object.keys(state).reduce((acc, k) => {
-        if (state[k] !== nextState[k]) {
+        if (!equal(state[k], nextState[k])) {
           acc.push(k);
           changedMap[k] = nextState[k] || state[k];
         }
@@ -470,6 +474,7 @@ class IdyllRuntime extends React.PureComponent {
   componentDidMount() {
     const refs = getRefs();
     updateRefsCallbacks.forEach(f => f({ ...this.state, refs }));
+    this._onMount && this._onMount();
   }
 
   render() {

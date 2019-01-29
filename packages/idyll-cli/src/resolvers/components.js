@@ -3,11 +3,12 @@ const fs = require('fs');
 
 const resolve = require('resolve');
 const htmlTags = require('html-tags');
+const svgTags = require('svg-tags');
 const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
 
 const errors = require('../errors');
-const debug = require('debug')('idyll:cli')
+const debug = require('debug')('idyll:cli');
 
 class ComponentResolver {
   constructor(options, paths) {
@@ -35,8 +36,13 @@ class ComponentResolver {
    */
   _loadPaths() {
     const componentsMap = new Map();
-    const prioritizedDirs = [this.paths.DEFAULT_COMPONENT_DIRS, this.paths.COMPONENT_DIRS];
-    debug(`Component directories (prioritized in ascending order): ${prioritizedDirs}`)
+    const prioritizedDirs = [
+      this.paths.DEFAULT_COMPONENT_DIRS,
+      this.paths.COMPONENT_DIRS
+    ];
+    debug(
+      `Component directories (prioritized in ascending order): ${prioritizedDirs}`
+    );
 
     prioritizedDirs.forEach(dirs => {
       dirs.forEach(dir => {
@@ -56,9 +62,11 @@ class ComponentResolver {
     });
     if (debug.enabled) {
       debug('Resolved components:');
-      debug([...componentsMap].reduce((s, p) => {
-        return s += `  ${p[0]} => ${p[1]}\n`;
-      }, ''));
+      debug(
+        [...componentsMap].reduce((s, p) => {
+          return (s += `  ${p[0]} => ${p[1]}\n`);
+        }, '')
+      );
     }
     this.componentsMap = componentsMap;
   }
@@ -81,7 +89,7 @@ class ComponentResolver {
     const candidates = [pascalCase(name), paramCase(name), name.toLowerCase()];
     debug(`Searching for component: ${name} with candidates: ${candidates}`);
 
-    var resolved = null
+    var resolved = null;
 
     candidates.forEach(name => {
       // Once one of the candidates has been found, don't continue searching.
@@ -97,17 +105,17 @@ class ComponentResolver {
       // Else try to import it as a node module.
       try {
         // npm modules are required via relative paths to support working with a locally linked idyll.
-        resolved = slash(resolve.sync(name, {basedir: this.paths.INPUT_DIR}));
+        resolved = slash(resolve.sync(name, { basedir: this.paths.INPUT_DIR }));
       } catch (err) {
         // Import errors are silently discarded.
         return;
       }
-    })
+    });
 
     if (!resolved) {
-      if (htmlTags.indexOf(name) !== -1) {
+      if (htmlTags.indexOf(name) > -1 || svgTags.indexOf(name) > -1) {
         // It is a valid HTML component, but should not be added to the map.
-        return
+        return;
       } else {
         if (['fullwidth', 'textcontainer'].indexOf(name) > -1) {
           throw new errors.OutOfDateError(name);
@@ -116,7 +124,7 @@ class ComponentResolver {
       }
     }
 
-    debug(`Resolved component ${name} to ${resolved}`)
+    debug(`Resolved component ${name} to ${resolved}`);
     return resolved;
   }
 
