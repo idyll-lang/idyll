@@ -3,64 +3,139 @@ const entries = require('object.entries');
 const falafel = require('falafel');
 
 export const buildExpression = (acc, expr, key, context, isEventHandler) => {
+  let identifiers = [];
+  const modifiedExpression = falafel(
+    isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`,
+    node => {
+      switch (node.type) {
+        case 'Identifier':
+          if (Object.keys(acc).indexOf(node.name) > -1) {
+            identifiers.push(node.name);
+            node.update('__idyllStateProxy.' + node.source());
+          }
+          break;
+      }
+    }
+  );
+
+  if (!isEventHandler) {
+    return `
+    ((context) => {
+      var __idyllStateProxy = new Proxy({}, {
+        get: (_, prop) => {
+          return context[prop];
+        },
+        set: (_, prop, value) => {
+          var newState = {};
+          newState[prop] = value;
+          context.update(newState);
+          return true;
+        }
+      });
+      ${modifiedExpression};
+      return __idyllReturnValue;
+    })(this)`;
+  }
+
   return `
     ((context) => {
-        var __idyllStateProxy = new Proxy({}, {
-          get: (_, prop) => {
-            return context[prop];
+        var __idyllExpressionExecuted = false;
+        var __idyllStateProxy = new Proxy({
+          ${identifiers
+            .map(key => {
+              return `${key}: context.__idyllCopy(context['${key}'])`;
+            })
+            .join(', ')}
+        }, {
+          get: (target, prop) => {
+            return target[prop];
           },
-          set: (_, prop, value) => {
-            var newState = {};
-            newState[prop] = value;
-            context.update(newState);
+          set: (target, prop, value) => {
+            if (__idyllExpressionExecuted) {
+              var newState = {};
+              newState[prop] = value;
+              context.update(newState);
+            }
+            target[prop] = value;
             return true;
           }
-        })
-        ${falafel(isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`, (node) => {
-          switch(node.type) {
-            case 'Identifier':
-              if (Object.keys(acc).indexOf(node.name) > -1) {
-                node.update('__idyllStateProxy.' + node.source());
-              }
-              break;
-          }
-        })};
-        ${isEventHandler ? '' : 'return __idyllReturnValue;'}
+        });
+        ${modifiedExpression};
+        context.update({
+          ${identifiers
+            .map(key => {
+              return `${key}: __idyllStateProxy['${key}']`;
+            })
+            .join(', ')}
+        });
+        __idyllExpressionExecuted = true;
     })(this)
   `;
-}
-
+};
 
 export const evalExpression = (acc, expr, key, context) => {
-  const isEventHandler = (key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/)));
+  const isEventHandler =
+    key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/));
   let e = buildExpression(acc, expr, key, context, isEventHandler);
 
   if (isEventHandler) {
-    return (function() {
+    return function() {
       eval(e);
-    }).bind(Object.assign({}, acc, context || {}));
+    }.bind(
+      Object.assign({}, acc, context || {}, {
+        __idyllCopy: function copy(o) {
+          if (typeof o !== 'object') return o;
+          var output, v, key;
+          output = Array.isArray(o) ? [] : {};
+          for (key in o) {
+            v = o[key];
+            output[key] = typeof v === 'object' ? copy(v) : v;
+          }
+          return output;
+        }
+      })
+    );
   }
 
   try {
-    return (function(evalString){
+    return function(evalString) {
       try {
         return eval('(' + evalString + ')');
-      } catch(err) {}
-    }).call(Object.assign({}, acc, context || {}), e);
+      } catch (err) {
+        console.warn('Error occurred in Idyll expression');
+        console.error(err);
+      }
+    }.call(Object.assign({}, acc, context || {}), e);
   } catch (err) {}
-}
+};
 
 export const getVars = (arr, context = {}, evalContext) => {
+  const formatAccumulatedValues = acc => {
+    const ret = {};
+    Object.keys(acc).forEach(key => {
+      const accVal = acc[key];
+      if (
+        typeof accVal.update !== 'undefined' &&
+        typeof accVal.value !== 'undefined'
+      ) {
+        ret[key] = accVal.value;
+      } else {
+        ret[key] = accVal;
+      }
+    });
+    return ret;
+  };
+
   const pluck = (acc, val) => {
-    const [ variableType, attrs = [], ] = val;
+    const [variableType, attrs = []] = val;
 
     const [nameArr, valueArr] = attrs;
     if (!nameArr || !valueArr) return acc;
 
-    const [, [, nameValue]] = nameArr
+    const [, [, nameValue]] = nameArr;
     const [, [valueType, valueValue]] = valueArr;
 
-    switch(valueType) {
+    switch (valueType) {
       case 'value':
         acc[nameValue] = valueValue;
         break;
@@ -74,25 +149,31 @@ export const getVars = (arr, context = {}, evalContext) => {
       case 'expression':
         const expr = valueValue;
         if (variableType === 'var') {
-          acc[nameValue] = evalExpression(context, expr);
+          acc[nameValue] = evalExpression(
+            Object.assign({}, context, formatAccumulatedValues(acc)),
+            expr
+          );
         } else {
           acc[nameValue] = {
-            value: evalExpression(context, expr),
-            update: (newState, oldState) => {
-              return evalExpression(Object.assign({}, oldState, newState), expr)
+            value: evalExpression(
+              Object.assign({}, context, formatAccumulatedValues(acc)),
+              expr
+            ),
+            update: (newState, oldState, context = {}) => {
+              return evalExpression(
+                Object.assign({}, oldState, newState, context),
+                expr
+              );
             }
-          }
+          };
         }
     }
 
     return acc;
-  }
+  };
 
-  return arr.reduce(
-    pluck,
-    {}
-  )
-}
+  return arr.reduce(pluck, {});
+};
 
 export const filterIdyllProps = (props, filterInjected) => {
   const {
@@ -108,41 +189,38 @@ export const filterIdyllProps = (props, filterInjected) => {
     ...rest
   } = props;
   if (filterInjected) {
-    const { idyll, hasError, updateProps, ...ret} = rest;
+    const { idyll, hasError, updateProps, ...ret } = rest;
     return ret;
   }
   return rest;
-}
+};
 
 export const getData = (arr, datasets = {}) => {
   const pluck = (acc, val) => {
-    const [ , attrs, ] = val
-    const [nameArr, ] = attrs;
+    const [, attrs] = val;
+    const [nameArr] = attrs;
 
-    const [, [, nameValue]] = nameArr
+    const [, [, nameValue]] = nameArr;
 
     acc[nameValue] = datasets[nameValue];
 
     return acc;
-  }
+  };
 
-  return arr.reduce(
-    pluck,
-    {}
-  )
-}
+  return arr.reduce(pluck, {});
+};
 
-export const splitAST = (ast) => {
+export const splitAST = ast => {
   const state = {
     vars: [],
     derived: [],
     data: [],
-    elements: [],
-  }
+    elements: []
+  };
 
-  const handleNode = (storeElements) => {
-    return (node) => {
-      const [ name, props, children ] = node;
+  const handleNode = storeElements => {
+    return node => {
+      const [name, props, children] = node;
       if (name === 'var') {
         state.vars.push(node);
       } else if (state[name]) {
@@ -154,12 +232,12 @@ export const splitAST = (ast) => {
         return;
       }
       children.forEach(handleNode(false));
-    }
-  }
+    };
+  };
 
   ast.forEach(handleNode(true));
   return state;
-}
+};
 
 export const hooks = [
   'onEnterView',
@@ -169,53 +247,50 @@ export const hooks = [
 ];
 
 export const scrollMonitorEvents = {
-  'onEnterView': 'enterViewport',
-  'onEnterViewFully': 'fullyEnterViewport',
-  'onExitView': 'partiallyExitViewport',
-  'onExitViewFully': 'exitViewport'
-}
+  onEnterView: 'enterViewport',
+  onEnterViewFully: 'fullyEnterViewport',
+  onExitView: 'partiallyExitViewport',
+  onExitViewFully: 'exitViewport'
+};
 
-export const translate = (arr) => {
-  const attrConvert = (list) => {
-    return list.reduce(
-      (acc, [name, [type, val]]) => {
-        if (type === 'variable') {
-          acc.__vars__ = acc.__vars__ || {};
-          acc.__vars__[name] = val;
-        }
-        // each node keeps a list of props that are expressions
-        if (type === 'expression') {
-          acc.__expr__ = acc.__expr__ || {};
-          acc.__expr__[name] = val;
-        }
-        // flag nodes that define a hook function
-        if (hooks.includes(name)) {
-          acc.hasHook = true;
-        };
+export const translate = arr => {
+  const attrConvert = list => {
+    return list.reduce((acc, [name, [type, val]]) => {
+      if (type === 'variable') {
+        acc.__vars__ = acc.__vars__ || {};
+        acc.__vars__[name] = val;
+      }
+      // each node keeps a list of props that are expressions
+      if (type === 'expression') {
+        acc.__expr__ = acc.__expr__ || {};
+        acc.__expr__[name] = val;
+      }
+      // flag nodes that define a hook function
+      if (hooks.includes(name)) {
+        acc.hasHook = true;
+      }
 
-        acc[name] = val;
-        return acc;
-      },
-      {}
-    )
-  }
+      acc[name] = val;
+      return acc;
+    }, {});
+  };
 
-  const tNode = (node) => {
+  const tNode = node => {
     if (typeof node === 'string') return node;
 
     if (node.length === 3) {
-      const [ name, attrs, children ] = node;
+      const [name, attrs, children] = node;
 
       return {
         component: name,
         ...attrConvert(attrs),
-        children: children.map(tNode),
-      }
+        children: children.map(tNode)
+      };
     }
-  }
+  };
 
-  return splitAST(arr).elements.map(tNode)
-}
+  return splitAST(arr).elements.map(tNode);
+};
 
 export const mapTree = (tree, mapFn, filterFn = () => true) => {
   const walkFn = (acc, node) => {
@@ -233,14 +308,11 @@ export const mapTree = (tree, mapFn, filterFn = () => true) => {
     return acc;
   };
 
-  return tree.reduce(
-    walkFn,
-    []
-  );
+  return tree.reduce(walkFn, []);
 };
 
-export const filterASTForDocument = (ast) => {
-  return mapTree(ast, n => n, ([name]) => name !== 'meta')
+export const filterASTForDocument = ast => {
+  return mapTree(ast, n => n, ([name]) => name !== 'meta');
 };
 
 export const findWrapTargets = (schema, state) => {
@@ -250,7 +322,7 @@ export const findWrapTargets = (schema, state) => {
   // always return node so we can walk the whole tree
   // but collect and ultimately return just the nodes
   // we are interested in wrapping
-  mapTree(schema, (node) => {
+  mapTree(schema, node => {
     if (typeof node === 'string') return node;
 
     if (node.hasHook) {
@@ -282,7 +354,7 @@ export const findWrapTargets = (schema, state) => {
     });
 
     return node;
-  })
+  });
 
   return targets;
-}
+};

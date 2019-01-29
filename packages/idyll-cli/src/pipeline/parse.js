@@ -153,11 +153,14 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const React = require('react');
   const IdyllDocument = require('idyll-document').default;
   const meta = parseMeta(ast);
+  const context = require(opts.context ? opts.context : __dirname + '/../client/context');
+
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
       ast: ast,
       components,
       datasets,
+      context,
       theme: opts.theme,
       layout: opts.layout,
       authorView: opts.authorView
