@@ -43,7 +43,7 @@ export const buildExpression = (acc, expr, key, context, isEventHandler) => {
         var __idyllStateProxy = new Proxy({
           ${identifiers
             .map(key => {
-              return `${key}: __idyllCopy(context['${key}'])`;
+              return `${key}: context.__idyllCopy(context['${key}'])`;
             })
             .join(', ')}
         }, {
