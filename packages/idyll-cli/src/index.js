@@ -211,7 +211,7 @@ const idyll = (options = {}, cb) => {
           }
           fs.readdirSync(dir + '').forEach(file => {
             var compName = file.replace(/\.jsx?/g, '');
-            if (compName !== 'index') {
+            if (compName !== 'index') { // avoid conflicts with index.js file
               components.push({
                 name: compName,
                 path: dir + '/' + file
@@ -259,6 +259,8 @@ const idyll = (options = {}, cb) => {
       fs.readdirSync(dataFolder).forEach(file => {
         defaultData.push(file);
       });
+      // TODO return in the same format as getComponents()
+      // path.extname(path) probly to get the extension
       return defaultData;
     }
 
