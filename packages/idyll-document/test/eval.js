@@ -78,7 +78,7 @@ describe('Detect global variables', () => {
       ((context) => {
         var __idyllExpressionExecuted = false;
         var __idyllStateProxy = new Proxy({
-          x: __idyllCopy(context['x'])
+          x:  context.__idyllCopy(context['x'])
         }, {
           get: (target, prop) => {
             return target[prop];
@@ -117,8 +117,8 @@ describe('Detect global variables', () => {
       ((context) => {
         var __idyllExpressionExecuted = false;
         var __idyllStateProxy = new Proxy({
-          x: __idyllCopy(context['x']),
-          y: __idyllCopy(context['y'])
+          x:  context.__idyllCopy(context['x']),
+          y:  context.__idyllCopy(context['y'])
         }, {
           get: (target, prop) => {
             return target[prop];
