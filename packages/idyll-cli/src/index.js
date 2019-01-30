@@ -257,7 +257,14 @@ const idyll = (options = {}, cb) => {
       var dataFolder = this.getPaths().DATA_DIR;
       var defaultData = [];
       fs.readdirSync(dataFolder).forEach(file => {
-        defaultData.push(file);
+        var fileName = file;
+        var datasetPath = dataFolder + '/' + file;
+        var extension = path.extname(file);
+        defaultData.push({
+          name: fileName,
+          path: datasetPath,
+          extension: extension
+        });
       });
       // TODO return in the same format as getComponents()
       // path.extname(path) probly to get the extension
