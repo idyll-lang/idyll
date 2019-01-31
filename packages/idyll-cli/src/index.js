@@ -191,7 +191,6 @@ const idyll = (options = {}, cb) => {
             title: 'Error compiling Idyll project',
             body: error.toString()
           });
-          // console.log('BS ERROR!');
         });
       return this;
     }
