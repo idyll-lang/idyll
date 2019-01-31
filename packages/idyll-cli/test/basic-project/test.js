@@ -141,16 +141,24 @@ test('should include components configured in package.json', () => {
   expect(Object.keys(output.components)).toContain('package-json-component-test');
 })
 
-// This tests for just the *default* components being in getComponents
-// TODO may need to hardcode *all* components, including custom ones
-test('Idyll getComponents() gets all default components', () => {
+// Tests for default and custom components
+test('Idyll getComponents() gets all default & custom components', () => {
   var defaultComponentsDirectory = __dirname + '/../../../idyll-components/src/';
   var idyllComponents = idyll.getComponents();
-  var componentNames = idyllComponents.map(comp => comp.name);
-
+  var componentNames = idyllComponents.map(comp => comp.name + '.js');
   // Ensure that the getComponents() have all of the default component file names
   fs.readdirSync(defaultComponentsDirectory).forEach(file => {
-    expect(componentNames).toContain(file + "");
+    if (file !== 'index.js') {
+      expect(componentNames).toContain(file + '');
+    }
+  })
+
+  // Ensure that we also get the custom components
+  var customComponentsPath = __dirname + '/src/components/';
+  fs.readdirSync(customComponentsPath).forEach(file => {
+    if (file !== 'index.js') {
+      expect(componentNames).toContain(file + '');
+    }
   })
 })
 
