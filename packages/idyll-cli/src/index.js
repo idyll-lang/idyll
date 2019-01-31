@@ -266,8 +266,6 @@ const idyll = (options = {}, cb) => {
           extension: extension
         });
       });
-      // TODO return in the same format as getComponents()
-      // path.extname(path) probly to get the extension
       return defaultData;
     }
 
