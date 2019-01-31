@@ -166,5 +166,9 @@ test('Idyll getComponents() gets all default & custom components', () => {
 // in an Idyll project
 test('Idyll getDatasets() gets all default datasets', () => {
   var datasets = idyll.getDatasets();
-  
+  var datasetNames = datasets.map(dataset => dataset.name);
+  var thisDatasetPath = __dirname + '/src/data/';
+  fs.readdirSync(thisDatasetPath).forEach(file => {
+    expect(datasetNames).toContain(file + '');
+  })
 })
