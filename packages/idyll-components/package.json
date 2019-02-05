@@ -9,7 +9,7 @@
     "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
-    "dev": "yarn run build:es --watch",
+    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
