@@ -186,10 +186,11 @@ const idyll = (options = {}, cb) => {
             // otherwise dump to the console
             console.error(error);
           }
-          bs.sockets.emit('fullscreen:message', {
-            title: 'Error compiling Idyll project',
-            body: error.toString()
-          });
+          bs &&
+            bs.sockets.emit('fullscreen:message', {
+              title: 'Error compiling Idyll project',
+              body: error.toString()
+            });
         });
       return this;
     }
