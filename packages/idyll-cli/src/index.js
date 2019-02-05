@@ -212,6 +212,7 @@ const idyll = (options = {}, cb) => {
           fs.readdirSync(dir + '').forEach(file => {
             var compName = file.replace(/\.jsx?/g, '');
             if (compName !== 'index') {
+              // avoid conflicts with index.js file
               components.push({
                 name: compName,
                 path: dir + '/' + file
@@ -257,7 +258,14 @@ const idyll = (options = {}, cb) => {
       var dataFolder = this.getPaths().DATA_DIR;
       var defaultData = [];
       fs.readdirSync(dataFolder).forEach(file => {
-        defaultData.push(file);
+        var fileName = file;
+        var datasetPath = dataFolder + '/' + file;
+        var extension = path.extname(file);
+        defaultData.push({
+          name: fileName,
+          path: datasetPath,
+          extension: extension
+        });
       });
       return defaultData;
     }
@@ -273,12 +281,6 @@ const idyll = (options = {}, cb) => {
         fs.mkdirSync(datasetDirectory);
       }
       fs.copyFileSync(datasetPath, datasetDirectory + '/' + datasetName);
-    }
-
-    getResolver() {
-      // Look at the build() and perhaps add a field for the revolvers to have access to it.
-      // Then can return it here
-      return resolvers['components'];
     }
 
     stopWatching() {

@@ -20,4 +20,15 @@ Preloader.defaultProps = {
   images: []
 };
 
+Preloader._idyll = {
+  name: "Preloader",
+  tagType: "closed",
+  displayType: "inline",
+  props: [{
+    name: "images",
+    type: "array",
+    example: '["image-url-1.png", "image-url-2.jpg"]'
+  }]
+}
+
 export default Preloader;
