@@ -1,4 +1,27 @@
 
+## v3.13
+
+- Add additional methods to exported `idyll` object, including `getComponents` and `getDatasets` to facilitate programatic interaction with Idyll projects.
+
+## v3.12 
+
+- Add `onMount` event to the context used by `idyll-document`
+
+## v3.11
+
+- Use prettier for code formatting
+- Add `update-notifier` to CLI tool
+- Fix bug in handling conflicts between options specified on the command line and in `package.json`
+
+## v3.10
+
+- Fix bug in runtime context initialization
+- Add missing component metadata
+
+## v3.9
+
+- Fix bug in idyll text-container styles.
+
 ## v3.8
 
 - Add `YouTube` component.
