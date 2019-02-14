@@ -36,8 +36,7 @@
     "expect.js": "^0.3.1",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^3.2.0",
-    "rimraf": "^2.6.2",
-    "idyll-compiler": "^3.3.1"
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "ajv": "^6.5.2"
