@@ -146,7 +146,7 @@ const hasChildren = function(node) {
     return false;
   }
 
-  if (node.children) {
+  if (node.children && node.children.length) {
     //console.log("@hasChildren", node);
     return true;
   } else {
@@ -331,7 +331,7 @@ const filterChildren = function(node, filter) {
     return node;
   }
   return Object.assign({}, node, {
-    chidren: getChildren(node).filter(child => {
+    children: getChildren(node).filter(child => {
       return filter(child);
     })
   });
@@ -350,15 +350,16 @@ const modifyNodesByName = function(ast, name, modifier) {
   typeCheckString(name, 'name');
   checkASTandFunction(ast, 'ast', modifier, 'modifier');
 
-  ([ast] || []).map(node => {
+  const modifiedAST = [ast].map(node => {
     if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) === -1) {
       node = Object.assign({}, node, {
         children: modifyHelper(getChildren(node), name, modifier)
       });
     }
     node = handleNodeByName(node, name, modifier);
+    return node;
   });
-  return Object.assign({}, ast);
+  return modifiedAST[0];
 };
 
 //Helper function for modifyHelper.
@@ -366,16 +367,15 @@ function modifyHelper(children, name, modifier) {
   typeCheckString(name, 'name');
   //checkASTandFunction(, "ast", modifier, "modifier");
 
-  (children || []).map(node => {
+  return children.map(node => {
     if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) === -1) {
       node = Object.assign({}, node, {
         children: modifyHelper(getChildren(node), name, modifier)
       });
     }
     node = handleNodeByName(node, name, modifier);
+    return node;
   });
-
-  return children;
 }
 
 /**
@@ -394,7 +394,7 @@ const handleNodeByName = function(node, name, modifier) {
   if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) > -1) {
     return Object.assign({}, node);
   }
-  if (node.name.toLowerCase() === name) {
+  if (node.name && node.name.toLowerCase() === name) {
     node = modifier(Object.assign({}, node));
   }
   return Object.assign({}, node);

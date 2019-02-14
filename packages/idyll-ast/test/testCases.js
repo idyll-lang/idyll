@@ -91,23 +91,23 @@ const astTestVar = {
               ]
             }
           ]
-        },
-        {
-          id: 11,
-          type: 'component',
-          name: 'meta',
-          properties: {
-            title: {
-              type: 'value',
-              value: 'Test'
-            },
-            description: {
-              type: 'value',
-              value: 'Short description of your project'
-            }
-          },
-          children: []
         }
+        // {
+        //   id: 11,
+        //   type: 'component',
+        //   name: 'meta',
+        //   properties: {
+        //     title: {
+        //       type: 'value',
+        //       value: 'Test'
+        //     },
+        //     description: {
+        //       type: 'value',
+        //       value: 'Short description of your project'
+        //     }
+        //   },
+        //   children: []
+        // }
       ]
     }
   ]

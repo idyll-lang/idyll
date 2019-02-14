@@ -111,32 +111,32 @@ const example1Array = [
     []
   ]
 ];
-function testConverter() {
-  console.log(JSON.stringify(convertV2ToV1(example1)));
-}
+// function testConverter() {
+//   console.log(JSON.stringify(convertV2ToV1(example1)));
+// }
 
-function testInverseConverter() {
-  console.log(JSON.stringify(convertV1ToV2(example1Array)));
-}
+// function testInverseConverter() {
+//   console.log(JSON.stringify(convertV1ToV2(example1Array)));
+// }
 
-function test1() {
-  let input = `
-    ## This is a header
-    And this is a normal paragraph. This is # not a header.
+// function test1() {
+//   let input = `
+//     ## This is a header
+//     And this is a normal paragraph. This is # not a header.
 
-    [component]# This header is inside a component.[/component]
+//     [component]# This header is inside a component.[/component]
 
-    [component]This is not a # header inside a component.[/component]
+//     [component]This is not a # header inside a component.[/component]
 
-    [component /]
+//     [component /]
 
-    # Header
+//     # Header
 
-    End text
-  `;
-  let value = compile(input, { async: false });
-  console.log(JSON.stringify(value));
-  console.log(JSON.stringify(convertV2ToV1(convertV1ToV2(value))));
-}
+//     End text
+//   `;
+//   let value = compile(input, { async: false });
+//   console.log(JSON.stringify(value));
+//   console.log(JSON.stringify(convertV2ToV1(convertV1ToV2(value))));
+// }
 
-testInverseConverter();
+// testInverseConverter();
