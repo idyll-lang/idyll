@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { dirname, isAbsolute, join, parse } = require('path');
+const path = require('path');
 const EventEmitter = require('events');
 const changeCase = require('change-case');
 const mkdirp = require('mkdirp');
@@ -188,6 +189,98 @@ const idyll = (options = {}, cb) => {
           }
         });
       return this;
+    }
+
+    // Returns an array of the default components
+    // Each element of the array is an object with keys 'name' and 'path'
+    // 'name' is the file name of the component
+    // 'path' is the absolute path to the component
+    getComponents() {
+      var components = [];
+      var defaultCompsDir = this.getPaths().DEFAULT_COMPONENT_DIRS;
+      var compsDir = this.getComponentsDirectory(); // grabs the `components` folder of their current directory
+      var componentDirs = [defaultCompsDir, compsDir];
+
+      componentDirs.forEach(dirs => {
+        dirs.forEach(dir => {
+          try {
+            fs.statSync(dir);
+          } catch (error) {
+            // for when directory doesn't exist
+            return;
+          }
+          fs.readdirSync(dir + '').forEach(file => {
+            var compName = file.replace(/\.jsx?/g, '');
+            if (compName !== 'index') {
+              // avoid conflicts with index.js file
+              components.push({
+                name: compName,
+                path: dir + '/' + file
+              });
+            }
+          });
+        });
+      });
+      return components;
+    }
+
+    // Returns the directory of the `components` folder
+    // of this IdyllInstance
+    // Note: this isn't guaranteed to exist
+    // It just adds "component" to the directory of this idyll instance
+    getComponentsDirectory() {
+      return this.getPaths().COMPONENT_DIRS;
+    }
+
+    // Adds the given component (directory) to the components used
+    // in this IdyllInstance
+    // If there is already a component for the given componentPath,
+    // it will be overwritten with the one from componentPath
+    // If there is no components/ directory, then it will be created
+    addComponent(componentPath) {
+      const componentsDirectory = this.getComponentsDirectory();
+      // We grab the name of the component, and put that in the components directory
+      const componentFileName = path.basename(componentPath);
+      // ensure components directory exists
+      try {
+        fs.statSync(componentsDirectory[0]);
+      } catch (err) {
+        fs.mkdirSync(componentsDirectory[0]);
+      }
+      fs.copyFileSync(
+        componentPath,
+        componentsDirectory[0] + '/' + componentFileName
+      );
+    }
+
+    // Returns an array of the current datasets used in this IdyllInstance's data directory
+    getDatasets() {
+      var dataFolder = this.getPaths().DATA_DIR;
+      var defaultData = [];
+      fs.readdirSync(dataFolder).forEach(file => {
+        var fileName = file;
+        var datasetPath = dataFolder + '/' + file;
+        var extension = path.extname(file);
+        defaultData.push({
+          name: fileName,
+          path: datasetPath,
+          extension: extension
+        });
+      });
+      return defaultData;
+    }
+
+    // Adds a dataset to the current datasets used in this IdyllInstance
+    // It will be added to the `data` directory of this IdyllInstance
+    addDataset(datasetPath) {
+      const datasetDirectory = this.getPaths().DATA_DIR;
+      const datasetName = path.basename(datasetPath);
+      try {
+        fs.statSync(datasetDirectory);
+      } catch (err) {
+        fs.mkdirSync(datasetDirectory);
+      }
+      fs.copyFileSync(datasetPath, datasetDirectory + '/' + datasetName);
     }
 
     stopWatching() {

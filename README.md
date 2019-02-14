@@ -30,13 +30,25 @@ Thank you to all our backers!
 
 <a href="https://opencollective.com/idyll#backers" target="_blank"><img src="https://opencollective.com/idyll/backers.svg?width=890"></a>
 
-
 ## Sponsors
 
 <img width="400px" src="https://idyll-lang.org/static/images/sponsors.png" />
 
 Support this project by [becoming a sponsor](https://opencollective.com/idyll). Your logo will show up here with a link to your website.
 
+# Citing
+
+If you use or build on Idyll in academic work, please use this citation:
+
+```
+@inproceedings{2018-idyll,
+ title = {Idyll: A Markup Language for Authoring and Publishing Interactive Articles on the Web},
+ author = {Matt Conlen AND Jeffrey Heer},
+ booktitle = {ACM User Interface Software \& Technology (UIST)},
+ year = {2018},
+ url = {http://idl.cs.washington.edu/papers/idyll},
+}
+```
 
 # Changelog / Upgrade Guide
 

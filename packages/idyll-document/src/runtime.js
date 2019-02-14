@@ -8,6 +8,8 @@ import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
 import AuthorTool from './components/author-tool';
 import { getChildren } from 'idyll-ast';
+import equal from 'fast-deep-equal';
+
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
 
@@ -44,7 +46,7 @@ const getTheme = theme => {
 const getRefs = () => {
   const refs = {};
   if (!scrollContainer) {
-    return;
+    return refCache;
   }
 
   scrollWatchers.forEach(watcher => {
@@ -59,15 +61,16 @@ const getRefs = () => {
     } = watcher;
     refs[watchItem.dataset.ref] = {
       ...watcherProps,
+      ...refCache[watchItem.dataset.ref],
       domNode: watchItem
     };
   });
 
-  return refs;
+  return { ...refCache, ...refs };
 };
 
 let wrapperKey = 0;
-const createWrapper = ({ theme, layout, authorView }) => {
+const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
   return class Wrapper extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -124,7 +127,7 @@ const createWrapper = ({ theme, layout, authorView }) => {
       // re-run this component's expressions using the latest doc state
       Object.keys(__expr__).forEach(key => {
         nextState[key] = evalExpression(
-          newState,
+          { ...newState, refs: getRefs() },
           __expr__[key],
           key,
           evalContext
@@ -141,7 +144,7 @@ const createWrapper = ({ theme, layout, authorView }) => {
       if (this.usesRefs) {
         const nextState = { refs: newState.refs };
         entries(__expr__).forEach(([key, val]) => {
-          if (!key.includes('refs.')) {
+          if (!val.includes('refs.')) {
             return;
           }
           nextState[key] = evalExpression(newState, val, key, evalContext);
@@ -196,8 +199,9 @@ const createWrapper = ({ theme, layout, authorView }) => {
           metaData.displayType === undefined ||
           metaData.displayType !== 'inline'
         ) {
+          const ViewComponent = userViewComponent || AuthorTool;
           return (
-            <AuthorTool
+            <ViewComponent
               component={returnComponent}
               authorComponent={childComponent}
               uniqueKey={uniqueKey}
@@ -228,7 +232,8 @@ class IdyllRuntime extends React.PureComponent {
     const Wrapper = createWrapper({
       theme: props.theme,
       layout: props.layout,
-      authorView: props.authorView
+      authorView: props.authorView,
+      userViewComponent: props.userViewComponent
     });
 
     let hasInitialized = false;
@@ -285,7 +290,7 @@ class IdyllRuntime extends React.PureComponent {
 
       const changedMap = {};
       const changedKeys = Object.keys(state).reduce((acc, k) => {
-        if (state[k] !== nextState[k]) {
+        if (!equal(state[k], nextState[k])) {
           acc.push(k);
           changedMap[k] = nextState[k] || state[k];
         }
@@ -304,7 +309,7 @@ class IdyllRuntime extends React.PureComponent {
         this._onUpdateState(changedMap);
     };
 
-    evalContext.update = this.updateState;
+    evalContext.__idyllUpdate = this.updateState;
     hasInitialized = true;
     this._onInitializeState && this._onInitializeState();
 
@@ -353,8 +358,13 @@ class IdyllRuntime extends React.PureComponent {
           scrollOffsets[node.refName] = node.scrollOffset || 0;
           refCache[node.refName] = {
             props: node,
-            domNode: domNode
+            domNode: domNode,
+            component: el
           };
+        };
+        refCache[node.refName] = {
+          props: node,
+          domNode: null
         };
       }
       //Inspect for isHTMLNode  props and to check for dynamic components.
@@ -373,11 +383,16 @@ class IdyllRuntime extends React.PureComponent {
         if (__vars__[k]) {
           node[k] = state[__vars__[k]];
         }
-        if (__expr__[k] && !__expr__[k].includes('refs.')) {
+        if (__expr__[k] !== undefined) {
           if (hooks.indexOf(k) > -1) {
             return;
           }
-          node[k] = evalExpression(state, __expr__[k], k, evalContext);
+          node[k] = evalExpression(
+            { ...state, refs: getRefs() },
+            __expr__[k],
+            k,
+            evalContext
+          );
         }
       });
       const resolvedComponent = rjs.resolveComponent(node);
@@ -417,7 +432,6 @@ class IdyllRuntime extends React.PureComponent {
     if (!el) return;
 
     let scroller = scrollparent(el);
-    let scrollContainer;
     if (
       scroller === document.documentElement ||
       scroller === document.body ||
@@ -434,7 +448,12 @@ class IdyllRuntime extends React.PureComponent {
       hooks.forEach(hook => {
         if (props[hook]) {
           watcher[scrollMonitorEvents[hook]](() => {
-            evalExpression(this.state, props[hook], hook, evalContext)();
+            evalExpression(
+              { ...this.state, refs: getRefs() },
+              props[hook],
+              hook,
+              evalContext
+            )();
           });
         }
       });

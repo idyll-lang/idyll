@@ -1,5 +1,3 @@
-
-
 export default ({ maxWidth }) => `
 
 body {
@@ -82,6 +80,7 @@ input {
 .component-debug-view {
   position: relative;
   transition: background-color 0.3s ease-in;
+  box-shadow: 5px 5px 10px 1px lightGray;
 }
 
 .author-view-button {
@@ -249,4 +248,4 @@ input {
     border-top: solid 2px black;
   }
 }
-`
+`;

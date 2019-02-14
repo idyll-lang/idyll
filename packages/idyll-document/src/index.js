@@ -90,6 +90,7 @@ class IdyllDocument extends React.Component {
             (this.idyllContext ? this.idyllContext.data() : {})
           }
           ast={this.props.ast || this.state.ast}
+          userViewComponent={this.props.userViewComponent}
         />
         {this.getErrorComponent()}
       </div>
