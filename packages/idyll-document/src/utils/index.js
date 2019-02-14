@@ -10,19 +10,25 @@ const {
 
 export const buildExpression = (acc, expr, isEventHandler) => {
   let identifiers = [];
-  const modifiedExpression = falafel(
-    isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`,
-    node => {
-      switch (node.type) {
-        case 'Identifier':
-          if (Object.keys(acc).indexOf(node.name) > -1) {
-            identifiers.push(node.name);
-            node.update('__idyllStateProxy.' + node.source());
-          }
-          break;
+  let modifiedExpression = '';
+
+  try {
+    modifiedExpression = falafel(
+      isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`,
+      node => {
+        switch (node.type) {
+          case 'Identifier':
+            if (Object.keys(acc).indexOf(node.name) > -1) {
+              identifiers.push(node.name);
+              node.update('__idyllStateProxy.' + node.source());
+            }
+            break;
+        }
       }
-    }
-  );
+    );
+  } catch (e) {
+    console.error(e);
+  }
 
   if (!isEventHandler) {
     return `
