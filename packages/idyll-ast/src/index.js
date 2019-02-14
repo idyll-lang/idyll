@@ -40,8 +40,9 @@ const appendNode = function(ast, node) {
  */
 const appendNodes = function(ast, nodes) {
   checkASTandNodeArray(ast, nodes);
-  ast.children = [].concat(ast.children, nodes);
-  return Object.assign({}, ast);
+  return Object.assign({}, ast, {
+    children: [].concat(ast.children, nodes)
+  });
 };
 
 /**
@@ -110,7 +111,7 @@ const getChildren = function(node) {
   }
   if (node.children) {
     //console.log("node @ gc", node);
-    return node.children.map(element => Object.assign({}, element));
+    return [...node.children];
   } else {
     return [];
   }
@@ -134,10 +135,7 @@ const setChildren = function(node, children) {
   }
 
   checkChildren(children);
-
-  node.children = children;
-
-  return Object.assign({}, node);
+  return Object.assign({}, node, { children: children });
 };
 
 const hasChildren = function(node) {
@@ -173,18 +171,50 @@ const getNodesByName = function(ast, name) {
     nodes.push(ast);
   }
   let otherNodes = getNodesByNameHelper(ast.children, name);
-  return nodes.concat(otherNodes).map(element => Object.assign({}, element));
+  return nodes.concat(otherNodes);
 };
 
 /*
-  Helper function for getNodesBtName
+  Helper function for getNodesByName
 */
 function getNodesByNameHelper(childArray, name) {
-  let nodes = childArray.filter(element => element.name === name);
+  let nodes = [...childArray.filter(element => element.name === name)];
   let otherNodes = [];
   childArray.forEach(node => {
     if (hasChildren(node)) {
       otherNodes = otherNodes.concat(getNodesByNameHelper(node.children, name));
+    }
+  });
+  return nodes.concat(otherNodes);
+}
+
+/**
+ * @name getNodesByType
+ * @type {function}
+ * @description
+ * Function to get all the nodes with the passed name in the passed AST.
+ * @param {object} ast  AST object
+ * @param {string} type type of the nodes
+ * @return {object[]} Array of nodes matching the name
+ */
+const getNodesByType = function(ast, type) {
+  typeCheckObject(ast, 'ast');
+  typeCheckString(type, 'type');
+  runValidator(ast, 'ast');
+  let nodes = [];
+  let otherNodes = getNodesByTypeHelper(ast.children, type);
+  return nodes.concat(otherNodes);
+};
+
+/*
+  Helper function for getNodesByType
+*/
+function getNodesByTypeHelper(childArray, type) {
+  let nodes = [...childArray.filter(element => element.type === type)];
+  let otherNodes = [];
+  childArray.forEach(node => {
+    if (hasChildren(node)) {
+      otherNodes = otherNodes.concat(getNodesByTypeHelper(node.children, type));
     }
   });
   return nodes.concat(otherNodes);
@@ -257,9 +287,9 @@ const filterNodes = function(ast, filter) {
 
   let result = [];
   walkNodes(ast, node => {
-    if (filter(node)) result.push(node);
+    if (filter(node)) result.push(Object.assign({}, node));
   });
-  return result.map(element => Object.assign({}, element));
+  return result;
 };
 
 /**
@@ -278,10 +308,11 @@ const modifyChildren = function(node, modifier) {
   if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) > -1) {
     return node;
   }
-  node.children = getChildren(node).map(child => {
-    return modifier(child);
+  return Object.assign({}, node, {
+    children: getChildren(node).map(child => {
+      return modifier(child);
+    })
   });
-  return Object.assign({}, node);
 };
 
 /**
@@ -299,10 +330,11 @@ const filterChildren = function(node, filter) {
   if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) > -1) {
     return node;
   }
-  node.children = getChildren(node).filter(child => {
-    return filter(child);
+  return Object.assign({}, node, {
+    chidren: getChildren(node).filter(child => {
+      return filter(child);
+    })
   });
-  return Object.assign({}, node);
 };
 
 /**
@@ -320,7 +352,9 @@ const modifyNodesByName = function(ast, name, modifier) {
 
   ([ast] || []).map(node => {
     if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) === -1) {
-      node.children = modifyHelper(getChildren(node), name, modifier);
+      node = Object.assign({}, node, {
+        children: modifyHelper(getChildren(node), name, modifier)
+      });
     }
     node = handleNodeByName(node, name, modifier);
   });
@@ -334,7 +368,9 @@ function modifyHelper(children, name, modifier) {
 
   (children || []).map(node => {
     if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) === -1) {
-      node.children = modifyHelper(getChildren(node), name, modifier);
+      node = Object.assign({}, node, {
+        children: modifyHelper(getChildren(node), name, modifier)
+      });
     }
     node = handleNodeByName(node, name, modifier);
   });
@@ -356,12 +392,12 @@ const handleNodeByName = function(node, name, modifier) {
   checkASTandFunction(node, 'node', modifier, 'modifier');
 
   if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) > -1) {
-    return node;
+    return { ...node };
   }
   if (node.name.toLowerCase() === name) {
-    node = modifier(node);
+    node = modifier({ ...node });
   }
-  return node;
+  return { ...node };
 };
 
 /**
@@ -485,8 +521,9 @@ const prependNode = function(ast, node) {
 const prependNodes = function(ast, nodes) {
   checkASTandNodeArray(ast, nodes);
 
-  ast.children = [].concat(nodes, getChildren(ast));
-  return Object.assign({}, ast);
+  return Object.assign({}, ast, {
+    children: [].concat(nodes, getChildren(ast))
+  });
 };
 
 /**
@@ -509,14 +546,17 @@ const removeNodesByName = function(ast, name) {
 };
 
 function removeHelper(children, name) {
-  children.forEach((child, index) => {
-    if (getNodeName(child) === name) {
-      children.splice(index, 1);
-    } else {
-      child = setChildren(child, removeHelper(getChildren(child), name));
-    }
-  });
-  return children;
+  return children
+    .filter(child => {
+      if (getNodeName(child) === name) {
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .map(child => {
+      return setChildren(child, removeHelper(getChildren(child), name));
+    });
 }
 /**
  * @name removeProperties
@@ -532,9 +572,11 @@ const removeProperty = function(node, key) {
   runValidator(node, 'node');
 
   if (getProperties(node, key)) {
-    delete node.key;
+    const newNode = { ...node };
+    delete newNode.properties.key;
   }
-  return Object.assign({}, node);
+
+  return newNode;
 };
 
 /* value ==> data */
@@ -572,10 +614,11 @@ const setProperty = function(node, name, data) {
   if (typeof name !== 'string') {
     throw new error.InvalidParameterError('Parameter name must be a string.');
   }
-  if (node.properties) {
-    node.properties[name] = data;
+  const newNode = { ...node };
+  if (newNode.properties) {
+    newNode.properties[name] = data;
   }
-  return Object.assign({}, node);
+  return newNode;
 };
 
 /**
@@ -601,12 +644,13 @@ const setProperties = function(node, properties) {
       'Paramete props is not a well-defined JSON according to the the AST schema. Look at schema.properties.properties!'
     );
   }
-  if (node.properties) {
-    node.properties = Object.assign({}, node.properties, properties);
+  const newNode = { ...node };
+  if (newNode.properties) {
+    newNode.properties = Object.assign({}, newNode.properties, properties);
   } else {
-    node.properties = Object.assign({}, porperties);
+    newNode.properties = Object.assign({}, porperties);
   }
-  return Object.assign({}, node);
+  return newNode;
 };
 
 /**
@@ -845,6 +889,7 @@ module.exports = {
   filterNodes,
   getChildren,
   getNodesByName,
+  getNodesByType,
   getNodeName,
   getPropertyKeys,
   getProperty,

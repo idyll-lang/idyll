@@ -99,7 +99,7 @@ function inverseConvertHelper(arrayElement, id) {
   if (typeof arrayElement === 'string') {
     elementJson.type = 'textnode';
     elementJson.value = arrayElement;
-  } else if (['var', 'derived', 'data'].indexOf(arrayElement[0]) > -1) {
+  } else if (['var', 'derived', 'data', 'meta'].indexOf(arrayElement[0]) > -1) {
     elementJson.type = arrayElement[0];
     elementJson.properties = {};
     arrayElement[1].forEach(property => {

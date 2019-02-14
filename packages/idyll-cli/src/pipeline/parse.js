@@ -9,26 +9,27 @@ const debug = require('debug')('idyll:cli');
 
 const {
   getNodesByName,
+  getNodesByType,
   getProperty,
   filterNodes,
-  getNodeName,
+  getType,
   getProperties,
   getPropertyKeys
 } = require('idyll-ast');
 
 exports.getComponentNodes = ast => {
-  const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
+  const ignoreTypes = new Set(['var', 'data', 'meta', 'derived']);
   let filter = filterNodes(ast, node => {
     if (node.type === 'textnode') {
       return false;
     }
-    return !ignoreNames.has(getNodeName(node).toLowerCase());
+    return !ignoreTypes.has(getType(node).toLowerCase());
   });
   return filter;
 };
 
 exports.getDataNodes = ast => {
-  const nodes = getNodesByName(ast, 'data');
+  const nodes = getNodesByType(ast, 'data');
   return nodes.map(node => {
     return {
       node,
@@ -114,7 +115,7 @@ exports.getHighlightJS = (ast, paths, server) => {
 
 const parseMeta = ast => {
   // there should only be one meta node
-  const metaNodes = getNodesByName(ast, 'meta');
+  const metaNodes = getNodesByType(ast, 'meta');
 
   let metaProperties = {};
   if (metaNodes.length > 1) {
@@ -186,6 +187,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
       authorView: opts.authorView
     })
   ).trim();
+
   return mustache.render(
     template,
     Object.assign(
