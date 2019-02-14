@@ -141,6 +141,14 @@ test('should construct the AST properly', () => {
       [],
       [
         [
+          'meta',
+          [
+            ['title', ['value', 'Page Title']],
+            ['description', ['value', 'Short description of your project']]
+          ],
+          []
+        ],
+        [
           'Header',
           [
             ['title', ['value', 'Welcome to Idyll']],
