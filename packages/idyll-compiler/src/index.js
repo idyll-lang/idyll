@@ -10,7 +10,7 @@ const {
   wrapText,
   autoLinkify
 } = require('./processors/post');
-const { convertV1ToV2 } = require('idyll-ast/converters');
+const { convertV1ToV2 } = require('idyll-ast').converters;
 const matter = require('gray-matter');
 
 module.exports = function(input, options, callback) {

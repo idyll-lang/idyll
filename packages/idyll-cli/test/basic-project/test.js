@@ -4,7 +4,7 @@ const Idyll = require('../../');
 const fs = require('fs');
 const { join, resolve, dirname } = require('path');
 const rimraf = require('rimraf');
-var AST = require('idyll-ast/converters');
+var AST = require('idyll-ast').converters;
 
 const getFilenames = dir => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');

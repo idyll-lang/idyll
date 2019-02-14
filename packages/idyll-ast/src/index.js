@@ -13,6 +13,7 @@ ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
 const schema = require('./ast.schema.json');
 const validator = ajv.compile(schema);
 const validatorProps = ajv.compile(schema.properties.properties);
+const converters = require('./converters');
 
 /**
  * @name appendNode
@@ -916,6 +917,7 @@ function runPropsValidator(props) {
 module.exports = {
   appendNode,
   appendNodes,
+  converters,
   createNode,
   createTextNode,
   filterChildren,

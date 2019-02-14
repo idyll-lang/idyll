@@ -2,7 +2,7 @@ var expect = require('expect.js');
 var Lexer = require('../src/lexer');
 var compile = require('../src');
 var fs = require('fs');
-var AST = require('idyll-ast/converters');
+var AST = require('idyll-ast').converters;
 
 describe('compiler', function() {
   describe('lexer', function() {
