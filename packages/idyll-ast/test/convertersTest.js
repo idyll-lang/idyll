@@ -1,6 +1,6 @@
 const { convertV1ToV2, convertV2ToV1 } = require('../converters');
 let expect = require('expect.js');
-let compile = require('../../../idyll-compiler/src');
+let compile = require('idyll-compiler');
 let fs = require('fs');
 
 const example1 = {
