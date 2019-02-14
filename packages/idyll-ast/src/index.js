@@ -111,7 +111,7 @@ const getChildren = function(node) {
   }
   if (node.children) {
     //console.log("node @ gc", node);
-    return [...node.children];
+    return [].concat(node.children);
   } else {
     return [];
   }
@@ -178,7 +178,7 @@ const getNodesByName = function(ast, name) {
   Helper function for getNodesByName
 */
 function getNodesByNameHelper(childArray, name) {
-  let nodes = [...childArray.filter(element => element.name === name)];
+  let nodes = [].concat(childArray.filter(element => element.name === name));
   let otherNodes = [];
   childArray.forEach(node => {
     if (hasChildren(node)) {
@@ -210,7 +210,7 @@ const getNodesByType = function(ast, type) {
   Helper function for getNodesByType
 */
 function getNodesByTypeHelper(childArray, type) {
-  let nodes = [...childArray.filter(element => element.type === type)];
+  let nodes = [].concat(childArray.filter(element => element.type === type));
   let otherNodes = [];
   childArray.forEach(node => {
     if (hasChildren(node)) {
@@ -392,12 +392,12 @@ const handleNodeByName = function(node, name, modifier) {
   checkASTandFunction(node, 'node', modifier, 'modifier');
 
   if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) > -1) {
-    return { ...node };
+    return Object.assign({}, node);
   }
   if (node.name.toLowerCase() === name) {
-    node = modifier({ ...node });
+    node = modifier(Object.assign({}, node));
   }
-  return { ...node };
+  return Object.assign({}, node);
 };
 
 /**
@@ -558,6 +558,39 @@ function removeHelper(children, name) {
       return setChildren(child, removeHelper(getChildren(child), name));
     });
 }
+
+/**
+ * @name removeNodesByType
+ * @description
+ * Function remove node with a particular name from the ast
+ * @param {*} ast
+ * @param {*} type
+ */
+const removeNodesByType = function(ast, type) {
+  typeCheckString(type, 'type');
+  typeCheckObject(ast, 'ast');
+  runValidator(ast, 'ast');
+
+  if (hasChildren(ast)) {
+    let children = getChildren(ast);
+    ast = setChildren(ast, removeByTypeHelper(children, type));
+  }
+  return ast;
+};
+
+function removeByTypeHelper(children, type) {
+  return children
+    .filter(child => {
+      if (getType(child) === type) {
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .map(child => {
+      return setChildren(child, removeByTypeHelper(getChildren(child), type));
+    });
+}
 /**
  * @name removeProperties
  * @description
@@ -572,7 +605,7 @@ const removeProperty = function(node, key) {
   runValidator(node, 'node');
 
   if (getProperties(node, key)) {
-    const newNode = { ...node };
+    const newNode = Object.assign({}, node);
     delete newNode.properties.key;
   }
 
@@ -614,7 +647,7 @@ const setProperty = function(node, name, data) {
   if (typeof name !== 'string') {
     throw new error.InvalidParameterError('Parameter name must be a string.');
   }
-  const newNode = { ...node };
+  const newNode = Object.assign({}, node);
   if (newNode.properties) {
     newNode.properties[name] = data;
   }
@@ -644,11 +677,11 @@ const setProperties = function(node, properties) {
       'Paramete props is not a well-defined JSON according to the the AST schema. Look at schema.properties.properties!'
     );
   }
-  const newNode = { ...node };
+  const newNode = Object.assign({}, node);
   if (newNode.properties) {
     newNode.properties = Object.assign({}, newNode.properties, properties);
   } else {
-    newNode.properties = Object.assign({}, porperties);
+    newNode.properties = Object.assign({}, properties);
   }
   return newNode;
 };
@@ -904,6 +937,7 @@ module.exports = {
   prependNode,
   prependNodes,
   removeNodesByName,
+  removeNodesByType,
   removeProperty,
   setChildren,
   setProperty,

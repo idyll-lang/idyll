@@ -340,6 +340,7 @@ export const findWrapTargets = (schema, state, components) => {
   const targets = [];
   //Name of custom components
   const componentNames = Object.keys(components);
+
   componentNames.forEach((component, i) => {
     let words = component.split('-');
     for (let i = 0; i < words.length; i++) {
@@ -355,7 +356,7 @@ export const findWrapTargets = (schema, state, components) => {
   //Walk the whole tree, collect and return the nodes
   //for wrapping
   mapTree(schema, node => {
-    if (node.component == 'textnode') {
+    if (node.component === 'textnode') {
       return node;
     }
 
@@ -378,12 +379,9 @@ export const findWrapTargets = (schema, state, components) => {
     const variables = Object.keys(__vars__ || {});
 
     for (let prop in props) {
-      if (targets.includes(node)) {
-        return;
-      }
-
       if (variables.includes(prop) || expressions.includes(prop)) {
         targets.push(node);
+        return node;
       }
     }
     return node;

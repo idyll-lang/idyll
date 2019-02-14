@@ -344,6 +344,7 @@ class IdyllRuntime extends React.PureComponent {
     const wrapTargets = findWrapTargets(schema, this.state, props.components);
     let refCounter = 0;
     const transformedSchema = mapTree(schema, node => {
+      // console.log('mapoing ', node.component || node.type);
       if (!node.component) {
         if (node.type && node.type === 'textnode') return node.value;
       }
@@ -420,6 +421,7 @@ class IdyllRuntime extends React.PureComponent {
         children: [filterIdyllProps(node, isHTMLNode)]
       };
     });
+
     this.kids = rjs.parseSchema(transformedSchema);
   }
 

@@ -32,7 +32,7 @@
             },
             "value": {
               "description": "Property value",
-              "type": "string"
+              "type": ["string", "number", "boolean"]
             }
           },
           "additionalProperties": false
