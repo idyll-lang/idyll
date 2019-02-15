@@ -2,6 +2,24 @@ const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
 
+const isPropertyAccess = node => {
+  const index = node.parent.source().indexOf(`.${node.name}`);
+  if (index === -1) {
+    return false;
+  }
+  const proxyString = '__idyllStateProxy';
+  if (index >= proxyString.length) {
+    if (
+      node.parent
+        .source()
+        .substr(index - proxyString.length, proxyString.length) === proxyString
+    ) {
+      return false;
+    }
+  }
+  return true;
+};
+
 export const buildExpression = (acc, expr, isEventHandler) => {
   let identifiers = [];
   let modifiedExpression = '';
@@ -12,9 +30,8 @@ export const buildExpression = (acc, expr, isEventHandler) => {
       node => {
         switch (node.type) {
           case 'Identifier':
-            const isPropertyAccess =
-              node.parent.source().indexOf(`.${node.name}`) > -1;
-            if (!isPropertyAccess && Object.keys(acc).indexOf(node.name) > -1) {
+            const propertyAcess = isPropertyAccess(node);
+            if (!propertyAcess && Object.keys(acc).indexOf(node.name) > -1) {
               identifiers.push(node.name);
               node.update('__idyllStateProxy.' + node.source());
             }
