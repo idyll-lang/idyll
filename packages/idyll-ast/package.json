@@ -20,14 +20,14 @@
   },
   "keywords": [
     "idyll",
-    "astV2"
+    "ast"
   ],
   "author": "Matthew Conlen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/idyll-lang/idyll/tree/master/packages/idyll-astV2"
+    "url": "https://github.com/idyll-lang/idyll/tree/master/packages/idyll-ast"
   },
-  "homepage": "https://github.com/idyll-lang/idyll/tree/master/packages/idyll-astV2",
+  "homepage": "https://github.com/idyll-lang/idyll/tree/master/packages/idyll-ast",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
