@@ -12,7 +12,9 @@ export const buildExpression = (acc, expr, isEventHandler) => {
       node => {
         switch (node.type) {
           case 'Identifier':
-            if (Object.keys(acc).indexOf(node.name) > -1) {
+            const isPropertyAccess =
+              node.parent.source().indexOf(`.${node.name}`) > -1;
+            if (!isPropertyAccess && Object.keys(acc).indexOf(node.name) > -1) {
               identifiers.push(node.name);
               node.update('__idyllStateProxy.' + node.source());
             }
@@ -85,7 +87,6 @@ export const evalExpression = (acc, expr, key, context) => {
   const isEventHandler =
     key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/));
   let e = buildExpression(acc, expr, isEventHandler);
-
   if (isEventHandler) {
     return function() {
       eval(e);
