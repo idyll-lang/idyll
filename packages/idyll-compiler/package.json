@@ -1,6 +1,6 @@
 {
   "name": "idyll-compiler",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "description": "Compiler for idyll",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -10,7 +10,7 @@
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "compile": "nearleyc src/grammar.ne -o src/grammar.js",
     "build": "npm run compile && npm run build:es && npm run build:cjs",
-    "dev": "yarn run build:es --watch",
+    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
     "test": "npm run compile && mocha",
     "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
@@ -32,6 +32,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "expect.js": "^0.3.1",
     "mocha": "^3.2.0",
@@ -39,7 +40,7 @@
   },
   "dependencies": {
     "gray-matter": "^3.1.1",
-    "idyll-ast": "^1.5.1",
+    "idyll-ast": "^1.5.2",
     "lex": "^1.7.9",
     "nearley": "^2.15.0",
     "smartquotes": "^2.0.0"

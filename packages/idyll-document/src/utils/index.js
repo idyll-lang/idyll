@@ -2,21 +2,46 @@ const values = require('object.values');
 const entries = require('object.entries');
 const falafel = require('falafel');
 
-export const buildExpression = (acc, expr, key, context, isEventHandler) => {
-  let identifiers = [];
-  const modifiedExpression = falafel(
-    isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`,
-    node => {
-      switch (node.type) {
-        case 'Identifier':
-          if (Object.keys(acc).indexOf(node.name) > -1) {
-            identifiers.push(node.name);
-            node.update('__idyllStateProxy.' + node.source());
-          }
-          break;
-      }
+const isPropertyAccess = node => {
+  const index = node.parent.source().indexOf(`.${node.name}`);
+  if (index === -1) {
+    return false;
+  }
+  const proxyString = '__idyllStateProxy';
+  if (index >= proxyString.length) {
+    if (
+      node.parent
+        .source()
+        .substr(index - proxyString.length, proxyString.length) === proxyString
+    ) {
+      return false;
     }
-  );
+  }
+  return true;
+};
+
+export const buildExpression = (acc, expr, isEventHandler) => {
+  let identifiers = [];
+  let modifiedExpression = '';
+
+  try {
+    modifiedExpression = falafel(
+      isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`,
+      node => {
+        switch (node.type) {
+          case 'Identifier':
+            const propertyAcess = isPropertyAccess(node);
+            if (!propertyAcess && Object.keys(acc).indexOf(node.name) > -1) {
+              identifiers.push(node.name);
+              node.update('__idyllStateProxy.' + node.source());
+            }
+            break;
+        }
+      }
+    );
+  } catch (e) {
+    console.error(e);
+  }
 
   if (!isEventHandler) {
     return `
@@ -26,10 +51,7 @@ export const buildExpression = (acc, expr, key, context, isEventHandler) => {
           return context[prop];
         },
         set: (_, prop, value) => {
-          var newState = {};
-          newState[prop] = value;
-          context.update(newState);
-          return true;
+          console.warn('Warning, trying to set a value in a property expression.');
         }
       });
       ${modifiedExpression};
@@ -43,7 +65,11 @@ export const buildExpression = (acc, expr, key, context, isEventHandler) => {
         var __idyllStateProxy = new Proxy({
           ${identifiers
             .map(key => {
-              return `${key}: context.__idyllCopy(context['${key}'])`;
+              return `${key}: ${
+                key !== 'refs'
+                  ? `context.__idyllCopy(context['${key}'])`
+                  : `context['${key}']`
+              }`;
             })
             .join(', ')}
         }, {
@@ -54,15 +80,16 @@ export const buildExpression = (acc, expr, key, context, isEventHandler) => {
             if (__idyllExpressionExecuted) {
               var newState = {};
               newState[prop] = value;
-              context.update(newState);
+              context.__idyllUpdate(newState);
             }
             target[prop] = value;
             return true;
           }
         });
         ${modifiedExpression};
-        context.update({
+        context.__idyllUpdate({
           ${identifiers
+            .filter(key => key !== 'refs')
             .map(key => {
               return `${key}: __idyllStateProxy['${key}']`;
             })
@@ -76,8 +103,7 @@ export const buildExpression = (acc, expr, key, context, isEventHandler) => {
 export const evalExpression = (acc, expr, key, context) => {
   const isEventHandler =
     key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/));
-  let e = buildExpression(acc, expr, key, context, isEventHandler);
-
+  let e = buildExpression(acc, expr, isEventHandler);
   if (isEventHandler) {
     return function() {
       eval(e);
@@ -105,11 +131,11 @@ export const evalExpression = (acc, expr, key, context) => {
         console.warn('Error occurred in Idyll expression');
         console.error(err);
       }
-    }.call(Object.assign({}, acc, context || {}), e);
+    }.call(Object.assign({}, acc), e);
   } catch (err) {}
 };
 
-export const getVars = (arr, context = {}, evalContext) => {
+export const getVars = (arr, context = {}) => {
   const formatAccumulatedValues = acc => {
     const ret = {};
     Object.keys(acc).forEach(key => {

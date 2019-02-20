@@ -1,6 +1,6 @@
 {
   "name": "idyll-components",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "Components that ship by default in new Idyll projects",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,7 +9,7 @@
     "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
-    "dev": "yarn run build:es --watch",
+    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
@@ -42,7 +42,7 @@
     "d3-drag": "^1.1.1",
     "d3-format": "^1.2.0",
     "d3-selection": "^1.1.0",
-    "idyll-ast": "^1.5.1",
+    "idyll-ast": "^1.5.2",
     "idyll-component-children": "^1.0.7",
     "intersection-observer": "^0.5.0",
     "prop-types": "^15.5.10",
@@ -63,6 +63,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",

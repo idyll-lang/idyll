@@ -1,6 +1,6 @@
 {
   "name": "idyll-ast",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Utilities for manipulating Idyll's AST",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,6 +9,7 @@
     "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:es && npm run build:cjs",
+    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
     "test": "mocha",
     "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
@@ -30,6 +31,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "expect.js": "^0.3.1",
     "mocha": "^3.2.0",

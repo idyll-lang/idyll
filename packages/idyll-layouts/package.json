@@ -1,6 +1,6 @@
 {
   "name": "idyll-layouts",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "description": "Default layouts for Idyll",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -9,7 +9,7 @@
     "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
     "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "npm run build:cjs && npm run build:es",
-    "dev": "yarn run build:es --watch",
+    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
@@ -38,6 +38,7 @@
     "babel-cli": "6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "jest": "^20.0.4",
     "rimraf": "^2.6.2"
