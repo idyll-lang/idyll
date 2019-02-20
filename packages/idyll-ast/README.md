@@ -32,49 +32,25 @@ And this is a normal paragraph. This is # not a header.
 The above Idyll syntax would look like the following when in ast form:
 
 ```
-{
-    "id": 0,
-    "type": "component",
-    "name": "root",
-    "children": [
-        {
-            "id": 1,
-            "type": "component",
-            "name": "h2",
-            "children": [
-                {
-                    "id": 2,
-                    "type": "textnode",
-                    "value": "This is a header"
-                }
-            ]
-        },
-        {
-            "id": 3,
-            "type": "component",
-            "name": "p",
-            "children": [
-                {
-                    "id": 4,
-                    "type": "textnode",
-                    "value": "Here is an image of a cute puppy!"
-                },
-                {
-                    "id": 5,
-                    "type": "component",
-                    "name": "img",
-                    "properties": {
-                        "src": {
-                            "type": "value",
-                            "value": "cutepupper.jpg"
-                        }
-                    }
-                }
-            ]
-        }
-    ]
-}
-
+{ id: 0,
+  type: 'component',
+  name: 'div',
+  children:
+   [ { id: 2,
+       type: 'component',
+       name: 'TextContainer',
+       children:
+        [ { id: 3,
+            type: 'component',
+            name: 'h2',
+            children: [ { id: 4, type: 'textnode', value: 'This is a header' } ] },
+          { id: 5,
+            type: 'component',
+            name: 'p',
+            children:
+             [ { id: 6,
+                 type: 'textnode',
+                 value: 'And this is a normal paragraph. This is # not a header.' } ] } ] } ] }
 ```
 
 All the data in the tree is encapsulated by the node called `root`. All the top-level components in the document are considered the children of the root.
