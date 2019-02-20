@@ -23,8 +23,7 @@ export default class LandingPage extends React.PureComponent {
 
 [var name:"x" value:5 /]
 
-The value of x is
-[Display value:x format:"d" /].
+The value of x is [Display value:x format:"d" /].
 
 [Range value:x min:0 max:10 /]
       `.trim()
