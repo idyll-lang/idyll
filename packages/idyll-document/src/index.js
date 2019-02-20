@@ -41,6 +41,10 @@ class IdyllDocument extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.ast) {
+      this.setState({
+        previousAST: this.state.ast,
+        hash: hashCode(newProps.ast.toString())
+      });
       return;
     }
 
