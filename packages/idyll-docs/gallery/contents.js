@@ -112,6 +112,14 @@ const exampleGroups = [
     title: 'Articles and Blog Posts',
     examples: [
       {
+        label: 'Statistical Power Analysis',
+        href:
+          'https://idyll.pub/post/statistical-power-d9ff5d116b4c883d22a7888f/',
+        image:
+          'https://idyll.pub/post/statistical-power-d9ff5d116b4c883d22a7888f/static/images/beaker.png',
+        sourceUrl: 'https://github.com/mathisonian/statistical-power'
+      },
+      {
         label: 'Blueberry Pancakes',
         href:
           'https://idyll.pub/post/blueberry-pancakes-28b1a2e1a8986c44ac091f08/',
@@ -192,6 +200,15 @@ const exampleGroups = [
   {
     title: 'Tutorials',
     examples: [
+      {
+        label: 'Animating with Idyll',
+        subtitle:
+          'How to use CSS animations and custom tweening to animate elements.',
+        href:
+          'https://idyll.pub/post/animation-example-b0c784887e77d19cf74b3e83/',
+        image: 'animating.png',
+        sourceUrl: 'https://github.com/mathisonian/idyll-animation-article'
+      },
       {
         label: 'Stacking Scroller Components',
         subtitle: 'Introduction to leveraging multiple Scrollers in Idyll',
