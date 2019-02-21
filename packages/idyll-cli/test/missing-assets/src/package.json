@@ -1,5 +1,5 @@
 {
-  "name": "static-assets",
+  "name": "missing-assets",
   "version": "1.0.0",
   "scripts": {
     "start": "idyll index.idl --watch --template index.html --css styles.css --layout centered --theme github --spellcheck",
