@@ -43,7 +43,7 @@ const cleanResults = (ast, options) => {
 
     const name = node[0].toLowerCase();
     if (
-      ['section', 'step', 'p', 'textcontainer'].indexOf(name) === -1 &&
+      ['section', 'step', 'textcontainer'].indexOf(name) === -1 &&
       node[2].length === 1 &&
       typeof node[2][0] !== 'string' &&
       node[2][0][0] === 'p' &&
