@@ -171,7 +171,7 @@ const idyll = (options = {}, cb) => {
               ui: false,
               port: opts.port,
               open: opts.open,
-              plugins: ['bs-pretty-message']
+              plugins: [require('bs-pretty-message')]
             });
           }
         })
@@ -187,6 +187,7 @@ const idyll = (options = {}, cb) => {
             console.error(error);
           }
           bs &&
+            bs.sockets &&
             bs.sockets.emit('fullscreen:message', {
               title: 'Error compiling Idyll project',
               body: error.toString()
