@@ -206,6 +206,7 @@ export const filterIdyllProps = (props, filterInjected) => {
     __vars__,
     __expr__,
     hasHook,
+    initialState,
     isHTMLNode,
     refName,
     onEnterViewFully,

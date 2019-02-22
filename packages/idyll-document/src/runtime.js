@@ -84,36 +84,43 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
 
       this.usesRefs = exps.some(v => v.includes('refs.'));
 
+      this.state = { hasError: false, error: null };
+
       // listen for props updates IF we care about them
       if (vars.length || exps.length) {
         // called with new doc state
         // when any component calls updateProps()
         updatePropsCallbacks.push(this.onUpdateProps);
+        this.state = this.onUpdateProps(
+          props.initialState,
+          Object.keys(props),
+          true
+        );
       }
 
       // listen for ref updates IF we care about them
       if (props.hasHook || this.usesRefs) {
         updateRefsCallbacks.push(this.onUpdateRefs);
       }
-
-      this.state = { hasError: false, error: null };
     }
 
     componentDidCatch(error, info) {
       this.setState({ hasError: true, error: error });
     }
 
-    onUpdateProps(newState, changedKeys) {
+    onUpdateProps(newState, changedKeys, initialRender) {
       const { __vars__, __expr__ } = this.props;
 
       // were there changes to any vars we track?
       // or vars our expressions reference?
-      const shouldUpdate = changedKeys.some(k => {
-        return (
-          values(__vars__).includes(k) ||
-          values(__expr__).some(expr => expr.includes(k))
-        );
-      });
+      const shouldUpdate =
+        initialRender ||
+        changedKeys.some(k => {
+          return (
+            values(__vars__).includes(k) ||
+            values(__expr__).some(expr => expr.includes(k))
+          );
+        });
       // if nothing we care about changed bail out and don't re-render
       if (!shouldUpdate) return;
 
@@ -132,9 +139,13 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
           evalContext
         );
       });
+
+      if (initialRender) {
+        return Object.assign({ hasError: false }, nextState);
+      }
       // trigger a re-render of this component
       // and more importantly, its wrapped component
-      this.setState(Object.assign({ hasError: false }, nextState));
+      this.setState(Object.assign({ hasError: false, error: null }, nextState));
     }
 
     onUpdateRefs(newState) {
@@ -407,6 +418,7 @@ class IdyllRuntime extends React.PureComponent {
         isHTMLNode: isHTMLNode,
         hasHook: node.hasHook,
         refName: node.refName,
+        initialState: this.state,
         updateProps: newProps => {
           // init new doc state object
           const newState = {};
