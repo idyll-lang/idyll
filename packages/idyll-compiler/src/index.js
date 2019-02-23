@@ -53,6 +53,8 @@ module.exports = function(input, options, callback) {
     .pipe(autoLinkify)
     .end();
 
+  astTransform = convertV1ToV2(astTransform);
+
   if (options.postProcessors) {
     // Turn them all into promises
     const promises = options.postProcessors.map(f => {
@@ -76,10 +78,10 @@ module.exports = function(input, options, callback) {
       return promise.then(val => {
         return f(val);
       });
-    }, Promise.resolve(convertV1ToV2(astTransform)));
+    }, Promise.resolve(astTransform));
   } else {
     return options.async
-      ? new Promise(resolve => resolve(convertV1ToV2(astTransform)))
-      : convertV1ToV2(astTransform);
+      ? new Promise(resolve => resolve(astTransform))
+      : astTransform;
   }
 };
