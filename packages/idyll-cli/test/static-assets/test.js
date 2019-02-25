@@ -5,32 +5,27 @@ const http = require('http');
 const { join, resolve, dirname } = require('path');
 
 const rimraf = require('rimraf');
-const {
-  JSDOM
-} = require('jsdom');
+const { JSDOM } = require('jsdom');
 
 const Idyll = require('../../');
 
-const getFilenames = (dir) => {
+const getFilenames = dir => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');
-}
+};
 
-const dirToHash = (dir) => {
-  return getFilenames(dir).reduce(
-    (acc, val) => {
-      let fullPath = join(dir, val);
+const dirToHash = dir => {
+  return getFilenames(dir).reduce((acc, val) => {
+    let fullPath = join(dir, val);
 
-      if (fs.statSync(fullPath).isFile()) {
-        acc[val] = fs.readFileSync(fullPath, 'utf8');
-      } else {
-        acc[val] = dirToHash(fullPath);
-      }
+    if (fs.statSync(fullPath).isFile()) {
+      acc[val] = fs.readFileSync(fullPath, 'utf8');
+    } else {
+      acc[val] = dirToHash(fullPath);
+    }
 
-      return acc;
-    },
-    {}
-  );
-}
+    return acc;
+  }, {});
+};
 
 const PROJECT_DIR = join(__dirname, 'src');
 
@@ -51,7 +46,7 @@ let idyll;
 beforeAll(() => {
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_CACHE);
-})
+});
 
 beforeAll(done => {
   idyll = Idyll({
@@ -62,8 +57,8 @@ beforeAll(done => {
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     css: join(PROJECT_DIR, 'styles.css'),
-    outputCSS: "__idyll_styles.css",
-    outputJS: "__idyll_index.js",
+    outputCSS: '__idyll_styles.css',
+    outputJS: '__idyll_index.js',
     compiler: {
       spellcheck: false
     },
@@ -72,24 +67,27 @@ beforeAll(done => {
     open: false
   });
 
-  idyll.on('update', (o) => {
-    output = o;
-    projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
-    projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
-    // Timeout required to ensure browsersync is running.
-    setTimeout(done, 2000);
-  }).build();
-})
+  idyll
+    .on('update', o => {
+      output = o;
+      projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
+      projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
+      // Timeout required to ensure browsersync is running.
+      setTimeout(done, 2000);
+    })
+    .build();
+});
 
 afterAll(() => {
   idyll.stopWatching();
-})
+});
 
 test('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
     alias: {},
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
+    context: undefined,
     minify: false,
     ssr: true,
     watch: true,
@@ -102,8 +100,8 @@ test('options work as expected', () => {
     defaultComponents: dirname(require.resolve('idyll-components')),
     temp: '.idyll',
     static: 'static',
-    outputCSS: "__idyll_styles.css",
-    outputJS: "__idyll_index.js",
+    outputCSS: '__idyll_styles.css',
+    outputJS: '__idyll_index.js',
     datasets: 'data',
     transform: [],
     port: 3000,
@@ -111,12 +109,12 @@ test('options work as expected', () => {
       spellcheck: false
     },
     inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
-  })
-})
+  });
+});
 
 test('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
-})
+});
 
 test('creates the expected HTML', done => {
   const dom = new JSDOM(projectBuildResults['index.html'], {
@@ -131,9 +129,11 @@ test('creates the expected HTML', done => {
     const document = dom.window.document;
     const svgNode = document.querySelector('svg');
     const imgNode = document.querySelector('img');
-    expect(imgNode.src).toEqual('http://localhost:3000/static/images/wearable.jpg');
+    expect(imgNode.src).toEqual(
+      'http://localhost:3000/static/images/wearable.jpg'
+    );
     expect(svgNode.childNodes.length).toEqual(5);
     dom.window.close();
     done();
   }, 2000);
-})
+});

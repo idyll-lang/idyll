@@ -1853,6 +1853,11 @@ browserslist@^3.2.6:
     caniuse-lite "^1.0.30000844"
     electron-to-chromium "^1.3.47"
 
+bs-pretty-message@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/bs-pretty-message/-/bs-pretty-message-1.0.8.tgz#bed417556f915606f961d14f179fa775ea58fd3e"
+  integrity sha1-vtQXVW+RVgb5YdFPF5+ndepY/T4=
+
 bs-recipes@1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/bs-recipes/-/bs-recipes-1.3.4.tgz#0d2d4d48a718c8c044769fdc4f89592dc8b69585"
