@@ -2,6 +2,7 @@ var expect = require('expect.js');
 var util = require('../src');
 const {
   astTestVar,
+  astTestMeta,
   updatedASTWithNode,
   updatedASTWithNodes,
   testChildren,
@@ -215,16 +216,18 @@ describe('ast', function() {
   });
 
   it('should filter children of a passed node', function() {
-    expect(
-      util.filterChildren(updatedASTWithNodes, node => node.id < 12)
-    ).to.eql(updatedASTWithNode);
+    let ast = Object.assign({}, updatedASTWithNodes);
+    expect(util.filterChildren(ast, node => node.id < 12)).to.eql(
+      updatedASTWithNode
+    );
   });
 
-  // it('should filter children of a passed node', function() {
-  //   expect(
-  //     util.filterChildren(updatedASTWithNodes, node => node.name !== 'meta')
-  //   ).to.eql(updatedASTWithNode);
-  // });
+  it('should filter children of a passed node based on name', function() {
+    let ast = Object.assign({}, astTestMeta);
+    expect(util.filterChildren(ast, node => node.name !== 'meta')).to.eql(
+      astTestVar
+    );
+  });
 
   it('should modify children of a passed node', function() {
     expect(
