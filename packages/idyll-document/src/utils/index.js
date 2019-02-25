@@ -7,6 +7,7 @@ const {
   getType,
   removeNodesByName
 } = require('idyll-ast');
+
 const isPropertyAccess = node => {
   const index = node.parent.source().indexOf(`.${node.name}`);
   if (index === -1) {
