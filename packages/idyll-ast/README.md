@@ -158,7 +158,7 @@ Function to append multiple top-level children to the root element.
 
 ### idyll-ast~createNode ⇒ <code>object</code>
 
-Function to creat a new AST node following the schema.
+Function to create a new AST node following the schema.
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
 **Returns**: <code>object</code> - New component node.
