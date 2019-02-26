@@ -355,7 +355,7 @@ Function to modify a single node using a modifier and name property.
 
 ### idyll-ast~getNodeName ⇒ <code>string</code>
 
-Function to get the name of a componenet
+Function to get the name of a component
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
 **Returns**: <code>string</code> - name of the passed node
