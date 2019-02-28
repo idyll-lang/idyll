@@ -123,7 +123,7 @@ Only **component** nodes can have any children. **textnodes**, **var**, **derive
   - [~removeProperties](#module_idyll-ast..removeProperties) ⇒ <code>object</code>
   - [~setProperty](#module_idyll-ast..setProperty) ⇒ <code>object</code>
   - [~setProperties](#module_idyll-ast..setProperties) ⇒ <code>object</code>
-  - [~toString](#module_idyll-ast..toString) ⇒ <code>string</code>
+  - [~toMarkup](#module_idyll-ast..toMarkup) ⇒ <code>string</code>
   - [~walkNodes](#module_idyll-ast..walkNodes) : <code>function</code>
   - [~walkNodeBreadthFirst](#module_idyll-ast..walkNodeBreadthFirst)
 
