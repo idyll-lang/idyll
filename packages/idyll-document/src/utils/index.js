@@ -211,6 +211,7 @@ export const filterIdyllProps = (props, filterInjected) => {
   const {
     __vars__,
     __expr__,
+    idyllASTNode,
     hasHook,
     initialState,
     isHTMLNode,
@@ -290,8 +291,10 @@ export const scrollMonitorEvents = {
 };
 
 export const translate = ast => {
-  const attrConvert = props => {
-    let reducedProps = {};
+  const attrConvert = (props, node) => {
+    let reducedProps = {
+      idyllASTNode: node
+    };
     for (let propName in props) {
       const name = propName;
       const type = props[propName].type;
@@ -329,7 +332,7 @@ export const translate = ast => {
     const children = getChildren(node);
     return {
       component: name,
-      ...attrConvert(attrs),
+      ...attrConvert(attrs, node),
       children: children.map(tNode)
     };
   };
