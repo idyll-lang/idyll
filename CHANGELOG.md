@@ -1,3 +1,8 @@
+## v3.15
+
+- Adds an in-browser notification when the idyll compiler errors on the command line. This should help prevent some frustration during development.
+- Fixes bugs relating to references in Idyll expressions
+
 ## v3.13
 
 - Add additional methods to exported `idyll` object, including `getComponents` and `getDatasets` to facilitate programatic interaction with Idyll projects.
