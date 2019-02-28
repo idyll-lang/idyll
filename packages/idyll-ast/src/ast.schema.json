@@ -145,7 +145,7 @@
                       "type": "string"
                     }
                   },
-                  "required": ["name", "vale"],
+                  "required": ["type", "value"],
                   "additionalProperties": false
                 },
                 "source": {
@@ -162,7 +162,7 @@
                       }
                     }
                   },
-                  "required": ["name", "vale"],
+                  "required": ["type", "value"],
                   "additionalProperties": false
                 }
               },
