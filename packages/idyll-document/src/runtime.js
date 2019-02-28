@@ -213,6 +213,7 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
           const ViewComponent = userViewComponent || AuthorTool;
           return (
             <ViewComponent
+              idyllASTNode={this.props.idyllASTNode}
               component={returnComponent}
               authorComponent={childComponent}
               uniqueKey={uniqueKey}
@@ -380,10 +381,15 @@ class IdyllRuntime extends React.PureComponent {
         };
       }
       //Inspect for isHTMLNode  props and to check for dynamic components.
-      if (!wrapTargets.includes(node)) return node;
+      if (!wrapTargets.includes(node)) {
+        // Don't include the AST node reference on unwrapped components
+        const { idyllASTNode, ...rest } = node;
+        return rest;
+      }
       const {
         component,
         children,
+        idyllASTNode,
         key,
         __vars__ = {},
         __expr__ = {},
@@ -414,6 +420,7 @@ class IdyllRuntime extends React.PureComponent {
         component: Wrapper,
         __vars__,
         __expr__,
+        idyllASTNode,
         isHTMLNode: isHTMLNode,
         hasHook: node.hasHook,
         refName: node.refName,
