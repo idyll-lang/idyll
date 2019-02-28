@@ -294,19 +294,19 @@ describe('markup conversion', function() {
     expect(markup).to.eql(
       `
 [p]
-	This is the first paragraph
+  This is the first paragraph
 [/p]
 [div]
-	[h1]
-		This is a header
-	[/h1]
-	[var name:"testVar" value:\`3 * 3\` /]
-	[p]
-		[a href:"www.test.com"]
-			This is a link to a website
-		[/a]
-		[data name:"testData" source:"test.csv" /]
-	[/p]
+  [h1]
+    This is a header
+  [/h1]
+  [var name:"testVar" value:\`3 * 3\` /]
+  [p]
+    [a href:"www.test.com"]
+      This is a link to a website
+    [/a]
+    [data name:"testData" source:"test.csv" /]
+  [/p]
 [/div]
     `.trim()
     );
