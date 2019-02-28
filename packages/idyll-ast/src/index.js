@@ -914,6 +914,71 @@ function runPropsValidator(props) {
   }
 }
 
+function propertyToString(property) {
+  switch (property.type) {
+    case 'value':
+      return JSON.stringify(property.value);
+    case 'expression':
+      return `\`${property.value}\``;
+    case 'variable':
+      return property.value;
+  }
+}
+
+function propertiesToString(node) {
+  return Object.keys(node.properties || {})
+    .reduce(function(memo, key) {
+      return memo + ` ${key}:${propertyToString(node.properties[key])}`;
+    }, '')
+    .trim();
+}
+
+function childrenToMarkup(node, depth) {
+  return (node.children || []).reduce(function(memo, child) {
+    return memo + `\n${nodeToMarkup(child, depth)}`;
+  }, '');
+}
+
+function nodeToMarkup(node, depth) {
+  switch (node.type) {
+    case 'textnode':
+      return `${'  '.repeat(depth)}${node.value}`;
+    case 'component':
+      if (node.name.toLowerCase() === 'textcontainer') {
+        return `\n${childrenToMarkup(node, depth)}\n`;
+      }
+      const propString = propertiesToString(node);
+      if (hasChildren(node)) {
+        return `${'  '.repeat(depth)}[${node.name}${
+          propString ? ` ${propString}` : ''
+        }]${childrenToMarkup(node, depth + 1)}\n${'  '.repeat(depth)}[/${
+          node.name
+        }]`;
+      }
+      return `${'  '.repeat(depth)}[${node.name}${
+        propString ? ` ${propString}` : ''
+      } /]`;
+    case 'var':
+    case 'derived':
+    case 'data':
+    case 'meta':
+      return `${'  '.repeat(depth)}[${node.type} ${propertiesToString(
+        node
+      )} /]`;
+  }
+}
+
+/**
+ * @name toMarkup
+ * @description
+ * Function to convert AST back to idyll markup
+ * @param {object} ast  AST node
+ * @return {string} Markup string
+ */
+function toMarkup(ast) {
+  return childrenToMarkup(ast, 0).trim();
+}
+
 module.exports = {
   appendNode,
   appendNodes,
@@ -945,5 +1010,6 @@ module.exports = {
   setProperty,
   setProperties,
   walkNodes,
-  walkNodesBreadthFirst
+  walkNodesBreadthFirst,
+  toMarkup
 };
