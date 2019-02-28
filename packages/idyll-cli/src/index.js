@@ -42,7 +42,6 @@ const idyll = (options = {}, cb) => {
     },
     options
   );
-  if (opts.watch) opts.minify = false; // speed!
 
   const paths = pathBuilder(opts);
   debug('Reading from paths:', paths);

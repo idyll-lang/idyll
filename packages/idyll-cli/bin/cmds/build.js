@@ -18,17 +18,9 @@ exports.builder = yargs => {
 };
 
 exports.handler = argv => {
-  // API checks the inverse
-  argv.minify = !argv['no-minify'];
-  argv.ssr = !argv['no-ssr'];
-
   // delete stuff we don't need
   delete argv._;
   delete argv['$0'];
-  delete argv.noMinify;
-  delete argv['no-minify'];
-  delete argv.noSsr;
-  delete argv['no-ssr'];
 
   [
     'a',
@@ -131,11 +123,13 @@ function buildOptions(yargs) {
     .describe('input-file', 'File containing Idyll source')
     .describe('input-string', 'Idyll source as a string')
     .describe('layout', 'Name of (or path to) the layout to use')
-    .boolean('no-minify')
-    .describe('no-minify', 'Skip JS minification')
+    .boolean('minify')
+    .describe('minify', 'Minify JS')
+    .default('minify', true)
     .describe('output', 'Directory where built files should be written')
-    .boolean('no-ssr')
-    .describe('no-ssr', 'Do not pre-render HTML as part of the build')
+    .boolean('ssr')
+    .describe('ssr', 'Pre-render HTML as part of the build')
+    .default('ssr', true)
     .describe('template', 'Path to HTML template')
     .array('transform')
     .describe('transform', 'Custom browserify transforms to apply.')
