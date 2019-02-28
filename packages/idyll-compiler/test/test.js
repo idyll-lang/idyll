@@ -1439,5 +1439,50 @@ End text
         ])
       );
     });
+
+    it.only('should handle bold at the end of a paragraph', function() {
+      const input = `
+        This is **bold text.**
+
+        This is a new paragraph.
+      `;
+
+      expect(compile(input, { async: false })).to.eql({
+        id: 0,
+        type: 'component',
+        name: 'div',
+        children: [
+          {
+            id: 2,
+            type: 'component',
+            name: 'TextContainer',
+            children: [
+              {
+                id: 3,
+                type: 'component',
+                name: 'p',
+                children: [
+                  { id: 4, type: 'textnode', value: 'This is ' },
+                  {
+                    id: 5,
+                    type: 'component',
+                    name: 'strong',
+                    children: [{ id: 6, type: 'textnode', value: 'bold text.' }]
+                  }
+                ]
+              },
+              {
+                id: 7,
+                type: 'component',
+                name: 'p',
+                children: [
+                  { id: 8, type: 'textnode', value: 'This is a new paragraph.' }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+    });
   });
 });
