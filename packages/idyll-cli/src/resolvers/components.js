@@ -113,7 +113,11 @@ class ComponentResolver {
     });
 
     if (!resolved) {
-      if (htmlTags.indexOf(name) > -1 || svgTags.indexOf(name) > -1) {
+      if (
+        htmlTags.indexOf(name) > -1 ||
+        svgTags.indexOf(name) > -1 ||
+        name === 'root'
+      ) {
         // It is a valid HTML component, but should not be added to the map.
         return;
       } else {

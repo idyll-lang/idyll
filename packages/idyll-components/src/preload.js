@@ -5,13 +5,13 @@ const imageCache = [];
 class Preloader extends React.PureComponent {
   componentDidMount() {
     const { images } = this.props;
-    images.forEach((i) => {
+    images.forEach(i => {
       const img = new Image();
       img.src = i;
       imageCache.push(img);
     });
   }
-  render () {
+  render() {
     return null;
   }
 }
@@ -21,14 +21,16 @@ Preloader.defaultProps = {
 };
 
 Preloader._idyll = {
-  name: "Preloader",
-  tagType: "closed",
-  displayType: "inline",
-  props: [{
-    name: "images",
-    type: "array",
-    example: '["image-url-1.png", "image-url-2.jpg"]'
-  }]
-}
+  name: 'Preloader',
+  tagType: 'closed',
+  displayType: 'inline',
+  props: [
+    {
+      name: 'images',
+      type: 'array',
+      example: '["image-url-1.png", "image-url-2.jpg"]'
+    }
+  ]
+};
 
 export default Preloader;

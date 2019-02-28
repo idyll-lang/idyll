@@ -4,25 +4,27 @@ const { join, isAbsolute } = require('path');
 const themes = require('idyll-themes');
 const layouts = require('idyll-layouts');
 
-const cleanPath = (str) => str.replace(/;/g, '');
-const cleanKey = (key) => key ? key.trim() : key;
+const cleanPath = str => str.replace(/;/g, '');
+const cleanKey = key => (key ? key.trim() : key);
 
-const resourceLoader = (root) => (resource) => {
+const resourceLoader = root => resource => {
   let { path, defaultContent } = resource;
   if (!path) {
     return defaultContent;
   }
-  const resourceFilePath = isAbsolute(path) ? cleanPath(path) : join(root, cleanPath(path));
+  const resourceFilePath = isAbsolute(path)
+    ? cleanPath(path)
+    : join(root, cleanPath(path));
   if (!existsSync(resourceFilePath)) {
     return defaultContent;
   }
   return readFileSync(resourceFilePath);
-}
+};
 
 const createResource = (key, defaultContent) => ({
   path: key,
   defaultContent
-})
+});
 
 class CSSResolver {
   constructor(options) {
@@ -43,12 +45,14 @@ class CSSResolver {
 
   getResources() {
     const defaults = this.getDefaults();
-    return this.resourceKeys.map((key, i) => createResource(key, defaults[i]))
+    return this.resourceKeys.map((key, i) => createResource(key, defaults[i]));
   }
 
   resolve() {
     const loadFromResource = resourceLoader(this.resourceRoot);
-    return this.getResources().map(loadFromResource).join('\n');
+    return this.getResources()
+      .map(loadFromResource)
+      .join('\n');
   }
 
   getDirectories() {

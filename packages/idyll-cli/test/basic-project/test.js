@@ -4,6 +4,7 @@ const Idyll = require('../../');
 const fs = require('fs');
 const { join, resolve, dirname } = require('path');
 const rimraf = require('rimraf');
+var AST = require('idyll-ast').converters;
 
 const getFilenames = dir => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');
@@ -145,6 +146,14 @@ test('should construct the AST properly', () => {
       [],
       [
         [
+          'meta',
+          [
+            ['title', ['value', 'Page Title']],
+            ['description', ['value', 'Short description of your project']]
+          ],
+          []
+        ],
+        [
           'Header',
           [
             ['title', ['value', 'Welcome to Idyll']],
@@ -217,7 +226,7 @@ test('should construct the AST properly', () => {
     ]
   ];
 
-  expect(output.ast).toEqual(ast);
+  expect(output.ast).toEqual(AST.convertV1ToV2(ast));
 });
 
 test('should include npm components', () => {

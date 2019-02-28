@@ -1,37 +1,28 @@
-const {
-  dirname,
-  isAbsolute,
-  join,
-  parse,
-  resolve,
-  relative
-} = require('path');
+const { dirname, isAbsolute, join, parse, resolve, relative } = require('path');
 
-const debug = require('debug')('idyll:cli')
+const debug = require('debug')('idyll:cli');
 
 function getBaseDir(path) {
-  return path && isAbsolute(path)
-    ? dirname(path)
-    : process.cwd();
+  return path && isAbsolute(path) ? dirname(path) : process.cwd();
 }
 
 function resolveWithBase(base) {
-  return (path) => {
+  return path => {
     if (!path || isAbsolute(path)) {
       return path;
     }
     return join(base, path);
-  }
+  };
 }
 
-module.exports = function (opts) {
-  const projectBaseDir = getBaseDir(opts.inputFile)
+module.exports = function(opts) {
+  const projectBaseDir = getBaseDir(opts.inputFile);
   const resolveWithProjBase = resolveWithBase(projectBaseDir);
 
-  const getComponentDirs = (paths) => {
+  const getComponentDirs = paths => {
     if (paths instanceof Array) return paths.map(p => resolveWithProjBase(p));
     return [resolveWithProjBase(paths)];
-  }
+  };
 
   const resolveWithOutputBase = resolveWithBase(getBaseDir(opts.output));
   const OUTPUT_DIR = resolveWithOutputBase(opts.output);
@@ -59,4 +50,4 @@ module.exports = function (opts) {
 
     TMP_DIR
   };
-}
+};

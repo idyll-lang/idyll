@@ -7,6 +7,7 @@ import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
 import AuthorTool from './components/author-tool';
+import { getChildren } from 'idyll-ast';
 import equal from 'fast-deep-equal';
 
 import * as layouts from 'idyll-layouts';
@@ -236,10 +237,9 @@ class IdyllRuntime extends React.PureComponent {
 
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
-
     const ast = filterASTForDocument(props.ast);
 
-    const { vars, derived, data, elements } = splitAST(ast);
+    const { vars, derived, data, elements } = splitAST(getChildren(ast));
     const Wrapper = createWrapper({
       theme: props.theme,
       layout: props.layout,
@@ -352,12 +352,13 @@ class IdyllRuntime extends React.PureComponent {
 
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
-
-    const wrapTargets = findWrapTargets(schema, this.state);
+    const wrapTargets = findWrapTargets(schema, this.state, props.components);
     let refCounter = 0;
-
     const transformedSchema = mapTree(schema, node => {
-      if (typeof node === 'string') return node;
+      // console.log('mapoing ', node.component || node.type);
+      if (!node.component) {
+        if (node.type && node.type === 'textnode') return node.value;
+      }
 
       // transform refs from strings to functions and store them
       if (node.ref || node.hasHook) {
@@ -378,9 +379,8 @@ class IdyllRuntime extends React.PureComponent {
           domNode: null
         };
       }
-
+      //Inspect for isHTMLNode  props and to check for dynamic components.
       if (!wrapTargets.includes(node)) return node;
-
       const {
         component,
         children,
@@ -407,7 +407,6 @@ class IdyllRuntime extends React.PureComponent {
           );
         }
       });
-
       const resolvedComponent = rjs.resolveComponent(node);
       const isHTMLNode = typeof resolvedComponent === 'string';
 

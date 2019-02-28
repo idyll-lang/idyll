@@ -12,7 +12,7 @@ const {
   getNodeName,
   createTextNode,
   createNode
-} = require('idyll-ast');
+} = require('idyll-ast/v1');
 
 const attrConvert = list => {
   return (list || []).reduce((acc, [name, [type, val]]) => {

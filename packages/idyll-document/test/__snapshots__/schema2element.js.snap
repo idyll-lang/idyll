@@ -387,8 +387,10 @@ ShallowWrapper {
 </div>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
     "getNode": [Function],
     "render": [Function],
+    "simulateError": [Function],
     "simulateEvent": [Function],
     "unmount": [Function],
   },
@@ -1224,7 +1226,7 @@ ShallowWrapper {
               "This document is being rendered from ",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1240,7 +1242,7 @@ ShallowWrapper {
               ". If you’ve used ",
               Object {
                 "instance": null,
-                "key": "1",
+                "key": "3",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1278,7 +1280,7 @@ For example, a ",
 For example, a ",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1347,7 +1349,7 @@ For example, a ",
               "Try changing the chart’s type from ",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1363,7 +1365,7 @@ For example, a ",
               " to ",
               Object {
                 "instance": null,
-                "key": "1",
+                "key": "3",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1379,7 +1381,7 @@ For example, a ",
               ", ",
               Object {
                 "instance": null,
-                "key": "2",
+                "key": "5",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1395,7 +1397,7 @@ For example, a ",
               ", or ",
               Object {
                 "instance": null,
-                "key": "3",
+                "key": "7",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1430,7 +1432,7 @@ For example, a ",
               "A component’s properties can be strings (“I’m a string!”), numbers (1.569), or evaluated JavaScript expressions (",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1477,7 +1479,7 @@ For example, a ",
               "There are a number of components available — see ",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1494,7 +1496,7 @@ For example, a ",
               " for a full list — Additional components can be installed via ",
               Object {
                 "instance": null,
-                "key": "1",
+                "key": "3",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1510,7 +1512,7 @@ For example, a ",
               " (any React component should work), and if you are comfortable with JavaScript you can write ",
               Object {
                 "instance": null,
-                "key": "2",
+                "key": "5",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1599,7 +1601,7 @@ or be used to parameterize components. Derived variables can be used to create v
 (x = ",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "class",
                 "props": Object {
                   "__vars__": Object {
@@ -1650,7 +1652,7 @@ or be used to parameterize components. Derived variables can be used to create v
               "Here I bind the value of ",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -1727,7 +1729,7 @@ or be used to parameterize components. Derived variables can be used to create v
  ",
               Object {
                 "instance": null,
-                "key": "1",
+                "key": "2",
                 "nodeType": "class",
                 "props": Object {
                   "__expr__": Object {
@@ -1783,7 +1785,7 @@ or be used to parameterize components. Derived variables can be used to create v
               ":",
               Object {
                 "instance": null,
-                "key": "1",
+                "key": "2",
                 "nodeType": "class",
                 "props": Object {
                   "__expr__": Object {
@@ -2211,7 +2213,7 @@ Late Var Range:",
               "Read more about Idyll at ",
               Object {
                 "instance": null,
-                "key": "0",
+                "key": "1",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -2228,7 +2230,7 @@ Late Var Range:",
               ", and come say “Hi!” in our ",
               Object {
                 "instance": null,
-                "key": "1",
+                "key": "3",
                 "nodeType": "host",
                 "props": Object {
                   "children": Array [
@@ -3085,7 +3087,7 @@ Late Var Range:",
                 "This document is being rendered from ",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3101,7 +3103,7 @@ Late Var Range:",
                 ". If you’ve used ",
                 Object {
                   "instance": null,
-                  "key": "1",
+                  "key": "3",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3139,7 +3141,7 @@ For example, a ",
 For example, a ",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3208,7 +3210,7 @@ For example, a ",
                 "Try changing the chart’s type from ",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3224,7 +3226,7 @@ For example, a ",
                 " to ",
                 Object {
                   "instance": null,
-                  "key": "1",
+                  "key": "3",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3240,7 +3242,7 @@ For example, a ",
                 ", ",
                 Object {
                   "instance": null,
-                  "key": "2",
+                  "key": "5",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3256,7 +3258,7 @@ For example, a ",
                 ", or ",
                 Object {
                   "instance": null,
-                  "key": "3",
+                  "key": "7",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3291,7 +3293,7 @@ For example, a ",
                 "A component’s properties can be strings (“I’m a string!”), numbers (1.569), or evaluated JavaScript expressions (",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3338,7 +3340,7 @@ For example, a ",
                 "There are a number of components available — see ",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3355,7 +3357,7 @@ For example, a ",
                 " for a full list — Additional components can be installed via ",
                 Object {
                   "instance": null,
-                  "key": "1",
+                  "key": "3",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3371,7 +3373,7 @@ For example, a ",
                 " (any React component should work), and if you are comfortable with JavaScript you can write ",
                 Object {
                   "instance": null,
-                  "key": "2",
+                  "key": "5",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3460,7 +3462,7 @@ or be used to parameterize components. Derived variables can be used to create v
 (x = ",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "class",
                   "props": Object {
                     "__vars__": Object {
@@ -3511,7 +3513,7 @@ or be used to parameterize components. Derived variables can be used to create v
                 "Here I bind the value of ",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -3588,7 +3590,7 @@ or be used to parameterize components. Derived variables can be used to create v
  ",
                 Object {
                   "instance": null,
-                  "key": "1",
+                  "key": "2",
                   "nodeType": "class",
                   "props": Object {
                     "__expr__": Object {
@@ -3644,7 +3646,7 @@ or be used to parameterize components. Derived variables can be used to create v
                 ":",
                 Object {
                   "instance": null,
-                  "key": "1",
+                  "key": "2",
                   "nodeType": "class",
                   "props": Object {
                     "__expr__": Object {
@@ -4072,7 +4074,7 @@ Late Var Range:",
                 "Read more about Idyll at ",
                 Object {
                   "instance": null,
-                  "key": "0",
+                  "key": "1",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -4089,7 +4091,7 @@ Late Var Range:",
                 ", and come say “Hi!” in our ",
                 Object {
                   "instance": null,
-                  "key": "1",
+                  "key": "3",
                   "nodeType": "host",
                   "props": Object {
                     "children": Array [
@@ -4118,16 +4120,22 @@ Late Var Range:",
     "adapter": ReactSixteenAdapter {
       "options": Object {
         "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
         "lifecycles": Object {
           "componentDidUpdate": Object {
             "onSetState": true,
           },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromProps": true,
           "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
         },
       },
     },
-    "attachTo": undefined,
-    "hydrateIn": undefined,
   },
 }
 `;
