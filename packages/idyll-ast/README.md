@@ -123,6 +123,7 @@ Only **component** nodes can have any children. **textnodes**, **var**, **derive
   - [~removeProperties](#module_idyll-ast..removeProperties) ⇒ <code>object</code>
   - [~setProperty](#module_idyll-ast..setProperty) ⇒ <code>object</code>
   - [~setProperties](#module_idyll-ast..setProperties) ⇒ <code>object</code>
+  - [~toString](#module_idyll-ast..toString) ⇒ <code>string</code>
   - [~walkNodes](#module_idyll-ast..walkNodes) : <code>function</code>
   - [~walkNodeBreadthFirst](#module_idyll-ast..walkNodeBreadthFirst)
 
@@ -501,6 +502,19 @@ Function to add multiple properties to a node
 | ---------- | ------------------- |
 | node       | <code>object</code> |
 | properties | <code>object</code> |
+
+<a name="module_idyll-ast..walkNodes"></a>
+
+### idyll-ast~toMarkup ⇒ <code>string</code>
+
+Function to convert an AST back into idyll markup
+
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Returns**: <code>string</code> - markup string
+
+| Param | Type                |
+| ----- | ------------------- |
+| node  | <code>object</code> |
 
 <a name="module_idyll-ast..walkNodes"></a>
 
