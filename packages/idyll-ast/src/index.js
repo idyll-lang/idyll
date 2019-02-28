@@ -942,27 +942,27 @@ function childrenToMarkup(node, depth) {
 function nodeToMarkup(node, depth) {
   switch (node.type) {
     case 'textnode':
-      return `${'\t'.repeat(depth)}${node.value}`;
+      return `${'  '.repeat(depth)}${node.value}`;
     case 'component':
       if (node.name.toLowerCase() === 'textcontainer') {
         return `\n${childrenToMarkup(node, depth)}\n`;
       }
       const propString = propertiesToString(node);
       if (hasChildren(node)) {
-        return `${'\t'.repeat(depth)}[${node.name}${
+        return `${'  '.repeat(depth)}[${node.name}${
           propString ? ` ${propString}` : ''
-        }]${childrenToMarkup(node, depth + 1)}\n${'\t'.repeat(depth)}[/${
+        }]${childrenToMarkup(node, depth + 1)}\n${'  '.repeat(depth)}[/${
           node.name
         }]`;
       }
-      return `${'\t'.repeat(depth)}[${node.name}${
+      return `${'  '.repeat(depth)}[${node.name}${
         propString ? ` ${propString}` : ''
       } /]`;
     case 'var':
     case 'derived':
     case 'data':
     case 'meta':
-      return `${'\t'.repeat(depth)}[${node.type} ${propertiesToString(
+      return `${'  '.repeat(depth)}[${node.type} ${propertiesToString(
         node
       )} /]`;
   }
