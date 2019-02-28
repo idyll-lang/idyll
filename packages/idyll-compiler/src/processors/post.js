@@ -42,21 +42,22 @@ const cleanResults = (ast, options) => {
     node[2] = flattenChildren(node[2]);
 
     const name = node[0].toLowerCase();
+    const rawNodes = ['pre', 'code', 'codehighlight', 'equation'];
     if (
-      name !== 'p' &&
-      name !== 'textcontainer' &&
+      ['section', 'step', 'textcontainer'].indexOf(name) === -1 &&
       node[2].length === 1 &&
       typeof node[2][0] !== 'string' &&
       node[2][0][0] === 'p' &&
-      node[2][0][2] &&
-      node[2][0][2].length === 1 &&
-      typeof node[2][0][2][0] === 'string'
+      node[2][0][2]
     ) {
-      return [node[0], node[1], node[2][0][2]];
+      if (rawNodes.indexOf(name) > -1) {
+        return [node[0], node[1], node[2][0][2]];
+      }
+      return [node[0], node[1], cleanResults(node[2][0][2], options)];
     }
 
     // don't apply cleaning to codeblocks
-    if (['pre', 'code', 'codehighlight'].indexOf(node[0].toLowerCase()) > -1) {
+    if (rawNodes.indexOf(name) > -1) {
       return node;
     }
     return [node[0], node[1], cleanResults(node[2], options)];
