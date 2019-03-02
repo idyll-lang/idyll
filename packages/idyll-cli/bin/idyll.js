@@ -5,7 +5,7 @@
 const updateNotifier = require('update-notifier');
 const pkg = require('../package.json');
 
-updateNotifier({pkg}).notify();
+updateNotifier({ pkg }).notify();
 
 const p = require('path');
 const fs = require('fs');
@@ -18,12 +18,12 @@ var cmd;
 if (!idyll) {
   cmd = p.join(__dirname, 'cli.js');
 } else {
-  var idyllBin = p.join(idyll, '..', '..', 'bin')
+  var idyllBin = p.join(idyll, '..', '..', 'bin');
   cmd = p.join(idyllBin, 'cli.js');
   try {
-    fs.statSync(cmd)
+    fs.statSync(cmd);
   } catch (err) {
-    cmd = p.join(idyllBin, 'idyll.js')
+    cmd = p.join(idyllBin, 'idyll.js');
   }
 }
 

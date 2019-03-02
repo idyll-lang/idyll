@@ -1,6 +1,6 @@
 {
   "name": "idyll-compiler",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "description": "Compiler for idyll",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
@@ -35,7 +35,7 @@
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "expect.js": "^0.3.1",
-    "mocha": "^3.2.0",
+    "mocha": "^6.0.2",
     "rimraf": "^2.6.2"
   },
   "dependencies": {

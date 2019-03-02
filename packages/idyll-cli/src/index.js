@@ -1,8 +1,6 @@
 const fs = require('fs');
-const { dirname, isAbsolute, join, parse } = require('path');
-const path = require('path');
+const { dirname, basename, extname, join } = require('path');
 const EventEmitter = require('events');
-const changeCase = require('change-case');
 const mkdirp = require('mkdirp');
 
 const pathBuilder = require('./path-builder');
@@ -44,7 +42,6 @@ const idyll = (options = {}, cb) => {
     },
     options
   );
-  if (opts.watch) opts.minify = false; // speed!
 
   const paths = pathBuilder(opts);
   debug('Reading from paths:', paths);
@@ -172,7 +169,8 @@ const idyll = (options = {}, cb) => {
               server: [paths.OUTPUT_DIR],
               ui: false,
               port: opts.port,
-              open: opts.open
+              open: opts.open,
+              plugins: [require('bs-pretty-message')]
             });
           }
         })
@@ -187,6 +185,12 @@ const idyll = (options = {}, cb) => {
             // otherwise dump to the console
             console.error(error);
           }
+          bs &&
+            bs.sockets &&
+            bs.sockets.emit('fullscreen:message', {
+              title: 'Error compiling Idyll project',
+              body: error.toString()
+            });
         });
       return this;
     }
@@ -240,7 +244,7 @@ const idyll = (options = {}, cb) => {
     addComponent(componentPath) {
       const componentsDirectory = this.getComponentsDirectory();
       // We grab the name of the component, and put that in the components directory
-      const componentFileName = path.basename(componentPath);
+      const componentFileName = basename(componentPath);
       // ensure components directory exists
       try {
         fs.statSync(componentsDirectory[0]);
@@ -260,7 +264,7 @@ const idyll = (options = {}, cb) => {
       fs.readdirSync(dataFolder).forEach(file => {
         var fileName = file;
         var datasetPath = dataFolder + '/' + file;
-        var extension = path.extname(file);
+        var extension = extname(file);
         defaultData.push({
           name: fileName,
           path: datasetPath,
@@ -274,7 +278,7 @@ const idyll = (options = {}, cb) => {
     // It will be added to the `data` directory of this IdyllInstance
     addDataset(datasetPath) {
       const datasetDirectory = this.getPaths().DATA_DIR;
-      const datasetName = path.basename(datasetPath);
+      const datasetName = basename(datasetPath);
       try {
         fs.statSync(datasetDirectory);
       } catch (err) {

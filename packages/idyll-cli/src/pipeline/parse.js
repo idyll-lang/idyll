@@ -5,35 +5,39 @@ const resolve = require('resolve');
 const slash = require('slash');
 const { paramCase, pascalCase } = require('change-case');
 
-const debug = require('debug')('idyll:cli')
+const debug = require('debug')('idyll:cli');
 
 const {
   getNodesByName,
+  getNodesByType,
   getProperty,
   filterNodes,
-  findNodes
-} = require('idyll-ast')
+  getType,
+  getProperties,
+  getPropertyKeys
+} = require('idyll-ast');
 
-exports.getComponentNodes = (ast) => {
-  const ignoreNames = new Set(['var', 'data', 'meta', 'derived']);
-  return findNodes(ast, node => {
-    if (typeof node === 'string') {
-      return false
+exports.getComponentNodes = ast => {
+  const ignoreTypes = new Set(['var', 'data', 'meta', 'derived']);
+  let filter = filterNodes(ast, node => {
+    if (node.type === 'textnode') {
+      return false;
     }
-    return !ignoreNames.has(node[0].toLowerCase())
+    return !ignoreTypes.has(getType(node).toLowerCase());
   });
-}
+  return filter;
+};
 
-exports.getDataNodes = (ast) => {
-  const nodes = getNodesByName(ast, 'data');
+exports.getDataNodes = ast => {
+  const nodes = getNodesByType(ast, 'data');
   return nodes.map(node => {
     return {
       node,
       name: getProperty(node, 'name'),
       source: getProperty(node, 'source')
-    }
+    };
   });
-}
+};
 
 exports.getHighlightJS = (ast, paths, server) => {
   // load react-syntax-highlighter from idyll's node_modules directory
@@ -47,79 +51,89 @@ exports.getHighlightJS = (ast, paths, server) => {
     return ' ';
   }
 
-  const languages = codeHighlightNodes.reduce(
-    (acc, dataNode) => {
-      const props = dataNode[1];
-      const { language } = props.reduce(
-        (hash, val) => {
-          hash[val[0]] = val[1][1];
-          return hash;
-        },
-        {}
-      );
-
-      acc[language] = true;
-      return acc;
-    },
-    {}
-  );
+  const languages = codeHighlightNodes.reduce((acc, dataNode) => {
+    const language = dataNode.properties.language.value;
+    acc[language] = true;
+    return acc;
+  }, {});
 
   if (server) {
-    const rshPath = slash(path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR })));
+    const rshPath = slash(
+      path.dirname(
+        resolve.sync('react-syntax-highlighter', {
+          basedir: paths.DEFAULT_COMPONENTS_DIR
+        })
+      )
+    );
     const rsh = require(slash(path.join(rshPath, 'light')));
-    Object.keys(languages).forEach((language) => {
+    Object.keys(languages).forEach(language => {
       let cleanedLanguage = language;
       if (languageMap[language]) {
         cleanedLanguage = languageMap[language];
       }
       try {
-        rsh.registerLanguage(language, require(slash(path.join(rshPath, 'languages', cleanedLanguage))).default);
-      } catch(e) {
-        console.warn(`Warning: could not find syntax highlighter for ${language}`);
+        rsh.registerLanguage(
+          language,
+          require(slash(path.join(rshPath, 'languages', cleanedLanguage)))
+            .default
+        );
+      } catch (e) {
+        console.warn(
+          `Warning: could not find syntax highlighter for ${language}`
+        );
       }
     });
     return;
   }
-  const rshPath = slash(path.dirname(resolve.sync('react-syntax-highlighter', { basedir: paths.DEFAULT_COMPONENTS_DIR })));
+  const rshPath = slash(
+    path.dirname(
+      resolve.sync('react-syntax-highlighter', {
+        basedir: paths.DEFAULT_COMPONENTS_DIR
+      })
+    )
+  );
 
-  let js = `var rsh = require('${slash(path.join(rshPath, 'light'))}')`
-  Object.keys(languages).forEach((language) => {
+  let js = `var rsh = require('${slash(path.join(rshPath, 'light'))}')`;
+  Object.keys(languages).forEach(language => {
     let cleanedLanguage = language;
     if (languageMap[language]) {
       cleanedLanguage = languageMap[language];
     }
     js += `
       try {
-        rsh.registerLanguage('${language}', require('${slash(path.join(rshPath, 'languages', cleanedLanguage))}').default);
+        rsh.registerLanguage('${language}', require('${slash(
+      path.join(rshPath, 'languages', cleanedLanguage)
+    )}').default);
       } catch(e) {
         console.warn("Warning: could not find syntax highlighter for ${language}");
       }
-    `
+    `;
   });
 
   return js;
-}
+};
 
-const parseMeta = (ast) => {
+const parseMeta = ast => {
   // there should only be one meta node
-  const metaNodes = getNodesByName(ast, 'meta');
+  const metaNodes = getNodesByType(ast, 'meta');
 
-  // data is stored in props, hence [1]
-  return metaNodes.length ? metaNodes[0][1].reduce(
-    (acc, prop) => {
-      acc[prop[0]] = prop[1][1];
-      return acc;
-    },
-    {}
-  ) : {};
-}
+  let metaProperties = {};
+  if (metaNodes.length > 1) {
+    console.warn('There are more than 1 meta nodes');
+  } else if (metaNodes.length === 1) {
+    getPropertyKeys(metaNodes[0]).forEach(key => {
+      metaProperties[key] = getProperty(metaNodes[0], key).value;
+    });
+  }
+  return metaProperties;
+};
 
-const formatFont = (fontName) => {
+const formatFont = fontName => {
   return fontName.split(' ').join('+');
-}
+};
 
 const getGoogleFontsUrl = ({ googleFonts }) => {
-  if(!googleFonts) {
+  if (!googleFonts) {
     return null;
   }
 
@@ -132,14 +146,20 @@ const getGoogleFontsUrl = ({ googleFonts }) => {
   }
 
   return null;
-}
+};
 
 exports.getBaseHTML = (ast, template, opts) => {
-  return mustache.render(template, Object.assign({
-    googleFontsUrl: getGoogleFontsUrl(opts),
-    favicon: opts.favicon
-  }, parseMeta(ast)));
-}
+  return mustache.render(
+    template,
+    Object.assign(
+      {
+        googleFontsUrl: getGoogleFontsUrl(opts),
+        favicon: opts.favicon
+      },
+      parseMeta(ast)
+    )
+  );
+};
 
 exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
   const components = {};
@@ -147,13 +167,14 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
     delete require.cache[require.resolve(_components[key])];
     components[key] = require(_components[key]);
   });
-
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
   const IdyllDocument = require('idyll-document').default;
   const meta = parseMeta(ast);
-  const context = require(opts.context ? opts.context : __dirname + '/../client/context');
+  const context = require(opts.context
+    ? opts.context
+    : __dirname + '/../client/context');
 
   meta.idyllContent = ReactDOMServer.renderToString(
     React.createElement(IdyllDocument, {
@@ -166,9 +187,16 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
       authorView: opts.authorView
     })
   ).trim();
-  return mustache.render(template, Object.assign({
-    favicon: opts.favicon,
-    usesTex: components.equation,
-    googleFontsUrl: getGoogleFontsUrl(opts)
-  }, meta));
-}
+
+  return mustache.render(
+    template,
+    Object.assign(
+      {
+        favicon: opts.favicon,
+        usesTex: components.equation,
+        googleFontsUrl: getGoogleFontsUrl(opts)
+      },
+      meta
+    )
+  );
+};

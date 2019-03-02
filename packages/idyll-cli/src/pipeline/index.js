@@ -13,11 +13,8 @@ const {
   getBaseHTML,
   getHTML
 } = require('./parse');
-const css = require('./css');
 const bundleJS = require('./bundle-js');
 const errors = require('../errors');
-
-const debug = require('debug')('idyll:cli');
 
 let output;
 
@@ -37,14 +34,18 @@ const build = (opts, paths, resolvers) => {
       return Promise.try(() => {
         const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
-        // Set -> Array to remove duplicate entries.
-        const uniqueComponents = Array.from(
-          new Set(
-            getComponentNodes(ast).map(node => {
-              return node[0].split('.')[0];
-            })
-          )
-        );
+        /* Change here */
+
+        let nameArray = [];
+        getComponentNodes(ast).forEach(node => {
+          if (['var', 'derived', 'data'].indexOf(node.type) > -1) {
+            nameArray.push(node.type);
+          } else {
+            // console.log('checking component names - ', node);
+            nameArray.push(node.name.split('.')[0]);
+          }
+        });
+        const uniqueComponents = Array.from(new Set(nameArray));
         const components = uniqueComponents.reduce((acc, name) => {
           let resolved = resolvers.get('components').resolve(name);
           if (resolved) acc[paramCase(name)] = resolved;

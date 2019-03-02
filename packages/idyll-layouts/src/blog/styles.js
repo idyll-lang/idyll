@@ -1,5 +1,3 @@
-
-
 export default ({ maxWidth }) => `
 
 body {
@@ -250,4 +248,4 @@ input {
     border-top: solid 2px black;
   }
 }
-`
+`;

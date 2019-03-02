@@ -30,7 +30,6 @@ Thank you to all our backers!
 
 <a href="https://opencollective.com/idyll#backers" target="_blank"><img src="https://opencollective.com/idyll/backers.svg?width=890"></a>
 
-
 ## Sponsors
 
 <img width="400px" src="https://idyll-lang.org/static/images/sponsors.png" />

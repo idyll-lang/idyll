@@ -7,6 +7,7 @@ import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
 import AuthorTool from './components/author-tool';
+import { getChildren } from 'idyll-ast';
 import equal from 'fast-deep-equal';
 
 import * as layouts from 'idyll-layouts';
@@ -84,36 +85,43 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
 
       this.usesRefs = exps.some(v => v.includes('refs.'));
 
+      this.state = { hasError: false, error: null };
+
       // listen for props updates IF we care about them
       if (vars.length || exps.length) {
         // called with new doc state
         // when any component calls updateProps()
         updatePropsCallbacks.push(this.onUpdateProps);
+        this.state = this.onUpdateProps(
+          props.initialState,
+          Object.keys(props),
+          true
+        );
       }
 
       // listen for ref updates IF we care about them
       if (props.hasHook || this.usesRefs) {
         updateRefsCallbacks.push(this.onUpdateRefs);
       }
-
-      this.state = { hasError: false, error: null };
     }
 
     componentDidCatch(error, info) {
       this.setState({ hasError: true, error: error });
     }
 
-    onUpdateProps(newState, changedKeys) {
+    onUpdateProps(newState, changedKeys, initialRender) {
       const { __vars__, __expr__ } = this.props;
 
       // were there changes to any vars we track?
       // or vars our expressions reference?
-      const shouldUpdate = changedKeys.some(k => {
-        return (
-          values(__vars__).includes(k) ||
-          values(__expr__).some(expr => expr.includes(k))
-        );
-      });
+      const shouldUpdate =
+        initialRender ||
+        changedKeys.some(k => {
+          return (
+            values(__vars__).includes(k) ||
+            values(__expr__).some(expr => expr.includes(k))
+          );
+        });
       // if nothing we care about changed bail out and don't re-render
       if (!shouldUpdate) return;
 
@@ -132,9 +140,13 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
           evalContext
         );
       });
+
+      if (initialRender) {
+        return Object.assign({ hasError: false }, nextState);
+      }
       // trigger a re-render of this component
       // and more importantly, its wrapped component
-      this.setState(Object.assign({ hasError: false }, nextState));
+      this.setState(Object.assign({ hasError: false, error: null }, nextState));
     }
 
     onUpdateRefs(newState) {
@@ -201,6 +213,7 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
           const ViewComponent = userViewComponent || AuthorTool;
           return (
             <ViewComponent
+              idyllASTNode={this.props.idyllASTNode}
               component={returnComponent}
               authorComponent={childComponent}
               uniqueKey={uniqueKey}
@@ -225,10 +238,9 @@ class IdyllRuntime extends React.PureComponent {
 
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
-
     const ast = filterASTForDocument(props.ast);
 
-    const { vars, derived, data, elements } = splitAST(ast);
+    const { vars, derived, data, elements } = splitAST(getChildren(ast));
     const Wrapper = createWrapper({
       theme: props.theme,
       layout: props.layout,
@@ -341,12 +353,13 @@ class IdyllRuntime extends React.PureComponent {
 
     const rjs = new ReactJsonSchema(components);
     const schema = translate(ast);
-
-    const wrapTargets = findWrapTargets(schema, this.state);
+    const wrapTargets = findWrapTargets(schema, this.state, props.components);
     let refCounter = 0;
-
     const transformedSchema = mapTree(schema, node => {
-      if (typeof node === 'string') return node;
+      // console.log('mapoing ', node.component || node.type);
+      if (!node.component) {
+        if (node.type && node.type === 'textnode') return node.value;
+      }
 
       // transform refs from strings to functions and store them
       if (node.ref || node.hasHook) {
@@ -367,12 +380,16 @@ class IdyllRuntime extends React.PureComponent {
           domNode: null
         };
       }
-
-      if (!wrapTargets.includes(node)) return node;
-
+      //Inspect for isHTMLNode  props and to check for dynamic components.
+      if (!wrapTargets.includes(node)) {
+        // Don't include the AST node reference on unwrapped components
+        const { idyllASTNode, ...rest } = node;
+        return rest;
+      }
       const {
         component,
         children,
+        idyllASTNode,
         key,
         __vars__ = {},
         __expr__ = {},
@@ -396,7 +413,6 @@ class IdyllRuntime extends React.PureComponent {
           );
         }
       });
-
       const resolvedComponent = rjs.resolveComponent(node);
       const isHTMLNode = typeof resolvedComponent === 'string';
 
@@ -404,9 +420,11 @@ class IdyllRuntime extends React.PureComponent {
         component: Wrapper,
         __vars__,
         __expr__,
+        idyllASTNode,
         isHTMLNode: isHTMLNode,
         hasHook: node.hasHook,
         refName: node.refName,
+        initialState: this.state,
         updateProps: newProps => {
           // init new doc state object
           const newState = {};

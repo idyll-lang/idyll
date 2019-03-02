@@ -7,6 +7,7 @@ const _componentMap = new WeakMap();
 class ReactJsonSchema {
   constructor(componentMap) {
     if (componentMap) this.setComponentMap(componentMap);
+
   }
 
   parseSchema(schema) {
@@ -24,7 +25,7 @@ class ReactJsonSchema {
     const Components = [];
     let index = 0;
     for (const subSchema of subSchemas) {
-      if (typeof subSchema === 'string') {
+      if (typeof subSchema === "string") {
         Components.push(subSchema);
       } else {
         subSchema.key = typeof subSchema.key !== 'undefined' ? subSchema.key : index;
@@ -36,6 +37,9 @@ class ReactJsonSchema {
   }
 
   createComponent(schema) {
+    if(schema.type) {
+      if(schema.type === 'textnode') return schema.value;;
+    }
     const { component, children, text, ...rest } = schema;
     const Component = this.resolveComponent(schema);
     const Children = typeof text !== 'undefined' ? text : this.resolveComponentChildren(schema);
@@ -45,7 +49,6 @@ class ReactJsonSchema {
   resolveComponent(schema) {
     const componentMap = this.getComponentMap();
     let Component;
-
     // bail early if there is no component name
     if (!schema.hasOwnProperty('component')) {
       throw new Error('ReactJsonSchema could not resolve a component due to a missing component attribute in the schema.');

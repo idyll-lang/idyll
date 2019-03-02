@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "AST Schema V1",
+  "description": "Structure of an AST object",
+  "type": "object",
+  "properties": {
+    "id": {
+      "desceription": "A unique identifier for the current element",
+      "type": "integer"
+    },
+    "type": {
+      "description": "The type category of the element (component/var/derived)",
+      "type": "string",
+      "enum": ["component", "var", "derived", "textnode", "data", "meta"]
+    },
+    "name": {
+      "description": "The name of the element",
+      "type": "string"
+    },
+    "properties": {
+      "description": "The properties/attributes of the element",
+      "type": "object",
+      "patternProperties": {
+        "^w+": {
+          "description": "Object containing data for the particular property",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The evaluation type of the property. Can be value/variable/expression",
+              "type": "string",
+              "enum": ["value", "variable", "expression"]
+            },
+            "value": {
+              "description": "Property value",
+              "type": ["string", "number", "boolean"]
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "children": {
+      "description": "The children of the element.",
+      "type": "array",
+      "items": {
+        "anyof": [
+          {
+            "$ref": "#"
+          },
+          {
+            "description": "Structure for a textnode",
+            "type": "object",
+            "properties": {
+              "id": {
+                "desceription": "A unique identifier for the current element",
+                "id": "integer"
+              },
+              "type": {
+                "description": "The type category of the element",
+                "type": "string",
+                "enum": ["textnode"]
+              },
+              "value": {
+                "description": "Text value in the textnode",
+                "type": "string"
+              }
+            },
+            "required": ["id", "type", "value"],
+            "additionalProperties": false
+          },
+          {
+            "description": "Structure for var and derived",
+            "type": "object",
+            "properties": {
+              "id": {
+                "desceription": "A unique identifier for the current element",
+                "id": "integer"
+              },
+              "type": {
+                "description": "The type category of the element",
+                "type": "string",
+                "enum": ["var", "derived"]
+              },
+              "properties": {
+                "name": {
+                  "description": "Name of the variable",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["value", "variable", "expression"]
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["name", "value"],
+                  "additionalProperties": false
+                },
+                "value": {
+                  "description": "Source for the data",
+                  "type": "object",
+                  "properties": {
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["value", "variable", "expression"]
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": ["name", "value"],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false,
+              "required": ["id", "type", "properties"]
+            }
+          },
+          {
+            "description": "Structure for data",
+            "type": "object",
+            "properties": {
+              "id": {
+                "desceription": "A unique identifier for the current element",
+                "id": "integer"
+              },
+              "type": {
+                "description": "The type category of the element",
+                "type": "string",
+                "enum": ["data"]
+              },
+              "properties": {
+                "name": {
+                  "description": "Name of the variable",
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": ["value", "variable", "expression"]
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["type", "value"],
+                  "additionalProperties": false
+                },
+                "source": {
+                  "description": "Source for the data",
+                  "type": "object",
+                  "properties": {
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["value", "variable", "expression"]
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": ["type", "value"],
+                  "additionalProperties": false
+                }
+              },
+              "required": ["id", "type", "properties"]
+            }
+          }
+        ]
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": ["id", "type"]
+}

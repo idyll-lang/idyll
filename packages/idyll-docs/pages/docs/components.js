@@ -22,7 +22,6 @@ function slugify(text)
 }
 
 const mdConverter = new showdown.Converter()
-console.log(Contents)
 
 function md2html(md, naked = false) {
   if (!md) return md
