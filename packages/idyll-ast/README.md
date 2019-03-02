@@ -67,7 +67,7 @@ There can be 5 different types of nodes in the AST.
 
 ## Properties
 
-The properties field for each component represent, it's attributes or value. The general structure for a properties field is as following:
+The properties field for each component represent, its attributes or value. The general structure for a properties field is as following:
 
 ```
 "properties" : {
@@ -272,7 +272,7 @@ Function to get the type information of a node
 
 ### idyll-ast~getText ⇒ <code>string</code>
 
-Function to get all the text from textnodes from the passes AST node
+Function to get all the text from textnodes from the passed AST node
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
 
@@ -326,7 +326,7 @@ Function to pass in a filter function to the children.
 
 ### idyll-ast~modifyNodesByName ⇒ <code>object</code>
 
-Function to modfiy nodes based on the name property.
+Function to modify nodes based on the name property.
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
 **Returns**: <code>object</code> - ast
