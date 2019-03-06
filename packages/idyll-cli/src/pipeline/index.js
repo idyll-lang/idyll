@@ -104,6 +104,9 @@ const build = (opts, paths, resolvers) => {
       output.js = js;
     })
     .then(() => {
+      console.log('JS path', paths.JS_OUTPUT_FILE);
+      console.log('CSS Path', paths.CSS_OUTPUT_FILE);
+      console.log('HTML Path', paths.HTML_OUTPUT_FILE);
       return Promise.all([
         writeFile(paths.JS_OUTPUT_FILE, output.js),
         writeFile(paths.CSS_OUTPUT_FILE, output.css),
