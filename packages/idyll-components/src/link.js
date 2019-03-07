@@ -6,31 +6,31 @@ class Link extends React.PureComponent {
   }
 
   render() {
-    let props = {...this.props};
-    if (props.url) {
-      props.href = props.url;
+    const { idyll, hasError, updateProps, ...props } = this.props;
+    let passProps = { ...props };
+    if (passProps.url) {
+      passProps.href = passProps.url;
     }
-    return (
-      <a {...props}>
-        {this.props.text || this.props.children}
-      </a>
-    );
+    return <a {...passProps}>{props.text || props.children}</a>;
   }
 }
 
 Link._idyll = {
-  name: "Link",
-  tagType: "closed",
-  displayType: "inline",
-  props: [{
-    name: "text",
-    type: "string",
-    example: '"Link Text"'
-  }, {
-    name: 'url',
-    type: 'string',
-    example: '"https://some.url/"'
-  }]
-}
+  name: 'Link',
+  tagType: 'closed',
+  displayType: 'inline',
+  props: [
+    {
+      name: 'text',
+      type: 'string',
+      example: '"Link Text"'
+    },
+    {
+      name: 'url',
+      type: 'string',
+      example: '"https://some.url/"'
+    }
+  ]
+};
 
 export default Link;
