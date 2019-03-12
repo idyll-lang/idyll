@@ -220,6 +220,7 @@ export const filterIdyllProps = (props, filterInjected) => {
     onEnterView,
     onExitViewFully,
     onExitView,
+    fullWidth,
     ...rest
   } = props;
   if (filterInjected) {
