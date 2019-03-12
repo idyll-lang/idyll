@@ -9,7 +9,7 @@ You can install idyll-ast by both `npm` and `yarn`.
 
 ```
 //using npm
-npm instal --save idyll-ast
+npm install --save idyll-ast
 
 //using yarn
 yarn add idyll-ast
