@@ -5,6 +5,7 @@ const { copy, pathExists } = require('fs-extra');
 const compile = require('idyll-compiler');
 const UglifyJS = require('uglify-js');
 const { paramCase } = require('change-case');
+const debug = require('debug')('idyll:cli');
 
 const {
   getComponentNodes,
@@ -108,12 +109,16 @@ const build = (opts, paths, resolvers) => {
         writeFile(paths.JS_OUTPUT_FILE, output.js),
         writeFile(paths.CSS_OUTPUT_FILE, output.css),
         writeFile(paths.HTML_OUTPUT_FILE, output.html),
-        pathExists(paths.STATIC_DIR).then(exists => {
-          if (exists && paths.STATIC_DIR !== paths.STATIC_OUTPUT_DIR) {
-            return copy(paths.STATIC_DIR, paths.STATIC_OUTPUT_DIR);
-          }
-          return null;
-        })
+        pathExists(paths.STATIC_DIR)
+          .then(exists => {
+            if (exists && paths.STATIC_DIR !== paths.STATIC_OUTPUT_DIR) {
+              return copy(paths.STATIC_DIR, paths.STATIC_OUTPUT_DIR);
+            }
+            return null;
+          })
+          .catch(e => {
+            debug('Error copying static files', e);
+          })
       ]);
     })
     .then(() => {
