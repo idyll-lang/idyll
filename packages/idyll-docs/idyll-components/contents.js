@@ -20,9 +20,7 @@ const components = [
             description:
               "A `FullWidth` component will break out of the text container and expand to fill the full width of the reader's browser.",
             image: 'feature.png',
-            thumbnail: 'feature.png',
-            component: COMPONENTS.FullWidth,
-            idyllProps: []
+            thumbnail: 'feature.png'
           }
         },
         {
@@ -39,16 +37,7 @@ const components = [
             description:
               'Content inside of a float will use the CSS `float` attribute to float to the left or right of its parent container.',
             thumbnail: 'float.png',
-            component: COMPONENTS.Float,
-            idyllProps: [
-              {
-                position: 'the float position: left or right.'
-              },
-              {
-                width:
-                  'the width of the component, specified in pixels or percentage.'
-              }
-            ]
+            component: COMPONENTS.Float
           }
         },
         {
@@ -65,16 +54,7 @@ const components = [
               'The `Scroller` component is used to create scroll-based presentations. See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
             thumbnail: 'scroller.gif',
             image: 'scroller.gif',
-            component: COMPONENTS.Scroller,
-            idyllProps: [
-              {
-                currentStep: 'the index of the currently selected step.'
-              },
-              {
-                currentState:
-                  'the state value associated with the currently selected step. Note you must set the state property on the step components for this value to update.'
-              }
-            ]
+            component: COMPONENTS.Scroller
           }
         },
         {
@@ -83,12 +63,7 @@ const components = [
               'The `Step` component is used to create step-based presentations, like slideshows.  See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
             thumbnail: 'stepper.gif',
             image: 'stepper.gif',
-            component: COMPONENTS.Stepper,
-            idyllProps: [
-              {
-                currentStep: 'the index of the currently selected step.'
-              }
-            ]
+            component: COMPONENTS.Stepper
           }
         }
       ]
@@ -104,18 +79,7 @@ const components = [
             thumbnail: 'action.png',
             component: COMPONENTS.Action,
             description:
-              'The `action` component allows you to add event handlers to text. For example:',
-            idyllProps: [
-              {
-                onClick: null
-              },
-              {
-                onMouseEnter: null
-              },
-              {
-                onMouseLeave: null
-              }
-            ]
+              'The `action` component allows you to add event handlers to text. For example:'
           }
         },
         {
@@ -123,13 +87,7 @@ const components = [
             thumbnail: 'boolean.png',
             image: 'boolean.gif',
             component: COMPONENTS.Boolean,
-            description: 'This will display a checkbox.',
-            idyllProps: [
-              {
-                value:
-                  'A value for the checkbox. If this value is truthy, the checkbox will be shown.'
-              }
-            ]
+            description: 'This will display a checkbox.'
           }
         },
         {
@@ -138,12 +96,7 @@ const components = [
             description:
               'This will display a button. To control what happens when the button is clicked, add an `onClick` property:',
             image: 'button.gif',
-            component: COMPONENTS.Button,
-            idyllProps: [
-              {
-                onClick: null
-              }
-            ]
+            component: COMPONENTS.Button
           }
         },
         {
@@ -151,37 +104,14 @@ const components = [
             thumbnail: 'dynamic.png',
             description: 'This will render a dynamic variable to the screen.',
             image: 'dynamic.gif',
-            component: COMPONENTS.Dynamic,
-            idyllProps: [
-              {
-                value: 'The value to display.'
-              },
-              {
-                max: 'The maximum value.'
-              },
-              {
-                min: 'The minimum value.'
-              },
-              {
-                step: 'The granularity of the changes.'
-              }
-            ]
+            component: COMPONENTS.Dynamic
           }
         },
         {
           Radio: {
             thumbnail: 'radio.png',
             component: COMPONENTS.Radio,
-            description: 'This component displays a set of radio buttons.',
-            idyllProps: [
-              {
-                value: 'the value of the "checked" radio button'
-              },
-              {
-                options:
-                  'an array representing the different buttons. Can be an array of strings like `["val1", "val2"]` or an array of objects `[{ value: "val1", label: "Value 1" }, { value: "val2", label: "Value 2" }]`.'
-              }
-            ]
+            description: 'This component displays a set of radio buttons.'
           }
         },
         {
@@ -189,50 +119,21 @@ const components = [
             thumbnail: 'range.png',
             component: COMPONENTS.Range,
             description: 'This component displays a range slider.',
-            image: 'displayvar.gif',
-            idyllProps: [
-              {
-                value:
-                  'The value to display; if this is a variable, the variable will automatically be updated when the slider is moved.'
-              },
-              {
-                max: 'The maximum value.'
-              },
-              {
-                min: 'The minimum value.'
-              },
-              {
-                step: 'The granularity of the slider.'
-              }
-            ]
+            image: 'displayvar.gif'
           }
         },
         {
           Select: {
             thumbnail: 'select.png',
             component: COMPONENTS.Select,
-            description: 'This component displays a selection dropdown.',
-            idyllProps: [
-              {
-                value: 'the currently selected value.'
-              },
-              {
-                options:
-                  'an array representing the different options. Can be an array of strings like `["val1", "val2"]` or an array of objects `[{ value: "val1", label: "Value 1" }, { value: "val2", label: "Value 2" }]`.'
-              }
-            ]
+            description: 'This component displays a selection dropdown.'
           }
         },
         {
           TextInput: {
             thumbnail: 'text-input.png',
             component: COMPONENTS.TextInput,
-            description: 'A user-editable text input field.',
-            idyllProps: [
-              {
-                value: 'the current value of the text entry box.'
-              }
-            ]
+            description: 'A user-editable text input field.'
           }
         }
       ]
@@ -248,29 +149,7 @@ const components = [
             thumbnail: 'chart.png',
             component: COMPONENTS.Chart,
             description: 'This will display a chart.',
-            image: 'chart.png',
-            idyllProps: [
-              {
-                data:
-                  'A JSON object containing the data for this chart. It uses the [victory](https://formidable.com/open-source/victory/docs) library to handle rendering, so see those docs for more information on what types of data can be passed in.'
-              },
-              {
-                type:
-                  'The type of the chart to display, can be `line`, `scatter`, `bar`, `pie`, or `time`. The time type is a line chart that expects the `x` values in the data to be in the temporal domain.'
-              },
-              {
-                domain:
-                  'The chart extent along the x dimension. *Default is [0, 1]*'
-              },
-              {
-                range:
-                  'The chart extent along the y dimension. *Default is [0, 1]*'
-              },
-              {
-                theme:
-                  'The theme to use, e.g. `grayscale` or `material` or a custom object (see [an example here](https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js))'
-              }
-            ]
+            image: 'chart.png'
           }
         },
         {
@@ -278,13 +157,7 @@ const components = [
             thumbnail: 'conditional.png',
             description:
               'This component will conditionally display its children.',
-            component: COMPONENTS.Conditional,
-            idyllProps: [
-              {
-                if:
-                  'An expression; if this evaluates to true, the children will be rendered, otherwise nothing will be drawn to the screen'
-              }
-            ]
+            component: COMPONENTS.Conditional
           }
         },
         {
@@ -352,28 +225,7 @@ const components = [
             thumbnail: 'youtube.png',
             component: COMPONENTS.Youtube,
             description:
-              'Plays a video from YouTube. All of the parameters are optional except for id, which must be provided. See all available options at https://developers.google.com/youtube/player_parameters',
-            idyllProps: [
-              {
-                id: 'YouTube video id. Required.'
-              },
-              {
-                width: 'width of the video'
-              },
-              {
-                height: 'height of the video'
-              },
-              {
-                play: 'Is the video playing? Default: false'
-              },
-              {
-                audio: 'Is the audio turned on? Default: true'
-              },
-              {
-                options:
-                  'Dictionary of extra options. See YouTube docs for all options.'
-              }
-            ]
+              'Plays a video from YouTube. All of the parameters are optional except for id, which must be provided. See all available options at https://developers.google.com/youtube/player_parameters'
           }
         }
       ]
@@ -430,13 +282,7 @@ const components = [
             thumbnail: 'preload.png',
             component: COMPONENTS.Preload,
             description:
-              'This will preload an array of images, useful if you want to show them later on in the article and not have a loading flash.',
-            idyllProps: [
-              {
-                images:
-                  'the array of images: `["image-url-1.png", "image-url-2.jpg"]`.'
-              }
-            ]
+              'This will preload an array of images, useful if you want to show them later on in the article and not have a loading flash.'
           }
         }
       ]
