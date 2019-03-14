@@ -34,21 +34,13 @@ export const buildExpression = (acc, expr, isEventHandler) => {
   let identifiers = [];
   let modifiedExpression = '';
 
-  // console.log(acc);
   try {
     modifiedExpression = falafel(
       isEventHandler ? expr : `var __idyllReturnValue = ${expr || 'undefined'}`,
       node => {
         switch (node.type) {
           case 'Identifier':
-            console.log(node.name);
             const skip = isPropertyAccess(node) || isObjectKey(node);
-            console.log(
-              'skip',
-              skip,
-              isPropertyAccess(node),
-              isObjectKey(node)
-            );
             if (Object.keys(acc).indexOf(node.name) > -1) {
               identifiers.push(node.name);
               if (!skip) {
@@ -149,7 +141,6 @@ export const evalExpression = (acc, expr, key, context) => {
         return eval('(' + evalString + ')');
       } catch (err) {
         console.warn('Error occurred in Idyll expression');
-        console.warn('(' + evalString + ')');
         console.error(err);
       }
     }.call(Object.assign({}, acc), e);
