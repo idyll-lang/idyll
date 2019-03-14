@@ -301,4 +301,8 @@ const idyll = (options = {}, cb) => {
   return inst;
 };
 
+idyll.getVersion = () => {
+  return require('../package.json').version;
+};
+
 module.exports = idyll;
