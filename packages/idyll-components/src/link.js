@@ -23,12 +23,14 @@ Link._idyll = {
     {
       name: 'text',
       type: 'string',
-      example: '"Link Text"'
+      example: '"Link Text"',
+      description: 'The text to display'
     },
     {
       name: 'url',
       type: 'string',
-      example: '"https://some.url/"'
+      example: '"https://some.url/"',
+      description: 'The URL to open when the link is clicked'
     }
   ]
 };

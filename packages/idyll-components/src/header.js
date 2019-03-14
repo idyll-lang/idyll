@@ -70,6 +70,19 @@ Header._idyll = {
       example: '"author.website"'
     },
     {
+      name: 'authors',
+      type: 'array',
+      example: "`[{name: 'Jane Doe', link: 'https://website.com'}]`",
+      description:
+        'An array of authors. Each element of the array can be an object or a string.'
+    },
+    {
+      name: 'date',
+      type: 'string',
+      example: '"December 25, 2018"',
+      description: 'The publication date.'
+    },
+    {
       name: 'background',
       type: 'string',
       example: '"#222"',

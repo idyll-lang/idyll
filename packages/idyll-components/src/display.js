@@ -9,7 +9,7 @@ class Display extends React.PureComponent {
 
   formatValue(v) {
     const t = typeof v;
-    switch(t) {
+    switch (t) {
       case 'object':
         return JSON.stringify(v);
       case 'number':
@@ -23,28 +23,29 @@ class Display extends React.PureComponent {
   render() {
     const { value } = this.props;
     const v = value !== undefined ? value : this.props.var;
-    return (
-      <span>
-        {this.formatValue(v)}
-      </span>
-    );
+    return <span>{this.formatValue(v)}</span>;
   }
 }
 
-
 Display._idyll = {
-  name: "Display",
-  tagType: "closed",
-  displayType: "inline",
-  props: [{
-    name: "value",
-    type: "number",
-    example: "x"
-  }, {
-    name: "format",
-    type: "string",
-    example: '"0.2f"'
-  }]
-}
+  name: 'Display',
+  tagType: 'closed',
+  displayType: 'inline',
+  props: [
+    {
+      name: 'value',
+      type: 'any',
+      example: 'x',
+      description: 'The value to be displayed.'
+    },
+    {
+      name: 'format',
+      type: 'string',
+      example: '"0.2f"',
+      description:
+        'The format to use, powered by [d3-format](https://github.com/d3/d3-format).'
+    }
+  ]
+};
 
 export default Display;
