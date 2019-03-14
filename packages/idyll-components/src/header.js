@@ -85,13 +85,15 @@ Header._idyll = {
     {
       name: 'background',
       type: 'string',
-      example: '"#222"',
+      example: '"blue"',
+      defaultValue: '"#222"',
       description: 'The background of the header. Can pass a color or a url().'
     },
     {
       name: 'color',
       type: 'string',
-      example: '"#fff"',
+      example: '"#000"',
+      defaultValue: '"#fff"',
       description: 'The text color of the header.'
     }
   ]

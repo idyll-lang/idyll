@@ -107,14 +107,16 @@ YoutubeComponent._idyll = {
     {
       name: 'audio',
       type: 'boolean',
-      example: 'true',
-      description: 'Is the audio turned on? Default: true'
+      example: 'false',
+      defaultValue: 'true',
+      description: 'Is the audio turned on?'
     },
     {
       name: 'play',
       type: 'boolean',
       example: 'true',
-      description: 'Is the video playing? Default: false'
+      defaultValue: 'false',
+      description: 'Is the video playing?'
     },
     {
       name: 'id',
@@ -125,7 +127,8 @@ YoutubeComponent._idyll = {
     {
       name: 'options',
       type: 'object',
-      example: '`{}`',
+      example: '`{ modestbranding: 1 }`',
+      defaultValue: '`{}`',
       description:
         'Dictionary of extra options. See YouTube docs for all options.'
     }

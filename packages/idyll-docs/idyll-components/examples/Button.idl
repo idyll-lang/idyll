@@ -1,1 +1,6 @@
+[var name:"myVar" value:0 /]
+
 [button onClick:`myVar += 1`]Click Me![/button]
+
+Variable value: [Display value:myVar /]
+

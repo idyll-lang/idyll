@@ -60,6 +60,7 @@ Range._idyll = {
       name: 'step',
       type: 'number',
       example: '1',
+      defaultValue: '1',
       description: 'The granularity of the slider.'
     }
   ]

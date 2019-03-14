@@ -46,6 +46,7 @@ Analytics._idyll = {
       name: 'google',
       type: 'string',
       example: '"UA-XXXXXXX"',
+      defaultValue: 'none',
       description: 'The google analytics Identifier.'
     }
   ]
