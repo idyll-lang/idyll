@@ -201,6 +201,16 @@ const exampleGroups = [
     title: 'Tutorials',
     examples: [
       {
+        label: 'Triggering Updates',
+        subtitle: 'How to update components in response to user events.',
+        href:
+          'https://idyll.pub/post/triggering-updates-22d46bef1e64218d16f2a97b/',
+        image:
+          'https://idyll.pub/post/triggering-updates-22d46bef1e64218d16f2a97b/static/images/share.png',
+        sourceUrl:
+          'https://github.com/mathisonian/idyll-tutorial-triggering-updates'
+      },
+      {
         label: 'Animating with Idyll',
         subtitle:
           'How to use CSS animations and custom tweening to animate elements.',
