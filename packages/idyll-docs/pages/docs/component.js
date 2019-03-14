@@ -33,9 +33,6 @@ class IdyllComponentDoc extends React.Component {
 
     const exampleCode = Examples[title];
 
-    console.log(component);
-    console.log(component._idyll);
-
     return (
       <div id={hrefId}>
         <h1>{title}</h1>
@@ -50,10 +47,14 @@ class IdyllComponentDoc extends React.Component {
             <code>{exampleCode}</code>
           </pre>
         )}
-        {component._idyll.props && component._idyll.props.length > 0 && (
+        {((component && component._idyll.props) || idyllProps) && (
           <div>
             <h4>Props</h4>
-            <ul>{component._idyll.props.map(p => this.renderPropBullet(p))}</ul>
+            <ul>
+              {(component ? component._idyll.props : idyllProps).map(p =>
+                this.renderPropBullet(p)
+              )}
+            </ul>
           </div>
         )}
       </div>
@@ -61,13 +62,11 @@ class IdyllComponentDoc extends React.Component {
   }
 
   renderPropBullet(prop) {
-    const { name, type, example } = prop;
-    const description = prop[name];
+    const { name, type, example, description } = prop;
     return (
       <li key={name} className="idyll-prop">
-        <b>{name}</b>
-        <code>{type}</code> &mdash;{' '}
-        {/* <span>{ md2html(description) }</span> */}
+        <b>{name}</b> <code>{type}</code> &mdash;{' '}
+        <span>{md2html(description)}</span>
       </li>
     );
   }

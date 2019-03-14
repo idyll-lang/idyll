@@ -252,27 +252,41 @@ const components = [
               'The meta component adds context to the page template when building your app for publication. The following variables are available and will be inserted as `<meta>` properties into the head of your HTML page if you define them:',
             idyllProps: [
               {
-                title: 'the page title.'
+                name: 'title',
+                type: 'string',
+                description: 'the page title.'
               },
               {
-                description: 'a short description of your project.'
+                name: 'description',
+                type: 'string',
+                description: 'A short description of your project.'
               },
               {
-                url: 'the canonical URL from this project.'
+                name: 'url',
+                type: 'string',
+                description: 'The canonical URL from this project.'
               },
               {
-                twitterHandle:
-                  "the author's twitter handle, it will create a link in the twitter card."
+                name: 'twitterHandle',
+                type: 'string',
+                description:
+                  "The author's twitter handle, it will create a link in the twitter card."
               },
               {
-                shareImageUrl:
-                  'the URL of an image to be shared on social media (twitter cards, etc.). This must be a fully qualified URL, e.g. https://idyll-lang.github.io/images/logo.png.'
+                name: 'shareImageUrl',
+                type: 'string',
+                description:
+                  'The URL of an image to be shared on social media (twitter cards, etc.). This must be a fully qualified URL, e.g. https://idyll-lang.github.io/images/logo.png.'
               },
               {
-                shareImageWidth: 'the width of the share image in pixels.'
+                name: 'shareImageWidth',
+                type: 'string',
+                description: 'The width of the share image in pixels.'
               },
               {
-                shareImageHeight: 'the height of the share image in pixels.'
+                name: 'shareImageHeight',
+                type: 'string',
+                description: 'The height of the share image in pixels.'
               }
             ]
           }
