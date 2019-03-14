@@ -3,7 +3,6 @@ import React from 'react';
 class Header extends React.PureComponent {
   render() {
     const { background, color } = this.props;
-    console.log('rendering header');
     return (
       <div className={'article-header'} style={{ background, color }}>
         <h1 className={'hed'}>{this.props.title}</h1>

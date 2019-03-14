@@ -867,6 +867,13 @@ img {
     max-width: none;
     padding: 0;
   }
+
+  h1.hed {
+    font-size: 2em;
+  }
+  h2.dek {
+    font-size: 1em;
+  }
 }
 
 `;

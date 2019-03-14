@@ -233,10 +233,12 @@ input {
   }
 
   .idyll-root {
-    width: 90vw;
-    max-width: 600px;
     margin: 0 auto;
     padding-bottom: 80vh;
+  }
+  .article-header {
+    margin: 0 auto;
+    padding-left: 1em;
   }
   .fixed {
     position: fixed;
