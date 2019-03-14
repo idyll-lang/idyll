@@ -106,6 +106,7 @@ Chart._idyll = {
       name: 'type',
       type: 'string',
       example: '"scatter"',
+      defaultValue: "'line'",
       description:
         'The type of the chart to display, can be `line`, `scatter`, `bar`, `pie`, or `time`. The time type is a line chart that expects the `x` values in the data to be in the temporal domain.'
     },
@@ -120,18 +121,21 @@ Chart._idyll = {
       name: 'domain',
       type: 'array',
       example: '`[0, 1]`',
+      defaultValue: '`[0, 1]`',
       description: 'The chart extent along the x dimension.'
     },
     {
       name: 'range',
       type: 'array',
       example: '`[0, 1]`',
+      defaultValue: '`[0, 1]`',
       description: 'The chart extent along the y dimension.'
     },
     {
       name: 'theme',
       type: 'string',
-      example: "'grayscale'",
+      example: "'material'",
+      defaultValue: "'grayscale'",
       description:
         'The theme to use, e.g. `grayscale` or `material` or a custom object (see [an example here](https://github.com/FormidableLabs/victory/blob/master/packages/victory-core/src/victory-theme/grayscale.js))'
     }

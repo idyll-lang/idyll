@@ -5,6 +5,8 @@ import { indexedComponents } from '../../idyll-components/contents';
 import showdown from 'showdown';
 import Parser from 'html-react-parser';
 import * as Examples from '../../idyll-components/examples';
+import * as IdyllComponents from 'idyll-components';
+import IdyllDocument from 'idyll-document';
 
 showdown.setFlavor('github');
 const mdConverter = new showdown.Converter();
@@ -28,7 +30,8 @@ class IdyllComponentDoc extends React.Component {
       description,
       image,
       idyllProps,
-      component
+      component,
+      liveExample
     } = this.props.component;
 
     const exampleCode = Examples[title];
@@ -37,19 +40,23 @@ class IdyllComponentDoc extends React.Component {
       <div id={hrefId}>
         <h1>{title}</h1>
         {md2html(description)}
-        {image && (
+        {!liveExample && image && (
           <figure>
             <img src={`/static/images/components/${image}`} alt={title} />
           </figure>
         )}
-        {exampleCode && (
-          <pre>
-            <code>{exampleCode}</code>
-          </pre>
+        {liveExample && exampleCode && (
+          <div>
+            <h3>Live Example</h3>
+            <IdyllDocument markup={exampleCode} components={IdyllComponents} />
+            <pre>
+              <code>{exampleCode}</code>
+            </pre>
+          </div>
         )}
         {((component && component._idyll.props) || idyllProps) && (
           <div>
-            <h4>Props</h4>
+            <h3>Props</h3>
             <ul>
               {(component ? component._idyll.props : idyllProps).map(p =>
                 this.renderPropBullet(p)
@@ -57,16 +64,37 @@ class IdyllComponentDoc extends React.Component {
             </ul>
           </div>
         )}
+        {!liveExample && exampleCode && (
+          <div>
+            <h3>Example Code</h3>
+            <pre>
+              <code>{exampleCode}</code>
+            </pre>
+          </div>
+        )}
       </div>
     );
   }
 
   renderPropBullet(prop) {
-    const { name, type, example, description } = prop;
+    const { name, type, example, defaultValue, description } = prop;
     return (
       <li key={name} className="idyll-prop">
-        <b>{name}</b> <code>{type}</code> &mdash;{' '}
+        <b>{name}</b> <code>{type}</code> <br />
+        <br />
         <span>{md2html(description)}</span>
+        <ul>
+          {example ? (
+            <li>
+              <em>Example</em>: <code>{example}</code>
+            </li>
+          ) : null}
+          {defaultValue ? (
+            <li>
+              <em>Default value</em>: <code>{defaultValue}</code>
+            </li>
+          ) : null}
+        </ul>
       </li>
     );
   }
@@ -98,6 +126,28 @@ export default class IdyllComponentPage extends React.PureComponent {
           </Link>
           <IdyllComponentDoc component={comp} />
         </div>
+        <style jsx global>{`
+          ul {
+            list-style-type: none;
+          }
+          .idyll-prop {
+            margin-bottom: 1em;
+            padding: 1em;
+            overflow-x: auto;
+            background: #efefef;
+          }
+          .idyll-prop ul li {
+            margin-top: 1em;
+          }
+
+          .idyll-prop code {
+            border: solid 1px #222;
+            border-radius: 5px;
+            margin: 0 5px;
+            background: #fff;
+            white-space: nowrap;
+          }
+        `}</style>
       </Layout>
     );
   }

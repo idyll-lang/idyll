@@ -12,7 +12,8 @@ const components = [
               'Content inside of an aside component will be displayed in the margin of your document. For example, the [consumer complaints](https://mathisonian.github.io/consumer-complaints/) article uses the `Aside` component to display a small chart and caption:',
             image: 'aside.png',
             thumbnail: 'aside.png',
-            component: COMPONENTS.Aside
+            component: COMPONENTS.Aside,
+            liveExample: false
           }
         },
         {
@@ -20,7 +21,8 @@ const components = [
             description:
               "A `FullWidth` component will break out of the text container and expand to fill the full width of the reader's browser.",
             image: 'feature.png',
-            thumbnail: 'feature.png'
+            thumbnail: 'feature.png',
+            liveExample: false
           }
         },
         {
@@ -29,7 +31,8 @@ const components = [
               'Content inside of a `fixed` component will be locked in place, even when the rest of the document scrolls. The [scroll](https://idyll-lang.github.io/idyll/scroll) example uses the `fixed` component to keep the dynamic chart in place:',
             thumbnail: 'fixed.gif',
             image: 'fixed.gif',
-            component: COMPONENTS.Fixed
+            component: COMPONENTS.Fixed,
+            liveExample: false
           }
         },
         {
@@ -37,7 +40,8 @@ const components = [
             description:
               'Content inside of a float will use the CSS `float` attribute to float to the left or right of its parent container.',
             thumbnail: 'float.png',
-            component: COMPONENTS.Float
+            component: COMPONENTS.Float,
+            liveExample: false
           }
         },
         {
@@ -45,7 +49,8 @@ const components = [
             thumbnail: 'inline.png',
             description:
               'The `inline` component adds the `display: inline-block` style property, so that items inside of `inline` component will be displayed next to each other. For example, this code will display three images side by side:',
-            component: COMPONENTS.Inline
+            component: COMPONENTS.Inline,
+            liveExample: false
           }
         },
         {
@@ -54,7 +59,8 @@ const components = [
               'The `Scroller` component is used to create scroll-based presentations. See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
             thumbnail: 'scroller.gif',
             image: 'scroller.gif',
-            component: COMPONENTS.Scroller
+            component: COMPONENTS.Scroller,
+            liveExample: false
           }
         },
         {
@@ -63,7 +69,8 @@ const components = [
               'The `Step` component is used to create step-based presentations, like slideshows.  See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
             thumbnail: 'stepper.gif',
             image: 'stepper.gif',
-            component: COMPONENTS.Stepper
+            component: COMPONENTS.Stepper,
+            liveExample: false
           }
         }
       ]
@@ -79,7 +86,8 @@ const components = [
             thumbnail: 'action.png',
             component: COMPONENTS.Action,
             description:
-              'The `action` component allows you to add event handlers to text. For example:'
+              'The `action` component allows you to add event handlers to text. For example:',
+            liveExample: true
           }
         },
         {
@@ -87,7 +95,8 @@ const components = [
             thumbnail: 'boolean.png',
             image: 'boolean.gif',
             component: COMPONENTS.Boolean,
-            description: 'This will display a checkbox.'
+            description: 'This will display a checkbox.',
+            liveExample: true
           }
         },
         {
@@ -96,7 +105,8 @@ const components = [
             description:
               'This will display a button. To control what happens when the button is clicked, add an `onClick` property:',
             image: 'button.gif',
-            component: COMPONENTS.Button
+            component: COMPONENTS.Button,
+            liveExample: true
           }
         },
         {
@@ -104,14 +114,16 @@ const components = [
             thumbnail: 'dynamic.png',
             description: 'This will render a dynamic variable to the screen.',
             image: 'dynamic.gif',
-            component: COMPONENTS.Dynamic
+            component: COMPONENTS.Dynamic,
+            liveExample: true
           }
         },
         {
           Radio: {
             thumbnail: 'radio.png',
             component: COMPONENTS.Radio,
-            description: 'This component displays a set of radio buttons.'
+            description: 'This component displays a set of radio buttons.',
+            liveExample: true
           }
         },
         {
@@ -119,21 +131,24 @@ const components = [
             thumbnail: 'range.png',
             component: COMPONENTS.Range,
             description: 'This component displays a range slider.',
-            image: 'displayvar.gif'
+            image: 'displayvar.gif',
+            liveExample: true
           }
         },
         {
           Select: {
             thumbnail: 'select.png',
             component: COMPONENTS.Select,
-            description: 'This component displays a selection dropdown.'
+            description: 'This component displays a selection dropdown.',
+            liveExample: true
           }
         },
         {
           TextInput: {
             thumbnail: 'text-input.png',
             component: COMPONENTS.TextInput,
-            description: 'A user-editable text input field.'
+            description: 'A user-editable text input field.',
+            liveExample: true
           }
         }
       ]
@@ -149,7 +164,8 @@ const components = [
             thumbnail: 'chart.png',
             component: COMPONENTS.Chart,
             description: 'This will display a chart.',
-            image: 'chart.png'
+            image: 'chart.png',
+            liveExample: true
           }
         },
         {
@@ -157,7 +173,8 @@ const components = [
             thumbnail: 'conditional.png',
             description:
               'This component will conditionally display its children.',
-            component: COMPONENTS.Conditional
+            component: COMPONENTS.Conditional,
+            liveExample: true
           }
         },
         {
@@ -166,7 +183,8 @@ const components = [
             component: COMPONENTS.Display,
             description:
               'This will render the value of a variable to the screen. It is mostly useful for debugging:',
-            image: 'displayvar.gif'
+            image: 'displayvar.gif',
+            liveExample: true
           }
         },
         {
@@ -175,7 +193,8 @@ const components = [
             component: COMPONENTS.Equation,
             description:
               'This uses [KaTeX](https://github.com/Khan/KaTeX) to typeset mathematical equations. Example:',
-            image: 'equation.png'
+            image: 'equation.png',
+            liveExample: true
           }
         },
         {
@@ -183,7 +202,8 @@ const components = [
             thumbnail: 'gist.png',
             component: COMPONENTS.Gist,
             description: 'Embed a github gist',
-            image: 'gist.png'
+            image: 'gist.png',
+            liveExample: true
           }
         },
         {
@@ -192,7 +212,8 @@ const components = [
             component: COMPONENTS.Header,
             description:
               'This component makes it easy to add a title, subtitle, and byline to your article:',
-            image: 'header.png'
+            image: 'header.png',
+            liveExample: true
           }
         },
         {
@@ -200,7 +221,8 @@ const components = [
             thumbnail: 'link.png',
             component: COMPONENTS.Link,
             description:
-              'This component just acts as syntactic sugar for displaying links inline in your text.'
+              'This component just acts as syntactic sugar for displaying links inline in your text.',
+            liveExample: true
           }
         },
         {
@@ -208,7 +230,8 @@ const components = [
             thumbnail: 'svg.png',
             component: COMPONENTS.SVG,
             description:
-              'This component will display an SVG file inline using https://github.com/matthewwithanm/react-inlinesvg. This makes it easy to style the SVG with css, as opposed to displaying the svg inside of an image tag.'
+              'This component will display an SVG file inline using https://github.com/matthewwithanm/react-inlinesvg. This makes it easy to style the SVG with css, as opposed to displaying the svg inside of an image tag.',
+            liveExample: true
           }
         },
         {
@@ -217,7 +240,8 @@ const components = [
             component: COMPONENTS.Table,
             description:
               'Display tabular data. Uses https://github.com/react-tools/react-table under the hood to render the table.',
-            image: 'table.png'
+            image: 'table.png',
+            liveExample: true
           }
         },
         {
@@ -225,7 +249,8 @@ const components = [
             thumbnail: 'youtube.png',
             component: COMPONENTS.Youtube,
             description:
-              'Plays a video from YouTube. All of the parameters are optional except for id, which must be provided. See all available options at https://developers.google.com/youtube/player_parameters'
+              'Plays a video from YouTube. All of the parameters are optional except for id, which must be provided. See all available options at https://developers.google.com/youtube/player_parameters',
+            liveExample: true
           }
         }
       ]
@@ -241,7 +266,8 @@ const components = [
             thumbnail: 'analytics.png',
             component: COMPONENTS.Analytics,
             description:
-              'This component makes it easy to insert a Google Analytics code on your page.'
+              'This component makes it easy to insert a Google Analytics code on your page.',
+            liveExample: false
           }
         },
         {
@@ -250,6 +276,7 @@ const components = [
             component: COMPONENTS.Meta,
             description:
               'The meta component adds context to the page template when building your app for publication. The following variables are available and will be inserted as `<meta>` properties into the head of your HTML page if you define them:',
+            liveExample: false,
             idyllProps: [
               {
                 name: 'title',
@@ -296,7 +323,8 @@ const components = [
             thumbnail: 'preload.png',
             component: COMPONENTS.Preload,
             description:
-              'This will preload an array of images, useful if you want to show them later on in the article and not have a loading flash.'
+              'This will preload an array of images, useful if you want to show them later on in the article and not have a loading flash.',
+            liveExample: false
           }
         }
       ]

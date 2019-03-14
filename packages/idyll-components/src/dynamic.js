@@ -54,18 +54,21 @@ Dynamic._idyll = {
       name: 'step',
       type: 'string',
       example: '1',
+      defaultValue: '1',
       description: 'The granularity of the changes.'
     },
     {
       name: 'min',
       type: 'number',
       example: '-100',
+      defaultValue: 'none',
       description: 'The minimum value.'
     },
     {
       name: 'max',
       type: 'number',
       example: '100',
+      defaultValue: 'none',
       description: 'The maximum value.'
     }
   ]

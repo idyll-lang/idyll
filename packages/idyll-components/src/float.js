@@ -27,6 +27,7 @@ Float._idyll = {
       name: 'width',
       type: 'string',
       example: '"50%"',
+      defaultValue: '"50%"',
       description:
         'the width of the component, specified in pixels or percentage.'
     }
