@@ -65,22 +65,37 @@ TableComponent._idyll = {
     {
       name: 'data',
       type: 'array',
-      example: 'x'
+      description:
+        'The data to be shown in a table. Should be an array of object.',
+      example: '`[{name: "A", value: 0}, {name: "B", value: 5}]`'
+    },
+    {
+      name: 'defaultPageSize',
+      type: 'number',
+      example: '10',
+      description: 'The number of datapoints to be shown on a page.',
+      defaultValue: '20'
     },
     {
       name: 'showPagination',
       type: 'boolean',
-      example: 'false'
+      example: 'false',
+      description: 'Show next and previous page buttons.',
+      defaultValue: 'true'
     },
     {
       name: 'showPageSizeOptions',
       type: 'boolean',
-      example: 'false'
+      example: 'false',
+      description: 'Show options to configure page size.',
+      defaultValue: 'false'
     },
     {
       name: 'showPageJump',
       type: 'boolean',
-      example: 'false'
+      example: 'false',
+      description: 'Show page jump option.',
+      defaultValue: 'false'
     }
   ]
 };

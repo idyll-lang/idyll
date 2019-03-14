@@ -174,6 +174,7 @@ Equation._idyll = {
       name: 'display',
       type: 'boolean',
       example: 'true',
+      defaultValue: 'false',
       description:
         'Set to `true` for a centered, standalone equation, set to `false` for an inline equation.'
     }
