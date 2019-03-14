@@ -810,6 +810,8 @@ hr {
   margin: 75vh 0 75vh 0;
   padding: 50px;
   background: white;
+  border: solid 1px #333;
+  box-shadow: #ddd 2px 2px 3px;
 }
 
 .idyll-root {

@@ -118,6 +118,20 @@ Chart._idyll = {
         'A JSON object containing the data for this chart. It uses the [victory](https://formidable.com/open-source/victory/docs) library to handle rendering, so see those docs for more information on what types of data can be passed in.'
     },
     {
+      name: 'x',
+      type: 'string',
+      example: '"year"',
+      defaultValue: '"x"',
+      description: 'The data property to be used for the `x` dimension.'
+    },
+    {
+      name: 'y',
+      type: 'string',
+      example: '"value"',
+      defaultValue: '"y"',
+      description: 'The data property to be used for the `y` dimension.'
+    },
+    {
       name: 'domain',
       type: 'array',
       example: '`[0, 1]`',
