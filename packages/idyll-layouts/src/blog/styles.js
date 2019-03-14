@@ -26,7 +26,9 @@ body {
 
 .article-header {
   width: 600px;
-  max-width: 90vw;
+  width: 100%;
+  text-align: left;
+  padding-left: 50px;
   margin-bottom: 45px;
 }
 
