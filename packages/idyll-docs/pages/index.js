@@ -337,6 +337,8 @@ The value of x is [Display value:x format:"d" /].
             padding: 10px;
             border: 1px solid #4c4b63;
             color: white;
+            font-size: 12px;
+            box-shadow: inset 2px 2px 2px 0px #333;
           }
           textarea:focus {
             outline: none !important;

@@ -68,6 +68,18 @@ Header._idyll = {
       name: 'authorLink',
       type: 'string',
       example: '"author.website"'
+    },
+    {
+      name: 'background',
+      type: 'string',
+      example: '"#222"',
+      description: 'The background of the header. Can pass a color or a url().'
+    },
+    {
+      name: 'color',
+      type: 'string',
+      example: '"#fff"',
+      description: 'The text color of the header.'
     }
   ]
 };

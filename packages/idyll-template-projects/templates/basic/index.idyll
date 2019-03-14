@@ -21,6 +21,7 @@ idyll, run the commnad `idyll` inside of this directory.
 Idyll posts are designed to support interaction and
 data-driven graphics.
 
+[var name:"state" value:0 /]
 [CustomD3Component className:"d3-component" state:state /]
 [button onClick:`state++`]
   Click Me.
