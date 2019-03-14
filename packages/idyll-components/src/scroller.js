@@ -23,7 +23,7 @@ const styles = {
     top: '50%',
     transform: 'translateY(-50%)'
   }
-}
+};
 
 let id = 0;
 
@@ -56,9 +56,8 @@ class Scroller extends React.Component {
       })
       .onStepEnter(this.handleStepEnter.bind(this))
       // .onStepExit(handleStepExit)
-      .onContainerEnter(this.handleContainerEnter.bind(this))
-      //.onContainerExit(this.handleContainerExit.bind(this));
-
+      .onContainerEnter(this.handleContainerEnter.bind(this));
+    //.onContainerExit(this.handleContainerExit.bind(this));
 
     // setup resize event
     window.addEventListener('resize', this.handleResize.bind(this));
@@ -79,30 +78,48 @@ class Scroller extends React.Component {
   handleResize() {
     this.setState({
       graphicHeight: window.innerHeight + 'px',
-      graphicWidth: window.innerWidth + 'px',
+      graphicWidth: window.innerWidth + 'px'
     });
   }
 
   handleContainerEnter(response) {
-    if (this.props.disableScroll && (!this.props.currentStep || this.props.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)) {
+    if (
+      this.props.disableScroll &&
+      (!this.props.currentStep ||
+        this.props.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)
+    ) {
       d3.select('body').style('overflow', 'hidden');
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.disableScroll && this.props.currentStep !== nextProps.currentStep) {
+    if (
+      nextProps.disableScroll &&
+      this.props.currentStep !== nextProps.currentStep
+    ) {
       d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
-        .filter(function (d, i) { return i === nextProps.currentStep; })
+        .filter(function(d, i) {
+          return i === nextProps.currentStep;
+        })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
-    if (nextProps.disableScroll && this.props.currentState !== nextProps.currentState) {
+    if (
+      nextProps.disableScroll &&
+      this.props.currentState !== nextProps.currentState
+    ) {
       d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
-        .filter((d, i) => { return nextProps.currentState === this.SCROLL_NAME_MAP[i] })
+        .filter((d, i) => {
+          return nextProps.currentState === this.SCROLL_NAME_MAP[i];
+        })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
-    if (nextProps.disableScroll && (!nextProps.currentStep || nextProps.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)) {
+    if (
+      nextProps.disableScroll &&
+      (!nextProps.currentStep ||
+        nextProps.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)
+    ) {
       d3.select('body').style('overflow', 'hidden');
     }
   }
@@ -116,37 +133,47 @@ class Scroller extends React.Component {
     const { hasError, updateProps, idyll, children, ...props } = this.props;
     const { graphicHeight, graphicWidth } = this.state;
 
-    const graphicChildren = filterChildren(
-      children,
-      (c) => {
-        return c.type.name && c.type.name.toLowerCase() === 'graphic';
-      }
-    );
+    const graphicChildren = filterChildren(children, c => {
+      return c.type.name && c.type.name.toLowerCase() === 'graphic';
+    });
 
     return (
-      <div ref={(ref) => this.ref = ref} className="idyll-scroll" id={`idyll-scroll-${this.id}`}
-        style={Object.assign({ position: 'relative' })}>
-        {
-          (graphicChildren && graphicChildren.length) ?
-            <div className="idyll-scroll-graphic"
-              style={Object.assign({ height: graphicHeight }, styles.SCROLL_GRAPHIC)} >
-              <div style={Object.assign({ width: graphicWidth }, styles.SCROLL_GRAPHIC_INNER)}>
-                {graphicChildren}
-              </div>
-            </div> : null
-        }
+      <div
+        ref={ref => (this.ref = ref)}
+        className="idyll-scroll"
+        id={`idyll-scroll-${this.id}`}
+        style={Object.assign({ position: 'relative' })}
+      >
+        {graphicChildren && graphicChildren.length ? (
+          <div
+            className="idyll-scroll-graphic"
+            style={Object.assign(
+              { height: graphicHeight },
+              styles.SCROLL_GRAPHIC
+            )}
+          >
+            <div
+              style={Object.assign(
+                { width: graphicWidth },
+                styles.SCROLL_GRAPHIC_INNER
+              )}
+            >
+              {graphicChildren}
+            </div>
+          </div>
+        ) : null}
         <TextContainer idyll={idyll}>
           <div className="idyll-scroll-text">
-            {mapChildren(filterChildren(
-              children,
-              (c) => {
+            {mapChildren(
+              filterChildren(children, c => {
                 return !c.type.name || c.type.name.toLowerCase() === 'step';
+              }),
+              c => {
+                return React.cloneElement(c, {
+                  registerStep: this.registerStep.bind(this)
+                });
               }
-            ), (c) => {
-              return React.cloneElement(c, {
-                registerStep: this.registerStep.bind(this)
-              });
-            })}
+            )}
           </div>
         </TextContainer>
       </div>
@@ -154,24 +181,31 @@ class Scroller extends React.Component {
   }
 }
 
-
 Scroller._idyll = {
-  name: "Scroller",
-  tagType: "open",
-  children: [`
+  name: 'Scroller',
+  tagType: 'open',
+  children: [
+    `
   [Graphic] This graphic stays fixed in the background.[/Graphic]
   [Step]This is the content for step 1[/Step]
   [Step]This is the content for step 2[/Step]
-  [Step]This is the content for step 3[/Step]`],
-  props: [{
-    name: "currentStep",
-    type: "integer",
-    example: "0"
-  }, {
-    name: "currentState",
-    type: "object",
-    example: "`{}`"
-  }]
-}
+  [Step]This is the content for step 3[/Step]`
+  ],
+  props: [
+    {
+      name: 'currentStep',
+      type: 'integer',
+      example: '0',
+      description: 'The index of the currently selected step.'
+    },
+    {
+      name: 'currentState',
+      type: 'object',
+      example: '`{}`',
+      description:
+        'The state value associated with the currently selected step. Note you must set the state property on the step components for this value to update.'
+    }
+  ]
+};
 
 export default Scroller;

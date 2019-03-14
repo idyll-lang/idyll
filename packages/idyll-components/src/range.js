@@ -14,7 +14,14 @@ class Range extends React.PureComponent {
   render() {
     const { value, min, max, step } = this.props;
     return (
-      <input type="range" onChange={this.handleChange.bind(this)} value={value} min={min} max={max} step={step} />
+      <input
+        type="range"
+        onChange={this.handleChange.bind(this)}
+        value={value}
+        min={min}
+        max={max}
+        step={step}
+      />
     );
   }
 }
@@ -27,25 +34,35 @@ Range.defaultProps = {
 };
 
 Range._idyll = {
-  name: "Range",
-  tagType: "closed",
-  props: [{
-    name: "value",
-    type: "number",
-    example: "x"
-  }, {
-    name: "min",
-    type: "number",
-    example: '0'
-  }, {
-    name: "max",
-    type: "number",
-    example: '100'
-  }, {
-    name: "step",
-    type: "number",
-    example: '1'
-  }]
-}
+  name: 'Range',
+  tagType: 'closed',
+  props: [
+    {
+      name: 'value',
+      type: 'number',
+      example: 'x',
+      description:
+        'The value to display; if this is a variable, the variable will automatically be updated when the slider is moved.'
+    },
+    {
+      name: 'min',
+      type: 'number',
+      example: '0',
+      description: 'The minimum value.'
+    },
+    {
+      name: 'max',
+      type: 'number',
+      example: '100',
+      description: 'The maximum value.'
+    },
+    {
+      name: 'step',
+      type: 'number',
+      example: '1',
+      description: 'The granularity of the slider.'
+    }
+  ]
+};
 
 export default Range;

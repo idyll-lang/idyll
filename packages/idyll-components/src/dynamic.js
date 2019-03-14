@@ -5,19 +5,21 @@ const Drag = require('d3-drag');
 const Selection = require('d3-selection');
 
 class Dynamic extends React.PureComponent {
-
   componentDidMount() {
     let node;
     try {
       node = ReactDOM.findDOMNode(this);
-    } catch(e) {};
+    } catch (e) {}
     if (!node) {
       return;
     }
     this.drag = Drag.drag().on('drag', () => {
       const dx = Selection.event.dx;
       const { step, value, interval } = this.props;
-      const newValue = Math.max(Math.min(value + (step || interval) * dx, this.props.max), this.props.min);
+      const newValue = Math.max(
+        Math.min(value + (step || interval) * dx, this.props.max),
+        this.props.min
+      );
       this.props.updateProps({ value: newValue });
     });
     this.drag(Selection.select(node));
@@ -26,11 +28,7 @@ class Dynamic extends React.PureComponent {
   render() {
     const { format, value } = this.props;
     const formatter = Format.format(format);
-    return (
-      <span className="idyll-dynamic">
-        {formatter(value)}
-      </span>
-    );
+    return <span className="idyll-dynamic">{formatter(value)}</span>;
   }
 }
 
@@ -41,28 +39,36 @@ Dynamic.defaultProps = {
   step: 1
 };
 
-
 Dynamic._idyll = {
-  name: "Dynamic",
-  tagType: "closed",
-  displayType: "inline",
-  props: [{
-    name: "value",
-    type: "number",
-    example: "x"
-  }, {
-    name: "step",
-    type: "string",
-    example: '1'
-  }, {
-    name: "min",
-    type: "number",
-    example: '-100'
-  }, {
-    name: "max",
-    type: "number",
-    example: '100'
-  }]
-}
+  name: 'Dynamic',
+  tagType: 'closed',
+  displayType: 'inline',
+  props: [
+    {
+      name: 'value',
+      type: 'number',
+      example: 'x',
+      description: 'The value to display.'
+    },
+    {
+      name: 'step',
+      type: 'string',
+      example: '1',
+      description: 'The granularity of the changes.'
+    },
+    {
+      name: 'min',
+      type: 'number',
+      example: '-100',
+      description: 'The minimum value.'
+    },
+    {
+      name: 'max',
+      type: 'number',
+      example: '100',
+      description: 'The maximum value.'
+    }
+  ]
+};
 
 export default Dynamic;

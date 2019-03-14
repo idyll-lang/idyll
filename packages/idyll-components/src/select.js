@@ -15,11 +15,19 @@ class Select extends React.PureComponent {
     const { idyll, hasError, updateProps, ...props } = this.props;
     return (
       <select onChange={this.onChange} {...props}>
-        {this.props.options.map((d) => {
+        {this.props.options.map(d => {
           if (typeof d === 'string') {
-            return <option key={d} value={d}>{d}</option>;
+            return (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            );
           }
-          return <option key={d.label || d.value} value={d.value}>{d.label || d.value}</option>;
+          return (
+            <option key={d.label || d.value} value={d.value}>
+              {d.label || d.value}
+            </option>
+          );
         })}
       </select>
     );
@@ -28,19 +36,25 @@ class Select extends React.PureComponent {
 
 Select.defaultProps = {
   options: []
-}
+};
 
 Select._idyll = {
-  name: "Select",
-  tagType: "closed",
-  props: [{
-    name: "value",
-    type: "string",
-    example: "x"
-  }, {
-    name: "options",
-    type: "array",
-    example: '`["option1", "option2"]`'
-  }]
-}
+  name: 'Select',
+  tagType: 'closed',
+  props: [
+    {
+      name: 'value',
+      type: 'string',
+      example: 'x',
+      description: 'The currently selected value.'
+    },
+    {
+      name: 'options',
+      type: 'array',
+      example: '`["option1", "option2"]`',
+      description:
+        'An array representing the different options. Can be an array of strings like `["val1", "val2"]` or an array of objects `[{ value: "val1", label: "Value 1" }, { value: "val2", label: "Value 2" }]`.'
+    }
+  ]
+};
 export default Select;
