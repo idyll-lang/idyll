@@ -19,7 +19,7 @@ require('yargs')
       } catch (e) {
         console.log(
           'Local idyll version:',
-          require(p.join(localIdyllPath, 'package.json')).version
+          require(p.join(localIdyllPath, '..', '..', 'package.json')).version
         );
       }
     }
