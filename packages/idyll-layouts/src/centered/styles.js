@@ -1,5 +1,3 @@
-
-
 export default () => `
 body {
   margin: 0;
@@ -17,6 +15,7 @@ body {
 }
 .article-header {
   margin-bottom: 45px;
+  text-align: center;
 }
 
 .inset {
@@ -195,4 +194,4 @@ input {
 
 }
 
-`
+`;
