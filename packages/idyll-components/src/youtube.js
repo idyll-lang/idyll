@@ -9,7 +9,7 @@ class YoutubeComponent extends React.Component {
     super(props);
     this.state = {
       mounted: false
-    }
+    };
   }
 
   componentDidMount() {
@@ -25,9 +25,14 @@ class YoutubeComponent extends React.Component {
     const opts = {
       height: this.props.height,
       width: this.props.width,
-      playerVars: Object.assign({}, { // https://developers.google.com/youtube/player_parameters
-        autoplay: this.props.play
-      }, this.props.options)
+      playerVars: Object.assign(
+        {},
+        {
+          // https://developers.google.com/youtube/player_parameters
+          autoplay: this.props.play
+        },
+        this.props.options
+      )
     };
 
     return (
@@ -66,48 +71,67 @@ class YoutubeComponent extends React.Component {
     if (!this.props.audio) {
       this._player.mute();
     }
-    this._player.addEventListener('onStateChange', (event) => {
+    this._player.addEventListener('onStateChange', event => {
       if (event.data === YT_PLAYING && !this.props.play) {
-        this.props.updateProps({ play: true })
+        this.props.updateProps({ play: true });
       } else if (event.data === YT_PAUSED && this.props.play) {
-        this.props.updateProps({ play: false })
+        this.props.updateProps({ play: false });
       }
-    })
+    });
     this.props.onReady && this.props.onReady();
   }
 }
 
 YoutubeComponent._idyll = {
-  name: "Youtube",
-  tagType: "closed",
-  props: [{
-    name: "onReady",
-    type: "expression",
-    example: '`initialized = true`'
-  }, {
-    name: "width",
-    type: "integer",
-    example: '600'
-  }, {
-    name: "height",
-    type: "integer",
-    example: '400'
-  }, {
-    name: "audio",
-    type: "boolean",
-    example: 'true'
-  }, {
-    name: "play",
-    type: "boolean",
-    example: 'true'
-  }, {
-    name: "id",
-    type: "string",
-    example: '<youtube-video-id>'
-  }, {
-    name: "options",
-    type: "object",
-    example: '`{}`'
-  }, ]
-}
+  name: 'Youtube',
+  tagType: 'closed',
+  props: [
+    {
+      name: 'onReady',
+      type: 'expression',
+      example: '`initialized = true`',
+      description: 'Callback triggered when the video is ready to play.'
+    },
+    {
+      name: 'width',
+      type: 'integer',
+      example: '600',
+      description: 'Width of the video.'
+    },
+    {
+      name: 'height',
+      type: 'integer',
+      example: '400',
+      description: 'Height of the video.'
+    },
+    {
+      name: 'audio',
+      type: 'boolean',
+      example: 'false',
+      defaultValue: 'true',
+      description: 'Is the audio turned on?'
+    },
+    {
+      name: 'play',
+      type: 'boolean',
+      example: 'true',
+      defaultValue: 'false',
+      description: 'Is the video playing?'
+    },
+    {
+      name: 'id',
+      type: 'string',
+      example: '<youtube-video-id>',
+      description: 'YouTube video id. Required.'
+    },
+    {
+      name: 'options',
+      type: 'object',
+      example: '`{ modestbranding: 1 }`',
+      defaultValue: '`{}`',
+      description:
+        'Dictionary of extra options. See YouTube docs for all options.'
+    }
+  ]
+};
 export default YoutubeComponent;

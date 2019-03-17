@@ -300,7 +300,6 @@ const lex = function(options) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
-    console.log('words1', lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
 
@@ -308,7 +307,6 @@ const lex = function(options) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
-    console.log('words2', lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
   // Match on separately so we can greedily match the
@@ -317,14 +315,12 @@ const lex = function(options) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
-    console.log('words3', lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
   lexer.addRule(/\\[\[\]]?/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
-    console.log('words4', lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
 

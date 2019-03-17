@@ -26,6 +26,10 @@ const isPropertyAccess = node => {
   return true;
 };
 
+const isObjectKey = node => {
+  return node.parent.type === 'Property' && node.parent.key === node;
+};
+
 export const buildExpression = (acc, expr, isEventHandler) => {
   let identifiers = [];
   let modifiedExpression = '';
@@ -36,10 +40,12 @@ export const buildExpression = (acc, expr, isEventHandler) => {
       node => {
         switch (node.type) {
           case 'Identifier':
-            const propertyAcess = isPropertyAccess(node);
-            if (!propertyAcess && Object.keys(acc).indexOf(node.name) > -1) {
+            const skip = isPropertyAccess(node) || isObjectKey(node);
+            if (Object.keys(acc).indexOf(node.name) > -1) {
               identifiers.push(node.name);
-              node.update('__idyllStateProxy.' + node.source());
+              if (!skip) {
+                node.update('__idyllStateProxy.' + node.source());
+              }
             }
             break;
         }
@@ -220,6 +226,7 @@ export const filterIdyllProps = (props, filterInjected) => {
     onEnterView,
     onExitViewFully,
     onExitView,
+    fullWidth,
     ...rest
   } = props;
   if (filterInjected) {

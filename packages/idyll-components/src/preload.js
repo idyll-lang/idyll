@@ -28,6 +28,8 @@ Preloader._idyll = {
     {
       name: 'images',
       type: 'array',
+      description:
+        'the array of images: `["image-url-1.png", "image-url-2.jpg"]`.',
       example: '["image-url-1.png", "image-url-2.jpg"]'
     }
   ]

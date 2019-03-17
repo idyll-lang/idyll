@@ -23,16 +23,21 @@ class Equation extends React.PureComponent {
   componentDidMount() {
     let dom;
 
-    const cssId = 'idyll-equation-css';  // you could encode the css path itself to generate id..
-    const cssURL = '//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css'
-    if (document && !document.getElementById(cssId) && !this.props.skipCSS && !select(`link[href='${cssURL}']`).size()) {
-      const heads = document.getElementsByTagName('head')
+    const cssId = 'idyll-equation-css'; // you could encode the css path itself to generate id..
+    const cssURL = '//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css';
+    if (
+      document &&
+      !document.getElementById(cssId) &&
+      !this.props.skipCSS &&
+      !select(`link[href='${cssURL}']`).size()
+    ) {
+      const heads = document.getElementsByTagName('head');
       if (heads.length) {
-        const head  = heads[0];
-        const link  = document.createElement('link');
-        link.id   = cssId;
+        const head = heads[0];
+        const link = document.createElement('link');
+        link.id = cssId;
         link.href = cssURL;
-        link.rel  = 'stylesheet';
+        link.rel = 'stylesheet';
         link.type = 'text/css';
         link.media = 'all';
         head.appendChild(link);
@@ -41,53 +46,60 @@ class Equation extends React.PureComponent {
 
     try {
       dom = ReactDOM.findDOMNode(this);
-    } catch(e) {};
+    } catch (e) {}
     if (!dom) {
       return;
     }
 
     this.propNodes = {};
     const self = this;
-    select(dom).selectAll('.mord').each(function (d) {
-      const $this = select(this);
-      Object.keys(self.props).filter((prop) => {
-        return allowedProps.indexOf(prop) === -1
-      }).forEach((prop) => {
-        if ($this.text() === prop) {
-          self.propNodes[prop] = $this;
-          $this.style('cursor', 'pointer');
-          $this.on('mouseover', () => {
-            $this.style('color', 'red');
-          }).on('mouseout', () => {
-            if (!(self.state.showRange && self.state.var === prop)) {
-              $this.style('color', 'black');
-            }
-          }).on('click', () => {
-
-            if (!(self.state.showRange && self.state.var === prop)) {
-              self.setState({
-                showRange: true,
-                var: prop
-              });
-              $this.text(self.props[prop])
-              $this.style('color', 'red');
-              Object.keys(self.propNodes).filter(d => d !== prop).forEach((d) => {
-                self.propNodes[d].text(d);
-                self.propNodes[d].style('color', 'black');
-              })
-            } else {
-              self.setState({
-                showRange: false,
-                var: prop
-              });
-              $this.style('color', 'black');
-              $this.text(prop)
-            }
+    select(dom)
+      .selectAll('.mord')
+      .each(function(d) {
+        const $this = select(this);
+        Object.keys(self.props)
+          .filter(prop => {
+            return allowedProps.indexOf(prop) === -1;
           })
-        }
-      })
-    });
-
+          .forEach(prop => {
+            if ($this.text() === prop) {
+              self.propNodes[prop] = $this;
+              $this.style('cursor', 'pointer');
+              $this
+                .on('mouseover', () => {
+                  $this.style('color', 'red');
+                })
+                .on('mouseout', () => {
+                  if (!(self.state.showRange && self.state.var === prop)) {
+                    $this.style('color', 'black');
+                  }
+                })
+                .on('click', () => {
+                  if (!(self.state.showRange && self.state.var === prop)) {
+                    self.setState({
+                      showRange: true,
+                      var: prop
+                    });
+                    $this.text(self.props[prop]);
+                    $this.style('color', 'red');
+                    Object.keys(self.propNodes)
+                      .filter(d => d !== prop)
+                      .forEach(d => {
+                        self.propNodes[d].text(d);
+                        self.propNodes[d].style('color', 'black');
+                      });
+                  } else {
+                    self.setState({
+                      showRange: false,
+                      var: prop
+                    });
+                    $this.style('color', 'black');
+                    $this.text(prop);
+                  }
+                });
+            }
+          });
+      });
   }
 
   handleRangeUpdate(event) {
@@ -107,7 +119,14 @@ class Equation extends React.PureComponent {
     const step = (this.props.step || {})[this.state.var] || 0.1;
     return (
       <div style={{ paddingTop: 15, textAlign: 'center' }}>
-        <input type='range' value={format('0.1f')(this.props[this.state.var])} min={d[0]} max={d[1]} onChange={this.handleRangeUpdate.bind(this)} step={step} />
+        <input
+          type="range"
+          value={format('0.1f')(this.props[this.state.var])}
+          min={d[0]}
+          max={d[1]}
+          onChange={this.handleRangeUpdate.bind(this)}
+          step={step}
+        />
       </div>
     );
   }
@@ -116,40 +135,50 @@ class Equation extends React.PureComponent {
     if (this.props.latex) {
       return this.props.latex;
     }
-    return (this.props.children && this.props.children[0]) ? this.props.children[0] : '';
+    return this.props.children && this.props.children[0]
+      ? this.props.children[0]
+      : '';
   }
 
   render() {
     const latexChar = '$';
-    const latexString = latexChar + this.getLatex()  + latexChar;
+    const latexString = latexChar + this.getLatex() + latexChar;
 
     let style;
     if (this.state.showRange) {
       style = this.props.style;
     } else {
-      style = Object.assign({
-        display: this.props.display ? "block" : "inline-block"
-      }, this.props.style);
+      style = Object.assign(
+        {
+          display: this.props.display ? 'block' : 'inline-block'
+        },
+        this.props.style
+      );
     }
 
     return (
       <span style={style}>
-          <Latex displayMode={this.props.display}>{latexString}</Latex>
-          {this.renderEditing()}
+        <Latex displayMode={this.props.display}>{latexString}</Latex>
+        {this.renderEditing()}
       </span>
     );
   }
 }
 
 Equation._idyll = {
-  name: "Equation",
-  tagType: "open",
-  children: "y = x^2",
-  props: [{
-    name: "display",
-    type: "boolean",
-    example: "true"
-  }]
-}
+  name: 'Equation',
+  tagType: 'open',
+  children: 'y = x^2',
+  props: [
+    {
+      name: 'display',
+      type: 'boolean',
+      example: 'true',
+      defaultValue: 'false',
+      description:
+        'Set to `true` for a centered, standalone equation, set to `false` for an inline equation.'
+    }
+  ]
+};
 
 export default Equation;

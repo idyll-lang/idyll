@@ -20,10 +20,14 @@ for you project.
 
 The \`centered\` layout puts your content in the center of the page and is mobile responsive.
 
+![centered](/static/images/layout-centered.png)
+
 #### Blog
 
 This is the default layout. The \`blog\` layout is fairly traditional article layout with room in the margin to
 put notes and other callouts. See <https://mathisonian.github.io/trig/etymology/> for an example of this layout.
+
+![centered](/static/images/layout-blog.png)
 
 #### None
 
@@ -32,13 +36,15 @@ heart's content.
 
 ### Themes
 
-#### Github
+#### Default
 
-This is the default theme, it uses CSS that resembles the styles in GitHub READMEs.
+This is the default theme. Use this as a starting point and add CSS to make posts your own.
 
-#### Idyll
+![centered](/static/images/layout-blog.png)
 
-This theme uses custom styles that go along with Idyll's look and feel. See <https://mathisonian.github.io/trig/etymology/> for an example of this style.
+#### GitHub
+
+This theme is inspired by the style of GitHub README pages.
 
 #### Tufte
 
@@ -56,7 +62,7 @@ var idyll = Idyll({
   componentFolder: './components/'
   dataFolder: './data',
   layout: 'centered',
-  theme: 'github'
+  theme: 'default'
 });
 
 idyll.build()
@@ -91,7 +97,7 @@ export default ({ url }) => (
       </li>
       <li>
         <b>theme</b> - the name of the theme to use. By default this is
-        "github". More on themes below.
+        "default". More on themes below.
       </li>
       <li>
         <b>authorView</b> - whether to display component information on the page

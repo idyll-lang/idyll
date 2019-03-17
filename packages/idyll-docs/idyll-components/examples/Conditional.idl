@@ -1,6 +1,8 @@
 [var name:"showChart" value:false /]
 
-[Button onClick:` showChart = true `]Show Chart[/Button]
+[Button onClick:` showChart = !showChart `]
+  [Display value:`showChart ? 'Hide Chart' : 'Show Chart' `]
+[/Button]
 
 [Conditional if:` showChart `]
   [Chart /]
