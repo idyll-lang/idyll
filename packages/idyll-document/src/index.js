@@ -95,6 +95,7 @@ class IdyllDocument extends React.Component {
           }
           ast={this.props.ast || this.state.ast}
           userViewComponent={this.props.userViewComponent}
+          handleComponentChange={this.props.handleComponentChange}
         />
         {this.getErrorComponent()}
       </div>

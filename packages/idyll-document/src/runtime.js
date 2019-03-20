@@ -70,7 +70,13 @@ const getRefs = () => {
 };
 
 let wrapperKey = 0;
-const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
+const createWrapper = ({
+  theme,
+  layout,
+  authorView,
+  userViewComponent,
+  handleComponentChange
+}) => {
   return class Wrapper extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -217,6 +223,7 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
               component={returnComponent}
               authorComponent={childComponent}
               uniqueKey={uniqueKey}
+              handleComponentChange={handleComponentChange}
             />
           );
         }
@@ -245,7 +252,8 @@ class IdyllRuntime extends React.PureComponent {
       theme: props.theme,
       layout: props.layout,
       authorView: props.authorView,
-      userViewComponent: props.userViewComponent
+      userViewComponent: props.userViewComponent,
+      handleComponentChange: props.handleComponentChange
     });
 
     let hasInitialized = false;
