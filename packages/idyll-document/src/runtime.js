@@ -75,7 +75,7 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
     constructor(props) {
       super(props);
 
-      this.key = wrapperKey++;
+      this.key = props.idyllASTNode.id || wrapperKey++;
       this.ref = {};
       this.onUpdateRefs = this.onUpdateRefs.bind(this);
       this.onUpdateProps = this.onUpdateProps.bind(this);
