@@ -1,3 +1,13 @@
+# v4
+
+- New, improved default template
+- New, more friendly AST schema. It should be easier for developers to make custom compiler extensions and plugins.
+- Fixes small bugs in the compiler and runtime. 
+
+### Breaking Changes
+
+There are very few breaking changes between version 3 and version 4. The reason for the major version bump is that we completely revamped how the AST is represented internally. This change is only breaking for projects using Idyll plugins, any projects not using plugins should not require any changes to upgrade from v3 to v4. Projects using plugins should update to the latest version of those plugins for them to work with the new AST.
+
 ## v3.15
 
 - Adds an in-browser notification when the idyll compiler errors on the command line. This should help prevent some frustration during development.
