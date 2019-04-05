@@ -9,7 +9,7 @@
     "authorView": false
   },
   "dependencies": {
-    "idyll": "^3.0.0",
+    "idyll": "^4.0.0",
     "idyll-d3-component": "^2.0.0",
     "d3": "^4.0.0"
   },
