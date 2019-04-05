@@ -8,6 +8,8 @@
 
 There are very few breaking changes between version 3 and version 4. The reason for the major version bump is that we completely revamped how the AST is represented internally. This change is only breaking for projects using Idyll plugins, any projects not using plugins should not require any changes to upgrade from v3 to v4. Projects using plugins should update to the latest version of those plugins for them to work with the new AST.
 
+If you see unexpected errors such as `tree.reduce is not a function` in the browser log, this is due to the v3 AST being cached locally. To fix this run `rm .idyll/browserify*` in your project to clear the cache. 
+
 ## v3.15
 
 - Adds an in-browser notification when the idyll compiler errors on the command line. This should help prevent some frustration during development.
