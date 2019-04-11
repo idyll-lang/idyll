@@ -1,3 +1,19 @@
+# v4
+
+- New, improved default template
+- New, more friendly AST schema. It should be easier for developers to make custom compiler extensions and plugins.
+- Fixes small bugs in the compiler and runtime. 
+
+### Breaking Changes
+
+There are very few breaking changes between version 3 and version 4. The reason for the major version bump is that we completely revamped how the AST is represented internally. This change is only breaking for projects using Idyll plugins, any projects not using plugins should not require any changes to upgrade from v3 to v4. Projects using plugins should update to the latest version of those plugins for them to work with the new AST.
+
+### Upgrading
+
+To grab the latest version of the Idyll CLI tool, run `npm i -g idyll@latest`. Note that idyll stores a local snapshot in each project, so if you want a post created with idyll v3 to use the latest version, you'll have to update the local copy of idyll as well, by running `npm i idyll@latest --save` in the project directory. There shouldn't be any code changes required other than the plugin issue mentioned above.
+
+If you see unexpected errors such as `tree.reduce is not a function` in the browser log, this is due to the v3 AST being cached locally. To fix this run `rm .idyll/browserify*` in your project to clear the cache. 
+
 ## v3.15
 
 - Adds an in-browser notification when the idyll compiler errors on the command line. This should help prevent some frustration during development.

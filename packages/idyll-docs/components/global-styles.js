@@ -99,5 +99,9 @@ export default () => (
       text-decoration: underline;
       cursor: pointer;
     }
+    .idyll-dynamic {
+      cursor: ew-resize;
+      font-family: monospace;
+    }
   `}</style>
 );
