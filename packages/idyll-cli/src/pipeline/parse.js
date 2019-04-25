@@ -99,15 +99,25 @@ exports.getHighlightJS = (ast, paths, server) => {
     if (languageMap[language]) {
       cleanedLanguage = languageMap[language];
     }
-    js += `
-      try {
-        rsh.registerLanguage('${language}', require('${slash(
-      path.join(rshPath, 'languages', cleanedLanguage)
-    )}').default);
-      } catch(e) {
-        console.warn("Warning: could not find syntax highlighter for ${language}");
-      }
-    `;
+    try {
+      rsh.registerLanguage(
+        language,
+        require(slash(path.join(rshPath, 'languages', cleanedLanguage))).default
+      );
+      js += `
+        try {
+          rsh.registerLanguage('${language}', require('${slash(
+        path.join(rshPath, 'languages', cleanedLanguage)
+      )}').default);
+        } catch(e) {
+          console.warn("Warning: could not find syntax highlighter for ${language}");
+        }
+      `;
+    } catch (e) {
+      console.warn(
+        `Warning: not including syntax highlighting for ${language}`
+      );
+    }
   });
 
   return js;
