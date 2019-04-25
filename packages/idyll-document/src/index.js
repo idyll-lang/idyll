@@ -72,6 +72,24 @@ class IdyllDocument extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log('receiving props', newProps.theme, newProps.layout);
+    if (newProps.theme !== this.props.theme && newProps.injectThemeCSS) {
+      if (this._themeNode) {
+        this._themeNode.innerHTML = getTheme(newProps.theme).styles;
+      } else {
+        this._themeNode = this.createStyleNode(getTheme(newProps.theme).styles);
+      }
+    }
+    if (newProps.layout !== this.props.layout && newProps.injectLayoutCSS) {
+      if (this._layoutNode) {
+        this._layoutNode.innerHTML = getLayout(newProps.layout).styles;
+      } else {
+        this._layoutNode = this.createStyleNode(
+          getLayout(newProps.layout).styles
+        );
+      }
+    }
+
     if (newProps.ast) {
       return;
     }
@@ -84,23 +102,6 @@ class IdyllDocument extends React.Component {
           this.setState({ previousAST: ast, ast, hash, error: null });
         })
         .catch(this.componentDidCatch.bind(this));
-    }
-
-    if (newProps.theme !== this.props.theme && newProps.injectThemeCSS) {
-      if (this._themeNode) {
-        this._themeNode.innerHTML = getTheme(newProps.theme);
-      } else {
-        this._themeNode = this.createStyleNode(getTheme(newProps.theme).styles);
-      }
-    }
-    if (newProps.layout !== this.props.layout && newProps.injectLayoutCSS) {
-      if (this._layoutNode) {
-        this._layoutNode.innerHTML = getLayout(newProps.layout);
-      } else {
-        this._layoutNode = this.createStyleNode(
-          getLayout(newProps.layout).styles
-        );
-      }
     }
   }
 
