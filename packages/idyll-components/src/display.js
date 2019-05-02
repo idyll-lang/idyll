@@ -23,7 +23,15 @@ class Display extends React.PureComponent {
   render() {
     const { value } = this.props;
     const v = value !== undefined ? value : this.props.var;
-    return <span>{this.formatValue(v)}</span>;
+    return (
+      <span
+        className={`idyll-display ${
+          this.props.className ? this.props.className : ''
+        }`.trim()}
+      >
+        {this.formatValue(v)}
+      </span>
+    );
   }
 }
 
