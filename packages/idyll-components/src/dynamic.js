@@ -70,6 +70,12 @@ Dynamic._idyll = {
       example: '100',
       defaultValue: 'none',
       description: 'The maximum value.'
+    },
+    {
+      name: 'updateProps',
+      type: 'function',
+      example: '(x) => console.log(x.value)',
+      description: 'The callback function when the dynamic value x has updated.'
     }
   ]
 };
