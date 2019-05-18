@@ -72,7 +72,6 @@ class IdyllDocument extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('receiving props', newProps.theme, newProps.layout);
     if (newProps.theme !== this.props.theme && newProps.injectThemeCSS) {
       if (this._themeNode) {
         this._themeNode.innerHTML = getTheme(newProps.theme).styles;
