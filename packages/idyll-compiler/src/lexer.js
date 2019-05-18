@@ -104,7 +104,7 @@ const lex = function(options) {
         .concat(['CLOSE_BRACKET']);
     }
   );
-  lexer.addRule(/`{4}(\S*)\n(((?!````)[\s\S])+)`{4}/g, function(
+  lexer.addRule(/`{4}(\S*)\n(((?!````)[\s\S])*[^\n])\n?\s*`{4}/g, function(
     lexeme,
     language,
     text
@@ -116,7 +116,7 @@ const lex = function(options) {
       .concat(formatToken(language))
       .concat(formatToken(text));
   });
-  lexer.addRule(/`{3}(\S*)\n(((?!```)[\s\S])+)`{3}/g, function(
+  lexer.addRule(/`{3}(\S*)\n(((?!```)[\s\S])*[^\n])\n?\s*`{3}/g, function(
     lexeme,
     language,
     text
