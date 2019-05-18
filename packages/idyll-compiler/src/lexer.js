@@ -114,7 +114,7 @@ const lex = function(options) {
     updatePosition(lexeme);
     return ['MULTILINE_CODE']
       .concat(formatToken(language))
-      .concat(formatToken(text.trim()));
+      .concat(formatToken(text));
   });
   lexer.addRule(/`{3}(\S*)\n(((?!```)[\s\S])+)`{3}/g, function(
     lexeme,
@@ -126,7 +126,7 @@ const lex = function(options) {
     updatePosition(lexeme);
     return ['MULTILINE_CODE']
       .concat(formatToken(language))
-      .concat(formatToken(text.trim()));
+      .concat(formatToken(text));
   });
   lexer.addRule(/```(((?!```)[^\n])+)```/, function(lexeme, text) {
     this.reject = inComponent;
