@@ -1,3 +1,9 @@
+## v4.1
+
+- Fixes bug in multiline codeblocks where leading spaces would be removed
+- Adds the `injectThemeCSS` and `injectLayoutCSS` options to `idyll-document`
+- Fixes a bug where syntax highlighting with an unknown language would cause a hard crash.
+
 # v4
 
 - New, improved default template
