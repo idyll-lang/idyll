@@ -58,63 +58,71 @@ describe('Component state initialization', () => {
     const checks = [
       {
         id: 'varDisplay',
-        html: '<span>2.00</span>'
+        html: '<span class="idyll-display">2.00</span>'
       },
       {
         id: 'derivedVarDisplay',
-        html: '<span>4.00</span>'
+        html: '<span class="idyll-display">4.00</span>'
       },
       {
         id: 'derivedVarDisplay2',
-        html: '<span>8.00</span>'
+        html: '<span class="idyll-display">8.00</span>'
       },
       {
         id: 'strDisplay',
-        html: '<span>string</span>'
+        html: '<span class="idyll-display">string</span>'
       },
       {
         id: 'staticObjectDisplay',
-        html: `<span>${JSON.stringify({ static: 'object' })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          static: 'object'
+        })}</span>`
       },
       {
         id: 'dynamicObjectDisplay',
-        html: `<span>${JSON.stringify({ dynamic: 2.0 })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          dynamic: 2.0
+        })}</span>`
       },
       {
         id: 'dataDisplay',
-        html: `<span>${FAKE_DATA}</span>`
+        html: `<span class="idyll-display">${FAKE_DATA}</span>`
       },
       {
         id: 'bareDataDisplay',
-        html: `<span>${FAKE_DATA}</span>`
+        html: `<span class="idyll-display">${FAKE_DATA}</span>`
       },
       {
         id: 'bareVarDisplay',
-        html: '<span>2.00</span>'
+        html: '<span class="idyll-display">2.00</span>'
       },
       {
         id: 'bareDerivedDisplay',
-        html: '<span>4.00</span>'
+        html: '<span class="idyll-display">4.00</span>'
       },
       {
         id: 'bareDerivedDisplay2',
-        html: '<span>8.00</span>'
+        html: '<span class="idyll-display">8.00</span>'
       },
       {
         id: 'objectVarDisplay',
-        html: `<span>${JSON.stringify({ an: 'object' })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          an: 'object'
+        })}</span>`
       },
       {
         id: 'bareObjectVarDisplay',
-        html: `<span>${JSON.stringify({ an: 'object' })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          an: 'object'
+        })}</span>`
       },
       {
         id: 'arrayVarDisplay',
-        html: `<span>${JSON.stringify(['array'])}</span>`
+        html: `<span class="idyll-display">${JSON.stringify(['array'])}</span>`
       },
       {
         id: 'bareArrayVarDisplay',
-        html: `<span>${JSON.stringify(['array'])}</span>`
+        html: `<span class="idyll-display">${JSON.stringify(['array'])}</span>`
       }
     ];
 
@@ -217,67 +225,75 @@ describe('Component state initialization', () => {
     const checks = [
       {
         id: 'varDisplay',
-        html: '<span>8.00</span>'
+        html: '<span class="idyll-display">8.00</span>'
       },
       {
         id: 'derivedVarDisplay',
-        html: '<span>64.00</span>'
+        html: '<span class="idyll-display">64.00</span>'
       },
       {
         id: 'derivedVarDisplay2',
-        html: '<span>512.00</span>'
+        html: '<span class="idyll-display">512.00</span>'
       },
       {
         id: 'strDisplay',
-        html: '<span>string</span>'
+        html: '<span class="idyll-display">string</span>'
       },
       {
         id: 'staticObjectDisplay',
-        html: `<span>${JSON.stringify({ static: 'object' })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          static: 'object'
+        })}</span>`
       },
       {
         id: 'dynamicObjectDisplay',
-        html: `<span>${JSON.stringify({ dynamic: 8.0 })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          dynamic: 8.0
+        })}</span>`
       },
       {
         id: 'dataDisplay',
-        html: `<span>${FAKE_DATA}</span>`
+        html: `<span class="idyll-display">${FAKE_DATA}</span>`
       },
       {
         id: 'bareDataDisplay',
-        html: `<span>${FAKE_DATA}</span>`
+        html: `<span class="idyll-display">${FAKE_DATA}</span>`
       },
       {
         id: 'bareDerivedDisplay',
-        html: '<span>64.00</span>'
+        html: '<span class="idyll-display">64.00</span>'
       },
       {
         id: 'bareDerivedDisplay2',
-        html: '<span>512.00</span>'
+        html: '<span class="idyll-display">512.00</span>'
       },
       {
         id: 'bareVarDisplay',
-        html: '<span>8.00</span>'
+        html: '<span class="idyll-display">8.00</span>'
       },
       {
         id: 'objectVarDisplay',
-        html: `<span>${JSON.stringify({ an: 'object' })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          an: 'object'
+        })}</span>`
       },
       {
         id: 'bareObjectVarDisplay',
-        html: `<span>${JSON.stringify({ an: 'object' })}</span>`
+        html: `<span class="idyll-display">${JSON.stringify({
+          an: 'object'
+        })}</span>`
       },
       {
         id: 'arrayVarDisplay',
-        html: `<span>${JSON.stringify(['array'])}</span>`
+        html: `<span class="idyll-display">${JSON.stringify(['array'])}</span>`
       },
       {
         id: 'bareArrayVarDisplay',
-        html: `<span>${JSON.stringify(['array'])}</span>`
+        html: `<span class="idyll-display">${JSON.stringify(['array'])}</span>`
       },
       {
         id: 'lateVarDisplay',
-        html: `<span>50.00</span>`
+        html: `<span class="idyll-display">50.00</span>`
       }
     ];
 
