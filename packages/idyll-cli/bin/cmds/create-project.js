@@ -27,17 +27,27 @@ exports.builder = builder;
 exports.handler = main;
 
 let _template;
+let _customTemplate;
+
+function buildOptions(yargs) {
+  return yargs
+    .alias({
+      t: 'template'
+    })
+    .describe('template', 'Path to custom template');
+}
 
 function builder(yargs) {
-  return yargs
+  return buildOptions(yargs)
     .usage('Usage: $0 create <post-name>')
     .example('$0 create example-post');
 }
 
 function main(argv) {
   let projectDir = argv._[1];
+  _customTemplate = argv['t'];
 
-  getAllTemplates()
+  getAllTemplates(_customTemplate)
     .then(askQuestions)
     .then(ensureDefaults)
     .then(createProject);
@@ -128,8 +138,15 @@ async function createProject(answers) {
   }
 
   async function copyFiles(proceed) {
-    await fs.copy(getTemplatePath(template), dir);
-    await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    const filterFunction = path => {
+      return path.indexOf('node_modules') === -1;
+    };
+    await fs.copy(getTemplatePath(template, Boolean(_customTemplate)), dir, {
+      filter: filterFunction
+    });
+    if (!Boolean(_customTemplate)) {
+      await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    }
   }
 
   async function fillTemplates() {
@@ -169,8 +186,13 @@ async function createProject(answers) {
   }
 }
 
-async function getAllTemplates() {
-  let templateNames = await fs.readdir(TEMPLATES_DIR);
+async function getAllTemplates(templateDir = TEMPLATES_DIR) {
+  let templateNames;
+  if (templateDir !== TEMPLATES_DIR) {
+    templateNames = [templateDir];
+  } else {
+    templateNames = await fs.readdir(templateDir);
+  }
   return templateNames.map(path => {
     return {
       name: path.split('-').map(c => c[0].toUpperCase() + c.slice(1)),
@@ -179,7 +201,10 @@ async function getAllTemplates() {
   });
 }
 
-function getTemplatePath(templateName) {
+function getTemplatePath(templateName, isCustomTemplate = false) {
+  if (isCustomTemplate) {
+    return p.resolve(templateName);
+  }
   return p.join(TEMPLATES_DIR, templateName);
 }
 
