@@ -34,12 +34,16 @@ function buildOptions(yargs) {
     .alias({
       t: 'template'
     })
-    .describe('template', 'Path to custom template');
+    .nargs('t', 1)
+    .describe(
+      'template <Path>',
+      'Creates Project using custom template at <Path>'
+    );
 }
 
 function builder(yargs) {
   return buildOptions(yargs)
-    .usage('Usage: $0 create <post-name>')
+    .usage('Usage: $0 create')
     .example('$0 create example-post');
 }
 
@@ -53,7 +57,6 @@ function main(argv) {
     .then(createProject);
 
   async function askQuestions(templates) {
-    _template = templates[0];
     let questions = [];
     if (!projectDir) {
       questions.push({
@@ -67,12 +70,22 @@ function main(argv) {
       message: 'What would you like to name your post?',
       default: answers => answers['post-dir'] || projectDir
     });
-    // questions.push({
-    //   name: 'template',
-    //   type: 'list',
-    //   message: 'Which project template would you like to use?',
-    //   choices: templates
-    // });
+    if (!_customTemplate) {
+      questions.push({
+        name: 'template',
+        type: 'list',
+        message: 'Which project template would you like to use?',
+        choices: [...templates, 'Custom']
+      });
+      questions.push({
+        name: 'customTemplate',
+        type: 'input',
+        message: 'Enter path of custom template.\n',
+        when: function(answers) {
+          return answers.template === 'Custom';
+        }
+      });
+    }
     console.log();
     return inquirer.prompt(questions);
   }
@@ -85,7 +98,8 @@ function main(argv) {
 
 async function createProject(answers) {
   let name = answers['package-name'];
-  let template = _template.value; // answers['template'];
+  _customTemplate = answers.customTemplate || _customTemplate;
+  let template = _customTemplate || answers['template']; // answers['template'];
   let dir = answers['post-dir'];
 
   let startMessage = `\nCreating a new Idyll post in ${dir} using the ${template} template...`;
@@ -96,7 +110,6 @@ async function createProject(answers) {
     'That directory already exists. Please ensure that your target directory\
  does not exist.';
   let errorMessage = `Could not create Idyll post in ${dir}`;
-
   let stages = [
     ['Ensuring that the target directory is valid', ensureEmptyProject],
     [
@@ -141,11 +154,15 @@ async function createProject(answers) {
     const filterFunction = path => {
       return path.indexOf('node_modules') === -1;
     };
-    await fs.copy(getTemplatePath(template, Boolean(_customTemplate)), dir, {
-      filter: filterFunction
-    });
-    if (!Boolean(_customTemplate)) {
-      await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    try {
+      await fs.copy(getTemplatePath(template, Boolean(_customTemplate)), dir, {
+        filter: filterFunction
+      });
+      if (!Boolean(_customTemplate)) {
+        await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+      }
+    } catch (err) {
+      throw err;
     }
   }
 
