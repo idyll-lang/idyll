@@ -26,7 +26,6 @@ exports.description = 'Create a new post';
 exports.builder = builder;
 exports.handler = main;
 
-let _template;
 let _customTemplate;
 
 function buildOptions(yargs) {
@@ -51,7 +50,7 @@ function main(argv) {
   let projectDir = argv._[1];
   _customTemplate = argv['t'];
 
-  getAllTemplates(_customTemplate)
+  getAllTemplates()
     .then(askQuestions)
     .then(ensureDefaults)
     .then(createProject);
@@ -92,14 +91,15 @@ function main(argv) {
 
   async function ensureDefaults(answers) {
     if (!answers['post-dir']) answers['post-dir'] = projectDir;
+    answers['template'] =
+      _customTemplate || answers.customTemplate || answers.template;
     return answers;
   }
 }
 
 async function createProject(answers) {
   let name = answers['package-name'];
-  _customTemplate = answers.customTemplate || _customTemplate;
-  let template = _customTemplate || answers['template']; // answers['template'];
+  let template = answers['template'];
   let dir = answers['post-dir'];
 
   let startMessage = `\nCreating a new Idyll post in ${dir} using the ${template} template...`;
@@ -155,15 +155,20 @@ async function createProject(answers) {
       return path.indexOf('node_modules') === -1;
     };
     try {
-      await fs.copy(getTemplatePath(template, Boolean(_customTemplate)), dir, {
-        filter: filterFunction
-      });
-      if (!Boolean(_customTemplate)) {
-        await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
-      }
+      await fs.copy(
+        getTemplatePath(template, answers.customTemplate || _customTemplate),
+        dir,
+        {
+          filter: filterFunction
+        }
+      );
     } catch (err) {
       throw err;
     }
+    // Move gitignore if it exists.
+    try {
+      await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    } catch (e) {}
   }
 
   async function fillTemplates() {
@@ -203,13 +208,8 @@ async function createProject(answers) {
   }
 }
 
-async function getAllTemplates(templateDir = TEMPLATES_DIR) {
-  let templateNames;
-  if (templateDir !== TEMPLATES_DIR) {
-    templateNames = [templateDir];
-  } else {
-    templateNames = await fs.readdir(templateDir);
-  }
+async function getAllTemplates() {
+  let templateNames = await fs.readdir(TEMPLATES_DIR);
   return templateNames.map(path => {
     return {
       name: path.split('-').map(c => c[0].toUpperCase() + c.slice(1)),
