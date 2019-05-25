@@ -26,16 +26,29 @@ exports.description = 'Create a new post';
 exports.builder = builder;
 exports.handler = main;
 
-let _template;
+let _customTemplate;
+
+function buildOptions(yargs) {
+  return yargs
+    .alias({
+      t: 'template'
+    })
+    .nargs('t', 1)
+    .describe(
+      'template <Path>',
+      'Creates Project using custom template at <Path>'
+    );
+}
 
 function builder(yargs) {
-  return yargs
-    .usage('Usage: $0 create <post-name>')
+  return buildOptions(yargs)
+    .usage('Usage: $0 create')
     .example('$0 create example-post');
 }
 
 function main(argv) {
   let projectDir = argv._[1];
+  _customTemplate = argv['t'];
 
   getAllTemplates()
     .then(askQuestions)
@@ -43,7 +56,6 @@ function main(argv) {
     .then(createProject);
 
   async function askQuestions(templates) {
-    _template = templates[0];
     let questions = [];
     if (!projectDir) {
       questions.push({
@@ -57,25 +69,37 @@ function main(argv) {
       message: 'What would you like to name your post?',
       default: answers => answers['post-dir'] || projectDir
     });
-    // questions.push({
-    //   name: 'template',
-    //   type: 'list',
-    //   message: 'Which project template would you like to use?',
-    //   choices: templates
-    // });
+    if (!_customTemplate) {
+      questions.push({
+        name: 'template',
+        type: 'list',
+        message: 'Which project template would you like to use?',
+        choices: [...templates, 'Custom']
+      });
+      questions.push({
+        name: 'customTemplate',
+        type: 'input',
+        message: 'Enter path of custom template.\n',
+        when: function(answers) {
+          return answers.template === 'Custom';
+        }
+      });
+    }
     console.log();
     return inquirer.prompt(questions);
   }
 
   async function ensureDefaults(answers) {
     if (!answers['post-dir']) answers['post-dir'] = projectDir;
+    answers['template'] =
+      _customTemplate || answers.customTemplate || answers.template;
     return answers;
   }
 }
 
 async function createProject(answers) {
   let name = answers['package-name'];
-  let template = _template.value; // answers['template'];
+  let template = answers['template'];
   let dir = answers['post-dir'];
 
   let startMessage = `\nCreating a new Idyll post in ${dir} using the ${template} template...`;
@@ -86,7 +110,6 @@ async function createProject(answers) {
     'That directory already exists. Please ensure that your target directory\
  does not exist.';
   let errorMessage = `Could not create Idyll post in ${dir}`;
-
   let stages = [
     ['Ensuring that the target directory is valid', ensureEmptyProject],
     [
@@ -128,8 +151,24 @@ async function createProject(answers) {
   }
 
   async function copyFiles(proceed) {
-    await fs.copy(getTemplatePath(template), dir);
-    await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    const filterFunction = path => {
+      return path.indexOf('node_modules') === -1;
+    };
+    try {
+      await fs.copy(
+        getTemplatePath(template, answers.customTemplate || _customTemplate),
+        dir,
+        {
+          filter: filterFunction
+        }
+      );
+    } catch (err) {
+      throw err;
+    }
+    // Move gitignore if it exists.
+    try {
+      await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+    } catch (e) {}
   }
 
   async function fillTemplates() {
@@ -179,7 +218,10 @@ async function getAllTemplates() {
   });
 }
 
-function getTemplatePath(templateName) {
+function getTemplatePath(templateName, isCustomTemplate = false) {
+  if (isCustomTemplate) {
+    return p.resolve(templateName);
+  }
   return p.join(TEMPLATES_DIR, templateName);
 }
 
