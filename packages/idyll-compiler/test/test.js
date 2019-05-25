@@ -1440,7 +1440,7 @@ End text
       );
     });
 
-    it.only('should handle bold at the end of a paragraph', function() {
+    it('should handle bold at the end of a paragraph', function() {
       const input = `
         This is **bold text.**
 
