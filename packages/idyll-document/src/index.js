@@ -37,7 +37,7 @@ class IdyllDocument extends React.Component {
     this.state = {
       ast: props.ast || defaultAST,
       previousAST: props.ast || defaultAST,
-      hash: props.ast ? JSON.stringify(props.ast) : hashCode(props.markup),
+      hash: props.ast ? JSON.stringify(props.ast) : '',
       error: null
     };
   }
