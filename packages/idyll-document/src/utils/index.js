@@ -402,7 +402,11 @@ export const findWrapTargets = (schema, state, components) => {
     }
 
     if (node.component) {
-      if (componentNames.includes(node.component.toLowerCase())) {
+      const checkName = node.component
+        .toLowerCase()
+        .split('-')
+        .join('');
+      if (componentNames.includes(checkName)) {
         targets.push(node);
         return node;
       }

@@ -37,7 +37,7 @@ class IdyllDocument extends React.Component {
     this.state = {
       ast: props.ast || defaultAST,
       previousAST: props.ast || defaultAST,
-      hash: '',
+      hash: props.ast ? JSON.stringify(props.ast) : '',
       error: null
     };
   }
@@ -90,6 +90,7 @@ class IdyllDocument extends React.Component {
     }
 
     if (newProps.ast) {
+      this.setState({ hash: JSON.stringify(newProps.ast) });
       return;
     }
 
@@ -133,7 +134,6 @@ class IdyllDocument extends React.Component {
             (this.idyllContext ? this.idyllContext.data() : {})
           }
           ast={this.props.ast || this.state.ast}
-          userViewComponent={this.props.userViewComponent}
         />
         {this.getErrorComponent()}
       </div>
