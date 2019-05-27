@@ -8,6 +8,7 @@ const chalk = require('chalk');
 const ora = require('ora');
 
 const IDYLL_PUB_API = 'https://api.idyll.pub';
+const DEFAULT_BUILD_DIR = 'build';
 
 const colors = {
   progress: chalk.hex('#6122fb'),
@@ -15,13 +16,26 @@ const colors = {
   failure: chalk.red
 };
 
-exports.command = 'publish'
-exports.description = 'Publish your project to idyll.pub'
-exports.builder = {}
-exports.handler = async (yargs) => {
+exports.command = 'publish';
+exports.description = 'Publish your project to idyll.pub';
+
+function buildOptions(yargs) {
+  return yargs
+    .alias({
+      b: 'build'
+    })
+    .nargs('b', 1)
+    .describe('build', 'Publish build at <Path>');
+}
+exports.builder = yargs => {
+  return buildOptions(yargs)
+    .usage('Usage: $0 publish')
+    .example('$0 publish');
+};
+exports.handler = async yargs => {
   const projectDir = process.cwd();
   const tokenPath = p.join(projectDir, '.idyll', 'token');
-  const config = require(p.join(projectDir, 'package.json'))
+  const config = require(p.join(projectDir, 'package.json'));
 
   let spinner = ora({
     text: colors.progress('Deploying your project to idyll.pub...')
@@ -31,12 +45,13 @@ exports.handler = async (yargs) => {
 
   try {
     // TODO: configurable build path.
-    let buildDir = p.join(projectDir, 'build');
+    const buildDir = yargs['b'] || config.idyll.output || DEFAULT_BUILD_DIR;
+    let buildPath = p.join(projectDir, buildDir);
     let token = await getProjectToken(tokenPath, config);
-    let files = await readdir(buildDir);
+    let files = await readdir(buildPath);
 
     let formData = files.reduce((acc, f) => {
-      acc[p.relative(buildDir, f)] = fs.createReadStream(f);
+      acc[p.relative(buildPath, f)] = fs.createReadStream(f);
       return acc;
     }, {});
     formData.token = token;
@@ -47,17 +62,19 @@ exports.handler = async (yargs) => {
       json: true
     });
 
-    spinner.succeed(colors.success(`Project deployed at https://idyll.pub/post/${alias}/`));
+    spinner.succeed(
+      colors.success(`Project deployed at https://idyll.pub/post/${alias}/`)
+    );
   } catch (err) {
     spinner.fail(colors.failure(`Could not deploy your project: ${err}`));
   }
-}
+};
 
 /**
  * Try to read the project token from the .idyll directory.
  * If it does not exist, create/save one into .idyll/token.
  */
-async function getProjectToken (tokenPath, config) {
+async function getProjectToken(tokenPath, config) {
   var token;
   try {
     token = await fs.readFile(tokenPath, { encoding: 'utf-8' });
