@@ -10,7 +10,7 @@ describe('compiler', function() {
       var lex = Lexer();
       var results = lex('Hello \n\nWorld! []');
       expect(results.tokens.join(' ')).to.eql(
-        'WORDS TOKEN_VALUE_START "Hello " TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "World" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "!" TOKEN_VALUE_END OPEN_BRACKET CLOSE_BRACKET EOF'
+        'WORDS TOKEN_VALUE_START "Hello " TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "World" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "! " TOKEN_VALUE_END OPEN_BRACKET CLOSE_BRACKET EOF'
       );
     });
 
@@ -1483,6 +1483,38 @@ End text
           }
         ]
       });
+    });
+  });
+  it('should handle numbers and symbols with and without spaces', function() {
+    const input = `
+      Test 1 2Three 1 2 Three 123Four
+    `;
+
+    expect(compile(input, { async: false })).to.eql({
+      id: 0,
+      type: 'component',
+      name: 'div',
+      children: [
+        {
+          id: 2,
+          type: 'component',
+          name: 'TextContainer',
+          children: [
+            {
+              id: 3,
+              type: 'component',
+              name: 'p',
+              children: [
+                {
+                  id: 4,
+                  type: 'textnode',
+                  value: 'Test 1 2Three 1 2 Three 123Four'
+                }
+              ]
+            }
+          ]
+        }
+      ]
     });
   });
 });
