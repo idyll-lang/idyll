@@ -392,7 +392,7 @@ const lex = function(options) {
     return ['EXPRESSION'].concat(formatToken(lexeme));
   });
 
-  lexer.addRule(/[+\-]?[0-9]+\.?[0-9]*/, function(lexeme) {
+  lexer.addRule(/[+\-]?\.?[0-9]+\.?[0-9]*/, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
     updatePosition(lexeme);
