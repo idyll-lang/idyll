@@ -311,7 +311,7 @@ const lex = function(options) {
   });
   // Match on separately so we can greedily match the
   // other tags.
-  lexer.addRule(/[!\d\*_`]/, function(lexeme) {
+  lexer.addRule(/[!\d\*_`]\s*/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
