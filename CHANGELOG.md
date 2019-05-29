@@ -1,6 +1,7 @@
 ## v4.3
 
 - Adds a Tweet component
+- Fix bug with properties named `text`
 
 
 ## v4.2
