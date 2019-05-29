@@ -1,3 +1,11 @@
+## v4.2
+
+- Adds `build` option to `idyll publish`
+- Adds `template` option to `idyll create`
+- Fixes a bug in compiler where spaces were being incorrectly inserted after numbers in text (`12three` would be rendered as `12 three`)
+- fix re-rendering issues with `idyll-document`
+
+
 ## v4.1
 
 - Fixes bug in multiline codeblocks where leading spaces would be removed
