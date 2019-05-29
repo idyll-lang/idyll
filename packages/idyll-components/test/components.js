@@ -27,11 +27,11 @@ import {
   SVG,
   Table,
   TextInput,
+  Tweet,
   Youtube
 } from '../src/';
 
 describe('Sanity Check', () => {
-
   describe('Shallow Mount', () => {
     describe('Layout', () => {
       it('<Aside />', () => {
@@ -46,7 +46,7 @@ describe('Sanity Check', () => {
       it('<Inline />', () => {
         expect(() => shallow(<Inline />)).not.toThrow();
       });
-    })
+    });
 
     describe('Presentation', () => {
       it('<Action />', () => {
@@ -118,7 +118,6 @@ describe('Sanity Check', () => {
     });
   });
 
-
   describe('Full Mount', () => {
     describe('Layout', () => {
       it('<Aside />', () => {
@@ -133,7 +132,7 @@ describe('Sanity Check', () => {
       it('<Inline />', () => {
         expect(() => mount(<Inline />)).not.toThrow();
       });
-    })
+    });
 
     describe('Presentation', () => {
       it('<Action />', () => {
@@ -190,6 +189,9 @@ describe('Sanity Check', () => {
       it('<TextInput />', () => {
         expect(() => mount(<TextInput />)).not.toThrow();
       });
+      it('<Tweet />', () => {
+        expect(() => mount(<Tweet id="123" />)).not.toThrow();
+      });
       it('<Youtube />', () => {
         expect(() => mount(<Youtube />)).not.toThrow();
       });
@@ -207,4 +209,4 @@ describe('Sanity Check', () => {
       });
     });
   });
-})
+});
