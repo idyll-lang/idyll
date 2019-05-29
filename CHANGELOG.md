@@ -11,12 +11,13 @@
 - Fixes bug in multiline codeblocks where leading spaces would be removed
 - Adds the `injectThemeCSS` and `injectLayoutCSS` options to `idyll-document`
 - Fixes a bug where syntax highlighting with an unknown language would cause a hard crash.
+- Adds a Tweet component
 
 # v4
 
 - New, improved default template
 - New, more friendly AST schema. It should be easier for developers to make custom compiler extensions and plugins.
-- Fixes small bugs in the compiler and runtime. 
+- Fixes small bugs in the compiler and runtime.
 
 ### Breaking Changes
 
@@ -26,7 +27,7 @@ There are very few breaking changes between version 3 and version 4. The reason 
 
 To grab the latest version of the Idyll CLI tool, run `npm i -g idyll@latest`. Note that idyll stores a local snapshot in each project, so if you want a post created with idyll v3 to use the latest version, you'll have to update the local copy of idyll as well, by running `npm i idyll@latest --save` in the project directory. There shouldn't be any code changes required other than the plugin issue mentioned above.
 
-If you see unexpected errors such as `tree.reduce is not a function` in the browser log, this is due to the v3 AST being cached locally. To fix this run `rm .idyll/browserify*` in your project to clear the cache. 
+If you see unexpected errors such as `tree.reduce is not a function` in the browser log, this is due to the v3 AST being cached locally. To fix this run `rm .idyll/browserify*` in your project to clear the cache.
 
 ## v3.15
 
