@@ -1,3 +1,8 @@
+## v4.3
+
+- Adds a Tweet component
+
+
 ## v4.2
 
 - Adds `build` option to `idyll publish`
@@ -11,7 +16,6 @@
 - Fixes bug in multiline codeblocks where leading spaces would be removed
 - Adds the `injectThemeCSS` and `injectLayoutCSS` options to `idyll-document`
 - Fixes a bug where syntax highlighting with an unknown language would cause a hard crash.
-- Adds a Tweet component
 
 # v4
 
