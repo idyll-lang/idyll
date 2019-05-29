@@ -7,7 +7,6 @@ const _componentMap = new WeakMap();
 class ReactJsonSchema {
   constructor(componentMap) {
     if (componentMap) this.setComponentMap(componentMap);
-
   }
 
   parseSchema(schema) {
@@ -25,10 +24,11 @@ class ReactJsonSchema {
     const Components = [];
     let index = 0;
     for (const subSchema of subSchemas) {
-      if (typeof subSchema === "string") {
+      if (typeof subSchema === 'string') {
         Components.push(subSchema);
       } else {
-        subSchema.key = typeof subSchema.key !== 'undefined' ? subSchema.key : index;
+        subSchema.key =
+          typeof subSchema.key !== 'undefined' ? subSchema.key : index;
         Components.push(this.parseSchema(subSchema));
         index++;
       }
@@ -37,12 +37,12 @@ class ReactJsonSchema {
   }
 
   createComponent(schema) {
-    if(schema.type) {
-      if(schema.type === 'textnode') return schema.value;;
+    if (schema.type) {
+      if (schema.type === 'textnode') return schema.value;
     }
-    const { component, children, text, ...rest } = schema;
+    const { component, children, ...rest } = schema;
     const Component = this.resolveComponent(schema);
-    const Children = typeof text !== 'undefined' ? text : this.resolveComponentChildren(schema);
+    const Children = this.resolveComponentChildren(schema);
     return createElement(Component, rest, Children);
   }
 
@@ -51,7 +51,9 @@ class ReactJsonSchema {
     let Component;
     // bail early if there is no component name
     if (!schema.hasOwnProperty('component')) {
-      throw new Error('ReactJsonSchema could not resolve a component due to a missing component attribute in the schema.');
+      throw new Error(
+        'ReactJsonSchema could not resolve a component due to a missing component attribute in the schema.'
+      );
     }
 
     // if it's already a ref bail early
@@ -77,12 +79,14 @@ class ReactJsonSchema {
       if (DOM.hasOwnProperty(name)) {
         Component = schema.component;
       } else {
-        console.warn(`Could not find an implementation for: ${schema.component}`);
+        console.warn(
+          `Could not find an implementation for: ${schema.component}`
+        );
         return () => (
-          <div style={{ color: 'black', border: 'solid 1px red'}}>
+          <div style={{ color: 'black', border: 'solid 1px red' }}>
             <pre>Could not find an implementation for: {schema.component}</pre>
           </div>
-        )
+        );
       }
     }
 
@@ -91,7 +95,9 @@ class ReactJsonSchema {
   }
 
   resolveComponentChildren(schema) {
-    const children = (schema.hasOwnProperty('children')) ? this.parseSchema(schema.children) : [];
+    const children = schema.hasOwnProperty('children')
+      ? this.parseSchema(schema.children)
+      : [];
     return children.length ? children : undefined;
   }
 
