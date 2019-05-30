@@ -30,10 +30,14 @@ input {
 .relative {
   position: relative;
 }
+
+.aside-container {
+  position: relative;
+}
 .aside {
   position: absolute;
-  width: 200px;
-  right: -225px;
+  width: 300px;
+  right: calc((10vw + 350px + 150px) / -2);
 }
 
 .idyll-scroll-graphic {
