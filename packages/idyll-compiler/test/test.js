@@ -215,6 +215,11 @@ describe('compiler', function() {
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "number" TOKEN_VALUE_END PARAM_SEPARATOR NUMBER TOKEN_VALUE_START ".1" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
       );
     });
+    it('should reject numbers with multiple decimal points', function() {
+      const input = `[component number:.1.1 /]`;
+      const lex = Lexer();
+      expect(() => lex(input)).to.throwException();
+    });
     it('should handle numbers with decimals as prop values in components', function() {
       const input = `[component number:1.1 /]`;
       const lex = Lexer();
