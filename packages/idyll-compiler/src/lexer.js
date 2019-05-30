@@ -392,8 +392,10 @@ const lex = function(options) {
     return ['EXPRESSION'].concat(formatToken(lexeme));
   });
 
-  lexer.addRule(/[+\-]?[0-9]+\.?[0-9]*/, function(lexeme) {
-    this.reject = !inComponent;
+  lexer.addRule(/[+\-]?\.?[0-9]+\.?[0-9]*/, function(lexeme) {
+    const multiplePeriods =
+      (lexeme.match(new RegExp(/\./, 'g')) || []).length >= 2;
+    this.reject = !inComponent || multiplePeriods;
     if (this.reject) return;
     updatePosition(lexeme);
     return ['NUMBER'].concat(formatToken(lexeme));

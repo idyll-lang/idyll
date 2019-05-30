@@ -207,6 +207,27 @@ describe('compiler', function() {
         'BREAK HEADER_2 WORDS TOKEN_VALUE_START "This is a header" TOKEN_VALUE_END HEADER_END WORDS TOKEN_VALUE_START "And this is a normal paragraph." TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK HEADER_1 WORDS TOKEN_VALUE_START "This header is inside a component." TOKEN_VALUE_END HEADER_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
+    it('should handle numbers with leading decimals as prop values in components', function() {
+      const input = `[component number:.1 /]`;
+      const lex = Lexer();
+      const results = lex(input);
+      expect(results.tokens.join(' ')).to.eql(
+        'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "number" TOKEN_VALUE_END PARAM_SEPARATOR NUMBER TOKEN_VALUE_START ".1" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
+      );
+    });
+    it('should reject numbers with multiple decimal points', function() {
+      const input = `[component number:.1.1 /]`;
+      const lex = Lexer();
+      expect(() => lex(input)).to.throwException();
+    });
+    it('should handle numbers with decimals as prop values in components', function() {
+      const input = `[component number:1.1 /]`;
+      const lex = Lexer();
+      const results = lex(input);
+      expect(results.tokens.join(' ')).to.eql(
+        'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "number" TOKEN_VALUE_END PARAM_SEPARATOR NUMBER TOKEN_VALUE_START "1.1" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
+      );
+    });
   });
 
   describe('parser', function() {
@@ -637,6 +658,15 @@ End text
       expect(compile(input, { async: false })).to.eql(
         AST.convertV1ToV2([
           ['TextContainer', [], [['component', [['prop', ['value', 10]]], []]]]
+        ])
+      );
+    });
+
+    it('should accept numbers /w a leading decimal point', function() {
+      const input = '[component prop:.1 /]';
+      expect(compile(input, { async: false })).to.eql(
+        AST.convertV1ToV2([
+          ['TextContainer', [], [['component', [['prop', ['value', 0.1]]], []]]]
         ])
       );
     });
