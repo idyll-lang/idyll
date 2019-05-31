@@ -36,7 +36,7 @@ This repository is structured as a [monorepo](https://github.com/babel/babel/blo
 To run the test suite, run `yarn test` inside any of the individual packages, or run `lerna run test` at the top-level to run all tests. 
 To test in a local Idyll project, follow these steps:
 - For each individual package you'd like to test:
-  - Make the changes. Run `yarn run build` within the package that you changed to generate compiled output. To rebuild the package on changes, use `yarn run dev`.  
+  - Make the changes. Run `yarn run build` within the package that you changed to generate compiled output. To automatically rebuild when the package is changed, use `yarn run dev`.  
   - Run `yarn link` from within the root of that package. For example, to test the command line tool, run `cd packages/idyll-cli && yarn link`. _Note you only ever have to run this command once in each package._
 - Create a new idyll project using `idyll create`
 - Enter that project's folder, e.g. `cd <idyll-project-name>`
