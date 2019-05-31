@@ -110,7 +110,6 @@ exports.getHighlightJS = (ast, paths, server) => {
         }
       `;
     } catch (e) {
-      console.log(e);
       console.warn(
         `Warning: not including syntax highlighting for ${language}`
       );
