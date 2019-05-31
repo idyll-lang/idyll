@@ -1,8 +1,11 @@
 ## v4.3
 
-- Adds a Tweet component
-- Fix bug with properties named `text`
-
+- Adds a Tweet component (https://github.com/idyll-lang/idyll/pull/515)
+- Fix bug with properties named `text` (https://github.com/idyll-lang/idyll/pull/518)
+- Fix positioning of `Aside` component on centered layout (https://github.com/idyll-lang/idyll/pull/520)
+- Adds a new "Tutorials" page to the docs (https://github.com/idyll-lang/idyll/pull/521)
+- fixes a syntax highlighting bug for custom code blocks (https://github.com/idyll-lang/idyll/pull/523)
+- add support for numbers with leading decimal places (https://github.com/idyll-lang/idyll/pull/514) 
 
 ## v4.2
 
