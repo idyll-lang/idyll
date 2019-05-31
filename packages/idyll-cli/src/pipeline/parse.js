@@ -100,10 +100,6 @@ exports.getHighlightJS = (ast, paths, server) => {
       cleanedLanguage = languageMap[language];
     }
     try {
-      rsh.registerLanguage(
-        language,
-        require(slash(path.join(rshPath, 'languages', cleanedLanguage))).default
-      );
       js += `
         try {
           rsh.registerLanguage('${language}', require('${slash(
