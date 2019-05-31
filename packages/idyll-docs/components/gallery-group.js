@@ -1,12 +1,12 @@
-import Example from './example'
+import GroupItem from './group-item';
 
-export default ({ title, examples }) => (
+export default ({ title, items }) => (
   <div className="example-group" id={title.split(' ').join('-')}>
-    <h3 className="anchor" >{ title }</h3>
+    <h3 className="anchor">{title}</h3>
     <div className="examples">
-      {
-        examples.map(ex => <Example {...ex} key={ ex.href } />)
-      }
+      {items.map(ex => (
+        <GroupItem {...ex} key={ex.href} />
+      ))}
     </div>
 
     <style jsx>{`
@@ -31,5 +31,4 @@ export default ({ title, examples }) => (
       }
     `}</style>
   </div>
-)
-
+);
