@@ -47,7 +47,7 @@ To test in a local Idyll project, follow these steps:
 
 - Make your changes.
 - Make sure the tests pass by running `lerna run test` from the top level. If you add a feature, add a test for it.
-- Push to your fork on GitHub and creating a [pull request](https://github.com/idyll-lang/idyll/pulls)!
+- Push to your fork on GitHub and [create a pull request](https://github.com/idyll-lang/idyll/pulls)!
 
 ### Code Style
 
