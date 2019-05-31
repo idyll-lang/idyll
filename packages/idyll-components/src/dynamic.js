@@ -26,16 +26,10 @@ class Dynamic extends React.PureComponent {
   }
 
   transformValue() {
-    const { format, value, map, min, step } = this.props;
-    const mapOnArray = Array.isArray(map);
-    const mapOnConditions = typeof map === 'string';
-    if (mapOnArray) {
-      const commonDiff = Math.ceil(Math.abs(step));
-      const index = Math.floor((value - min) / commonDiff);
-      return index < map.length ? map[index] : value;
-    }
-    if (mapOnConditions) {
-      return map;
+    const { format, value } = this.props;
+    const customFormat = typeof format === 'function';
+    if (customFormat) {
+      return format(value);
     }
     const formatter = Format.format(format);
     return formatter(value);
@@ -86,12 +80,6 @@ Dynamic._idyll = {
       example: '100',
       defaultValue: 'none',
       description: 'The maximum value.'
-    },
-    {
-      name: 'map',
-      type: 'any',
-      example: 'x',
-      description: 'A custom value to be displayed instead of number.'
     }
   ]
 };
