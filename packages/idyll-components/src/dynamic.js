@@ -25,10 +25,21 @@ class Dynamic extends React.PureComponent {
     this.drag(Selection.select(node));
   }
 
-  render() {
-    const { format, value } = this.props;
+  transformValue() {
+    const { format, value, display } = this.props;
     const formatter = Format.format(format);
-    return <span className="idyll-dynamic">{formatter(value)}</span>;
+    if (display !== undefined) {
+      if (typeof display === 'string') {
+        return display;
+      }
+      return formatter(display);
+    }
+    return formatter(value);
+  }
+
+  render() {
+    const display = this.transformValue();
+    return <span className="idyll-dynamic">{display}</span>;
   }
 }
 
@@ -36,7 +47,9 @@ Dynamic.defaultProps = {
   format: '.2f',
   min: Number.NEGATIVE_INFINITY,
   max: Number.POSITIVE_INFINITY,
-  step: 1
+  step: 1,
+  interval: 0,
+  display: undefined
 };
 
 Dynamic._idyll = {
@@ -70,6 +83,12 @@ Dynamic._idyll = {
       example: '100',
       defaultValue: 'none',
       description: 'The maximum value.'
+    },
+    {
+      name: 'display',
+      type: 'expression',
+      example: '`x === 0 ? "none" : x`',
+      description: 'A custom display transform to use'
     }
   ]
 };
