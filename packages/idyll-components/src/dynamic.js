@@ -26,12 +26,14 @@ class Dynamic extends React.PureComponent {
   }
 
   transformValue() {
-    const { format, value } = this.props;
-    const customFormat = typeof format === 'function';
-    if (customFormat) {
-      return format(value);
-    }
+    const { format, value, display } = this.props;
     const formatter = Format.format(format);
+    if (display !== undefined) {
+      if (typeof display === 'string') {
+        return display;
+      }
+      return formatter(display);
+    }
     return formatter(value);
   }
 
@@ -46,7 +48,8 @@ Dynamic.defaultProps = {
   min: Number.NEGATIVE_INFINITY,
   max: Number.POSITIVE_INFINITY,
   step: 1,
-  interval: 0
+  interval: 0,
+  display: undefined
 };
 
 Dynamic._idyll = {
@@ -80,6 +83,12 @@ Dynamic._idyll = {
       example: '100',
       defaultValue: 'none',
       description: 'The maximum value.'
+    },
+    {
+      name: 'display',
+      type: 'expression',
+      example: '`x === 0 ? "none" : x`',
+      description: 'A custom display transform to use'
     }
   ]
 };
