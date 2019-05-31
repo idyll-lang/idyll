@@ -14,25 +14,40 @@ To work with Idyll's codebase, you must have [Lerna](https://github.com/lerna/le
 
 This repository is structured as a [monorepo](https://github.com/babel/babel/blob/master/doc/design/monorepo.md), which means it contains several independent modules in one git repository. Each folder in the `packages` directory acts as an independent JavaScript module, and is published and versioned independently on npm.
 
+- [Idyll AST](./packages/idyll-ast/) - Schema definition and utilities for Idyll's abstract syntax tree (AST).
+- [Idyll CLI](./packages/idyll-cli/) - The `idyll` command line tool. 
+- [Idyll Compiler](./packages/idyll-compiler/) - The idyll compiler: markup goes in, AST comes out.
+- [Idyll Components](./packages/idyll-components/) - Front-end component library.
+- [Idyll Docs](./packages/idyll-docs/) - The idyll-lang.org website
+- [Idyll Document](./packages/idyll-document/) - Idyll's React-based runtime for the browser. AST goes in, article comes out. 
+- [Idyll Layouts](./packages/idyll-layouts/) - Choose your article layout.
+- [Idyll Template Projects](./packages/idyll-template-projects/) - The template options for `idyll create`. 
+- [Idyll Themes](./packages/idyll-themes/) - Choose your article theme.
+
 ### Making Changes
 
-To submit a PR do the following:
+#### Installation
 
 - [Fork the repo](https://help.github.com/articles/fork-a-repo/) and [clone it](https://help.github.com/articles/cloning-a-repository/) onto to your computer.
 - Run `lerna bootstrap` from inside the `idyll` folder to install the dependencies and link all of the packages together.
+
+#### Testing Changes
+
+To run the test suite, run `yarn test` inside any of the individual packages, or run `lerna run test` at the top-level to run all tests. 
+To test in a local Idyll project, follow these steps:
+- For each individual package you'd like to test:
+  - Make the changes. Run `yarn run build` within the package that you changed to generate compiled output. To rebuild the package on changes, use `yarn run dev`.  
+  - Run `yarn link` from within the root of that package. For example, to test the command line tool, run `cd packages/idyll-cli && yarn link`. _Note you only ever have to run this command once in each package._
+- Create a new idyll project using `idyll create`
+- Enter that project's folder, e.g. `cd <idyll-project-name>`
+- For each of the packages you are testing, link by running `yarn link <package name>` (e.g. `yarn link idyll`, `yarn link idyll-components`).
+- Then run `idyll` to open the project in a browser.
+
+#### Submitting a PR
+
 - Make your changes.
-- Test your changes:
-  - Make sure the tests pass by running `lerna run test` from the top level. If you add a feature, add a test for it.
-    - This runs all the tests; if you just want to run tests in a single package, run `yarn test` inside of the specific `packages/idyll-<package-name>` folder.
-  - If you'd like to test these changes in a local Idyll project, follow these steps:
-    - For each individual package you'd like to test:
-      - Make the changes. Run `yarn run build` within the package that you changed to generate compiled output.
-      - Run `yarn link` from within the root of that package. For example, to test the command line tool, run `cd packages/idyll-cli && yarn link`. _Note you only ever have to run this command once in each package._
-    - Create a new idyll project using `idyll create`
-    - Enter that project's folder, e.g. `cd <idyll-project-name>`
-    - For each of the packages you are testing, link by running `yarn link <package name>` (e.g. `yarn link idyll`, `yarn link idyll-components`).
-    - Then run `idyll` to open the project in a browser.
-- Submit the PR!
+- Make sure the tests pass by running `lerna run test` from the top level. If you add a feature, add a test for it.
+- Push to your fork on GitHub and creating a [pull request](https://github.com/idyll-lang/idyll/pulls)!
 
 ### Code Style
 
