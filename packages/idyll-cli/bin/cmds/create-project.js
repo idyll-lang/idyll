@@ -174,10 +174,7 @@ async function createProject(answers) {
     }
     // Move gitignore if it exists.
     try {
-      await fs.move(
-        p.join(templatePath, 'gitignore'),
-        p.join(dir, '.gitignore')
-      );
+      await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
     } catch (e) {}
   }
 
