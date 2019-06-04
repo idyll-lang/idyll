@@ -152,12 +152,19 @@ async function createProject(answers) {
 
   async function copyFiles(proceed) {
     const filterFunction = path => {
-      return path.indexOf('node_modules') === -1;
+      const testPath = path.replace(TEMPLATES_DIR, '');
+      return testPath.indexOf('node_modules') === -1;
     };
+
+    const templatePath = getTemplatePath(
+      template,
+      answers.customTemplate || _customTemplate
+    );
+
     try {
       await fs.copy(
-        getTemplatePath(template, answers.customTemplate || _customTemplate),
-        dir,
+        templatePath,
+        p.isAbsolute(dir) ? dir : p.join(process.cwd(), dir),
         {
           filter: filterFunction
         }
@@ -167,7 +174,10 @@ async function createProject(answers) {
     }
     // Move gitignore if it exists.
     try {
-      await fs.move(p.join(dir, 'gitignore'), p.join(dir, '.gitignore'));
+      await fs.move(
+        p.join(templatePath, 'gitignore'),
+        p.join(dir, '.gitignore')
+      );
     } catch (e) {}
   }
 
