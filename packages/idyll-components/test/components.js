@@ -10,6 +10,7 @@ import {
   Chart,
   CodeHighlight,
   Case,
+  Default,
   Display,
   Dynamic,
   Equation,
@@ -71,6 +72,9 @@ describe('Sanity Check', () => {
       });
       it('<Dynamic />', () => {
         expect(() => shallow(<Dynamic />)).not.toThrow();
+      });
+      it('<Default />', () => {
+        expect(() => shallow(<Default />)).not.toThrow();
       });
       it('<Equation />', () => {
         expect(() => shallow(<Equation />)).not.toThrow();
@@ -163,6 +167,9 @@ describe('Sanity Check', () => {
       });
       it('<Dynamic />', () => {
         expect(() => mount(<Dynamic />)).not.toThrow();
+      });
+      it('<Default />', () => {
+        expect(() => mount(<Default />)).not.toThrow();
       });
       it('<Equation />', () => {
         expect(() => mount(<Equation />)).not.toThrow();

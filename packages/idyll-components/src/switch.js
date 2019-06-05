@@ -1,17 +1,27 @@
 const React = require('react');
+const { filterChildren } = require('idyll-component-children');
 
 class Switch extends React.Component {
   render() {
-    const { idyll, hasError, updateProps, value, ...props } = this.props;
+    const {
+      idyll,
+      hasError,
+      updateProps,
+      value,
+      children,
+      ...props
+    } = this.props;
 
-    if (props.children) {
-      const filterFn = value => ({ props }) =>
-        props.children[0].props.test === value;
-      const matchCase = filterFn(value);
-      const matchDefault = filterFn('Default');
-      const [matchedCase] = props.children.filter(matchCase);
-      const [DefaultCase] = props.children.filter(matchDefault);
-      return <div>{matchedCase ? matchedCase : DefaultCase}</div>;
+    if (children) {
+      const matchCase = child =>
+        child.type.name.toLowerCase() === 'case' && child.props.test === value;
+      const matchDefault = child => child.type.name.toLowerCase() === 'default';
+
+      const child = filterChildren(children, child => {
+        return matchCase(child) || matchDefault(child);
+      });
+      const [matchedCase, defaultCase] = child;
+      return <div>{matchedCase ? matchedCase : defaultCase}</div>;
     }
     return '';
   }

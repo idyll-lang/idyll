@@ -7,6 +7,7 @@ export { default as Case } from './case';
 export { default as Chart } from './chart';
 export { default as CodeHighlight } from './code-highlight';
 export { default as Conditional } from './conditional';
+export { default as Default } from './default';
 export { default as Display } from './display';
 export { default as Dynamic } from './dynamic';
 export { default as Equation } from './equation';

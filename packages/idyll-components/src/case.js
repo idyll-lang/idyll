@@ -14,10 +14,10 @@ Case._idyll = {
   props: [
     {
       name: 'test',
-      type: 'variable',
+      type: 'value',
       example: '1',
       description:
-        'A variable; if this is equal to the parent [Switch /] components value, the children for this case will be rendered, otherwise nothing will be drawn to the screen'
+        'A variable; if this is equal to the parent [Switch /] components value, the children for this case will be rendered, otherwise the default case will be rendered.'
     }
   ]
 };
