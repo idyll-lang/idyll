@@ -9,6 +9,8 @@ import {
   Button,
   Chart,
   CodeHighlight,
+  Case,
+  Default,
   Display,
   Dynamic,
   Equation,
@@ -25,6 +27,7 @@ import {
   Step,
   Stepper,
   SVG,
+  Switch,
   Table,
   TextInput,
   Tweet,
@@ -58,6 +61,9 @@ describe('Sanity Check', () => {
       it('<Button />', () => {
         expect(() => shallow(<Button />)).not.toThrow();
       });
+      it('<Case />', () => {
+        expect(() => shallow(<Case />)).not.toThrow();
+      });
       it('<Chart />', () => {
         expect(() => shallow(<Chart />)).not.toThrow();
       });
@@ -66,6 +72,9 @@ describe('Sanity Check', () => {
       });
       it('<Dynamic />', () => {
         expect(() => shallow(<Dynamic />)).not.toThrow();
+      });
+      it('<Default />', () => {
+        expect(() => shallow(<Default />)).not.toThrow();
       });
       it('<Equation />', () => {
         expect(() => shallow(<Equation />)).not.toThrow();
@@ -96,6 +105,9 @@ describe('Sanity Check', () => {
       });
       it('<SVG />', () => {
         expect(() => shallow(<SVG />)).not.toThrow();
+      });
+      it('<Switch />', () => {
+        expect(() => shallow(<Switch />)).not.toThrow();
       });
       it('<Table />', () => {
         expect(() => shallow(<Table />)).not.toThrow();
@@ -144,6 +156,9 @@ describe('Sanity Check', () => {
       it('<Button />', () => {
         expect(() => mount(<Button />)).not.toThrow();
       });
+      it('<Case />', () => {
+        expect(() => mount(<Case />)).not.toThrow();
+      });
       it('<Chart />', () => {
         expect(() => mount(<Chart />)).not.toThrow();
       });
@@ -152,6 +167,9 @@ describe('Sanity Check', () => {
       });
       it('<Dynamic />', () => {
         expect(() => mount(<Dynamic />)).not.toThrow();
+      });
+      it('<Default />', () => {
+        expect(() => mount(<Default />)).not.toThrow();
       });
       it('<Equation />', () => {
         expect(() => mount(<Equation />)).not.toThrow();
@@ -182,6 +200,9 @@ describe('Sanity Check', () => {
       });
       it('<SVG />', () => {
         expect(() => mount(<SVG />)).not.toThrow();
+      });
+      it('<Switch />', () => {
+        expect(() => mount(<Switch />)).not.toThrow();
       });
       it('<Table />', () => {
         expect(() => mount(<Table />)).not.toThrow();
