@@ -17,10 +17,9 @@ class Switch extends React.Component {
         child.type.name.toLowerCase() === 'case' && child.props.test === value;
       const matchDefault = child => child.type.name.toLowerCase() === 'default';
 
-      const child = filterChildren(children, child => {
-        return matchCase(child) || matchDefault(child);
-      });
-      const [matchedCase, defaultCase] = child;
+      const matchedCase = filterChildren(children, matchCase);
+      const defaultCase = filterChildren(children, matchDefault);
+
       return <div>{matchedCase ? matchedCase : defaultCase}</div>;
     }
     return '';
