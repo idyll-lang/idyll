@@ -17,6 +17,7 @@ export { default as Gist } from './gist';
 export { default as Header } from './header';
 export { default as Inline } from './inline';
 export { default as Link } from './link';
+export { default as Map } from './map';
 export { default as Preload } from './preload';
 export { default as Radio } from './radio';
 export { default as Range } from './range';
