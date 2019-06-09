@@ -61,6 +61,13 @@ const exampleGroups = [
         sourceUrl: 'https://github.com/mathisonian/trig/'
       },
       {
+        label: 'Explorable Flexagons',
+        subtitle: 'Learn to create and flex flexagons',
+        href: 'http://loki3.com/flex/explore/',
+        image: 'flexagons.jpg',
+        sourceUrl: 'https://github.com/loki3/flexagonator'
+      },
+      {
         label: 'Travelling Salesman Algorithms',
         subtitle: 'From Naive to Christofide',
         href: 'https://cse442-17f.github.io/Traveling-Salesman-Algorithms/',
