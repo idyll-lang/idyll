@@ -4,14 +4,7 @@ import TextContainer from './text-container';
 
 class Map extends React.Component {
   render() {
-    const {
-      idyll,
-      hasError,
-      updateProps,
-      children,
-      value,
-      currentValue
-    } = this.props;
+    const { children, value, currentValue } = this.props;
 
     if (children) {
       return mapChildren(children, child => {
@@ -24,15 +17,7 @@ class Map extends React.Component {
             }
             return props;
           }, newProps);
-          return (
-            <TextContainer>
-              <div>
-                {React.cloneElement(child, {
-                  ...newProps
-                })}
-              </div>
-            </TextContainer>
-          );
+          return React.cloneElement(child, { ...newProps });
         });
       });
     }
