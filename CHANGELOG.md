@@ -1,5 +1,9 @@
 ## v4.3
 
+- Adds loop and switch components (https://github.com/idyll-lang/idyll/pull/524, https://github.com/idyll-lang/idyll/pull/528)
+
+## v4.3
+
 - Adds a Tweet component (https://github.com/idyll-lang/idyll/pull/515)
 - Fix bug with properties named `text` (https://github.com/idyll-lang/idyll/pull/518)
 - Fix positioning of `Aside` component on centered layout (https://github.com/idyll-lang/idyll/pull/520)
