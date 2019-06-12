@@ -20,6 +20,7 @@ import {
   Header,
   Inline,
   Link,
+  Loop,
   Preload,
   Radio,
   Range,
@@ -87,6 +88,9 @@ describe('Sanity Check', () => {
       });
       it('<Link />', () => {
         expect(() => shallow(<Link />)).not.toThrow();
+      });
+      it('<Loop />', () => {
+        expect(() => shallow(<Loop />)).not.toThrow();
       });
       it('<Radio />', () => {
         expect(() => shallow(<Radio />)).not.toThrow();
@@ -182,6 +186,9 @@ describe('Sanity Check', () => {
       });
       it('<Link />', () => {
         expect(() => mount(<Link />)).not.toThrow();
+      });
+      it('<Loop />', () => {
+        expect(() => mount(<Loop />)).not.toThrow();
       });
       it('<Radio />', () => {
         expect(() => mount(<Radio />)).not.toThrow();
