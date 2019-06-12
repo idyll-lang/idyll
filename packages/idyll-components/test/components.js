@@ -20,7 +20,7 @@ import {
   Header,
   Inline,
   Link,
-  Map,
+  Loop,
   Preload,
   Radio,
   Range,
@@ -89,8 +89,8 @@ describe('Sanity Check', () => {
       it('<Link />', () => {
         expect(() => shallow(<Link />)).not.toThrow();
       });
-      it('<Map />', () => {
-        expect(() => shallow(<Map />)).not.toThrow();
+      it('<Loop />', () => {
+        expect(() => shallow(<Loop />)).not.toThrow();
       });
       it('<Radio />', () => {
         expect(() => shallow(<Radio />)).not.toThrow();
@@ -187,8 +187,8 @@ describe('Sanity Check', () => {
       it('<Link />', () => {
         expect(() => mount(<Link />)).not.toThrow();
       });
-      it('<Map />', () => {
-        expect(() => mount(<Map />)).not.toThrow();
+      it('<Loop />', () => {
+        expect(() => mount(<Loop />)).not.toThrow();
       });
       it('<Radio />', () => {
         expect(() => mount(<Radio />)).not.toThrow();

@@ -1,17 +1,16 @@
 const React = require('react');
 const { mapChildren } = require('idyll-component-children');
-import TextContainer from './text-container';
 
-class Map extends React.Component {
+class Loop extends React.Component {
   render() {
-    const { children, value, currentValue } = this.props;
+    const { children, value } = this.props;
 
     if (children) {
       return mapChildren(children, child => {
         return value.map(val => {
           let newProps = Object.assign({}, child.props);
           newProps = Object.keys(child.props).reduce((props, elm) => {
-            if (props[elm] === currentValue) {
+            if (props[elm] === '_iterator') {
               props[elm] = val;
               return props;
             }
@@ -25,8 +24,8 @@ class Map extends React.Component {
   }
 }
 
-Map._idyll = {
-  name: 'Map',
+Loop._idyll = {
+  name: 'Loop',
   tagType: 'open',
   children: ['Some text'],
   props: [
@@ -45,4 +44,4 @@ Map._idyll = {
     }
   ]
 };
-module.exports = Map;
+module.exports = Loop;
