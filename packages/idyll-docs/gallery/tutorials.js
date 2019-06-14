@@ -7,8 +7,7 @@ const tutorialsGroups = [
         subtitle: 'How to update components in response to user events.',
         href:
           'https://idyll.pub/post/triggering-updates-22d46bef1e64218d16f2a97b/',
-        image:
-          'https://idyll.pub/post/triggering-updates-22d46bef1e64218d16f2a97b/static/images/share.png',
+        image: 'triggering-updates.png',
         sourceUrl:
           'https://github.com/mathisonian/idyll-tutorial-triggering-updates'
       },
@@ -18,7 +17,7 @@ const tutorialsGroups = [
           'How to use CSS animations and custom tweening to animate elements.',
         href:
           'https://idyll.pub/post/animation-example-b0c784887e77d19cf74b3e83/',
-        image: 'animating.png',
+        image: 'animating-with-idyll.png',
         sourceUrl: 'https://github.com/mathisonian/idyll-animation-article'
       },
       {
@@ -42,6 +41,12 @@ const tutorialsGroups = [
           'Using derived variables to easily create reactive views of data in Idyll.',
         href: 'https://idyll.pub/post/derived-table-b00359641a4490037dc3dce7/',
         image: 'dynamic-datasets.png'
+      },
+      {
+        label: 'Dynamic Data Loading',
+        subtitle: 'How to load data into Idyll posts at runtime.',
+        href: 'https://idyll.pub/post/dynamic-data-e13c64946ffab6b5110af990/',
+        image: 'dynamic-data-loading.png'
       }
     ]
   },

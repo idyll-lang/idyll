@@ -24,7 +24,7 @@ export default ({ selected }) => (
       </Link>
       <Link href="/gallery">
         <a className={`link ${selected === 'gallery' ? 'selected' : ''}`}>
-          Examples
+          Gallery
         </a>
       </Link>
       <Link href="/editor">

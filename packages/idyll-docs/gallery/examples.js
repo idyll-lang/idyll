@@ -68,6 +68,13 @@ const exampleGroups = [
         sourceUrl: 'https://github.com/loki3/flexagonator'
       },
       {
+        label: 'Bayesian Knowledge Tracing',
+        subtitle: 'An explorable explainable',
+        href: 'https://eutopi.github.io/bkt-explorable/',
+        image: 'bkt.png',
+        sourceUrl: 'https://github.com/eutopi/bkt_interactive'
+      },
+      {
         label: 'Travelling Salesman Algorithms',
         subtitle: 'From Naive to Christofide',
         href: 'https://cse442-17f.github.io/Traveling-Salesman-Algorithms/',
