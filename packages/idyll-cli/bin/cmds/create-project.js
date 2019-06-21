@@ -185,14 +185,22 @@ async function createProject(answers) {
     let packageJson = JSON.parse(await fs.readFile(packagePath));
     let indexIdyll = await fs.readFile(indexPath, { encoding: 'utf-8' });
 
-    packageJson.name = name
+    const slug = name
       .split(' ')
       .join('-')
       .toLowerCase();
+
+    packageJson.name = slug;
     var title = name
       .split('-')
       .join(' ')
       .replace(/\b\w/g, l => l.toUpperCase());
+
+    if (packageJson.idyll) {
+      Object.keys(packageJson.idyll).forEach(key => {
+        packageJson.idyll[key] = packageJson.idyll[key].replace('[slug]', slug);
+      });
+    }
 
     await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
     // TODO: could add more templating.
