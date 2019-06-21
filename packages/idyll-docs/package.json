@@ -1,7 +1,7 @@
 {
   "name": "idyll-docs",
   "private": true,
-  "version": "3.3.0",
+  "version": "3.3.1",
   "description": "A repo for developing the new docs and editor pages, made with next.js",
   "main": "index.js",
   "repository": "https://github.com/idyll-lang/docs-redux.git",
@@ -27,7 +27,7 @@
     "fs": "0.0.1-security",
     "html-react-parser": "^0.4.1",
     "idyll-compiler": "^4.0.9",
-    "idyll-components": "^3.7.0",
+    "idyll-components": "^3.8.0",
     "idyll-document": "^3.1.2",
     "isomorphic-fetch": "^2.2.1",
     "markdown-in-js": "^1.1.3",
