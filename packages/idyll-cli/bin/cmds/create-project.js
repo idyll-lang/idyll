@@ -198,7 +198,12 @@ async function createProject(answers) {
 
     if (packageJson.idyll) {
       Object.keys(packageJson.idyll).forEach(key => {
-        packageJson.idyll[key] = packageJson.idyll[key].replace('[slug]', slug);
+        if (typeof packageJson.idyll[key] === 'string') {
+          packageJson.idyll[key] = packageJson.idyll[key].replace(
+            '[slug]',
+            slug
+          );
+        }
       });
     }
 
