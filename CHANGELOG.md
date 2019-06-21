@@ -1,4 +1,4 @@
-## v4.3
+## v4.4
 
 - Adds loop and switch components (https://github.com/idyll-lang/idyll/pull/524, https://github.com/idyll-lang/idyll/pull/528)
 - Adds `[slug]` parameter to template options
