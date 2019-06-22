@@ -24,7 +24,6 @@
     "dynasty": "^0.3.9",
     "express": "^4.16.2",
     "fontfaceobserver": "^2.0.13",
-    "fs": "0.0.1-security",
     "html-react-parser": "^0.4.1",
     "idyll-compiler": "^4.0.9",
     "idyll-components": "^3.8.0",
