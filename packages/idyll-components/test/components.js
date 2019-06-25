@@ -32,7 +32,8 @@ import {
   Table,
   TextInput,
   Tweet,
-  Youtube
+  Youtube,
+  Heading1
 } from '../src/';
 
 describe('Sanity Check', () => {
@@ -118,6 +119,9 @@ describe('Sanity Check', () => {
       });
       it('<TextInput />', () => {
         expect(() => shallow(<TextInput />)).not.toThrow();
+      });
+      it('<Heading1 />', () => {
+        expect(() => shallow(<Heading1 />)).not.toThrow();
       });
     });
 
@@ -222,6 +226,9 @@ describe('Sanity Check', () => {
       });
       it('<Youtube />', () => {
         expect(() => mount(<Youtube />)).not.toThrow();
+      });
+      it('<Heading1 />', () => {
+        expect(() => mount(<Heading1 />)).not.toThrow();
       });
     });
 

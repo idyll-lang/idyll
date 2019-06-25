@@ -15,6 +15,7 @@ export { default as Fixed } from './fixed';
 export { default as Float } from './float';
 export { default as Gist } from './gist';
 export { default as Header } from './header';
+export { default as Heading1 } from './heading1';
 export { default as Inline } from './inline';
 export { default as Link } from './link';
 export { default as Loop } from './Loop';
