@@ -122,16 +122,14 @@ async function createProject(answers) {
       'Copying files from template directory into the target directory',
       copyFiles
     ],
-    ['Configuring post', fillTemplates],
-    ['Installing dependencies', installDependencies]
+    ['Configuring post', fillTemplates]
   ];
-
+  if (isinstallDependencies) {
+    stages.push(['Installing dependencies', installDependencies]);
+  }
   console.log(colors.success(startMessage));
   var spinner;
   try {
-    if (!isinstallDependencies) {
-      stages = stages.filter(stage => stage[0] !== 'Installing dependencies');
-    }
     for (var i = 0; i < stages.length; i++) {
       let stage = stages[i];
       spinner = ora({
