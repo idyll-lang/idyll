@@ -30,14 +30,19 @@ let _customTemplate;
 
 function buildOptions(yargs) {
   return yargs
-    .alias({
-      t: 'template'
-    })
+    .alias([
+      {
+        t: 'template'
+      },
+      { i: 'install' }
+    ])
+    .default('install', true)
     .nargs('t', 1)
     .describe(
       'template <Path>',
       'Creates Project using custom template at <Path>'
-    );
+    )
+    .describe('install', 'Skip dependency installation');
 }
 
 function builder(yargs) {
@@ -98,6 +103,7 @@ function main(argv) {
 }
 
 async function createProject(answers) {
+  const { install: isinstallDependencies } = yargs.argv;
   let name = answers['package-name'];
   let template = answers['template'];
   let dir = answers['post-dir'];
@@ -116,10 +122,11 @@ async function createProject(answers) {
       'Copying files from template directory into the target directory',
       copyFiles
     ],
-    ['Configuring post', fillTemplates],
-    ['Installing dependencies', installDependencies]
+    ['Configuring post', fillTemplates]
   ];
-
+  if (isinstallDependencies) {
+    stages.push(['Installing dependencies', installDependencies]);
+  }
   console.log(colors.success(startMessage));
   var spinner;
   try {
