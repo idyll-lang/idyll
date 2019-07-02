@@ -9,7 +9,7 @@ exports.handler = async _ => {
   try {
     let isTokenExists = await checkIfTokenExists();
     if (isTokenExists) {
-      let userAnswer = await confirmClean();
+      let userAnswer = await confirm();
       if (userAnswer === 'Yes') {
         removeIdyll();
       }
@@ -25,18 +25,18 @@ checkIfTokenExists = _ => {
   return fs.pathExists(`${PATH}/token`);
 };
 
-confirmClean = async _ => {
+confirm = async _ => {
   const userResponse = await inquirer.prompt([
     {
       type: 'list',
-      name: 'confirmClean',
+      name: 'confirm',
       message: `This command will remove the idyll cache folder, including your idyll.pub token.
       Subsequent deploys to idyll.pub will receive a new URL. 
       Are you sure you wish to continue?`,
       choices: ['Yes', 'No']
     }
   ]);
-  return userResponse.confirmClean;
+  return userResponse.confirm;
 };
 
 removeIdyll = _ => {
