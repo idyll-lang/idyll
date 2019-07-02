@@ -21,11 +21,11 @@ exports.handler = async _ => {
   }
 };
 
-checkIfTokenExists = _ => {
+const checkIfTokenExists = _ => {
   return fs.pathExists(`${PATH}/token`);
 };
 
-confirmClean = async _ => {
+const confirmClean = async _ => {
   const userResponse = await inquirer.prompt([
     {
       type: 'confirm',
@@ -39,7 +39,7 @@ confirmClean = async _ => {
   return userResponse.confirmClean;
 };
 
-removeIdyll = _ => {
+const removeIdyll = _ => {
   fs.remove(PATH, err => {
     if (err) return console.error(err);
   });
