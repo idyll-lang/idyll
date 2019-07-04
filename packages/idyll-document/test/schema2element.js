@@ -6,7 +6,6 @@ import ReactJsonSchema from '../src/utils/schema2element';
 import schema from './fixtures/schema.json';
 
 describe('ReactJsonSchema', () => {
-
   it('can be created without arguments', () => {
     const rjs = new ReactJsonSchema();
     expect(rjs).toBeDefined();
@@ -25,8 +24,7 @@ describe('ReactJsonSchema', () => {
 
   it('can parse a schema', () => {
     const rjs = new ReactJsonSchema(components);
-    const tree = rjs.parseSchema({component: 'div', children: schema});
+    const tree = rjs.parseSchema({ component: 'div', children: schema });
     expect(shallow(tree)).toMatchSnapshot();
   });
-
 });

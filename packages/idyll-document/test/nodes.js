@@ -93,6 +93,8 @@ describe('Schema to Elements', () => {
     });
 
     const el = rjs.parseSchema({ component: 'div', children: strippedSchema });
-    expect(shallow(el).contains(<h1>Welcome to Idyll</h1>)).toBe(true);
+    expect(
+      shallow(el).contains(<components.H1>Welcome to Idyll</components.H1>)
+    ).toBe(true);
   });
 });
