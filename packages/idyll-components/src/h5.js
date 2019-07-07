@@ -3,8 +3,7 @@ import GenerateHeaders from './generateHeaders';
 
 class H5 extends React.PureComponent {
   render() {
-    const { children } = this.props;
-    return <GenerateHeaders size="5">{children}</GenerateHeaders>;
+    return <GenerateHeaders size="5" {...this.props} />;
   }
 }
 
