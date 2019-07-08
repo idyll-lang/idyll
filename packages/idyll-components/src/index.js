@@ -32,3 +32,4 @@ export { default as TextContainer } from './text-container';
 export { default as TextInput } from './text-input';
 export { default as Tweet } from './tweet';
 export { default as Youtube } from './youtube';
+export { default as Desmos } from './desmos';
