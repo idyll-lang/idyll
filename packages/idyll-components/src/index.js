@@ -10,6 +10,7 @@ export { default as Conditional } from './conditional';
 export { default as Default } from './default';
 export { default as Display } from './display';
 export { default as Dynamic } from './dynamic';
+export { default as Desmos } from './desmos';
 export { default as Equation } from './equation';
 export { default as Fixed } from './fixed';
 export { default as Float } from './float';
