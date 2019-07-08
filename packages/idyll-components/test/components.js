@@ -32,7 +32,13 @@ import {
   Table,
   TextInput,
   Tweet,
-  Youtube
+  Youtube,
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6
 } from '../src/';
 
 describe('Sanity Check', () => {
@@ -118,6 +124,24 @@ describe('Sanity Check', () => {
       });
       it('<TextInput />', () => {
         expect(() => shallow(<TextInput />)).not.toThrow();
+      });
+      it('<H1 />', () => {
+        expect(() => shallow(<H1 />)).not.toThrow();
+      });
+      it('<H2 />', () => {
+        expect(() => shallow(<H2 />)).not.toThrow();
+      });
+      it('<H3 />', () => {
+        expect(() => shallow(<H3 />)).not.toThrow();
+      });
+      it('<H4 />', () => {
+        expect(() => shallow(<H4 />)).not.toThrow();
+      });
+      it('<H5 />', () => {
+        expect(() => shallow(<H5 />)).not.toThrow();
+      });
+      it('<H6 />', () => {
+        expect(() => shallow(<H6 />)).not.toThrow();
       });
     });
 
@@ -222,6 +246,24 @@ describe('Sanity Check', () => {
       });
       it('<Youtube />', () => {
         expect(() => mount(<Youtube />)).not.toThrow();
+      });
+      it('<H1 />', () => {
+        expect(() => mount(<H1 />)).not.toThrow();
+      });
+      it('<H2 />', () => {
+        expect(() => mount(<H2 />)).not.toThrow();
+      });
+      it('<H3 />', () => {
+        expect(() => mount(<H3 />)).not.toThrow();
+      });
+      it('<H4 />', () => {
+        expect(() => mount(<H4 />)).not.toThrow();
+      });
+      it('<H5 />', () => {
+        expect(() => mount(<H5 />)).not.toThrow();
+      });
+      it('<H6 />', () => {
+        expect(() => mount(<H6 />)).not.toThrow();
       });
     });
 

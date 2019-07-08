@@ -939,7 +939,7 @@ ShallowWrapper {
               }
         }
     >
-        <h1
+        <H1
             idyllASTNode={
                 Object {
                     "children": Array [
@@ -956,8 +956,8 @@ ShallowWrapper {
             }
         >
             Welcome to Idyll
-        </h1>
-        <h3
+        </H1>
+        <H3
             idyllASTNode={
                 Object {
                     "children": Array [
@@ -974,7 +974,7 @@ ShallowWrapper {
             }
         >
             Idyll is a language for creating interactive documents on the web.
-        </h3>
+        </H3>
         <p
             idyllASTNode={
                 Object {
@@ -3618,7 +3618,7 @@ ShallowWrapper {
                             }
           }
 >
-          <h1
+          <H1
                     idyllASTNode={
                               Object {
                                         "children": Array [
@@ -3635,8 +3635,8 @@ ShallowWrapper {
                     }
           >
                     Welcome to Idyll
-          </h1>
-          <h3
+          </H1>
+          <H3
                     idyllASTNode={
                               Object {
                                         "children": Array [
@@ -3653,7 +3653,7 @@ ShallowWrapper {
                     }
           >
                     Idyll is a language for creating interactive documents on the web.
-          </h3>
+          </H3>
           <p
                     idyllASTNode={
                               Object {
@@ -5356,7 +5356,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "children": Array [
-            <h1
+            <H1
               idyllASTNode={
                             Object {
                                           "children": Array [
@@ -5373,8 +5373,8 @@ ShallowWrapper {
               }
 >
               Welcome to Idyll
-</h1>,
-            <h3
+</H1>,
+            <H3
               idyllASTNode={
                             Object {
                                           "children": Array [
@@ -5391,7 +5391,7 @@ ShallowWrapper {
               }
 >
               Idyll is a language for creating interactive documents on the web.
-</h3>,
+</H3>,
             <p
               idyllASTNode={
                             Object {
@@ -8021,7 +8021,7 @@ Late Var Range:",
           Object {
             "instance": null,
             "key": "0",
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
               "children": Array [
                 "Welcome to Idyll",
@@ -8043,12 +8043,12 @@ Late Var Range:",
             "rendered": Array [
               "Welcome to Idyll",
             ],
-            "type": "h1",
+            "type": [Function],
           },
           Object {
             "instance": null,
             "key": "1",
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
               "children": Array [
                 "Idyll is a language for creating interactive documents on the web.",
@@ -8070,7 +8070,7 @@ Late Var Range:",
             "rendered": Array [
               "Idyll is a language for creating interactive documents on the web.",
             ],
-            "type": "h3",
+            "type": [Function],
           },
           Object {
             "instance": null,
@@ -11565,7 +11565,7 @@ Late Var Range:",
                                   }
             }
 >
-            <h1
+            <H1
                         idyllASTNode={
                                     Object {
                                                 "children": Array [
@@ -11582,8 +11582,8 @@ Late Var Range:",
                         }
             >
                         Welcome to Idyll
-            </h1>
-            <h3
+            </H1>
+            <H3
                         idyllASTNode={
                                     Object {
                                                 "children": Array [
@@ -11600,7 +11600,7 @@ Late Var Range:",
                         }
             >
                         Idyll is a language for creating interactive documents on the web.
-            </h3>
+            </H3>
             <p
                         idyllASTNode={
                                     Object {
@@ -13303,7 +13303,7 @@ Late Var Range:",
           "nodeType": "class",
           "props": Object {
             "children": Array [
-              <h1
+              <H1
                 idyllASTNode={
                                 Object {
                                                 "children": Array [
@@ -13320,8 +13320,8 @@ Late Var Range:",
                 }
 >
                 Welcome to Idyll
-</h1>,
-              <h3
+</H1>,
+              <H3
                 idyllASTNode={
                                 Object {
                                                 "children": Array [
@@ -13338,7 +13338,7 @@ Late Var Range:",
                 }
 >
                 Idyll is a language for creating interactive documents on the web.
-</h3>,
+</H3>,
               <p
                 idyllASTNode={
                                 Object {
@@ -15968,7 +15968,7 @@ Late Var Range:",
             Object {
               "instance": null,
               "key": "0",
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
                 "children": Array [
                   "Welcome to Idyll",
@@ -15990,12 +15990,12 @@ Late Var Range:",
               "rendered": Array [
                 "Welcome to Idyll",
               ],
-              "type": "h1",
+              "type": [Function],
             },
             Object {
               "instance": null,
               "key": "1",
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
                 "children": Array [
                   "Idyll is a language for creating interactive documents on the web.",
@@ -16017,7 +16017,7 @@ Late Var Range:",
               "rendered": Array [
                 "Idyll is a language for creating interactive documents on the web.",
               ],
-              "type": "h3",
+              "type": [Function],
             },
             Object {
               "instance": null,
