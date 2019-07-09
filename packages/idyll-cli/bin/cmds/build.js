@@ -79,7 +79,7 @@ exports.handler = argv => {
   console.log(
     `\n${chalk.green(
       'Building Idyll project with output directory:'
-    )} ${chalk.hex('#6122fb')(argv['output'])}\n`
+    )} ${chalk.magenta(argv['output'])}\n`
   );
   idyll(argv)
     .build()

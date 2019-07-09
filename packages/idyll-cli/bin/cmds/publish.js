@@ -11,7 +11,7 @@ const IDYLL_PUB_API = 'https://api.idyll.pub';
 const DEFAULT_BUILD_DIR = 'build';
 
 const colors = {
-  progress: chalk.hex('#6122fb'),
+  progress: chalk.magenta,
   success: chalk.green,
   failure: chalk.red
 };
