@@ -17,7 +17,7 @@ Template for an Idyll blog with multiple posts.
 
 ## Creating a post
 
-Navigate to the posts directory and run `idyll create --template ../template/`
+Navigate to the posts directory and run `idyll create --template ../template/ --no-install`.
 
 ## Developing a post locally
 
