@@ -1,0 +1,142 @@
+[meta title:"{{title}}" description:"Short description of your project" /]
+
+[Header
+  fullWidth:true
+  title:"{{title}}"
+  subtitle:"Welcome to Idyll. Open index.idyll to start writing"
+  author:"Your Name Here"
+  authorLink:"https://idyll-lang.org"
+  date:`(new Date()).toDateString()`
+  background:"#222222"
+  color:"#ffffff"
+   /]
+
+
+## Introduction
+
+This is an Idyll post. It is generated via
+the file `index.idyll`. To compile this post using
+idyll, run the command `idyll` inside of this directory.
+
+
+Idyll posts are designed to support interaction and
+data-driven graphics.
+
+[var name:"state" value:0 /]
+[CustomD3Component className:"d3-component" state:state /]
+[button onClick:`state++`]
+  Click Me.
+[/button]
+
+Configuration can be done via the `idyll` field in `package.json`.
+
+## Markup
+
+Idyll is based on Markdown.
+
+You can use familiar syntax
+to create **bold** (`**bold**` ) and *italic* (``*italic*` ) styles,
+
+* lists
+* of
+* items,
+
+```
+* lists
+* of
+* items,
+```
+
+1. and numbered
+2. lists
+3. of items,
+
+
+```
+1. and numbered
+2. lists
+3. of items,
+```
+
+in addition to [hyperlinks](https://idyll-lang.org) and images:
+
+![quill](static/images/quill.svg)
+
+```
+![quill](static/images/quill.svg)
+```
+
+## Components
+
+Components can be embedded using a bracket syntax:
+
+```
+[Range /]
+```
+
+and can contain nested content:
+
+```
+[Equation]e = mc^{2}[/Equation]
+```
+
+Components accept properties:
+
+```
+[Range value:x min:0 max:1 /]
+```
+
+that can be bound to variables to achieve interactivity (more in next section).
+
+
+A variety of components are included by default. See [all the available components](https://idyll-lang.org/docs/components/). You can also use any html tag, for example: `[div] A div! [/div]`.
+
+To create your own, add it to the `components/` folder. There are examples of how to use Idyll with React and D3 based components already included.
+
+
+
+## Interactivity
+
+Here is how you can instantiate a variable and bind it to a component:
+
+[var name:"exampleVar" value:5 /]
+
+[Range min:0 max:10 value:exampleVar /]
+[Display value:exampleVar /]
+
+```
+[var name:"exampleVar" value:5 /]
+
+[Range min:0 max:10 value:exampleVar /]
+[Display value:exampleVar /]
+```
+
+## Learn More
+
+To learn more see the documentation at https://idyll-lang.org/docs/,
+join our [chatroom](https://gitter.im/idyll-lang/Lobby), or see the project on [GitHub](https://github.com/idyll-lang/idyll).
+
+[hr /]
+
+# Technical Details
+
+## Installation
+
+- Make sure you have `idyll` installed (`npm i -g idyll`).
+- Clone this repo and run `npm install`.
+
+## Developing a post locally
+
+Run `idyll`.
+
+## Building a post for production
+
+Run `idyll build`. The output will appear in the top-level `build` folder. To change the output location, change the `output` option in `package.json`.
+
+## Deploying
+
+Make sure your post has been built, then deploy the docs folder via any static hosting service.
+
+## Dependencies
+
+You can install custom dependencies by running `npm install <package-name> --save`. Note that any collaborators will also need download the package locally by running `npm install` after pulling the changes.
