@@ -1,3 +1,9 @@
+## v4.5 (unreleased)
+- Improves `article-header` style for the blog layout.
+- Add `idyll clean` command. This command removes elements from the `.idyll` folder, which is used as a build cache and to store tokens for idyll.pub.
+- Add `--no-install` option to `idyll create` so you can generate new posts without running `npm install` (good for use in blogs that share dependencies).
+- Make header components autogenerate `id` tags. 
+
 ## v4.4
 
 - Adds loop and switch components (https://github.com/idyll-lang/idyll/pull/524, https://github.com/idyll-lang/idyll/pull/528)
