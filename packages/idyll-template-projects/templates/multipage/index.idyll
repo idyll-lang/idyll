@@ -1,0 +1,17 @@
+[meta title:"{{title}}" description:"Short description of your project" /]
+
+[Header
+  fullWidth:true
+  title:"{{title}}"
+  subtitle:"Welcome to Idyll. Open index.idyll to start writing"
+  author:"Your Name Here"
+  authorLink:"https://idyll-lang.org"
+  date:`(new Date()).toDateString()`
+  background:"#222222"
+  color:"#ffffff"
+   /]
+
+
+## Posts
+
+* [Post 1](./post-1/)
