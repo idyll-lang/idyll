@@ -65,7 +65,7 @@ function main(argv) {
     if (!projectDir) {
       questions.push({
         name: 'post-dir',
-        message: 'In which directory would you like to install your post?',
+        message: 'In which directory would you like your post?',
         default: 'my-idyll-post'
       });
     }
