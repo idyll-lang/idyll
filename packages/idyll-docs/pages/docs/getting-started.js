@@ -25,14 +25,16 @@ Note that depending on how \`npm\` is installed, you may have to run the above c
 
 ## Creating a project
 
-Idyll provides a built-in project template to help you get started.
-To use the generator run
+Idyll provides a built-in project template to help you get started. Run
 
 ~~~sh
 $ idyll create
 ~~~
 
-and follow the prompts. The generator will produce a structure that looks like this:
+to create a new project. You can choose either \`article\` or \`multipage\` from the
+to create a single post or a multipage setup (for making blogs, books, etc.).
+
+For a single post, the generator will produce a structure that looks like this:
 
 ~~~sh
 $  tree -I node_modules
