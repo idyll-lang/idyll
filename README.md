@@ -1,7 +1,7 @@
 ![idyll-logo](https://user-images.githubusercontent.com/1074773/30891039-807308e2-a2e5-11e7-827e-bce391ad9b1b.png)
 
 <p align="center">
- <a href="https://idyll-lang.github.io/editor">Try Idyll in your browser</a> | <a href="https://idyll-lang.org">Documentation</a> | <a href="https://gitter.im/idyll-lang/Lobby">Chatroom</a> | <a href="https://groups.google.com/forum/#!forum/idyll-lang">Mailing list</a> | <a href="https://twitter.com/idyll_lang">Twitter</a>
+ <a href="https://idyll-lang.org/tutorials">Tutorials</a> | <a href="https://idyll-lang.org">Documentation</a> | <a href="https://gitter.im/idyll-lang/Lobby">Chatroom</a> | <a href="https://groups.google.com/forum/#!forum/idyll-lang">Mailing list</a> | <a href="https://twitter.com/idyll_lang">Twitter</a>
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
 
 # What is Idyll?
 
-For an introduction to Idyll, API reference, and examples, please see https://idyll-lang.org/.
+For an introduction to Idyll, API reference, examples, and tutorials, please see https://idyll-lang.org/.
 
 # Contributor's Guide
 
