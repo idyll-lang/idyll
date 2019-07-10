@@ -16,7 +16,7 @@ const TEMPLATES_DIR = p.join(
 );
 
 const colors = {
-  progress: chalk.hex('#6122fb'),
+  progress: chalk.magenta,
   success: chalk.green,
   failure: chalk.red
 };
