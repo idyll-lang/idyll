@@ -22,7 +22,7 @@ const colors = {
 };
 
 exports.command = 'create [post-name]';
-exports.description = 'Create a new post';
+exports.description = 'Create a new project';
 exports.builder = builder;
 exports.handler = main;
 
@@ -65,20 +65,20 @@ function main(argv) {
     if (!projectDir) {
       questions.push({
         name: 'post-dir',
-        message: 'In which directory would you like your post?',
+        message: 'In which directory would you like your project?',
         default: 'my-idyll-post'
       });
     }
     questions.push({
       name: 'package-name',
-      message: 'What would you like to name your post?',
+      message: 'What would you like to name your project?',
       default: answers => answers['post-dir'] || projectDir
     });
     if (!_customTemplate) {
       questions.push({
         name: 'template',
         type: 'list',
-        message: 'Which project template would you like to use?',
+        message: 'Which template would you like to use?',
         choices: [...templates, 'Custom']
       });
       questions.push({
@@ -108,21 +108,21 @@ async function createProject(answers) {
   let template = answers['template'];
   let dir = answers['post-dir'];
 
-  let startMessage = `\nCreating a new Idyll post in ${dir} using the ${template} template...`;
+  let startMessage = `\nCreating a new Idyll project in ${dir} using the ${template} template...`;
   let successMessage = 'Finished creating the post!';
   let doneInstructionsText = `To start developing, run the following commands in your terminal:`;
   let doneInstructionsCommand = `    cd ${dir}\n    idyll`;
   let dirExistsMessage =
     'That directory already exists. Please ensure that your target directory\
  does not exist.';
-  let errorMessage = `Could not create Idyll post in ${dir}`;
+  let errorMessage = `Could not create Idyll project in ${dir}`;
   let stages = [
     ['Ensuring that the target directory is valid', ensureEmptyProject],
     [
       'Copying files from template directory into the target directory',
       copyFiles
     ],
-    ['Configuring post', fillTemplates]
+    ['Configuring project', fillTemplates]
   ];
   if (isinstallDependencies) {
     stages.push(['Installing dependencies', installDependencies]);
