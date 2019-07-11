@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://idyll-lang.org/</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/editor</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/gallery</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/getting-started</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/tutorials</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/syntax</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/configuration-and-styles</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/plugin-system</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/npm</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/custom</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/scrolling-and-refs</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/publishing/deploying-to-the-web</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/publishing/embedding</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/aside</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/full-width</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/fixed</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/float</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/inline</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/scroller</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/stepper</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/action</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/boolean</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/button</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/dynamic</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/radio</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/range</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/select</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/text-input</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/chart</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/conditional</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/display</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/equation</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/gist</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/header</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/link</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/svg</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/table</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/youtube</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/analytics</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/meta</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://idyll-lang.org/docs/components/default/preload</loc>
+  <lastmod>2019-07-11T06:08:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>
