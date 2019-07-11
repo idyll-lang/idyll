@@ -1,37 +1,17 @@
 import React from 'react';
 
+let desmosGraphCount = 0;
+
 class Desmos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.id ? this.generateId(this.props.id) : `desmos-graph`
+      id: this.props.id
+        ? this.generateId(this.props.id)
+        : `desmos-${desmosGraphCount++}`
     };
-  }
-
-  generateId(id = '') {
-    return id
-      .toString()
-      .trim()
-      .replace(/\s+/g, '-')
-      .toLowerCase();
-  }
-
-  componentDidMount() {
-    const { apiKey, equation } = this.props;
-    const { id } = this.state;
-    const script = document.createElement('script');
-    script.src = `https://www.desmos.com/api/v1.1/calculator.js?apiKey=${apiKey}`;
-    script.async = true;
-    document.body.appendChild(script);
-    script.onload = () => {
-      var elt = document.getElementById(id);
-      var calculator = window.Desmos.GraphingCalculator(elt);
-      if (equation) {
-        calculator.setExpression({ latex: equation });
-      } else {
-        calculator.setBlank();
-      }
-    };
+    this.elt;
+    this.calculator;
   }
 
   render() {
@@ -49,6 +29,38 @@ class Desmos extends React.Component {
     return (
       <div id={this.state.id} style={{ height, width }} {...attributeProps} />
     );
+  }
+
+  generateId(id = '') {
+    return id
+      .toString()
+      .trim()
+      .replace(/\s+/g, '-')
+      .toLowerCase();
+  }
+
+  componentWillUpdate(nextProps) {
+    const { equation } = nextProps;
+    if (equation !== this.props.equation) {
+      this.calculator.setExpression({ latex: equation });
+    }
+  }
+
+  componentDidMount() {
+    const { apiKey, equation } = this.props;
+    const script = document.createElement('script');
+    script.src = `https://www.desmos.com/api/v1.1/calculator.js?apiKey=${apiKey}`;
+    script.async = true;
+    document.body.appendChild(script);
+    script.onload = () => {
+      this.elt = document.getElementById(this.state.id);
+      this.calculator = window.Desmos.GraphingCalculator(this.elt);
+      if (equation) {
+        this.calculator.setExpression({ latex: equation });
+      } else {
+        this.calculator.setBlank();
+      }
+    };
   }
 }
 
