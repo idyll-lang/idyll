@@ -6,7 +6,7 @@ const Contents = [
       { title: 'Getting started', route: '/docs/getting-started' },
       { title: 'Markup syntax', route: '/docs/syntax' },
       { title: 'Options and styles', route: '/docs/configuration-and-styles' },
-      { title: 'Advanced configuration', route: '/docs/advanced-configuration' }
+      { title: 'Plugin System', route: '/docs/plugin-system' }
     ]
   },
   {

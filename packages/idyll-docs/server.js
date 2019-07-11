@@ -1,24 +1,31 @@
 // server.js
-const next = require('next')
-const routes = require('./routes')
-const app = next({dev: process.env.NODE_ENV !== 'production'})
-const handler = routes.getRequestHandler(app)
+const next = require('next');
+const routes = require('./routes');
+const app = next({ dev: process.env.NODE_ENV !== 'production' });
+const handler = routes.getRequestHandler(app);
 const uuid = require('uuid/v4');
-const express = require('express')
-const bodyParser = require('body-parser')
-const { parse } = require('url')
+const express = require('express');
+const bodyParser = require('body-parser');
+const { parse } = require('url');
 
-const {createServer} = require('http');
+const { createServer } = require('http');
 app.prepare().then(() => {
-    // Express config
-    const server = express();
-    server.use(bodyParser.json());
+  // Express config
+  const server = express();
+  server.use(bodyParser.json());
 
-    server.get('*', (req, res) => {
-      req.url = req.url.replace(/\/$/, "")
-      if (req.url == "") { req.url = "/" }
-      handler(req, res)
-    })
+  server.get('*', (req, res) => {
+    req.url = req.url.replace(/\/$/, '');
+    if (req.url == '') {
+      req.url = '/';
+    }
+    if (req.url == '/docs/advanced-configuration') {
+      res.writeHead(302, { Location: `/docs/plugin-system` });
+      res.end();
+      return;
+    }
+    handler(req, res);
+  });
 
-    server.listen(3000)
-  })
+  server.listen(3000);
+});

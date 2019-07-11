@@ -1,16 +1,26 @@
 import Link from 'next/link';
-import markdown from 'markdown-in-js';
 import Layout from '../../components/layout';
 import Highlight from 'react-highlight';
 
 export default ({ url }) => (
-  <Layout url={url} title={'Idyll Documentation | Advanced Configuration'}>
+  <Layout url={url} title={'Idyll Documentation | Plugin System'}>
     <link
       rel="stylesheet"
       href="../../../static/styles/tomorrow-night-eighties.css"
     />
     <div>
-      <h1>Advanced Configuration</h1>
+      <h1>Plugin System</h1>
+
+      <p>
+        See available plugins:
+        <ul>
+          <li>
+            <a href="https://github.com/idyll-lang/idyll-plugins">
+              https://github.com/idyll-lang/idyll-plugins
+            </a>
+          </li>
+        </ul>
+      </p>
 
       <p>
         This section details how to work with the custom hooks exposed by
@@ -28,17 +38,6 @@ export default ({ url }) => (
         The compiler is responsible for transforming Idyll markup into a
         machine-readable abstract syntax tree (AST). You may provide custom
         transformations for processing the AST at compile time.
-      </p>
-
-      <p>
-        See available plugins:
-        <ul>
-          <li>
-            <a href="https://github.com/idyll-lang/idyll-plugins">
-              https://github.com/idyll-lang/idyll-plugins
-            </a>
-          </li>
-        </ul>
       </p>
 
       <p>These transformations are implemented as JavaScript modules.</p>
