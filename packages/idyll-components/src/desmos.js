@@ -10,8 +10,6 @@ class Desmos extends React.Component {
         ? this.generateId(this.props.id)
         : `desmos-${desmosGraphCount++}`
     };
-    this.elt;
-    this.calculator;
   }
 
   render() {
@@ -39,10 +37,22 @@ class Desmos extends React.Component {
       .toLowerCase();
   }
 
+  generateGraph(equation) {
+    const { id } = this.state;
+    document.getElementById(id).innerHTML = '';
+    var elt = document.getElementById(id);
+    var calculator = window.Desmos.GraphingCalculator(elt);
+    if (equation) {
+      calculator.setExpression({ latex: equation });
+    } else {
+      calculator.setBlank();
+    }
+  }
+
   componentWillUpdate(nextProps) {
     const { equation } = nextProps;
     if (equation !== this.props.equation) {
-      this.calculator.setExpression({ latex: equation });
+      this.generateGraph(equation);
     }
   }
 
@@ -53,13 +63,7 @@ class Desmos extends React.Component {
     script.async = true;
     document.body.appendChild(script);
     script.onload = () => {
-      this.elt = document.getElementById(this.state.id);
-      this.calculator = window.Desmos.GraphingCalculator(this.elt);
-      if (equation) {
-        this.calculator.setExpression({ latex: equation });
-      } else {
-        this.calculator.setBlank();
-      }
+      this.generateGraph(equation);
     };
   }
 }
