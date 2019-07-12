@@ -18583,7 +18583,10 @@ Late Var Range:",
           "getChildContext": Object {
             "calledByRenderer": false,
           },
-          "getDerivedStateFromProps": true,
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
           "getSnapshotBeforeUpdate": true,
           "setState": Object {
             "skipsComponentDidUpdateOnNullish": true,
@@ -18591,6 +18594,8 @@ Late Var Range:",
         },
       },
     },
+    Symbol(enzyme.__providerValues__): undefined,
   },
+  Symbol(enzyme.__providerValues__): Map {},
 }
 `;
