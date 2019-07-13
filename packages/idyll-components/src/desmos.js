@@ -1,6 +1,8 @@
 import React from 'react';
 
 let desmosGraphCount = 0;
+const desmosApiUrl = 'https://www.desmos.com/api/v1.1/calculator.js?apiKey=';
+const desmosApiKey = 'dcb31709b452b1cf9dc26972add0fda6';
 
 class Desmos extends React.Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class Desmos extends React.Component {
       idyll,
       hasError,
       updateProps,
-      apiKey,
+      apiKey = desmosApiKey,
       equation,
       height = 400,
       width,
@@ -59,7 +61,7 @@ class Desmos extends React.Component {
   componentDidMount() {
     const { apiKey, equation } = this.props;
     const script = document.createElement('script');
-    script.src = `https://www.desmos.com/api/v1.1/calculator.js?apiKey=${apiKey}`;
+    script.src = `${desmosApiUrl + apiKey}`;
     script.async = true;
     document.body.appendChild(script);
     script.onload = () => {
