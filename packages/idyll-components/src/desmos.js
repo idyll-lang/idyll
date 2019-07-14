@@ -19,7 +19,7 @@ class Desmos extends React.Component {
       idyll,
       hasError,
       updateProps,
-      apiKey = desmosApiKey,
+      apiKey,
       equation,
       height = 400,
       width,
@@ -59,7 +59,12 @@ class Desmos extends React.Component {
   }
 
   componentDidMount() {
-    const { apiKey, equation } = this.props;
+    const { apiKey = desmosApiKey, equation } = this.props;
+    if (apiKey === desmosApiKey) {
+      console.log(
+        `Warning ! You are using default API key for desmos, you should obtain your own API key from https://www.desmos.com/api/v1.3/docs/index.html#document-api-keys and supply it as the apiKey parameter`
+      );
+    }
     const script = document.createElement('script');
     script.src = `${desmosApiUrl + apiKey}`;
     script.async = true;
