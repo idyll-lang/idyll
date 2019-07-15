@@ -12,6 +12,14 @@ class Desmos extends React.Component {
         ? this.generateId(this.props.id)
         : `desmos-${desmosGraphCount++}`
     };
+    if (
+      (!this.props.apiKey || this.props.apiKey === desmosApiKey) &&
+      typeof window === 'undefined'
+    ) {
+      console.log(
+        `Warning ! You are using default API key for desmos, you should obtain your own API key from https://www.desmos.com/api/v1.3/docs/index.html#document-api-keys and supply it as the apiKey parameter`
+      );
+    }
   }
 
   render() {
@@ -60,11 +68,6 @@ class Desmos extends React.Component {
 
   componentDidMount() {
     const { apiKey = desmosApiKey, equation } = this.props;
-    if (apiKey === desmosApiKey) {
-      console.log(
-        `Warning ! You are using default API key for desmos, you should obtain your own API key from https://www.desmos.com/api/v1.3/docs/index.html#document-api-keys and supply it as the apiKey parameter`
-      );
-    }
     const script = document.createElement('script');
     script.src = `${desmosApiUrl + apiKey}`;
     script.async = true;
