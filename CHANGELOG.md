@@ -1,3 +1,6 @@
+## v4.6
+- Adds a [Desmos]() component. ([#547](https://github.com/idyll-lang/idyll/pull/547))
+
 ## v4.5
 - Improves `article-header` style for the blog layout. ([#544](https://github.com/idyll-lang/idyll/pull/544))
 - Add `idyll clean` command. This command removes elements from the `.idyll` folder, which is used as a build cache and to store tokens for idyll.pub. ([#540](https://github.com/idyll-lang/idyll/pull/540))
