@@ -2,81 +2,6 @@ import * as COMPONENTS from 'idyll-components';
 
 const components = [
   {
-    Layout: {
-      description:
-        'These components help manage page layout, for example putting text in the `Aside` component will render it in the article margin instead of inline with the rest of your text.',
-      components: [
-        {
-          Aside: {
-            description:
-              'Content inside of an aside component will be displayed in the margin of your document. For example, the [consumer complaints](https://mathisonian.github.io/consumer-complaints/) article uses the `Aside` component to display a small chart and caption:',
-            image: 'aside.png',
-            thumbnail: 'aside.png',
-            component: COMPONENTS.Aside,
-            liveExample: false
-          }
-        },
-        {
-          FullWidth: {
-            description:
-              "A `FullWidth` component will break out of the text container and expand to fill the full width of the reader's browser.",
-            image: 'feature.png',
-            thumbnail: 'feature.png',
-            liveExample: false
-          }
-        },
-        {
-          Fixed: {
-            description:
-              'Content inside of a `fixed` component will be locked in place, even when the rest of the document scrolls. The [scroll](https://idyll-lang.github.io/idyll/scroll) example uses the `fixed` component to keep the dynamic chart in place:',
-            thumbnail: 'fixed.gif',
-            image: 'fixed.gif',
-            component: COMPONENTS.Fixed,
-            liveExample: false
-          }
-        },
-        {
-          Float: {
-            description:
-              'Content inside of a float will use the CSS `float` attribute to float to the left or right of its parent container.',
-            thumbnail: 'float.png',
-            component: COMPONENTS.Float,
-            liveExample: false
-          }
-        },
-        {
-          Inline: {
-            thumbnail: 'inline.png',
-            description:
-              'The `inline` component adds the `display: inline-block` style property, so that items inside of `inline` component will be displayed next to each other. For example, this code will display three images side by side:',
-            component: COMPONENTS.Inline,
-            liveExample: false
-          }
-        },
-        {
-          Scroller: {
-            description:
-              'The `Scroller` component is used to create scroll-based presentations. See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
-            thumbnail: 'scroller.gif',
-            image: 'scroller.gif',
-            component: COMPONENTS.Scroller,
-            liveExample: false
-          }
-        },
-        {
-          Stepper: {
-            description:
-              'The `Step` component is used to create step-based presentations, like slideshows.  See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
-            thumbnail: 'stepper.gif',
-            image: 'stepper.gif',
-            component: COMPONENTS.Stepper,
-            liveExample: false
-          }
-        }
-      ]
-    }
-  },
-  {
     Input: {
       description:
         'The components are used to accept reader input and update variables in response.',
@@ -155,6 +80,116 @@ const components = [
     }
   },
   {
+    Layout: {
+      description:
+        'These components help manage page layout, for example putting text in the `Aside` component will render it in the article margin instead of inline with the rest of your text.',
+      components: [
+        {
+          Aside: {
+            description:
+              'Content inside of an aside component will be displayed in the margin of your document. For example, the [consumer complaints](https://mathisonian.github.io/consumer-complaints/) article uses the `Aside` component to display a small chart and caption:',
+            image: 'aside.png',
+            thumbnail: 'aside.png',
+            component: COMPONENTS.Aside,
+            liveExample: false
+          }
+        },
+        {
+          FullWidth: {
+            description:
+              "A `FullWidth` component will break out of the text container and expand to fill the full width of the reader's browser.",
+            image: 'feature.png',
+            thumbnail: 'feature.png',
+            liveExample: false
+          }
+        },
+        {
+          Fixed: {
+            description:
+              'Content inside of a `fixed` component will be locked in place, even when the rest of the document scrolls. The [scroll](https://idyll-lang.github.io/idyll/scroll) example uses the `fixed` component to keep the dynamic chart in place:',
+            thumbnail: 'fixed.gif',
+            image: 'fixed.gif',
+            component: COMPONENTS.Fixed,
+            liveExample: false
+          }
+        },
+        {
+          Float: {
+            description:
+              'Content inside of a float will use the CSS `float` attribute to float to the left or right of its parent container.',
+            thumbnail: 'float.png',
+            component: COMPONENTS.Float,
+            liveExample: false
+          }
+        },
+        {
+          Inline: {
+            thumbnail: 'inline.png',
+            description:
+              'The `inline` component adds the `display: inline-block` style property, so that items inside of `inline` component will be displayed next to each other. For example, this code will display three images side by side:',
+            component: COMPONENTS.Inline,
+            liveExample: false
+          }
+        },
+        {
+          Scroller: {
+            description:
+              'The `Scroller` component is used to create scroll-based presentations. See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
+            thumbnail: 'scroller.gif',
+            image: 'scroller.gif',
+            component: COMPONENTS.Scroller,
+            liveExample: false
+          }
+        },
+        {
+          Stepper: {
+            description:
+              'The `Step` component is used to create step-based presentations, like slideshows.  See [this example](https://mathisonian.github.io/idyll/scaffolding-interactives/) for more details.',
+            thumbnail: 'stepper.gif',
+            image: 'stepper.gif',
+            component: COMPONENTS.Stepper,
+            liveExample: false
+          }
+        }
+      ]
+    }
+  },
+  {
+    Logic: {
+      description:
+        'These components help add logic like conditionally showing components or looping over arrays.',
+      components: [
+        {
+          Conditional: {
+            description:
+              'Content inside of an aside component will be displayed in the margin of your document. The conditional component will only display its children when a condition is met:',
+            thumbnail: 'conditional.png',
+            component: COMPONENTS.Conditional,
+            liveExample: true
+          }
+        },
+        {
+          Loop: {
+            description:
+              'Loop over an array to output multiple components based on data.',
+            thumbnail: 'loop.png',
+            component: COMPONENTS.Loop,
+            liveExample: true
+          }
+        },
+        {
+          Switch: {
+            description:
+              'Change what is displayed based on the value of a variable.',
+            thumbnail: 'switch.png',
+            component: COMPONENTS.Switch,
+            liveExample: true
+          }
+        }
+      ]
+    }
+  },
+  {
     Presentation: {
       description:
         'These components render something to the screen, for example the `Chart` component takes data as input and can display several types of charts.',
@@ -169,21 +204,22 @@ const components = [
           }
         },
         {
-          Conditional: {
-            thumbnail: 'conditional.png',
-            description:
-              'This component will conditionally display its children.',
-            component: COMPONENTS.Conditional,
-            liveExample: true
-          }
-        },
-        {
           Display: {
             thumbnail: 'display.png',
             component: COMPONENTS.Display,
             description:
               'This will render the value of a variable to the screen. It is mostly useful for debugging:',
             image: 'displayvar.gif',
+            liveExample: true
+          }
+        },
+        {
+          Desmos: {
+            thumbnail: 'desmos.png',
+            component: COMPONENTS.Desmos,
+            description:
+              'This will show a Desmos graphing calculator with editable equations.',
+            image: 'desmos.gif',
             liveExample: true
           }
         },
@@ -241,6 +277,15 @@ const components = [
             description:
               'Display tabular data. Uses https://github.com/react-tools/react-table under the hood to render the table.',
             image: 'table.png',
+            liveExample: true
+          }
+        },
+        {
+          Tweet: {
+            thumbnail: 'tweet.png',
+            component: COMPONENTS.Tweet,
+            description: 'Display a tweet.',
+            image: 'tweet.png',
             liveExample: true
           }
         },
