@@ -70,7 +70,7 @@
     "uglify-js": "^2.8.22",
     "update-notifier": "^2.5.0",
     "url-join": "^4.0.0",
-    "yargs": "8.0.1"
+    "yargs": "^13.3.0"
   },
   "devDependencies": {
     "jest": "20.0.4",
