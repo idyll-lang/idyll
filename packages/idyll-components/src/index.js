@@ -24,7 +24,7 @@ export { default as H5 } from './h5';
 export { default as H6 } from './h6';
 export { default as Inline } from './inline';
 export { default as Link } from './link';
-export { default as Loop } from './Loop';
+export { default as Loop } from './loop';
 export { default as Preload } from './preload';
 export { default as Radio } from './radio';
 export { default as Range } from './range';

@@ -34,13 +34,6 @@ Loop._idyll = {
       type: 'array',
       example: "['one', 'two', 'three']",
       description: 'Array of values to map.'
-    },
-    {
-      name: 'currentValue',
-      type: 'string',
-      example: 'iterator',
-      description:
-        'Value of the current element being processed from the array.'
     }
   ]
 };
