@@ -38,7 +38,8 @@ import {
   H3,
   H4,
   H5,
-  H6
+  H6,
+  Desmos
 } from '../src/';
 
 describe('Sanity Check', () => {
@@ -142,6 +143,9 @@ describe('Sanity Check', () => {
       });
       it('<H6 />', () => {
         expect(() => shallow(<H6 />)).not.toThrow();
+      });
+      it('<Desmos />', () => {
+        expect(() => shallow(<Desmos />)).not.toThrow();
       });
     });
 
@@ -264,6 +268,9 @@ describe('Sanity Check', () => {
       });
       it('<H6 />', () => {
         expect(() => mount(<H6 />)).not.toThrow();
+      });
+      it('<Desmos />', () => {
+        expect(() => mount(<Desmos />)).not.toThrow();
       });
     });
 
