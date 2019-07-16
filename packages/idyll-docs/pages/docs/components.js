@@ -182,8 +182,8 @@ export default ({ url }) => (
     <h1>Built-In Components</h1>
     <p>
       Idyll ships with a handful of components that handle common tasks. They
-      are broken into four categories: <em>layout</em>, <em>input</em>,{' '}
-      <em>presentation</em>, and <em>helpers</em>.
+      are broken into five categories: <em>input</em>, <em>layout</em>,{' '}
+      <em>logic</em>, <em>presentation</em>, and <em>helpers</em>.
     </p>
     <div className="page-contents">
       <div>{groups.map(g => g.renderContents())}</div>
