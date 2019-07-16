@@ -16,10 +16,11 @@ class Desmos extends React.Component {
       (!this.props.apiKey || this.props.apiKey === desmosApiKey) &&
       typeof window === 'undefined'
     ) {
-      console.log(
-        `Warning ! You are using default API key for desmos, you should obtain your own API key from https://www.desmos.com/api/v1.3/docs/index.html#document-api-keys and supply it as the apiKey parameter`
+      console.warn(
+        `\nWarning! You are using default API key for desmos. If you plan to use Desmos in production you should obtain a key from https://www.desmos.com/api/v1.3/docs/index.html#document-api-keys and supply it as the apiKey parameter.\n`
       );
     }
+    this.getCurrentLatex = this.getCurrentLatex.bind(this);
   }
 
   render() {
@@ -47,22 +48,64 @@ class Desmos extends React.Component {
       .toLowerCase();
   }
 
+  getCurrentLatex() {
+    if (!this.calculator) {
+      return;
+    }
+    const { expressions } = this.calculator.getState();
+    const filteredExpressions = expressions.list.filter(
+      d => d.type === 'expression'
+    );
+    if (filteredExpressions.length) {
+      return filteredExpressions[0].latex;
+    }
+  }
+
   generateGraph(equation) {
     const { id } = this.state;
     document.getElementById(id).innerHTML = '';
-    var elt = document.getElementById(id);
-    var calculator = window.Desmos.GraphingCalculator(elt);
+    const elt = document.getElementById(id);
+    const calculator = window.Desmos.GraphingCalculator(elt);
     if (equation) {
       calculator.setExpression({ latex: equation });
     } else {
       calculator.setBlank();
     }
+
+    this.calculator = calculator;
+
+    // Have to pull these functions out because
+    // `observeEvent` won't work with an arrow
+    // function.
+    const { updateProps } = this.props;
+    const { getCurrentLatex } = this;
+
+    // Catch changes when a user edits the
+    // calculator.
+    calculator.observeEvent('change', function() {
+      const latex = getCurrentLatex();
+      if (latex) {
+        updateProps({ equation: latex });
+      }
+    });
   }
 
   componentWillUpdate(nextProps) {
     const { equation } = nextProps;
-    if (equation !== this.props.equation) {
-      this.generateGraph(equation);
+    // Only instantiate & update the calculator
+    // when necessary to improve performance.
+    if (
+      equation !== this.props.equation &&
+      equation !== this.getCurrentLatex()
+    ) {
+      if (this.calculator) {
+        const newState = this.calculator.getState();
+        newState.expressions.list[0].type = 'expression';
+        newState.expressions.list[0].latex = equation;
+        this.calculator.setState(newState);
+      } else {
+        this.generateGraph(equation);
+      }
     }
   }
 
