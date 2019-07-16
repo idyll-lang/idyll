@@ -43,11 +43,6 @@ exports.handler = argv => {
     delete argv[key];
   });
 
-  // delete undefined keys so Object.assign won't use them
-  Object.keys(argv).forEach(key => {
-    if (argv[key] === undefined) delete argv[key];
-  });
-
   const defaults = {
     components: ['components'],
     static: 'static',
