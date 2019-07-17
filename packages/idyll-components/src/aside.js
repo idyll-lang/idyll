@@ -3,19 +3,16 @@ import React from 'react';
 class Aside extends React.PureComponent {
   render() {
     return (
-      <div className={'aside-container'}>
-        <div className={'aside'}>
-          {this.props.children}
-        </div>
-      </div>
+      <span className={'aside-container'}>
+        <span className={'aside'}>{this.props.children}</span>
+      </span>
     );
   }
 }
 
-
 Aside._idyll = {
-  name: "Aside",
-  tagType: "open"
-}
+  name: 'Aside',
+  tagType: 'open'
+};
 
 export default Aside;
