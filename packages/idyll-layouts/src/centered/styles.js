@@ -33,8 +33,10 @@ input {
 
 .aside-container {
   position: relative;
+  display: block;
 }
 .aside {
+  display: block;
   position: absolute;
   width: 300px;
   right: calc((10vw + 350px + 150px) / -2);

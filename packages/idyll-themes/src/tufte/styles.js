@@ -1,5 +1,3 @@
-
-
 export default () => `
 @charset "UTF-8";
 
@@ -196,9 +194,9 @@ blockquote .sidenote, blockquote .marginnote, blockquote .aside { margin-right: 
                                                min-width: 59%;
                                                text-align: left; }
 
-.aside-container { width: 55%; }
 .aside-container {
   position: static;
+  width: 55%;
 }
 div.fullwidth, table.fullwidth { width: 100%; }
 
@@ -371,4 +369,4 @@ pre {
   overflow-x: auto;
 }
 
-`
+`;
