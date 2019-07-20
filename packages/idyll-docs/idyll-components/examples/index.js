@@ -28,11 +28,11 @@ import Analytics from './Analytics.idl';
 
 import Conditional from './Conditional.idl';
 
-import Tweet from './tweet.idl';
-import Desmos from './desmos.idl';
+import Tweet from './Tweet.idl';
+import Desmos from './Desmos.idl';
 
-import Loop from './loop.idl';
-import Switch from './switch.idl';
+import Loop from './Loop.idl';
+import Switch from './Switch.idl';
 
 // import Meta from './Meta.idl'
 // import Preload from './Preload.idl'
