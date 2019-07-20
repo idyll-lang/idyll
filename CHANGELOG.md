@@ -1,5 +1,6 @@
 ## v4.6
 - Adds a [Desmos]() component. ([#547](https://github.com/idyll-lang/idyll/pull/547))
+- Fix bug with incorrect components being inserted when using `Asides` & server-side rendering.
 
 ## v4.5
 - Improves `article-header` style for the blog layout. ([#544](https://github.com/idyll-lang/idyll/pull/544))
