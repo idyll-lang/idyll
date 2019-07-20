@@ -30,12 +30,10 @@ let _customTemplate;
 
 function buildOptions(yargs) {
   return yargs
-    .alias([
-      {
-        t: 'template'
-      },
-      { i: 'install' }
-    ])
+    .alias({
+      t: 'template',
+      i: 'install'
+    })
     .default('install', true)
     .nargs('t', 1)
     .describe(
