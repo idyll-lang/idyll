@@ -20,7 +20,10 @@ class Tweet extends Component {
   loadTwttr() {
     return new Promise((resolve, reject) => {
       const twttrEl = document.createElement('script');
-      twttrEl.setAttribute('src', 'http://platform.twitter.com/widgets.js');
+      twttrEl.setAttribute(
+        'src',
+        `${document.location.protocol}//platform.twitter.com/widgets.js`
+      );
       twttrEl.onload = () => resolve();
       twttrEl.onerror = error => reject(error);
       (document.head || document.body || { appendChild: () => {} }).appendChild(
