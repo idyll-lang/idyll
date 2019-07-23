@@ -19,12 +19,14 @@ class TableComponent extends React.PureComponent {
       return this.props.columns;
     }
     if ((this.props.data || []).length) {
-      return Object.keys(this.props.data[0]).map(d => {
-        return {
-          Header: d,
-          accessor: d
-        };
-      });
+      return Object.keys(this.props.data[0])
+        .filter(d => d !== '')
+        .map(d => {
+          return {
+            Header: d,
+            accessor: d
+          };
+        });
     }
 
     return [];
