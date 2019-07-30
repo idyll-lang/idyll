@@ -77,6 +77,22 @@ describe('compiler', function() {
       );
     });
 
+    it('should handle standalone, centered equations inside $$...$$', function() {
+      var lex = Lexer();
+      var results = lex('$$\ny = 0\n$$');
+      expect(results.tokens.join(' ')).to.eql(
+        'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "display" TOKEN_VALUE_END PARAM_SEPARATOR BOOLEAN TOKEN_VALUE_START "true" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF'
+      );
+    });
+
+    it('should handle inline equations inside $...$', function() {
+      var lex = Lexer();
+      var results = lex('$y = 0$');
+      expect(results.tokens.join(' ')).to.eql(
+        'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF'
+      );
+    });
+
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
       var results = lex('regular text and stuff, then some `code`');

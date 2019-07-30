@@ -87,6 +87,47 @@ const lex = function(options) {
         .concat(['CLOSE_BRACKET']);
     }
   );
+  // Standalone, centered equation inside $$...$$
+  lexer.addRule(
+    /\$\s*([^\$\$]*)\s*\$[\n\s\t]*(((?!((\$\$))).)*)[\n\s\t]*\$\$/i,
+    function(lexeme, props, innerText) {
+      inComponent = false;
+      if (this.reject) return;
+      updatePosition(lexeme);
+      return ['OPEN_BRACKET', 'COMPONENT_NAME']
+        .concat(formatToken('equation'))
+        .concat(recurse(props, { inComponent: true, gotName: true }))
+        .concat(['COMPONENT_WORD'])
+        .concat(formatToken('display'))
+        .concat(['PARAM_SEPARATOR'])
+        .concat(['BOOLEAN'])
+        .concat(formatToken('true'))
+        .concat(['CLOSE_BRACKET'])
+        .concat(['WORDS'])
+        .concat(formatToken(innerText))
+        .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+        .concat(formatToken('equation'))
+        .concat(['CLOSE_BRACKET']);
+    }
+  );
+  // TODO: Inline equation inside $...$ (doesn't work yet, have to find correct regex)
+  // lexer.addRule(
+  //   /\$[\n\s\t]*(((?!(\$)).)*)[\n\s\t]*\$/i,
+  //   function(lexeme, props, innerText) {
+  //     inComponent = false;
+  //     if (this.reject) return;
+  //     updatePosition(lexeme);
+  //     return ['OPEN_BRACKET', 'COMPONENT_NAME']
+  //       .concat(formatToken('equation'))
+  //       .concat(recurse(props, { inComponent: true, gotName: true }))
+  //       .concat(['CLOSE_BRACKET'])
+  //       .concat(['WORDS'])
+  //       .concat(formatToken(innerText))
+  //       .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+  //       .concat(formatToken('equation'))
+  //       .concat(['CLOSE_BRACKET']);
+  //   }
+  // );
   lexer.addRule(
     /\[\s*code\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*code\s*\])).)*)[\n\s\t]*\[\s*\/\s*code\s*\]/i,
     function(lexeme, props, innerText) {
