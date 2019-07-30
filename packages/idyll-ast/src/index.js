@@ -354,7 +354,7 @@ const modifyNodesByName = function(ast, name, modifier) {
   const modifiedAST = [ast].map(node => {
     if (['textnode', 'var', 'derived', 'data'].indexOf(node.type) === -1) {
       node = Object.assign({}, node, {
-        children: modifyHelper(getChildren(node), name, modifier)
+        children: modifyHelper(getChildren(node), name.toLowerCase(), modifier)
       });
     }
     node = handleNodeByName(node, name, modifier);
