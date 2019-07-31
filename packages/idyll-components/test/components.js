@@ -39,7 +39,9 @@ import {
   H4,
   H5,
   H6,
-  Desmos
+  Desmos,
+  Cite,
+  References
 } from '../src/';
 
 describe('Sanity Check', () => {
@@ -146,6 +148,12 @@ describe('Sanity Check', () => {
       });
       it('<Desmos />', () => {
         expect(() => shallow(<Desmos />)).not.toThrow();
+      });
+      it('<Cite />', () => {
+        expect(() => shallow(<Cite />)).not.toThrow();
+      });
+      it('<Cite.References />', () => {
+        expect(() => shallow(<Cite.References />)).not.toThrow();
       });
     });
 
@@ -271,6 +279,12 @@ describe('Sanity Check', () => {
       });
       it('<Desmos />', () => {
         expect(() => mount(<Desmos />)).not.toThrow();
+      });
+      it('<Cite />', () => {
+        expect(() => mount(<Cite />)).not.toThrow();
+      });
+      it('<Cite.References />', () => {
+        expect(() => mount(<Cite.References />)).not.toThrow();
       });
     });
 

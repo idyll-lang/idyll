@@ -204,6 +204,15 @@ const components = [
           }
         },
         {
+          Cite: {
+            thumbnail: 'cite.png',
+            component: COMPONENTS.Cite,
+            description:
+              'This will add to the list of citations which can be displayed anywhere with the component `Cite.References`.',
+            liveExample: true
+          }
+        },
+        {
           Display: {
             thumbnail: 'display.png',
             component: COMPONENTS.Display,

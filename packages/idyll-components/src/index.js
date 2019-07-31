@@ -5,6 +5,7 @@ export { default as Boolean } from './boolean';
 export { default as Button } from './button';
 export { default as Case } from './case';
 export { default as Chart } from './chart';
+export { default as Cite } from './cite';
 export { default as CodeHighlight } from './code-highlight';
 export { default as Conditional } from './conditional';
 export { default as Default } from './default';
