@@ -28,7 +28,9 @@ class References extends React.Component {
           {citations.map((citation, index) => (
             <li key={index}>
               {`${citation.authors}: `}
-              <a href={citation.source}>{citation.title}</a>
+              <a href={citation.url} target="_blank">
+                {citation.title}
+              </a>
             </li>
           ))}
         </ol>
@@ -40,8 +42,8 @@ class References extends React.Component {
 class Cite extends React.Component {
   constructor(props) {
     super(props);
-    const { authors, source, title } = this.props;
-    citationsProxy.push({ authors, source, title });
+    const { authors, url, title } = this.props;
+    citationsProxy.push({ authors, url, title });
     this.state = { citationNumber: citations.length };
   }
   render() {
@@ -68,7 +70,7 @@ Cite._idyll = {
       type: 'string'
     },
     {
-      name: 'source',
+      name: 'url',
       type: 'string',
       description: 'Link to the citation.'
     }
