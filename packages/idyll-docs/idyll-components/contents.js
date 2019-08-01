@@ -208,7 +208,7 @@ const components = [
             thumbnail: 'cite.png',
             component: COMPONENTS.Cite,
             description:
-              'This will add to the list of citations which can be displayed anywhere with the component `Cite.References`.',
+              'This will add to the list of citations which can be displayed anywhere with the component `Cite.References`. To refer to the same cite at multiple places it only needs to be declared with all properties once. After this it can be referred using the id like `[Cite id:"idyll-uist"]`.',
             liveExample: true
           }
         },

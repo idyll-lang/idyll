@@ -150,7 +150,9 @@ describe('Sanity Check', () => {
         expect(() => shallow(<Desmos />)).not.toThrow();
       });
       it('<Cite />', () => {
-        expect(() => shallow(<Cite />)).not.toThrow();
+        expect(() =>
+          shallow(<Cite authors="abc" title="xyz" date="2009" />)
+        ).not.toThrow();
       });
       it('<Cite.References />', () => {
         expect(() => shallow(<Cite.References />)).not.toThrow();
@@ -281,7 +283,9 @@ describe('Sanity Check', () => {
         expect(() => mount(<Desmos />)).not.toThrow();
       });
       it('<Cite />', () => {
-        expect(() => mount(<Cite />)).not.toThrow();
+        expect(() =>
+          mount(<Cite authors="abc" title="xyz" date="2009" />)
+        ).not.toThrow();
       });
       it('<Cite.References />', () => {
         expect(() => mount(<Cite.References />)).not.toThrow();

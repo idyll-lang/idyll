@@ -27,10 +27,11 @@ class References extends React.Component {
         <ol>
           {citations.map((citation, index) => (
             <li key={index}>
-              {`${citation.authors}: `}
+              {citation.authors}:{' '}
               <a href={citation.url} target="_blank">
                 {citation.title}
               </a>
+              , {citation.date}
             </li>
           ))}
         </ol>
@@ -42,13 +43,33 @@ class References extends React.Component {
 class Cite extends React.Component {
   constructor(props) {
     super(props);
-    const { authors, url, title } = this.props;
-    citationsProxy.push({ authors, url, title });
-    this.state = { citationNumber: citations.length };
+    const { authors, url, title, id, date } = this.props;
+    const foundCitation = citationsProxy.find(
+      citation => citation.id === id && id !== undefined
+    );
+    if (foundCitation) {
+      this.state = {
+        citationNumber: citationsProxy.indexOf(foundCitation) + 1,
+        ...foundCitation
+      };
+      if (authors || title) {
+        console.warn(
+          'Warning: Ignoring authors and title as Cite with the given id was declared before.'
+        );
+      }
+    } else if (authors && title) {
+      const newCitation = { authors, url, title, id, date };
+      citationsProxy.push(newCitation);
+      this.state = { citationNumber: citationsProxy.length, ...newCitation };
+    } else {
+      console.warn(
+        `Warning: Cite with given id not found or invalid id. Check if a Cite with the id "${id}" was declared before this line.`
+      );
+      this.state = {};
+    }
   }
   render() {
-    const { authors, title } = this.props;
-    const { citationNumber } = this.state;
+    const { citationNumber, authors, title } = this.state;
     return (
       <a title={`${authors}: ${title}`} href="#references">
         [{citationNumber}]
@@ -73,6 +94,16 @@ Cite._idyll = {
       name: 'url',
       type: 'string',
       description: 'Link to the citation.'
+    },
+    {
+      name: 'date',
+      type: 'string'
+    },
+    {
+      name: 'id',
+      type: 'string',
+      description:
+        'Can be used to refer a previously stated citation using the same id.'
     }
   ]
 };
