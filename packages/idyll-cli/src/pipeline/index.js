@@ -53,13 +53,16 @@ const build = (opts, paths, resolvers) => {
           return acc;
         }, {});
 
-        const data = getDataNodes(ast).reduce((acc, { name, source }) => {
-          let { resolvedName, data } = resolvers
-            .get('data')
-            .resolve(name, source);
-          acc[resolvedName] = data;
-          return acc;
-        }, {});
+        const data = getDataNodes(ast).reduce(
+          (acc, { name, source, async }) => {
+            let { resolvedName, data } = resolvers
+              .get('data')
+              .resolve(name, source, async);
+            acc[resolvedName] = data;
+            return acc;
+          },
+          {}
+        );
 
         const css = resolvers.get('css').resolve();
 
