@@ -235,7 +235,7 @@ const getDerivedValues = dVars => {
 class IdyllRuntime extends React.PureComponent {
   constructor(props) {
     super(props);
-
+    this.state = {};
     this.scrollListener = this.scrollListener.bind(this);
     this.initScrollListener = this.initScrollListener.bind(this);
     const ast = filterASTForDocument(props.ast);
@@ -275,18 +275,44 @@ class IdyllRuntime extends React.PureComponent {
       });
     }
 
+    const dataStore = getData(data, props.datasets);
     const initialState = Object.assign(
       {},
       {
         ...getVars(vars, initialContext),
-        ...getData(data, props.datasets)
+        ...dataStore.syncData
       },
       initialContext,
       props.initialState ? props.initialState : {}
     );
+
+    const { asyncData: asyncDataStore } = dataStore;
+    const asyncDataStoreKeys = Object.keys(asyncDataStore);
+    const asyncDataList = asyncDataStoreKeys.map(key => asyncDataStore[key]);
+    asyncDataStoreKeys.forEach(key => {
+      this.state[key] = [];
+    });
+
+    Promise.all(asyncDataList)
+      .then(resolvedAsyncDataList => {
+        const resolvedDataObject = asyncDataStoreKeys.reduce(
+          (acc, key, index) => {
+            acc[key] = resolvedAsyncDataList[index];
+            return acc;
+          },
+          {}
+        );
+        this.updateState({
+          ...this.state,
+          ...resolvedDataObject
+        });
+      })
+      .catch(e => console.error(e));
+
     const derivedVars = (this.derivedVars = getVars(derived, initialState));
 
     let state = (this.state = {
+      ...this.state,
       ...initialState,
       ...getDerivedValues(derivedVars)
     });

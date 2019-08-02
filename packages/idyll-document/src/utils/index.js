@@ -1,5 +1,5 @@
 const falafel = require('falafel');
-
+const axios = require('axios');
 const {
   getChildren,
   getNodeName,
@@ -238,12 +238,24 @@ export const filterIdyllProps = (props, filterInjected) => {
 export const getData = (arr, datasets = {}) => {
   const pluck = (acc, val) => {
     const nameValue = getProperties(val).name.value;
-    acc[nameValue] = datasets[nameValue];
+    const sourceValue = getProperties(val).source.value;
+    const async = getProperties(val).async ? getProperties(val).async : false;
+
+    if (async) {
+      acc.asyncData[nameValue] = axios
+        .get(sourceValue)
+        .then(resp => {
+          return resp.data;
+        })
+        .catch(e => console.error(e));
+    } else {
+      acc.syncData[nameValue] = datasets[nameValue];
+    }
 
     return acc;
   };
 
-  return arr.reduce(pluck, {});
+  return arr.reduce(pluck, { syncData: {}, asyncData: {} });
 };
 
 export const splitAST = ast => {
