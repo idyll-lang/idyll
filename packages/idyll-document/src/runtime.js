@@ -288,27 +288,20 @@ class IdyllRuntime extends React.PureComponent {
 
     const { asyncData: asyncDataStore } = dataStore;
     const asyncDataStoreKeys = Object.keys(asyncDataStore);
-    const asyncDataList = asyncDataStoreKeys.map(key => asyncDataStore[key]);
     asyncDataStoreKeys.forEach(key => {
-      this.state[key] = [];
+      this.state[key] = asyncDataStore[key].initialValue;
     });
 
-    Promise.all(asyncDataList)
-      .then(resolvedAsyncDataList => {
-        const resolvedDataObject = asyncDataStoreKeys.reduce(
-          (acc, key, index) => {
-            acc[key] = resolvedAsyncDataList[index];
-            return acc;
-          },
-          {}
-        );
-        this.updateState({
-          ...this.state,
-          ...resolvedDataObject
-        });
-      })
-      .catch(e => console.error(e));
-
+    asyncDataStoreKeys.map(key => {
+      asyncDataStore[key].dataPromise
+        .then(res => {
+          this.updateState({
+            ...this.state,
+            [key]: res
+          });
+        })
+        .catch(e => console.error('Error while resolving the data' + e));
+    });
     const derivedVars = (this.derivedVars = getVars(derived, initialState));
 
     let state = (this.state = {

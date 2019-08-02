@@ -1,5 +1,7 @@
 const falafel = require('falafel');
 const axios = require('axios');
+const parse = require('csv-parse/lib/es5/sync');
+
 const {
   getChildren,
   getNodeName,
@@ -239,15 +241,26 @@ export const getData = (arr, datasets = {}) => {
   const pluck = (acc, val) => {
     const nameValue = getProperties(val).name.value;
     const sourceValue = getProperties(val).source.value;
-    const async = getProperties(val).async ? getProperties(val).async : false;
-
+    const async = getProperties(val).async
+      ? getProperties(val).async.value
+      : false;
     if (async) {
-      acc.asyncData[nameValue] = axios
+      const initialValue = getProperties(val).initialValue
+        ? JSON.parse(getProperties(val).initialValue.value)
+        : [];
+      const dataPromise = axios
         .get(sourceValue)
         .then(resp => {
+          if (sourceValue.endsWith('.csv')) {
+            return parse(resp.data);
+          }
           return resp.data;
         })
-        .catch(e => console.error(e));
+        .catch(e => console.error('Error while fetching Data:' + e));
+      acc.asyncData[nameValue] = {
+        initialValue,
+        dataPromise
+      };
     } else {
       acc.syncData[nameValue] = datasets[nameValue];
     }
