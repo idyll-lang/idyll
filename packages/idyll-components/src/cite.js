@@ -27,11 +27,12 @@ class References extends React.Component {
         <ol>
           {citations.map((citation, index) => (
             <li key={index}>
-              {citation.authors}:{' '}
               <a href={citation.url} target="_blank">
                 {citation.title}
               </a>
-              , {citation.date}
+              , {citation.authors}.
+              <em>{citation.venue ? ' ' + citation.venue + '.' : ''}</em>
+              {citation.date ? ' ' + citation.date + '.' : ''}
             </li>
           ))}
         </ol>
@@ -43,7 +44,7 @@ class References extends React.Component {
 class Cite extends React.Component {
   constructor(props) {
     super(props);
-    const { authors, url, title, id, date } = this.props;
+    const { authors, url, title, date, venue, id } = this.props;
     const foundCitation = citationsProxy.find(
       citation => citation.id === id && id !== undefined
     );
@@ -58,7 +59,7 @@ class Cite extends React.Component {
         );
       }
     } else if (authors && title) {
-      const newCitation = { authors, url, title, id, date };
+      const newCitation = { authors, url, title, date, venue, id };
       citationsProxy.push(newCitation);
       this.state = { citationNumber: citationsProxy.length, ...newCitation };
     } else {
@@ -69,9 +70,9 @@ class Cite extends React.Component {
     }
   }
   render() {
-    const { citationNumber, authors, title } = this.state;
+    const { citationNumber, authors, title, url } = this.state;
     return (
-      <a title={`${authors}: ${title}`} href="#references">
+      <a title={`${title}, ${authors}`} href={url || '#references'}>
         [{citationNumber}]
       </a>
     );
@@ -97,6 +98,10 @@ Cite._idyll = {
     },
     {
       name: 'date',
+      type: 'string'
+    },
+    {
+      name: 'venue',
       type: 'string'
     },
     {
