@@ -71,7 +71,7 @@ const lex = function(options) {
   // that shouldn't be formatted.
 
   lexer.addRule(
-    /\[\s*equation\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*equation\s*\])).)*)[\n\s\t]*\[\s*\/\s*equation\s*\]/i,
+    /\[\s*equation\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/equation\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*equation\s*\]/i,
     function(lexeme, props, innerText) {
       inComponent = false;
       if (this.reject) return;
