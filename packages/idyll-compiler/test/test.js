@@ -146,7 +146,7 @@ describe('compiler', function() {
         not a comment: https://stuff.com
       `);
       expect(results.tokens.join(' ')).to.eql(
-        'WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/not a comment\n          " TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK WORDS TOKEN_VALUE_START "not a comment: https:" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/stuff.com" TOKEN_VALUE_END EOF'
+        'WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/not a comment\n          " TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK WORDS TOKEN_VALUE_START "not a comment: https:" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/stuff.com" TOKEN_VALUE_END EOF'
       );
     });
 
@@ -606,20 +606,15 @@ End text
 
         not a comment: https://stuff.com
       `;
+
       expect(compile(input, { async: false })).to.eql(
         AST.convertV1ToV2([
           [
             'TextContainer',
             [],
             [
-              [
-                'p',
-                [],
-                [
-                  'Text. / Not a comment.\n        ',
-                  ['component', [], ['//not a comment\n          ']]
-                ]
-              ],
+              ['p', [], ['Text. / Not a comment.\n        ']],
+              ['component', [], ['//not a comment\n          ']],
               [
                 'p',
                 [],

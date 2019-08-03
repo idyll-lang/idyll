@@ -294,6 +294,9 @@ const lex = function(options) {
 
   lexer.addRule(/(\n\s*\/\/[^\n]*|\/\/\s+[^\n]*)/, function(lexeme) {
     updatePosition(lexeme);
+    if (lexeme.startsWith('\n')) {
+      return ['BREAK'];
+    }
   });
 
   lexer.addRule(/\/(\n?[^`\*\[\/\n\]!\\\d_])*/gm, function(lexeme) {
