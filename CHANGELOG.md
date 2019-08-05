@@ -1,3 +1,15 @@
+## v4.7
+
+New features:
+
+- Adds support for citations and references ([#575](https://github.com/idyll-lang/idyll/pull/575))
+
+Bugfixes: 
+
+- Fix case sensativity in AST modifyNodesByName method ([#574](https://github.com/idyll-lang/idyll/pull/574))
+- Fix equation rendering issues ([#579](https://github.com/idyll-lang/idyll/pull/579))
+- Fix comment spacing issue ([#578](https://github.com/idyll-lang/idyll/pull/578))
+
 ## v4.6
 - Adds a [Desmos]() component. ([#547](https://github.com/idyll-lang/idyll/pull/547))
 - Fix bug with incorrect components being inserted when using `Asides` & server-side rendering.
