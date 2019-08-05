@@ -33,7 +33,7 @@ import Desmos from './Desmos.idl';
 
 import Loop from './Loop.idl';
 import Switch from './Switch.idl';
-
+import Cite from './Cite.idl';
 // import Meta from './Meta.idl'
 // import Preload from './Preload.idl'
 
@@ -67,7 +67,8 @@ export {
   Youtube,
   Analytics,
   Conditional,
-  Loop
+  Loop,
+  Cite
   // Meta,
   // Preload,
 };
