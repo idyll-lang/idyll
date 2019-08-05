@@ -1542,4 +1542,50 @@ End text
       ]
     });
   });
+
+  it('should preprocess multiline equations', function() {
+    const input = `
+      [Equation display:true]
+      \begin{aligned}
+      (\overline{p + a})\star(\chi - p - a) &= \chi \star(\overline{p + a}) - (p + a)\star(\overline{p + a}) \\
+      &= \chi\star\bar p + \chi\star\bar a - p\star\bar p - a\star\bar a - 2 p\star\bar a \\
+      &= \bar p\star(\chi - p) + \bar a\star(\chi - a) - 2 p\star\bar a
+      \end{aligned}
+      [/Equation]
+    `;
+
+    expect(compile(input, { async: false })).to.eql({
+      id: 0,
+      type: 'component',
+      name: 'div',
+      children: [
+        {
+          id: 2,
+          type: 'component',
+          name: 'TextContainer',
+          children: [
+            {
+              id: 3,
+              type: 'component',
+              name: 'equation',
+              properties: {
+                display: {
+                  type: 'value',
+                  value: true
+                }
+              },
+              children: [
+                {
+                  id: 4,
+                  type: 'textnode',
+                  value:
+                    '\begin{aligned}\n      (overline{p + a})star(chi - p - a) &= chi star(overline{p + a}) - (p + a)star(overline{p + a}) \\\n      &= chistar\bar p + chistar\bar a - pstar\bar p - astar\bar a - 2 pstar\bar a \\\n      &= \bar pstar(chi - p) + \bar astar(chi - a) - 2 pstar\bar a\n      end{aligned}'
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    });
+  });
 });
