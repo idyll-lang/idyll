@@ -1,4 +1,4 @@
-## v4.7 (unreleased)
+## v4.7
 
 New features:
 
