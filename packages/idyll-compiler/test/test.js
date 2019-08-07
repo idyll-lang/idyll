@@ -228,6 +228,21 @@ describe('compiler', function() {
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "number" TOKEN_VALUE_END PARAM_SEPARATOR NUMBER TOKEN_VALUE_START "1.1" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
       );
     });
+
+    it('should handle equation alias', function() {
+      var lex = Lexer({}, { Eq: 'equation' });
+      var results = lex('[Eq]y = 0[/Eq]');
+      expect(results.tokens.join(' ')).to.eql(
+        'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF'
+      );
+    });
+    it('should handle code alias', function() {
+      var lex = Lexer({}, { Cd: 'code' });
+      var results = lex('[Cd]y = 0[/Cd]');
+      expect(results.tokens.join(' ')).to.eql(
+        'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET EOF'
+      );
+    });
   });
 
   describe('parser', function() {

@@ -25,7 +25,7 @@ const shouldBreak = text => {
 
 let currentInput = null;
 
-const lex = function(options) {
+const lex = function(options, alias = {}) {
   let { row, column, outer, skipLists, inComponent, gotName } = Object.assign(
     {},
     {
@@ -53,10 +53,18 @@ const lex = function(options) {
   });
 
   const recurse = (str, opts) => {
-    return lex(Object.assign({ row, column, outer: false }, opts || {}))(str)
-      .tokens;
+    return lex(Object.assign({ row, column, outer: false }, opts || {}), alias)(
+      str
+    ).tokens;
   };
-
+  const findAlias = name => {
+    const AliasNames = Object.keys(alias);
+    return (
+      AliasNames.find(
+        aliasName => alias[aliasName].toLowerCase() === name.toLowerCase()
+      ) || name
+    );
+  };
   var updatePosition = function(lexeme) {
     var lines = lexeme.split('\n');
     row += lines.length - 1;
@@ -69,10 +77,13 @@ const lex = function(options) {
   // Rules at the front are pre-processed,
   // e.g. equations, and code snippets
   // that shouldn't be formatted.
-
+  const equationAlias = findAlias('equation');
   lexer.addRule(
-    /\[\s*equation\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/equation\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*equation\s*\]/i,
-    function(lexeme, props, innerText) {
+    new RegExp(
+      String.raw`\[\s*(equation|${equationAlias})\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/(equation|${equationAlias})\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*(equation|${equationAlias})\s*\]`,
+      'i'
+    ),
+    function(lexeme, tagName, props, innerText) {
       inComponent = false;
       if (this.reject) return;
       updatePosition(lexeme);
@@ -87,9 +98,13 @@ const lex = function(options) {
         .concat(['CLOSE_BRACKET']);
     }
   );
+  const codeAlias = findAlias('code');
   lexer.addRule(
-    /\[\s*code\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/code\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*code\s*\]/i,
-    function(lexeme, props, innerText) {
+    new RegExp(
+      String.raw`\[\s*(code|${codeAlias})\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/(code|${codeAlias})\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*(code|${codeAlias})\s*\]`,
+      'i'
+    ),
+    function(lexeme, tagName, props, innerText) {
       inComponent = false;
       if (this.reject) return;
       updatePosition(lexeme);
