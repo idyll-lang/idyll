@@ -1,32 +1,28 @@
-import Link from 'next/link'
-import markdown from 'markdown-in-js'
-import Layout from '../../components/layout'
-
+import Link from 'next/link';
+import markdown from 'markdown-in-js';
+import Layout from '../../components/layout';
 
 const Content = () => markdown`
 # Syntax
 
-
 #### Contents
 
-* [Text](#text)
-  * [Bold and Italic](#bold-italic)
-  * [Headers](#headers)
-  * [Code](#code)
-  * [Lists](#lists)
-* [Components](#components)
-  * [Properties](#component-properties)
-    * [Literals](#literals)
-    * [Variables and Datasets](#variables-and-datasets)
-    * [Expressions](#expressions)
-    * [Refs](#refs)
-* [Variables](#variables)
-  * [Derived Variables](#derived-variables)
-* [Datasets](#datasets)
-
+- [Text](#text)
+  - [Bold and Italic](#bold-italic)
+  - [Headers](#headers)
+  - [Code](#code)
+  - [Lists](#lists)
+- [Components](#components)
+  - [Properties](#component-properties)
+    - [Literals](#literals)
+    - [Variables and Datasets](#variables-and-datasets)
+    - [Expressions](#expressions)
+    - [Refs](#refs)
+- [Variables](#variables)
+  - [Derived Variables](#derived-variables)
+- [Datasets](#datasets)
 
 #### A short note
-
 
 We provide syntax highlighting plugins for several editors:
 
@@ -35,10 +31,9 @@ We provide syntax highlighting plugins for several editors:
 
 If you'd like a syntax highlighter for a different editor, please [open an issue on github](https://github.com/idyll-lang/idyll/issues).
 
-*Idyll tries to maintain parity with popular markdown implementations,
+_Idyll tries to maintain parity with popular markdown implementations,
 but sometimes doesn't get things exactly right. If something seems off,
-feel free to [open an issue](https://github.com/idyll-lang/idyll/issues?q=is%3Aissue+is%3Aopen+label%3ACompiler).*
-
+feel free to [open an issue](https://github.com/idyll-lang/idyll/issues?q=is%3Aissue+is%3Aopen+label%3ACompiler)._
 
 <h2 id="text">Text</h2>
 
@@ -48,20 +43,20 @@ formatting tasks easier, Idyll borrows some syntax from markdown.
 <h4 id="bold-italic">Bold, italic</h4>
 
 Text surrounded by asterisks (\`*\`) will be bolded,
-e.g. \`*italic*\` becomes *italic*, and \`**bold**\` becomes **bold**.
+e.g. \`*italic*\` becomes _italic_, and \`**bold**\` becomes **bold**.
 
 <h4 id="headers">Headers</h4>
 
 Use a pound sign (\`#\`) to denote a header:
 
-\`\`\`
+~~~
 # Title h1
 ## Title h2
 ### Title h3
 #### Title h4
 ##### Title h5
 ###### Title h6
-\`\`\`
+~~~
 
 <h4 id="code">Code</h4>
 
@@ -71,22 +66,24 @@ as code: \`\` \`y = x * x\` \`\` becomes \`y = x * x\`.
 Text placed between groups of three backticks will be displayed as
 a code block.
 
-\`\`\`
+~~~
 This is a code block
-\`\`\`
+~~~
 
 The above code block is created with this code:
-\`\`\`
+
+~~~
 \\\`\\\`\\\`
 This is a code block
 \\\`\\\`\\\`
-\`\`\`
+~~~
 
 <h4 id="lists">Lists</h4>
 
 Ordered and unordered lists are supported. Lists can be created by using an asterisk (\`*\`)
 or numbers. For example:
-\`\`\`
+
+~~~
 * Unordered item one
 * Unordered item two
 * Unordered item three
@@ -94,7 +91,7 @@ or numbers. For example:
 1. ordered item one
 2. ordered item two
 3. ordered item three
-\`\`\`
+~~~
 
 <h2 id="components">Components</h2>
 
@@ -102,17 +99,17 @@ Besides text, components are the other basic building block of an Idyll document
 Components are denoted with brackets, and can be invoked in one of two ways: they can be self
 closing,
 
-\`\`\`
+~~~
 [Range min:0 max:10 value:value /]
-\`\`\`
+~~~
 
 or have a closing and opening tag with content in between.
 
-\`\`\`
+~~~
 [Button]
 Click Me
 [/Button]
-\`\`\`
+~~~
 
 <h3 id="component-properties">Component properties</h3>
 
@@ -123,11 +120,11 @@ in the following ways:
 
 Number, string, or boolean literals may be used.
 
-\`\`\`
+~~~
 [Component propName:10 /]
 [Component propName:'propValue' /]
 [Component propName:false /]
-\`\`\`
+~~~
 
 <h4 id="variables-and-datasets">Variable and datasets</h4>
 
@@ -135,9 +132,9 @@ A variable or dataset can be passed in directly, this will
 automatically create a binding between that variable and property,
 more on this in the section on [variables and datasets](/components-variables-and-datasets).
 
-\`\`\`
+~~~
 [Component propName:myVar /]
-\`\`\`
+~~~
 
 If the variable changes that update will immediately be reflected in the
 state of the component.
@@ -146,10 +143,10 @@ state of the component.
 
 Use backticks to pass an evaluated expression:
 
-\`\`\`
+~~~
 [Component propName:\\\`2 * 2 * 2\\\` /]
 [Component propName:\\\`{ an: 'object' }\\\` /]
-\`\`\`
+~~~
 
 Note that because Idyll is reactive, if a variable changes, any expressions that reference that
 variable will immediately be recomputed. See this utilized to create reactive vega-lite specifications:
@@ -160,14 +157,13 @@ the expression will automatically be
 converted to a callback. This is convenient
 for updating variables on events, for example.
 
-\`\`\`
+~~~
 [Component onClick:\\\`myVar++\\\` /]
-\`\`\`
+~~~
 
 Idyll uses naming conventions to determine if the expression should be converted to a callback.
 Properties that are named \`onXxxxx\` (e.g. \`onClick\`) or \`handleYyyyy\` (e.g. \`handleMouseMove\`) are
 assumed to expect callbacks.
-
 
 <h4 id="refs">Refs</h4>
 
@@ -175,16 +171,15 @@ There is a special property called \`ref\` that allows you to create a reference
 component on the page. This is primarily used to keep track of elements on the page as
 a reader scrolls. See the section on [refs](/components-refs) for more details.
 
-
 <h2 id="variables">Variables</h2>
 
 Variables can be declared at any point in an Idyll file. Variables use
 the same syntax as a component, but must defined a \`name\` and a \`value\`
 property.
 
-\`\`\`
+~~~
 [var name:'x' value:10 /]
-\`\`\`
+~~~
 
 The above code defines a variable \`x\`, with the initial value of \`10\`.
 
@@ -193,9 +188,9 @@ The above code defines a variable \`x\`, with the initial value of \`10\`.
 A derived variable is similar to a \`var\`, but its value is derived from
 other variables, and is recomputed whenever values change:
 
-\`\`\`
+~~~
 [derived name:'xSquared' value:\\\`x * x\\\` /]
-\`\`\`
+~~~
 
 The above code defines a derived variable \`xSquared\` that depends
 on the value of \`x\`. The value of \`xSquared\` is automatically updated
@@ -208,24 +203,35 @@ A dataset is similar to a variable, except instead of expecting a
 
 Example:
 
-\`\`\`
+~~~
 [data name:'myData' source:'myData.csv' /]
 [Table data:myData /]
-\`\`\`
+~~~
 
 The above code declares a dataset, and uses it as input to a \`Table\` component.
 Datasets can be either \`.csv\` or \`.json\` files. CSV files will automatically be
-converted to a JSON object.
-`
+converted to a JSON object. You can also fetch data from a url.
 
+Example:
 
+~~~
+[data name:'myAsyncData' source:'https://domain.com/myData.csv' async:true initialValue:\\\`[]\\\`/]
+[Table data:myAsyncData /]
+~~~
+
+The above code fetches the dataset from the given \`source\` and stores it into \`myAsyncData\`.
+Until the dataset is fetched it will be set to the \`initialValue\`.
+`;
 
 export default ({ url }) => (
-  <Layout url={ url } title={'Idyll Documentation | Markup Syntax'}>
+  <Layout url={url} title={'Idyll Documentation | Markup Syntax'}>
     <Content />
     <p>
       Continue to the next section to learn about{' '}
-      <Link href="/docs/configuration-and-styles"><a>customizing Idyll</a></Link>.
+      <Link href="/docs/configuration-and-styles">
+        <a>customizing Idyll</a>
+      </Link>
+      .
     </p>
   </Layout>
-)
+);
