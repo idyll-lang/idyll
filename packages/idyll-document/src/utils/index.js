@@ -253,10 +253,19 @@ export const getData = (arr, datasets = {}) => {
       if (typeof fetch !== 'undefined') {
         dataPromise = fetch(sourceValue)
           .then(res => {
+            if (res.status >= 400) {
+              throw new Error(
+                `Error Status ${
+                  res.status
+                } occurred while fetching data from ${sourceValue}. If you are using a file to load the data and not a url, make sure async is not set to true.`
+              );
+            }
             if (sourceValue.endsWith('.csv')) {
               return res
                 .text()
-                .then(resString => parse(resString))
+                .then(resString =>
+                  parse(resString, { cast: true, columns: true })
+                )
                 .catch(e => {
                   console.error(`Error while parsing csv: ${e}`);
                 });
@@ -264,10 +273,10 @@ export const getData = (arr, datasets = {}) => {
             return res.json().catch(e => console.error(e));
           })
           .catch(e => {
-            console.error(
-              `Error while fetching data from "${sourceValue}": ${e}`
-            );
+            console.error(e);
           });
+      } else if (typeof window !== 'undefined') {
+        console.warn('Could not find fetch.');
       }
       acc.asyncData[nameValue] = {
         initialValue,

@@ -32,7 +32,9 @@ describe('Component state initialization', () => {
       myData: FAKE_DATA,
       objectVar: { an: 'object' },
       arrayVar: ['array'],
-      lateVar: 50
+      lateVar: 50,
+      myAsyncJSONData: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+      myAsyncCSVData: [{ x: 0, y: 0 }, { x: 1, y: 1 }]
     });
   });
 
@@ -152,7 +154,9 @@ describe('Component state initialization', () => {
       myData: FAKE_DATA,
       objectVar: { an: 'object' },
       arrayVar: ['array'],
-      lateVar: 50
+      lateVar: 50,
+      myAsyncJSONData: [],
+      myAsyncCSVData: []
     });
   });
 
@@ -182,7 +186,9 @@ describe('Component state initialization', () => {
       myData: FAKE_DATA,
       objectVar: { an: 'object' },
       arrayVar: ['array'],
-      lateVar: 50
+      lateVar: 50,
+      myAsyncJSONData: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+      myAsyncCSVData: [{ x: 0, y: 0 }, { x: 1, y: 1 }]
     });
   });
 
@@ -212,7 +218,9 @@ describe('Component state initialization', () => {
       myData: FAKE_DATA,
       objectVar: { an: 'object' },
       arrayVar: ['array'],
-      lateVar: 50
+      lateVar: 50,
+      myAsyncJSONData: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+      myAsyncCSVData: [{ x: 0, y: 0 }, { x: 1, y: 1 }]
     });
   });
 
