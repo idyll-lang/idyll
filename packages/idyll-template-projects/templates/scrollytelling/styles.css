@@ -1,0 +1,37 @@
+.d3-component svg {
+  background: #ddd;
+  max-height: 300px;
+}
+@media all and (max-width: 1000px) {
+  .d3-component svg {
+    max-height: 200px;
+  }
+}
+
+.idyll-scroll .idyll-text-container {
+  max-width: 50vw;
+}
+.idyll-scroll-text .idyll-step {
+  max-width: 45vw;
+}
+.d3-component-container {
+  height: 20vw;
+  width: 20vw;
+  margin-left: 72vw;
+}
+#idyll-scroll-1 {
+  background: #fffcc1;
+}
+@media only screen and (max-width: 600px) {
+  .idyll-scroll .idyll-text-container {
+    max-width: 57vw;
+  }
+  .idyll-scroll-text .idyll-step {
+    max-width: 57vw;
+  }
+  .d3-component-container {
+    height: 31vw;
+    width: 31vw;
+    margin-left: 65vw;
+  }
+}
