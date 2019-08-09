@@ -57,13 +57,14 @@ const lex = function(options, alias = {}) {
       str
     ).tokens;
   };
-  const findAlias = name => {
-    const AliasNames = Object.keys(alias);
-    return (
-      AliasNames.find(
+  const findAliases = name => {
+    const aliasNames = Object.keys(alias);
+    return [
+      name,
+      ...aliasNames.filter(
         aliasName => alias[aliasName].toLowerCase() === name.toLowerCase()
-      ) || name
-    );
+      )
+    ].join('|');
   };
   var updatePosition = function(lexeme) {
     var lines = lexeme.split('\n');
@@ -77,10 +78,10 @@ const lex = function(options, alias = {}) {
   // Rules at the front are pre-processed,
   // e.g. equations, and code snippets
   // that shouldn't be formatted.
-  const equationAlias = findAlias('equation');
+  const equationAliases = findAliases('equation');
   lexer.addRule(
     new RegExp(
-      String.raw`\[\s*(equation|${equationAlias})\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/(equation|${equationAlias})\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*(equation|${equationAlias})\s*\]`,
+      String.raw`\[\s*(${equationAliases})\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/(${equationAliases})\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*(${equationAliases})\s*\]`,
       'i'
     ),
     function(lexeme, tagName, props, innerText) {
@@ -98,10 +99,10 @@ const lex = function(options, alias = {}) {
         .concat(['CLOSE_BRACKET']);
     }
   );
-  const codeAlias = findAlias('code');
+  const codeAlias = findAliases('code');
   lexer.addRule(
     new RegExp(
-      String.raw`\[\s*(code|${codeAlias})\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/(code|${codeAlias})\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*(code|${codeAlias})\s*\]`,
+      String.raw`\[\s*(${codeAlias})\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/(${codeAlias})\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*(${codeAlias})\s*\]`,
       'i'
     ),
     function(lexeme, tagName, props, innerText) {
