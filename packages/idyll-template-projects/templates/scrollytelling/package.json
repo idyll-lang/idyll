@@ -1,16 +1,12 @@
 {
-  "name": "test-post",
+  "name": "scrollytelling-template",
   "version": "1.0.0",
   "license": "MIT",
   "idyll": {
     "theme": "default",
     "layout": "centered",
     "css": "styles.css",
-    "authorView": false,
-    "alias": {
-      "Eq": "Equation",
-      "Cd": "code"
-    }
+    "authorView": false
   },
   "dependencies": {
     "idyll": "^4.0.0",
