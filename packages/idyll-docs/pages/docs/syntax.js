@@ -215,10 +215,18 @@ Example:
 
 The above code declares a dataset, and uses it as input to a \`Table\` component.
 Datasets can be either \`.csv\` or \`.json\` files. CSV files will automatically be
-converted to a JSON object.
+converted to a JSON object. You can also fetch data from a url.
+
+Example:
+
+~~~
+[data name:'myAsyncData' source:'https://domain.com/myData.csv' async:true initialValue:\\\`[]\\\`/]
+[Table data:myAsyncData /]
+~~~
+
+The above code fetches the dataset from the given \`source\` and stores it into \`myAsyncData\`.
+Until the dataset is fetched it will be set to the \`initialValue\`.
 `
-
-
 
 export default ({ url }) => (
   <Layout url={ url } title={'Idyll Documentation | Markup Syntax'}>

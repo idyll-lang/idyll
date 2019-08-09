@@ -38,7 +38,9 @@ function convertHelper(jsonElement) {
     elementArray = ['data'];
     elementArray.push([
       ['name', ['value', jsonElement.name]],
-      ['source', ['value', jsonElement.source]]
+      ['source', ['value', jsonElement.source]],
+      ['async', ['value', jsonElement.async]],
+      ['initialValue', ['expression', jsonElement.initialValue]]
     ]);
     elementArray.push([]);
   } else {

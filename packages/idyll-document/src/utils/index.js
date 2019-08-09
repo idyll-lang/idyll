@@ -1,4 +1,5 @@
 const falafel = require('falafel');
+const parse = require('csv-parse/lib/es5/sync');
 
 const {
   getChildren,
@@ -238,12 +239,57 @@ export const filterIdyllProps = (props, filterInjected) => {
 export const getData = (arr, datasets = {}) => {
   const pluck = (acc, val) => {
     const nameValue = getProperties(val).name.value;
-    acc[nameValue] = datasets[nameValue];
+    const sourceValue = getProperties(val).source.value;
+    const async = getProperties(val).async
+      ? getProperties(val).async.value
+      : false;
+    if (async) {
+      const initialValue = getProperties(val).initialValue
+        ? JSON.parse(getProperties(val).initialValue.value)
+        : [];
+
+      let dataPromise = new Promise(res => res(initialValue));
+
+      if (typeof fetch !== 'undefined') {
+        dataPromise = fetch(sourceValue)
+          .then(res => {
+            if (res.status >= 400) {
+              throw new Error(
+                `Error Status ${
+                  res.status
+                } occurred while fetching data from ${sourceValue}. If you are using a file to load the data and not a url, make sure async is not set to true.`
+              );
+            }
+            if (sourceValue.endsWith('.csv')) {
+              return res
+                .text()
+                .then(resString =>
+                  parse(resString, { cast: true, columns: true })
+                )
+                .catch(e => {
+                  console.error(`Error while parsing csv: ${e}`);
+                });
+            }
+            return res.json().catch(e => console.error(e));
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      } else if (typeof window !== 'undefined') {
+        console.warn('Could not find fetch.');
+      }
+      acc.asyncData[nameValue] = {
+        initialValue,
+        dataPromise
+      };
+    } else {
+      acc.syncData[nameValue] = datasets[nameValue];
+    }
 
     return acc;
   };
 
-  return arr.reduce(pluck, {});
+  return arr.reduce(pluck, { syncData: {}, asyncData: {} });
 };
 
 export const splitAST = ast => {

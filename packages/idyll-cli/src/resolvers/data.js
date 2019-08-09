@@ -12,7 +12,7 @@ class DataResolver {
     this.paths = paths;
   }
 
-  resolve(name, source) {
+  resolve(name, source, async) {
     debug(`Resolving data with name ${name} and source ${source}`);
 
     if (name.type !== 'value') {
@@ -24,10 +24,11 @@ class DataResolver {
 
     name = name.value;
     source = source.value;
-
+    async = async ? async.value : false;
     var data = null;
-
-    if (source.endsWith('.csv')) {
+    if (async) {
+      data = [];
+    } else if (source.endsWith('.csv')) {
       debug(`Loading ${source} as a CSV into data variable ${name}`);
       const inputString = fs.readFileSync(
         slash(join(this.paths.DATA_DIR, source))

@@ -98,3 +98,6 @@ Late Var Range:
 
 Read more about Idyll at [https://idyll-lang.github.io/](https://idyll-lang.github.io/), and come say "Hi!" in our [chatroom on gitter](https://gitter.im/idyll-lang/Lobby).
 
+[data name:"myAsyncJSONData" async:true source:"https://url.com/myData" initialValue:`[]` /]
+
+[data name:"myAsyncCSVData" async:true source:"https://url.com/myData.csv" initialValue:`[]` /]

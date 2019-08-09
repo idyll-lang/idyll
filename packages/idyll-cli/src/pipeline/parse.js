@@ -34,7 +34,8 @@ exports.getDataNodes = ast => {
     return {
       node,
       name: getProperty(node, 'name'),
-      source: getProperty(node, 'source')
+      source: getProperty(node, 'source'),
+      async: getProperty(node, 'async')
     };
   });
 };
