@@ -1,0 +1,19 @@
+{
+  "name": "scrollytelling-template",
+  "version": "1.0.0",
+  "license": "MIT",
+  "idyll": {
+    "theme": "default",
+    "layout": "centered",
+    "css": "styles.css",
+    "authorView": false
+  },
+  "dependencies": {
+    "idyll": "^4.0.0",
+    "idyll-d3-component": "^2.0.0",
+    "d3": "^4.0.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.12.0"
+  }
+}
