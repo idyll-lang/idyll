@@ -87,6 +87,47 @@ const lex = function(options) {
         .concat(['CLOSE_BRACKET']);
     }
   );
+  // Standalone, centered equation inside $$...$$
+  lexer.addRule(
+    /()\[\s*\${2}\s*([^\/\$]*)\s[\n\s\t]*(((?!(\${2}\s*\])).)*)[\n\s\t]*\s*\${2}\s*\]/i,
+    function(lexeme, props, innerText) {
+      inComponent = false;
+      if (this.reject) return;
+      updatePosition(lexeme);
+      return ['OPEN_BRACKET', 'COMPONENT_NAME']
+        .concat(formatToken('equation'))
+        .concat(recurse(props, { inComponent: true, gotName: true }))
+        .concat(['COMPONENT_WORD'])
+        .concat(formatToken('display'))
+        .concat(['PARAM_SEPARATOR'])
+        .concat(['BOOLEAN'])
+        .concat(formatToken('true'))
+        .concat(['CLOSE_BRACKET'])
+        .concat(['WORDS'])
+        .concat(formatToken(innerText))
+        .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+        .concat(formatToken('equation'))
+        .concat(['CLOSE_BRACKET']);
+    }
+  );
+  // Inline equation inside $...$
+  lexer.addRule(
+    /()\[\s*\${1}\s*([^\/\$]*)\s[\n\s\t]*(((?!(\${1}\s*\])).)*)[\n\s\t]*\s*\${1}\s*\]/i,
+    function(lexeme, props, innerText) {
+      inComponent = false;
+      if (this.reject) return;
+      updatePosition(lexeme);
+      return ['OPEN_BRACKET', 'COMPONENT_NAME']
+        .concat(formatToken('equation'))
+        .concat(recurse(props, { inComponent: true, gotName: true }))
+        .concat(['CLOSE_BRACKET'])
+        .concat(['WORDS'])
+        .concat(formatToken(innerText))
+        .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+        .concat(formatToken('equation'))
+        .concat(['CLOSE_BRACKET']);
+    }
+  );
   lexer.addRule(
     /\[\s*code\s*([^\/\]]*)\s*\][\n\s\t]*(((?!(\[\s*\/code\s*\])).\n?)*)[\n\s\t]*\[\s*\/\s*code\s*\]/i,
     function(lexeme, props, innerText) {
