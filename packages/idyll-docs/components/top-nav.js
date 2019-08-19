@@ -138,15 +138,16 @@ export default ({ selected }) => {
             }
             .expanded {
               height: auto;
-              padding-bottom: 10px;
             }
             .link {
-              padding-top: 15px;
+              margin-top: 15px;
+              margin-bottom: 10px;
             }
 
             .logo-container {
               font-size: 24px;
               margin: 0;
+              width: 50px;
             }
             .nav-logo {
               // top: 1px;
