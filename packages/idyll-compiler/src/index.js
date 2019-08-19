@@ -13,7 +13,7 @@ const {
 const { convertV1ToV2 } = require('idyll-ast').converters;
 const matter = require('gray-matter');
 
-module.exports = function(input, options, callback) {
+module.exports = function(input, options, alias, callback) {
   input = Processor(input)
     .pipe(cleanNewlines)
     .end();
@@ -23,7 +23,7 @@ module.exports = function(input, options, callback) {
     { spellcheck: false, smartquotes: true, async: true },
     options || {}
   );
-  const lex = Lexer();
+  const lex = Lexer({}, alias);
   let lexResults = '',
     output = [];
   try {
