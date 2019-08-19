@@ -24,6 +24,11 @@ export default ({ title, items }) => (
         margin-top: -100px;
       }
 
+      @media all and (max-width: 960px) {
+        .examples {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
       @media all and (max-width: 600px) {
         .examples {
           grid-template-columns: 1fr;

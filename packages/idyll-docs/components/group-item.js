@@ -38,6 +38,9 @@ export default ({ href, label, subtitle, image, sourceUrl }) => (
 
     <style jsx>{`
       .example {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         border: solid 2px #efefef;
         background: #efefef;
         transition: border 0.25s, background 0.25s, color 0.25s;
@@ -55,7 +58,8 @@ export default ({ href, label, subtitle, image, sourceUrl }) => (
         display: block;
         padding: 10px
         background: #fff;
-        width: 125px;
+        width: 50%;
+        max-width:125px;
         text-align: center;
         border: solid 1px black;
         color: black;
