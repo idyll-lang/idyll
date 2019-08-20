@@ -6,8 +6,11 @@ class Loop extends React.Component {
     const { children, value } = this.props;
 
     if (children) {
-      return mapChildren(children, child => {
-        return value.map(val => {
+      return value.map(val => {
+        return mapChildren(children, child => {
+          if (typeof child !== 'object') {
+            return child;
+          }
           let newProps = Object.assign({}, child.props);
           newProps = Object.keys(child.props).reduce((props, elm) => {
             if (props[elm] === '_iterator') {
