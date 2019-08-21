@@ -20,7 +20,7 @@ class Switch extends React.Component {
       const matchedCase = filterChildren(children, matchCase);
       const defaultCase = filterChildren(children, matchDefault);
 
-      return <div>{matchedCase ? matchedCase : defaultCase}</div>;
+      return <div>{matchedCase.length ? matchedCase : defaultCase}</div>;
     }
     return '';
   }

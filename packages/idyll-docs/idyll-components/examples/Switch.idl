@@ -3,9 +3,9 @@
 [Switch value:currentValue]
   [Case test:"one"]Case 1[/Case]
   [Case test:"two"]Case 2[/Case]
-  [Default]Default case[/Case]
+  [Default]Default case[/Default]
 [/Switch]
 
-[Button onClick:`currentValue = "A"`]A[/Button]
-[Button onClick:`currentValue = "B"`]B[/Button]
+[Button onClick:`currentValue = "one"`]A[/Button]
+[Button onClick:`currentValue = "two"`]B[/Button]
 [Button onClick:`currentValue = ""`]Default[/Button]
