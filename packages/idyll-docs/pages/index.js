@@ -599,6 +599,11 @@ The value of x is [Display value:x format:"d" /].
               width: 95%;
             }
           }
+          @media (max-width: 600px) {
+            .links a {
+              padding: 0 5px;
+            }
+          }
         `}</style>
       </div>
     );

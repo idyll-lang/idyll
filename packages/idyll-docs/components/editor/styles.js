@@ -271,7 +271,9 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
                                                                    position: relative; }
                             label { cursor: pointer; }
                             div.table-wrapper, table { width: 85%; }
-                            img { width: 100%; } }
+                            img { width: 100%; } 
+                            header img{ width: auto; }
+                          }
 
 
 * {
