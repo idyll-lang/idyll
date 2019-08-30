@@ -293,26 +293,27 @@ const lex = function(options, alias = {}) {
     });
     return output.concat(['LIST_END']);
   });
+
   lexer.addRule(
     /\s*~((\s*\w*\s*(:?=)\s*[^\n,]*)[^\n,](,[^\n]\s*\w*\s*(:?=)\s*[^\n,]*)*)/g,
-    function(lexeme, definitions) {
+    function(lexeme, variableDeclarations) {
       if (this.reject) return;
       updatePosition(lexeme);
       let output = [];
-      definitions.split(',').forEach(definition => {
-        if (definition[definition.indexOf('=') - 1] === ':') {
+      variableDeclarations.split(',').forEach(declaration => {
+        if (declaration[declaration.indexOf('=') - 1] === ':') {
           output = output
             .concat(['OPEN_BRACKET', 'COMPONENT_NAME'])
             .concat(formatToken('derived'))
             .concat(['COMPONENT_WORD'])
             .concat(formatToken('name'))
             .concat('PARAM_SEPARATOR', 'COMPONENT_WORD')
-            .concat(formatToken(definition.split(':=')[0].trim()))
+            .concat(formatToken(declaration.split(':=')[0].trim()))
             .concat(['COMPONENT_WORD'])
             .concat(formatToken('value'))
             .concat(['PARAM_SEPARATOR'])
             .concat(['EXPRESSION'])
-            .concat(formatToken('`' + definition.split(':=')[1].trim() + '`'))
+            .concat(formatToken('`' + declaration.split(':=')[1].trim() + '`'))
             .concat(['FORWARD_SLASH', 'CLOSE_BRACKET']);
         } else {
           output = output
@@ -321,12 +322,12 @@ const lex = function(options, alias = {}) {
             .concat(['COMPONENT_WORD'])
             .concat(formatToken('name'))
             .concat('PARAM_SEPARATOR', 'COMPONENT_WORD')
-            .concat(formatToken(definition.split('=')[0].trim()))
+            .concat(formatToken(declaration.split('=')[0].trim()))
             .concat(['COMPONENT_WORD'])
             .concat(formatToken('value'))
             .concat('PARAM_SEPARATOR')
             .concat(
-              recurse(definition.split('=')[1].trim(), { inComponent: true })
+              recurse(declaration.split('=')[1].trim(), { inComponent: true })
             )
             .concat(['FORWARD_SLASH', 'CLOSE_BRACKET']);
         }

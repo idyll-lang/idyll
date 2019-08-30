@@ -1606,10 +1606,9 @@ End text
 
   it('should handle variable syntax', function() {
     const input = `
-    ~ x=1, y:=x*2
-    ~ a:=x+y, b="somestring"
+      ~ x=1, y:=x*2
+      ~ a:=x+y, b="somestring"
     `;
-    console.log(JSON.stringify(compile(input, { async: false })));
     expect(compile(input, { async: false })).to.eql({
       id: 0,
       type: 'component',
