@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const { copy, pathExists } = require('fs-extra');
 const compile = require('idyll-compiler');
-const UglifyJS = require('uglify-js');
+const Terser = require('terser');
 const { paramCase } = require('change-case');
 const debug = require('debug')('idyll:cli');
 
@@ -104,8 +104,7 @@ const build = (opts, paths, resolvers) => {
     .then(js => {
       // minify bundle if necessary and store it
       if (opts.minify) {
-        js = UglifyJS.minify(js, {
-          fromString: true,
+        js = Terser.minify(js, {
           mangle: { keep_fnames: true }
         }).code;
       }
