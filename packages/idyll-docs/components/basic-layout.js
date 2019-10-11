@@ -1,8 +1,8 @@
-import React from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
-import GlobalStyles from './global-styles'
-import { Contents, hrefFromName } from '../contents'
+import React from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
+import GlobalStyles from './global-styles';
+import { Contents, hrefFromName } from '../contents';
 import TopNav from './top-nav';
 import Fonts from './fonts';
 import { logPageView, initGA } from './analytics';
@@ -15,51 +15,71 @@ const NavTransitionDuration = 0.25; // s
 
 class IdyllDocsLayout extends React.Component {
   constructor(props) {
-    super(props)
-    const {url} = props
-    this.presentPath = url && url.asPath
+    super(props);
+    const { url } = props;
+    this.presentPath = url && url.asPath;
     this.state = {
-      navOpen: false,
-    }
+      navOpen: false
+    };
   }
 
   componentDidMount() {
-    console.log('mount')
+    console.log('mount');
     Fonts();
     if (!window.GA_INITIALIZED) {
-      initGA()
-      window.GA_INITIALIZED = true
+      initGA();
+      window.GA_INITIALIZED = true;
     }
-    logPageView()
+    logPageView();
   }
 
   toggleNavOpen() {
-    this.setState({ navOpen: !this.state.navOpen })
+    this.setState({ navOpen: !this.state.navOpen });
   }
 
   render() {
-    const { title = 'Idyll', selected = "", shareImage, description ="A markup language for interactive documents.", children } = this.props
+    const {
+      title = 'Idyll',
+      selected = '',
+      shareImage,
+      description = 'A markup language for interactive documents.',
+      children
+    } = this.props;
     return (
-      <div id="master" className={ this.state.navOpen ?  'nav-open' : 'nav-closed' }>
+      <div
+        id="master"
+        className={this.state.navOpen ? 'nav-open' : 'nav-closed'}
+      >
         <Head>
-          <title>{ title }</title>
-          <meta charSet='utf-8' />
-          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-          <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-          <meta property='og:image' content={shareImage || 'https://idyll-lang.org/static/images/twitter-share.png'} />
-          <meta name='twitter:card' content='summary_large_image' />
-          <meta property='og:description' content={description} />
-          <meta property='og:title' content={title} />
-          <meta property='og:url' content='https://idyll-lang.org' />
-          <meta property='og:type' content='website' />
+          <title>{title}</title>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/favicon.ico"
+          />
+          <meta
+            property="og:image"
+            content={
+              shareImage ||
+              'https://idyll-lang.org/static/images/twitter-share.png'
+            }
+          />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="og:description" content={description} />
+          <meta property="og:title" content={title} />
+          <meta property="og:url" content="https://idyll-lang.org" />
+          <meta property="og:type" content="website" />
         </Head>
 
         <TopNav selected={selected} />
         <div className="content-container">
           <main>
-            <div className="main-container">
-              { children }
-            </div>
+            <div className="main-container">{children}</div>
           </main>
         </div>
 
@@ -89,14 +109,16 @@ class IdyllDocsLayout extends React.Component {
             display: none;
           }
 
-
           @media (max-width: 767px) {
             main {
               width: 100%;
+              padding: 0.5em;
             }
-
+            .main-container {
+              margin-left: 1em;
+              margin-right: 1em;
+            }
           }
-
 
           ul {
             padding: 0;
@@ -117,10 +139,9 @@ class IdyllDocsLayout extends React.Component {
         `}</style>
 
         <GlobalStyles />
-
       </div>
-    )
+    );
   }
 }
 
-export default IdyllDocsLayout
+export default IdyllDocsLayout;
