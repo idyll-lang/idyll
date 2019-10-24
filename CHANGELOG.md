@@ -1,3 +1,14 @@
+## v4.8
+
+New features:
+
+- Replace uglify with terser ([#591](https://github.com/idyll-lang/idyll/pull/591))
+
+Bugfixes: 
+
+- Fix security issue with `csv-parse` ([#594](https://github.com/idyll-lang/idyll/pull/594))
+
+
 ## v4.7
 
 New features:
