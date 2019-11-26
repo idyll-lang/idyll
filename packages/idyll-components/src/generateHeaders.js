@@ -25,7 +25,7 @@ const GenerateHeaders = props => {
     attributeProps.id = generateId(headerText);
   }
 
-  return <HeaderTag {...attributeProps}>{headerText}</HeaderTag>;
+  return <HeaderTag {...attributeProps}>{children}</HeaderTag>;
 };
 
 export default GenerateHeaders;
