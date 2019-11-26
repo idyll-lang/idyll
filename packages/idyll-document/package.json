@@ -30,6 +30,7 @@
   "dependencies": {
     "change-case": "^3.0.1",
     "cross-env": "^5.2.0",
+    "csv-parse": "^4.8.2",
     "falafel": "^2.1.0",
     "fast-deep-equal": "^2.0.1",
     "html-tags": "^2.0.0",
