@@ -401,6 +401,20 @@ class IdyllRuntime extends React.PureComponent {
       }
       //Inspect for isHTMLNode  props and to check for dynamic components.
       if (!wrapTargets.includes(node)) {
+        // console.log('node not wrapped', node);
+
+        if (
+          this.props.wrapTextComponents.indexOf(node.component) > -1 &&
+          this.props.textEditComponent
+        ) {
+          const { idyllASTNode, ...rest } = node;
+          return {
+            component: this.props.textEditComponent,
+            idyllASTNode: idyllASTNode,
+            children: [rest]
+          };
+        }
+
         // Don't include the AST node reference on unwrapped components
         const { idyllASTNode, ...rest } = node;
         return rest;
@@ -541,7 +555,8 @@ IdyllRuntime.defaultProps = {
   layout: 'blog',
   theme: 'github',
   authorView: false,
-  insertStyles: false
+  insertStyles: false,
+  wrapTextComponents: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'CodeHighlight']
 };
 
 export default IdyllRuntime;
