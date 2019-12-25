@@ -52,9 +52,11 @@ class Scroller extends React.Component {
       .setup({
         step: `#idyll-scroll-${this.id} .idyll-step`, // required
         container: `#idyll-scroll-${this.id}`, // required (for sticky)
-        graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic` // required (for sticky)
+        graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic`, // required (for sticky)
+        progress: true
       })
       .onStepEnter(this.handleStepEnter.bind(this))
+      .onStepProgress(this.handleStepProgress.bind(this))
       // .onStepExit(handleStepExit)
       .onContainerEnter(this.handleContainerEnter.bind(this));
     //.onContainerExit(this.handleContainerExit.bind(this));
@@ -90,6 +92,12 @@ class Scroller extends React.Component {
     ) {
       d3.select('body').style('overflow', 'hidden');
     }
+  }
+
+  handleStepProgress(response) {
+    const progress = { response };
+    const update = { progress: progress * 100 };
+    this.props.updateProps && this.props.updateProps(update);
   }
 
   componentWillReceiveProps(nextProps) {
