@@ -96,7 +96,9 @@ class ComponentResolver {
       if (resolved) return;
 
       // Otherwise check to see if this is a custom component (in a component directory).
-      resolved = this.componentsMap.get(name + '.js');
+      resolved =
+        this.componentsMap.get(name + '.js') ||
+        this.componentsMap.get(name + '.jsx');
       if (resolved) {
         resolved = slash(resolved);
         return;
