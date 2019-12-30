@@ -53,7 +53,7 @@ class Scroller extends React.Component {
         step: `#idyll-scroll-${this.id} .idyll-step`, // required
         container: `#idyll-scroll-${this.id}`, // required (for sticky)
         graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic`, // required (for sticky)
-        progress: true
+        progress: this.props.progress != undefined ? true : false
       })
       .onStepEnter(this.handleStepEnter.bind(this))
       .onStepProgress(this.handleStepProgress.bind(this))
@@ -95,8 +95,8 @@ class Scroller extends React.Component {
   }
 
   handleStepProgress(response) {
-    const progress = { response };
-    const update = { progress: progress * 100 };
+    const { progress } = response;
+    const update = { progress };
     this.props.updateProps && this.props.updateProps(update);
   }
 
@@ -212,6 +212,13 @@ Scroller._idyll = {
       example: '`{}`',
       description:
         'The state value associated with the currently selected step. Note you must set the state property on the step components for this value to update.'
+    },
+    {
+      name: 'progress',
+      type: 'integer',
+      example: '0',
+      description:
+        'The percent of completion (0-1) of the currently selected step'
     }
   ]
 };
