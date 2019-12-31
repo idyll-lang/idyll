@@ -53,7 +53,7 @@ class Scroller extends React.Component {
         step: `#idyll-scroll-${this.id} .idyll-step`, // required
         container: `#idyll-scroll-${this.id}`, // required (for sticky)
         graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic`, // required (for sticky)
-        progress: this.props.progress != undefined ? true : false
+        progress: this.props.progress !== undefined ? true : false
       })
       .onStepEnter(this.handleStepEnter.bind(this))
       .onStepProgress(this.handleStepProgress.bind(this))
@@ -215,7 +215,7 @@ Scroller._idyll = {
     },
     {
       name: 'progress',
-      type: 'integer',
+      type: 'number',
       example: '0',
       description:
         'The percent of completion (0-1) of the currently selected step'
