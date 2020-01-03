@@ -120,6 +120,39 @@ const lex = function(options, alias = {}) {
         .concat(['CLOSE_BRACKET']);
     }
   );
+  lexer.addRule(/\[\s*\${2}([\s\w\W]*?)\${2}\s*\]/, function(
+    lexeme,
+    innerText
+  ) {
+    updatePosition(lexeme);
+    return ['OPEN_BRACKET', 'COMPONENT_NAME']
+      .concat(formatToken('equation'))
+      .concat(['COMPONENT_WORD'])
+      .concat(formatToken('display'))
+      .concat(['PARAM_SEPARATOR'])
+      .concat(['BOOLEAN'])
+      .concat(formatToken('true'))
+      .concat(['CLOSE_BRACKET'])
+      .concat(['WORDS'])
+      .concat(formatToken(innerText.trim()))
+      .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+      .concat(formatToken('equation'))
+      .concat(['CLOSE_BRACKET']);
+  });
+  lexer.addRule(/\[\s*\${1}([\s\w\W]*?)\${1}\s*\]/, function(
+    lexeme,
+    innerText
+  ) {
+    updatePosition(lexeme);
+    return ['OPEN_BRACKET', 'COMPONENT_NAME']
+      .concat(formatToken('equation'))
+      .concat(['CLOSE_BRACKET'])
+      .concat(['WORDS'])
+      .concat(formatToken(innerText.trim()))
+      .concat(['OPEN_BRACKET', 'FORWARD_SLASH', 'COMPONENT_NAME'])
+      .concat(formatToken('equation'))
+      .concat(['CLOSE_BRACKET']);
+  });
   lexer.addRule(/`{4}(\S*)\n(((?!````)[\s\S])*[^\n])\n?\s*`{4}/g, function(
     lexeme,
     language,
