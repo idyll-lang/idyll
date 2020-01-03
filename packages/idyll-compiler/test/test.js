@@ -243,6 +243,13 @@ describe('compiler', function() {
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
+    it('should handle [$ ... $] equation syntax', function() {
+      var lex = Lexer();
+      var results = lex('[$$ y = 0 $$]');
+      expect(results.tokens.join(' ')).to.eql(
+        'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "display" TOKEN_VALUE_END PARAM_SEPARATOR BOOLEAN TOKEN_VALUE_START "true" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF'
+      );
+    });
   });
 
   describe('parser', function() {
