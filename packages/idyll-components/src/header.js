@@ -15,13 +15,13 @@ class Header extends React.PureComponent {
         )}
         {this.props.author && (
           <div className={'byline'}>
-            {`${prefix} `}
+            {`${prefix.trim()} `}
             <a href={this.props.authorLink}>{this.props.author}</a>
           </div>
         )}
         {this.props.authors ? (
           <div className={'byline'}>
-            {`${prefix} `}
+            {`${prefix.trim()} `}
             {this.props.authors.map((author, i) => {
               if (typeof author === 'string') {
                 return author;
@@ -31,8 +31,8 @@ class Header extends React.PureComponent {
                   <a href={author.link}>{author.name}</a>
                   {i < this.props.authors.length - 1
                     ? i === this.props.authors.length - 2
-                      ? ` ${suffix} `
-                      : `${joint} `
+                      ? ` ${suffix.trim()} `
+                      : `${joint.trim()} `
                     : ''}
                 </span>
               ) : (
@@ -97,7 +97,7 @@ Header._idyll = {
     {
       name: 'byLineTemplate',
       type: 'object',
-      example: "{ prefix: 'Made by', joint: ' -', suffix: '&' }",
+      example: "{ prefix: 'Made by', joint: ' ', suffix: '&' }",
       description: 'Optional template to use in by line.'
     },
     {
