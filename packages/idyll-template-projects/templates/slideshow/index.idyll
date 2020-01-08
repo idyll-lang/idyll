@@ -1,0 +1,71 @@
+[meta title:"Slideshow" description:"Short description of your project" /]
+
+[var name:"currentSlide" value:0 /]
+[var name:"numSlides" value:0 /]
+
+[Slideshow currentSlide:currentSlide numSlides:numSlides fullWidth:true]
+
+
+  [Slide]
+    [Header
+      title:"My Presentation Title"
+      subtitle:"Subtitle"
+      author:"Your Name Here"
+      fullWidth:true color:"#222" background:"#fff" /]
+  [/Slide]
+
+  [Slide]
+    ## Project Overview
+
+* Extended Idyll to support authoring interactive slideshows
+* Bullet point 2
+* Bullet point 3
+  [/Slide]
+
+  [Slide]
+    ## Idyll Slides
+
+* Idyll is a markup language for creating dynamic documents
+* Outputs JavaScript so can be combined with many graphics libraries
+* Typically targets essays / articles, but here I've extended to slideshows
+
+```
+[Slideshow]
+  [Slide]
+    # My Slide Title
+
+    * Bullet point item 1
+    * Bullet point item 2
+
+    [Chart data:myDataset /]
+  [/Slide]
+[/Slideshow]
+```
+  [/Slide]
+
+  [Slide]
+    ## Image
+
+    ![placekitten](http://placekitten.com/800/600)
+  [/Slide]
+
+  [Slide]
+    ## Map
+
+    [var name:"zoom" value:8 /]
+    [var name:"lat" value:47.6062 /]
+    [var name:"lon" value:-122.3321 /]
+
+    [ReactMapGL
+      width:'auto'
+      height:'65vh'
+      latitude:lat
+      longitude:lon
+      zoom:zoom
+      mapStyle:"mapbox://styles/mathisonian/cjurw8owq15tb1fomkfgdvycn"
+      mapboxApiAccessToken:"pk.eyJ1IjoibWF0aGlzb25pYW4iLCJhIjoiY2l5bTA5aWlnMDAwMDN1cGZ6Y3d4dGl6MSJ9.JZaRAfZOZfAnU2EAuybfsg"
+     /]
+
+   [/Slide]
+
+[/Slideshow]

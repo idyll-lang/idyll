@@ -1,0 +1,32 @@
+.slide {
+  height: 100vh;
+  width: 100vw;
+  font-size: 1.5rem;
+}
+
+.slideshow {
+  display: flex;
+  flex-direction: row;
+  transition: transform 0.75s;
+}
+
+.slide img {
+  transition: filter 0.75s;
+}
+
+.idyll-text-container {
+  max-width: 90% !important;
+}
+
+.article-header a {
+  color: #222;
+}
+
+.article-header {
+  padding-top: 1em;
+  padding-bottom: 0;
+}
+
+h1.hed {
+  font-size: 3.5em;
+}

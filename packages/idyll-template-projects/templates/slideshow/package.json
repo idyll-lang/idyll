@@ -1,0 +1,21 @@
+{
+  "name": "slideshow",
+  "version": "1.0.0",
+  "license": "MIT",
+  "idyll": {
+    "theme": "default",
+    "layout": "blog",
+    "css": "styles.css"
+  },
+  "dependencies": {
+    "d3": "^4.0.0",
+    "idyll": "^4.0.0",
+    "idyll-d3-component": "^2.0.0",
+    "react-map-gl": "^5.0.3",
+    "vega": "^5.4.0",
+    "vega-lite": "^3.3.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^0.12.0"
+  }
+}
