@@ -1,8 +1,12 @@
 import React from 'react';
 
+const byLineDefault = { prefix: 'By:', joint: ',', suffix: 'and' };
+
 class Header extends React.PureComponent {
   render() {
-    const { background, color } = this.props;
+    const { background, color, byLineTemplate } = this.props;
+    const { joint, prefix, suffix } = { ...byLineDefault, ...byLineTemplate };
+
     return (
       <div className={'article-header'} style={{ background, color }}>
         <h1 className={'hed'}>{this.props.title}</h1>
@@ -11,12 +15,13 @@ class Header extends React.PureComponent {
         )}
         {this.props.author && (
           <div className={'byline'}>
-            By: <a href={this.props.authorLink}>{this.props.author}</a>
+            {`${prefix.trim()} `}
+            <a href={this.props.authorLink}>{this.props.author}</a>
           </div>
         )}
         {this.props.authors ? (
           <div className={'byline'}>
-            By:{' '}
+            {`${prefix.trim()} `}
             {this.props.authors.map((author, i) => {
               if (typeof author === 'string') {
                 return author;
@@ -26,8 +31,8 @@ class Header extends React.PureComponent {
                   <a href={author.link}>{author.name}</a>
                   {i < this.props.authors.length - 1
                     ? i === this.props.authors.length - 2
-                      ? ' and '
-                      : ', '
+                      ? ` ${suffix.trim()} `
+                      : `${joint.trim()} `
                     : ''}
                 </span>
               ) : (
@@ -88,6 +93,12 @@ Header._idyll = {
       example: '"blue"',
       defaultValue: '"#222"',
       description: 'The background of the header. Can pass a color or a url().'
+    },
+    {
+      name: 'byLineTemplate',
+      type: 'object',
+      example: "{ prefix: 'Made by', joint: ' ', suffix: '&' }",
+      description: 'Optional template to use in by line.'
     },
     {
       name: 'color',
