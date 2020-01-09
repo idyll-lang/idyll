@@ -1,4 +1,4 @@
-## v4.9
+## v4.10
 
 - Add `progress` parameter to the scroller component to make continuos scroll-based animations. ([#601](https://github.com/idyll-lang/idyll/pull/601))
 - Support for JSX file extension of components ([#603](https://github.com/idyll-lang/idyll/pull/603))
