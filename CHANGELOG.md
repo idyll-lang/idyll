@@ -1,3 +1,13 @@
+## v4.9
+
+- Add `progress` parameter to the scroller component to make continuos scroll-based animations. ([#601](https://github.com/idyll-lang/idyll/pull/601))
+- Support for JSX file extension of components ([#603](https://github.com/idyll-lang/idyll/pull/603))
+- new template for slideshows ([#608](https://github.com/idyll-lang/idyll/pull/608))
+- new `byline` options for header component ([#599](https://github.com/idyll-lang/idyll/pull/599))
+
+Bugfixes:
+- Fix compiler bug with exclamation points ([#604](https://github.com/idyll-lang/idyll/pull/604))
+
 ## v4.8
 
 New features:
