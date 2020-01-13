@@ -89,6 +89,15 @@ export default ({ url }) => (
       these same options can be configured via command line flags or when using
       Idyll as an API.
     </p>
+    <p>
+      Idyll looks for package.json file starting from the current directory
+      where Idyll was run and searches through the parent directories till the
+      root directory for another package.json file. This is useful for multipage
+      projects where package.json need not be duplicated for each page. In cases
+      where multiple package.json files are present with the same options
+      configured, the local package.json will be given higher preference over
+      options from package.json found in any parent folder.
+    </p>
     <h2>Options</h2>
     <ul>
       <li>
