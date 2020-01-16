@@ -67,8 +67,8 @@ const lex = function(options, alias = {}) {
       )
     ].join('|');
   };
-  var updatePosition = function(lexeme, shouldNotPush) {
-    if (!shouldNotPush) {
+  var updatePosition = function(lexeme, shouldNotPush, isStart, isEnd) {
+    if (!shouldNotPush && !isEnd) {
       positions.push([row, column]);
     }
     var lines = lexeme.split('\n');
@@ -77,7 +77,7 @@ const lex = function(options, alias = {}) {
       column = 1;
     }
     column += lines[lines.length - 1].length;
-    if (!shouldNotPush) {
+    if (!shouldNotPush && !isStart) {
       positions.push([row, column]);
     }
   };
@@ -312,7 +312,7 @@ const lex = function(options, alias = {}) {
   });
 
   lexer.addRule(/(\n\s*\/\/[^\n]*|\/\/\s+[^\n]*)/, function(lexeme) {
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     if (lexeme.startsWith('\n')) {
       return ['BREAK'];
     }
@@ -354,13 +354,13 @@ const lex = function(options, alias = {}) {
   });
 
   lexer.addRule(/[ \t\n]+/, function(lexeme) {
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
   });
 
   lexer.addRule(/\[/, function(lexeme) {
     inComponent = true;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, false, true);
     return ['OPEN_BRACKET'];
   });
 
@@ -368,7 +368,7 @@ const lex = function(options, alias = {}) {
     inComponent = false;
     gotName = false;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, false, false, true);
     var ret = ['CLOSE_BRACKET'];
     if (trailingSpace) {
       ret = ret.concat(['WORDS']).concat(formatToken(trailingSpace));
@@ -379,14 +379,14 @@ const lex = function(options, alias = {}) {
   lexer.addRule(/\//, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['FORWARD_SLASH'];
   });
 
   lexer.addRule(/true|false/, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['BOOLEAN'].concat(formatToken(lexeme));
   });
 
@@ -396,21 +396,21 @@ const lex = function(options, alias = {}) {
       this.reject = !inComponent || gotName;
       if (this.reject) return;
       gotName = true;
-      updatePosition(lexeme);
+      updatePosition(lexeme, true);
       return ['COMPONENT_NAME'].concat(formatToken(lexeme));
     }
   );
   lexer.addRule(/[^+\-0-9:\s\/\]"'`\.][^:\s\/\]"'`\.]*/, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['COMPONENT_WORD'].concat(formatToken(lexeme));
   });
 
   lexer.addRule(/`[^`]*`/, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['EXPRESSION'].concat(formatToken(lexeme));
   });
 
@@ -419,27 +419,27 @@ const lex = function(options, alias = {}) {
       (lexeme.match(new RegExp(/\./, 'g')) || []).length >= 2;
     this.reject = !inComponent || multiplePeriods;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['NUMBER'].concat(formatToken(lexeme));
   });
 
   lexer.addRule(/"[^"]*"/, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['STRING'].concat(formatToken(lexeme));
   });
   lexer.addRule(/'([^']*)'/, function(lexeme, str) {
     this.reject = !inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['STRING'].concat(formatToken('"' + str + '"'));
   });
 
   lexer.addRule(/:/, function(lexeme) {
     this.reject = !inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['PARAM_SEPARATOR'];
   });
 

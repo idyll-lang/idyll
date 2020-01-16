@@ -266,7 +266,12 @@ const linkMarkupToNode = (lexPositions, content) => {
     return ast.map(node => {
       let [startRow, startColumn] = positions.shift();
       let [endRow, endColumn] = positions.shift();
-      let markup = lines[startRow - 1].substring(startColumn - 1);
+      let markup;
+      if (startRow !== endRow) {
+        markup = lines[startRow - 1].substring(startColumn - 1);
+      } else {
+        markup = lines[startRow - 1].substring(startColumn - 1, endColumn - 1);
+      }
       while (startRow < endRow) {
         startRow++;
         if (startRow === endRow) {
