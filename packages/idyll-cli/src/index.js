@@ -65,7 +65,9 @@ const idyll = (options = {}, cb) => {
     opts.compiler.postProcessors = opts.compiler.postProcessors.map(
       processor => {
         try {
-          return require(processor, { basedir: paths.INPUT_DIR });
+          return require(require.resolve(processor, {
+            paths: [paths.INPUT_DIR]
+          }));
         } catch (e) {
           console.log(e);
           console.warn('\n\nCould not find post-processor plugin: ', processor);
@@ -150,16 +152,18 @@ const idyll = (options = {}, cb) => {
 
             // Each resolver is responsible for generating a list of directories to watch for
             // their corresponding data types.
-            resolvers.forEach((resolver, name) => {
-              let watcher = bs.watch(
-                resolver.getDirectories(),
-                { ignoreInitial: true },
-                () => {
-                  inst.build();
-                }
-              );
-              watchers.push(watcher);
-            });
+            if (!opts.compiler.postProcessors) {
+              resolvers.forEach((resolver, name) => {
+                let watcher = bs.watch(
+                  resolver.getDirectories(),
+                  { ignoreInitial: true },
+                  () => {
+                    inst.build();
+                  }
+                );
+                watchers.push(watcher);
+              });
+            }
 
             bs.init({
               cors: true,
