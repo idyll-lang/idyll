@@ -26,6 +26,7 @@ const shouldBreak = text => {
 let currentInput = null;
 
 const lex = function(options, alias = {}) {
+  const positions = [];
   let { row, column, outer, skipLists, inComponent, gotName } = Object.assign(
     {},
     {
@@ -66,13 +67,19 @@ const lex = function(options, alias = {}) {
       )
     ].join('|');
   };
-  var updatePosition = function(lexeme) {
+  var updatePosition = function(lexeme, shouldNotPush) {
+    if (!shouldNotPush) {
+      positions.push([row, column]);
+    }
     var lines = lexeme.split('\n');
     row += lines.length - 1;
     if (lines.length > 1) {
-      column = 0;
+      column = 1;
     }
     column += lines[lines.length - 1].length;
+    if (!shouldNotPush) {
+      positions.push([row, column]);
+    }
   };
 
   // Rules at the front are pre-processed,
@@ -163,22 +170,18 @@ const lex = function(options, alias = {}) {
     return ['INLINE_CODE'].concat(formatToken(text.trim()));
   });
 
-  lexer.addRule(/[\s\n]*(#{1,6})\s*([^\n\[]+)[\n\s]*/gm, function(
-    lexeme,
-    hashes,
-    text
-  ) {
+  lexer.addRule(/(#{1,6})\s*([^\n\[]+)/gm, function(lexeme, hashes, text) {
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['BREAK', 'HEADER_' + hashes.length]
+    return ['HEADER_' + hashes.length]
       .concat(recurse(text, { skipLists: true }))
       .concat(['HEADER_END']);
   });
 
-  lexer.addRule(/[\s\n]*>\s*([^\n\[]+)[\n\s]*/gm, function(lexeme, text) {
+  lexer.addRule(/>\s*([^\n\[]+)/gm, function(lexeme, text) {
     if (this.reject) return;
     updatePosition(lexeme);
-    return ['BREAK', 'QUOTE_START']
+    return ['QUOTE_START']
       .concat(recurse(text, { skipLists: true }))
       .concat(['QUOTE_END']);
   });
@@ -315,14 +318,14 @@ const lex = function(options, alias = {}) {
     }
   });
 
-  lexer.addRule(/\/(\n?[^`\*\[\/\n\]!\\\d_])*/gm, function(lexeme) {
+  lexer.addRule(/\/([^`\*\[\/\n\]!\\\d_])*/gm, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
     return ['WORDS'].concat(formatToken(lexeme));
   });
 
-  lexer.addRule(/(\n?[^`\*\[\/\n\]!\\\d_])+/, function(lexeme) {
+  lexer.addRule(/([^`\*\[\/\n\]!\\\d_])+/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
@@ -330,7 +333,7 @@ const lex = function(options, alias = {}) {
   });
   // Match on separately so we can greedily match the
   // other tags.
-  lexer.addRule(/[!\d\*_`] */, function(lexeme) {
+  lexer.addRule(/[!\d\*_`]\s*/, function(lexeme) {
     this.reject = inComponent || lexeme.trim() === '';
     if (this.reject) return;
     updatePosition(lexeme);
@@ -343,10 +346,10 @@ const lex = function(options, alias = {}) {
     return ['WORDS'].concat(formatToken(lexeme));
   });
 
-  lexer.addRule(/\s*\n{2,}\s*/, function(lexeme) {
+  lexer.addRule(/\s*\n+?\s*/, function(lexeme) {
     this.reject = inComponent;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['BREAK'];
   });
 
@@ -443,21 +446,18 @@ const lex = function(options, alias = {}) {
   lexer.addRule(/\s*$/, function(lexeme) {
     this.reject = !outer;
     if (this.reject) return;
-    updatePosition(lexeme);
+    updatePosition(lexeme, true);
     return ['EOF'];
   });
 
   return function(str) {
     currentInput = str;
-    var vals = [];
     var output = [];
-    var positions = [];
 
     lexer.input = str.trim();
     var token = lexer.lex();
     while (token) {
       output.push(token);
-      positions.push([row, column]);
       token = lexer.lex();
     }
     return {

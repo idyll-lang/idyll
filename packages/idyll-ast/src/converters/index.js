@@ -113,6 +113,7 @@ function inverseConvertHelper(arrayElement, id) {
   } else {
     elementJson.type = 'component';
     elementJson.name = arrayElement[0];
+    elementJson.raw = arrayElement[3];
     if (arrayElement[1].length !== 0) {
       elementJson.properties = {};
       arrayElement[1].forEach(property => {
