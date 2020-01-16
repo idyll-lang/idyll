@@ -65,9 +65,7 @@ const idyll = (options = {}, cb) => {
     opts.compiler.postProcessors = opts.compiler.postProcessors.map(
       processor => {
         try {
-          return require(require.resolve(processor, {
-            paths: [paths.INPUT_DIR]
-          }));
+          return require(processor, { basedir: paths.INPUT_DIR });
         } catch (e) {
           console.log(e);
           console.warn('\n\nCould not find post-processor plugin: ', processor);
