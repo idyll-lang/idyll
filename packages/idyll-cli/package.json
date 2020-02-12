@@ -44,7 +44,6 @@
     "csv-parse": "^4.8.2",
     "debug": "^3.1.0",
     "dev-null": "^0.1.1",
-    "findup-sync": "^1.0.0",
     "fs-extra": "^5.0.0",
     "html-tags": "^1.1.1",
     "idyll-ast": "^2.0.9",
