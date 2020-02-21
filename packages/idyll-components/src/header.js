@@ -2,6 +2,34 @@ import React from 'react';
 
 const byLineDefault = { prefix: 'By:', joint: ',', suffix: 'and' };
 
+const additionalTextByIndex = (authors, suffix, joint, index) => {
+  const map = { [authors.length - 1]: '', [authors.length - 2]: ` ${suffix} ` };
+
+  return index in map ? map[index] : `${joint} `;
+};
+
+const AuthorLink = ({ name, link }) => <a href={link}>{name}</a>;
+
+const ByLineMultipleAuthors = ({ authors, prefix, joint, suffix }) => (
+  <div className={'byline'}>
+    {`${prefix} `}
+    {authors.map((author, i) => {
+      const authorDisplay = typeof author === 'string' ? author : author.name;
+
+      return (
+        <span key={authorDisplay}>
+          {typeof author.link === 'string' ? (
+            <AuthorLink {...author} />
+          ) : (
+            authorDisplay
+          )}
+          {additionalTextByIndex(authors, suffix, joint, i)}
+        </span>
+      );
+    })}
+  </div>
+);
+
 class Header extends React.PureComponent {
   render() {
     const { background, color, byLineTemplate } = this.props;
@@ -19,29 +47,14 @@ class Header extends React.PureComponent {
             <a href={this.props.authorLink}>{this.props.author}</a>
           </div>
         )}
-        {this.props.authors ? (
-          <div className={'byline'}>
-            {`${prefix.trim()} `}
-            {this.props.authors.map((author, i) => {
-              if (typeof author === 'string') {
-                return author;
-              }
-              return author.link ? (
-                <span key={author.name}>
-                  <a href={author.link}>{author.name}</a>
-                  {i < this.props.authors.length - 1
-                    ? i === this.props.authors.length - 2
-                      ? ` ${suffix.trim()} `
-                      : `${joint.trim()} `
-                    : ''}
-                </span>
-              ) : (
-                author.name
-              );
-            })}
-            {}
-          </div>
-        ) : null}
+        {!!this.props.authors && (
+          <ByLineMultipleAuthors
+            authors={this.props.authors}
+            prefix={prefix.trim()}
+            joint={joint.trim()}
+            suffix={suffix.trim()}
+          />
+        )}
         {this.props.date && (
           <div className={'idyll-pub-date'}>{this.props.date}</div>
         )}
