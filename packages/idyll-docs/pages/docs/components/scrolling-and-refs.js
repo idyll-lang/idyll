@@ -14,7 +14,7 @@ export default ({ url }) => (
         <li><code>onEnterView</code> - triggered when a component partially enters the viewport.</li>
         <li><code>onEnterViewFully</code> - triggered when a component fully enters the viewport.</li>
         <li><code>onExitView</code> - triggered when a component partially exits the viewport.</li>
-        <li><code>onExitViewFully</code> - triggered when a component fully enters the viewport.</li>
+        <li><code>onExitViewFully</code> - triggered when a component fully exits the viewport.</li>
       </ul>
 
       <p>To customize the position at which these events get triggered (e.g. to trigger the <code>onEnterView</code> event only
