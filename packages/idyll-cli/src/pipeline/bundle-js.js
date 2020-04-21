@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const browserifyInc = require('browserify-incremental');
+const browserify = require('browserify');
 const babelify = require('babelify');
 const reactPreset = require('babel-preset-react');
 const envPreset = require('babel-preset-env');
@@ -76,56 +77,61 @@ const getTransform = (opts, paths) => {
 module.exports = function(opts, paths, output) {
   process.env['NODE_ENV'] = opts.watch ? 'development' : 'production';
 
-  const b = browserifyInc({
-    entries: [path.join(__dirname, '..', 'client', 'build.js')],
-    cache: {},
-    packageCache: {},
-    fullPaths: true,
+  const b = browserify(
+    Object.assign({}, browserifyInc.args, {
+      entries: [path.join(__dirname, '..', 'client', 'build.js')],
+      cache: {},
+      packageCache: {},
+      fullPaths: true,
+      transform: getTransform(opts, paths),
+      paths: [getLocalModules(paths), getGlobalModules(paths)],
+      plugin: [
+        b => {
+          if (opts.minify) {
+            b.require('react/umd/react.production.min.js', { expose: 'react' });
+            b.require('react-dom/umd/react-dom.production.min.js', {
+              expose: 'react-dom'
+            });
+          } else {
+            b.require('react', { expose: 'react' });
+            b.require('react-dom', { expose: 'react-dom' });
+          }
+          const aliases = {
+            ast: '__IDYLL_AST__',
+            components: '__IDYLL_COMPONENTS__',
+            data: '__IDYLL_DATA__',
+            syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__',
+            opts: '__IDYLL_OPTS__'
+          };
+
+          for (const key in aliases) {
+            const data = output[key];
+            b.exclude(aliases[key]);
+            b.require(toStream(key, data), {
+              expose: aliases[key],
+              basedir: paths.TMP_DIR
+            });
+          }
+
+          if (opts.context) {
+            b.require(opts.context, {
+              expose: '__IDYLL_CONTEXT__'
+            });
+          } else {
+            b.require(__dirname + '/../client/context', {
+              expose: '__IDYLL_CONTEXT__'
+            });
+          }
+        }
+      ]
+    })
+  );
+
+  browserifyInc(b, {
     cacheFile: path.join(
       paths.TMP_DIR,
       `browserify-cache${opts.minify ? '-min' : ''}.json`
-    ),
-    transform: getTransform(opts, paths),
-    paths: [getLocalModules(paths), getGlobalModules(paths)],
-    plugin: [
-      b => {
-        if (opts.minify) {
-          b.require('react/umd/react.production.min.js', { expose: 'react' });
-          b.require('react-dom/umd/react-dom.production.min.js', {
-            expose: 'react-dom'
-          });
-        } else {
-          b.require('react', { expose: 'react' });
-          b.require('react-dom', { expose: 'react-dom' });
-        }
-        const aliases = {
-          ast: '__IDYLL_AST__',
-          components: '__IDYLL_COMPONENTS__',
-          data: '__IDYLL_DATA__',
-          syntaxHighlighting: '__IDYLL_SYNTAX_HIGHLIGHT__',
-          opts: '__IDYLL_OPTS__'
-        };
-
-        for (const key in aliases) {
-          const data = output[key];
-          b.exclude(aliases[key]);
-          b.require(toStream(key, data), {
-            expose: aliases[key],
-            basedir: paths.TMP_DIR
-          });
-        }
-
-        if (opts.context) {
-          b.require(opts.context, {
-            expose: '__IDYLL_CONTEXT__'
-          });
-        } else {
-          b.require(__dirname + '/../client/context', {
-            expose: '__IDYLL_CONTEXT__'
-          });
-        }
-      }
-    ]
+    )
   });
 
   return new Promise((resolve, reject) => {
