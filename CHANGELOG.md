@@ -6,7 +6,9 @@
 - new `byline` options for header component ([#599](https://github.com/idyll-lang/idyll/pull/599))
 
 Bugfixes:
+
 - Fix compiler bug with exclamation points ([#604](https://github.com/idyll-lang/idyll/pull/604))
+- Fix integration with Vega-Lite
 
 ## v4.8
 
@@ -14,10 +16,9 @@ New features:
 
 - Replace uglify with terser ([#591](https://github.com/idyll-lang/idyll/pull/591))
 
-Bugfixes: 
+Bugfixes:
 
 - Fix security issue with `csv-parse` ([#594](https://github.com/idyll-lang/idyll/pull/594))
-
 
 ## v4.7
 
@@ -25,22 +26,24 @@ New features:
 
 - Adds support for citations and references ([#575](https://github.com/idyll-lang/idyll/pull/575))
 
-Bugfixes: 
+Bugfixes:
 
 - Fix case sensativity in AST modifyNodesByName method ([#574](https://github.com/idyll-lang/idyll/pull/574))
 - Fix equation rendering issues ([#579](https://github.com/idyll-lang/idyll/pull/579))
 - Fix comment spacing issue ([#578](https://github.com/idyll-lang/idyll/pull/578))
 
 ## v4.6
+
 - Adds a [Desmos]() component. ([#547](https://github.com/idyll-lang/idyll/pull/547))
 - Fix bug with incorrect components being inserted when using `Asides` & server-side rendering.
 
 ## v4.5
+
 - Improves `article-header` style for the blog layout. ([#544](https://github.com/idyll-lang/idyll/pull/544))
 - Add `idyll clean` command. This command removes elements from the `.idyll` folder, which is used as a build cache and to store tokens for idyll.pub. ([#540](https://github.com/idyll-lang/idyll/pull/540))
 - Add `--no-install` option to `idyll create` so you can generate new posts without running `npm install` (good for use in blogs that share dependencies). ([#539](https://github.com/idyll-lang/idyll/pull/539))
 - Make header components autogenerate `id` tags. ([#538](https://github.com/idyll-lang/idyll/pull/538))
-- Add a `multipage` template for making blogs and such things. ([#549](https://github.com/idyll-lang/idyll/pull/549)) 
+- Add a `multipage` template for making blogs and such things. ([#549](https://github.com/idyll-lang/idyll/pull/549))
 
 ## v4.4
 
@@ -54,7 +57,7 @@ Bugfixes:
 - Fix positioning of `Aside` component on centered layout (https://github.com/idyll-lang/idyll/pull/520)
 - Adds a new "Tutorials" page to the docs (https://github.com/idyll-lang/idyll/pull/521)
 - fixes a syntax highlighting bug for custom code blocks (https://github.com/idyll-lang/idyll/pull/523)
-- add support for numbers with leading decimal places (https://github.com/idyll-lang/idyll/pull/514) 
+- add support for numbers with leading decimal places (https://github.com/idyll-lang/idyll/pull/514)
 
 ## v4.2
 
@@ -62,7 +65,6 @@ Bugfixes:
 - Adds `template` option to `idyll create`
 - Fixes a bug in compiler where spaces were being incorrectly inserted after numbers in text (`12three` would be rendered as `12 three`)
 - fix re-rendering issues with `idyll-document`
-
 
 ## v4.1
 
