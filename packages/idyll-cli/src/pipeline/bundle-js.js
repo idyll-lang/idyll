@@ -64,9 +64,9 @@ const getTransform = (opts, paths) => {
         presets: [envPreset, stage2Preset, reactPreset],
         babelrc: false,
         // Ensure that Babel doesn't process both the local and global node_modules.
-        ignore: new RegExp(
-          `(${getLocalModules(paths)}|${getGlobalModules(paths)})`
-        )
+        ignore: opts.compileLibs
+          ? null
+          : new RegExp(`(${getLocalModules(paths)}|${getGlobalModules(paths)})`)
       }
     ]
   ]

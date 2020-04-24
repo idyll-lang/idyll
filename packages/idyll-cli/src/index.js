@@ -38,7 +38,8 @@ const idyll = (options = {}, cb) => {
       temp: '.idyll',
       template: join(__dirname, 'client', '_index.html'),
       transform: [],
-      compiler: {}
+      compiler: {},
+      compileLibs: false
     },
     options
   );
@@ -59,6 +60,8 @@ const idyll = (options = {}, cb) => {
   opts.transform = options.transform || inputConfig.transform || opts.transform;
   opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
   opts.context = options.context || inputConfig.context || opts.context;
+  opts.compileLibs =
+    options.compileLibs || inputConfig.compileLibs || opts.compileLibs;
 
   // Resolve compiler plugins:
   if (opts.compiler.postProcessors) {
