@@ -11,6 +11,10 @@ var ReactDOM = require('react-dom');
 var IdyllDocument = require('idyll-document').default;
 var mountNode = document.getElementById('idyll-mount');
 
+// Included only so that VegaLite will
+// work properly with our ecosystem.
+require('regenerator-runtime/runtime');
+
 var ast = require('__IDYLL_AST__');
 var components = require('__IDYLL_COMPONENTS__');
 var datasets = require('__IDYLL_DATA__');
