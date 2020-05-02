@@ -84,6 +84,7 @@ test('options work as expected', () => {
     ssr: true,
     watch: false,
     open: true,
+    compileLibs: false,
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
     htmlTemplate: join(PROJECT_DIR, '_index.html'),
