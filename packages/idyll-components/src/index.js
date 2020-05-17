@@ -2,6 +2,7 @@ export { default as Action } from './action';
 export { default as Analytics } from './analytics';
 export { default as Aside } from './aside';
 export { default as Boolean } from './boolean';
+export { default as Checkbox } from './boolean';
 export { default as Button } from './button';
 export { default as Case } from './case';
 export { default as Chart } from './chart';

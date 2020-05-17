@@ -12,12 +12,14 @@ class Boolean extends React.PureComponent {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, className, style } = this.props;
     return (
       <input
         type="checkbox"
         onChange={this.toggleCheckbox.bind(this)}
-        value={value}
+        checked={value}
+        className={`idyll-checkbox ${className ? className : ''}`.trim()}
+        style={style}
       />
     );
   }
