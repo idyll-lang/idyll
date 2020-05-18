@@ -1,1 +1,1 @@
-[Table value:`[{columnName1: value, columnName2: value}, {columnName1: value, columnName2: value}]` /]
+[Table value:`[{columnName1: 'value 1', columnName2: 'value 2'}, {columnName1: 'value 3', columnName2: 'value 4'}]` /]
