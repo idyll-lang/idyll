@@ -47,11 +47,24 @@ class IdyllComponentDoc extends React.Component {
         )}
         {liveExample && exampleCode && (
           <div>
-            <h3>Live Example</h3>
-            <IdyllDocument markup={exampleCode} components={IdyllComponents} />
+            <h4>Input:</h4>
             <pre>
-              <code>{exampleCode}</code>
+              <code>{(exampleCode || '').trim()}</code>
             </pre>
+            <h4>Output:</h4>
+            <div
+              style={{
+                border: 'solid 1px black',
+                borderRadius: 5,
+                padding: '1em',
+                boxShadow: '3px 3px 5px #ccc'
+              }}
+            >
+              <IdyllDocument
+                markup={exampleCode}
+                components={IdyllComponents}
+              />
+            </div>
           </div>
         )}
         {((component && component._idyll.props) || idyllProps) && (

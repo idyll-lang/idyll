@@ -1,11 +1,8 @@
-
 [Youtube
-  id:"videoID"
+  id:"KnPe6dZuwlg"
   play:true
   audio:true
   width:500
   height:300
   options:`{ controls: 1 }`
   /]
-
-

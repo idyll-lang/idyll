@@ -11,28 +11,66 @@ export default ({ url }) => (
     <div>
       <h1>Plugin System</h1>
 
-      <p>
-        See available plugins:
-        <ul>
-          <li>
-            <a href="https://github.com/idyll-lang/idyll-plugins">
-              https://github.com/idyll-lang/idyll-plugins
-            </a>
-          </li>
-        </ul>
-      </p>
+      <h2>Using Plugins</h2>
 
       <p>
-        This section details how to work with the custom hooks exposed by
-        Idyll's compiler and runtime. If you want to learn about basic
-        configuration options and styling,{' '}
-        <Link href="/docs/configuration-and-styles">
-          <a>see this page</a>
-        </Link>
+        Plugins are sorted into two categories, compiler plugins and runtime
+        plugins. Compiler plugins can affect how the project builds or modify
+        the abstract syntax tree that Idyll produces. Runtime plugins can
+        inspect and affect Idyll's reactive variable system in the browser.
+      </p>
+
+      <p>See each plugin for specific installation and usage instructions.</p>
+
+      <h3>Compiler Plugins</h3>
+      <ul>
+        <li>
+          <a href="https://github.com/idyll-lang/idyll-plugin-spellcheck">
+            Spellcheck
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/idyll-lang/idyll-plugin-table-of-contents">
+            Table of Contents
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/idyll-lang/idyll-plugin-revision">
+            Git Revisions
+          </a>
+        </li>
+      </ul>
+      <h3>Runtime Plugins</h3>
+      <ul>
+        <li>
+          <a href="https://github.com/idyll-lang/idyll-plugin-url-state">
+            URL State Synchronization
+          </a>{' '}
+          - serialize the article state into the URL. Allows readers to share
+          the article in a particular configuration.
+        </li>
+        <li>
+          <a href="https://github.com/idyll-lang/idyll-analytics">Analytics</a>{' '}
+          - collect detailed usage data to learn how readers are interacting
+          with your article.
+        </li>
+      </ul>
+      <p>
+        To use multiple runtime plugins simultaneously, use{' '}
+        <a href="https://github.com/idyll-lang/idyll-context-compose">
+          idyll-context-compose
+        </a>
         .
       </p>
 
-      <h2>Compiler Plugins</h2>
+      <h2>Developing Plugins</h2>
+
+      <p>
+        This section details how to work with the custom hooks exposed by
+        Idyll's compiler and runtime.
+      </p>
+
+      <h3>Compiler Plugins</h3>
 
       <p>
         The compiler is responsible for transforming Idyll markup into a
@@ -73,7 +111,7 @@ module.exports = (ast) => {
 }`}
       </Highlight>
 
-      <h2>Runtime Context</h2>
+      <h3>Runtime Context</h3>
 
       <p>
         If you want to write custom code that reads or writes to Idyll's
