@@ -28,7 +28,7 @@ Navigate to the `posts` directory and run `idyll create --template ../template/ 
 Alternatively, use `idyll create`, select `Custom` for the template when prompted, and provide the path `../template/`.
 
 Using the `idyll create` command without one of the other templates will work, but the above will automatically follow the default structure of the multipage post, while the other preset templates will not.
-If you do choose to use another template, your build files will go to `posts/name-of-post/build` instead of `docs/name-of-post`.
+If you do choose to use another template, your build files will go to `posts/name-of-post/build/` instead of `docs/name-of-post/`.
 
 To change the output location, change the `output` option in `package.json` in the template directory (if using the provided template) and at the root of this project (and any existing posts!).
 
