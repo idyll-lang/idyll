@@ -2,6 +2,13 @@
 
 Template for an Idyll blog with multiple posts.
 
+### Quick Start
+* The multipage template uses an index, or main, page (in this directory) alongside multiple sub-pages (in the `posts` directory).  
+* To run the main page, use the `idyll` command in this directory.  
+* To create a new page, `cd posts` to navigate to the `posts` directory, then use `idyll create --template ../template --no-install` to create a new post.  
+* To run a sub-page, `cd posts/name-of-page` to navigate to that page's directory, then use `idyll`.  
+* Any pages that have been built will go to the `docs` directory (found within the top level of the multipage post).
+
 ### Project overview
 
 - `posts` - all of the available posts, each directory within contains a full idyll post
@@ -17,7 +24,14 @@ Template for an Idyll blog with multiple posts.
 
 ## Creating a post
 
-Navigate to the posts directory and run `idyll create --template ../template/ --no-install`.
+Navigate to the `posts` directory and run `idyll create --template ../template/ --no-install`. 
+Alternatively, use `idyll create`, select `Custom` for the template when prompted, and provide the path `../template/`.
+
+Using the `idyll create` command without one of the other templates will work, but the above will automatically follow the default structure of the multipage post, while the other preset templates will not.
+If you do choose to use another template, your build files will go to `posts/name-of-post/build/` instead of `docs/name-of-post/`.
+
+To change the output location, change the `output` option in `package.json` in the template directory (if using the provided template) and at the root of this project (and any existing posts!).
+
 
 ## Developing a post locally
 
@@ -29,7 +43,9 @@ Navigate to the root of this project and run `idyll`.
 
 ## Building a post for production
 
-Navigate to the post's directory and run `idyll build`. The output will appear in the top-level `docs` folder. To change the output location, change the `output` option in `package.json` in the template directory and at the root of this project (and any existing posts!).
+Navigate to the post's directory and run \`idyll build\`. The output will appear in the top-level \`docs\` folder. 
+To change the output location, change the \`output\` option in \`package.json\` in the template directory and at the root of this project (and any existing posts!).
+(This assumes that you are using the template provided for multipage blogs.)
 
 ## Deploying
 
