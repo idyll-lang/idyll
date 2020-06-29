@@ -1,41 +1,41 @@
-import React from 'react'
-import LiveIdyllEditor from '../components/editor'
-import exampleMarkup from '../components/editor/initial'
-import { hashCode } from '../components/editor/utils'
+import React from 'react';
+import LiveIdyllEditor from '../components/editor';
+import exampleMarkup from '../components/editor/initial';
+import { hashCode } from '../components/editor/utils';
 import TopNav from '../components/top-nav';
 import Fonts from '../components/fonts';
-import Head from 'next/head'
+import Head from 'next/head';
 import 'isomorphic-fetch';
 
 import request from 'superagent';
-import {Router} from '../routes';
+import { Router } from 'next/router';
 import { logPageView, initGA } from '../components/analytics';
 
 const API_URL = 'https://idyll-docs-wwijepjavd.now.sh';
 
-const grey = x => `rgb(${x}, ${x}, ${x})`
+const grey = x => `rgb(${x}, ${x}, ${x})`;
 
 class EditorPage extends React.PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isSaving: false,
       edited: false
-    }
+    };
   }
 
   static async getInitialProps({ req, query }) {
-    if(query && query.uuid) {
+    if (query && query.uuid) {
       try {
-        const res = await fetch(`${API_URL}/api/editor/${query.uuid}`)
-        const json = await res.json()
-        return { initialMarkup: json.markup, uuid: query.uuid }
-      } catch(e) {
+        const res = await fetch(`${API_URL}/api/editor/${query.uuid}`);
+        const json = await res.json();
+        return { initialMarkup: json.markup, uuid: query.uuid };
+      } catch (e) {
         console.log(e);
       }
     }
 
-    return { initialMarkup: exampleMarkup }
+    return { initialMarkup: exampleMarkup };
   }
 
   componentDidMount() {
@@ -47,12 +47,12 @@ class EditorPage extends React.PureComponent {
     logPageView();
   }
 
-  handleChange = (markup) => {
+  handleChange = markup => {
     this.currentMarkup = markup;
     if (hashCode(markup) !== hashCode(this.props.initialMarkup)) {
       this.setState({ edited: true });
     }
-  }
+  };
 
   handleClick = () => {
     if (this.state.isSaving) {
@@ -67,17 +67,17 @@ class EditorPage extends React.PureComponent {
           this.setState({ isSaving: false });
           return;
         }
-        Router.pushRoute('editor', {uuid: res.body.id});
+        Router.push(`/editor/${res.body.id}`);
         this.setState({ edited: false, isSaving: false });
       });
-  }
+  };
 
   handleFullscreen = () => {
     if (this.state.isSaving) {
       return;
     }
     if (!this.state.edited && this.props.uuid) {
-      Router.pushRoute('fullscreen', {uuid: this.props.uuid});
+      Router.push(`/fullscreen/${this.props.uuid}`);
       return;
     }
     this.setState({ isSaving: true });
@@ -89,28 +89,41 @@ class EditorPage extends React.PureComponent {
           this.setState({ isSaving: false });
           return;
         }
-        Router.pushRoute('fullscreen', {uuid: res.body.id});
+        Router.push(`/fullscreen/${res.body.id}`);
       });
-  }
+  };
 
   render() {
     if (!this.currentMarkup) {
       this.currentMarkup = this.props.initialMarkup;
     }
     return (
-      <div className='editor-page'>
+      <div className="editor-page">
         <Head>
-          <title>{ 'Idyll Editor' }</title>
-          <meta charSet='utf-8' />
-          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-          <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-          <meta property='og:image' content='https://idyll-lang.org/static/images/twitter-share.png' />
-          <meta property='og:description' content="Try Idyll in your browser." />
-          <meta property='og:title' content={'Idyll Editor'} />
-          <meta property='og:url' content='https://idyll-lang.org/editor' />
-          <meta property='og:type' content='website' />
+          <title>{'Idyll Editor'}</title>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/favicon.ico"
+          />
+          <meta
+            property="og:image"
+            content="https://idyll-lang.org/static/images/twitter-share.png"
+          />
+          <meta
+            property="og:description"
+            content="Try Idyll in your browser."
+          />
+          <meta property="og:title" content={'Idyll Editor'} />
+          <meta property="og:url" content="https://idyll-lang.org/editor" />
+          <meta property="og:type" content="website" />
         </Head>
-        <TopNav selected='editor' />
+        <TopNav selected="editor" />
         {/* <nav>
           <button onClick={ this.insertExample }>
             Load Example
@@ -125,22 +138,26 @@ class EditorPage extends React.PureComponent {
         <div className="editor-container">
           {
             // this.state.initialMarkup ? (
-              <LiveIdyllEditor
-                markup={ this.props.initialMarkup }
-                onChange={ this.handleChange }
-              />
+            <LiveIdyllEditor
+              markup={this.props.initialMarkup}
+              onChange={this.handleChange}
+            />
             // ) : null
           }
-          <button onClick={this.handleFullscreen} style={{position:'fixed', bottom:20, right:20}}>
+          <button
+            onClick={this.handleFullscreen}
+            style={{ position: 'fixed', bottom: 20, right: 20 }}
+          >
             Fullscreen
           </button>
-          {
-            this.state.edited ? (
-              <button onClick={this.handleClick} style={{position:'fixed', bottom:20, right:120}}>
-                {this.state.isSaving ? 'Saving...' : 'Save' }
-              </button>
-            ) : null
-          }
+          {this.state.edited ? (
+            <button
+              onClick={this.handleClick}
+              style={{ position: 'fixed', bottom: 20, right: 120 }}
+            >
+              {this.state.isSaving ? 'Saving...' : 'Save'}
+            </button>
+          ) : null}
         </div>
 
         <style jsx>{`
@@ -170,13 +187,10 @@ class EditorPage extends React.PureComponent {
             background: #333;
             color: #efefef;
           }
-
-
         `}</style>
       </div>
-    )
+    );
   }
 }
 
-
-export default EditorPage
+export default EditorPage;

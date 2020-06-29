@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '../../routes';
+import { Link } from 'next/link';
 import showdown from 'showdown';
 import Parser from 'html-react-parser';
 import Layout from '../../components/layout';

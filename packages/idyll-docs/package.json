@@ -11,7 +11,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "dev": "AWS_PROFILE=idyll BABEL_DISABLE_CACHE=1 node server.js",
+    "dev": "AWS_PROFILE=idyll BABEL_DISABLE_CACHE=1 next dev",
     "build": "next build",
     "export": "next export -o dist",
     "start": "NODE_ENV=production node server.js"

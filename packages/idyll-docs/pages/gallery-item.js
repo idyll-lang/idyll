@@ -1,4 +1,4 @@
-import { Link } from '../routes';
+import { Link } from 'next/link';
 import Layout from '../components/basic-layout';
 import { indexedGallery } from '../gallery';
 import { logPageView, initGA } from '../components/analytics';

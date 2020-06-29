@@ -1,4 +1,4 @@
-import { Link } from '../routes';
+import { Link } from 'next/link';
 
 const imageUrl = url => (/^http/.test(url) ? url : `/static/images/${url}`);
 
