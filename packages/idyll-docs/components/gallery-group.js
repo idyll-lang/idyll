@@ -1,8 +1,6 @@
 import GroupItem from './group-item';
 
 export default function GalleryGroup({ title, items }) {
-  console.log('ITEMS', items);
-  console.log('TITLE', title);
   return (
     <div className="example-group" id={title.split(' ').join('-')}>
       <h3 className="anchor">{title}</h3>

@@ -4,8 +4,6 @@ import GalleryGroup from '../components/gallery-group';
 import { examples } from '../gallery';
 import Donate from '../components/donate-link';
 
-console.log('GALLERY', examples);
-
 const Examples = () => (
   <section>
     <h1>Made with Idyll</h1>
@@ -37,7 +35,6 @@ const Examples = () => (
       </p>
       <ul>
         {examples.map(({ title }) => {
-          console.log('TITLE', title);
           return (
             <li key={title}>
               <a href={`#${title.split(' ').join('-')}`}>{title}</a>

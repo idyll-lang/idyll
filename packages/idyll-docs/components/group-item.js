@@ -16,8 +16,6 @@ function slugify(text) {
 }
 
 export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
-  console.log('HREF', href);
-  console.log('SOURCE', sourceUrl);
   return (
     <div className="example">
       <div

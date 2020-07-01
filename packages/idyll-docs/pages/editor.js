@@ -8,7 +8,7 @@ import Head from 'next/head';
 import 'isomorphic-fetch';
 
 import request from 'superagent';
-import { Router } from 'next/router';
+import Router from 'next/router';
 import { logPageView, initGA } from '../components/analytics';
 
 const API_URL = 'https://idyll-docs-wwijepjavd.now.sh';
