@@ -34,14 +34,21 @@ Attributes which allow multiple properties have multiple differences.
 First, surround the list of properties with backticks, then within that list them inside curly braces.
 Separate properties with commas instead of semicolons,
 and pass in all values as strings (with single or double quotes).
+Any argument that would be hyphenated in html &mdash;
+\`background-color\`, for example &mdash;
+now has the second word capitalized and the hyphen removed (\`backgroundColor\`).
 
-For instance, use
+For instance, use:
 
 \`\`\`
-[div style:\\\`{color: 'green', padding: '20px'}\\\`]Some text[/div]
+[div style:\\\`{backgroundColor: 'green', padding: '20px'}\\\`]Some text[/div]
 \`\`\`
 
-to generate a div with green text and 20 pixels of padding on each side.
+to generate a div with a green background and 20 pixels of padding on each side:
+
+<div style={{backgroundColor:'green',padding:'20px'}}>Some text</div>
+
+If calling a class in, for example, a div, Idyll prefers calling a \`className\` over simply using \`class\`.
 
 ## Creating and Calling Classes
 
@@ -56,23 +63,24 @@ The class is assigned a name so that it can easily be called multiple times.
 Idyll posts are pre-configured to read an editable \`styles.css\` file,
 and this file can be found in the top level of the idyll post (the same location as \`index.idyll\`).
 You can also use a style section, enclosed in the \`[style]...[/style]\` tags, 
-which comes after the \`[Header]\` and before the page's contents.
+which comes after the \`[Header /]\` and before the page's contents.
 
 ### CSS Syntax
 
 Where the use of inline styles in Idyll differs from HTML, 
 the syntax for defining classes is the same as it is in CSS.
 
-Define a style as follows:
+Define as follows:
 
 ~~~shell
-.styleName {
+.myclass {
     property: value;
     property: value;
 }
 ~~~
 
-And call it using the \`className\` property, treating the value as a string.
+The above will apply the properties it was given to all elements whose class name is \`myclass\`. 
+You can assign the class to an object using the \`className\` property, treating the value as a string.
 The \`className\` property can be assigned when using \`[div]\`, \`[span]\`, or \`[p]\`.
 
 For example, say you want a style that contrasts with your black text on a white background
@@ -94,16 +102,21 @@ Then you could make a div that uses that class by simply writing:
 [div className:'contrast']Some text.[/div]
 ~~~
 
-This can be done with a div or span as well.
+And you will see:
+
+<div style={{backgroundColor:'black',color:'white',margin:'20px',padding:'20px'}}>Some text</div>
+
+This can be done with a paragraph (\`[p]\`) or span (\`[span]\`) as well, using the same method. 
 
 #### Useful Properties
-* \`color\` - Sets the color of the text. Values can be a name (example: \`green\`) or a hex code (example: \`#00ff00\` or \`#0f0\`)
-* \`background-color\` - Sets the background color of the box. Values can be a name (example: \`black\`) or a hex code (example: \`#000000\` or \`#000\`)
-* \`margin\` - Sets a margin between the outside of the box and the other contents. Values can be a number of pixels (example: \`20px\`) or a percentage of the element (example: \`5%\`)
-    * Individual margins can be set using \`margin-top\`, \`margin-bottom\`, \`margin-right\`, and \`margin-left\`. Values can be a number of pixels (example: \`10px\`) or a percentage of the element (example: \`10%\`)
-* \`padding\` - Sets padding between the outside of the box and the box's contents. 
-* \`font-size\` - Sets the size of the font. Values can be in pixels (ex: \`14px\`), percentage of a parent element's size (example: \`150%\`), or size category (ex: \`xx-small\`).
-* \`font-weight\` - Sets the weight of the font. While you likely won't be using \`normal\` or \`bold\` often, because this can easily be handled through markdown syntax, values can be set to numbers, where the normal weight is 400 and the bold weight is 700.
+
+* **\`color\`** - Sets the color of the text. Values can be a name (example: \`green\`) or a hex code (example: \`#00ff00\` or \`#0f0\`)
+* **\`background-color\`** - Sets the background color of the box. Values can be a name (example: \`black\`) or a hex code (example: \`#000000\` or \`#000\`).
+* **\`margin\`** - Sets a margin between the outside of the box and the other contents. Values can be a number of pixels (example: \`20px\`) or a percentage of the element (example: \`5%\`).
+    * Individual margins can be set using \`margin-top\`, \`margin-bottom\`, \`margin-right\`, and \`margin-left\`. Values function the same as they do for \`margin\`.
+* **\`padding\`** - Sets padding between the outside of the box and the box's contents. 
+* **\`font-size\`** - Sets the size of the font. Values can be in pixels (ex: \`14px\`), percentage of a parent element's size (example: \`150%\`), or size category (ex: \`xx-small\`).
+* **\`font-weight\`** - Sets the weight of the font. While you likely won't be using the values \`normal\` or \`bold\` often, because this can easily be handled through markdown syntax, values can be set to numbers, where the normal weight is 400 and the bold weight is 700.
 
 ## Inline Styles
 
@@ -118,18 +131,20 @@ As in an example above, you can do so like this:
 For example,
 
 \`\`\`
-[div style:\\\`{color: 'green', padding: '20px'}\\\`]Some text[/div]
+[div style:\\\`{backgroundColor: 'green', padding: '20px'}\\\`]Some text[/div]
 \`\`\`
 
-*Waiting on information from Matthew about whether all behavior is intentional/should be documented before I complete this portion of the writeup.*
+The properties available are the same as those listed above for CSS, 
+although any hyphenated properties have the hyphen removed and the second word capitalized
+(e.g. \`font-size\` becomes \`fontSize\` when used with inline styling).
 
 ## Other Tags
 
-Below are some other miscellaneous tags that you may find useful.
+Below are some other tags that you may find useful.
 
 ### Text Formatting
 
-For large chunks of text where asterisks can miss or erroneously contain text,
+In the rare case that markdown's asterisks are proving difficult to use,
 the \`[i]\` tag can be used to <i>italicize</i> text
 and the \`[b]\` tag can be used to <b>bold</b> text.
 
@@ -138,6 +153,35 @@ To <u>underline</u> text, use the \`[u]\` tag.
 Use \`[sup]\` to create <sup>superscripts</sup> and \`[sub]\` to create <sub>subscripts</sub>.
 
 Use \`[del]\` to <del>strikethrough</del>.
+
+#### Lists
+
+Currently, markdown syntax in Idyll does not support multiple levels of lists.
+HTML's list syntax, however, does allow sub-items in Idyll.
+An HTML-style list can be made by:
+
+1. Putting one of these tags at the front of the list:
+    * \`[ol]\` to generate ordered lists, like the main one
+    * \`[ul]\` to generate unordered lists, like this sub-list
+    * (And to nest lists, just put a new list where a list item would go!)
+2. Putting the \`[li]\` tag before each list item and the \`[/li]\` tag after,
+3. And putting closing the list with an \`[/ol]\` or \`[/ul]\` at the end.
+
+
+To make the above example in Idyll (Indentation is optional):
+~~~shell
+An HTML-style list can be made by:
+[ol]
+  [li]Putting one of these tags at the front of the list:[/li]
+  [ul]
+    [li] \\\`[ol]\\\` to generate ordered lists, like the main one[/li]
+    [li] \\\`[ul]\\\` to generate unordered lists, like this sub-list[/li]
+    [li] (And to nest lists, just put a new list where a list item would go!) [/li]
+  [/ul]
+  [li]Putting the \\\`[li]\\\` tag before each list item and the \\\`[/li]\\\` tag after[/li]
+  [li]And putting closing the list with an \\\`[/ol]\\\` (or \\\`[/ul]\\\`) at the end.[/li]
+[/ol]
+~~~
 
 ### Other Formatting
 
@@ -148,6 +192,7 @@ Make horizontal lines with \`[hr /]\`.
 
 ---
 
+Both of these tags have a \`/\` at the end of them, indicating that they do not need a closing tag &mdash; just write \`[br /]\`, not \`[br /][/br]\`!
 `;
 
 export default ({ url }) => (
