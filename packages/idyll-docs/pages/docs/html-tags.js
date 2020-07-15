@@ -105,7 +105,10 @@ which comes after the \`[Header /]\` and before the page's contents.
 Where the use of inline styles in Idyll differs from HTML, 
 the syntax for defining classes is the same as it is in CSS.
 
-Define as follows:
+Define a class by preceding its name with a period, 
+listing property-value pairs in curly braces,
+assigning properties with a colon,
+and delimiting property-value pairs with a semicolon:
 
 ~~~shell
 .myclass {
@@ -192,7 +195,7 @@ To <u>underline</u> text, use the \`[u]\` tag.
 
 Use \`[sup]\` to create <sup>superscripts</sup> and \`[sub]\` to create <sub>subscripts</sub>.
 
-Use \`[del]\` to <del>strikethrough</del>.
+The \`[del]\` tag can be used to <del>strikethrough</del>.
 
 #### <a name="Lists">Lists</a>
 
@@ -203,8 +206,8 @@ An HTML-style list can be made by:
 1. Putting one of these tags at the front of the list:
     * \`[ol]\` to generate ordered lists, like the main one
     * \`[ul]\` to generate unordered lists, like this sub-list
-    * (And to nest lists, just put a new list where a list item would go!)
-2. Putting the \`[li]\` tag before each list item and the \`[/li]\` tag after,
+    * (To nest lists, just put a new list where a list item would go!)
+2. Putting the \`[li]\` tag before each list item (and \`[/li]\` after)
 3. And putting closing the list with an \`[/ol]\` or \`[/ul]\` at the end.
 
 
@@ -214,12 +217,12 @@ An HTML-style list can be made by:
 [ol]
   [li]Putting one of these tags at the front of the list:[/li]
   [ul]
-    [li] \\\`[ol]\\\` to generate ordered lists, like the main one[/li]
-    [li] \\\`[ul]\\\` to generate unordered lists, like this sub-list[/li]
-    [li] (And to nest lists, just put a new list where a list item would go!) [/li]
+    [li] \\\`[ol]\\\` to generate ordered lists, like the main one [/li]
+    [li] \\\`[ul]\\\` to generate unordered lists, like this sub-list [/li]
+    [li] (To nest lists, just put a new list where a list item would go!) [/li]
   [/ul]
-  [li]Putting the \\\`[li]\\\` tag before each list item and the \\\`[/li]\\\` tag after[/li]
-  [li]And putting closing the list with an \\\`[/ol]\\\` (or \\\`[/ul]\\\`) at the end.[/li]
+  [li]Putting the \\\`[li]\\\` tag before each list item (and \\\`[/li]\\\` after) [/li]
+  [li]And putting closing the list with an \\\`[/ol]\\\` (or \\\`[/ul]\\\`) at the end. [/li]
 [/ol]
 ~~~
 
