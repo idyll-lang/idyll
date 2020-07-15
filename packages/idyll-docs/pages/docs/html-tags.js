@@ -7,36 +7,65 @@ const Content = () => markdown`
 
 Idyll supports a variety of HTML tags, although the syntax for using these tags in Idyll differs a bit from plain HTML.
 
-## General Syntax Changes
+#### Contents
+* [General Syntax Changes](#General)
+  * [Tag Syntax](#Tags)
+    * [Singular Tags](#Singular)
+  * [Attribute Assignment](#Attributes)
+    * [Hyphenated Attributes & Properties](#Hyphenated)  
+    * [Attributes Allowing Multiple Properties](#Multiple)
+    * [Calling Classes](#Calling)
+* [Creating and Calling Classes](#Classes)
+  * [Where to Define Classes](#Where)
+  * [CSS Syntax](#CSS)
+    * [Useful Properties](#Properties)
+* [Inline Styles](#Inline)
+* [Other Tags](#Other)
+  * [Text Formatting](#Text)
+  * [Lists](#Lists)
+  * [Other Formatting](#Misc)
 
-For those familiar with HTML, below is a summary of changes in syntax for HTML tags.
+## <a name="General">General Syntax Changes</a>
+
+For those familiar with HTML, below is a summary of changes from normal HTML syntax.
+
+### <a name="Tags">Tag Syntax</a>
 
 Enclose tags in square brackets instead of angular ones:
 
 \`\`\`
-[i]This text will be italicized using html italicization.[/i]
+[i]This text will be italicized using HTML italicization.[/i]
 \`\`\`
 
-*This text will be italicized using html italicization.*
+Renders: *This text will be italicized using HTML italicization.*
+
+#### <a name="Singular">Singular Tags</a>
 
 If you are using a tag that does not have separate opening and a closing tags &mdash; 
 for instance, the \`\<br\>\` tag to force a line break &mdash; 
-put a slash to the end, as in \`\[br /\]\`.
+put a slash at the end, as in \`\[br /\]\`.
 
-Replace any \`=\` you might find in an HTML tag with a \`:\`, as below:
+### <a name="Attributes">Attribute Assignment</a>
+
+Replace any \`=\` you might normally use when assigning attributes with a \`:\`, as below:
 
 \`\`\`
 [a href:'http://google.com']Google[/a]
 \`\`\`
-<a href='http://google.com'>Google</a>
+Renders: <a href='http://google.com'>Google</a>
 
-Attributes which allow multiple properties have multiple differences. 
-First, surround the list of properties with backticks, then within that list them inside curly braces.
-Separate properties with commas instead of semicolons,
-and pass in all values as strings (with single or double quotes).
-Any argument that would be hyphenated in html &mdash;
+#### <a name="Hyphenated">Hyphenated Attributes & Properties</a>
+
+Any attribute or property that would be hyphenated in HTML &mdash;
 \`background-color\`, for example &mdash;
 now has the second word capitalized and the hyphen removed (\`backgroundColor\`).
+
+#### <a name="Multiple">Attributes Allowing Multiple Properties</a>
+
+Attributes which allow multiple properties have several differences. 
+First, instead of using "quotes," surround the list of properties with backticks, then, within that, list them inside curly braces.
+Separate properties with commas instead of semicolons,
+and pass in all individual values as strings (with single or double quotes).
 
 For instance, use:
 
@@ -48,9 +77,15 @@ to generate a div with a green background and 20 pixels of padding on each side:
 
 <div style={{backgroundColor:'green',padding:'20px'}}>Some text</div>
 
-If calling a class in, for example, a div, Idyll prefers calling a \`className\` over simply using \`class\`.
+#### <a name="Calling">Calling Classes</a>
 
-## Creating and Calling Classes
+If calling a class in, for example, a div, Idyll prefers calling a \`className\` over simply using \`class\`:
+
+~~~shell
+[p className:'myclass']Some other text[/p]
+~~~
+
+## <a name="Classes">Creating and Calling Classes</a>
 
 While Idyll supports inline styles, 
 it is often both easier to read and write the source for a page by defining a class. 
@@ -58,14 +93,14 @@ A class, in HTML or CSS,
 is essentially a collection of style attributes that will be used in multiple divs, spans, or paragraph blocks.
 The class is assigned a name so that it can easily be called multiple times.
 
-### Where to Define Classes
+### <a name="Where">Where to Define Classes</a>
 
 Idyll posts are pre-configured to read an editable \`styles.css\` file,
 and this file can be found in the top level of the idyll post (the same location as \`index.idyll\`).
 You can also use a style section, enclosed in the \`[style]...[/style]\` tags, 
 which comes after the \`[Header /]\` and before the page's contents.
 
-### CSS Syntax
+### <a name="CSS">CSS Syntax</a>
 
 Where the use of inline styles in Idyll differs from HTML, 
 the syntax for defining classes is the same as it is in CSS.
@@ -108,17 +143,22 @@ And you will see:
 
 This can be done with a paragraph (\`[p]\`) or span (\`[span]\`) as well, using the same method. 
 
-#### Useful Properties
+#### <a name="Properties">Useful Properties</a>
 
-* **\`color\`** - Sets the color of the text. Values can be a name (example: \`green\`) or a hex code (example: \`#00ff00\` or \`#0f0\`)
-* **\`background-color\`** - Sets the background color of the box. Values can be a name (example: \`black\`) or a hex code (example: \`#000000\` or \`#000\`).
-* **\`margin\`** - Sets a margin between the outside of the box and the other contents. Values can be a number of pixels (example: \`20px\`) or a percentage of the element (example: \`5%\`).
-    * Individual margins can be set using \`margin-top\`, \`margin-bottom\`, \`margin-right\`, and \`margin-left\`. Values function the same as they do for \`margin\`.
-* **\`padding\`** - Sets padding between the outside of the box and the box's contents. 
-* **\`font-size\`** - Sets the size of the font. Values can be in pixels (ex: \`14px\`), percentage of a parent element's size (example: \`150%\`), or size category (ex: \`xx-small\`).
-* **\`font-weight\`** - Sets the weight of the font. While you likely won't be using the values \`normal\` or \`bold\` often, because this can easily be handled through markdown syntax, values can be set to numbers, where the normal weight is 400 and the bold weight is 700.
+**\`color\`** - Sets the color of the text. Values can be a name (example: \`green\`) or a hex code (example: \`#00ff00\` or \`#0f0\`)
 
-## Inline Styles
+**\`background-color\`** - Sets the background color of the box. Values can be a name (example: \`black\`) or a hex code (example: \`#000000\` or \`#000\`).
+
+**\`margin\`** - Sets a margin between the outside of the box and the other contents. Values can be a number of pixels (example: \`20px\`) or a percentage of the element (example: \`5%\`).  
+Individual margins can be set using \`margin-top\`, \`margin-bottom\`, \`margin-right\`, and \`margin-left\`. These properties' values otherwise function the same as they do for \`margin\`.
+
+**\`padding\`** - Sets padding between the outside of the box and the box's contents. 
+
+**\`font-size\`** - Sets the size of the font. Values can be in pixels (ex: \`14px\`), percentage of a parent element's size (example: \`150%\`), or size category (ex: \`xx-small\`).
+
+**\`font-weight\`** - Sets the weight of the font. While you likely won't be using the values \`normal\` or \`bold\` often, because this can easily be handled through markdown syntax, values can be set to numbers, where the normal weight is 400 and the bold weight is 700.
+
+## <a name="Inline">Inline Styles</a>
 
 There may be cases where you only need to use a certain style once, 
 and it therefore ends up being easier to use that style "inline" in the tag itself without calling a style.
@@ -134,15 +174,15 @@ For example,
 [div style:\\\`{backgroundColor: 'green', padding: '20px'}\\\`]Some text[/div]
 \`\`\`
 
-The properties available are the same as those listed above for CSS, 
+The properties available are the same as those listed [above](#Properties) for CSS, 
 although any hyphenated properties have the hyphen removed and the second word capitalized
 (e.g. \`font-size\` becomes \`fontSize\` when used with inline styling).
 
-## Other Tags
+## <a name="Other">Other Tags</a>
 
 Below are some other tags that you may find useful.
 
-### Text Formatting
+### <a name="Text">Text Formatting</a>
 
 In the rare case that markdown's asterisks are proving difficult to use,
 the \`[i]\` tag can be used to <i>italicize</i> text
@@ -154,7 +194,7 @@ Use \`[sup]\` to create <sup>superscripts</sup> and \`[sub]\` to create <sub>sub
 
 Use \`[del]\` to <del>strikethrough</del>.
 
-#### Lists
+#### <a name="Lists">Lists</a>
 
 Currently, markdown syntax in Idyll does not support multiple levels of lists.
 HTML's list syntax, however, does allow sub-items in Idyll.
@@ -183,7 +223,7 @@ An HTML-style list can be made by:
 [/ol]
 ~~~
 
-### Other Formatting
+### <a name="Misc">Other Formatting</a>
 
 You can force a line  
 break with \`[br /]\`.
