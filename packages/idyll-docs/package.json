@@ -28,7 +28,7 @@
     "idyll-document": "^3.2.2",
     "isomorphic-fetch": "^2.2.1",
     "markdown-in-js": "^1.1.3",
-    "next": "^4.2.3",
+    "next": "^9.3.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-ga": "^2.4.1",
