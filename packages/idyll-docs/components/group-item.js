@@ -1,4 +1,4 @@
-import { Link } from '../routes';
+import Link from 'next/link';
 
 const imageUrl = url => (/^http/.test(url) ? url : `/static/images/${url}`);
 
@@ -15,28 +15,29 @@ function slugify(text) {
     .replace(/-+$/, ''); // Trim - from end of text
 }
 
-export default ({ href, label, subtitle, image, sourceUrl }) => (
-  <div className="example">
-    <div
-      className="example-image"
-      style={{ backgroundImage: `url(${imageUrl(image)})` }}
-    />
-    <div className="example-label">
-      {label}
-      {subtitle ? <div className="subtitle">{subtitle}</div> : null}
-    </div>
-    <div className="example-links">
-      <Link href={href}>
-        <a className="example-button">Open</a>
-      </Link>
-      {sourceUrl ? (
-        <Link href={sourceUrl}>
-          <a className="example-button">View Source</a>
+export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
+  return (
+    <div className="example">
+      <div
+        className="example-image"
+        style={{ backgroundImage: `url(${imageUrl(image)})` }}
+      />
+      <div className="example-label">
+        {label}
+        {subtitle ? <div className="subtitle">{subtitle}</div> : null}
+      </div>
+      <div className="example-links">
+        <Link href={href}>
+          <a className="example-button">Open</a>
         </Link>
-      ) : null}
-    </div>
+        {sourceUrl ? (
+          <Link href={sourceUrl}>
+            <a className="example-button">View Source</a>
+          </Link>
+        ) : null}
+      </div>
 
-    <style jsx>{`
+      <style jsx>{`
       .example {
         display: flex;
         flex-direction: column;
@@ -98,5 +99,6 @@ export default ({ href, label, subtitle, image, sourceUrl }) => (
         background-position: center;
       }
     `}</style>
-  </div>
-);
+    </div>
+  );
+}

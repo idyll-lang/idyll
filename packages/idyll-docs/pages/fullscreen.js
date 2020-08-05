@@ -6,7 +6,7 @@ import Fonts from '../components/fonts';
 import Head from 'next/head';
 import 'isomorphic-fetch';
 
-import { Router } from '../routes';
+import { Router } from 'next/router';
 import { logPageView, initGA } from '../components/analytics';
 
 const API_URL = 'https://idyll-docs-wwijepjavd.now.sh';
@@ -43,7 +43,7 @@ class EditorPage extends React.PureComponent {
   }
 
   handleEdit = () => {
-    Router.pushRoute('editor', { uuid: this.props.uuid });
+    Router.push(`/editor/${this.props.uuid}`);
   };
 
   render() {

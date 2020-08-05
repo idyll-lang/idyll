@@ -60,9 +60,10 @@ const Examples = () => (
       </p>
     </div>
 
-    {examples.map(eg => (
-      <GalleryGroup {...eg} key={eg.title} />
-    ))}
+    {examples.map(eg => {
+      console.log(eg);
+      return <GalleryGroup items={eg.items} title={eg.title} key={eg.title} />;
+    })}
 
     <style jsx>{`
       .feature {
