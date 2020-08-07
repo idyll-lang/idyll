@@ -327,7 +327,7 @@ const components = [
         {
           Meta: {
             thumbnail: 'meta.png',
-            component: COMPONENTS.Meta,
+            component: null,
             description:
               'The meta component adds context to the page template when building your app for publication. The following variables are available and will be inserted as `<meta>` properties into the head of your HTML page if you define them:',
             liveExample: false,
