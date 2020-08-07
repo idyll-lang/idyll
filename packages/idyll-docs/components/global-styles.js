@@ -59,7 +59,7 @@ export default () => (
     code:before,
     code:after {
       letter-spacing: -0.2em;
-      content: '\00a0';
+      content: '\\00a0';
     }
 
     Highlight,
