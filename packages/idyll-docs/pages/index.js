@@ -290,10 +290,6 @@ The value of x is [Display value:x format:"d" /].
           }
 
           html {
-            opacity: 0;
-            transition: opacity 0.25s ease-in;
-          }
-          html.loaded {
             opacity: 1;
           }
 

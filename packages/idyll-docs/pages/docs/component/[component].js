@@ -122,9 +122,8 @@ class IdyllComponentPage extends React.PureComponent {
 
   render() {
     const { slug } = this.props;
-    const comp = indexedComponents[slug];
+    const comp = indexedComponents[slug] || { name: '' };
 
-    console.log(slug, comp);
     return (
       <Layout
         url={`/docs/componts/${slug}`}
@@ -163,12 +162,9 @@ class IdyllComponentPage extends React.PureComponent {
   }
 }
 
-const Component = () => {
+const Component = props => {
   const router = useRouter();
   const { component } = router.query;
-
-  console.log(router);
-  console.log();
 
   return <IdyllComponentPage slug={component} />;
 };

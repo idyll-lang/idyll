@@ -1,7 +1,7 @@
 const importString =
   "@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i');";
 
-export default () => (
+const GlobalStyles = () => (
   <style jsx global>{`
     ${importString}
 
@@ -9,14 +9,6 @@ export default () => (
     body {
       margin: 0;
       padding: 0;
-    }
-
-    html {
-      opacity: 0;
-      transition: opacity 0.25s ease-in;
-    }
-    html.loaded {
-      opacity: 1;
     }
 
     body {
@@ -108,3 +100,5 @@ export default () => (
     }
   `}</style>
 );
+
+export default GlobalStyles;
