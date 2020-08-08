@@ -27,13 +27,13 @@ export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
         {subtitle ? <div className="subtitle">{subtitle}</div> : null}
       </div>
       <div className="example-links">
-        <Link href={href}>
-          <a className="example-button">Open</a>
-        </Link>
+        <a href={href} className="example-button">
+          Open
+        </a>
         {sourceUrl ? (
-          <Link href={sourceUrl}>
-            <a className="example-button">View Source</a>
-          </Link>
+          <a href={sourceUrl} className="example-button">
+            View Source
+          </a>
         ) : null}
       </div>
 

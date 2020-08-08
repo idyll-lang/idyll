@@ -1,9 +1,7 @@
 import Link from 'next/link';
-
 import IdyllDocument from 'idyll-document';
-const Display = require('idyll-components/dist/cjs/display');
-const TextContainer = require('idyll-components/dist/cjs/text-container');
-const Range = require('idyll-components/dist/cjs/range');
+
+import { Display, Range, TextContainer } from 'idyll-components';
 import Head from 'next/head';
 import Fonts from '../components/fonts';
 import { logPageView, initGA } from '../components/analytics';

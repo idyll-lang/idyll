@@ -1,10 +1,11 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import markdown from 'markdown-in-js';
-import Layout from '../../components/layout';
-import { indexedComponents } from '../../idyll-components/contents';
+import Layout from '../../../components/layout';
+import { indexedComponents } from '../../../idyll-components/contents';
 import showdown from 'showdown';
 import Parser from 'html-react-parser';
-import * as Examples from '../../idyll-components/examples';
+import * as Examples from '../../../idyll-components/examples';
 import * as IdyllComponents from 'idyll-components';
 import IdyllDocument from 'idyll-document';
 
@@ -113,24 +114,20 @@ class IdyllComponentDoc extends React.Component {
   }
 }
 
-export default class IdyllComponentPage extends React.PureComponent {
-  // getInitialProps({query}) {
-  //   return {
-  //     slug: query.slug
-  //   }
-  // }
-
+class IdyllComponentPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const { url } = this.props;
-    const comp = indexedComponents[url.query.slug];
+    const { slug } = this.props;
+    const comp = indexedComponents[slug];
+
+    console.log(slug, comp);
     return (
       <Layout
-        url={url}
+        url={`/docs/componts/${slug}`}
         title={`Idyll Documentation | Component - ${comp.name}`}
       >
         <div>
@@ -165,3 +162,15 @@ export default class IdyllComponentPage extends React.PureComponent {
     );
   }
 }
+
+const Component = () => {
+  const router = useRouter();
+  const { component } = router.query;
+
+  console.log(router);
+  console.log();
+
+  return <IdyllComponentPage slug={component} />;
+};
+
+export default Component;
