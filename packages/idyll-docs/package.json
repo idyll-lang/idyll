@@ -14,7 +14,7 @@
     "dev": "AWS_PROFILE=idyll BABEL_DISABLE_CACHE=1 next dev",
     "build": "next build",
     "export": "next export -o dist",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production next"
   },
   "dependencies": {
     "cords": "^1.0.4",
@@ -28,7 +28,7 @@
     "idyll-document": "^3.2.2",
     "isomorphic-fetch": "^2.2.1",
     "markdown-in-js": "^1.1.3",
-    "next": "^4.2.3",
+    "next": "^9.5.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-ga": "^2.4.1",

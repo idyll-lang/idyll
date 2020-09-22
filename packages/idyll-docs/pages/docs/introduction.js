@@ -166,7 +166,7 @@ Idyll is supported by the Interactive Data Lab at the University of Washington, 
 
 `;
 
-export default ({ url }) => (
+const Introduction = ({ url }) => (
   <Layout url={url} title={'Idyll Documentation | An overview.'}>
     <IdyllDocument
       layout="centered"
@@ -226,3 +226,5 @@ export default ({ url }) => (
     `}</style>
   </Layout>
 );
+
+export default Introduction;

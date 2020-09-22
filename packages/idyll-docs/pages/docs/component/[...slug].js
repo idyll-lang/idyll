@@ -115,58 +115,71 @@ class IdyllComponentDoc extends React.Component {
 }
 
 class IdyllComponentPage extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  render() {}
+}
 
-  render() {
-    const { slug } = this.props;
-    const comp = indexedComponents[slug] || { name: '' };
+export async function getStaticPaths() {
+  const _components = Object.keys(indexedComponents);
 
-    return (
-      <Layout
-        url={`/docs/componts/${slug}`}
-        title={`Idyll Documentation | Component - ${comp.name}`}
-      >
-        <div>
-          <Link href={'/docs/components'}>
-            <a>← Back</a>
-          </Link>
-          <IdyllComponentDoc component={comp} />
-        </div>
-        <style jsx global>{`
-          ul {
-            list-style-type: none;
-          }
-          .idyll-prop {
-            margin-bottom: 1em;
-            padding: 1em;
-            overflow-x: auto;
-            background: #efefef;
-          }
-          .idyll-prop ul li {
-            margin-top: 1em;
-          }
+  const paths = _components.map(k => {
+    return {
+      params: { slug: [k] }
+    };
+  });
 
-          .idyll-prop code {
-            border: solid 1px #222;
-            border-radius: 5px;
-            margin: 0 5px;
-            background: #fff;
-            white-space: nowrap;
-          }
-        `}</style>
-      </Layout>
-    );
-  }
+  // fallback: false means pages that don’t have the
+  // correct id will 404.
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  // params contains the post `id`.
+  // If the route is like /posts/1, then params.id is 1
+
+  // Pass post data to the page via props
+  return { props: { slug: params.slug } };
 }
 
 const Component = props => {
   const router = useRouter();
-  const { component } = router.query;
+  const { slug } = router.query;
+  const comp = indexedComponents[slug] || { name: '' };
 
-  return <IdyllComponentPage slug={component} />;
+  return (
+    <Layout
+      url={`/docs/components/${slug}`}
+      title={`Idyll Documentation | Component - ${comp.name}`}
+    >
+      <div>
+        <Link href={'/docs/components'}>
+          <a>← Back</a>
+        </Link>
+        <IdyllComponentDoc component={comp} />
+      </div>
+      <style jsx global>{`
+        ul {
+          list-style-type: none;
+        }
+        .idyll-prop {
+          margin-bottom: 1em;
+          padding: 1em;
+          overflow-x: auto;
+          background: #efefef;
+        }
+        .idyll-prop ul li {
+          margin-top: 1em;
+        }
+
+        .idyll-prop code {
+          border: solid 1px #222;
+          border-radius: 5px;
+          margin: 0 5px;
+          background: #fff;
+          white-space: nowrap;
+        }
+      `}</style>
+    </Layout>
+  );
 };
 
 export default Component;
