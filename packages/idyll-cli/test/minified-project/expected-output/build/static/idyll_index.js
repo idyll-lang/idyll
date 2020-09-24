@@ -4178,7 +4178,7 @@ function runTimeout(fun) {
         return setTimeout(fun, 0);
     }
     try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
+        // when when somebody has screwed with setTimeout but no I.E. madness
         return cachedSetTimeout(fun, 0);
     } catch(e){
         try {
@@ -4203,7 +4203,7 @@ function runClearTimeout(marker) {
         return clearTimeout(marker);
     }
     try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
+        // when when somebody has screwed with setTimeout but no I.E. madness
         return cachedClearTimeout(marker);
     } catch (e){
         try {
