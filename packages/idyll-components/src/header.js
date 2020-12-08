@@ -32,11 +32,17 @@ const ByLineMultipleAuthors = ({ authors, prefix, joint, suffix }) => (
 
 class Header extends React.PureComponent {
   render() {
-    const { background, color, byLineTemplate } = this.props;
+    const { background, color, byLineTemplate, idyll } = this.props;
     const { joint, prefix, suffix } = { ...byLineDefault, ...byLineTemplate };
 
     return (
-      <div className={'article-header'} style={{ background, color }}>
+      <div
+        className={'article-header'}
+        style={{
+          background: background || idyll.theme.headerBackground,
+          color: background || idyll.theme.headerColor
+        }}
+      >
         <h1 className={'hed'}>{this.props.title}</h1>
         {this.props.subtitle && (
           <h2 className={'dek'}>{this.props.subtitle}</h2>
@@ -104,7 +110,6 @@ Header._idyll = {
       name: 'background',
       type: 'string',
       example: '"blue"',
-      defaultValue: '"#222"',
       description: 'The background of the header. Can pass a color or a url().'
     },
     {
@@ -117,7 +122,6 @@ Header._idyll = {
       name: 'color',
       type: 'string',
       example: '"#000"',
-      defaultValue: '"#fff"',
       description: 'The text color of the header.'
     }
   ]
