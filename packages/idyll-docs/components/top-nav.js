@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-export default ({ selected }) => {
+
+const TopNav = ({ selected }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     document.addEventListener('mousedown', handleClick);
@@ -161,3 +162,5 @@ export default ({ selected }) => {
     </header>
   );
 };
+
+export default TopNav;

@@ -48,10 +48,8 @@ const GlobalStyles = () => (
       border-radius: 3px;
     }
 
-    code:before,
-    code:after {
-      letter-spacing: -0.2em;
-      content: '\\00a0';
+    code {
+      padding: 0.25em 0.5em;
     }
 
     Highlight,
