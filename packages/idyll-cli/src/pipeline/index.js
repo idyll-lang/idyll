@@ -6,6 +6,7 @@ const compile = require('idyll-compiler');
 const Terser = require('terser');
 const { paramCase } = require('change-case');
 const debug = require('debug')('idyll:cli');
+const { ComponentResolver } = require('../resolvers');
 
 const {
   getComponentNodes,
@@ -40,6 +41,7 @@ const build = (opts, paths, resolvers) => {
         const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
         /* Change here */
+        resolvers.set('components', new ComponentResolver(opts, paths));
 
         let nameArray = [];
         getComponentNodes(ast).forEach(node => {

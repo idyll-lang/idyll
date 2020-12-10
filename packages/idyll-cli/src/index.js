@@ -155,16 +155,18 @@ const idyll = (options = {}, cb) => {
 
             // Each resolver is responsible for generating a list of directories to watch for
             // their corresponding data types.
-            resolvers.forEach((resolver, name) => {
-              let watcher = bs.watch(
-                resolver.getDirectories(),
-                { ignoreInitial: true },
-                () => {
-                  inst.build();
-                }
-              );
-              watchers.push(watcher);
-            });
+            if (!opts.compiler.postProcessors) {
+              resolvers.forEach((resolver, name) => {
+                let watcher = bs.watch(
+                  resolver.getDirectories(),
+                  { ignoreInitial: true },
+                  () => {
+                    inst.build();
+                  }
+                );
+                watchers.push(watcher);
+              });
+            }
 
             bs.init({
               cors: true,
