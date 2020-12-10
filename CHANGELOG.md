@@ -1,3 +1,16 @@
+## v5.0
+
+Features:
+- Adds `fullWidthSteps` option to the scroller, to make it easier for scroller components steps to take on wider designs
+
+Bugfixes:
+-  Component resolver is initialized at the start of compile process and when a compiler postprocessor plugin creates a new component in components directory, it won't be available till the next build and the current build fails with component not found error. (See: https://github.com/idyll-lang/idyll/pull/610)
+
+Breaking changes:
+
+- Update header component default behavior to use styles (background color and text color) provided by themes
+- Fix the `package.json` options logic so any idyll option can be provided via package.json and 
+
 ## v4.10
 
 - Add `progress` parameter to the scroller component to make continuos scroll-based animations. ([#601](https://github.com/idyll-lang/idyll/pull/601))
