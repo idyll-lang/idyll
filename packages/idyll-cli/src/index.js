@@ -16,6 +16,26 @@ function createDirectories(paths) {
   mkdirp.sync(paths.TMP_DIR);
 }
 
+const searchParentDirectories = packageDir => {
+  while (true) {
+    if (packageDir === join(packageDir, '..')) {
+      break;
+    }
+
+    packageDir = join(packageDir, '..');
+    const parentPackageFilePath = join(packageDir, 'package.json');
+
+    const parentPackageFile = fs.existsSync(parentPackageFilePath)
+      ? require(parentPackageFilePath)
+      : {};
+
+    if (parentPackageFile.idyll) {
+      return parentPackageFile.idyll;
+    }
+  }
+  return {};
+};
+
 const idyll = (options = {}, cb) => {
   const opts = Object.assign(
     {},
@@ -55,13 +75,8 @@ const idyll = (options = {}, cb) => {
     : {};
   const inputConfig = inputPackage.idyll || {};
 
-  // Handle options that can be provided via options or via package.json
-  opts.alias = options.alias || inputConfig.alias || opts.alias;
-  opts.transform = options.transform || inputConfig.transform || opts.transform;
-  opts.compiler = options.compiler || inputConfig.compiler || opts.compiler;
-  opts.context = options.context || inputConfig.context || opts.context;
-  opts.compileLibs =
-    options.compileLibs || inputConfig.compileLibs || opts.compileLibs;
+  const parentInputConfig = searchParentDirectories(paths.INPUT_DIR);
+  Object.assign(opts, parentInputConfig, inputConfig, options);
 
   // Resolve compiler plugins:
   if (opts.compiler.postProcessors) {
