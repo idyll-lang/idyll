@@ -1,0 +1,56 @@
+{
+  "width": 800,
+  "height": 400,
+  "encoding": {
+    "x": { "field": "date", "type": "temporal" }
+  },
+  "layer": [
+    {
+      "mark": "line",
+      "encoding": {
+        "y": { "field": "price", "type": "quantitative" },
+        "color": { "field": "symbol", "type": "nominal" }
+      }
+    },
+    {
+      "selection": {
+        "index": {
+          "type": "single",
+          "on": "mousemove",
+          "encodings": ["x"],
+          "nearest": true
+        }
+      },
+      "mark": { "type": "point" },
+      "encoding": {
+        "y": { "field": "price", "type": "quantitative" },
+        "opacity": { "value": 0 }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "and": ["index.date", { "selection": "index" }]
+          }
+        }
+      ],
+      "mark": "rule"
+    },
+    {
+      "transform": [
+        {
+          "filter": {
+            "and": ["index.date", { "selection": "index" }]
+          }
+        }
+      ],
+      "mark": "text",
+      "encoding": {
+        "y": { "value": 10 },
+        "text": { "field": "date", "type": "temporal" }
+      }
+    }
+  ],
+  "config": { "text": { "align": "right", "dx": -5, "dy": 5 } }
+}

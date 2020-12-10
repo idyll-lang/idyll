@@ -18,8 +18,8 @@ class TableComponent extends React.PureComponent {
 
       return this.props.columns;
     }
-    if ((this.props.data || []).length) {
-      return Object.keys(this.props.data[0])
+    if ((this.props.value || this.props.data || []).length) {
+      return Object.keys((this.props.value || this.props.data)[0])
         .filter(d => d !== '')
         .map(d => {
           return {
@@ -65,10 +65,10 @@ TableComponent._idyll = {
   tagType: 'closed',
   props: [
     {
-      name: 'data',
+      name: 'value',
       type: 'array',
       description:
-        'The data to be shown in a table. Should be an array of object.',
+        'The data to be shown in a table. Should be an array of objects. Alias: data',
       example: '`[{name: "A", value: 0}, {name: "B", value: 5}]`'
     },
     {

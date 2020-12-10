@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from '../../routes';
+import Link from 'next/link';
 import showdown from 'showdown';
 import Parser from 'html-react-parser';
 import Layout from '../../components/layout';
@@ -97,7 +97,7 @@ class IdyllComponentInfo extends BaseSection {
 
   renderContents() {
     return (
-      <Link route="component" params={{ slug: this.slug }}>
+      <Link href={`/docs/component/${this.slug}`}>
         <a style={{ display: 'block', width: 140, margin: 20 }}>
           <img
             style={{ display: 'block', width: '100%' }}
@@ -177,7 +177,7 @@ class IdyllComponentSection extends React.Component {
 
 const groups = Contents.map(groupObj => new IdyllComponentGroup(groupObj));
 
-export default ({ url }) => (
+const ComponentsPage = ({ url }) => (
   <Layout url={url} title={'Idyll Documentation | Standard Component Library'}>
     <h1>Built-In Components</h1>
     <p>
@@ -207,3 +207,5 @@ export default ({ url }) => (
     </p>
   </Layout>
 );
+
+export default ComponentsPage;

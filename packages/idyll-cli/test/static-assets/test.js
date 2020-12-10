@@ -88,6 +88,7 @@ test('options work as expected', () => {
     layout: 'centered',
     theme: join(PROJECT_DIR, 'custom-theme.css'),
     context: undefined,
+    compileLibs: false,
     minify: false,
     ssr: true,
     watch: true,

@@ -5,8 +5,10 @@ const Contents = [
       { title: 'Introduction', route: '/docs' },
       { title: 'Getting started', route: '/docs/getting-started' },
       { title: 'Markup syntax', route: '/docs/syntax' },
+      { title: 'HTML tags', route: '/docs/html-tags'},
       { title: 'Options and styles', route: '/docs/configuration-and-styles' },
-      { title: 'Plugin System', route: '/docs/plugin-system' }
+      { title: 'Plugin system', route: '/docs/plugin-system' },
+      { title: 'Multipage template', route: '/docs/multipage' }
     ]
   },
   {

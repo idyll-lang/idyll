@@ -1,42 +1,70 @@
 import React from 'react';
 
+const byLineDefault = { prefix: 'By:', joint: ',', suffix: 'and' };
+
+const additionalTextByIndex = (authors, suffix, joint, index) => {
+  const map = { [authors.length - 1]: '', [authors.length - 2]: ` ${suffix} ` };
+
+  return index in map ? map[index] : `${joint} `;
+};
+
+const AuthorLink = ({ name, link }) => <a href={link}>{name}</a>;
+
+const ByLineMultipleAuthors = ({ authors, prefix, joint, suffix }) => (
+  <div className={'byline'}>
+    {`${prefix} `}
+    {authors.map((author, i) => {
+      const authorDisplay = typeof author === 'string' ? author : author.name;
+
+      return (
+        <span key={authorDisplay}>
+          {typeof author.link === 'string' ? (
+            <AuthorLink {...author} />
+          ) : (
+            authorDisplay
+          )}
+          {additionalTextByIndex(authors, suffix, joint, i)}
+        </span>
+      );
+    })}
+  </div>
+);
+
 class Header extends React.PureComponent {
   render() {
-    const { background, color } = this.props;
+    const { background, color, byLineTemplate, idyll } = this.props;
+    const { joint, prefix, suffix } = { ...byLineDefault, ...byLineTemplate };
+
     return (
-      <div className={'article-header'} style={{ background, color }}>
+      <div
+        className={'article-header'}
+        style={{
+          background:
+            background ||
+            (idyll && idyll.theme ? idyll.theme.headerBackground : undefined),
+          color:
+            color ||
+            (idyll && idyll.theme ? idyll.theme.headerColor : undefined)
+        }}
+      >
         <h1 className={'hed'}>{this.props.title}</h1>
         {this.props.subtitle && (
           <h2 className={'dek'}>{this.props.subtitle}</h2>
         )}
         {this.props.author && (
           <div className={'byline'}>
-            By: <a href={this.props.authorLink}>{this.props.author}</a>
+            {`${prefix.trim()} `}
+            <a href={this.props.authorLink}>{this.props.author}</a>
           </div>
         )}
-        {this.props.authors ? (
-          <div className={'byline'}>
-            By:{' '}
-            {this.props.authors.map((author, i) => {
-              if (typeof author === 'string') {
-                return author;
-              }
-              return author.link ? (
-                <span key={author.name}>
-                  <a href={author.link}>{author.name}</a>
-                  {i < this.props.authors.length - 1
-                    ? i === this.props.authors.length - 2
-                      ? ' and '
-                      : ', '
-                    : ''}
-                </span>
-              ) : (
-                author.name
-              );
-            })}
-            {}
-          </div>
-        ) : null}
+        {!!this.props.authors && (
+          <ByLineMultipleAuthors
+            authors={this.props.authors}
+            prefix={prefix.trim()}
+            joint={joint.trim()}
+            suffix={suffix.trim()}
+          />
+        )}
         {this.props.date && (
           <div className={'idyll-pub-date'}>{this.props.date}</div>
         )}
@@ -86,14 +114,18 @@ Header._idyll = {
       name: 'background',
       type: 'string',
       example: '"blue"',
-      defaultValue: '"#222"',
       description: 'The background of the header. Can pass a color or a url().'
+    },
+    {
+      name: 'byLineTemplate',
+      type: 'object',
+      example: "{ prefix: 'Made by', joint: ' ', suffix: '&' }",
+      description: 'Optional template to use in by line.'
     },
     {
       name: 'color',
       type: 'string',
       example: '"#000"',
-      defaultValue: '"#fff"',
       description: 'The text color of the header.'
     }
   ]

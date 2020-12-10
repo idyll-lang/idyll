@@ -31,17 +31,17 @@ Configuration can be done via the `idyll` field in `package.json`.
   [/Graphic]
 
   [Step]
-  
+
     ## Markup
 
     Idyll is based on Markdown.
 
     You can use familiar syntax
-    to create **bold** (`**bold**` ) and *italic* (``*italic*` ) styles,
+    to create **bold** (`**bold**` ) and *italic* (`*italic*` ) styles,
 
-    * lists
-    * of
-    * items,
+* lists
+* of
+* items,
 
     ```
     * lists
@@ -49,9 +49,9 @@ Configuration can be done via the `idyll` field in `package.json`.
     * items,
     ```
 
-    1. and numbered
-    2. lists
-    3. of items,
+1. and numbered
+2. lists
+3. of items,
 
 
     ```
@@ -96,7 +96,7 @@ Configuration can be done via the `idyll` field in `package.json`.
     A variety of components are included by default. See [all the available components](https://idyll-lang.org/docs/components/). You can also use any html tag, for example: `[div] A div! [/div]`.
 
     To create your own, add it to the `components/` folder. There are examples of how to use Idyll with React and D3 based components already included.
-  
+
   [/Step]
 
   [Step]
@@ -124,8 +124,8 @@ Configuration can be done via the `idyll` field in `package.json`.
   [Step]
 
     ##Scroller
-    
-    The `Scroller` component is used to create scroll-based presentations. It can be used to create scrollytelling articles similar to this. 
+
+    The `Scroller` component is used to create scroll-based presentations. It can be used to create scrollytelling articles similar to this.
     It takes a property `currentStep` which is updated when the user scrolls to a different step.
 
     A persistent graphic may also provided using the `Graphic` component in order to create visualizations.
@@ -136,10 +136,10 @@ Configuration can be done via the `idyll` field in `package.json`.
 
     ## Learn More
 
-    To learn more see the documentation at https://idyll-lang.org/docs/,
+    To learn more see the documentation at [https://idyll-lang.org/docs/](https://idyll-lang.org/docs/),
     join our [chatroom](https://gitter.im/idyll-lang/Lobby), or see the project on [GitHub](https://github.com/idyll-lang/idyll).
   [hr /]
-    
+
   [/Step]
 
 [/Scroller]

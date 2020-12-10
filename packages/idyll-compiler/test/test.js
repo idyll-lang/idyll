@@ -243,6 +243,19 @@ describe('compiler', function() {
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
+    it("symbols or numbers at end of paragraph doesn't remove paragraph break", function() {
+      const input = `
+        Idyll is based on Markdown!
+
+        Idyll posts are designed to support interaction and
+        data-driven graphics.
+      `;
+      const lex = Lexer();
+      const results = lex(input);
+      expect(results.tokens.join(' ')).to.eql(
+        'WORDS TOKEN_VALUE_START "Idyll is based on Markdown" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "!" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "Idyll posts are designed to support interaction and\n        data-driven graphics." TOKEN_VALUE_END EOF'
+      );
+    });
   });
 
   describe('parser', function() {

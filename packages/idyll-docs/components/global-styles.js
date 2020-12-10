@@ -1,19 +1,14 @@
-export default () => (
+const importString =
+  "@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i');";
+
+const GlobalStyles = () => (
   <style jsx global>{`
-    @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i');
+    ${importString}
 
     html,
     body {
       margin: 0;
       padding: 0;
-    }
-
-    html {
-      opacity: 0;
-      transition: opacity 0.25s ease-in;
-    }
-    html.loaded {
-      opacity: 1;
     }
 
     body {
@@ -53,10 +48,8 @@ export default () => (
       border-radius: 3px;
     }
 
-    code:before,
-    code:after {
-      letter-spacing: -0.2em;
-      content: '\00a0';
+    code {
+      padding: 0.25em 0.5em;
     }
 
     Highlight,
@@ -105,3 +98,5 @@ export default () => (
     }
   `}</style>
 );
+
+export default GlobalStyles;

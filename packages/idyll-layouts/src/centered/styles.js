@@ -45,6 +45,7 @@ input {
 .idyll-scroll-graphic {
   position: -webkit-sticky;
   position: sticky;
+  overflow: hidden;
 }
 
 .idyll-scroll-graphic img {

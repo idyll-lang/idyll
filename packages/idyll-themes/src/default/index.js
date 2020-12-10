@@ -1,6 +1,9 @@
 import createStyles from './styles';
 
-const config = {};
+const config = {
+  headerColor: '#ffffff',
+  headerBackground: '#222222'
+};
 
 export default {
   ...config,

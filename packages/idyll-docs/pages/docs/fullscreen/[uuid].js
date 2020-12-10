@@ -1,13 +1,13 @@
 import React from 'react';
-import LiveIdyllEditor from '../components/editor';
-import exampleMarkup from '../components/editor/initial';
-import TopNav from '../components/top-nav';
-import Fonts from '../components/fonts';
+import LiveIdyllEditor from '../../../components/editor';
+import exampleMarkup from '../../../components/editor/initial';
+import TopNav from '../../../components/top-nav';
+import Fonts from '../../../components/fonts';
 import Head from 'next/head';
 import 'isomorphic-fetch';
 
-import { Router } from '../routes';
-import { logPageView, initGA } from '../components/analytics';
+import { Router } from 'next/router';
+import { logPageView, initGA } from '../../../components/analytics';
 
 const API_URL = 'https://idyll-docs-wwijepjavd.now.sh';
 
@@ -17,20 +17,6 @@ class EditorPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  static async getInitialProps({ req, query }) {
-    if (query && query.uuid) {
-      try {
-        const res = await fetch(`${API_URL}/api/editor/${query.uuid}`);
-        const json = await res.json();
-        return { initialMarkup: json.markup, uuid: query.uuid };
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    return { initialMarkup: exampleMarkup };
   }
 
   componentDidMount() {
@@ -43,7 +29,7 @@ class EditorPage extends React.PureComponent {
   }
 
   handleEdit = () => {
-    Router.pushRoute('editor', { uuid: this.props.uuid });
+    Router.push(`/editor/${this.props.uuid}`);
   };
 
   render() {
@@ -121,4 +107,23 @@ class EditorPage extends React.PureComponent {
   }
 }
 
-export default EditorPage;
+const Component = async props => {
+  const router = useRouter();
+  let passProps = { uuid: '', initialMarkup: '' };
+
+  if (router.query && router.query.uuid) {
+    const { uuid } = router.query;
+    try {
+      const res = await fetch(`${API_URL}/api/editor/${params.uuid}`);
+      const json = await res.json();
+      const passProps = { uuid: uuid, initialMarkup: json.markup };
+      return <EditorPage {...passProps} />;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  return <EditorPage {...passProps} />;
+};
+
+export default Component;

@@ -1,9 +1,7 @@
 import Link from 'next/link';
-
 import IdyllDocument from 'idyll-document';
-const Display = require('idyll-components/dist/cjs/display');
-const TextContainer = require('idyll-components/dist/cjs/text-container');
-const Range = require('idyll-components/dist/cjs/range');
+
+import { Display, Range, TextContainer } from 'idyll-components';
 import Head from 'next/head';
 import Fonts from '../components/fonts';
 import { logPageView, initGA } from '../components/analytics';
@@ -292,10 +290,6 @@ The value of x is [Display value:x format:"d" /].
           }
 
           html {
-            opacity: 0;
-            transition: opacity 0.25s ease-in;
-          }
-          html.loaded {
             opacity: 1;
           }
 

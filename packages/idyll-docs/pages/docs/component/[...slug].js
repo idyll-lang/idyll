@@ -1,10 +1,11 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import markdown from 'markdown-in-js';
-import Layout from '../../components/layout';
-import { indexedComponents } from '../../idyll-components/contents';
+import Layout from '../../../components/layout';
+import { indexedComponents } from '../../../idyll-components/contents';
 import showdown from 'showdown';
 import Parser from 'html-react-parser';
-import * as Examples from '../../idyll-components/examples';
+import * as Examples from '../../../idyll-components/examples';
 import * as IdyllComponents from 'idyll-components';
 import IdyllDocument from 'idyll-document';
 
@@ -47,11 +48,24 @@ class IdyllComponentDoc extends React.Component {
         )}
         {liveExample && exampleCode && (
           <div>
-            <h3>Live Example</h3>
-            <IdyllDocument markup={exampleCode} components={IdyllComponents} />
+            <h4>Input:</h4>
             <pre>
-              <code>{exampleCode}</code>
+              <code>{(exampleCode || '').trim()}</code>
             </pre>
+            <h4>Output:</h4>
+            <div
+              style={{
+                border: 'solid 1px black',
+                borderRadius: 5,
+                padding: '1em',
+                boxShadow: '3px 3px 5px #ccc'
+              }}
+            >
+              <IdyllDocument
+                markup={exampleCode}
+                components={IdyllComponents}
+              />
+            </div>
           </div>
         )}
         {((component && component._idyll.props) || idyllProps) && (
@@ -100,55 +114,72 @@ class IdyllComponentDoc extends React.Component {
   }
 }
 
-export default class IdyllComponentPage extends React.PureComponent {
-  // getInitialProps({query}) {
-  //   return {
-  //     slug: query.slug
-  //   }
-  // }
-
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    const { url } = this.props;
-    const comp = indexedComponents[url.query.slug];
-    return (
-      <Layout
-        url={url}
-        title={`Idyll Documentation | Component - ${comp.name}`}
-      >
-        <div>
-          <Link href={'/docs/components'}>
-            <a>← Back</a>
-          </Link>
-          <IdyllComponentDoc component={comp} />
-        </div>
-        <style jsx global>{`
-          ul {
-            list-style-type: none;
-          }
-          .idyll-prop {
-            margin-bottom: 1em;
-            padding: 1em;
-            overflow-x: auto;
-            background: #efefef;
-          }
-          .idyll-prop ul li {
-            margin-top: 1em;
-          }
-
-          .idyll-prop code {
-            border: solid 1px #222;
-            border-radius: 5px;
-            margin: 0 5px;
-            background: #fff;
-            white-space: nowrap;
-          }
-        `}</style>
-      </Layout>
-    );
-  }
+class IdyllComponentPage extends React.PureComponent {
+  render() {}
 }
+
+export async function getStaticPaths() {
+  const _components = Object.keys(indexedComponents);
+
+  const paths = _components.map(k => {
+    return {
+      params: { slug: [k] }
+    };
+  });
+
+  // fallback: false means pages that don’t have the
+  // correct id will 404.
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  // params contains the post `id`.
+  // If the route is like /posts/1, then params.id is 1
+
+  // Pass post data to the page via props
+  return { props: { slug: params.slug } };
+}
+
+const Component = props => {
+  const router = useRouter();
+  const { slug } = router.query;
+  const comp = indexedComponents[slug] || { name: '' };
+
+  return (
+    <Layout
+      url={`/docs/components/${slug}`}
+      title={`Idyll Documentation | Component - ${comp.name}`}
+    >
+      <div>
+        <Link href={'/docs/components'}>
+          <a>← Back</a>
+        </Link>
+        <IdyllComponentDoc component={comp} />
+      </div>
+      <style jsx global>{`
+        ul {
+          list-style-type: none;
+        }
+        .idyll-prop {
+          margin-bottom: 1em;
+          padding: 1em;
+          overflow-x: auto;
+          background: #efefef;
+        }
+        .idyll-prop ul li {
+          margin-top: 1em;
+        }
+
+        .idyll-prop code {
+          border: solid 1px #222;
+          border-radius: 5px;
+          margin: 0 5px;
+          background: #fff;
+          white-space: nowrap;
+        }
+      `}</style>
+    </Layout>
+  );
+};
+
+export default Component;

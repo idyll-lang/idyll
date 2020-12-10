@@ -12,6 +12,8 @@ class Display extends React.PureComponent {
     switch (t) {
       case 'object':
         return JSON.stringify(v);
+      case 'boolean':
+        return '' + v;
       case 'number':
         return this.format(v);
       case 'string':
