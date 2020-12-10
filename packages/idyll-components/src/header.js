@@ -39,8 +39,12 @@ class Header extends React.PureComponent {
       <div
         className={'article-header'}
         style={{
-          background: background || idyll.theme.headerBackground,
-          color: color || idyll.theme.headerColor
+          background:
+            background ||
+            (idyll && idyll.theme ? idyll.theme.headerBackground : undefined),
+          color:
+            color ||
+            (idyll && idyll.theme ? idyll.theme.headerColor : undefined)
         }}
       >
         <h1 className={'hed'}>{this.props.title}</h1>
