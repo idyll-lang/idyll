@@ -145,6 +145,8 @@ class Scroller extends React.Component {
       return c.type.name && c.type.name.toLowerCase() === 'graphic';
     });
 
+    const StepContainer = props.fullWidthSteps ? 'div' : TextContainer;
+
     return (
       <div
         ref={ref => (this.ref = ref)}
@@ -170,7 +172,7 @@ class Scroller extends React.Component {
             </div>
           </div>
         ) : null}
-        <TextContainer idyll={idyll}>
+        <StepContainer idyll={idyll}>
           <div className="idyll-scroll-text">
             {mapChildren(
               filterChildren(children, c => {
@@ -183,7 +185,7 @@ class Scroller extends React.Component {
               }
             )}
           </div>
-        </TextContainer>
+        </StepContainer>
       </div>
     );
   }
