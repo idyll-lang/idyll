@@ -65,7 +65,7 @@ TableComponent._idyll = {
   tagType: 'closed',
   props: [
     {
-      name: 'value',
+      name: 'data',
       type: 'array',
       description:
         'The data to be shown in a table. Should be an array of objects. Alias: data',

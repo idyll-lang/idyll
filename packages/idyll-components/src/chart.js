@@ -113,7 +113,7 @@ Chart._idyll = {
     {
       name: 'data',
       type: 'array',
-      example: '`[{x: 1, y: 1}, { x: 2, y: 2 }]`',
+      example: '`[{year: 1, value: 1}, { year: 2, value: 2 }]`',
       description:
         'A JSON object containing the data for this chart. It uses the [victory](https://formidable.com/open-source/victory/docs) library to handle rendering, so see those docs for more information on what types of data can be passed in.'
     },
