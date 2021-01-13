@@ -175,14 +175,6 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
     }
 
     render() {
-      if (this.state.hasError) {
-        return (
-          <div style={{ border: 'solid red 1px', padding: 10 }}>
-            {this.state.error.message}
-          </div>
-        );
-      }
-
       const state = filterIdyllProps(this.state, this.props.isHTMLNode);
       const { children, ...passThruProps } = filterIdyllProps(
         this.props,
@@ -190,7 +182,7 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
       );
       let childComponent = null;
       let uniqueKey = `${this.key}-help`;
-      const returnComponent = React.Children.map(children, (c, i) => {
+      let returnComponent = React.Children.map(children, (c, i) => {
         childComponent = c;
         return React.cloneElement(c, {
           key: `${this.key}-${i}`,
@@ -203,6 +195,13 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
           ...passThruProps
         });
       });
+      if (this.state.hasError) {
+        returnComponent = (
+          <div style={{ border: 'solid red 1px', padding: 10 }}>
+            {this.state.error.message}
+          </div>
+        );
+      }
       const metaData = childComponent.type._idyll;
       if (authorView && metaData && metaData.props) {
         // ensure inline elements do not have this overlay
