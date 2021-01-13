@@ -1,4 +1,10 @@
-## v5.0
+### v5.0.1
+
+Bugfixes:
+-  Improves output of `AST.toMarkup(ast)` function so that extra whitespace is not inserted on repeated calls.
+
+
+# v5.0
 
 Features:
 - Adds `fullWidthSteps` option to the scroller, to make it easier for scroller components steps to take on wider designs

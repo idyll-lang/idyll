@@ -942,7 +942,7 @@ function childrenToMarkup(node, depth) {
 function nodeToMarkup(node, depth) {
   switch (node.type) {
     case 'textnode':
-      return `${'  '.repeat(depth)}${node.value}`;
+      return `${'  '.repeat(depth)}${node.value.trim()}`;
     case 'component':
       if (node.name.toLowerCase() === 'textcontainer') {
         return `\n${childrenToMarkup(node, depth)}\n`;
