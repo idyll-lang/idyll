@@ -2,13 +2,18 @@ const fs = require('fs');
 const { dirname, basename, extname, join } = require('path');
 const EventEmitter = require('events');
 const mkdirp = require('mkdirp');
+const commandLineArgs = require('command-line-args');
 
 const pathBuilder = require('./path-builder');
 const configureNode = require('./node-config');
 const pipeline = require('./pipeline');
 const { ComponentResolver, DataResolver, CSSResolver } = require('./resolvers');
+const { forEach } = require('svg-tags');
 
 const debug = require('debug')('idyll:cli');
+
+const optionDefinitions = [{ name: 'env', alias: 'e', type: String }];
+const options = commandLineArgs(optionDefinitions);
 
 function createDirectories(paths) {
   mkdirp.sync(paths.OUTPUT_DIR);
@@ -30,7 +35,35 @@ const searchParentDirectories = packageDir => {
       : {};
 
     if (parentPackageFile.idyll) {
-      return parentPackageFile.idyll;
+      // Check for an idyll env key if array found
+      if (Array.isArray(parentPackageFile.idyll)) {
+        if (options.env == null) {
+          return parentPackageFile.idyll[0];
+        } else {
+          for (var obj in parentPackageFile.idyll) {
+            if (obj[0] === options.env) {
+              return obj[1];
+            }
+          }
+          console.error(
+            'No env found matching ' +
+              options.env +
+              ' in inferred package.json: ' +
+              parentPackageFilePath
+          );
+        }
+      } else {
+        // env passed but package.json is in wrong format
+        if (options.env != null) {
+          console.error(
+            'No env found matching ' +
+              options.env +
+              ' in inferred package.json: ' +
+              parentPackageFilePath
+          );
+        }
+        return parentPackageFile.idyll;
+      }
     }
   }
   return {};
