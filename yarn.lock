@@ -3570,7 +3570,7 @@ command-join@^2.0.0:
   dependencies:
     "@improved/node" "^1.0.0"
 
-command-line-args@^5.0.0:
+command-line-args@^5.0.0, command-line-args@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/command-line-args/-/command-line-args-5.1.1.tgz#88e793e5bb3ceb30754a86863f0401ac92fd369a"
   integrity sha512-hL/eG8lrll1Qy1ezvkant+trihbGnaKaeEjj6Scyr3DN+RC7iQ5Rz84IeLERfAWDGo0HBSNAakczwgCilDXnWg==
