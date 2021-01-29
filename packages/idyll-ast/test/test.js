@@ -293,9 +293,9 @@ describe('markup conversion', function() {
     const markup = util.toMarkup(astTestVar);
     expect(markup).to.eql(
       `
-[p]
-  This is the first paragraph
-[/p]
+
+This is the first paragraph
+
 [div]
   [h1]
     This is a header
@@ -308,6 +308,87 @@ describe('markup conversion', function() {
     [data name:"testData" source:"test.csv" /]
   [/p]
 [/div]
+    `.trim()
+    );
+  });
+
+  it("should break a complex component's properties onto multiple lines", function() {
+    const markup = util.toMarkup({
+      id: -1,
+      type: 'component',
+      name: 'div',
+      children: [
+        {
+          id: 1,
+          type: 'component',
+          name: 'Table',
+          properties: {
+            data: {
+              type: 'variable',
+              value: 'wheat'
+            },
+            defaultPageSize: {
+              type: 'value',
+              value: 10
+            },
+            showPagination: {
+              type: 'value',
+              value: true
+            },
+            showPageSizeOptions: {
+              type: 'value',
+              value: false
+            },
+            showPageJump: {
+              type: 'value',
+              value: false
+            }
+          }
+        }
+      ]
+    });
+
+    expect(markup).to.eql(
+      `
+[Table
+  data:wheat
+  defaultPageSize:10
+  showPagination:true
+  showPageSizeOptions:false
+  showPageJump:false /]
+    `.trim()
+    );
+  });
+
+  it('should serialize basic markdown elements', function() {
+    const markup = util.toMarkup({
+      id: -1,
+      type: 'component',
+      name: 'p',
+      children: [
+        {
+          id: 1,
+          type: 'textnode',
+          value: 'One two '
+        },
+        {
+          id: 2,
+          type: 'component',
+          name: 'em',
+          children: [
+            {
+              id: 3,
+              type: 'textnode',
+              value: 'three'
+            }
+          ]
+        }
+      ]
+    });
+
+    expect(markup).to.eql(
+      `
+One two **three**
     `.trim()
     );
   });
