@@ -388,7 +388,7 @@ This is the first paragraph
 
     expect(markup).to.eql(
       `
-One two **three**
+One two *three*
     `.trim()
     );
   });
