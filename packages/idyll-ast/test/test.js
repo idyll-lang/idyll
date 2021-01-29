@@ -293,9 +293,9 @@ describe('markup conversion', function() {
     const markup = util.toMarkup(astTestVar);
     expect(markup).to.eql(
       `
-[p]
-  This is the first paragraph
-[/p]
+
+This is the first paragraph
+
 [div]
   [h1]
     This is a header
@@ -356,6 +356,39 @@ describe('markup conversion', function() {
   showPagination:true
   showPageSizeOptions:false
   showPageJump:false /]
+    `.trim()
+    );
+  });
+
+  it('should serialize basic markdown elements', function() {
+    const markup = util.toMarkup({
+      id: -1,
+      type: 'component',
+      name: 'p',
+      children: [
+        {
+          id: 1,
+          type: 'textnode',
+          value: 'One two '
+        },
+        {
+          id: 2,
+          type: 'component',
+          name: 'em',
+          children: [
+            {
+              id: 3,
+              type: 'textnode',
+              value: 'three'
+            }
+          ]
+        }
+      ]
+    });
+
+    expect(markup).to.eql(
+      `
+One two **three**
     `.trim()
     );
   });
