@@ -925,15 +925,35 @@ function propertyToString(property) {
   }
 }
 
-function propertiesToString(node) {
-  return Object.keys(node.properties || {})
-    .reduce(function(memo, key) {
-      return memo + ` ${key}:${propertyToString(node.properties[key])}`;
-    }, '')
-    .trim();
+function propertiesToString(node, depth) {
+  let flatString = Object.keys(node.properties || {}).reduce(function(
+    memo,
+    key
+  ) {
+    return memo + ` ${key}:${propertyToString(node.properties[key])}`;
+  },
+  '');
+
+  if (flatString.length < 60) {
+    return flatString;
+  }
+
+  return Object.keys(node.properties || {}).reduce(function(memo, key) {
+    return (
+      memo +
+      `\n${'  '.repeat(depth + 1)}${key}:${propertyToString(
+        node.properties[key]
+      )}`
+    );
+  }, '');
 }
 
 function childrenToMarkup(node, depth) {
+  const markupNodes = {
+    EM: 'em',
+    ITALIC: 'i',
+    BOLD: 'b'
+  };
   return (node.children || []).reduce(function(memo, child) {
     return memo + `\n${nodeToMarkup(child, depth)}`;
   }, '');
@@ -947,23 +967,24 @@ function nodeToMarkup(node, depth) {
       if (node.name.toLowerCase() === 'textcontainer') {
         return `\n${childrenToMarkup(node, depth)}\n`;
       }
-      const propString = propertiesToString(node);
+      const propString = propertiesToString(node, depth);
       if (hasChildren(node)) {
         return `${'  '.repeat(depth)}[${node.name}${
-          propString ? ` ${propString}` : ''
+          propString ? `${propString}` : ''
         }]${childrenToMarkup(node, depth + 1)}\n${'  '.repeat(depth)}[/${
           node.name
         }]`;
       }
       return `${'  '.repeat(depth)}[${node.name}${
-        propString ? ` ${propString}` : ''
+        propString ? `${propString}` : ''
       } /]`;
     case 'var':
     case 'derived':
     case 'data':
     case 'meta':
-      return `${'  '.repeat(depth)}[${node.type} ${propertiesToString(
-        node
+      return `${'  '.repeat(depth)}[${node.type}${propertiesToString(
+        node,
+        depth
       )} /]`;
   }
 }

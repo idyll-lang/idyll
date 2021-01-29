@@ -311,4 +311,52 @@ describe('markup conversion', function() {
     `.trim()
     );
   });
+
+  it("should break a complex component's properties onto multiple lines", function() {
+    const markup = util.toMarkup({
+      id: -1,
+      type: 'component',
+      name: 'div',
+      children: [
+        {
+          id: 1,
+          type: 'component',
+          name: 'Table',
+          properties: {
+            data: {
+              type: 'variable',
+              value: 'wheat'
+            },
+            defaultPageSize: {
+              type: 'value',
+              value: 10
+            },
+            showPagination: {
+              type: 'value',
+              value: true
+            },
+            showPageSizeOptions: {
+              type: 'value',
+              value: false
+            },
+            showPageJump: {
+              type: 'value',
+              value: false
+            }
+          }
+        }
+      ]
+    });
+
+    expect(markup).to.eql(
+      `
+[Table
+  data:wheat
+  defaultPageSize:10
+  showPagination:true
+  showPageSizeOptions:false
+  showPageJump:false /]
+    `.trim()
+    );
+  });
 });
