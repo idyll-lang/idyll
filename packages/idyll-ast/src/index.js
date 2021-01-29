@@ -955,7 +955,7 @@ function childrenToMarkup(node, depth, separator = '\n') {
 }
 
 function nodeToMarkup(node, depth) {
-  const markupNodes = ['em', 'i', 'b'];
+  const markupNodes = ['strong', 'em', 'i', 'b'];
   switch (node.type) {
     case 'textnode':
       return `${'  '.repeat(depth)}${node.value.trim()}`;
@@ -969,9 +969,10 @@ function nodeToMarkup(node, depth) {
         return `\n${childrenToMarkup(node, depth)}\n`;
       } else if (markupNodes.includes(node.name.toLowerCase())) {
         switch (node.name.toLowerCase()) {
-          case 'em':
+          case 'strong':
           case 'b':
             return `**${childrenToMarkup(node, 0, ' ').trim()}**`;
+          case 'em':
           case 'i':
             return `*${childrenToMarkup(node, 0, ' ').trim()}*`;
         }
