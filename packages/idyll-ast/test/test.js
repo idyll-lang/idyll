@@ -392,4 +392,43 @@ One two *three*
     `.trim()
     );
   });
+
+  it('should insert full width props when requested', function() {
+    const markup = util.toMarkup(
+      {
+        id: -1,
+        type: 'component',
+        name: 'div',
+        children: [
+          {
+            id: 1,
+            type: 'component',
+            name: 'Header',
+            properties: {}
+          },
+          {
+            id: 2,
+            type: 'component',
+            name: 'TextContainer',
+            children: [
+              {
+                id: 3,
+                type: 'textnode',
+                value: 'Hello world.'
+              }
+            ]
+          }
+        ]
+      },
+      { insertFullWidth: true }
+    );
+
+    expect(markup.trim()).to.eql(
+      `
+[Header fullWidth:true /]
+
+Hello world.
+    `.trim()
+    );
+  });
 });
