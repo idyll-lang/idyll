@@ -121,7 +121,7 @@ YoutubeComponent._idyll = {
     {
       name: 'id',
       type: 'string',
-      example: '<youtube-video-id>',
+      example: '"KnPe6dZuwlg"',
       description: 'YouTube video id. Required.'
     },
     {

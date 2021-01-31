@@ -78,7 +78,7 @@ Tweet._idyll = {
     {
       name: 'parameters',
       type: 'object',
-      example: '{linkColor: "#8342f4"}',
+      example: '`{linkColor: "#8342f4"}`',
       description:
         'Embedded tweet params. See https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-parameter-reference. Optional'
     }

@@ -7,4 +7,10 @@ class H5 extends React.PureComponent {
   }
 }
 
+H5._idyll = {
+  name: 'H5',
+  tagType: 'open',
+  children: ['My Header Size 5']
+};
+
 export default H5;

@@ -51,7 +51,7 @@ class Stepper extends React.PureComponent {
     return (
       <div
         className="idyll-stepper"
-        style={{ position: 'relative', height: height }}
+        style={{ position: 'relative', height: height, ...props.style }}
       >
         <div className="idyll-step-graphic">
           {filterChildren(children, c => {
