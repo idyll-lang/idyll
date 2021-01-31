@@ -70,7 +70,13 @@ const getRefs = () => {
 };
 
 let wrapperKey = 0;
-const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
+const createWrapper = ({
+  theme,
+  layout,
+  authorView,
+  userViewComponent,
+  userInlineViewComponent
+}) => {
   return class Wrapper extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -218,6 +224,17 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
               uniqueKey={uniqueKey}
             />
           );
+        } else if (metaData.displayType === 'inline') {
+          const InlineViewComponent =
+            userInlineViewComponent || userViewComponent || AuthorTool;
+          return (
+            <InlineViewComponent
+              idyllASTNode={this.props.idyllASTNode}
+              component={returnComponent}
+              authorComponent={childComponent}
+              uniqueKey={uniqueKey}
+            />
+          );
         }
       }
       return returnComponent;
@@ -244,7 +261,8 @@ class IdyllRuntime extends React.PureComponent {
       theme: props.theme,
       layout: props.layout,
       authorView: props.authorView,
-      userViewComponent: props.userViewComponent
+      userViewComponent: props.userViewComponent,
+      userInlineViewComponent: props.userInlineViewComponent
     });
 
     let hasInitialized = false;

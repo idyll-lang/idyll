@@ -64,7 +64,12 @@ class EmbeddedGist extends React.PureComponent {
     if (this.state.loading) {
       return <div>loading...</div>;
     } else {
-      return <div dangerouslySetInnerHTML={{ __html: this.state.src }} />;
+      return (
+        <div
+          style={this.props.style}
+          dangerouslySetInnerHTML={{ __html: this.state.src }}
+        />
+      );
     }
   }
 }

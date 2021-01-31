@@ -69,7 +69,7 @@ class Chart extends React.PureComponent {
     let formattedRange = { domain: { x: domain, y: range } };
 
     return (
-      <div className={props.className}>
+      <div style={props.style} className={props.className}>
         {type !== 'PIE' ? (
           <V.VictoryChart
             domainPadding={domainPadding}

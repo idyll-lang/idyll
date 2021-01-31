@@ -3,7 +3,7 @@ import React from 'react';
 class Aside extends React.PureComponent {
   render() {
     return (
-      <span className={'aside-container'}>
+      <span style={this.props.style} className={'aside-container'}>
         <span className={'aside'}>{this.props.children}</span>
       </span>
     );

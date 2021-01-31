@@ -12,7 +12,7 @@ class Range extends React.PureComponent {
   }
 
   render() {
-    const { value, min, max, step } = this.props;
+    const { value, min, max, step, style } = this.props;
     return (
       <input
         type="range"
@@ -21,6 +21,7 @@ class Range extends React.PureComponent {
         min={min}
         max={max}
         step={step}
+        style={style}
       />
     );
   }
