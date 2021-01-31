@@ -224,8 +224,9 @@ const createWrapper = ({
               uniqueKey={uniqueKey}
             />
           );
-        } else if (meta.displayType === 'inline') {
-          const InlineViewComponent = userInlineViewComponent || AuthorTool;
+        } else if (metaData.displayType === 'inline') {
+          const InlineViewComponent =
+            userInlineViewComponent || userViewComponent || AuthorTool;
           return (
             <InlineViewComponent
               idyllASTNode={this.props.idyllASTNode}
