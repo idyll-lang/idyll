@@ -281,13 +281,31 @@ class IdyllRuntime extends React.PureComponent {
           return this.state;
         },
         onInitialize: cb => {
-          this._onInitializeState = cb;
+          this._initializeCallbacks.push(cb);
         },
         onMount: cb => {
-          this._onMount = cb;
+          this._mountCallbacks.push(cb);
         },
         onUpdate: cb => {
-          this._onUpdateState = cb;
+          this._updateCallbacks.push(cb);
+        },
+        _initializeCallbacks: [],
+        _mountCallbacks: [],
+        _updateCallbacks: [],
+        _onInitializeState: () => {
+          this._initializeCallbacks.forEach(cb => {
+            cb();
+          });
+        },
+        _onMount: () => {
+          this._mountCallbacks.forEach(cb => {
+            cb();
+          });
+        },
+        _onUpdateState: newData => {
+          this._updateCallbacks.forEach(cb => {
+            cb(newData);
+          });
         }
       });
     }
