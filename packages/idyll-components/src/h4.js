@@ -7,4 +7,10 @@ class H4 extends React.PureComponent {
   }
 }
 
+H4._idyll = {
+  name: 'H4',
+  tagType: 'open',
+  children: ['My Header Size 4']
+};
+
 export default H4;

@@ -3,7 +3,7 @@ import React from 'react';
 class Inline extends React.PureComponent {
   render() {
     return (
-      <div style={{display: 'inline-block'}}>
+      <div style={{ display: 'inline-block', ...this.props.style }}>
         {this.props.children}
       </div>
     );
@@ -11,9 +11,8 @@ class Inline extends React.PureComponent {
 }
 
 Inline._idyll = {
-  name: "Inline",
-  tagType: "open"
-}
-
+  name: 'Inline',
+  tagType: 'open'
+};
 
 export default Inline;

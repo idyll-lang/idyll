@@ -7,4 +7,10 @@ class H2 extends React.PureComponent {
   }
 }
 
+H2._idyll = {
+  name: 'H2',
+  tagType: 'open',
+  children: ['My Header Size 2']
+};
+
 export default H2;

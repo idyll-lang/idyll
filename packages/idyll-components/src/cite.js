@@ -72,7 +72,11 @@ class Cite extends React.Component {
   render() {
     const { citationNumber, authors, title, url } = this.state;
     return (
-      <a title={`${title}, ${authors}`} href={url || '#references'}>
+      <a
+        style={this.props.style}
+        title={`${title}, ${authors}`}
+        href={url || '#references'}
+      >
         [{citationNumber}]
       </a>
     );
@@ -85,28 +89,35 @@ Cite._idyll = {
   props: [
     {
       name: 'authors',
-      type: 'string'
+      type: 'string',
+      example: '"Matthew Conlen and Jeffrey Heer"'
     },
     {
       name: 'title',
-      type: 'string'
+      type: 'string',
+      example:
+        '"Idyll: A Markup Language for Authoring and Publishing Interactive Articles on the Web"'
     },
     {
       name: 'url',
       type: 'string',
-      description: 'Link to the citation.'
+      description: 'Link to the citation.',
+      example: '"https://idl.cs.washington.edu/papers/idyll"'
     },
     {
       name: 'date',
-      type: 'string'
+      type: 'string',
+      example: '"2018"'
     },
     {
       name: 'venue',
-      type: 'string'
+      type: 'string',
+      example: '"ACM User Interface Software & Technology (UIST)"'
     },
     {
       name: 'id',
       type: 'string',
+      example: '"idyll-2018"',
       description:
         'Can be used to refer a previously stated citation using the same id.'
     }
