@@ -1,3 +1,12 @@
+## v5.1.0
+
+Features:
+- Adds `insertFullWidth` option to markup serializer ([#686](https://github.com/idyll-lang/idyll/pull/686))
+- Adds `inlineAuthorView` option to `idyll-document` ([#681](https://github.com/idyll-lang/idyll/pull/681))
+
+Bugfixes:
+-  General improvements to markup serialization ([#685](https://github.com/idyll-lang/idyll/pull/685), [#684](https://github.com/idyll-lang/idyll/pull/684), [#676](https://github.com/idyll-lang/idyll/pull/676))
+
 ### v5.0.1
 
 Bugfixes:
