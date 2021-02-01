@@ -43,9 +43,10 @@ const searchParentDirectories = packageDir => {
 };
 
 function selectIdyllConfig(inputPackage) {
-  var hasMultipleConfigs = false; // for error
+  var hasMultipleConfigs = false; // for error handling later
   if (inputPackage.idyll) {
     // Check for an idyll env key if array found
+    console.log('found idyll line');
     if (Array.isArray(inputPackage.idyll)) {
       if (options.env == null) {
         return {
@@ -73,7 +74,7 @@ function selectIdyllConfig(inputPackage) {
         throw Error('No env found matching ' + options.env);
       }
       return {
-        idyll: inputPackage.idyll[0],
+        idyll: inputPackage.idyll,
         hasMultipleConfigs: hasMultipleConfigs
       };
     }
@@ -121,17 +122,15 @@ const idyll = (options = {}, cb) => {
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE)
     ? require(paths.PACKAGE_FILE)
     : {};
-  const inputConfig = inputPackage || {};
-  const parentInputConfig = searchParentDirectories(paths.INPUT_DIR);
-  // const inputConfig = selectIdyllConfig(inputPackage || {});
-  // const parentInputConfig = selectIdyllConfig(
-  //   searchParentDirectories(paths.INPUT_DIR)
-  // );
-  // if (parentInputConfig.hasMultipleConfigs && !inputConfig.hasMultipleConfigs) {
-  //   throw Error(
-  //     'Project root has multiple config options given but the local project does not. Please add envs to the local project and use the --env paramter or remove them from the top level package.'
-  //   );
-  // }
+  const inputConfig = selectIdyllConfig(inputPackage);
+  const parentInputConfig = selectIdyllConfig(
+    searchParentDirectories(paths.INPUT_DIR)
+  );
+  if (parentInputConfig.hasMultipleConfigs && !inputConfig.hasMultipleConfigs) {
+    throw Error(
+      'Project root has multiple config options given but the local project does not. Please add envs to the local project and use the --env paramter or remove them from the top level package.'
+    );
+  }
   Object.assign(opts, parentInputConfig.idyll, inputConfig.idyll, options);
 
   // Resolve compiler plugins:
