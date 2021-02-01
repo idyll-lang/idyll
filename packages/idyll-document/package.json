@@ -1,6 +1,6 @@
 {
   "name": "idyll-document",
-  "version": "3.3.3",
+  "version": "3.4.1",
   "license": "MIT",
   "authors": [
     "Matthew Conlen",
@@ -36,7 +36,7 @@
     "html-tags": "^2.0.0",
     "idyll-compiler": "^4.0.19",
     "idyll-layouts": "^3.0.6",
-    "idyll-themes": "^3.1.1",
+    "idyll-themes": "^3.1.2",
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
     "react-dom-factories": "^1.0.1",

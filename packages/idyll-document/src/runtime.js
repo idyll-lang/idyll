@@ -268,6 +268,25 @@ class IdyllRuntime extends React.PureComponent {
     let hasInitialized = false;
     let initialContext = {};
     // Initialize a custom context
+    let _initializeCallbacks = [];
+    let _mountCallbacks = [];
+    let _updateCallbacks = [];
+
+    this._onInitializeState = () => {
+      _initializeCallbacks.forEach(cb => {
+        cb();
+      });
+    };
+    this._onMount = () => {
+      _mountCallbacks.forEach(cb => {
+        cb();
+      });
+    };
+    this._onUpdateState = newData => {
+      _updateCallbacks.forEach(cb => {
+        cb(newData);
+      });
+    };
     if (typeof props.context === 'function') {
       props.context({
         update: newState => {
@@ -281,13 +300,13 @@ class IdyllRuntime extends React.PureComponent {
           return this.state;
         },
         onInitialize: cb => {
-          this._onInitializeState = cb;
+          _initializeCallbacks.push(cb);
         },
         onMount: cb => {
-          this._onMount = cb;
+          _mountCallbacks.push(cb);
         },
         onUpdate: cb => {
-          this._onUpdateState = cb;
+          _updateCallbacks.push(cb);
         }
       });
     }
