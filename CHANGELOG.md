@@ -1,3 +1,7 @@
+## v5.2.0
+
+Add experimental [project create API](https://github.com/idyll-lang/idyll/pull/690).
+
 ## v5.1.0
 
 Features:
