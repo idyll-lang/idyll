@@ -22,7 +22,11 @@ class Tweet extends Component {
       const twttrEl = document.createElement('script');
       twttrEl.setAttribute(
         'src',
-        `${document.location.protocol}//platform.twitter.com/widgets.js`
+        `${
+          document.location.protocol === 'file:'
+            ? 'https:'
+            : document.location.protocol
+        }//platform.twitter.com/widgets.js`
       );
       twttrEl.onload = () => resolve();
       twttrEl.onerror = error => reject(error);
