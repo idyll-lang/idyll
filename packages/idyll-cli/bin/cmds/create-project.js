@@ -25,6 +25,7 @@ exports.command = 'create [post-name]';
 exports.description = 'Create a new project';
 exports.builder = builder;
 exports.handler = main;
+exports.createProject = createProject;
 
 let _customTemplate;
 
@@ -101,7 +102,12 @@ function main(argv) {
 }
 
 async function createProject(answers) {
-  const { install: isinstallDependencies } = yargs.argv;
+  let isinstallDependencies;
+  if (answers.installDependencies !== undefined) {
+    isinstallDependencies = answers.installDependencies;
+  } else if (yargs && yargs.argv) {
+    isinstallDependencies = yargs.argv.install;
+  }
   let name = answers['package-name'];
   let template = answers['template'];
   let dir = answers['post-dir'];
