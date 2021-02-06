@@ -74,8 +74,10 @@ const createWrapper = ({
   theme,
   layout,
   authorView,
+  textEditComponent,
   userViewComponent,
-  userInlineViewComponent
+  userInlineViewComponent,
+  wrapTextComponents
 }) => {
   return class Wrapper extends React.PureComponent {
     constructor(props) {
@@ -209,9 +211,28 @@ const createWrapper = ({
         );
       }
       const metaData = childComponent.type._idyll;
-      if (authorView && metaData && metaData.props) {
+      if (authorView) {
         // ensure inline elements do not have this overlay
         if (
+          (metaData && metaData.name === 'TextContainer') ||
+          ['TextContainer', 'DragDropContainer'].includes(
+            childComponent.type.name
+          )
+        ) {
+          return returnComponent;
+        } else if (
+          textEditComponent &&
+          metaData &&
+          wrapTextComponents.includes(metaData.name.toLowerCase())
+        ) {
+          const ViewComponent = textEditComponent;
+          return (
+            <ViewComponent idyllASTNode={this.props.idyllASTNode}>
+              {childComponent}
+            </ViewComponent>
+          );
+        } else if (
+          !metaData ||
           metaData.displayType === undefined ||
           metaData.displayType !== 'inline'
         ) {
@@ -261,8 +282,10 @@ class IdyllRuntime extends React.PureComponent {
       theme: props.theme,
       layout: props.layout,
       authorView: props.authorView,
+      textEditComponent: props.textEditComponent,
       userViewComponent: props.userViewComponent,
-      userInlineViewComponent: props.userInlineViewComponent
+      userInlineViewComponent: props.userInlineViewComponent,
+      wrapTextComponents: props.wrapTextComponents
     });
 
     let hasInitialized = false;
@@ -410,7 +433,7 @@ class IdyllRuntime extends React.PureComponent {
     const schema = translate(ast);
     const wrapTargets = findWrapTargets(schema, this.state, props.components);
     let refCounter = 0;
-    const transformedSchema = mapTree(schema, node => {
+    const transformedSchema = mapTree(schema, (node, depth) => {
       // console.log('mapoing ', node.component || node.type);
       if (!node.component) {
         if (node.type && node.type === 'textnode') return node.value;
@@ -437,8 +460,6 @@ class IdyllRuntime extends React.PureComponent {
       }
       //Inspect for isHTMLNode  props and to check for dynamic components.
       if (!wrapTargets.includes(node)) {
-        // console.log('node not wrapped', node);
-
         if (
           this.props.wrapTextComponents.indexOf(node.component) > -1 &&
           this.props.textEditComponent
@@ -592,7 +613,19 @@ IdyllRuntime.defaultProps = {
   theme: 'github',
   authorView: false,
   insertStyles: false,
-  wrapTextComponents: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'CodeHighlight']
+  wrapTextComponents: [
+    'p',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'ul',
+    'ol',
+    'pre',
+    'CodeHighlight'
+  ]
 };
 
 export default IdyllRuntime;

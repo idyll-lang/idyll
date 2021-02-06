@@ -393,22 +393,22 @@ export const translate = ast => {
   return splitAST(getChildren(ast)).elements.map(tNode);
 };
 
-export const mapTree = (tree, mapFn, filterFn = () => true) => {
-  const walkFn = (acc, node) => {
+export const mapTree = (tree, mapFn, filterFn = () => true, depth = 0) => {
+  const walkFn = depth => (acc, node) => {
     //To check for textnodes
     if (node.component) {
       //To check for childrens
       if (node.children) {
-        node.children = node.children.reduce(walkFn, []);
+        node.children = node.children.reduce(walkFn(depth + 1), []);
       }
     }
 
     if (filterFn(node)) {
-      acc.push(mapFn(node));
+      acc.push(mapFn(node, depth));
     }
     return acc;
   };
-  let value = tree.reduce(walkFn, []);
+  let value = tree.reduce(walkFn(depth), []);
   return value;
 };
 
