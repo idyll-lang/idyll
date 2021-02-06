@@ -211,12 +211,18 @@ const createWrapper = ({
         );
       }
       const metaData = childComponent.type._idyll;
-      if (authorView && metaData) {
+      if (authorView) {
         // ensure inline elements do not have this overlay
-        if (metaData.name === 'TextContainer') {
+        if (
+          (metaData && metaData.name === 'TextContainer') ||
+          ['TextContainer', 'DragDropContainer'].includes(
+            childComponent.type.name
+          )
+        ) {
           return returnComponent;
         } else if (
           textEditComponent &&
+          metaData &&
           wrapTextComponents.includes(metaData.name.toLowerCase())
         ) {
           const ViewComponent = textEditComponent;
@@ -226,6 +232,7 @@ const createWrapper = ({
             </ViewComponent>
           );
         } else if (
+          !metaData ||
           metaData.displayType === undefined ||
           metaData.displayType !== 'inline'
         ) {

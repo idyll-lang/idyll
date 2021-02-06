@@ -35,7 +35,7 @@ Configuration can be done via the `idyll` field in `package.json`.
 Idyll is based on Markdown.
 
 You can use familiar syntax
-to create **bold** (`**bold**` ) and *italic* (``*italic*` ) styles,
+to create **bold** (`**bold**` ) and *italic* (`*italic*` ) styles,
 
 * lists
 * of

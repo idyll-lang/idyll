@@ -4,8 +4,6 @@ import compile from 'idyll-compiler';
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
 
-console.log('using linked idyll-document');
-
 const getLayout = layout => {
   return layouts[layout.trim()] || {};
 };
