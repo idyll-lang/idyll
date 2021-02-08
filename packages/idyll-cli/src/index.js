@@ -43,12 +43,18 @@ const searchParentDirectories = packageDir => {
 };
 
 function selectIdyllConfig(inputPackage) {
+  console.log('in select');
+  console.log(options);
+  console.log(options.env == null);
   var hasMultipleConfigs = false; // for error handling later
   if (inputPackage.idyll) {
+    console.log('in if');
+    console.log(inputPackage.idyll);
     // Check for an idyll env key if array found
-    console.log('found idyll line');
     if (Array.isArray(inputPackage.idyll)) {
+      console.log('in array');
       if (options.env == null) {
+        console.log('null');
         return {
           idyll: inputPackage.idyll[1],
           hasMultipleConfigs: hasMultipleConfigs
