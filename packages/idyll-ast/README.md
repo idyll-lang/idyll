@@ -31,7 +31,7 @@ And this is a normal paragraph. This is # not a header.
 
 The above Idyll syntax would look like the following when in ast form:
 
-```
+```js
 { id: 0,
   type: 'component',
   name: 'div',
@@ -69,7 +69,7 @@ There can be 5 different types of nodes in the AST.
 
 The properties field for each component represent, its attributes or value. The general structure for a properties field is as following:
 
-```
+```json
 "properties" : {
     "prop1": {
         "type": "type1",
