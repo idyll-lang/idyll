@@ -16,27 +16,25 @@ Action._idyll = {
   name: 'Action',
   tagType: 'open',
   displayType: 'inline',
-  children: ['action text'],
+  children: ['Click me to trigger an action'],
   props: [
     {
       name: 'onClick',
       type: 'event',
-      example: '`x = !x`',
+      example: '`alert("You clicked the text.")`',
       description: 'An event that is triggered when a reader clicks.'
     },
     {
       name: 'onMouseEnter',
       type: 'event',
-      example: '`x = true`',
       description:
-        'An event that is triggered when a reader mouses over the element.'
+        'An event that is triggered when a reader mouses over the element, e.g. `x = true`.'
     },
     {
       name: 'onMouseLeave',
       type: 'event',
-      example: '`x = false`',
       description:
-        'An event that is triggered when a reader removes their mouse from the element.'
+        'An event that is triggered when a reader removes their mouse from the element, e.g. `x = false`.'
     }
   ]
 };

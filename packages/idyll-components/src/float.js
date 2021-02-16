@@ -20,6 +20,9 @@ class Float extends React.PureComponent {
 Float._idyll = {
   name: 'Float',
   tagType: 'open',
+  children: [
+    `Content placed here will take up half of the text-column width. Use the properties to specify left or right.`
+  ],
   props: [
     {
       name: 'position',

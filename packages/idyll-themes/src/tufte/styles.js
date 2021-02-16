@@ -272,6 +272,7 @@ label.margin-toggle:not(.sidenote-number) { display: none; }
 
 .idyll-action {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 
