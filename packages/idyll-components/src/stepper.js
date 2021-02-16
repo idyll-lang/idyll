@@ -22,8 +22,16 @@ class Stepper extends React.PureComponent {
   }
 
   next() {
+    let newStep = this.props.currentStep + 1;
+    if (!newStep) {
+      newStep = 1;
+    }
+    if (newStep <= this.getSteps().length) {
+      newStep = 0;
+    }
+
     this.props.updateProps({
-      currentStep: ((this.props.currentStep || 0) + 1) % this.getSteps().length
+      currentStep: newStep
     });
   }
   previous() {
