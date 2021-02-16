@@ -23,14 +23,20 @@ Link._idyll = {
     {
       name: 'text',
       type: 'string',
-      example: '"Link Text"',
+      example: '"This is a hyperlink"',
       description: 'The text to display'
     },
     {
       name: 'url',
       type: 'string',
-      example: '"https://some.url/"',
+      example: '"https://idyll-lang.org/"',
       description: 'The URL to open when the link is clicked'
+    },
+    {
+      name: 'target',
+      type: 'string',
+      example: '"_blank"',
+      description: 'Specifies where to open the linked document'
     }
   ]
 };

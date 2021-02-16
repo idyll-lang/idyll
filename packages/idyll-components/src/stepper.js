@@ -23,7 +23,7 @@ class Stepper extends React.PureComponent {
 
   next() {
     this.props.updateProps({
-      currentStep: (this.props.currentStep + 1) % this.getSteps().length
+      currentStep: ((this.props.currentStep || 0) + 1) % this.getSteps().length
     });
   }
   previous() {
@@ -95,13 +95,14 @@ Stepper._idyll = {
     `
 [Step]This is the content for step 1[/Step]
 [Step]This is the content for step 2[/Step]
-[Step]This is the content for step 3[/Step]`
+[Step]This is the content for step 3[/Step]
+[StepperControl /]`
   ],
   props: [
     {
       name: 'currentStep',
       type: 'number',
-      example: '0',
+      example: 'currentStep',
       description: 'The index of the currently selected step.'
     }
   ]

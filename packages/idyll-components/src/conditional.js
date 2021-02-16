@@ -15,12 +15,12 @@ class Conditional extends React.Component {
 Conditional._idyll = {
   name: 'Conditional',
   tagType: 'open',
-  children: ['Some text'],
+  children: ['This text can be conditionally hidden.'],
   props: [
     {
       name: 'if',
       type: 'expression',
-      example: '`x < 10`',
+      example: '`true`',
       description:
         'An expression; if this evaluates to true, the children will be rendered, otherwise nothing will be drawn to the screen'
     }

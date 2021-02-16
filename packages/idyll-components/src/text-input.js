@@ -24,7 +24,7 @@ TextInput._idyll = {
     {
       name: 'value',
       type: 'string',
-      example: '"Hello"',
+      example: 'x',
       description: 'The current value of the text entry box.'
     }
   ]
