@@ -51,7 +51,9 @@ exports.handler = async yargs => {
     let files = await readdir(buildPath);
 
     let formData = files.reduce((acc, f) => {
-      acc[p.relative(buildPath, f)] = fs.createReadStream(f);
+      acc[p.relative(buildPath, f).replace(/\\/g, '/')] = fs.createReadStream(
+        f
+      );
       return acc;
     }, {});
     formData.token = token;
