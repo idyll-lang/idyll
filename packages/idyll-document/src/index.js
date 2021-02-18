@@ -12,6 +12,9 @@ const getTheme = theme => {
   return themes[theme.trim()] || {};
 };
 
+let layoutNode;
+let themeNode;
+
 const defaultAST = {
   id: 0,
   type: 'component',
@@ -57,12 +60,10 @@ class IdyllDocument extends React.Component {
     }
 
     if (this.props.injectThemeCSS) {
-      this._themeNode = this.createStyleNode(getTheme(this.props.theme).styles);
+      themeNode = this.createStyleNode(getTheme(this.props.theme).styles);
     }
     if (this.props.injectLayoutCSS) {
-      this._layoutNode = this.createStyleNode(
-        getLayout(this.props.layout).styles
-      );
+      layoutNode = this.createStyleNode(getLayout(this.props.layout).styles);
     }
   }
 
@@ -73,19 +74,17 @@ class IdyllDocument extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.theme !== this.props.theme && newProps.injectThemeCSS) {
-      if (this._themeNode) {
-        this._themeNode.innerHTML = getTheme(newProps.theme).styles;
+      if (themeNode) {
+        themeNode.innerHTML = getTheme(newProps.theme).styles;
       } else {
-        this._themeNode = this.createStyleNode(getTheme(newProps.theme).styles);
+        themeNode = this.createStyleNode(getTheme(newProps.theme).styles);
       }
     }
     if (newProps.layout !== this.props.layout && newProps.injectLayoutCSS) {
-      if (this._layoutNode) {
-        this._layoutNode.innerHTML = getLayout(newProps.layout).styles;
+      if (layoutNode) {
+        layoutNode.innerHTML = getLayout(newProps.layout).styles;
       } else {
-        this._layoutNode = this.createStyleNode(
-          getLayout(newProps.layout).styles
-        );
+        layoutNode = this.createStyleNode(getLayout(newProps.layout).styles);
       }
     }
 
