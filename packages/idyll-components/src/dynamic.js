@@ -91,7 +91,7 @@ Dynamic._idyll = {
     {
       name: 'display',
       type: 'expression',
-      example: '`x === 0 ? "none" : x`',
+      defaultValue: 'none',
       description: 'A custom display transform to use'
     }
   ]
