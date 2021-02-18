@@ -167,9 +167,16 @@ class Equation extends React.PureComponent {
 
 Equation._idyll = {
   name: 'Equation',
-  tagType: 'open',
-  children: 'y = x^2',
+  tagType: 'closed',
   props: [
+    {
+      name: 'latex',
+      type: 'expression',
+      example: '`"x = " + x`',
+      defaultValue: '"x"',
+      description:
+        'Set the latex to be shown. Can be driven by an expression to allow for dynamically updated equations.'
+    },
     {
       name: 'display',
       type: 'boolean',
