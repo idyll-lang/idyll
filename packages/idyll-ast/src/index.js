@@ -956,22 +956,35 @@ function childrenToMarkup(
   insertFullWidth = false
 ) {
   return (node.children || []).reduce(function(memo, child) {
-    return memo + `${separator}${nodeToMarkup(child, depth, insertFullWidth)}`;
+    return (
+      memo +
+      `${separator}${nodeToMarkup(child, depth, insertFullWidth, separator)}`
+    );
   }, '');
 }
 
-function nodeToMarkup(node, depth, insertFullWidth) {
-  const markupNodes = ['strong', 'em', 'i', 'b'];
+function nodeToMarkup(node, depth, insertFullWidth, separator = '\n') {
+  const markupNodes = [
+    'strong',
+    'em',
+    'i',
+    'b',
+    'code',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'a'
+  ];
   switch (node.type) {
     case 'textnode':
       return `${'  '.repeat(depth)}${node.value.trim()}`;
     case 'component':
-      let separator = '\n';
-      if (
-        node.name.toLowerCase() === 'textcontainer' ||
-        (node.name.toLowerCase() === 'p' && depth < 1)
-      ) {
-        return `${childrenToMarkup(node, depth, '\n', false)}\n`;
+      if (node.name.toLowerCase() === 'textcontainer') {
+        return `\n${childrenToMarkup(node, depth, '\n', false)}\n`;
+      } else if (node.name.toLowerCase() === 'p' && depth < 1) {
+        return `\n${childrenToMarkup(node, depth, ' ', false).trim()}\n`;
       } else if (markupNodes.includes(node.name.toLowerCase())) {
         switch (node.name.toLowerCase()) {
           case 'strong':
@@ -980,11 +993,61 @@ function nodeToMarkup(node, depth, insertFullWidth) {
           case 'em':
           case 'i':
             return `*${childrenToMarkup(node, 0, ' ', false).trim()}*`;
+          case 'code':
+            return `\`${childrenToMarkup(node, 0, ' ', false).trim()}\``;
+          case 'h1':
+          case 'h2':
+          case 'h3':
+          case 'h4':
+          case 'h5':
+            if (
+              node.children &&
+              node.children.length === 1 &&
+              node.children[0].type === 'textnode'
+            ) {
+              return `${'#'.repeat(+node.name[1])} ${childrenToMarkup(
+                node,
+                0,
+                ' ',
+                false
+              ).trim()}`;
+            }
         }
+      }
+
+      if (
+        node.name.toLowerCase() === 'pre' &&
+        node.children &&
+        node.children.length === 1 &&
+        node.children[0].name &&
+        node.children[0].name.toLowerCase() === 'code'
+      ) {
+        return `
+\`\`\`
+${childrenToMarkup(node.children[0], 0, ' ', false).trim()}
+\`\`\`
+        `;
+      } else if (
+        node.name.toLowerCase() === 'pre' &&
+        node.children &&
+        node.children.length === 1 &&
+        node.children[0].type === 'textnode'
+      ) {
+        return `
+\`\`\`
+${childrenToMarkup(node, 0, ' ', false).trim()}
+\`\`\``;
       }
 
       const propString = propertiesToString(node, depth, insertFullWidth);
       if (hasChildren(node)) {
+        if (node.name === 'a') {
+          return `[${node.name}${
+            propString ? `${propString}` : ''
+          }]${childrenToMarkup(node, depth + 1, ' ', false).trim()}[/${
+            node.name
+          }]`;
+        }
         return `${'  '.repeat(depth)}[${node.name}${
           propString ? `${propString}` : ''
         }]${childrenToMarkup(node, depth + 1, separator, false)}\n${'  '.repeat(

@@ -1,3 +1,10 @@
+## v5.2.1
+Bugfix: fix publish command on windows [#695](https://github.com/idyll-lang/idyll/pull/695)
+
+## v5.2.0
+
+Add experimental [project create API](https://github.com/idyll-lang/idyll/pull/690).
+
 ## v5.1.0
 
 Features:

@@ -12,7 +12,10 @@ class Aside extends React.PureComponent {
 
 Aside._idyll = {
   name: 'Aside',
-  tagType: 'open'
+  tagType: 'open',
+  children: [
+    'Content placed inside of an aside component will be displayed in the margin.'
+  ]
 };
 
 export default Aside;

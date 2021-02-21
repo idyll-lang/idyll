@@ -177,7 +177,6 @@ input {
 @media all and (max-width: 1000px) {
 
   .idyll-root {
-    max-width: 600px;
     margin: 0 auto;
     padding: 60px 20px;
     margin-bottom: 60px;

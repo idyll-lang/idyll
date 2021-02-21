@@ -33,12 +33,18 @@ class Switch extends React.Component {
 Switch._idyll = {
   name: 'Switch',
   tagType: 'open',
-  children: ['Case components'],
+  children: [
+    `
+    [Case test:0]Case 0[/Case]
+    [Case test:1]Case 1[/Case]
+    [Default]Default case[/Default]
+  `
+  ],
   props: [
     {
       name: 'value',
       type: 'variable',
-      example: '1',
+      example: 'x',
       description: 'Value of the child prop to render.'
     }
   ]
