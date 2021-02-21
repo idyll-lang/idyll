@@ -14,7 +14,7 @@ const { has } = require('browser-sync');
 const debug = require('debug')('idyll:cli');
 
 const optionDefinitions = [{ name: 'env', alias: 'e', type: String }];
-const options = commandLineArgs(optionDefinitions);
+const commandLineOptions = commandLineArgs(optionDefinitions);
 
 function createDirectories(paths) {
   mkdirp.sync(paths.OUTPUT_DIR);
@@ -27,7 +27,6 @@ const searchParentDirectories = packageDir => {
     if (packageDir === join(packageDir, '..')) {
       break;
     }
-
     packageDir = join(packageDir, '..');
     const parentPackageFilePath = join(packageDir, 'package.json');
 
@@ -42,27 +41,20 @@ const searchParentDirectories = packageDir => {
   return {};
 };
 
-function selectIdyllConfig(inputPackage) {
-  console.log('in select');
-  console.log(options);
-  console.log(options.env == null);
+function selectIdyllConfig(inputPackage, env) {
   var hasMultipleConfigs = false; // for error handling later
   if (inputPackage.idyll) {
-    console.log('in if');
-    console.log(inputPackage.idyll);
     // Check for an idyll env key if array found
     if (Array.isArray(inputPackage.idyll)) {
-      console.log('in array');
-      if (options.env == null) {
-        console.log('null');
+      if (env == null) {
         return {
-          idyll: inputPackage.idyll[1],
+          idyll: inputPackage.idyll[0][1],
           hasMultipleConfigs: hasMultipleConfigs
         };
       } else {
         for (var i in inputPackage.idyll) {
           hasMultipleConfigs = true;
-          if (inputPackage.idyll[i][0] === options.env) {
+          if (inputPackage.idyll[i][0] === env) {
             return {
               idyll: inputPackage.idyll[i][1],
               hasMultipleConfigs: hasMultipleConfigs
@@ -71,13 +63,13 @@ function selectIdyllConfig(inputPackage) {
         }
         throw Error(
           'No matching env found out of available options. Please verify your package.json file(s) have  ' +
-            options.env
+            env
         );
       }
     } else {
       // env passed but package.json is in wrong format
-      if (options.env != null) {
-        throw Error('No env found matching ' + options.env);
+      if (env != null) {
+        throw Error('No env found matching ' + env);
       }
       return {
         idyll: inputPackage.idyll,
@@ -114,7 +106,8 @@ const idyll = (options = {}, cb) => {
       template: join(__dirname, 'client', '_index.html'),
       transform: [],
       compiler: {},
-      compileLibs: false
+      compileLibs: false,
+      env: commandLineOptions.env
     },
     options
   );
@@ -128,13 +121,26 @@ const idyll = (options = {}, cb) => {
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE)
     ? require(paths.PACKAGE_FILE)
     : {};
-  const inputConfig = selectIdyllConfig(inputPackage);
+
+  if (
+    commandLineOptions.env !== options.env &&
+    (commandLineOptions.env !== undefined && options.env !== undefined)
+  ) {
+    //Should one supercede the other?
+    throw Error(
+      "Mismatch between Idyll env provided and command line arg. Please remove the Idyll({env='...',...} or the command line argument."
+    );
+  }
+
+  const env = commandLineOptions.env || options.env;
+  const inputConfig = selectIdyllConfig(inputPackage, env);
   const parentInputConfig = selectIdyllConfig(
-    searchParentDirectories(paths.INPUT_DIR)
+    searchParentDirectories(paths.INPUT_DIR),
+    env
   );
   if (parentInputConfig.hasMultipleConfigs && !inputConfig.hasMultipleConfigs) {
     throw Error(
-      'Project root has multiple config options given but the local project does not. Please add envs to the local project and use the --env paramter or remove them from the top level package.'
+      'Project root has multiple config options given but the local project does not. Please add envs to the local project and use the --env parameter or remove them from the top level package.'
     );
   }
   Object.assign(opts, parentInputConfig.idyll, inputConfig.idyll, options);
