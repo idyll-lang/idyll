@@ -5,7 +5,11 @@ class Float extends React.PureComponent {
     return (
       <div
         className={`float ${this.props.position}`}
-        style={{ float: this.props.position, width: this.props.width || '50%' }}
+        style={{
+          float: this.props.position,
+          width: this.props.width || '50%',
+          ...this.props.style
+        }}
       >
         {this.props.children}
       </div>
@@ -16,6 +20,9 @@ class Float extends React.PureComponent {
 Float._idyll = {
   name: 'Float',
   tagType: 'open',
+  children: [
+    `Content placed here will take up half of the text-column width. Use the properties to specify left or right.`
+  ],
   props: [
     {
       name: 'position',

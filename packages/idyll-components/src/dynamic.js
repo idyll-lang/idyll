@@ -39,7 +39,11 @@ class Dynamic extends React.PureComponent {
 
   render() {
     const display = this.transformValue();
-    return <span className="idyll-dynamic">{display}</span>;
+    return (
+      <span style={this.props.style} className="idyll-dynamic">
+        {display}
+      </span>
+    );
   }
 }
 
@@ -87,7 +91,7 @@ Dynamic._idyll = {
     {
       name: 'display',
       type: 'expression',
-      example: '`x === 0 ? "none" : x`',
+      defaultValue: 'none',
       description: 'A custom display transform to use'
     }
   ]

@@ -30,12 +30,12 @@ class Loop extends React.Component {
 Loop._idyll = {
   name: 'Loop',
   tagType: 'open',
-  children: ['Some text'],
+  children: ['Item [Display value:"_iterator" /] [br/]'],
   props: [
     {
       name: 'value',
       type: 'array',
-      example: "['one', 'two', 'three']",
+      example: "`['one', 'two', 'three']`",
       description: 'Array of values to map.'
     }
   ]

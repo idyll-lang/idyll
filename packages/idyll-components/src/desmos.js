@@ -33,10 +33,15 @@ class Desmos extends React.Component {
       height = 400,
       width,
       id,
+      style,
       ...attributeProps
     } = this.props;
     return (
-      <div id={this.state.id} style={{ height, width }} {...attributeProps} />
+      <div
+        id={this.state.id}
+        style={{ ...style, height, width }}
+        {...attributeProps}
+      />
     );
   }
 

@@ -7,4 +7,10 @@ class H3 extends React.PureComponent {
   }
 }
 
+H3._idyll = {
+  name: 'H3',
+  tagType: 'open',
+  children: ['My Header Size 3']
+};
+
 export default H3;

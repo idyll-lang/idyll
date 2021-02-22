@@ -44,7 +44,8 @@ class Header extends React.PureComponent {
             (idyll && idyll.theme ? idyll.theme.headerBackground : undefined),
           color:
             color ||
-            (idyll && idyll.theme ? idyll.theme.headerColor : undefined)
+            (idyll && idyll.theme ? idyll.theme.headerColor : undefined),
+          ...this.props.style
         }}
       >
         <h1 className={'hed'}>{this.props.title}</h1>
@@ -89,13 +90,11 @@ Header._idyll = {
     },
     {
       name: 'author',
-      type: 'string',
-      example: '"Author Name"'
+      type: 'string'
     },
     {
       name: 'authorLink',
-      type: 'string',
-      example: '"author.website"'
+      type: 'string'
     },
     {
       name: 'authors',
@@ -113,13 +112,13 @@ Header._idyll = {
     {
       name: 'background',
       type: 'string',
-      example: '"blue"',
+      example: '"#999"',
       description: 'The background of the header. Can pass a color or a url().'
     },
     {
       name: 'byLineTemplate',
       type: 'object',
-      example: "{ prefix: 'Made by', joint: ' ', suffix: '&' }",
+      example: "`{ prefix: 'Made by', joint: ' ', suffix: '&' }`",
       description: 'Optional template to use in by line.'
     },
     {

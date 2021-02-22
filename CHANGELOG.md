@@ -1,21 +1,42 @@
+## v5.2.1
+
+Bugfix: fix publish command on windows [#695](https://github.com/idyll-lang/idyll/pull/695)
+
+## v5.2.0
+
+Add experimental [project create API](https://github.com/idyll-lang/idyll/pull/690).
+
+## v5.1.0
+
+Features:
+
+- Adds `insertFullWidth` option to markup serializer ([#686](https://github.com/idyll-lang/idyll/pull/686))
+- Adds `inlineAuthorView` option to `idyll-document` ([#681](https://github.com/idyll-lang/idyll/pull/681))
+
+Bugfixes:
+
+- General improvements to markup serialization ([#685](https://github.com/idyll-lang/idyll/pull/685), [#684](https://github.com/idyll-lang/idyll/pull/684), [#676](https://github.com/idyll-lang/idyll/pull/676))
+
 ### v5.0.1
 
 Bugfixes:
--  Improves output of `AST.toMarkup(ast)` function so that extra whitespace is not inserted on repeated calls.
 
+- Improves output of `AST.toMarkup(ast)` function so that extra whitespace is not inserted on repeated calls.
 
 # v5.0
 
 Features:
+
 - Adds `fullWidthSteps` option to the scroller, to make it easier for scroller components steps to take on wider designs
 
 Bugfixes:
--  Component resolver is initialized at the start of compile process and when a compiler postprocessor plugin creates a new component in components directory, it won't be available till the next build and the current build fails with component not found error. (See: https://github.com/idyll-lang/idyll/pull/610)
+
+- Component resolver is initialized at the start of compile process and when a compiler postprocessor plugin creates a new component in components directory, it won't be available till the next build and the current build fails with component not found error. (See: https://github.com/idyll-lang/idyll/pull/610)
 
 Breaking changes:
 
 - Update header component default behavior to use styles (background color and text color) provided by themes
-- Fix the `package.json` options logic so any idyll option can be provided via package.json and 
+- Fix the `package.json` options logic so any idyll option can be provided via package.json and
 
 ## v4.10
 

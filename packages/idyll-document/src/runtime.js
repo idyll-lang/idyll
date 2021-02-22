@@ -70,7 +70,15 @@ const getRefs = () => {
 };
 
 let wrapperKey = 0;
-const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
+const createWrapper = ({
+  theme,
+  layout,
+  authorView,
+  textEditComponent,
+  userViewComponent,
+  userInlineViewComponent,
+  wrapTextComponents
+}) => {
   return class Wrapper extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -203,15 +211,45 @@ const createWrapper = ({ theme, layout, authorView, userViewComponent }) => {
         );
       }
       const metaData = childComponent.type._idyll;
-      if (authorView && metaData && metaData.props) {
+      if (authorView) {
         // ensure inline elements do not have this overlay
         if (
+          (metaData && metaData.name === 'TextContainer') ||
+          ['TextContainer', 'DragDropContainer'].includes(
+            childComponent.type.name
+          )
+        ) {
+          return returnComponent;
+        } else if (
+          textEditComponent &&
+          metaData &&
+          wrapTextComponents.includes(metaData.name.toLowerCase())
+        ) {
+          const ViewComponent = textEditComponent;
+          return (
+            <ViewComponent idyllASTNode={this.props.idyllASTNode}>
+              {childComponent}
+            </ViewComponent>
+          );
+        } else if (
+          !metaData ||
           metaData.displayType === undefined ||
           metaData.displayType !== 'inline'
         ) {
           const ViewComponent = userViewComponent || AuthorTool;
           return (
             <ViewComponent
+              idyllASTNode={this.props.idyllASTNode}
+              component={returnComponent}
+              authorComponent={childComponent}
+              uniqueKey={uniqueKey}
+            />
+          );
+        } else if (metaData.displayType === 'inline') {
+          const InlineViewComponent =
+            userInlineViewComponent || userViewComponent || AuthorTool;
+          return (
+            <InlineViewComponent
               idyllASTNode={this.props.idyllASTNode}
               component={returnComponent}
               authorComponent={childComponent}
@@ -244,12 +282,34 @@ class IdyllRuntime extends React.PureComponent {
       theme: props.theme,
       layout: props.layout,
       authorView: props.authorView,
-      userViewComponent: props.userViewComponent
+      textEditComponent: props.textEditComponent,
+      userViewComponent: props.userViewComponent,
+      userInlineViewComponent: props.userInlineViewComponent,
+      wrapTextComponents: props.wrapTextComponents
     });
 
     let hasInitialized = false;
     let initialContext = {};
     // Initialize a custom context
+    let _initializeCallbacks = [];
+    let _mountCallbacks = [];
+    let _updateCallbacks = [];
+
+    this._onInitializeState = () => {
+      _initializeCallbacks.forEach(cb => {
+        cb();
+      });
+    };
+    this._onMount = () => {
+      _mountCallbacks.forEach(cb => {
+        cb();
+      });
+    };
+    this._onUpdateState = newData => {
+      _updateCallbacks.forEach(cb => {
+        cb(newData);
+      });
+    };
     if (typeof props.context === 'function') {
       props.context({
         update: newState => {
@@ -263,13 +323,13 @@ class IdyllRuntime extends React.PureComponent {
           return this.state;
         },
         onInitialize: cb => {
-          this._onInitializeState = cb;
+          _initializeCallbacks.push(cb);
         },
         onMount: cb => {
-          this._onMount = cb;
+          _mountCallbacks.push(cb);
         },
         onUpdate: cb => {
-          this._onUpdateState = cb;
+          _updateCallbacks.push(cb);
         }
       });
     }
@@ -373,7 +433,7 @@ class IdyllRuntime extends React.PureComponent {
     const schema = translate(ast);
     const wrapTargets = findWrapTargets(schema, this.state, props.components);
     let refCounter = 0;
-    const transformedSchema = mapTree(schema, node => {
+    const transformedSchema = mapTree(schema, (node, depth) => {
       // console.log('mapoing ', node.component || node.type);
       if (!node.component) {
         if (node.type && node.type === 'textnode') return node.value;
@@ -400,8 +460,6 @@ class IdyllRuntime extends React.PureComponent {
       }
       //Inspect for isHTMLNode  props and to check for dynamic components.
       if (!wrapTargets.includes(node)) {
-        // console.log('node not wrapped', node);
-
         if (
           this.props.wrapTextComponents.indexOf(node.component) > -1 &&
           this.props.textEditComponent
@@ -555,7 +613,19 @@ IdyllRuntime.defaultProps = {
   theme: 'github',
   authorView: false,
   insertStyles: false,
-  wrapTextComponents: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'CodeHighlight']
+  wrapTextComponents: [
+    'p',
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'ul',
+    'ol',
+    'pre',
+    'CodeHighlight'
+  ]
 };
 
 export default IdyllRuntime;

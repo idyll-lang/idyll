@@ -22,7 +22,11 @@ class Tweet extends Component {
       const twttrEl = document.createElement('script');
       twttrEl.setAttribute(
         'src',
-        `${document.location.protocol}//platform.twitter.com/widgets.js`
+        `${
+          document.location.protocol === 'file:'
+            ? 'https:'
+            : document.location.protocol
+        }//platform.twitter.com/widgets.js`
       );
       twttrEl.onload = () => resolve();
       twttrEl.onerror = error => reject(error);
@@ -78,7 +82,7 @@ Tweet._idyll = {
     {
       name: 'parameters',
       type: 'object',
-      example: '{linkColor: "#8342f4"}',
+      example: '`{linkColor: "#8342f4"}`',
       description:
         'Embedded tweet params. See https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-parameter-reference. Optional'
     }

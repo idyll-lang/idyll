@@ -727,6 +727,7 @@ hr {
 
 .idyll-action {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .idyll-document-error {

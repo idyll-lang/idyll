@@ -7,4 +7,10 @@ class H6 extends React.PureComponent {
   }
 }
 
+H6._idyll = {
+  name: 'H6',
+  tagType: 'open',
+  children: ['My Header Size 6']
+};
+
 export default H6;
