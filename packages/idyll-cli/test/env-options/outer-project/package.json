@@ -1,0 +1,32 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "idyll index.idl --watch --css styles.css --layout centered --theme github --spellcheck"
+  },
+  "idyll": [
+    ["default-env",
+      {
+        "layout": "blog"
+      }],
+    ["my-env",
+      {
+        "alias": {
+          "PackageJsonComponentTest": "CustomComponent"
+        },
+        "layout": "none"
+      }],
+    ["outer-env",
+      {
+        "alias": {
+          "PackageJsonComponentTest": "CustomComponent"
+        },
+        "layout": "centered"
+      }]
+  ],
+  "dependencies": {
+    "idyll-component": "^1.1.0",
+    "react-simple-pie-chart": "^0.4.1"
+  },
+  "devDependencies": {}
+}
