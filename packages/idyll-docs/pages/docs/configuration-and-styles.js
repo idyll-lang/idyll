@@ -199,6 +199,40 @@ export default ({ url }) => (
       <p>You can also compile an input string directly instead of a file:</p>
       <Highlight className="javascript">{ExampleCodeB}</Highlight>
     </section>
+    <section>
+      <h2>Selecting Idyll options using the env parameter</h2>
+      <p>
+        Oftentimes it can be helpful to change your options based on where You
+        are running Idyll. Idyll supports an env paramter you can use either by
+        API or with the command-line with \`--env my-env\`
+      </p>
+      <p>
+        To use the env parameter you need to change the format of package.json
+        to support multiple options.
+      </p>
+      <h3>package.json example</h3>
+      <Highlight className="json">
+        {`"idyll": [
+        "my-env", {
+          "layout": "blog",
+          "theme": "my-custom-theme.css",
+          "components": ["./components/", "../some-other-components/"],
+          "googleFonts": ["Hanalei Fill"],
+          "favicon": "static/favicon.ico",
+          "alias": {
+            "VL": "IdyllVegaLite"
+          }],
+          [
+            "prod-env", {
+              "theme": "my-custom-prod-theme.css",
+          }]
+    ]}`}
+      </Highlight>
+      <p>
+        If no env is supplied and package.json is in list format, the first env
+        will be used by default.
+      </p>
+    </section>
     <p>
       Continue to the next section to learn about{' '}
       <Link href="/docs/components">
