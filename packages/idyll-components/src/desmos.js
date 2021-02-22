@@ -153,7 +153,7 @@ Desmos._idyll = {
     {
       name: 'width',
       type: 'string',
-      example: '"350px"'
+      example: '"100%"'
     }
   ]
 };
