@@ -35,13 +35,17 @@ class YoutubeComponent extends React.Component {
       )
     };
 
+    const style = this.props.style || {};
+
     return (
-      <YouTube
-        key={this.props.id}
-        videoId={this.props.id}
-        opts={opts}
-        onReady={this._onReady.bind(this)}
-      />
+      <div style={{ minHeight: this.props.height, ...style }}>
+        <YouTube
+          key={this.props.id}
+          videoId={this.props.id}
+          opts={opts}
+          onReady={this._onReady.bind(this)}
+        />
+      </div>
     );
   }
 
