@@ -612,6 +612,10 @@ img {
   background-color: #fff;
 }
 
+.vega-embed {
+  width: 100%;
+}
+
 code {
   padding: 0;
   padding-top: 0.2em;

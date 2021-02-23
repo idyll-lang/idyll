@@ -725,6 +725,10 @@ table th {
   background-color: #f6f8fa;
 }
 
+.vega-embed {
+  width: 100%;
+}
+
 img {
   max-width: 100%;
   box-sizing: content-box;
