@@ -87,10 +87,18 @@ YoutubeComponent._idyll = {
   tagType: 'closed',
   props: [
     {
-      name: 'onReady',
-      type: 'expression',
-      example: '`initialized = true`',
-      description: 'Callback triggered when the video is ready to play.'
+      name: 'play',
+      type: 'boolean',
+      example: 'true',
+      defaultValue: 'false',
+      description: 'Is the video playing?'
+    },
+    {
+      name: 'audio',
+      type: 'boolean',
+      example: 'false',
+      defaultValue: 'true',
+      description: 'Is the audio turned on?'
     },
     {
       name: 'width',
@@ -105,20 +113,6 @@ YoutubeComponent._idyll = {
       description: 'Height of the video.'
     },
     {
-      name: 'audio',
-      type: 'boolean',
-      example: 'false',
-      defaultValue: 'true',
-      description: 'Is the audio turned on?'
-    },
-    {
-      name: 'play',
-      type: 'boolean',
-      example: 'true',
-      defaultValue: 'false',
-      description: 'Is the video playing?'
-    },
-    {
       name: 'id',
       type: 'string',
       example: '"KnPe6dZuwlg"',
@@ -131,6 +125,11 @@ YoutubeComponent._idyll = {
       defaultValue: '`{}`',
       description:
         'Dictionary of extra options. See YouTube docs for all options.'
+    },
+    {
+      name: 'onReady',
+      type: 'expression',
+      description: 'Callback triggered when the video is ready to play.'
     }
   ]
 };
