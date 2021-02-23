@@ -40,7 +40,7 @@ class Tweet extends Component {
     const twttr = window['twttr'];
     const { id, parameters } = this.props;
 
-    twttr.widgets.createTweet(id, this.tweetContainer.current, parameters);
+    twttr.widgets.createTweet('' + id, this.tweetContainer.current, parameters);
 
     this.setState({ loading: false });
   }
