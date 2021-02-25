@@ -102,6 +102,7 @@ test('options work as expected', () => {
     template: resolve(join(__dirname, '/../../src/client/_index.html')),
     datasets: join(PROJECT_DIR, 'data'),
     static: 'static',
+    staticOutputDir: 'static',
     transform: [],
     port: 3000,
     compiler: {

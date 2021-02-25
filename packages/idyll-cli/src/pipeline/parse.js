@@ -126,7 +126,7 @@ const parseMeta = ast => {
 
   let metaProperties = {};
   if (metaNodes.length > 1) {
-    console.warn('There are more than 1 meta nodes');
+    console.warn('There is more than one meta node.');
   } else if (metaNodes.length === 1) {
     getPropertyKeys(metaNodes[0]).forEach(key => {
       metaProperties[key] = getProperty(metaNodes[0], key).value;
@@ -161,7 +161,8 @@ exports.getBaseHTML = (ast, template, opts) => {
     Object.assign(
       {
         googleFontsUrl: getGoogleFontsUrl(opts),
-        favicon: opts.favicon
+        favicon: opts.favicon,
+        staticOutputDir: opts.staticOutputDir || 'static'
       },
       parseMeta(ast)
     )
@@ -201,7 +202,8 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
       {
         favicon: opts.favicon,
         usesTex: components.equation,
-        googleFontsUrl: getGoogleFontsUrl(opts)
+        googleFontsUrl: getGoogleFontsUrl(opts),
+        staticOutputDir: opts.staticOutputDir || 'static'
       },
       meta
     )

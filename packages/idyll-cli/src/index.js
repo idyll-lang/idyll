@@ -48,6 +48,7 @@ const idyll = (options = {}, cb) => {
       ssr: true,
       components: 'components',
       static: 'static',
+      staticOutputDir: 'static',
       defaultComponents: dirname(require.resolve('idyll-components')),
       layout: 'centered',
       theme: 'github',
