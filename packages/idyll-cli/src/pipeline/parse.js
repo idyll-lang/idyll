@@ -126,7 +126,7 @@ const parseMeta = ast => {
 
   let metaProperties = {};
   if (metaNodes.length > 1) {
-    console.warn('There is more than 1 meta node.');
+    console.warn('There is more than one meta node.');
   } else if (metaNodes.length === 1) {
     getPropertyKeys(metaNodes[0]).forEach(key => {
       metaProperties[key] = getProperty(metaNodes[0], key).value;
