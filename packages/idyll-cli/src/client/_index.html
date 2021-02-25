@@ -42,10 +42,10 @@
     <link rel="stylesheet" href="{{googleFontsUrl}}" />
     {{/googleFontsUrl}}
 
-    <link rel="stylesheet" href="static/idyll_styles.css" />
+    <link rel="stylesheet" href="{{staticOutputDir}}/idyll_styles.css" />
   </head>
   <body>
     <div id="idyll-mount">{{{idyllContent}}}</div>
-    <script src="static/idyll_index.js"></script>
+    <script src="{{staticOutputDir}}/idyll_index.js"></script>
   </body>
 </html>
