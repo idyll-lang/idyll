@@ -26,10 +26,11 @@ module.exports = function(opts) {
 
   const resolveWithOutputBase = resolveWithBase(getBaseDir(opts.output));
   const OUTPUT_DIR = resolveWithOutputBase(opts.output);
-  const STATIC_OUTPUT_DIR = join(OUTPUT_DIR, opts.static_output_dir).replace(
-    /\/$/,
-    ''
-  );
+  console.log(OUTPUT_DIR, opts.staticOutputDir);
+  const STATIC_OUTPUT_DIR = join(
+    OUTPUT_DIR,
+    opts.staticOutputDir || 'static'
+  ).replace(/\/$/, '');
   const TMP_DIR = resolveWithProjBase(opts.temp);
 
   return {

@@ -162,7 +162,7 @@ exports.getBaseHTML = (ast, template, opts) => {
       {
         googleFontsUrl: getGoogleFontsUrl(opts),
         favicon: opts.favicon,
-        staticOutputDir: paths.STATIC_OUTPUT_DIR
+        staticOutputDir: opts.staticOutputDir || 'static'
       },
       parseMeta(ast)
     )
@@ -200,10 +200,10 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
     template,
     Object.assign(
       {
-        favicon: opts.favicon,
+        favicon: c.favicon,
         usesTex: components.equation,
         googleFontsUrl: getGoogleFontsUrl(opts),
-        staticOutputDir: paths.STATIC_OUTPUT_DIR
+        staticOutputDir: opts.staticOutputDir || 'static'
       },
       meta
     )
