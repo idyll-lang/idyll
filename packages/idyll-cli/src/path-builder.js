@@ -26,7 +26,6 @@ module.exports = function(opts) {
 
   const resolveWithOutputBase = resolveWithBase(getBaseDir(opts.output));
   const OUTPUT_DIR = resolveWithOutputBase(opts.output);
-  console.log(OUTPUT_DIR, opts.staticOutputDir);
   const STATIC_OUTPUT_DIR = join(
     OUTPUT_DIR,
     opts.staticOutputDir || 'static'

@@ -3,8 +3,6 @@ const { dirname, basename, extname, join } = require('path');
 const EventEmitter = require('events');
 const mkdirp = require('mkdirp');
 
-console.log('idyll');
-
 const pathBuilder = require('./path-builder');
 const configureNode = require('./node-config');
 const pipeline = require('./pipeline');
@@ -39,7 +37,6 @@ const searchParentDirectories = packageDir => {
 };
 
 const idyll = (options = {}, cb) => {
-  console.log(options);
   const opts = Object.assign(
     {},
     {
@@ -68,7 +65,6 @@ const idyll = (options = {}, cb) => {
     options
   );
 
-  console.log(opts);
   const paths = pathBuilder(opts);
   debug('Reading from paths:', paths);
 

@@ -200,7 +200,7 @@ exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
     template,
     Object.assign(
       {
-        favicon: c.favicon,
+        favicon: opts.favicon,
         usesTex: components.equation,
         googleFontsUrl: getGoogleFontsUrl(opts),
         staticOutputDir: opts.staticOutputDir || 'static'
