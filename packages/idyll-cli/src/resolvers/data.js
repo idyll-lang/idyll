@@ -33,7 +33,13 @@ class DataResolver {
       const inputString = fs.readFileSync(
         slash(join(this.paths.DATA_DIR, source))
       );
-      data = parse(inputString, { cast: true, columns: true });
+      data = parse(inputString, {
+        cast: true,
+        columns: true,
+        skip_empty_lines: true,
+        ltrim: true,
+        rtrim: true
+      });
       debug(`${JSON.stringify(data)}`);
     } else if (source.endsWith('.json')) {
       debug(`Loading ${source} as a JSON document into data variable ${name}`);
