@@ -91,7 +91,7 @@ const createWrapper = ({
       const vars = values(props.__vars__);
       const exps = values(props.__expr__);
 
-      this.usesRefs = exps.some(v => v.includes('refs.'));
+      this.usesRefs = exps.some(v => v && v.includes('refs.'));
 
       this.state = { hasError: false, error: null };
 
