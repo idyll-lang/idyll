@@ -264,7 +264,13 @@ export const getData = (arr, datasets = {}) => {
               return res
                 .text()
                 .then(resString =>
-                  parse(resString, { cast: true, columns: true })
+                  parse(resString, {
+                    cast: true,
+                    columns: true,
+                    skip_empty_lines: true,
+                    ltrim: true,
+                    rtrim: true
+                  })
                 )
                 .catch(e => {
                   console.error(`Error while parsing csv: ${e}`);

@@ -591,18 +591,18 @@ table th {
   font-weight: 600;
 }
 
-table th,
-table td {
+:not(.gist) table th,
+:not(.gist) table td {
   padding: 6px 13px;
   border: 1px solid #dfe2e5;
 }
 
-table tr {
+:not(.gist) table tr {
   background-color: #fff;
   border-top: 1px solid #c6cbd1;
 }
 
-table tr:nth-child(2n) {
+:not(.gist) table tr:nth-child(2n) {
   background-color: #f6f8fa;
 }
 
@@ -610,6 +610,10 @@ img {
   max-width: 100%;
   box-sizing: content-box;
   background-color: #fff;
+}
+
+.vega-embed {
+  width: 100%;
 }
 
 code {

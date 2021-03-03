@@ -8,7 +8,11 @@ const additionalTextByIndex = (authors, suffix, joint, index) => {
   return index in map ? map[index] : `${joint} `;
 };
 
-const AuthorLink = ({ name, link }) => <a href={link}>{name}</a>;
+const AuthorLink = ({ name, link }) => (
+  <a target="_blank" href={link}>
+    {name}
+  </a>
+);
 
 const ByLineMultipleAuthors = ({ authors, prefix, joint, suffix }) => (
   <div className={'byline'}>
@@ -55,7 +59,9 @@ class Header extends React.PureComponent {
         {this.props.author && (
           <div className={'byline'}>
             {`${prefix.trim()} `}
-            <a href={this.props.authorLink}>{this.props.author}</a>
+            <a target="_blank" href={this.props.authorLink}>
+              {this.props.author}
+            </a>
           </div>
         )}
         {!!this.props.authors && (

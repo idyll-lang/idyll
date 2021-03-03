@@ -1,7 +1,4 @@
-const {
-  dirname,
-  join,
-} = require('path');
+const { dirname, join } = require('path');
 const pathBuilder = require('../../src/path-builder');
 
 function opts(inputPath, outputPath) {
@@ -21,7 +18,8 @@ function opts(inputPath, outputPath) {
     datasets: 'data',
     minify: false,
     ssr: true,
-    components: [ 'components' ],
+    staticOutputDir: 'static',
+    components: ['components'],
     static: 'static',
     defaultComponents: '',
     layout: 'blog',
@@ -37,7 +35,7 @@ function opts(inputPath, outputPath) {
     help: false,
     h: false,
     version: false,
-    m: [ 'components' ],
+    m: ['components'],
     css: 'styles.css',
     c: 'styles.css',
     d: 'data',
@@ -49,14 +47,14 @@ function opts(inputPath, outputPath) {
     googleFonts: [],
     g: [],
     e: 'github',
-    ...overrideOpts,
-  }
+    ...overrideOpts
+  };
 }
 
 describe('path builder with input and output args', () => {
   it('should use absolute -i (input path) args directly', () => {
     const inputPath = join('/', 'absolute', 'nested', 'index.idyll');
-    const pathOpts = opts(inputPath)
+    const pathOpts = opts(inputPath);
     const paths = pathBuilder(pathOpts);
     const expectedInputPath = inputPath;
     const expectedOutputDir = join(process.cwd(), 'build');
@@ -66,7 +64,7 @@ describe('path builder with input and output args', () => {
 
   it('should use absolute -o (output path) arg directly', () => {
     const outputDir = join('/', 'nested', 'build');
-    const pathOpts = opts(null, outputDir)
+    const pathOpts = opts(null, outputDir);
     const paths = pathBuilder(pathOpts);
     const expectedInputPath = join(process.cwd(), pathOpts.inputFile);
     const expectedOutputDir = outputDir;
@@ -77,7 +75,7 @@ describe('path builder with input and output args', () => {
   it('should use absolute -i and -o (input and output path) args directly', () => {
     const inputPath = join('/', 'absolute', 'nested', 'index.idyll');
     const outputDir = join('/', 'outputs', 'nested', 'build');
-    const pathOpts = opts(inputPath, outputDir)
+    const pathOpts = opts(inputPath, outputDir);
     const paths = pathBuilder(pathOpts);
     const expectedInputPath = inputPath;
     const expectedOutputDir = outputDir;
@@ -87,7 +85,7 @@ describe('path builder with input and output args', () => {
 
   it('should resolve relative -i (input path) arg', () => {
     const inputPath = join('nested', 'index.idyll');
-    const pathOpts = opts(inputPath)
+    const pathOpts = opts(inputPath);
     const paths = pathBuilder(pathOpts);
     const expectedInputPath = join(process.cwd(), inputPath);
     const expectedOutputDir = join(process.cwd(), 'build');
@@ -97,7 +95,7 @@ describe('path builder with input and output args', () => {
 
   it('should resolve relative -o (output path) arg', () => {
     const outputPath = join('nested', 'v1', 'build');
-    const pathOpts = opts(null, outputPath)
+    const pathOpts = opts(null, outputPath);
     const paths = pathBuilder(pathOpts);
     const expectedInputPath = join(process.cwd(), pathOpts.inputFile);
     const expectedOutputDir = join(process.cwd(), outputPath);
@@ -108,12 +106,11 @@ describe('path builder with input and output args', () => {
   it('should resolve relative -i and -o (input and output path) args', () => {
     const inputPath = join('nested', 'index.idyll');
     const outputPath = join('build');
-    const pathOpts = opts(inputPath, outputPath)
+    const pathOpts = opts(inputPath, outputPath);
     const paths = pathBuilder(pathOpts);
     const expectedInputPath = join(process.cwd(), inputPath);
     const expectedOutputDir = join(process.cwd(), outputPath);
     expect(paths.IDYLL_INPUT_FILE).toBe(expectedInputPath);
     expect(paths.OUTPUT_DIR).toBe(expectedOutputDir);
   });
-
 });

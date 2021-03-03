@@ -8,8 +8,6 @@ const pathBuilder = require('./path-builder');
 const configureNode = require('./node-config');
 const pipeline = require('./pipeline');
 const { ComponentResolver, DataResolver, CSSResolver } = require('./resolvers');
-const { forEach } = require('svg-tags');
-const { has } = require('browser-sync');
 
 const debug = require('debug')('idyll:cli');
 
@@ -95,6 +93,7 @@ const idyll = (options = {}, cb) => {
       ssr: true,
       components: 'components',
       static: 'static',
+      staticOutputDir: 'static',
       defaultComponents: dirname(require.resolve('idyll-components')),
       layout: 'centered',
       theme: 'github',

@@ -6,7 +6,7 @@
   subtitle:"Welcome to Idyll. Open index.idyll to start writing"
   author:"Your Name Here"
   authorLink:"https://idyll-lang.org"
-  date:`(new Date()).toDateString()`
+  date:"{{date}}"
   background:"#222222"
   color:"#ffffff"
    /]

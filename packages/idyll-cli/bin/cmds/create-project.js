@@ -220,7 +220,17 @@ async function createProject(answers) {
 
     await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
     // TODO: could add more templating.
-    await fs.writeFile(indexPath, indexIdyll.replace(/\{\{title\}\}/g, title));
+    await fs.writeFile(
+      indexPath,
+      indexIdyll.replace(/\{\{title\}\}/g, title).replace(
+        /\{\{date\}\}/g,
+        new Date().toLocaleDateString('en-EN', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric'
+        })
+      )
+    );
   }
 
   async function installDependencies() {

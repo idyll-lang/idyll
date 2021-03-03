@@ -101,6 +101,7 @@ test('options work as expected', () => {
     defaultComponents: dirname(require.resolve('idyll-components')),
     temp: '.idyll',
     static: 'static',
+    staticOutputDir: 'static',
     outputCSS: '__idyll_styles.css',
     outputJS: '__idyll_index.js',
     datasets: 'data',

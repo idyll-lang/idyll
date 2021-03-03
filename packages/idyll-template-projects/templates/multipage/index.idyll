@@ -6,15 +6,15 @@
   subtitle:"Welcome to Idyll. Open index.idyll to start writing"
   author:"Your Name Here"
   authorLink:"https://idyll-lang.org"
-  date:`(new Date()).toDateString()`
+  date:"{{date}}"
   background:"#222222"
   color:"#ffffff"
    /]
 
 ## Quick Start
-* The multipage template uses an index, or main, page (in this directory) alongside multiple sub-pages (in the `posts` directory).  
-* To create a new page, `cd posts` to navigate to the `posts` directory, then use `idyll create --template ../template --no-install` to create a new post.  
-* To run a sub-page, `cd posts/name-of-page` to navigate to that page's directory, then use `idyll`.  
+* The multipage template uses an index, or main, page (in this directory) alongside multiple sub-pages (in the `posts` directory).
+* To create a new page, `cd posts` to navigate to the `posts` directory, then use `idyll create --template ../template --no-install` to create a new post.
+* To run a sub-page, `cd posts/name-of-page` to navigate to that page's directory, then use `idyll`.
 * Any pages that have been built will go to the `docs` directory (found within the top level of the multipage post).
 
 ## Project overview
