@@ -40,7 +40,7 @@
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
     "react-dom-factories": "^1.0.1",
-    "react-tooltip": "3.8.4",
+    "react-tooltip": "4.2.15",
     "scrollmonitor": "^1.2.3",
     "scrollparent": "^2.0.1",
     "styled-jsx": "^2.2.4"
@@ -52,7 +52,7 @@
     "babel-preset-react": "^6.24.1",
     "concurrently": "^4.1.0",
     "enzyme": "^3.0.0",
-    "enzyme-adapter-react-16": "^1.0.0",
+    "enzyme-adapter-react-16": "^1.15.4",
     "jest": "^20.0.4",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
