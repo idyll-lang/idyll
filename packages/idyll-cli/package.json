@@ -40,6 +40,7 @@
     "bs-pretty-message": "^1.0.8",
     "chalk": "^2.4.1",
     "change-case": "^3.0.1",
+    "command-line-args": "^5.1.1",
     "cross-spawn": "^6.0.5",
     "csv-parse": "^4.8.2",
     "debug": "^3.1.0",
