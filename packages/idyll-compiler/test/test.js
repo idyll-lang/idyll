@@ -1200,8 +1200,8 @@ End text
       try {
         const output = compile(input, { async: false });
       } catch (err) {
-        // expect(err.row).to.be(1);
-        // expect(err.column).to.be(70);
+        expect(err.row).to.be(1);
+        expect(err.column).to.be(70);
       }
     });
   });

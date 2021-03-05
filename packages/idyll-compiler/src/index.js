@@ -44,7 +44,7 @@ module.exports = function(input, options, alias, callback) {
     if (options.async) {
       return new Promise((resolve, reject) => reject(err));
     } else {
-      throw errr;
+      throw err;
     }
   }
 
