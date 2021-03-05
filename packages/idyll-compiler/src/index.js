@@ -41,7 +41,11 @@ module.exports = function(input, options, alias, callback) {
     );
   } catch (err) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
-    return new Promise((resolve, reject) => reject(err));
+    if (options.async) {
+      return new Promise((resolve, reject) => reject(err));
+    } else {
+      throw errr;
+    }
   }
 
   let astTransform = Processor(output, options)
