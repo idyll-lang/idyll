@@ -6,7 +6,6 @@ import ReactJsonSchema from './utils/schema2element';
 import entries from 'object.entries';
 import values from 'object.values';
 import { generatePlaceholder } from './components/placeholder';
-import AuthorTool from './components/author-tool';
 import { getChildren } from 'idyll-ast';
 import equal from 'fast-deep-equal';
 
@@ -236,26 +235,31 @@ const createWrapper = ({
           metaData.displayType === undefined ||
           metaData.displayType !== 'inline'
         ) {
-          const ViewComponent = userViewComponent || AuthorTool;
-          return (
-            <ViewComponent
-              idyllASTNode={this.props.idyllASTNode}
-              component={returnComponent}
-              authorComponent={childComponent}
-              uniqueKey={uniqueKey}
-            />
-          );
+          const ViewComponent = userViewComponent;
+          if (ViewComponent) {
+            return (
+              <ViewComponent
+                idyllASTNode={this.props.idyllASTNode}
+                component={returnComponent}
+                authorComponent={childComponent}
+                uniqueKey={uniqueKey}
+              />
+            );
+          }
         } else if (metaData.displayType === 'inline') {
           const InlineViewComponent =
-            userInlineViewComponent || userViewComponent || AuthorTool;
-          return (
-            <InlineViewComponent
-              idyllASTNode={this.props.idyllASTNode}
-              component={returnComponent}
-              authorComponent={childComponent}
-              uniqueKey={uniqueKey}
-            />
-          );
+            userInlineViewComponent || userViewComponent;
+
+          if (InlineViewComponent) {
+            return (
+              <InlineViewComponent
+                idyllASTNode={this.props.idyllASTNode}
+                component={returnComponent}
+                authorComponent={childComponent}
+                uniqueKey={uniqueKey}
+              />
+            );
+          }
         }
       }
       return returnComponent;
