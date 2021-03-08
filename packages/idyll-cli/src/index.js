@@ -12,7 +12,9 @@ const { ComponentResolver, DataResolver, CSSResolver } = require('./resolvers');
 const debug = require('debug')('idyll:cli');
 
 const optionDefinitions = [{ name: 'env', alias: 'e', type: String }];
-const commandLineOptions = commandLineArgs(optionDefinitions);
+const commandLineOptions = commandLineArgs(optionDefinitions, {
+  partial: true
+}); //partial needed to allow yargs commands like create
 
 function createDirectories(paths) {
   mkdirp.sync(paths.OUTPUT_DIR);
