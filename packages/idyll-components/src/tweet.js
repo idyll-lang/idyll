@@ -62,7 +62,11 @@ class Tweet extends Component {
     return (
       <div
         ref={this.tweetContainer}
-        style={this.props.style ? this.props.style : { minHeight: 309 }}
+        style={
+          this.props.style
+            ? this.props.style
+            : { minHeight: 309, marginTop: 10, marginBottom: 10 }
+        }
       >
         {loading && loadingMessage}
       </div>
