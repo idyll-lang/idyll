@@ -1,4 +1,15 @@
-## v5.2.1
+## v5.4.0
+
+Features: 
+- Added support for multiple configurations in package.json [#701](https://github.com/idyll-lang/idyll/pull/701)
+
+Bugfixes:
+- Fix bug where an undefined expression could crash the runtime [#704](https://github.com/idyll-lang/idyll/pull/704)
+- Make CSV parsing more flexible [#703](https://github.com/idyll-lang/idyll/pull/703)
+- Add min heights to components that fetch resources over the network
+- Small improvements to theme CSS
+
+### v5.2.1
 
 Bugfix: fix publish command on windows [#695](https://github.com/idyll-lang/idyll/pull/695)
 
