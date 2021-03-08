@@ -7,7 +7,7 @@ class Tweet extends Component {
 
     this.state = {
       loading: true,
-      loadingMessage: 'Loading tweet ...'
+      loadingMessage: 'Loading tweet...'
     };
     this.tweetContainer = createRef();
     this.loadTweet = this.loadTweet.bind(this);
@@ -59,7 +59,18 @@ class Tweet extends Component {
   render() {
     const { loading, loadingMessage } = this.state;
 
-    return <div ref={this.tweetContainer}>{loading && loadingMessage}</div>;
+    return (
+      <div
+        ref={this.tweetContainer}
+        style={
+          this.props.style
+            ? this.props.style
+            : { minHeight: 309, marginTop: 10, marginBottom: 10 }
+        }
+      >
+        {loading && loadingMessage}
+      </div>
+    );
   }
 }
 
