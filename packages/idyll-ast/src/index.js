@@ -14,6 +14,7 @@ const schema = require('./ast.schema.json');
 const validator = ajv.compile(schema);
 const validatorProps = ajv.compile(schema.properties.properties);
 const converters = require('./converters');
+const htmlTags = require('html-tags');
 
 /**
  * @name appendNode
@@ -977,6 +978,15 @@ function nodeToMarkup(node, depth, insertFullWidth, separator = '\n') {
     'h5',
     'a'
   ];
+
+  // normalize component names
+  if (node.name && !htmlTags.includes(node.name.toLowerCase())) {
+    node.name = node.name
+      .split('-')
+      .map(s => s.charAt(0).toUpperCase() + s.slice(1))
+      .join('');
+  }
+
   switch (node.type) {
     case 'textnode':
       return `${'  '.repeat(depth)}${node.value.trim()}`;
