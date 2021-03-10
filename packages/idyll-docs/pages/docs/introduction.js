@@ -16,18 +16,16 @@ Idyll can be used to create [explorable explanations](https://explorabl.es/), wr
 
 We offer a [free public hosting service](https://idyll.pub) so that you can publish your creations to the web in a matter of seconds. Continue reading to learn more about the project, or see our [example gallery](/gallery).
 
-## Familiar Markup
-
-Idyll starts with the same principles as markdown, and uses a lot of the same syntax. If you want text to appear in your output, just start writing.
-
-## Beyond Static Text
-
-The real power of Idyll comes when you want to use JavaScript to enrich your writing. Special syntax allows you to embed JavaScript inline with your text. Idyll comes with a variety of components that can be used out-of-the-box to create rich documents.
+Idyll starts with the same principles as markdown, and uses a lot of the same syntax. If you want text to appear in your output, just start writing. The real power of Idyll comes when you want to use JavaScript to enrich your writing. Special syntax allows you to embed JavaScript inline with your text. Idyll comes with a variety of components that can be used out-of-the-box to create rich documents.
 
 To include a JavaScript component, you can add tags to your text like this:
 
 \`\`\`
+Lorem ipsum...
+
 [ComponentName property:variableValue onEvent:\`variableValue = 5\` /]
+
+Lorem ipsum...
 \`\`\`
 
 Each tag corresponds to a React component, which receives the provided properties. Properties can be reactive variables or expressions,
@@ -128,6 +126,7 @@ Write your own equation:
 [Chart
   equation:\` (t) => funcFromString ? funcFromString(t) : 0 \`
   domain:\`[domainStart, domainEnd]\`
+  range:\`[-3, 3]\`
   samplePoints:1000 /]
 
 #### Update Domain
@@ -149,6 +148,7 @@ End: [Range value:domainEnd min:0 max:\`4 * Math.PI\` step:0.01  /]
 [Chart
   equation:\` (t) =>  funcFromString(t) \`
   domain:\`[domainStart, domainEnd]\`
+  range:\`[-3, 3]\`
   samplePoints:1000 /]
 \`\`\`
 

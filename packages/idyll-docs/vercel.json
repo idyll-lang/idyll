@@ -1,4 +1,15 @@
 {
   "version": 2,
-  "alias": "idyll-lang.org"
+  "alias": "idyll-lang.org",
+  "redirects": [
+    {
+      "source": "/docs/advanced-configuration",
+      "destination": "/docs/plugin-system"
+    },
+    { "source": "/", "destination": "/docs" },
+    {
+      "source": "/gallery/stacking-scroller-components",
+      "destination": "https://idyll.pub/post/stack-scroll-0c3da7fb8e45f3ecb720bcf8/"
+    }
+  ]
 }
