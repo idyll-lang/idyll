@@ -180,7 +180,7 @@ const Introduction = ({ url }) => (
       </Link>{' '}
       to start using Idyll.
     </p>
-    <style global jsx>{`
+    <style global>{`
       .idyll-root img {
         width: 400px;
         display: block;

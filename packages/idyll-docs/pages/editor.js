@@ -160,7 +160,7 @@ class EditorPage extends React.PureComponent {
           ) : null}
         </div>
 
-        <style jsx>{`
+        <style>{`
           .editor-page {
           }
 

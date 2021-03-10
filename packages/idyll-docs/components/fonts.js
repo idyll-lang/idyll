@@ -16,9 +16,12 @@ const Fonts = () => {
 
   const sourceSans = new FontFaceObserver('Source Sans Pro');
 
-  sourceSans.load().then(() => {
-    document.documentElement.classList.add('loaded');
-  });
+  sourceSans
+    .load()
+    .then(() => {
+      document.documentElement.classList.add('loaded');
+    })
+    .catch(e => console.warn);
 };
 
 export default Fonts;

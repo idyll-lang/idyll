@@ -3,12 +3,11 @@ const exampleGroups = [
     title: 'Explorable Explanations',
     items: [
       {
-        label: 'How to Tune a Guitar',
-        subtitle:
-          'An interactive audio guide with guitars and a little music theory.',
-        href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
-        image: 'how-to-tune-a-guitar.png',
-        sourceUrl: 'https://github.com/mathisonian/how-to-tune-a-guitar'
+        label: 'The Barnes-Hut Approximation',
+        subtitle: 'Efficient computation of N-body forces',
+        href: 'https://jheer.github.io/barnes-hut/',
+        image: 'barnes-hut.png',
+        sourceUrl: 'https://github.com/jheer/barnes-hut'
       },
       {
         label: 'Kernel Density Estimation',
@@ -16,6 +15,21 @@ const exampleGroups = [
         href: 'https://mathisonian.github.io/kde/',
         image: 'kde.png',
         sourceUrl: 'https://github.com/mathisonian/kde'
+      },
+      {
+        label: 'The Math of Card Shuffling',
+        subtitle: 'Riffling from factory order to complete randomness.',
+        href: 'https://fredhohman.com/card-shuffling/',
+        image: 'cards.png',
+        sourceUrl: 'https://github.com/fredhohman/card-shuffling'
+      },
+      {
+        label: 'How to Tune a Guitar',
+        subtitle:
+          'An interactive audio guide with guitars and a little music theory.',
+        href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
+        image: 'how-to-tune-a-guitar.png',
+        sourceUrl: 'https://github.com/mathisonian/how-to-tune-a-guitar'
       },
       {
         label: "The Beginner's Guide to Dimensionality Reduction",
@@ -28,13 +42,6 @@ const exampleGroups = [
         sourceUrl: 'https://github.com/mathisonian/dimensionality-reduction'
       },
       {
-        label: 'The Barnes-Hut Approximation',
-        subtitle: 'Efficient computation of N-body forces',
-        href: 'https://jheer.github.io/barnes-hut/',
-        image: 'barnes-hut.png',
-        sourceUrl: 'https://github.com/jheer/barnes-hut'
-      },
-      {
         label: 'Beat Basics',
         subtitle: "Explore 3/4 and 6/8 time using John Varney's rhythm wheel.",
         href: 'https://megan-vo.github.io/basic-beats/',
@@ -45,13 +52,6 @@ const exampleGroups = [
         label: 'How does the eye work?',
         href: 'https://idyll.pub/post/the-eye-5b169094cce3bece5d95e964/',
         image: 'the-eye.png'
-      },
-      {
-        label: 'The Math of Card Shuffling',
-        subtitle: 'Riffling from factory order to complete randomness.',
-        href: 'https://fredhohman.com/card-shuffling/',
-        image: 'cards.png',
-        sourceUrl: 'https://github.com/fredhohman/card-shuffling'
       },
       {
         label: 'The Etymology of Trig Functions',

@@ -8,27 +8,6 @@ const Examples = () => (
   <section>
     <h1>Made with Idyll</h1>
 
-    <div className="feature">
-      <div className="feature--text">
-        <a style={{ fontSize: '1.25rem' }} href="https://parametric.press">
-          Featured: Parametric Press, a digital magazine built with Idyll
-        </a>
-        <br />
-        <br />
-        The Parametric Press is an experiment, a born-digital magazine dedicated
-        to showcasing the expository power that’s possible when the audio,
-        visual, and interactive capabilities of dynamic media are effectively
-        combined.
-      </div>
-      <div className="feature--image">
-        <a href="https://parametric.press">
-          <img
-            style={{ maxWidth: 300, width: '100%', height: 'auto' }}
-            src="https://parametric.press/issue-01/static/images/share.png"
-          />
-        </a>
-      </div>
-    </div>
     <div style={{ position: 'relative' }}>
       <p>
         <b>Browse by category</b>
@@ -60,12 +39,35 @@ const Examples = () => (
       </p>
     </div>
 
-    {examples.map(eg => {
-      console.log(eg);
+    {examples.slice(0, 1).map(eg => {
+      return <GalleryGroup items={eg.items} title={eg.title} key={eg.title} />;
+    })}
+    <div className="feature">
+      <div className="feature--text">
+        <a style={{ fontSize: '1.25rem' }} href="https://parametric.press">
+          Featured: Parametric Press, a digital magazine built with Idyll
+        </a>
+        <br />
+        <br />
+        The Parametric Press is an experiment, a born-digital magazine dedicated
+        to showcasing the expository power that’s possible when the audio,
+        visual, and interactive capabilities of dynamic media are effectively
+        combined.
+      </div>
+      <div className="feature--image">
+        <a href="https://parametric.press">
+          <img
+            style={{ maxWidth: 300, width: '100%', height: 'auto' }}
+            src="https://parametric.press/issue-01/static/images/share.png"
+          />
+        </a>
+      </div>
+    </div>
+    {examples.slice(1).map(eg => {
       return <GalleryGroup items={eg.items} title={eg.title} key={eg.title} />;
     })}
 
-    <style jsx>{`
+    <style>{`
       .feature {
         border-radius: 5px;
         border: solid 1px #ddd;
@@ -75,6 +77,7 @@ const Examples = () => (
         flex-direction: row;
         align-items: flex-start;
         justify-content: space-between;
+        margin-top: 30px;
       }
 
       .feature--text {

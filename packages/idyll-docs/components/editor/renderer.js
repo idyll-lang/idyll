@@ -6,7 +6,7 @@ import styles from './styles/idyll';
 
 const scopedStyles = resolveScopedStyles(
   <scope>
-    <style jsx>{styles}</style>
+    <style>{styles}</style>
   </scope>
 );
 
@@ -46,7 +46,7 @@ class Renderer extends React.PureComponent {
 
         {scopedStyles.styles}
 
-        <style jsx>{`
+        <style>{`
           .renderer {
             flex: 2;
             background: #fffff8;

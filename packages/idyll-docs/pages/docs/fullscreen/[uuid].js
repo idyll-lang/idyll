@@ -74,7 +74,7 @@ class EditorPage extends React.PureComponent {
           </button>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .editor-page {
           }
 

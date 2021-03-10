@@ -1,8 +1,8 @@
-import React from 'react'
-import Link from 'next/link'
-import Head from 'next/head'
-import GlobalStyles from './global-styles'
-import { Contents } from '../contents'
+import React from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
+import GlobalStyles from './global-styles';
+import { Contents } from '../contents';
 import TopNav from './top-nav';
 import Fonts from './fonts';
 import { logPageView, initGA } from './analytics';
@@ -15,87 +15,113 @@ const NavTransitionDuration = 0.25; // s
 
 class IdyllDocsLayout extends React.Component {
   constructor(props) {
-    super(props)
-    const {url} = props
-    this.presentPath = url && url.asPath
+    super(props);
+    const { url } = props;
+    this.presentPath = url && url.asPath;
     this.state = {
-      navOpen: false,
-    }
+      navOpen: false
+    };
   }
 
-
   componentDidMount() {
-    console.log('mount')
+    console.log('mount');
     Fonts();
     if (!window.GA_INITIALIZED) {
-      initGA()
-      window.GA_INITIALIZED = true
+      initGA();
+      window.GA_INITIALIZED = true;
     }
-    logPageView()
+    logPageView();
   }
 
   toggleNavOpen() {
-    this.setState({ navOpen: !this.state.navOpen })
+    this.setState({ navOpen: !this.state.navOpen });
   }
 
   render() {
-    const { title = 'Idyll', shareImage, children } = this.props
+    const { title = 'Idyll', shareImage, children } = this.props;
     return (
-      <div id="master" className={ this.state.navOpen ? 'nav-open' : 'nav-closed' }>
+      <div
+        id="master"
+        className={this.state.navOpen ? 'nav-open' : 'nav-closed'}
+      >
         <Head>
-          <title>{ title }</title>
-          <meta charSet='utf-8' />
-          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-          <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" />
-          <meta property='og:image' content={shareImage || 'https://idyll-lang.org/static/images/twitter-share.png'} />
-          <meta property='og:description' content="A markup language for interactive documents." />
-          <meta property='og:title' content={title} />
-          <meta property='og:url' content='https://idyll-lang.org' />
-          <meta property='og:type' content='website' />
+          <title>{title}</title>
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+          <link
+            rel="icon"
+            type="image/x-icon"
+            href="/static/images/favicon.ico"
+          />
+          <meta
+            property="og:image"
+            content={
+              shareImage ||
+              'https://idyll-lang.org/static/images/twitter-share.png'
+            }
+          />
+          <meta
+            property="og:description"
+            content="A markup language for interactive documents."
+          />
+          <meta property="og:title" content={title} />
+          <meta property="og:url" content="https://idyll-lang.org" />
+          <meta property="og:type" content="website" />
         </Head>
 
         <TopNav selected="docs" />
         <div className="content-container">
-
           <nav>
             <button
               className="nav-toggler"
-              onClick={ () => this.toggleNavOpen() }
-            ><svg width={15} height={15} viewBox={`0 0 100 100`}><path d="M 25 50 L 100 0 L 100 100 Z" fill="#ddd" stroke="none" /></svg></button>
-            {
-              Contents.map(group => (
-                <section key={ group.title }>
-                  <h1>{ group.title }</h1>
-                  <ul>{
-                    group.pages.map(page => {
-                      return (
-                        <li className={ page.route === this.presentPath ? 'active' : null } key={ page.title }>
-                        {
-                          page.route.indexOf('http') > -1 ? (
-                            <a href={page.route} target='_blank'>{page.title}</a>
-                          ) : (
-                          <Link href={ page.route }>
-                            <a>{ page.title }</a>
-                          </Link>
-                          )
+              onClick={() => this.toggleNavOpen()}
+            >
+              <svg width={15} height={15} viewBox={`0 0 100 100`}>
+                <path
+                  d="M 25 50 L 100 0 L 100 100 Z"
+                  fill="#ddd"
+                  stroke="none"
+                />
+              </svg>
+            </button>
+            {Contents.map(group => (
+              <section key={group.title}>
+                <h1>{group.title}</h1>
+                <ul>
+                  {group.pages.map(page => {
+                    return (
+                      <li
+                        className={
+                          page.route === this.presentPath ? 'active' : null
                         }
-                        </li>
-                      )
-                    })
-                  }</ul>
-                </section>
-              ))
-            }
+                        key={page.title}
+                      >
+                        {page.route.indexOf('http') > -1 ? (
+                          <a href={page.route} target="_blank">
+                            {page.title}
+                          </a>
+                        ) : (
+                          <Link href={page.route}>
+                            <a>{page.title}</a>
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            ))}
           </nav>
 
           <main>
-            <div className="main-container">
-              { children }
-            </div>
+            <div className="main-container">{children}</div>
           </main>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .content-container {
             display: flex;
             justify-content: flex-end;
@@ -221,10 +247,9 @@ class IdyllDocsLayout extends React.Component {
         `}</style>
 
         <GlobalStyles />
-
       </div>
-    )
+    );
   }
 }
 
-export default IdyllDocsLayout
+export default IdyllDocsLayout;

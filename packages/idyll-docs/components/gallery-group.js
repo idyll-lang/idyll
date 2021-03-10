@@ -17,7 +17,7 @@ export default function GalleryGroup({ title, items }) {
         ))}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .example-group {
           margin-top: 60px;
         }

@@ -1,45 +1,45 @@
-import React from 'react'
-import { Editor, EditorState, ContentState } from 'draft-js'
+import React from 'react';
+import { Editor, EditorState, ContentState } from 'draft-js';
 
 class IdyllEditArea extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       editorState: this.createEditorState(props.initialContent),
-      shouldRenderEditor: false,
-    }
+      shouldRenderEditor: false
+    };
   }
 
   componentDidMount() {
     // Prevents the editor from rendering server-side
-    this.setState({ shouldRenderEditor: true })
+    this.setState({ shouldRenderEditor: true });
   }
 
   createEditorState(text) {
-    return EditorState.createWithContent(ContentState.createFromText(text))
+    return EditorState.createWithContent(ContentState.createFromText(text));
   }
 
-  onEditorChange = (editorState) => {
-    this.setState({ editorState })
-    const { onChange } = this.props
+  onEditorChange = editorState => {
+    this.setState({ editorState });
+    const { onChange } = this.props;
     if (onChange) {
-      onChange(editorState.getCurrentContent().getPlainText())
+      onChange(editorState.getCurrentContent().getPlainText());
     }
-  }
+  };
 
   render() {
-    const { editorState, shouldRenderEditor } = this.state
+    const { editorState, shouldRenderEditor } = this.state;
     return (
-      <div className='editor'>
-        { shouldRenderEditor &&
+      <div className="editor">
+        {shouldRenderEditor && (
           <Editor
-            editorState={ editorState }
-            onChange={ this.onEditorChange }
-            editorKey='idyll-editor'
+            editorState={editorState}
+            onChange={this.onEditorChange}
+            editorKey="idyll-editor"
           />
-        }
+        )}
 
-        <style jsx>{`
+        <style>{`
           .editor {
             flex: 1.5;
             overflow-y: auto;
@@ -51,9 +51,8 @@ class IdyllEditArea extends React.Component {
           }
         `}</style>
       </div>
-    )
+    );
   }
 }
 
-
-export default IdyllEditArea
+export default IdyllEditArea;

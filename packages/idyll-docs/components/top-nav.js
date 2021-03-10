@@ -56,7 +56,7 @@ const TopNav = ({ selected }) => {
         alt="menu"
         onClick={() => setMenuOpen(!menuOpen)}
       />
-      <style jsx>
+      <style>
         {`
           header {
             width: 100%;
@@ -107,7 +107,7 @@ const TopNav = ({ selected }) => {
             top: 10px;
             // right: 30px;
           }
-          a {
+          .link-group a {
             font-family: 'Fira Mono';
             font-size: 18px;
             // width: 100%;
@@ -116,7 +116,7 @@ const TopNav = ({ selected }) => {
             text-decoration: none;
           }
 
-          a.selected {
+          .link-group a.selected {
             // color: rgb(97, 34, 251);
             border-bottom: solid 2px black;
           }

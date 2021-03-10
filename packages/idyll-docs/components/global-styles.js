@@ -2,7 +2,7 @@ const importString =
   "@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i');";
 
 const GlobalStyles = () => (
-  <style jsx global>{`
+  <style global>{`
     ${importString}
 
     html,

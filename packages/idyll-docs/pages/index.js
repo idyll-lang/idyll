@@ -282,7 +282,7 @@ The value of x is [Display value:x format:"d" /].
           <div className="panel alt">
           </div>
         </section> */}
-        <style jsx global>{`
+        <style global>{`
           html,
           body {
             margin: 0;
@@ -301,7 +301,7 @@ The value of x is [Display value:x format:"d" /].
             display: block;
           }
         `}</style>
-        <style jsx>{`
+        <style>{`
           p {
             // display: none;
             max-width: 476px;

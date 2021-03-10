@@ -1,19 +1,18 @@
-import React from 'react'
-import IdyllEditArea from './edit-area'
-import IdyllRenderer from './renderer'
-import GlobalStyles from '../global-styles'
-import styles from './styles'
+import React from 'react';
+import IdyllEditArea from './edit-area';
+import IdyllRenderer from './renderer';
+import GlobalStyles from '../global-styles';
+import styles from './styles';
 
 class LiveIdyllEditor extends React.PureComponent {
-
   constructor(props) {
-    super(props)
-    const { markup } = props
+    super(props);
+    const { markup } = props;
     this.state = {
       error: null,
       initialMarkup: markup,
       currentMarkup: markup
-    }
+    };
   }
 
   setContent(value) {
@@ -21,34 +20,35 @@ class LiveIdyllEditor extends React.PureComponent {
   }
 
   componentDidCatch(error, info) {
-
     console.log(error);
     this.setState({ error: error.message });
   }
 
-  componentWillReceiveProps() {
-  }
+  componentWillReceiveProps() {}
 
-  handleChange = (newContent) => {
-    this.setContent(newContent)
-    const { onChange } = this.props
+  handleChange = newContent => {
+    this.setContent(newContent);
+    const { onChange } = this.props;
     if (onChange) {
-      onChange(newContent)
+      onChange(newContent);
     }
-  }
+  };
 
   render() {
     const { fullscreen } = this.props;
-    const { initialMarkup, currentMarkup, error, idyllHash } = this.state
+    const { initialMarkup, currentMarkup, error, idyllHash } = this.state;
     return (
-      <div className='container'>
-        {
-          fullscreen ? null : <IdyllEditArea initialContent={ initialMarkup } onChange={ this.handleChange } />
-        }
-        <IdyllRenderer markup={ currentMarkup } />
-        { error && this.renderError() }
-        <style jsx global>{styles}</style>
-        <style jsx>{`
+      <div className="container">
+        {fullscreen ? null : (
+          <IdyllEditArea
+            initialContent={initialMarkup}
+            onChange={this.handleChange}
+          />
+        )}
+        <IdyllRenderer markup={currentMarkup} />
+        {error && this.renderError()}
+        <style global>{styles}</style>
+        <style>{`
           .container {
             flex: 1;
             display: flex;
@@ -58,15 +58,13 @@ class LiveIdyllEditor extends React.PureComponent {
         `}</style>
         <GlobalStyles />
       </div>
-    )
+    );
   }
 
   renderError = () => (
-    <div className='error-display'>
-      <pre>
-        {this.state.error}
-      </pre>
-      <style jsx>{`
+    <div className="error-display">
+      <pre>{this.state.error}</pre>
+      <style>{`
         .error-display {
           background: rgba(0, 0, 0, 0.8);
           color: white;
@@ -79,7 +77,7 @@ class LiveIdyllEditor extends React.PureComponent {
         }
       `}</style>
     </div>
-  )
+  );
 }
 
-export default LiveIdyllEditor
+export default LiveIdyllEditor;

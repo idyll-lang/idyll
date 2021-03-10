@@ -37,7 +37,7 @@ export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
         ) : null}
       </div>
 
-      <style jsx>{`
+      <style>{`
       .example {
         display: flex;
         flex-direction: column;

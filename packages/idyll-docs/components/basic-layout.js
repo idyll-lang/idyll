@@ -83,7 +83,7 @@ class IdyllDocsLayout extends React.Component {
           </main>
         </div>
 
-        <style jsx>{`
+        <style>{`
           .content-container {
             display: flex;
             justify-content: center;
