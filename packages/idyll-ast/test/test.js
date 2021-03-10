@@ -389,6 +389,36 @@ One two *three*
     );
   });
 
+  it('should normalize names when serializing', function() {
+    const markup = util.toMarkup({
+      id: -1,
+      type: 'component',
+      name: 'p',
+      children: [
+        {
+          id: 1,
+          type: 'component',
+          name: 'my-component',
+          properties: {},
+          children: []
+        },
+        {
+          id: 2,
+          type: 'component',
+          name: 'MyComponent',
+          properties: {},
+          children: []
+        }
+      ]
+    });
+
+    expect(markup).to.eql(
+      `
+[MyComponent /] [MyComponent /]
+    `.trim()
+    );
+  });
+
   it('should insert full width props when requested', function() {
     const markup = util.toMarkup(
       {
