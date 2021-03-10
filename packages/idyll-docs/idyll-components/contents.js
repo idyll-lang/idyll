@@ -180,7 +180,7 @@ const components = [
         {
           Switch: {
             description:
-              'Change what is displayed based on the value of a variable.',
+              'Change what is displayed based on the provided `value`. For example, "Case 1" will be shown when the value of x is "one".',
             thumbnail: 'switch.png',
             component: COMPONENTS.Switch,
             liveExample: true

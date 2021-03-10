@@ -1,11 +1,11 @@
-[var name:"currentValue" value:"A" /]
+[var name:"x" value:"one" /]
 
-[Switch value:currentValue]
+[Switch value:x]
   [Case test:"one"]Case 1[/Case]
   [Case test:"two"]Case 2[/Case]
   [Default]Default case[/Default]
 [/Switch]
 
-[Button onClick:`currentValue = "one"`]A[/Button]
-[Button onClick:`currentValue = "two"`]B[/Button]
-[Button onClick:`currentValue = ""`]Default[/Button]
+[Button onClick:`x = "one"`]A[/Button]
+[Button onClick:`x = "two"`]B[/Button]
+[Button onClick:`x = ""`]Default[/Button]
