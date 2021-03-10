@@ -156,7 +156,7 @@ const Component = props => {
         </Link>
         <IdyllComponentDoc component={comp} />
       </div>
-      <style jsx global>{`
+      <style global>{`
         ul {
           list-style-type: none;
         }

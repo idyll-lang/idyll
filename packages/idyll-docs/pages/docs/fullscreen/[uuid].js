@@ -19,6 +19,20 @@ class EditorPage extends React.PureComponent {
     this.state = {};
   }
 
+  static async getInitialProps({ req, query }) {
+    if (query && query.uuid) {
+      try {
+        const res = await fetch(`${API_URL}/api/editor/${query.uuid}`);
+        const json = await res.json();
+        return { initialMarkup: json.markup, uuid: query.uuid };
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    return { initialMarkup: exampleMarkup };
+  }
+
   componentDidMount() {
     Fonts();
     if (!window.GA_INITIALIZED) {
@@ -107,23 +121,4 @@ class EditorPage extends React.PureComponent {
   }
 }
 
-const Component = async props => {
-  const router = useRouter();
-  let passProps = { uuid: '', initialMarkup: '' };
-
-  if (router.query && router.query.uuid) {
-    const { uuid } = router.query;
-    try {
-      const res = await fetch(`${API_URL}/api/editor/${params.uuid}`);
-      const json = await res.json();
-      const passProps = { uuid: uuid, initialMarkup: json.markup };
-      return <EditorPage {...passProps} />;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  return <EditorPage {...passProps} />;
-};
-
-export default Component;
+export default EditorPage;
