@@ -196,7 +196,9 @@ Scroller._idyll = {
   tagType: 'open',
   children: [
     `
-  [Graphic] This graphic stays fixed in the background.[/Graphic]
+  [Graphic fullWidth:true]
+    [Image src:\`"https://www.fillmurray.com/1200/800?" + x\` style:\`{ width:"100%", height: "auto", display: "block" }\` /]
+  [/Graphic]
   [Step]This is the content for step 1[/Step]
   [Step]This is the content for step 2[/Step]
   [Step]This is the content for step 3[/Step]`
@@ -204,21 +206,25 @@ Scroller._idyll = {
   props: [
     {
       name: 'currentStep',
-      type: 'integer',
-      example: '0',
+      type: 'variable',
+      example: 'x',
       description: 'The index of the currently selected step.'
+    },
+    {
+      name: 'fullWidth',
+      type: 'boolean',
+      example: 'true',
+      description: 'Is this component fullWidth.'
     },
     {
       name: 'currentState',
       type: 'object',
-      example: '`{}`',
       description:
         'The state value associated with the currently selected step. Note you must set the state property on the step components for this value to update.'
     },
     {
       name: 'progress',
       type: 'number',
-      example: '0',
       description:
         'The percent of completion (0-1) of the currently selected step'
     }

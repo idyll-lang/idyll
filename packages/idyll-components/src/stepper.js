@@ -26,7 +26,7 @@ class Stepper extends React.PureComponent {
     if (!newStep) {
       newStep = 1;
     }
-    if (newStep <= this.getSteps().length) {
+    if (newStep >= this.getSteps().length) {
       newStep = 0;
     }
 
@@ -101,17 +101,26 @@ Stepper._idyll = {
   tagType: 'open',
   children: [
     `
-[Step]This is the content for step 1[/Step]
-[Step]This is the content for step 2[/Step]
-[Step]This is the content for step 3[/Step]
+[Graphic fullWidth:true]
+  [Image src:\`"https://www.placecage.com/" + (["g", "c", "gif"]) + "/600/320"\` style:\`{ width:"100%", height: "auto", display: "block" }\` /]
+[/Graphic]
+[Step]A black and white photo[/Step]
+[Step]A color photo[/Step]
+[Step]An animated gif![/Step]
 [StepperControl /]`
   ],
   props: [
     {
       name: 'currentStep',
       type: 'number',
-      example: 'currentStep',
+      example: 'x',
       description: 'The index of the currently selected step.'
+    },
+    {
+      name: 'fullWidth',
+      type: 'boolean',
+      example: 'true',
+      description: 'Should this component be full width?.'
     }
   ]
 };
