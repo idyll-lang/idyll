@@ -300,6 +300,11 @@ The value of x is [Display value:x format:"d" /].
           input {
             display: block;
           }
+
+          a {
+            color: #6122fb;
+            text-decoration: underline;
+          }
         `}</style>
         <style>{`
           p {

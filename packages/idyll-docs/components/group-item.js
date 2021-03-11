@@ -76,6 +76,7 @@ export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
       .example a {
         display: block;
         text-decoration: none;
+        color: black;
       }
 
       .example-label {

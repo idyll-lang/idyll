@@ -120,7 +120,7 @@ class IdyllDocsLayout extends React.Component {
             }
           }
 
-          ul {
+          nav ul {
             padding: 0;
             list-style: none;
           }

@@ -113,6 +113,7 @@ const TopNav = ({ selected }) => {
             // width: 100%;
             margin-right: 20px;
             margin-left: 20px;
+            color: black;
             text-decoration: none;
           }
 

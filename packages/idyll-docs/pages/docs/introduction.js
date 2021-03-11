@@ -29,7 +29,8 @@ Lorem ipsum...
 \`\`\`
 
 Each tag corresponds to a React component, which receives the provided properties. Properties can be reactive variables or expressions,
-Idyll handles the logic to watch for variable updates and re-render components as needed.
+Idyll handles the logic to watch for variable updates and re-render components as needed. Idyll is compatible with graphics libraries
+like D3 and P5 and can support most JavaScript libraries that are available on npm.
 
 
 ## Example Usage
