@@ -207,11 +207,11 @@ span.action {
 }
 
 .idyll-scroll-text {
-  padding: 50vh 0;
+  padding: 0 0 50vh 0;
 }
 
 .idyll-scroll-text .idyll-step {
-  margin: 75vh 0 75vh 0;
+  margin: 0 0 90vh 0;
   padding: 50px;
   background: white;
 }

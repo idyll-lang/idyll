@@ -9,7 +9,6 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 'auto',
-    height: '100vh',
     width: '100%',
     transform: `translate3d(0, 0, 0)`,
     zIndex: -1
@@ -45,23 +44,23 @@ class Scroller extends React.Component {
     const scrollama = require('scrollama');
     // instantiate the scrollama
     const scroller = scrollama();
-    this.handleResize();
 
     // setup the instance, pass callback functions
     scroller
       .setup({
         step: `#idyll-scroll-${this.id} .idyll-step`, // required
-        container: `#idyll-scroll-${this.id}`, // required (for sticky)
-        graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic`, // required (for sticky)
-        progress: this.props.progress !== undefined ? true : false
+        progress: this.props.progress !== undefined ? true : false,
+        debug: this.props.debug,
+        offset: this.props.offset
       })
       .onStepEnter(this.handleStepEnter.bind(this))
-      .onStepProgress(this.handleStepProgress.bind(this))
-      // .onStepExit(handleStepExit)
-      .onContainerEnter(this.handleContainerEnter.bind(this));
-    //.onContainerExit(this.handleContainerExit.bind(this));
+      .onStepProgress(this.handleStepProgress.bind(this));
 
     // setup resize event
+
+    this.scroller = scroller;
+
+    this.handleResize();
     window.addEventListener('resize', this.handleResize.bind(this));
   }
 
@@ -82,16 +81,7 @@ class Scroller extends React.Component {
       graphicHeight: window.innerHeight + 'px',
       graphicWidth: window.innerWidth + 'px'
     });
-  }
-
-  handleContainerEnter(response) {
-    if (
-      this.props.disableScroll &&
-      (!this.props.currentStep ||
-        this.props.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)
-    ) {
-      d3.select('body').style('overflow', 'hidden');
-    }
+    this.scroller.resize();
   }
 
   handleStepProgress(response) {
@@ -146,6 +136,7 @@ class Scroller extends React.Component {
     });
 
     const StepContainer = props.fullWidthSteps ? 'div' : TextContainer;
+    let stepIndex = 0;
 
     return (
       <div
@@ -157,10 +148,9 @@ class Scroller extends React.Component {
         {graphicChildren && graphicChildren.length ? (
           <div
             className="idyll-scroll-graphic"
-            style={Object.assign(
-              { height: graphicHeight },
-              styles.SCROLL_GRAPHIC
-            )}
+            style={Object.assign({}, styles.SCROLL_GRAPHIC, {
+              height: graphicHeight
+            })}
           >
             <div
               style={Object.assign(
@@ -180,7 +170,8 @@ class Scroller extends React.Component {
               }),
               c => {
                 return React.cloneElement(c, {
-                  registerStep: this.registerStep.bind(this)
+                  registerStep: this.registerStep.bind(this),
+                  stepIndex: stepIndex++
                 });
               }
             )}
@@ -227,6 +218,17 @@ Scroller._idyll = {
       type: 'number',
       description:
         'The percent of completion (0-1) of the currently selected step'
+    },
+    {
+      name: 'offset',
+      type: 'number',
+      description:
+        '(number 0 - 1, or string with "px"): How far from the top of the viewport to trigger a step. (default: 0.5) (middle of screen)'
+    },
+    {
+      name: 'debug',
+      type: 'boolean',
+      description: 'Show scroller debug information.'
     }
   ]
 };

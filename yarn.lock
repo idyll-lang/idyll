@@ -10526,10 +10526,10 @@ schema-utils@^2.6.1, schema-utils@^2.6.6:
     ajv "^6.12.4"
     ajv-keywords "^3.5.2"
 
-scrollama@^1.4.1:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/scrollama/-/scrollama-1.4.4.tgz#e0fd474e04c0be4c95d08280bdc2d636f619db59"
-  integrity sha512-okBTs3Wa0NJY6xoX6wXUWltorKe5N7tF2fF8y0oJIt6VFeGja461WXAODhxpKq+1Zy4gqKIG2nghDYukYqBD+Q==
+scrollama@^2.0.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/scrollama/-/scrollama-2.2.1.tgz#c9f37871388f6866e807b4cd39bcb45d5c3e49fb"
+  integrity sha512-Wq880ZLa3G6YSDbV7Bg5thEggo20+UM9qFu9P9ZAZlPmTt/rhIroUNmsZYvO8C5Y0kLp4nwK8S2Zha+bbOFiYg==
 
 scrollmonitor@^1.2.3:
   version "1.2.4"
