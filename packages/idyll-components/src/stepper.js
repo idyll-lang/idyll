@@ -102,7 +102,7 @@ Stepper._idyll = {
   children: [
     `
 [Graphic fullWidth:true]
-  [Image src:\`"https://www.placecage.com/" + (["g", "c", "gif"]) + "/600/320"\` style:\`{ width:"100%", height: "auto", display: "block" }\` /]
+  [Image src:\`"https://www.placecage.com/" + (["g", "c", "gif"][x]) + "/600/320"\` style:\`{ width:"100%", height: "auto", display: "block" }\` /]
 [/Graphic]
 [Step]A black and white photo[/Step]
 [Step]A color photo[/Step]

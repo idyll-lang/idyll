@@ -188,7 +188,7 @@ Scroller._idyll = {
   children: [
     `
   [Graphic fullWidth:true]
-    [Image src:\`"https://www.fillmurray.com/1200/800?" + x\` style:\`{ width:"100%", height: "auto", display: "block" }\` /]
+    [Image src:\`"https://www.placecage.com/" + (["g", "c", "gif"][x]) + "/600/320"\` style:\`{ width:"100%", height: "auto", display: "block" }\` /]
   [/Graphic]
   [Step]This is the content for step 1[/Step]
   [Step]This is the content for step 2[/Step]
