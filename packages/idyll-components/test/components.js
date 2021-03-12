@@ -18,6 +18,7 @@ import {
   Float,
   Gist,
   Header,
+  Image,
   Inline,
   Link,
   Loop,
@@ -94,6 +95,9 @@ describe('Sanity Check', () => {
       });
       it('<Header />', () => {
         expect(() => shallow(<Header />)).not.toThrow();
+      });
+      it('<Image />', () => {
+        expect(() => shallow(<Image />)).not.toThrow();
       });
       it('<Link />', () => {
         expect(() => shallow(<Link />)).not.toThrow();
@@ -221,6 +225,9 @@ describe('Sanity Check', () => {
       });
       it('<Header />', () => {
         expect(() => mount(<Header />)).not.toThrow();
+      });
+      it('<Image />', () => {
+        expect(() => mount(<Image />)).not.toThrow();
       });
       it('<Link />', () => {
         expect(() => mount(<Link />)).not.toThrow();

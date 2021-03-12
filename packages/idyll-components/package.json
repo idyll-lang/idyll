@@ -51,7 +51,7 @@
     "react-syntax-highlighter": "^5.7.0",
     "react-table": "6.8.6",
     "react-youtube": "^7.6.0",
-    "scrollama": "^1.4.1",
+    "scrollama": "2",
     "victory": "^0.23.0"
   },
   "peerDependencies": {

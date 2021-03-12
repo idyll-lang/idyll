@@ -9,7 +9,6 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 'auto',
-    height: '100vh',
     width: '100%',
     transform: `translate3d(0, 0, 0)`,
     zIndex: -1
@@ -51,17 +50,22 @@ class Scroller extends React.Component {
     scroller
       .setup({
         step: `#idyll-scroll-${this.id} .idyll-step`, // required
-        container: `#idyll-scroll-${this.id}`, // required (for sticky)
-        graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic`, // required (for sticky)
-        progress: this.props.progress !== undefined ? true : false
+        // container: `#idyll-scroll-${this.id}`, // required (for sticky)
+        // graphic: `#idyll-scroll-${this.id} .idyll-scroll-graphic`, // required (for sticky)
+        progress: this.props.progress !== undefined ? true : false,
+        debug: this.props.debug,
+        offset: this.props.offset
       })
       .onStepEnter(this.handleStepEnter.bind(this))
-      .onStepProgress(this.handleStepProgress.bind(this))
-      // .onStepExit(handleStepExit)
-      .onContainerEnter(this.handleContainerEnter.bind(this));
+      .onStepProgress(this.handleStepProgress.bind(this));
+    // .onStepExit(handleStepExit)
+    // .onContainerEnter(this.handleContainerEnter.bind(this));
     //.onContainerExit(this.handleContainerExit.bind(this));
 
     // setup resize event
+
+    this.scroller = scroller;
+
     window.addEventListener('resize', this.handleResize.bind(this));
   }
 
@@ -146,6 +150,7 @@ class Scroller extends React.Component {
     });
 
     const StepContainer = props.fullWidthSteps ? 'div' : TextContainer;
+    let stepIndex = 0;
 
     return (
       <div
@@ -157,10 +162,9 @@ class Scroller extends React.Component {
         {graphicChildren && graphicChildren.length ? (
           <div
             className="idyll-scroll-graphic"
-            style={Object.assign(
-              { height: graphicHeight },
-              styles.SCROLL_GRAPHIC
-            )}
+            style={Object.assign({}, styles.SCROLL_GRAPHIC, {
+              height: graphicHeight
+            })}
           >
             <div
               style={Object.assign(
@@ -180,7 +184,8 @@ class Scroller extends React.Component {
               }),
               c => {
                 return React.cloneElement(c, {
-                  registerStep: this.registerStep.bind(this)
+                  registerStep: this.registerStep.bind(this),
+                  stepIndex: stepIndex++
                 });
               }
             )}
