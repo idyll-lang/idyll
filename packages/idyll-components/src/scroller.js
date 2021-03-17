@@ -90,7 +90,7 @@ class Scroller extends React.Component {
     this.props.updateProps && this.props.updateProps(update);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       nextProps.disableScroll &&
       this.props.currentStep !== nextProps.currentStep
