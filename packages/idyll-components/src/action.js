@@ -5,7 +5,15 @@ class Action extends React.PureComponent {
     const { idyll, hasError, updateProps, ...props } = this.props;
 
     return (
-      <span {...props} className={'idyll-action'}>
+      <span
+        {...props}
+        onClick={
+          this.props.onClick
+            ? e => e.stopPropagation() && this.props.onClick(e)
+            : e => e.stopPropagation()
+        }
+        className={'idyll-action'}
+      >
         {this.props.children}
       </span>
     );

@@ -1087,12 +1087,16 @@ ${childrenToMarkup(node, 0, ' ', false).trim()}
  * @return {string} Markup string
  */
 function toMarkup(ast, options = { insertFullWidth: false }) {
-  return childrenToMarkup(
+  const markup = childrenToMarkup(
     ast,
     0,
     ast.name === 'p' ? ' ' : '\n',
     options.insertFullWidth || false
   ).trim();
+
+  const cleanedMarkup = markup.replace(/\] ([,\.\!\?\:\[])/g, ']$1');
+
+  return cleanedMarkup;
 }
 
 module.exports = {

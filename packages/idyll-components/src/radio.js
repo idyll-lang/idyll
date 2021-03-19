@@ -24,7 +24,10 @@ class Radio extends React.PureComponent {
     } = this.props;
 
     return (
-      <div {...props}>
+      <div
+        {...props}
+        onClick={this.props.onClick || (e => e.stopPropagation())}
+      >
         {options.map(d => {
           if (typeof d === 'string') {
             return (

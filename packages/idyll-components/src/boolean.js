@@ -17,6 +17,7 @@ class Boolean extends React.PureComponent {
       <input
         type="checkbox"
         onChange={this.toggleCheckbox.bind(this)}
+        onClick={this.props.onClick || (e => e.stopPropagation())}
         checked={value}
         className={`idyll-checkbox ${className ? className : ''}`.trim()}
         style={style}

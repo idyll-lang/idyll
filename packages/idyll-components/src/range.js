@@ -6,9 +6,12 @@ class Range extends React.PureComponent {
   }
 
   handleChange(event) {
+    event.stopPropagation();
+
     this.props.updateProps({
       value: +event.target.value
     });
+    return false;
   }
 
   render() {
@@ -22,6 +25,7 @@ class Range extends React.PureComponent {
         max={max}
         step={step}
         style={style}
+        onClick={this.props.onClick || (e => e.stopPropagation())}
       />
     );
   }

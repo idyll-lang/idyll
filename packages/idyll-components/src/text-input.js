@@ -13,7 +13,14 @@ class TextInput extends React.PureComponent {
 
   render() {
     const { idyll, hasError, updateProps, ...props } = this.props;
-    return <input type="text" onChange={this.onChange} {...props} />;
+    return (
+      <input
+        onClick={this.props.onClick || (e => e.stopPropagation())}
+        type="text"
+        onChange={this.onChange}
+        {...props}
+      />
+    );
   }
 }
 

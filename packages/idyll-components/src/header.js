@@ -39,16 +39,19 @@ class Header extends React.PureComponent {
     const { background, color, byLineTemplate, idyll } = this.props;
     const { joint, prefix, suffix } = { ...byLineDefault, ...byLineTemplate };
 
+    const _background =
+      background ||
+      (idyll && idyll.theme ? idyll.theme.headerBackground : undefined);
+
+    const _color =
+      color || (idyll && idyll.theme ? idyll.theme.headerColor : undefined);
+
     return (
       <div
         className={'article-header'}
         style={{
-          background:
-            background ||
-            (idyll && idyll.theme ? idyll.theme.headerBackground : undefined),
-          color:
-            color ||
-            (idyll && idyll.theme ? idyll.theme.headerColor : undefined),
+          background: _background,
+          color: _color,
           ...this.props.style
         }}
       >
@@ -59,7 +62,11 @@ class Header extends React.PureComponent {
         {this.props.author && (
           <div className={'byline'}>
             {`${prefix.trim()} `}
-            <a target="_blank" href={this.props.authorLink}>
+            <a
+              target="_blank"
+              href={this.props.authorLink}
+              style={{ color: _color }}
+            >
               {this.props.author}
             </a>
           </div>
@@ -70,6 +77,7 @@ class Header extends React.PureComponent {
             prefix={prefix.trim()}
             joint={joint.trim()}
             suffix={suffix.trim()}
+            color={_color}
           />
         )}
         {this.props.date && (
