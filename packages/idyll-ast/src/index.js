@@ -1094,7 +1094,7 @@ function toMarkup(ast, options = { insertFullWidth: false }) {
     options.insertFullWidth || false
   ).trim();
 
-  const cleanedMarkup = markup.replace(/\] ([,\.\!\?\:\[])/g, ']$1');
+  const cleanedMarkup = markup.replace(/([\]\*\_]) ([,\.\!\?\:\[])/g, '$1$2');
 
   return cleanedMarkup;
 }
