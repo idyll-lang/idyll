@@ -956,12 +956,14 @@ function childrenToMarkup(
   separator = '\n',
   insertFullWidth = false
 ) {
-  return (node.children || []).reduce(function(memo, child) {
-    return (
-      memo +
-      `${separator}${nodeToMarkup(child, depth, insertFullWidth, separator)}`
-    );
-  }, '');
+  return (node.children || [])
+    .reduce(function(memo, child) {
+      return (
+        memo +
+        `${separator}${nodeToMarkup(child, depth, insertFullWidth, separator)}`
+      );
+    }, '')
+    .replace(/\n\n+/g, '\n\n');
 }
 
 function nodeToMarkup(node, depth, insertFullWidth, separator = '\n') {
@@ -992,9 +994,9 @@ function nodeToMarkup(node, depth, insertFullWidth, separator = '\n') {
       return `${'  '.repeat(depth)}${node.value.trim()}`;
     case 'component':
       if (node.name.toLowerCase() === 'textcontainer') {
-        return `\n${childrenToMarkup(node, depth, '\n', false)}\n`;
+        return `\n${childrenToMarkup(node, depth, '\n', false)}`;
       } else if (node.name.toLowerCase() === 'p' && depth < 1) {
-        return `\n${childrenToMarkup(node, depth, ' ', false).trim()}\n`;
+        return `\n${childrenToMarkup(node, depth, '\n', false).trim()}\n`;
       } else if (markupNodes.includes(node.name.toLowerCase())) {
         switch (node.name.toLowerCase()) {
           case 'strong':
@@ -1052,7 +1054,7 @@ ${childrenToMarkup(node, 0, ' ', false).trim()}
       const propString = propertiesToString(node, depth, insertFullWidth);
       if (hasChildren(node)) {
         if (node.name === 'a') {
-          return `[${node.name}${
+          return `${'  '.repeat(depth)}[${node.name}${
             propString ? `${propString}` : ''
           }]${childrenToMarkup(node, depth + 1, ' ', false).trim()}[/${
             node.name
