@@ -8,13 +8,13 @@ const additionalTextByIndex = (authors, suffix, joint, index) => {
   return index in map ? map[index] : `${joint} `;
 };
 
-const AuthorLink = ({ name, link }) => (
-  <a target="_blank" href={link}>
+const AuthorLink = ({ name, link, color }) => (
+  <a target="_blank" href={link} style={{ color: color }}>
     {name}
   </a>
 );
 
-const ByLineMultipleAuthors = ({ authors, prefix, joint, suffix }) => (
+const ByLineMultipleAuthors = ({ authors, prefix, joint, suffix, color }) => (
   <div className={'byline'}>
     {`${prefix} `}
     {authors.map((author, i) => {
@@ -23,7 +23,7 @@ const ByLineMultipleAuthors = ({ authors, prefix, joint, suffix }) => (
       return (
         <span key={authorDisplay}>
           {typeof author.link === 'string' ? (
-            <AuthorLink {...author} />
+            <AuthorLink {...author} color={color} />
           ) : (
             authorDisplay
           )}
