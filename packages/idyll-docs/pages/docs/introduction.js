@@ -224,6 +224,15 @@ const Introduction = ({ url }) => (
       .idyll-root .float {
         text-align: center;
       }
+
+      a {
+        color: #6122fb;
+        text-decoration: underline;
+      }
+      p a {
+        color: #6122fb;
+        text-decoration: underline;
+      }
     `}</style>
   </Layout>
 );

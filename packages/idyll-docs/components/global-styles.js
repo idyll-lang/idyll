@@ -17,6 +17,11 @@ const GlobalStyles = () => (
       color: black;
     }
 
+    p a, p a:visited {
+      color: #6122fb;
+      text-decoration: underline;
+    }
+
     a,
     a:visited {
       color: black;
@@ -25,6 +30,11 @@ const GlobalStyles = () => (
     a:hover,
     a:visited:hover {
       color: #6122fb;
+    }
+
+    p a, p a:visited {
+      color: #6122fb;
+      text-decoration: underline;
     }
 
     figure {

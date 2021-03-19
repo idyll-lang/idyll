@@ -11,7 +11,7 @@ const styles = {
     bottom: 'auto',
     width: '100%',
     transform: `translate3d(0, 0, 0)`,
-    zIndex: -1
+    zIndex: 0
   },
 
   SCROLL_GRAPHIC_INNER: {
@@ -149,7 +149,8 @@ class Scroller extends React.Component {
           <div
             className="idyll-scroll-graphic"
             style={Object.assign({}, styles.SCROLL_GRAPHIC, {
-              height: graphicHeight
+              height: graphicHeight,
+              zIndex: idyll && idyll.authorView ? 0 : -1
             })}
           >
             <div
@@ -188,7 +189,23 @@ Scroller._idyll = {
   children: [
     `
   [Graphic fullWidth:true]
-    [Image src:\`"https://www.placecage.com/" + (["g", "c", "gif"][x]) + "/600/320"\` style:\`{ width:"100%", height: "auto", display: "block" }\` /]
+    [VegaLite
+      data:\`[{x: 0, y: 0}, {x: 1, y: 1}]\`
+      spec:\`{
+      mark: "line",
+      encoding: {
+        x: {
+          field: "x",
+          type: "quantitative"
+        },
+        y: {
+          field: "y",
+          type: "quantitative"
+        }
+      }
+    }\`
+    width:"container"
+    height:300 /]
   [/Graphic]
   [Step]This is the content for step 1[/Step]
   [Step]This is the content for step 2[/Step]

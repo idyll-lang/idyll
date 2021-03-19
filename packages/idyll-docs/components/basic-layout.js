@@ -132,7 +132,6 @@ class IdyllDocsLayout extends React.Component {
           a:not(:hover) {
             text-decoration: none;
           }
-
           .active {
             font-weight: bold;
           }

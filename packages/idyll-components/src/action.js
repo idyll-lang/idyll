@@ -8,9 +8,7 @@ class Action extends React.PureComponent {
       <span
         {...props}
         onClick={
-          this.props.onClick
-            ? e => e.stopPropagation() && this.props.onClick(e)
-            : e => e.stopPropagation()
+          this.props.onClick ? this.props.onClick : e => e.stopPropagation()
         }
         className={'idyll-action'}
       >
