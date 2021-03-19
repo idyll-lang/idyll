@@ -40,7 +40,11 @@ class Dynamic extends React.PureComponent {
   render() {
     const display = this.transformValue();
     return (
-      <span style={this.props.style} className="idyll-dynamic">
+      <span
+        onClick={this.props.onClick || (e => e.stopPropagation())}
+        style={this.props.style}
+        className="idyll-dynamic"
+      >
         {display}
       </span>
     );

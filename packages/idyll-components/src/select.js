@@ -14,7 +14,11 @@ class Select extends React.PureComponent {
   render() {
     const { idyll, hasError, updateProps, ...props } = this.props;
     return (
-      <select onChange={this.onChange} {...props}>
+      <select
+        onChange={this.onChange}
+        {...props}
+        onClick={this.props.onClick || (e => e.stopPropagation())}
+      >
         {this.props.options.map(d => {
           if (typeof d === 'string') {
             return (

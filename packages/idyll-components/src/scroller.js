@@ -41,7 +41,7 @@ class Scroller extends React.Component {
 
   componentDidMount() {
     require('intersection-observer');
-    const scrollama = require('scrollama');
+    const scrollama = require('./scrollama');
     // instantiate the scrollama
     const scroller = scrollama();
 
@@ -81,7 +81,7 @@ class Scroller extends React.Component {
       graphicHeight: window.innerHeight + 'px',
       graphicWidth: window.innerWidth + 'px'
     });
-    this.scroller.resize();
+    // this.scroller.resize();
   }
 
   handleStepProgress(response) {

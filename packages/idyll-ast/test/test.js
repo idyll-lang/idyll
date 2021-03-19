@@ -300,7 +300,7 @@ This is the first paragraph
 # This is a header
   [var name:"testVar" value:\`3 * 3\` /]
   [p]
-[a href:"www.test.com"]This is a link to a website[/a]
+    [a href:"www.test.com"]This is a link to a website[/a]
     [data name:"testData" source:"test.csv" /]
   [/p]
 [/div]
@@ -414,7 +414,7 @@ One two *three*
 
     expect(markup).to.eql(
       `
-[MyComponent /] [MyComponent /]
+[MyComponent /][MyComponent /]
     `.trim()
     );
   });
@@ -452,7 +452,6 @@ One two *three*
     expect(markup.trim()).to.eql(
       `
 [Header fullWidth:true /]
-
 
 Hello world.
     `.trim()

@@ -12,7 +12,10 @@ class Fixed extends React.PureComponent {
 
 Fixed._idyll = {
   name: 'Fixed',
-  tagType: 'open'
+  tagType: 'open',
+  children: [
+    'Content placed inside of a fixed component will be remain fixed in the margin.'
+  ]
 };
 
 export default Fixed;
