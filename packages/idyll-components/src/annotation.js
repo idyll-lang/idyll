@@ -1,16 +1,11 @@
 import React from 'react';
 
 class Annotation extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    const { idyll, hasError, updateProps, ...props } = this.props;
     return (
       <div className="annotated-text">
-        {props.children}
-        <span className="annotation-text">{props.annotation}</span>
+        {this.props.children}
+        <span className="annotation-text">{this.props.annotation}</span>
       </div>
     );
   }
@@ -18,15 +13,12 @@ class Annotation extends React.PureComponent {
 
 Annotation._idyll = {
   name: 'Annotation',
-  tagType: 'closed',
+  tagType: 'open',
   displayType: 'inline',
+  children: [
+    'Content placed inside of an annotation component will be displayed inline with some styling.'
+  ],
   props: [
-    {
-      name: 'text',
-      type: 'string',
-      example: '"This is annotated text"',
-      description: 'The text to display'
-    },
     {
       name: 'annotation',
       type: 'string',
