@@ -1,0 +1,69 @@
+[meta title:"Test Add Annotation" description:"This project tests out the annotation feature" /]
+
+[Header
+  fullWidth:true
+  title:"Test Annotation Component"
+  subtitle:"This post tests out the annotation feature"
+  author:"Jasen Lo"
+  authorLink:"https://github.com/jasenlo123"
+  date:"Mar 24, 2021"
+  background:"#222222"
+  color:"#ffffff"
+   /]
+
+# Some thoughts & notes:
+* I put the `CSS` styling of this component in `styles.css` for now. I didn't want to pollute the `styles.js` files in `idyll-layout` until the `CSS` is ready. Should the decision on how to style the annotations be left to the user? I can see how users might want to control the `CSS` styling of the annotated text, and the annotation box look and text too. For instance, the `CSS` below shows two ways of styling the annotation - highlighting vs. underlining.
+```
+.annotated-text, .annotated-text:visited {
+  /* choose between one of the two styling choices below*/
+  border-bottom: 2px solid silver; /* This creates an underline annotation effect*/
+  /*box-shadow: inset 0 -22px 0 #fffff8;*/ /* This creates a highlight annotation effect*/
+
+  transition: box-shadow 0.25s ease-out;
+}
+```
+* Would be great to be able annotate `code text` with this component. This is useful for explaining technical things in-line and in context.
+* Right now the mobile responsive solution is kinda hacky. For smartphones, the annotation text box appears in a fixed position, which can slightly feel janky. 
+```
+@media all and (max-width: 600px) {
+  .annotated-text .annotation-text {
+    width: 50vw;
+    position: fixed;
+    left: 50%;
+    bottom: 20%;   /* this is 20% because on mobile, longer annotations get cut off from the top*/
+  }
+}
+```
+* As long as the user has margins on their text such that their annotated text doesn't hug the edge of the screen for larger screens (max-width > 600px), the annotation text box doesn't go outside of the screen mostly. However, this forces very long annotations to be too long vertically.
+
+# TESTS
+## Annotation basic:
+Hover over [Annotation annotation:"This is an annotation!"] highlights [/Annotation] for inline annotations.
+
+### Text styling concerns: 
+
+#### Can annotated text be italised?
+Hover over *[Annotation annotation:"This is an annotation!"] this italised text[/Annotation]*.
+
+#### Can annotated text be bold?
+Hover over **[Annotation annotation:"This is an annotation!"] this bold text [/Annotation]**.
+
+#### Annotated text can't be styled into code though:
+Hover over `[Annotation annotation:"This is an annotation!"] this code text [/Annotation]`.
+
+#### Annotation text can't be styled because we're passing `annotation` as a `string`. Is there another way to do this such that the text in the Annotation box can be styled?
+Hover over [Annotation annotation:"This is **an annotation**!"] this text[/Annotation] to see unstyled annotation text, since double `**` should **bold** text (italics is CSS class stlyed).
+
+
+### Mobile responsive-ness concerns:
+
+#### Check annotation boundaries (left of page):
+[Annotation annotation:"This is an annotation!"] highlights [/Annotation] for inline annotations. View this with screen-size width 768px (Tablet) to see how the annotation box stays within the screen. The annotation box should stay within the boundaries of the screen for all devices.
+
+#### For a very long annotation:
+Hover over [Annotation annotation:"Ad tempora iste. Similique et nobis ad et ad. Optio quo autem in dolore illo dolor quo officia quisquam. Qui est perferendis impedit explicabo cumque perspiciatis dolore. Et sed quis fugiat reiciendis et. Harum libero dolorem qui. Consequatur ipsam et eius. Ipsum similique velit veniam iusto. Magni optio maiores similique deserunt sit et quod. Accusamus omnis alias officia aspernatur placeat aut et."] this [/Annotation] to see overly long annotation look.
+
+#### For a very long annotation on the edge of the screen:
+[Annotation annotation:"Ad tempora iste. Similique et nobis ad et ad. Optio quo autem in dolore illo dolor quo officia quisquam. Qui est perferendis impedit explicabo cumque perspiciatis dolore. Et sed quis fugiat reiciendis et. Harum libero dolorem qui. Consequatur ipsam et eius. Ipsum similique velit veniam iusto. Magni optio maiores similique deserunt sit et quod. Accusamus omnis alias officia aspernatur placeat aut et."] this [/Annotation] to see overly long annotation look.
+
+
