@@ -12,7 +12,7 @@
    /]
 
 # Some thoughts & notes:
-* I put the `CSS` styling of this component in `styles.css` for now. I didn't want to pollute the `styles.js` files in `idyll-layout` until the `CSS` is ready. Should the decision on how to style the annotations be left to the user? I can see how users might want to control the `CSS` styling of the annotated text, and the annotation box look and text too. For instance, the `CSS` below shows two ways of styling the annotation - highlighting vs. underlining.
+* I put the `CSS` styling of this component in `styles.css` of this test project for now. I didn't know where to put the CSS for this component's classes until the `CSS` is ready. Should the decision on how to style the annotations be left to the user? I can see how users might want to control the `CSS` styling of the annotated text, and the annotation box look and text too. For instance, the `CSS` below shows two ways of styling the annotation - highlighting vs. underlining.
 ```
 .annotated-text, .annotated-text:visited {
   /* choose between one of the two styling choices below*/
