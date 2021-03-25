@@ -1006,4 +1006,72 @@ img {
   }
 }
 
+
+/* annotated-text container */
+.annotated-text {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
+.annotated-text,
+.annotated-text:visited {
+  /* choose between one of the two styling choices below*/
+  border-bottom: 2px solid silver; /* This creates an underline annotation effect*/
+  /*box-shadow: inset 0 -22px 0 #fffff8;*/ /* This creates a highlight annotation effect*/
+  transition: box-shadow 0.25s ease-out;
+}
+
+.annotated-text:hover {
+  color: black;
+  box-shadow: inset 0 -2px 0 -webkit-link;
+}
+
+/* annotated-text CSS */
+.annotated-text .annotation-text {
+  visibility: hidden;
+  border-style: solid;
+  border-color: -webkit-link;
+  background: #fffff8;
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  font-style: italic;
+}
+
+.annotated-text .annotation-text {
+  width: 30vh;
+  bottom: 120%;
+  left: 50%;
+  margin-left: -15vh; /* Use half of the width (120/2 = 60), to center the annotated-text */
+  opacity: 0;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  font-weight: initial;
+}
+
+.annotated-text:hover .annotation-text {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease-out;
+}
+
+@media all and (max-width: 800px) {
+  .annotated-text .annotation-text {
+    width: 50vh;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .annotated-text .annotation-text {
+    width: 50vw;
+    position: fixed;
+    left: 50%;
+    bottom: 20%;
+  }
+}
+
+
 `;
