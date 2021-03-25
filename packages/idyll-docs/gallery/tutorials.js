@@ -3,6 +3,13 @@ const tutorialsGroups = [
     title: 'Design Patterns',
     items: [
       {
+        label: 'Dynamic Datasets',
+        subtitle:
+          'Using derived variables to easily create reactive views of data in Idyll.',
+        href: 'https://idyll.pub/post/derived-table-b00359641a4490037dc3dce7/',
+        image: 'dynamic-datasets.png'
+      },
+      {
         label: 'Triggering Updates',
         subtitle: 'How to update components in response to user events.',
         href:
@@ -10,6 +17,14 @@ const tutorialsGroups = [
         image: 'triggering-updates.png',
         sourceUrl:
           'https://github.com/mathisonian/idyll-tutorial-triggering-updates'
+      },
+      {
+        label: 'Custom React Components',
+        subtitle:
+          'User React to create your own custom graphics inside an Idyll post.',
+        href: 'https://tanalan.github.io/idyll-react-components-tutorial/',
+        image: 'custom-react.png',
+        sourceUrl: 'https://github.com/tanalan/idyll-react-components-tutorial'
       },
       {
         label: 'Animating with Idyll',
@@ -34,13 +49,6 @@ const tutorialsGroups = [
         href: 'https://idyll.pub/post/stack-scroll-0c3da7fb8e45f3ecb720bcf8/',
         image: 'stacked-scroller.gif',
         sourceUrl: 'https://github.com/megan-vo/stacked-scrolling-tutorial'
-      },
-      {
-        label: 'Dynamic Datasets',
-        subtitle:
-          'Using derived variables to easily create reactive views of data in Idyll.',
-        href: 'https://idyll.pub/post/derived-table-b00359641a4490037dc3dce7/',
-        image: 'dynamic-datasets.png'
       },
       {
         label: 'Dynamic Data Loading',

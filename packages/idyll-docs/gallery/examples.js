@@ -126,6 +126,16 @@ const exampleGroups = [
     title: 'Articles and Blog Posts',
     items: [
       {
+        label: '77 Nationalities & 66 Currencies',
+        subtitle:
+          "How do currency exchange rates affect Minerva students' tuition fees?",
+        href:
+          'https://jasenlo123.github.io/jasenlo123-The-Minerva-Quest---Forex/',
+        image: 'forex.png',
+        sourceUrl:
+          'https://github.com/jasenlo123/jasenlo123-The-Minerva-Quest---Forex'
+      },
+      {
         label: 'Statistical Power Analysis',
         href:
           'https://idyll.pub/post/statistical-power-d9ff5d116b4c883d22a7888f/',

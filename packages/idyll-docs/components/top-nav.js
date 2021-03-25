@@ -17,7 +17,7 @@ const TopNav = ({ selected }) => {
   };
   return (
     <header className={menuOpen ? 'expanded' : ''}>
-      <Link href="/">
+      <Link href="/docs">
         <a className="logo-container">
           <img
             src="/static/images/quill.svg"

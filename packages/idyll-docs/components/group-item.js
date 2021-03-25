@@ -18,10 +18,12 @@ function slugify(text) {
 export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
   return (
     <div className="example">
-      <div
-        className="example-image"
-        style={{ backgroundImage: `url(${imageUrl(image)})` }}
-      />
+      <a href={href}>
+        <div
+          className="example-image"
+          style={{ backgroundImage: `url(${imageUrl(image)})` }}
+        />
+      </a>
       <div className="example-label">
         {label}
         {subtitle ? <div className="subtitle">{subtitle}</div> : null}
@@ -57,7 +59,7 @@ export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
 
       .example-button {
         display: block;
-        padding: 10px
+        padding: 10px;
         background: #fff;
         width: 50%;
         max-width:125px;
@@ -69,7 +71,7 @@ export default function GroupItem({ href, label, subtitle, image, sourceUrl }) {
 
       .example-button:hover {
         transition: border 0.25s, background 0.25s, color 0.25s;
-        color: white;
+        color: white !important;
         background: #6122FB;
       }
 
