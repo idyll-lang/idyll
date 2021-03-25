@@ -123,7 +123,7 @@ const exampleGroups = [
     ]
   },
   {
-    title: 'Articles and Blog Posts',
+    title: 'News Articles and Blog Posts',
     items: [
       {
         label: '77 Nationalities & 66 Currencies',
