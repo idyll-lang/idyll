@@ -1,3 +1,8 @@
+## v5.5.0
+
+Features
+- Added a new `[Annotation /]` component [#718](https://github.com/idyll-lang/idyll/pull/718)
+
 ## v5.4.0
 
 Features: 
