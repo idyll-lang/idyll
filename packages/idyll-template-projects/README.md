@@ -19,7 +19,9 @@ idyll create-project
 
 ## Available Templates
 
-1. [`basic`](templates/basic): a barebones Idyll project.
-
+1. [`article`](templates/article): a typical Idyll article.
+2. [`multipage`](templates/multipage): setup for a multipage blog.
+3. [`scrollytelling`](templates/scrollytelling): scroll and tell.
+4. [`slideshow`](templates/slideshow): interactive graphics in your slideshow.
 
 *See http://idyll-lang.org for complete documentation.*
