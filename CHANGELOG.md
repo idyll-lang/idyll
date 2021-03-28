@@ -1,3 +1,6 @@
+### v5.5.1
+- Node v15 support
+
 ## v5.5.0
 
 Features
