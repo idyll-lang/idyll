@@ -1,5 +1,6 @@
 export { default as Action } from './action';
 export { default as Analytics } from './analytics';
+export { default as Annotation } from './annotation';
 export { default as Aside } from './aside';
 export { default as Boolean } from './boolean';
 export { default as Checkbox } from './boolean';

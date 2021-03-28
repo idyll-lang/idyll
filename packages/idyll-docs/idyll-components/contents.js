@@ -95,6 +95,15 @@ const components = [
           }
         },
         {
+          Annotation: {
+            description:
+              'Use the annotation component to show a tooltip when the user hovers over text or other components.',
+            thumbnail: 'annotation.png',
+            component: COMPONENTS.Annotation,
+            liveExample: true
+          }
+        },
+        {
           FullWidth: {
             description:
               "A `FullWidth` component will break out of the text container and expand to fill the full width of the reader's browser.",

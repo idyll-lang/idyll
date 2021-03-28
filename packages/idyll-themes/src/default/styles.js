@@ -1006,4 +1006,69 @@ img {
   }
 }
 
+
+/* annotated-text container */
+.annotated-text {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
+.annotated-text,
+.annotated-text:visited {
+  background: #efefef;
+  padding: 0 5px;
+  transition: background 0.25s ease-out;
+}
+
+.annotated-text:hover {
+  background: #ccc;
+}
+
+/* annotated-text CSS */
+.annotated-text .annotation-text {
+  visibility: hidden;
+  border: solid 0.5px #666;
+  box-shadow: 0 0 5px #ccc;
+  background: #fff;
+  text-align: left;
+  padding: 5px;
+  /* border-radius: 4px; */
+  position: absolute;
+  z-index: 1;
+  font-size: 0.9em;
+  line-height: 1.2;
+}
+
+.annotated-text .annotation-text {
+  width: 250px;
+  bottom: 120%;
+  left: 50%;
+  margin-left: -125px; /* Use half of the width (120/2 = 60), to center the annotated-text */
+  opacity: 0;
+  font-weight: initial;
+}
+
+.annotated-text:hover .annotation-text {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease-out;
+}
+
+@media all and (max-width: 800px) {
+  .annotated-text .annotation-text {
+    width: 50vh;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .annotated-text .annotation-text {
+    width: 50vw;
+    position: fixed;
+    left: 50%;
+    bottom: 20%;
+  }
+}
+
+
 `;

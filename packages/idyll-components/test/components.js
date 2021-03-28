@@ -4,6 +4,7 @@ import { mount, shallow } from 'enzyme';
 import {
   Action,
   Analytics,
+  Annotation,
   Aside,
   Boolean,
   Button,
@@ -65,6 +66,9 @@ describe('Sanity Check', () => {
     describe('Presentation', () => {
       it('<Action />', () => {
         expect(() => shallow(<Action />)).not.toThrow();
+      });
+      it('<Annotation />', () => {
+        expect(() => mount(<Annotation />)).not.toThrow();
       });
       it('<Boolean />', () => {
         expect(() => shallow(<Boolean />)).not.toThrow();
@@ -195,6 +199,9 @@ describe('Sanity Check', () => {
     describe('Presentation', () => {
       it('<Action />', () => {
         expect(() => mount(<Action />)).not.toThrow();
+      });
+      it('<Annotation />', () => {
+        expect(() => mount(<Annotation />)).not.toThrow();
       });
       it('<Boolean />', () => {
         expect(() => mount(<Boolean />)).not.toThrow();
