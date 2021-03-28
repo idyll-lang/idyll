@@ -21,7 +21,7 @@ const tutorialsGroups = [
       {
         label: 'Custom React Components',
         subtitle:
-          'User React to create your own custom graphics inside an Idyll post.',
+          'Use React to create your own custom graphics inside an Idyll post.',
         href: 'https://tanalan.github.io/idyll-react-components-tutorial/',
         image: 'custom-react.png',
         sourceUrl: 'https://github.com/tanalan/idyll-react-components-tutorial'

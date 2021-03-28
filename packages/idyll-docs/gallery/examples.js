@@ -24,12 +24,23 @@ const exampleGroups = [
         sourceUrl: 'https://github.com/fredhohman/card-shuffling'
       },
       {
-        label: 'How to Tune a Guitar',
-        subtitle:
-          'An interactive audio guide with guitars and a little music theory.',
-        href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
-        image: 'how-to-tune-a-guitar.png',
-        sourceUrl: 'https://github.com/mathisonian/how-to-tune-a-guitar'
+        label: 'How does the eye work?',
+        href: 'https://idyll.pub/post/the-eye-5b169094cce3bece5d95e964/',
+        image: 'the-eye.png'
+      },
+      {
+        label: 'Explorable Flexagons',
+        subtitle: 'Learn to create and flex flexagons',
+        href: 'http://loki3.com/flex/explore/',
+        image: 'flexagons.jpg',
+        sourceUrl: 'https://github.com/loki3/flexagonator'
+      },
+      {
+        label: 'Beat Basics',
+        subtitle: "Explore 3/4 and 6/8 time using John Varney's rhythm wheel.",
+        href: 'https://megan-vo.github.io/basic-beats/',
+        image: 'beat-basics.png',
+        sourceUrl: 'https://github.com/megan-vo/basic-beats'
       },
       {
         label: "The Beginner's Guide to Dimensionality Reduction",
@@ -42,30 +53,11 @@ const exampleGroups = [
         sourceUrl: 'https://github.com/mathisonian/dimensionality-reduction'
       },
       {
-        label: 'Beat Basics',
-        subtitle: "Explore 3/4 and 6/8 time using John Varney's rhythm wheel.",
-        href: 'https://megan-vo.github.io/basic-beats/',
-        image: 'beat-basics.png',
-        sourceUrl: 'https://github.com/megan-vo/basic-beats'
-      },
-      {
-        label: 'How does the eye work?',
-        href: 'https://idyll.pub/post/the-eye-5b169094cce3bece5d95e964/',
-        image: 'the-eye.png'
-      },
-      {
         label: 'The Etymology of Trig Functions',
         subtitle: 'A graphic walkthrough of mathematical history',
         href: 'https://mathisonian.github.io/trig/etymology/',
         image: 'trig.png',
         sourceUrl: 'https://github.com/mathisonian/trig/'
-      },
-      {
-        label: 'Explorable Flexagons',
-        subtitle: 'Learn to create and flex flexagons',
-        href: 'http://loki3.com/flex/explore/',
-        image: 'flexagons.jpg',
-        sourceUrl: 'https://github.com/loki3/flexagonator'
       },
       {
         label: 'Bayesian Knowledge Tracing',
@@ -119,6 +111,14 @@ const exampleGroups = [
         href:
           'https://cse442-17f.github.io/Gilbert-Johnson-Keerthi-Distance-Algorithm/',
         image: 'collision.png'
+      },
+      {
+        label: 'How to Tune a Guitar',
+        subtitle:
+          'An interactive audio guide with guitars and a little music theory.',
+        href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
+        image: 'how-to-tune-a-guitar.png',
+        sourceUrl: 'https://github.com/mathisonian/how-to-tune-a-guitar'
       }
     ]
   },

@@ -26,16 +26,15 @@ const Examples = () => (
       </ul>
       <p>
         If you've made something with Idyll and would like to post it here,
-        please{' '}
+        please reach out on{' '}
+        <a href="https://twitter.com/idyll_lang/" target="_blank">
+          Twitter
+        </a>{' '}
+        or{' '}
         <a href="https://github.com/idyll-lang/idyll/issues" target="_blank">
           open an issue on GitHub
         </a>{' '}
-        with the title "Gallery Example". If you like what we're doing, please
-        consider{' '}
-        <a href="https://opencollective.com/idyll">
-          buying a sticker or donating
-        </a>{' '}
-        to help support future development of the project.
+        with the title "Gallery Example".
       </p>
     </div>
 
