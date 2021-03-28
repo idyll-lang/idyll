@@ -5,6 +5,7 @@ import Float from './Float.idl';
 import Inline from './Inline.idl';
 
 import Action from './Action.idl';
+import Annotation from './Annotation.idl';
 import Boolean from './Boolean.idl';
 import Button from './Button.idl';
 import Chart from './Chart.idl';
@@ -39,6 +40,7 @@ import Cite from './Cite.idl';
 
 export {
   Aside,
+  Annotation,
   FullWidth,
   Fixed,
   Float,

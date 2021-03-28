@@ -832,39 +832,36 @@ hr {
 
 .annotated-text,
 .annotated-text:visited {
-  /* choose between one of the two styling choices below*/
-  border-bottom: 2px solid silver; /* This creates an underline annotation effect*/
-  /*box-shadow: inset 0 -22px 0 #fffff8;*/ /* This creates a highlight annotation effect*/
-  transition: box-shadow 0.25s ease-out;
+  background: #efefef;
+  padding: 0 5px;
+  transition: background 0.25s ease-out;
 }
 
 .annotated-text:hover {
-  color: black;
-  box-shadow: inset 0 -2px 0 -webkit-link;
+  background: #ccc;
 }
 
 /* annotated-text CSS */
 .annotated-text .annotation-text {
   visibility: hidden;
-  border-style: solid;
-  border-color: -webkit-link;
-  background: #fffff8;
+  border: solid 0.5px #666;
+  box-shadow: 0 0 5px #ccc;
+  background: #fff;
   text-align: left;
-  padding: 10px 10px;
-  border-radius: 4px;
+  padding: 5px;
+  /* border-radius: 4px; */
   position: absolute;
   z-index: 1;
-  font-style: italic;
+  font-size: 0.9em;
+  line-height: 1.2;
 }
 
 .annotated-text .annotation-text {
-  width: 30vh;
+  width: 250px;
   bottom: 120%;
   left: 50%;
-  margin-left: -15vh; /* Use half of the width (120/2 = 60), to center the annotated-text */
+  margin-left: -125px; /* Use half of the width (120/2 = 60), to center the annotated-text */
   opacity: 0;
-  font-size: 1.2rem;
-  line-height: 1.5rem;
   font-weight: initial;
 }
 

@@ -3,10 +3,10 @@ import React from 'react';
 class Annotation extends React.PureComponent {
   render() {
     return (
-      <div className="annotated-text">
+      <span className="annotated-text">
         {this.props.children}
         <span className="annotation-text">{this.props.annotation}</span>
-      </div>
+      </span>
     );
   }
 }
