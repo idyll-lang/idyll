@@ -8,6 +8,11 @@
     "css": "styles.css",
     "authorView": false
   },
+  "scripts": {
+    "start": "idyll",
+    "build": "idyll build",
+    "publish": "idyll publish"
+  },
   "dependencies": {
     "idyll": "^5.0.0",
     "idyll-d3-component": "^2.0.0",
