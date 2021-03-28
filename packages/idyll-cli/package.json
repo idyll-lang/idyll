@@ -35,7 +35,7 @@
     "bluebird": "^3.5.0",
     "brfs": "^1.4.3",
     "browser-sync": "^2.18.8",
-    "browserify": "^16.5.0",
+    "browserify": "^17.0.0",
     "browserify-incremental": "^3.1.1",
     "bs-pretty-message": "^1.0.8",
     "chalk": "^2.4.1",
