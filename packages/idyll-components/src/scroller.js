@@ -90,33 +90,35 @@ class Scroller extends React.Component {
     this.props.updateProps && this.props.updateProps(update);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     if (
-      nextProps.disableScroll &&
-      this.props.currentStep !== nextProps.currentStep
+      this.props.disableScroll &&
+      this.props.currentStep !== prevProps.currentStep
     ) {
       d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
         .filter(function(d, i) {
-          return i === nextProps.currentStep;
+          return i === this.props.currentStep;
         })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
     if (
-      nextProps.disableScroll &&
-      this.props.currentState !== nextProps.currentState
+      this.props.disableScroll &&
+      this.props.currentState !== prevProps.currentState
     ) {
       d3.selectAll(`#idyll-scroll-${this.id} .idyll-step`)
         .filter((d, i) => {
-          return nextProps.currentState === this.SCROLL_NAME_MAP[i];
+          return (
+            this.props.currentState.currentState === this.SCROLL_NAME_MAP[i]
+          );
         })
         .node()
         .scrollIntoView({ behavior: 'smooth' });
     }
     if (
-      nextProps.disableScroll &&
-      (!nextProps.currentStep ||
-        nextProps.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)
+      this.props.disableScroll &&
+      (!this.props.currentStep ||
+        this.props.currentStep < Object.keys(this.SCROLL_STEP_MAP).length - 1)
     ) {
       d3.select('body').style('overflow', 'hidden');
     }

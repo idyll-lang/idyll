@@ -95,8 +95,8 @@ class Desmos extends React.Component {
     });
   }
 
-  UNSAFE_componentWillUpdate(nextProps) {
-    const { equation } = nextProps;
+  componentDidUpdate(prevProps) {
+    const { equation } = prevProps;
     // Only instantiate & update the calculator
     // when necessary to improve performance.
     if (
