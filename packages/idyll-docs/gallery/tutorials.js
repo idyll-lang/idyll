@@ -7,7 +7,8 @@ const tutorialsGroups = [
         subtitle:
           'Using derived variables to easily create reactive views of data in Idyll.',
         href: 'https://idyll.pub/post/derived-table-b00359641a4490037dc3dce7/',
-        image: 'dynamic-datasets.png'
+        image: 'dynamic-datasets.png',
+        sourceUrl: 'https://github.com/mathisonian/idyll-dynamic-data/'
       },
       {
         label: 'Triggering Updates',

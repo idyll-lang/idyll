@@ -3,6 +3,12 @@ const exampleGroups = [
     title: 'Explorable Explanations',
     items: [
       {
+        label: "What's an IP address?",
+        subtitle: 'How are they allocated? Are we running out?',
+        href: 'https://outofips.netlify.app/',
+        image: 'ip-explorable.png'
+      },
+      {
         label: 'The Barnes-Hut Approximation',
         subtitle: 'Efficient computation of N-body forces',
         href: 'https://jheer.github.io/barnes-hut/',
@@ -123,7 +129,7 @@ const exampleGroups = [
     ]
   },
   {
-    title: 'News Articles and Blog Posts',
+    title: 'Articles and Blog Posts',
     items: [
       {
         label: '77 Nationalities & 66 Currencies',

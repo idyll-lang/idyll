@@ -8,9 +8,18 @@ const Tutorials = () => (
   <section style={{ position: 'relative' }}>
     <h1>Tutorials</h1>
 
-    <div style={{ position: 'absolute', top: 0, right: 0 }}>
-      <Donate />
-    </div>
+    <p>
+      <b>Browse by category</b>
+    </p>
+    <ul>
+      {tutorials.map(({ title }) => {
+        return (
+          <li key={title}>
+            <a href={`#${title.split(' ').join('-')}`}>{title}</a>
+          </li>
+        );
+      })}
+    </ul>
 
     {tutorials.map(eg => (
       <GalleryGroup {...eg} key={eg.title} />
