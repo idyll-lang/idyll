@@ -9959,12 +9959,13 @@ react-syntax-highlighter@^5.7.0:
     highlight.js "~9.12.0"
     lowlight "~1.9.1"
 
-react-table@6.8.6:
-  version "6.8.6"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.8.6.tgz#a0ad8b4839319052d5befc012603fb161e52ede3"
-  integrity sha1-oK2LSDkxkFLVvvwBJgP7Fh5S7eM=
+react-table@6.11.4:
+  version "6.11.4"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.11.4.tgz#e9d30b4500d2c1cf8e5ba312227d19a256ec1913"
+  integrity sha512-2b114yTjYyDTAha1vOH33QPupzv/KE3i7diouYqmt7O3NIExaWxNxxvbch26MyvL5YSLN17cK9Zk9Eh3ss+Pcg==
   dependencies:
     classnames "^2.2.5"
+    react-is "^16.8.1"
 
 react-test-renderer@^16.0.0, react-test-renderer@^16.0.0-0:
   version "16.13.1"

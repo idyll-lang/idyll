@@ -49,7 +49,7 @@
     "react-inlinesvg": "^0.8.1",
     "react-latex-patched": "^1.1.1",
     "react-syntax-highlighter": "^5.7.0",
-    "react-table": "6.8.6",
+    "react-table": "6.11.4",
     "react-youtube": "^7.6.0",
     "scrollama": "^2.0.0",
     "victory": "^0.23.0"
