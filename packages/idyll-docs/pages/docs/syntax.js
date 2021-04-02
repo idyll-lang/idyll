@@ -13,6 +13,7 @@ We provide syntax highlighting plugins for several editors:
 
 - [Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=mathisonian.idyll-syntax)
 - [Atom](https://atom.io/packages/language-idyll)
+- [Sublime](https://github.com/idyll-lang/idyll-sublime-syntax-highlighter)
 
 If you'd like a syntax highlighter for a different editor, please [open an issue on github](https://github.com/idyll-lang/idyll/issues).
 

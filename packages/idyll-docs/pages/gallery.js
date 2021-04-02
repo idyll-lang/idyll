@@ -9,7 +9,7 @@ const Examples = () => (
     <h1>Made with Idyll</h1>
 
     <div style={{ position: 'relative' }}>
-      <p>
+      {/* <p>
         <b>Browse by category</b>
       </p>
       <ul>
@@ -23,7 +23,7 @@ const Examples = () => (
         <li>
           <a href="./tutorials">Tutorials</a>
         </li>
-      </ul>
+      </ul> */}
       <p>
         If you've made something with Idyll and would like to post it here,
         please reach out on{' '}
@@ -34,14 +34,15 @@ const Examples = () => (
         <a href="https://github.com/idyll-lang/idyll/issues" target="_blank">
           open an issue on GitHub
         </a>{' '}
-        with the title "Gallery Example".
+        with the title "Gallery Example". For tutorials on how to use Idyll,{' '}
+        <a href="./tutorials">click here</a>.
       </p>
     </div>
 
     {examples.slice(0, 1).map(eg => {
       return <GalleryGroup items={eg.items} title={eg.title} key={eg.title} />;
     })}
-    <div className="feature">
+    {/* <div className="feature">
       <div className="feature--text">
         <a style={{ fontSize: '1.25rem' }} href="https://parametric.press">
           Featured: Parametric Press, a digital magazine built with Idyll
@@ -61,7 +62,7 @@ const Examples = () => (
           />
         </a>
       </div>
-    </div>
+    </div> */}
     {examples.slice(1).map(eg => {
       return <GalleryGroup items={eg.items} title={eg.title} key={eg.title} />;
     })}
@@ -114,7 +115,7 @@ const Examples = () => (
   </section>
 );
 
-export default ({ url }) => (
+const GalleryPage = ({ url }) => (
   <Layout
     url={url}
     title="Idyll Example Gallery"
@@ -125,3 +126,5 @@ export default ({ url }) => (
     <Examples />
   </Layout>
 );
+
+export default GalleryPage;

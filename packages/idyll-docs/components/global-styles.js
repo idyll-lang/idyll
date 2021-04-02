@@ -21,6 +21,9 @@ const GlobalStyles = () => (
       color: #6122fb;
       text-decoration: underline;
     }
+    .main-container ul a, .main-container ul a:visited {
+      color: #6122fb;
+    }
 
     a,
     a:visited {

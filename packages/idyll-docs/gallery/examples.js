@@ -1,7 +1,13 @@
 const exampleGroups = [
   {
-    title: 'Explorable Explanations',
+    title: 'Explorable explanations and interactive articles',
     items: [
+      {
+        label: 'Future of the Oxford Cambridge Arc',
+        subtitle: 'An interactive article about urban development modelling',
+        href: 'https://nismod.github.io/arc-udm-vis/',
+        image: 'transport.png'
+      },
       {
         label: "What's an IP address?",
         subtitle: 'How are they allocated? Are we running out?',
@@ -125,12 +131,7 @@ const exampleGroups = [
         href: 'https://mathisonian.github.io/idyll/how-to-tune-a-guitar/',
         image: 'how-to-tune-a-guitar.png',
         sourceUrl: 'https://github.com/mathisonian/how-to-tune-a-guitar'
-      }
-    ]
-  },
-  {
-    title: 'Articles and Blog Posts',
-    items: [
+      },
       {
         label: '77 Nationalities & 66 Currencies',
         subtitle:
