@@ -67,7 +67,6 @@ const TopNav = ({ selected }) => {
             flex-direction: row;
             justify-content: space-between;
             background: #eae7d6;
-            // border-bottom: solid 1px #999;
             z-index: 2;
           }
           .header-menu {
@@ -88,8 +87,7 @@ const TopNav = ({ selected }) => {
           }
 
           .logo-container {
-            // color: black;
-            font-family: 'Fira Mono';
+            font-family: Fira Mono;
             font-size: 36px;
             text-decoration: none;
           }
@@ -101,16 +99,12 @@ const TopNav = ({ selected }) => {
           }
 
           .nav-logo {
-            // width: 100%;
-            // max-width: 250px;
             position: relative;
             top: 10px;
-            // right: 30px;
           }
           .link-group a {
-            font-family: 'Fira Mono';
+            font-family: Fira Mono;
             font-size: 18px;
-            // width: 100%;
             margin-right: 20px;
             margin-left: 20px;
             color: black;
@@ -118,7 +112,6 @@ const TopNav = ({ selected }) => {
           }
 
           .link-group a.selected {
-            // color: rgb(97, 34, 251);
             border-bottom: solid 2px black;
           }
 
@@ -151,9 +144,7 @@ const TopNav = ({ selected }) => {
               margin: 0;
               width: 50px;
             }
-            .nav-logo {
-              // top: 1px;
-            }
+
             .logo-text {
               display: none;
             }

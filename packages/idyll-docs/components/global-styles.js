@@ -1,20 +1,16 @@
-const importString =
-  "@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i');";
-
 const GlobalStyles = () => (
   <style global>{`
-    ${importString}
+    @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i)
 
-    html,
-    body {
+    html, body {
       margin: 0;
       padding: 0;
     }
 
     body {
-      font-family: 'Source Sans Pro', sans-serif;
-      // color: rgb(80, 80, 80);
+      font-family: Source Sans Pro, sans-serif;
       color: black;
+      margin: 0;
     }
 
     p a, p a:visited {
@@ -56,7 +52,6 @@ const GlobalStyles = () => (
       padding-top: 0.2em;
       padding-bottom: 0.2em;
       margin: 0;
-      // font-size: 85%;
       background-color: rgba(0, 0, 0, 0.04);
       border-radius: 3px;
     }
@@ -71,10 +66,9 @@ const GlobalStyles = () => (
       overflow: auto;
       line-height: 1.45;
       background-color: #f7f7f7;
-      // border-radius: 3px;
       word-wrap: normal;
       background: #4c4b63;
-      font-family: 'Fira Mono', monospace;
+      font-family: Fira Mono, monospace;
       color: white;
     }
 

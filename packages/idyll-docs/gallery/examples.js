@@ -6,13 +6,15 @@ const exampleGroups = [
         label: 'Future of the Oxford Cambridge Arc',
         subtitle: 'An interactive article about urban development modelling',
         href: 'https://nismod.github.io/arc-udm-vis/',
-        image: 'transport.png'
+        image: 'transport.png',
+        sourceUrl: 'https://github.com/nismod/arc-udm-vis'
       },
       {
         label: "What's an IP address?",
         subtitle: 'How are they allocated? Are we running out?',
         href: 'https://outofips.netlify.app/',
-        image: 'ip-explorable.png'
+        image: 'ip-explorable.png',
+        sourceUrl: 'https://github.com/katmh/ip'
       },
       {
         label: 'The Barnes-Hut Approximation',

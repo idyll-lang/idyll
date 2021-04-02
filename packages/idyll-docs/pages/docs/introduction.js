@@ -167,11 +167,13 @@ Idyll is supported by the Interactive Data Lab at the University of Washington, 
 
 `;
 
+const ast = compile(idyllMarkup, { async: false });
+
 const Introduction = ({ url }) => (
   <Layout url={url} title={'Idyll Documentation | An overview.'}>
     <IdyllDocument
       layout="centered"
-      markup={idyllMarkup}
+      ast={ast}
       components={Object.assign({}, components, { Donate })}
     />
     <p style={{ marginBottom: 30 }}>
@@ -216,7 +218,7 @@ const Introduction = ({ url }) => (
         margin: 0 auto;
         padding: 10px 5px;
         font-size: 18px;
-        font-family: 'Fira Mono', monospace;
+        font-family: Fira Mono, monospace;
         width: 100%;
         max-width: 400px;
       }

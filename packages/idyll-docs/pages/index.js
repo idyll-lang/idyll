@@ -308,12 +308,10 @@ The value of x is [Display value:x format:"d" /].
         `}</style>
         <style>{`
           p {
-            // display: none;
             max-width: 476px;
             margin: 2em auto 0 auto;
-            // text-align: justify;
             line-height: 1.4em;
-            font-family: 'Source Sans Pro';
+            font-family: Source Sans Pro;
           }
           .alert {
             position: absolute;
@@ -324,7 +322,7 @@ The value of x is [Display value:x format:"d" /].
             color: white;
             padding: 5px 10px;
             font-size: 0.8em;
-            font-family: 'Source Sans Pro';
+            font-family: Source Sans Pro;
             text-align: right;
           }
           .alert a,
@@ -334,7 +332,7 @@ The value of x is [Display value:x format:"d" /].
           textarea {
             display: block;
             width: 100%;
-            font-family: 'Fira Mono', monospace;
+            font-family: Fira Mono, monospace;
             background: #4c4b63;
             border: none;
             padding: 10px;
@@ -371,7 +369,6 @@ The value of x is [Display value:x format:"d" /].
             background: white;
             width: 100%;
             padding: 5px 10px;
-            // height: calc(100vh - 550px);
             overflow-y: auto;
             min-height: 140px;
             margin-bottom: 1em;
@@ -386,13 +383,13 @@ The value of x is [Display value:x format:"d" /].
             bottom: 10px;
             width: 100%;
             text-align: center;
-            font-family: 'Source Sans Pro';
+            font-family: Source Sans Pro;
           }
 
           .logo-container {
             width: 100%;
             margin: 0 auto;
-            font-family: 'Fira Mono';
+            font-family: Fira Mono;
             color: black;
             font-size: 48px;
             text-decoration: none;
@@ -406,18 +403,15 @@ The value of x is [Display value:x format:"d" /].
             width: 100%;
             margin: 0 auto;
             margin-top: 2em;
-            // margin-top: 84px;
             text-align: center;
           }
 
           .editor-link {
-            // display: block;
-            font-family: 'Fira Mono';
+            font-family: Fira Mono;
             text-decoration: none;
             color: black;
             font-size: 14px;
             color: white;
-            // background: #6122FB;
             background: #4c4b63;
             padding: 10px 10px;
             transition: color 0.5s, background 0.5s;
@@ -438,7 +432,7 @@ The value of x is [Display value:x format:"d" /].
           .other-links {
             width: 100%;
             text-align: center;
-            font-family: 'Source Sans Pro';
+            font-family: Source Sans Pro;
           }
           .links a {
             color: black;
@@ -456,7 +450,6 @@ The value of x is [Display value:x format:"d" /].
           .gallery {
             position: relative;
             font-size: 22px;
-            // background: #84828F;
             width: 100%;
             transition: height 1.5s;
             display: flex;
@@ -491,9 +484,6 @@ The value of x is [Display value:x format:"d" /].
             text-decoration: none;
             color: white;
           }
-          .gallery-item:hover .title {
-            // opacity: 1;
-          }
 
           .gallery-title {
             position: absolute;
@@ -502,7 +492,7 @@ The value of x is [Display value:x format:"d" /].
             padding: 20px;
             background: rgba(255, 255, 255, 1);
             border: solid 1px #333;
-            font-family: 'Fira Mono';
+            font-family: Fira Mono;
             font-size: 0.9em;
             margin: 0 auto;
             left: 0;
@@ -528,17 +518,12 @@ The value of x is [Display value:x format:"d" /].
             color: #6122fb;
           }
 
-          .gallery:hover .gallery-title {
-            // opacity: 0;
-          }
-
           .links a:hover {
             color: #6122fb;
             font-weight: bold;
           }
 
           .editor-link:hover {
-            // color: #6122FB;
             background: #6122fb;
           }
 
@@ -547,10 +532,9 @@ The value of x is [Display value:x format:"d" /].
             max-width: 400px;
             margin: 0 auto;
             margin-top: 1em;
-            font-family: 'Source Sans Pro';
+            font-family: Source Sans Pro;
             font-size: 24px;
             font-weight: 300;
-            // letter-spacing: 0.3em;
             line-height: 1.1em;
             text-align: center;
           }
@@ -587,9 +571,6 @@ The value of x is [Display value:x format:"d" /].
             .editor-link-container {
               margin-top: 0.5em;
             }
-            // .gallery {
-            //   margin-top: 1em;
-            // }
 
             .links {
               font-size: 0.9em;
