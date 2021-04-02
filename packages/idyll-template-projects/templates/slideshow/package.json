@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "d3": "^5.0.0",
-    "idyll": "^4.0.0",
+    "idyll": "^5.0.0",
     "idyll-d3-component": "^2.0.0",
     "react-map-gl": "^5.0.3",
     "vega": "^5.4.0",
