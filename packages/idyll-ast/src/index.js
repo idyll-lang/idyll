@@ -967,6 +967,13 @@ function childrenToMarkup(
 }
 
 function nodeToMarkup(node, depth, insertFullWidth, separator = '\n') {
+  if (
+    node.name &&
+    node.name.toLowerCase() === 'IdyllEditorDropTarget'.toLowerCase()
+  ) {
+    return '';
+  }
+
   const markupNodes = [
     'strong',
     'em',
