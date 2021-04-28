@@ -1,11 +1,16 @@
 import React from 'react';
+import Image from './image.js';
 
 class Annotation extends React.PureComponent {
   render() {
+    const hasGraphic = this.props.src;
     return (
       <span className="annotated-text">
         {this.props.children}
-        <span className="annotation-text">{this.props.annotation}</span>
+        <div className="annotation-text">
+          <Image src={hasGraphic} />
+          {this.props.annotation}
+        </div>
       </span>
     );
   }
@@ -22,6 +27,7 @@ Annotation._idyll = {
     {
       name: 'annotation',
       type: 'string',
+      src: 'src',
       example: '"This is annotation text"',
       description: 'The displayed text when user hovers on annotated text.'
     }
