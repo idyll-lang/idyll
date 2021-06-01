@@ -1,7 +1,18 @@
 import React from 'react';
-import { ReactTinyLink } from 'react-tiny-link';
 
 class Preview extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mounted: false
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      mounted: true
+    });
+  }
   render() {
     const {
       hasError,
@@ -14,6 +25,16 @@ class Preview extends React.Component {
       media,
       ...props
     } = this.props;
+
+    if (!this.state.mounted) {
+      return (
+        <a href={url}>
+          {title} - {description}
+        </a>
+      );
+    }
+
+    const ReactTinyLink = require('react-tiny-link').ReactTinyLink;
     if (this.props.media) {
       return (
         <ReactTinyLink
