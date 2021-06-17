@@ -3,8 +3,9 @@ const { filterChildren } = require('idyll-component-children');
 
 class Annotation extends React.PureComponent {
   render() {
-    const inline_text = this.props.children.slice(-1);
-    const annotation_box = this.props.children.slice(0, children.length - 1);
+    const { children } = this.props;
+    const inline_text = children.slice(-1);
+    const annotation_box = children.slice(0, children.length - 1);
 
     return (
       <span className="annotated-text">
@@ -24,15 +25,7 @@ class Annotation extends React.PureComponent {
 Annotation._idyll = {
   name: 'Annotation',
   tagType: 'open',
-  displayType: 'inline',
-  props: [
-    {
-      name: 'annotation',
-      type: 'string',
-      example: '"This is annotation text"',
-      description: 'The displayed text when user hovers on annotated text.'
-    }
-  ]
+  displayType: 'inline'
 };
 
 export default Annotation;
