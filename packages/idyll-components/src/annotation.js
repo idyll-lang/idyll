@@ -4,20 +4,23 @@ const { filterChildren } = require('idyll-component-children');
 class Annotation extends React.PureComponent {
   render() {
     const { children } = this.props;
-    const inline_text = children && children.length ? children.slice(-1) : [];
-    const annotation_box =
-      children && children.length ? children.slice(0, children.length - 1) : [];
+
+    const annotationBox = filterChildren(children || [], c => {
+      return (
+        c && c.type && c.type.name && c.type.name.toLowerCase() === 'graphic'
+      );
+    });
+
+    const inlineText = filterChildren(children || [], c => {
+      return !c.type || !c.type.name || c.type.name.toLowerCase() !== 'graphic';
+    });
 
     return (
-      <span className="annotated-text">
-        {filterChildren(inline_text, c => {
-          return c;
-        })}
-        <div className="annotation-text">
-          {filterChildren(annotation_box, c => {
-            return c;
-          })}
-        </div>
+      <span>
+        {' '}
+        <span className="annotated-text">
+          {inlineText} <span className="annotation-text">{annotationBox}</span>
+        </span>{' '}
       </span>
     );
   }
