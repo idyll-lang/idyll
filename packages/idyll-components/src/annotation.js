@@ -4,8 +4,9 @@ const { filterChildren } = require('idyll-component-children');
 class Annotation extends React.PureComponent {
   render() {
     const { children } = this.props;
-    const inline_text = children.slice(-1);
-    const annotation_box = children.slice(0, children.length - 1);
+    const inline_text = children && children.length ? children.slice(-1) : [];
+    const annotation_box =
+      children && children.length ? children.slice(0, children.length - 1) : [];
 
     return (
       <span className="annotated-text">
