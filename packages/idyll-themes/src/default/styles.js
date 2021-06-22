@@ -1017,7 +1017,7 @@ img {
 .annotated-text,
 .annotated-text:visited {
   background: #efefef;
-  padding: 0 5px;
+  padding: 0 2.5px;
   transition: background 0.25s ease-out;
 }
 

@@ -1,11 +1,24 @@
 import React from 'react';
+const { filterChildren } = require('idyll-component-children');
 
 class Annotation extends React.PureComponent {
   render() {
+    const { children } = this.props;
+
+    const annotationBox = filterChildren(children || [], c => {
+      return c.type && c.type.name && c.type.name.toLowerCase() === 'graphic';
+    });
+
+    const inlineText = filterChildren(children || [], c => {
+      return !c.type || !c.type.name || c.type.name.toLowerCase() !== 'graphic';
+    });
+
     return (
-      <span className="annotated-text">
-        {this.props.children}
-        <span className="annotation-text">{this.props.annotation}</span>
+      <span>
+        {' '}
+        <span className="annotated-text">
+          {inlineText} <span className="annotation-text">{annotationBox}</span>
+        </span>{' '}
       </span>
     );
   }
@@ -14,18 +27,7 @@ class Annotation extends React.PureComponent {
 Annotation._idyll = {
   name: 'Annotation',
   tagType: 'open',
-  displayType: 'inline',
-  children: [
-    'Content placed inside of an annotation component will be displayed inline with some styling.'
-  ],
-  props: [
-    {
-      name: 'annotation',
-      type: 'string',
-      example: '"This is annotation text"',
-      description: 'The displayed text when user hovers on annotated text.'
-    }
-  ]
+  displayType: 'inline'
 };
 
 export default Annotation;
