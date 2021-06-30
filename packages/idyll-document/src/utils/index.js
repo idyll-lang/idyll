@@ -142,7 +142,6 @@ export const evalExpression = (acc, expr, key, context) => {
         return eval('(' + evalString + ')');
       } catch (err) {
         console.warn('Error occurred in Idyll expression');
-        console.error(err);
       }
     }.call(Object.assign({}, acc), e);
   } catch (err) {}
