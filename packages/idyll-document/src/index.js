@@ -60,10 +60,18 @@ class IdyllDocument extends React.Component {
     }
 
     if (this.props.injectThemeCSS) {
-      themeNode = this.createStyleNode(getTheme(this.props.theme).styles);
+      if (themeNode) {
+        themeNode.innerHTML = getTheme(this.props.theme).styles;
+      } else {
+        themeNode = this.createStyleNode(getTheme(this.props.theme).styles);
+      }
     }
     if (this.props.injectLayoutCSS) {
-      layoutNode = this.createStyleNode(getLayout(this.props.layout).styles);
+      if (layoutNode) {
+        layoutNode.innerHTML = getLayout(this.props.layout).styles;
+      } else {
+        layoutNode = this.createStyleNode(getLayout(this.props.layout).styles);
+      }
     }
   }
 

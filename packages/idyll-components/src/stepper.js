@@ -120,9 +120,9 @@ Stepper._idyll = {
   width:400
   height:300 /]
 [/Graphic]
-[Step]A black and white photo[/Step]
-[Step]A color photo[/Step]
-[Step]An animated gif![/Step]
+[Step]Text for step 1[/Step]
+[Step]Text for step 2[/Step]
+[Step]Text for step 3[/Step]
 [StepperControl /]`
   ],
   props: [
