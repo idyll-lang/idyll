@@ -9,13 +9,15 @@ class TextInput extends React.PureComponent {
   onChange(e) {
     const value = e.target.value || '';
     const pattern = this.props.pattern;
+    const patternMismatchMessage =
+      this.props.patternMismatchMessage || `Input value doesn't match pattern`;
 
     this.props.updateProps({ value: value });
 
     if (pattern) {
       try {
         if (!value.match(pattern)) {
-          throw new Error(`Input value doesn't match pattern`);
+          throw new Error(patternMismatchMessage);
         }
 
         eval(value); //check if there's JS syntax errors
@@ -66,6 +68,13 @@ TextInput._idyll = {
       type: 'object',
       example: '/w+/',
       description: 'A regex pattern to validate input field'
+    },
+    {
+      name: 'patternMismatchMessage',
+      type: 'string',
+      example: 'Value doesnt match pattern',
+      description:
+        "A string message to display after a pattern mismatch. Default is: 'Input value is not valid'"
     }
   ]
 };

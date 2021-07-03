@@ -122,7 +122,7 @@ Write your own equation:
 [var name:"funcString" value:\`"(x) => x * Math.sin(10 / (x || 1))"\` /]
 [derived name:"funcFromString" value:\`eval(funcString)\` /]
 
-[TextInput value:funcString pattern:\`/([a-zA-Z]\\w*|\\([a-zA-Z]\\w*(,\\s*[a-zA-Z]\\w*)*\\)) =>/\` /]
+[TextInput value:funcString pattern:\`/([a-zA-Z]\\w*|\\([a-zA-Z]\\w*(,\\s*[a-zA-Z]\\w*)*\\)) =>/\` patternMismatchMessage:"Input value doesn't match pattern. xx" /]
 
 [Chart
   equation:\` (t) => funcFromString ? funcFromString(t) : 0 \`
