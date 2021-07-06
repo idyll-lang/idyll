@@ -5,7 +5,7 @@ Features:
 - Improves the `[Annotation /]` API so that annotations can include arbitrary embeded components, not just text. [#730](https://github.com/idyll-lang/idyll/pull/730)
 
 Bugfixes:
-- Bugfixes for `idyll-document` 
+- Prevent `idyll-document` from unecessarily injecting theme and layout stylesheets onto the page multiple times
 
 ### v5.5.1
 - Node v15 support
