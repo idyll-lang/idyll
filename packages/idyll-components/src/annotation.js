@@ -7,21 +7,29 @@ class Annotation extends React.PureComponent {
 
     const annotationBox = filterChildren(children || [], c => {
       let name = '';
-      name = name || (c._idyll ? c._idyll.name : name);
-      name = name || (c.type ? c.type.name : name);
-      name =
-        name ||
-        (c.props && c.props.idyllASTNode ? c.props.idyllASTNode.name : name);
+      if (c && c.props && c.props.idyllASTNode && c.props.idyllASTNode.name) {
+        name = c.props.idyllASTNode.name;
+      } else if (c && c._idyll && c._idyll.name) {
+        name = c._idyll.name;
+      } else if (c && c.type && c.type.name) {
+        name = c.type.name;
+      } else {
+        return false;
+      }
       return name.toLowerCase() === 'graphic';
     });
 
     const inlineText = filterChildren(children || [], c => {
       let name = '';
-      name = name || (c._idyll ? c._idyll.name : name);
-      name = name || (c.type ? c.type.name : name);
-      name =
-        name ||
-        (c.props && c.props.idyllASTNode ? c.props.idyllASTNode.name : name);
+      if (c && c.props && c.props.idyllASTNode && c.props.idyllASTNode.name) {
+        name = c.props.idyllASTNode.name;
+      } else if (c && c._idyll && c._idyll.name) {
+        name = c._idyll.name;
+      } else if (c && c.type && c.type.name) {
+        name = c.type.name;
+      } else {
+        return true;
+      }
       return name.toLowerCase() !== 'graphic';
     });
 
