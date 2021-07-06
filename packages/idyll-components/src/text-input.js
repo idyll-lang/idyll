@@ -20,7 +20,6 @@ class TextInput extends React.PureComponent {
           throw new Error(patternMismatchMessage);
         }
 
-        eval(value); //check if there's JS syntax errors
         this.setState({ error: { msg: '', isError: false } });
       } catch (err) {
         this.setState({

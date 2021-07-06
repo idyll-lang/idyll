@@ -170,6 +170,18 @@ const Component = props => {
           margin-top: 1em;
         }
 
+        input[type='text'].idyll-input-error {
+          border-color: red;
+        }
+        
+        span.idyll-input-error{
+          display: block;
+          margin: 0 auto;
+          padding: 10px 5px;
+          color: red;
+          width: 100%;
+        }
+
         .idyll-prop code {
           border: solid 1px #222;
           border-radius: 5px;
