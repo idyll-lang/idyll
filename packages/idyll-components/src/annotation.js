@@ -6,30 +6,23 @@ class Annotation extends React.PureComponent {
     const { children } = this.props;
 
     const annotationBox = filterChildren(children || [], c => {
-      console.log(
-        'filtering',
-        c,
-        c._idyll,
-        c.type,
-        c._idyll && c._idyll.name && c._idyll.name.toLowerCase() === 'graphic',
-        c.type && c.type.name && c.type.name.toLowerCase() === 'graphic'
-      );
-      return (
-        (c._idyll &&
-          c._idyll.name &&
-          c._idyll.name.toLowerCase() === 'graphic') ||
-        (c.type && c.type.name && c.type.name.toLowerCase() === 'graphic')
-      );
+      let name = '';
+      name = name || (c._idyll ? c._idyll.name : name);
+      name = name || (c.type ? c.type.name : name);
+      name =
+        name ||
+        (c.props && c.props.idyllASTNode ? c.props.idyllASTNode.name : name);
+      return name.toLowerCase() === 'graphic';
     });
 
     const inlineText = filterChildren(children || [], c => {
-      return (
-        !(
-          c._idyll &&
-          c._idyll.name &&
-          c._idyll.name.toLowerCase() === 'graphic'
-        ) && !(c.type && c.type.name && c.type.name.toLowerCase() === 'graphic')
-      );
+      let name = '';
+      name = name || (c._idyll ? c._idyll.name : name);
+      name = name || (c.type ? c.type.name : name);
+      name =
+        name ||
+        (c.props && c.props.idyllASTNode ? c.props.idyllASTNode.name : name);
+      return name.toLowerCase() !== 'graphic';
     });
 
     return (
