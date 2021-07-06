@@ -1,3 +1,12 @@
+## v5.6.0
+
+Features:
+- Adds a new `[Preview /]` component to display link previews. [#731](https://github.com/idyll-lang/idyll/pull/731)
+- Improves the `[Annotation /]` API so that annotations can include arbitrary embeded components, not just text. [#730](https://github.com/idyll-lang/idyll/pull/730)
+
+Bugfixes:
+- Bugfixes for `idyll-document` 
+
 ### v5.5.1
 - Node v15 support
 
