@@ -224,6 +224,15 @@ span.action {
   cursor: help;
 }
 
+.annotated-text .annotation-text img {
+  display: block;
+  max-width: 100%;
+}
+
+.annotated-text p {
+  margin: 0;
+}
+
 .annotated-text,
 .annotated-text:visited {
   background: #efefef;

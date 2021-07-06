@@ -14,12 +14,12 @@ class Annotation extends React.PureComponent {
     });
 
     return (
-      <span>
+      <div style={{ display: 'inline' }}>
         {' '}
-        <span className="annotated-text">
-          {inlineText} <span className="annotation-text">{annotationBox}</span>
-        </span>{' '}
-      </span>
+        <div className="annotated-text">
+          {inlineText} <div className="annotation-text">{annotationBox}</div>
+        </div>{' '}
+      </div>
     );
   }
 }

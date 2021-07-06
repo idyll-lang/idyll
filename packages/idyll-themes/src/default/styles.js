@@ -1055,6 +1055,15 @@ img {
   transition: opacity 0.25s ease-out;
 }
 
+.annotated-text .annotation-text img {
+  display: block;
+  max-width: 100%;
+}
+
+.annotated-text p {
+  margin: 0;
+}
+
 @media all and (max-width: 800px) {
   .annotated-text .annotation-text {
     width: 50vh;
