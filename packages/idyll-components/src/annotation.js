@@ -6,11 +6,22 @@ class Annotation extends React.PureComponent {
     const { children } = this.props;
 
     const annotationBox = filterChildren(children || [], c => {
-      return c.type && c.type.name && c.type.name.toLowerCase() === 'graphic';
+      return (
+        (c._idyll &&
+          c._idyll.name &&
+          c._idyll.name.toLowerCase() === 'graphic') ||
+        (c.type && c.type.name && c.type.name.toLowerCase() === 'graphic')
+      );
     });
 
     const inlineText = filterChildren(children || [], c => {
-      return !c.type || !c.type.name || c.type.name.toLowerCase() !== 'graphic';
+      return (
+        !(
+          c._idyll &&
+          c._idyll.name &&
+          c._idyll.name.toLowerCase() === 'graphic'
+        ) && !(c.type && c.type.name && c.type.name.toLowerCase() === 'graphic')
+      );
     });
 
     return (
