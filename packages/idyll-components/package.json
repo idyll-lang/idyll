@@ -1,6 +1,6 @@
 {
   "name": "idyll-components",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Components that ship by default in new Idyll projects",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
