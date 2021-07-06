@@ -15,6 +15,7 @@ import Equation from './Equation.idl';
 import Gist from './Gist.idl';
 import Header from './Header.idl';
 import Link from './Link.idl';
+import Preview from './Preview.idl';
 import Radio from './Radio.idl';
 import Range from './Range.idl';
 import Select from './Select.idl';
@@ -56,6 +57,7 @@ export {
   Gist,
   Header,
   Link,
+  Preview,
   Radio,
   Range,
   Select,

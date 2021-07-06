@@ -280,6 +280,15 @@ const components = [
           }
         },
         {
+          Preview: {
+            thumbnail: 'preview.png',
+            component: COMPONENTS.Preview,
+            description:
+              'This component displays a preview of an externally linked URL.',
+            liveExample: true
+          }
+        },
+        {
           SVG: {
             thumbnail: 'svg.png',
             component: COMPONENTS.SVG,
