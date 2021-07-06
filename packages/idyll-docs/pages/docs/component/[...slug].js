@@ -37,6 +37,8 @@ class IdyllComponentDoc extends React.Component {
 
     const exampleCode = Examples[title];
 
+    console.log(liveExample, exampleCode, IdyllComponents);
+
     return (
       <div id={hrefId}>
         <h1>{title}</h1>
