@@ -857,7 +857,17 @@ hr {
   font-family: monospace;
 }
 
+input[type='text'].idyll-input-error {
+  border-color: red;
+}
 
+span.idyll-input-error{
+  display: block;
+  margin: 0 auto;
+  padding: 10px 5px;
+  color: red;
+  width: 100%;
+}
 
 .idyll-step-graphic {
   top: 0;

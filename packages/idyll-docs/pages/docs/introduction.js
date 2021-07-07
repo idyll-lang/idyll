@@ -122,7 +122,7 @@ Write your own equation:
 [var name:"funcString" value:\`"(x) => x * Math.sin(10 / (x || 1))"\` /]
 [derived name:"funcFromString" value:\`eval(funcString)\` /]
 
-[TextInput value:funcString /]
+[TextInput value:funcString pattern:\`/([a-zA-Z]\\w*|\\([a-zA-Z]\\w*(,\\s*[a-zA-Z]\\w*)*\\)) =>/\` patternMismatchMessage:"Input value doesn't match pattern." /]
 
 [Chart
   equation:\` (t) => funcFromString ? funcFromString(t) : 0 \`
@@ -219,6 +219,19 @@ const Introduction = ({ url }) => (
         padding: 10px 5px;
         font-size: 18px;
         font-family: Fira Mono, monospace;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .idyll-root input[type='text'].idyll-input-error {
+        border-color: red;
+      }
+      
+      .idyll-root span.idyll-input-error{
+        display: block;
+        margin: 0 auto;
+        padding: 10px 5px;
+        color: red;
         width: 100%;
         max-width: 400px;
       }
