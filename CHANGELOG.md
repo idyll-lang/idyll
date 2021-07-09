@@ -1,26 +1,38 @@
+## v5.7.0
+
+Features
+
+- Adds new options to the `[TextInput /]` component, allowing authors to define regex patterns which the user input must match. [#737](https://github.com/idyll-lang/idyll/pull/737).
+
 ## v5.6.0
 
 Features:
+
 - Adds a new `[Preview /]` component to display link previews. [#731](https://github.com/idyll-lang/idyll/pull/731)
 - Improves the `[Annotation /]` API so that annotations can include arbitrary embeded components, not just text. [#730](https://github.com/idyll-lang/idyll/pull/730)
 
 Bugfixes:
+
 - Prevent `idyll-document` from unecessarily injecting theme and layout stylesheets onto the page multiple times
 
 ### v5.5.1
+
 - Node v15 support
 
 ## v5.5.0
 
 Features
+
 - Added a new `[Annotation /]` component [#718](https://github.com/idyll-lang/idyll/pull/718)
 
 ## v5.4.0
 
-Features: 
+Features:
+
 - Added support for multiple configurations in package.json [#701](https://github.com/idyll-lang/idyll/pull/701)
 
 Bugfixes:
+
 - Fix bug where an undefined expression could crash the runtime [#704](https://github.com/idyll-lang/idyll/pull/704)
 - Make CSV parsing more flexible [#703](https://github.com/idyll-lang/idyll/pull/703)
 - Add min heights to components that fetch resources over the network
