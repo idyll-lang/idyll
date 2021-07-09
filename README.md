@@ -13,7 +13,9 @@
 
 # What is Idyll?
 
-For an introduction to Idyll, API reference, examples, and tutorials, please see https://idyll-lang.org/.
+For an introduction to Idyll, API reference, examples, and tutorials, please see https://idyll-lang.org/. 
+
+For a more academic overview, see [our paper published at ACM UIST 2018](https://idl.cs.washington.edu/papers/idyll/).
 
 # Contributor's Guide
 
