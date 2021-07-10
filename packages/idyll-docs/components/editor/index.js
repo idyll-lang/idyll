@@ -24,8 +24,6 @@ class LiveIdyllEditor extends React.PureComponent {
     this.setState({ error: error.message });
   }
 
-  componentWillReceiveProps() {}
-
   handleChange = newContent => {
     this.setContent(newContent);
     const { onChange } = this.props;
