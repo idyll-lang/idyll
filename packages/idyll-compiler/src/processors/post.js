@@ -60,6 +60,9 @@ const cleanResults = (ast, options) => {
     if (rawNodes.indexOf(name) > -1) {
       return node;
     }
+    if (node[3]) {
+      return [node[0], node[1], cleanResults(node[2], options), node[3]];
+    }
     return [node[0], node[1], cleanResults(node[2], options)];
   });
 };
@@ -256,6 +259,33 @@ function getHyperLinksFromText(textNode) {
   return textNode.match(regexURL);
 }
 
+const linkMarkupToNode = (lexPositions, content) => {
+  return ast => {
+    const positions = [...lexPositions];
+    const lines = content.split('\n');
+    return ast.map(node => {
+      let [startRow, startColumn] = positions.shift();
+      let [endRow, endColumn] = positions.shift();
+      let markup;
+      if (startRow !== endRow) {
+        markup = lines[startRow - 1].substring(startColumn - 1);
+      } else {
+        markup = lines[startRow - 1].substring(startColumn - 1, endColumn - 1);
+      }
+      while (startRow < endRow) {
+        startRow++;
+        if (startRow === endRow) {
+          markup += lines[startRow - 1].substring(0, endColumn - 1);
+        } else {
+          markup += lines[startRow - 1];
+        }
+      }
+      node[3] = markup;
+      return node;
+    });
+  };
+};
+
 module.exports = {
   cleanResults,
   flattenChildren,
@@ -266,5 +296,6 @@ module.exports = {
   autoLinkifyHelper,
   hyperLinkifiedVersion,
   seperateTextAndHyperLink,
-  getHyperLinksFromText
+  getHyperLinksFromText,
+  linkMarkupToNode
 };
