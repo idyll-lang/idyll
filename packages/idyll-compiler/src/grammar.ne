@@ -148,7 +148,7 @@ Text -> "WORDS" __ TokenValue {%
   }
 %}
 
-TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | ImageInline) {%
+TextInline -> (CodeInline | BoldInline | EmInline | LinkInline | EmLinkInline | BoldLinkInline | ImageInline) {%
   function(data, location, reject) {
     return data[0][0];
   }
@@ -191,6 +191,18 @@ ImageInline -> "IMAGE" __ TokenValue __ TokenValue {%
 LinkInline -> "LINK" __ TokenValue __ TokenValue {%
   function(data, location, reject) {
     return ['a', [["href", ["value", data[4]]]], [data[2]]];
+  }
+%}
+
+EmLinkInline -> "LINK" __ "EM" __ Text __ "EM_END" __ TokenValue {%
+  function(data, location, reject) {
+    return ['em', [], [['a', [["href", ["value", data[8]]]], [data[4]]]]];
+  }
+%}
+
+BoldLinkInline -> "LINK" __ "STRONG" __ Text __ "STRONG_END" __ TokenValue {%
+  function(data, location, reject) {
+    return ['strong', [], [['a', [["href", ["value", data[8]]]], [data[4]]]]];
   }
 %}
 

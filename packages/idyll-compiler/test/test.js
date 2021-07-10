@@ -1172,6 +1172,31 @@ End text
       );
     });
 
+    it('should handle italic and bold semantics for links', function() {
+      const input = '[**on gitter**](https://gitter.im/idyll-lang/Lobby)';
+      expect(compile(input, { async: false })).to.eql(
+        AST.convertV1ToV2([
+          [
+            'TextContainer',
+            [],
+            [
+              [
+                'strong',
+                [],
+                [
+                  [
+                    'a',
+                    [['href', ['value', 'https://gitter.im/idyll-lang/Lobby']]],
+                    ['on gitter']
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ])
+      );
+    });
+
     // it('should respect linebreaks', function() {
     //   const input = `
     //   How many
