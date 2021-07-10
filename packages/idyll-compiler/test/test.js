@@ -1616,4 +1616,50 @@ End text
       ]
     });
   });
+
+  it('should handle variable syntax', function() {
+    const input = `
+      ~ x=1, y:=x*2
+      ~ a:=x+y, b="somestring"
+    `;
+    expect(compile(input, { async: false })).to.eql({
+      id: 0,
+      type: 'component',
+      name: 'div',
+      children: [
+        {
+          id: 2,
+          type: 'var',
+          properties: {
+            name: { type: 'variable', value: 'x' },
+            value: { type: 'value', value: 1 }
+          }
+        },
+        {
+          id: 3,
+          type: 'var',
+          properties: {
+            name: { type: 'variable', value: 'b' },
+            value: { type: 'value', value: 'somestring' }
+          }
+        },
+        {
+          id: 4,
+          type: 'derived',
+          properties: {
+            name: { type: 'variable', value: 'y' },
+            value: { type: 'expression', value: 'x*2' }
+          }
+        },
+        {
+          id: 5,
+          type: 'derived',
+          properties: {
+            name: { type: 'variable', value: 'a' },
+            value: { type: 'expression', value: 'x+y' }
+          }
+        }
+      ]
+    });
+  });
 });
