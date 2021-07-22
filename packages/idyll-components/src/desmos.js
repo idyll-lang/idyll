@@ -96,11 +96,11 @@ class Desmos extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { equation } = prevProps;
+    const { equation } = this.props;
     // Only instantiate & update the calculator
     // when necessary to improve performance.
     if (
-      equation !== this.props.equation &&
+      equation !== prevProps.equation &&
       equation !== this.getCurrentLatex()
     ) {
       if (this.calculator) {
