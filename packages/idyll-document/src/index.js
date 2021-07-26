@@ -80,7 +80,7 @@ class IdyllDocument extends React.Component {
     this.setState({ error: error.message });
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (newProps.theme !== this.props.theme && newProps.injectThemeCSS) {
       if (themeNode) {
         themeNode.innerHTML = getTheme(newProps.theme).styles;
