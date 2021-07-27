@@ -122,7 +122,7 @@ Write your own equation:
 [var name:"funcString" value:\`"(x) => x * Math.sin(10 / (x || 1))"\` /]
 [derived name:"funcFromString" value:\`eval(funcString)\` /]
 
-[TextInput value:funcString /]
+[TextInput value:funcString pattern:\`/([a-zA-Z]\\w*|\\([a-zA-Z]\\w*(,\\s*[a-zA-Z]\\w*)*\\)) =>/\` patternMismatchMessage:"Input value doesn't match pattern." /]
 
 [Chart
   equation:\` (t) => funcFromString ? funcFromString(t) : 0 \`
@@ -167,11 +167,13 @@ Idyll is supported by the Interactive Data Lab at the University of Washington, 
 
 `;
 
+const ast = compile(idyllMarkup, { async: false });
+
 const Introduction = ({ url }) => (
   <Layout url={url} title={'Idyll Documentation | An overview.'}>
     <IdyllDocument
       layout="centered"
-      markup={idyllMarkup}
+      ast={ast}
       components={Object.assign({}, components, { Donate })}
     />
     <p style={{ marginBottom: 30 }}>
@@ -216,7 +218,20 @@ const Introduction = ({ url }) => (
         margin: 0 auto;
         padding: 10px 5px;
         font-size: 18px;
-        font-family: 'Fira Mono', monospace;
+        font-family: Fira Mono, monospace;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .idyll-root input[type='text'].idyll-input-error {
+        border-color: red;
+      }
+      
+      .idyll-root span.idyll-input-error{
+        display: block;
+        margin: 0 auto;
+        padding: 10px 5px;
+        color: red;
         width: 100%;
         max-width: 400px;
       }

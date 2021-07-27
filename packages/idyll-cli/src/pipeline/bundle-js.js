@@ -6,7 +6,7 @@ const babelify = require('babelify');
 const reactPreset = require('babel-preset-react');
 const envPreset = require('babel-preset-env');
 const stage2Preset = require('babel-preset-stage-2');
-const brfs = require('brfs');
+const brfs = require('brfs-node-15');
 const Promise = require('bluebird');
 const stream = require('stream');
 

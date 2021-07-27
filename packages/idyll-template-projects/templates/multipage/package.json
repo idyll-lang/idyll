@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "d3": "^5.0.0",
-    "idyll": "^4.4.0",
+    "idyll": "^5.0.0",
     "idyll-d3-component": "^2.0.0"
   }
 }

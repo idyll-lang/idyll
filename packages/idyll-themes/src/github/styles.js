@@ -739,7 +739,17 @@ hr {
   font-family: monospace;
 }
 
+input[type='text'].idyll-input-error {
+  border-color: red;
+}
 
+span.idyll-input-error{
+  display: block;
+  margin: 0 auto;
+  padding: 10px 5px;
+  color: red;
+  width: 100%;
+}
 
 .idyll-step-graphic {
   top: 0;
@@ -833,7 +843,7 @@ hr {
 .annotated-text,
 .annotated-text:visited {
   background: #efefef;
-  padding: 0 5px;
+  padding: 0 2.5px;
   transition: background 0.25s ease-out;
 }
 
@@ -863,6 +873,15 @@ hr {
   margin-left: -125px; /* Use half of the width (120/2 = 60), to center the annotated-text */
   opacity: 0;
   font-weight: initial;
+}
+
+.annotated-text .annotation-text img {
+  display: block;
+  max-width: 100%;
+}
+
+.annotated-text p {
+  margin: 0;
 }
 
 .annotated-text:hover .annotation-text {

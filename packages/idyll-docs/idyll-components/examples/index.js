@@ -5,6 +5,7 @@ import Float from './Float.idl';
 import Inline from './Inline.idl';
 
 import Action from './Action.idl';
+
 import Annotation from './Annotation.idl';
 import Boolean from './Boolean.idl';
 import Button from './Button.idl';
@@ -15,6 +16,7 @@ import Equation from './Equation.idl';
 import Gist from './Gist.idl';
 import Header from './Header.idl';
 import Link from './Link.idl';
+import Preview from './Preview.idl';
 import Radio from './Radio.idl';
 import Range from './Range.idl';
 import Select from './Select.idl';
@@ -56,6 +58,7 @@ export {
   Gist,
   Header,
   Link,
+  Preview,
   Radio,
   Range,
   Select,

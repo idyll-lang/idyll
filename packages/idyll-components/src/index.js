@@ -31,6 +31,7 @@ export { default as Inline } from './inline';
 export { default as Link } from './link';
 export { default as Loop } from './loop';
 export { default as Preload } from './preload';
+export { default as Preview } from './preview';
 export { default as Radio } from './radio';
 export { default as Range } from './range';
 export { default as Scroller } from './scroller';

@@ -24,7 +24,6 @@ class IdyllDocsLayout extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mount');
     Fonts();
     if (!window.GA_INITIALIZED) {
       initGA();
@@ -134,7 +133,6 @@ class IdyllDocsLayout extends React.Component {
           }
 
           nav {
-            // background: #efefef;
             transition: left ${NavTransitionDuration}s;
             position: fixed;
             left: 0;
@@ -144,9 +142,6 @@ class IdyllDocsLayout extends React.Component {
             width: ${NavWidth}%;
             min-width: 130px;
             border-right: solid 1px #999;
-            // background: #4C4B63;
-            // color: white;
-            // box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
           }
 
           nav ul {
@@ -155,7 +150,6 @@ class IdyllDocsLayout extends React.Component {
           }
           nav h1 {
             margin-bottom: 0;
-            // margin-top: 0;
           }
           nav section {
             margin-bottom: 2em;

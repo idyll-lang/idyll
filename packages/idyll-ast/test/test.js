@@ -457,4 +457,34 @@ Hello world.
     `.trim()
     );
   });
+
+  it('should ignore instrumental nodes', function() {
+    const markup = util.toMarkup({
+      id: -1,
+      type: 'component',
+      name: 'p',
+      children: [
+        {
+          id: 1,
+          type: 'component',
+          name: 'my-component',
+          properties: {},
+          children: []
+        },
+        {
+          id: 2,
+          type: 'component',
+          name: 'IdyllEditorDropTarget',
+          properties: {},
+          children: []
+        }
+      ]
+    });
+
+    expect(markup).to.eql(
+      `
+[MyComponent /]
+    `.trim()
+    );
+  });
 });

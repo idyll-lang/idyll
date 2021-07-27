@@ -24,6 +24,7 @@ import {
   Link,
   Loop,
   Preload,
+  Preview,
   Radio,
   Range,
   Select,
@@ -108,6 +109,9 @@ describe('Sanity Check', () => {
       });
       it('<Loop />', () => {
         expect(() => shallow(<Loop />)).not.toThrow();
+      });
+      it('<Preview />', () => {
+        expect(() => shallow(<Preview />)).not.toThrow();
       });
       it('<Radio />', () => {
         expect(() => shallow(<Radio />)).not.toThrow();
@@ -241,6 +245,9 @@ describe('Sanity Check', () => {
       });
       it('<Loop />', () => {
         expect(() => mount(<Loop />)).not.toThrow();
+      });
+      it('<Preview />', () => {
+        expect(() => shallow(<Preview />)).not.toThrow();
       });
       it('<Radio />', () => {
         expect(() => mount(<Radio />)).not.toThrow();

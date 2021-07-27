@@ -1,1 +1,9 @@
- [Annotation annotation:"This is that annotation"]This is an annotation[/Annotation].
+[Annotation]
+  [Graphic]
+    This is Baby Yoda!
+    [Image src:"https://upload.wikimedia.org/wikipedia/en/0/00/The_Child_aka_Baby_Yoda_%28Star_Wars%29.jpg" /]
+    Cool, huh?
+  [/Graphic]
+
+  Annotation with Image!
+[/Annotation]

@@ -15,6 +15,8 @@
 
 For an introduction to Idyll, API reference, examples, and tutorials, please see https://idyll-lang.org/.
 
+For a more academic overview, see [our paper published at ACM UIST 2018](https://idl.cs.washington.edu/papers/idyll/).
+
 # Contributor's Guide
 
 See [CONTRIBUTING](./CONTRIBUTING.md) for details on the development workflow. If you have any questions, feel free to open an issue or inquire on https://gitter.im/idyll-lang/Lobby.
