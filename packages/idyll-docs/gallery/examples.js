@@ -222,11 +222,42 @@ const exampleGroups = [
         sourceUrl: 'https://github.com/mathisonian/lorenz'
       },
       {
-        label: 'Nonlinear Sliders',
-        href: 'https://mathisonian.github.io/idyll/nonlinear-sliders/',
-        image: 'nonlinear.png',
-        sourceUrl:
-          'https://github.com/mathisonian/idyll/tree/master/nonlinear-sliders'
+        label: 'The Corporations Behind Climate Change',
+        subtitle:
+          'Seven simple demands to hold fossil fuel companies accountable.',
+        href: 'https://github.com/ParametricPress/02-corporations',
+        image: 'parametric_press.png',
+        sourceUrl: 'https://parametric.press/issue-02/'
+      },
+      {
+        label: 'Impact of the COVID-19 Vaccine',
+        subtitle:
+          'With a vaccine now made available for COVID-19, the purpose of this project is to help assess how people are transitioning to a in person environment and if social distancing will have long lasting effects on society.',
+        href: 'https://cse412-21sp.github.io/COVID-defender/',
+        image: 'COVID-defender.png',
+        sourceUrl: 'https://github.com/cse412-21sp/COVID-defender'
+      },
+      {
+        label: 'Le long de la route BR-163',
+        subtitle: 'Un axe de la déforestation en Amazonie brésilienne.',
+        href: 'https://github.com/AtelierCartographie/BR163',
+        image: 'atelier_cartographie.png',
+        sourceUrl: 'https://ateliercartographie.github.io/BR163/'
+      },
+      {
+        label: 'Exploring veganism',
+        subtitle: 'The Impact of a Plant-based Diet',
+        href: 'https://github.com/infovis396/vegan-viz',
+        image: 'exploring_veganism.png',
+        sourceUrl: 'https://my-idyll-post-d3c5b0cb9b0551d49c74f354.vercel.app/'
+      },
+      {
+        label: 'Approximate Bayesian Computation (ABC)',
+        subtitle:
+          'This project aims to create an “explorable explanation” for the Approximate Bayesian Computation (ABC) algorithm.',
+        href: 'https://github.com/davibarreira/Visualizations',
+        image: 'mathematical_visualizations.png',
+        sourceUrl: 'https://abc-e988b74721b736092fef14ae.vercel.app/'
       }
     ]
   }
