@@ -21,6 +21,9 @@ class References extends React.Component {
     referenceInstances.push(this);
   }
   render() {
+    if (!citations.length) {
+      return null;
+    }
     return (
       <div id="references">
         <h1>References</h1>
