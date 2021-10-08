@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import markdown from 'markdown-in-js';
 import Layout from '../../components/layout';
@@ -226,7 +227,7 @@ const Introduction = ({ url }) => (
       .idyll-root input[type='text'].idyll-input-error {
         border-color: red;
       }
-      
+
       .idyll-root span.idyll-input-error{
         display: block;
         margin: 0 auto;
