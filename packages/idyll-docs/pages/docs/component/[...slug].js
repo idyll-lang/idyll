@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import markdown from 'markdown-in-js';
@@ -173,7 +174,7 @@ const Component = props => {
         input[type='text'].idyll-input-error {
           border-color: red;
         }
-        
+
         span.idyll-input-error{
           display: block;
           margin: 0 auto;

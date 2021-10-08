@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import markdown from 'markdown-in-js'
-import Layout from '../../../components/layout'
-
+import React from 'react';
+import Link from 'next/link';
+import markdown from 'markdown-in-js';
+import Layout from '../../../components/layout';
 
 const Content = () => markdown`
 # Building your Idyll project for the web
@@ -14,10 +14,10 @@ to build and deploy the project to github pages are available.
 
 Once you've initialized your project, run the commands
 
-\`\`\`sh
+~~~sh
 $ idyll build
 $ idyll publish
-\`\`\`
+~~~
 
 this will compile the assets and then publish it on the idyll.pub server. Note that
 the [meta component](https://idyll-lang.org/docs/components/default/meta) is
@@ -25,7 +25,7 @@ useful for inserting metadata into the compiled output.
 
 If you wish to update the post, simply rerun the \`idyll publish\` command.
 
-*Note: running \`idyll publish\` does not automatically rebuild your project.*
+_Note: running \`idyll publish\` does not automatically rebuild your project._
 
 ## Other hosting
 
@@ -33,16 +33,18 @@ Idyll's generated output is compatible with other static hosting services as wel
 
 To compile the project, run
 
-\`\`\`sh
+~~~sh
 $ idyll build
-\`\`\`
+~~~
 
 this will compile files and place them inside of the \`build/\` folder.
-`
-
+`;
 
 export default ({ url }) => (
-  <Layout url={ url } title={'Idyll Documentation | Deploying an Idyll article to the web.'} >
+  <Layout
+    url={url}
+    title={'Idyll Documentation | Deploying an Idyll article to the web.'}
+  >
     <Content />
   </Layout>
-)
+);
