@@ -8,7 +8,7 @@ const Content = () => markdown`
 If you prefer video
 tutorials, [watch the introduction on YouTube](https://www.youtube.com/watch?v=9YvEFdiY0yE).
 
-There's also an [online editor](https://idyll-lang.github.io/editor) where you
+There's also an [online editor](https://idyll-lang.org/editor) where you
 can play around with the language.
 
 ## Installation
