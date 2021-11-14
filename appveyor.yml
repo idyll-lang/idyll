@@ -15,7 +15,6 @@ environment:
     - nodejs_version: '12'
     - nodejs_version: '14'
     - nodejs_version: '16'
-    - nodejs_version: '17'
 
 cache:
   - "%LOCALAPPDATA%\\Yarn"
