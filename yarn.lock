@@ -8824,10 +8824,10 @@ scrollama@^2.0.0:
   resolved "https://registry.yarnpkg.com/scrollama/-/scrollama-2.2.3.tgz#c5e41ee56bf76b14162708d6421c1cd42585fb14"
   integrity sha512-fKuGfBaIycyk0TdninJKNgxctSnzjVMAVm0G1fDhZN1KjbDvxVse3K8OElqnvrCAWVup5YN/8K6aOKgj7dmYWA==
 
-scrollmonitor@^1.2.3:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/scrollmonitor/-/scrollmonitor-1.2.7.tgz#e522adb859ad48a216b03210b3d0e354cf788aee"
-  integrity sha512-j6/wcrPugXnl4O+U1KJdTQ+xGEDmnaZ1uum96ObCDas+WtVKYsjJdb2UDz/6m8+GRfeH1jxjVzM6QvFyQGS1bw==
+scrollmonitor@1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/scrollmonitor/-/scrollmonitor-1.2.6.tgz#1df3363de799a958161e4c96ef21a4b8815b4d0e"
+  integrity sha512-e1v7amZ2gS3YeQBTolCF7ZjyKWlJgx0owiF+iizS8HtZReJ4T5aJ3n2q8XlwYGUOg7hGcqiZ57rUZW5+m96RIQ==
 
 scrollparent@^2.0.1:
   version "2.0.1"
