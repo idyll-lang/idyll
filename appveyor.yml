@@ -14,7 +14,7 @@ environment:
   matrix:
     - nodejs_version: '12'
     - nodejs_version: '14'
-    - nodejs_version: '15'
+    - nodejs_version: '16'
 
 cache:
   - "%LOCALAPPDATA%\\Yarn"
