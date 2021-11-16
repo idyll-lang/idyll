@@ -1,6 +1,11 @@
 const React = require('react');
 const D3Component = require('idyll-d3-component');
-const d3 = require('d3');
+const d3 = Object.assign(
+  {},
+  require('d3'),
+  require('d3-transition'),
+  require('d3-selection')
+);
 
 const size = 600;
 
