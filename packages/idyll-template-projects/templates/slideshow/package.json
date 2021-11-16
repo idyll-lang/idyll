@@ -8,7 +8,9 @@
     "css": "styles.css"
   },
   "dependencies": {
-    "d3": "^5.0.0",
+    "d3": "^6.7.0",
+    "d3-selection": "^2.0.0",
+    "d3-transition": "^2.0.0",
     "idyll": "^5.0.0",
     "idyll-d3-component": "^2.0.0",
     "react-map-gl": "^5.0.3",
