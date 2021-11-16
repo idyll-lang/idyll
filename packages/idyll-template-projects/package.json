@@ -1,6 +1,6 @@
 {
   "name": "idyll-template-projects",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "description": "Template projects for Idyll",
   "main": "index.js",
   "repository": {
