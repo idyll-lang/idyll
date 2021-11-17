@@ -25,5 +25,4 @@ const groupsToIndex = groups =>
   }, {});
 
 const indexedGallery = groupsToIndex([...examples, ...tutorials]);
-console.log(indexedGallery);
 export { examples, tutorials, indexedGallery };

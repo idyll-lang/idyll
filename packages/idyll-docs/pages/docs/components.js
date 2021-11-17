@@ -100,7 +100,11 @@ class IdyllComponentInfo extends BaseSection {
       <Link href={`/docs/component/${this.slug}`}>
         <a style={{ display: 'block', width: 140, margin: 20 }}>
           <img
-            style={{ display: 'block', width: '100%' }}
+            style={{
+              display: 'block',
+              width: '100%',
+              border: 'solid 0.5px #999'
+            }}
             src={`/static/images/components/thumbnails/${this.thumbnail}`}
           />
           <div style={{ textAlign: 'center', margin: '10px 0' }}>
