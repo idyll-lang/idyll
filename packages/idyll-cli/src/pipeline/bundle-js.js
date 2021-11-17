@@ -85,6 +85,7 @@ module.exports = function(opts, paths, output) {
       fullPaths: true,
       transform: getTransform(opts, paths),
       paths: [getLocalModules(paths), getGlobalModules(paths)],
+      ignoreMissing: ['iterator.js'], // fix for vega-embed
       plugin: [
         b => {
           if (opts.minify) {
@@ -136,7 +137,9 @@ module.exports = function(opts, paths, output) {
 
   return new Promise((resolve, reject) => {
     b.bundle((err, src) => {
-      if (err) return reject(err);
+      if (err) {
+        return reject(err);
+      }
       resolve(src.toString('utf8'));
       // browserify-incremental has to be piped but we don't need the output
     }).pipe(require('dev-null')());
