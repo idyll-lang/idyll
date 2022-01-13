@@ -200,6 +200,14 @@ The above code defines a derived variable \`xSquared\` that depends
 on the value of \`x\`. The value of \`xSquared\` is automatically updated
 based on the value of \`x\`.
 
+Another way to declare a variable is by using the following syntax. 
+
+\`\`\`
+~ x=2, y:=x*5
+\`\`\`
+
+In the above code \`x\` is a normal variable while \`y\` is a derived variable.
+
 <h2 id="datasets">Datasets</h2>
 
 A dataset is similar to a variable, except instead of expecting a
