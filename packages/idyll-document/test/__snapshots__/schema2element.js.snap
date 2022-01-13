@@ -18572,7 +18572,7 @@ Late Var Range:",
     },
   ],
   Symbol(enzyme.__options__): Object {
-    "adapter": ReactSixteenAdapter {
+    "adapter": ReactSeventeenAdapter {
       "options": Object {
         "enableComponentDidUpdateOnSetState": true,
         "legacyContextMode": "parent",

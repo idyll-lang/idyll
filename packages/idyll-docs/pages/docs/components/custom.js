@@ -21,6 +21,13 @@ export default ({ url }) => (
         your markup.
       </p>
 
+      <p>
+        <i>
+          Note: Idyll currently uses React version 17. We will do our best to
+          support the latest stable versions of React as they are released.
+        </i>
+      </p>
+
       <p>For example, this custom component</p>
 
       <Highlight className="javascript">
