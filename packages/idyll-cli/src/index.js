@@ -189,6 +189,14 @@ const idyll = (options = {}, cb) => {
       return opts;
     }
 
+    getResolvers() {
+      return createResolvers();
+    }
+
+    getResolverConstructors() {
+      return require('./resolvers');
+    }
+
     build(src) {
       // Resolvers are recreated on each build, since new data dependencies might have been added.
       const resolvers = createResolvers();
