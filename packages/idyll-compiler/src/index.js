@@ -8,7 +8,8 @@ const {
   cleanResults,
   makeFullWidth,
   wrapText,
-  autoLinkify
+  autoLinkify,
+  linkMarkupToNode
 } = require('./processors/post');
 const { convertV1ToV2 } = require('idyll-ast').converters;
 const matter = require('gray-matter');
@@ -48,7 +49,10 @@ module.exports = function(input, options, alias, callback) {
     }
   }
 
+  const referenceMarkup = linkMarkupToNode(lexResults.positions, content);
+
   let astTransform = Processor(output, options)
+    .pipe(referenceMarkup)
     .pipe(hoistVariables)
     .pipe(flattenChildren)
     .pipe(makeFullWidth)
