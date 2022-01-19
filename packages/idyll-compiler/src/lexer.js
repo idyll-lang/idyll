@@ -342,6 +342,19 @@ const lex = function(options, alias = {}) {
     return ['IMAGE'].concat(formatToken(text)).concat(formatToken(link));
   });
 
+  lexer.addRule(/\[([_|\*][^\]]*[_|\*])\]\(([^\)]*)\)/, function(
+    lexeme,
+    text,
+    link
+  ) {
+    this.reject = inComponent;
+    if (this.reject) return;
+    updatePosition(lexeme);
+    return ['LINK']
+      .concat(recurse(text, { skipLists: true }))
+      .concat(formatToken(link));
+  });
+
   lexer.addRule(/\[([^\]]*)\]\(([^\)]*)\)/, function(lexeme, text, link) {
     this.reject = inComponent;
     if (this.reject) return;
