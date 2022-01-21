@@ -82,7 +82,8 @@ module.exports = function(opts, paths, output) {
       return [k, output.components[k]];
     }),
     data: output.data,
-    options: output.opts
+    options: output.opts,
+    syntaxHighlighting: output.syntaxHighlighting
   });
 
   const entryPath = path.join(paths.TMP_DIR, 'entrypoint.js');

@@ -1,4 +1,11 @@
-module.exports = ({ ast, components, data, options, context }) => {
+module.exports = ({
+  ast,
+  components,
+  data,
+  options,
+  syntaxHighlighting,
+  context
+}) => {
   return `
     var React = require('react');
     var ReactDOM = require('react-dom');
@@ -14,7 +21,8 @@ module.exports = ({ ast, components, data, options, context }) => {
       })
       .join(', ')}};
     var datasets = ${JSON.stringify(data)};
-    // require('__IDYLL_SYNTAX_HIGHLIGHT__');
+
+    ${syntaxHighlighting}
 
     var opts = ${JSON.stringify(options)};
     var layout = opts.layout;
