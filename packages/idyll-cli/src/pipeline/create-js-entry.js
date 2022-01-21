@@ -29,14 +29,14 @@ module.exports = ({
     var theme = opts.theme;
     var authorView = opts.authorView;
 
-    // var context = require('__IDYLL_CONTEXT__');
+    var context = require("${context}");
 
     var mountMethod = opts.ssr ? 'hydrate' : 'render';
     ReactDOM[mountMethod](
       React.createElement(IdyllDocument, {
         ast: ast,
         components: components,
-        // context: context,
+        context: context,
         datasets: datasets,
         layout: layout,
         theme: theme,
