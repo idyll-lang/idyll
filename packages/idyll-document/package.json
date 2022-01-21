@@ -6,7 +6,13 @@
     "Matthew Conlen",
     "Ben Clinkinbeard"
   ],
-  "main": "dist/cjs/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/es/index.js",
+      "require": "./dist/es/index.js"
+    }
+  },
+  "main": "dist/es/index.js",
   "module": "dist/es/index.js",
   "scripts": {
     "prebuild": "rimraf dist",
@@ -30,7 +36,7 @@
   "dependencies": {
     "change-case": "^3.0.1",
     "cross-env": "^5.2.0",
-    "csv-parse": "^4.8.2",
+    "csv-parse": "5",
     "falafel": "^2.1.0",
     "fast-deep-equal": "^2.0.1",
     "html-tags": "^2.0.0",

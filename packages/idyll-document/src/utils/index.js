@@ -1,5 +1,5 @@
 const falafel = require('falafel');
-const parse = require('csv-parse/lib/es5/sync');
+// import { parse } from 'csv-parse/browser/esm/sync';
 
 const {
   getChildren,

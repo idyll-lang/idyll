@@ -6,10 +6,10 @@ module.exports = {
     [
       'env',
       {
-        loose: true,
-        modules: BABEL_ENV === 'cjs' || NODE_ENV === 'test' ? 'commonjs' : false,
-      },
+        loose: true
+        // modules: BABEL_ENV === 'cjs' || NODE_ENV === 'test' ? 'commonjs' : false,
+      }
     ],
-    'react',
-  ],
+    'react'
+  ]
 };
