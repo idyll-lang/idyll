@@ -1,11 +1,10 @@
-const React = require('react');
+import React from 'react';
 
 class CustomComponent extends React.Component {
   render() {
     const { hasError, idyll, updateProps, ...props } = this.props;
     return (
       <div {...props}>
-        Top level custom
         <svg
           width={300}
           height={50}
@@ -23,4 +22,4 @@ class CustomComponent extends React.Component {
   }
 }
 
-module.exports = CustomComponent;
+export default CustomComponent;

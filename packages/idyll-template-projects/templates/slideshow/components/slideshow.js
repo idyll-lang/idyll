@@ -1,5 +1,5 @@
-const React = require('react');
-const { filterChildren, mapChildren } = require('idyll-component-children');
+import React from 'react';
+import { filterChildren } from 'idyll-component-children';
 
 class CustomComponent extends React.Component {
   componentDidMount() {
@@ -70,4 +70,4 @@ class CustomComponent extends React.Component {
   }
 }
 
-module.exports = CustomComponent;
+export default CustomComponent;

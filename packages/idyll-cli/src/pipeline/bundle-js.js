@@ -25,12 +25,8 @@ module.exports = function(opts, paths, output) {
   });
 
   const entryPath = path.join(paths.TMP_DIR, 'entrypoint.js');
-
-  console.log('writing JS entry', entryPath);
-
   fs.writeFileSync(entryPath, bundleString);
 
-  console.log('running esbuild', entryPath, bundleString);
   return esbuild.build({
     entryPoints: [entryPath],
     bundle: true,

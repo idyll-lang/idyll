@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class CustomComponent extends React.Component {
   render() {
@@ -22,4 +22,4 @@ class CustomComponent extends React.Component {
   }
 }
 
-module.exports = CustomComponent;
+export default CustomComponent;
