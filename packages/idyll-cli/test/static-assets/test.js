@@ -1,4 +1,4 @@
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
 
 const fs = require('fs');
 const http = require('http');

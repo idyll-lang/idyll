@@ -7,14 +7,14 @@ class ExtendableError extends Error {
   }
 }
 
-exports.InvalidParameterError = class InvalidParameterError extends ExtendableError {
+export class InvalidParameterError extends ExtendableError {
   constructor(msg) {
     super(msg);
   }
-};
+}
 
-exports.MalformedAstError = class MalformedAstError extends ExtendableError {
+export class MalformedAstError extends ExtendableError {
   constructor(msg) {
     super(msg);
   }
-};
+}

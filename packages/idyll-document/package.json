@@ -12,7 +12,7 @@
       "default": "./dist/esm/index.mjs"
     }
   },
-  "main": "dist/csj/index.js",
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.mjs",
   "type": "commonjs",
   "scripts": {

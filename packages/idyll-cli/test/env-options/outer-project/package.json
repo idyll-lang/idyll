@@ -1,28 +1,34 @@
 {
-  "name": "test-project",
+  "name": "env-options-outer-test-project",
   "version": "1.0.0",
   "scripts": {
     "start": "idyll index.idl --watch --css styles.css --layout centered --theme github --spellcheck"
   },
   "idyll": [
-    ["default-env",
+    [
+      "default-env",
       {
         "layout": "blog"
-      }],
-    ["my-env",
+      }
+    ],
+    [
+      "my-env",
       {
         "alias": {
           "PackageJsonComponentTest": "CustomComponent"
         },
         "layout": "none"
-      }],
-    ["outer-env",
+      }
+    ],
+    [
+      "outer-env",
       {
         "alias": {
           "PackageJsonComponentTest": "CustomComponent"
         },
         "layout": "centered"
-      }]
+      }
+    ]
   ],
   "dependencies": {
     "idyll-component": "^1.1.0",

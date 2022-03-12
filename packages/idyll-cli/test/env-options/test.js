@@ -1,4 +1,4 @@
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
 
 const Idyll = require('../../src');
 const fs = require('fs');
@@ -65,7 +65,7 @@ test('no env provided', () => {
     port: 3000,
     ssr: true,
     static: 'static',
-    staticOutputDir: "static",
+    staticOutputDir: 'static',
     temp: '.idyll',
     template: resolve(join(__dirname, '/../../src/client/_index.html')),
     theme: join(PROJECT_DIR, 'custom-theme.css'),
@@ -115,7 +115,7 @@ test('my-env provided', () => {
     port: 3000,
     ssr: true,
     static: 'static',
-    staticOutputDir: "static",
+    staticOutputDir: 'static',
     temp: '.idyll',
     template: resolve(join(__dirname, '/../../src/client/_index.html')),
     theme: join(PROJECT_DIR, 'custom-theme.css'),
