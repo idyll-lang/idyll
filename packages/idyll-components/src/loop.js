@@ -40,4 +40,5 @@ Loop._idyll = {
     }
   ]
 };
-module.exports = Loop;
+
+export default Loop;

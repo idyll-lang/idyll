@@ -1,3 +1,16 @@
 {
-  "presets": ["./.babelrc.js"]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ]
+  ],
+  "ignore": [
+    "node_modules/**"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime"
+  ]
 }

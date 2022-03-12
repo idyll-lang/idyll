@@ -2,15 +2,20 @@
   "name": "idyll-compiler",
   "version": "5.0.0-alpha.0",
   "description": "Compiler for idyll",
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.mjs"
+    }
+  },
+  "main": "dist/csj/index.js",
+  "module": "dist/esm/index.mjs",
+  "type": "commonjs",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
-    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "compile": "nearleyc src/grammar.ne -o src/grammar.js",
-    "build": "npm run compile && npm run build:es && npm run build:cjs",
-    "dev": "concurrently \"yarn run compile\" \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
+    "build": "rollup -c rollup.config.js",
+    "dev": "rollup -c rollup.config.js -w",
     "test": "npm run compile && mocha",
     "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
@@ -30,13 +35,17 @@
   },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "expect.js": "^0.3.1",
     "mocha": "6.1",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "rollup": "^2.70.0",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.0.2"
   },
   "dependencies": {
     "gray-matter": "^3.1.1",

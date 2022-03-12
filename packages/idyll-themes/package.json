@@ -2,14 +2,18 @@
   "name": "idyll-themes",
   "version": "3.1.10",
   "description": "Default themes for Idyll",
-  "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.mjs"
+    }
+  },
+  "main": "dist/csj/index.js",
+  "module": "dist/esm/index.mjs",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
-    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
-    "build": "npm run build:cjs && npm run build:es",
-    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
+    "build": "rollup -c rollup.config.js",
+    "dev": "rollup -c rollup.config.js -w",
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
@@ -35,12 +39,15 @@
   },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "jest": "^20.0.4",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "rollup": "^2.70.0",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.0.2"
   }
 }
