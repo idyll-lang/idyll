@@ -2,7 +2,7 @@ const { join } = require('path');
 const slash = require('slash');
 const fs = require('fs');
 
-const { parse } = require('csv-parse/dist/cjs/sync.cjs');
+const { parse } = require('csv-parse/sync');
 
 const errors = require('../errors.js');
 var debug = require('debug')('idyll:cli');

@@ -7,10 +7,10 @@ module.exports = ({
   context
 }) => {
   return `
-    var React = require('react');
-    var ReactDOM = require('react-dom');
+    import React from 'react';
+    import ReactDOM from 'react-dom';
 
-    import IdyllDocument from 'idyll-document';
+    import { IdyllDocument } from 'idyll-document';
 
     var mountNode = document.getElementById('idyll-mount');
 

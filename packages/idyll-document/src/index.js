@@ -21,7 +21,7 @@ const defaultAST = {
   name: 'root'
 };
 
-export const hashCode = str => {
+const hashCode = str => {
   var hash = 0,
     i,
     chr;
@@ -148,4 +148,4 @@ class IdyllDocument extends React.Component {
   }
 }
 
-export default IdyllDocument;
+export { IdyllDocument };

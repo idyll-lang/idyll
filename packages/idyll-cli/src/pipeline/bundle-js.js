@@ -93,7 +93,7 @@ module.exports = function(opts, paths, output) {
 
   fs.writeFileSync(entryPath, bundleString);
 
-  console.log('running esbuild');
+  console.log('running esbuild', entryPath, bundleString);
   return esbuild.build({
     entryPoints: [entryPath],
     bundle: true,

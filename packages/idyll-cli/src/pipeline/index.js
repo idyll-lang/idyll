@@ -34,7 +34,7 @@ const build = (opts, paths, resolvers) => {
   return (
     compile(opts.inputString, opts.compiler || opts.compilerOptions, opts.alias)
       .then(ast => {
-        return Promise.try(() => {
+        return Promise.try(async () => {
           const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
           /* Change here */
@@ -86,7 +86,7 @@ const build = (opts, paths, resolvers) => {
           if (!opts.ssr) {
             output.html = getBaseHTML(ast, template, opts);
           } else {
-            output.html = getHTML(
+            output.html = await getHTML(
               paths,
               ast,
               output.components,
@@ -94,6 +94,7 @@ const build = (opts, paths, resolvers) => {
               template,
               opts
             );
+            console.log(output.html);
           }
         });
       })
