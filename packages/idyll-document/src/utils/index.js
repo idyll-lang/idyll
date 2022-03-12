@@ -114,7 +114,6 @@ export const buildExpression = (acc, expr, isEventHandler) => {
 };
 
 export const evalExpression = (acc, expr, key, context) => {
-  // const _eval = eval;
   const isEventHandler =
     key && (key.match(/^on[A-Z].*/) || key.match(/^handle[A-Z].*/));
   let e = buildExpression(acc, expr, isEventHandler);

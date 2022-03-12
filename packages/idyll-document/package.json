@@ -17,10 +17,8 @@
   "type": "commonjs",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
-    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
     "build": "rollup -c rollup.config.js",
-    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
+    "dev": "rollup -c rollup.config.js -w",
     "prepublishOnly": "npm run build",
     "test": "jest",
     "update-fixtures": "npm run build && node scripts/idl2ast",
@@ -35,7 +33,6 @@
     ]
   },
   "dependencies": {
-    "@rollup/plugin-babel": "^5.3.1",
     "change-case": "^3.0.1",
     "cross-env": "^5.2.0",
     "csv-parse": "5",
@@ -62,10 +59,6 @@
     "@rollup/plugin-commonjs": "^21.0.2",
     "@rollup/plugin-replace": "^4.0.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-react": "^6.24.1",
     "concurrently": "^4.1.0",
     "enzyme": "^3.0.0",
     "jest": "^20.0.4",

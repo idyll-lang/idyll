@@ -36,6 +36,7 @@ module.exports = function(opts, paths, output) {
     bundle: true,
     outfile: paths.JS_OUTPUT_FILE,
     loader: { '.js': 'jsx' },
+    minify: opts.minify,
     define: {
       process: JSON.stringify({
         env: {
