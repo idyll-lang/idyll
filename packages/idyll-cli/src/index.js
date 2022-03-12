@@ -146,7 +146,6 @@ const idyll = (options = {}, cb) => {
   }
   Object.assign(opts, parentInputConfig.idyll, inputConfig.idyll, options);
 
-  console.log(opts);
   // Resolve compiler plugins:
   if (opts.compiler.postProcessors) {
     opts.compiler.postProcessors = opts.compiler.postProcessors.map(
