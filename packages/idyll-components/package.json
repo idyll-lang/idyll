@@ -18,13 +18,17 @@
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
+  "resolutions": {
+    "jest-environment-jsdom": "27.3.1"
+  },
   "jest": {
     "setupFiles": [
       "<rootDir>/setupJest.js"
     ],
     "testMatch": [
       "**/test/**/*.js"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "repository": {
     "type": "git",
@@ -67,16 +71,18 @@
     "@babel/core": "^7.17.5",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.0.2",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "babel-jest": "^27.5.1",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "enzyme": "^3.0.0",
-    "jest": "^20.0.4",
+    "jest": "27",
+    "jest-environment-jsdom": "^27",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rimraf": "^2.6.2",
-    "rollup": "^2.70.0",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^21.0.2"
+    "rollup": "^2.70.0"
   }
 }
