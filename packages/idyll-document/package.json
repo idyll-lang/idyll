@@ -25,8 +25,9 @@
     "update-snapshot": " jest --updateSnapshot"
   },
   "jest": {
+    "transform": {},
     "setupFiles": [
-      "<rootDir>/setupJest.js"
+      "<rootDir>/setupJest.mjs"
     ],
     "testMatch": [
       "**/test/**/*.js"
@@ -61,7 +62,7 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "concurrently": "^4.1.0",
     "enzyme": "^3.0.0",
-    "jest": "^20.0.4",
+    "jest": "27",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-test-renderer": "^16.0.0",

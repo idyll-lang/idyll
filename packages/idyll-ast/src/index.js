@@ -8,7 +8,7 @@
 
 import * as error from './error';
 import schema from './ast.schema.json';
-import converters from './converters';
+import * as converters from './converters';
 
 const Ajv = require('ajv');
 const ajv = new Ajv();
@@ -1109,7 +1109,6 @@ function toMarkup(ast, options = { insertFullWidth: false }) {
   return cleanedMarkup;
 }
 
-import * as v1 from './v1';
 export {
   appendNode,
   appendNodes,
@@ -1142,6 +1141,5 @@ export {
   setProperties,
   walkNodes,
   walkNodesBreadthFirst,
-  toMarkup,
-  v1
+  toMarkup
 };

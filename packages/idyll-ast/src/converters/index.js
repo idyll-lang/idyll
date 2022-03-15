@@ -138,7 +138,4 @@ function inverseConvertHelper(arrayElement, id) {
   return result;
 }
 
-module.exports = {
-  convertV1ToV2,
-  convertV2ToV1
-};
+export { convertV1ToV2, convertV2ToV1 };

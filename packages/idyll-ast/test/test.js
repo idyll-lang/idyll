@@ -1,5 +1,5 @@
 var expect = require('expect.js');
-var util = require('../src');
+var util = require('../dist/cjs');
 const {
   astTestVar,
   astTestMeta,

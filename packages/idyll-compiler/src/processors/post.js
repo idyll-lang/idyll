@@ -1,7 +1,6 @@
 const smartquotes = require('smartquotes');
 
-import v1 from 'idyll-ast';
-const {
+import {
   modifyNodesByName,
   modifyChildren,
   getNodesByName,
@@ -13,7 +12,7 @@ const {
   getNodeName,
   createTextNode,
   createNode
-} = v1;
+} from 'idyll-ast/v1';
 
 const attrConvert = list => {
   return (list || []).reduce((acc, [name, [type, val]]) => {

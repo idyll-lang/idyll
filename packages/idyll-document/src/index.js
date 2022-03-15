@@ -1,6 +1,6 @@
 import React from 'react';
 import Runtime from './runtime';
-import compile from 'idyll-compiler';
+import { compile } from 'idyll-compiler';
 import * as layouts from 'idyll-layouts';
 import * as themes from 'idyll-themes';
 

@@ -1,6 +1,5 @@
 var expect = require('expect.js');
-var Lexer = require('../src/lexer');
-var compile = require('../src');
+var { compile, Lexer } = require('../dist/cjs/');
 var fs = require('fs');
 var AST = require('idyll-ast').converters;
 

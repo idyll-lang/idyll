@@ -1,4 +1,4 @@
-// jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
+jest.setTimeout(60000);
 
 const fs = require('fs');
 const http = require('http');

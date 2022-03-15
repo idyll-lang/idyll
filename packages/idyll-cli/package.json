@@ -7,7 +7,7 @@
     "idyll": "bin/idyll.js"
   },
   "scripts": {
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "repository": {
     "type": "git",
@@ -28,9 +28,12 @@
   "jest": {
     "transform": {},
     "moduleDirectories": [
-      "node_modules",
-      ".."
-    ]
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "csv-parse/sync": "csv-parse/dist/cjs/sync.cjs",
+      "idyll-ast/v1": "idyll-ast/dist/cjs/v1/index.js"
+    }
   },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
@@ -78,6 +81,7 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "expect": "^27.5.1",
     "jest": "27",
     "jsdom": "^11.10.0",
     "rimraf": "2.6.2"

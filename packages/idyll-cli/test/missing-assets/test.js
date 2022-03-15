@@ -1,4 +1,4 @@
-// jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
+jest.setTimeout(30000);
 
 const { readFileSync, existsSync } = require('fs');
 const http = require('http');

@@ -12,11 +12,11 @@ import {
 } from './processors/post';
 
 import { converters } from 'idyll-ast';
-const convertV1ToV2 = converters;
+const { convertV1ToV2 } = converters;
 
 const matter = require('gray-matter');
 
-export default function(input, options, alias, callback) {
+const compile = function(input, options, alias, callback) {
   input = Processor(input)
     .pipe(cleanNewlines)
     .end();
@@ -91,4 +91,6 @@ export default function(input, options, alias, callback) {
       ? new Promise(resolve => resolve(astTransform))
       : astTransform;
   }
-}
+};
+
+export { compile, Lexer };
