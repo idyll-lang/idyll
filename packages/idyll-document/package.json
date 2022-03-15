@@ -25,13 +25,17 @@
     "update-snapshot": " jest --updateSnapshot"
   },
   "jest": {
-    "transform": {},
+    "testEnvironment": "jsdom",
     "setupFiles": [
-      "<rootDir>/setupJest.mjs"
+      "<rootDir>/setupJest.js"
     ],
     "testMatch": [
       "**/test/**/*.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "csv-parse/sync": "csv-parse/dist/cjs/sync.cjs",
+      "idyll-ast/v1": "idyll-ast/dist/cjs/v1/index.js"
+    }
   },
   "dependencies": {
     "change-case": "^3.0.1",
@@ -60,12 +64,14 @@
     "@rollup/plugin-commonjs": "^21.0.2",
     "@rollup/plugin-replace": "^4.0.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "babel-jest": "^27.5.1",
     "concurrently": "^4.1.0",
     "enzyme": "^3.0.0",
     "jest": "27",
+    "jest-environment-jsdom": "^27",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-test-renderer": "^16.0.0",
+    "react-test-renderer": "^17.0.2",
     "rimraf": "^2.6.2",
     "rollup": "^2.70.0",
     "rollup-plugin-jsx": "^1.0.3"

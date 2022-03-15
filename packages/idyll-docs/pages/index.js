@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import IdyllDocument from 'idyll-document';
+import { IdyllDocument } from 'idyll-document';
 
 import { Display, Range, TextContainer } from 'idyll-components';
 import Head from 'next/head';

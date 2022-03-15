@@ -1,6 +1,6 @@
 # idyll-compiler
-Lexer and parser for Idyll lang. If you want to embed Idyll on your webpage, use the `idyll-document` package.
 
+Lexer and parser for Idyll lang. If you want to embed Idyll on your webpage, use the `idyll-document` package.
 
 ## Installation
 
@@ -11,12 +11,11 @@ $ npm install --save idyll-compiler
 ## Usage
 
 ```javascript
-import compile from 'idyll-compiler';
+import { compile } from 'idyll-compiler';
 
-compile(inputString, options)
-  .then((ast) => {
-    // Do something with the generated abstract syntax tree.
-  })
+compile(inputString, options).then(ast => {
+  // Do something with the generated abstract syntax tree.
+});
 ```
 
 ## Developing

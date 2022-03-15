@@ -8,7 +8,7 @@ import showdown from 'showdown';
 import Parser from 'html-react-parser';
 import * as Examples from '../../../idyll-components/examples';
 import * as IdyllComponents from 'idyll-components';
-import IdyllDocument from 'idyll-document';
+import { IdyllDocument } from 'idyll-document';
 
 showdown.setFlavor('github');
 const mdConverter = new showdown.Converter();

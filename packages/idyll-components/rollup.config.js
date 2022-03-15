@@ -1,6 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
 import fs from 'fs';
+import path from 'path';
 
 const builds = [];
 fs.readdirSync(`${__dirname}/src/`).forEach(file => {
@@ -14,7 +15,7 @@ fs.readdirSync(`${__dirname}/src/`).forEach(file => {
         name: 'idyll-components'
       },
       {
-        file: 'dist/esm/index.mjs',
+        file: `dist/esm/${path.parse(file).name}.mjs`,
         format: 'esm',
         sourcemap: false
       }

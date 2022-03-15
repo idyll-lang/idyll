@@ -40,7 +40,7 @@ export default ({ url }) => (
       </p>
 
       <Highlight className="javascript">
-        {`import IdyllDocument from 'idyll-document';
+        {`import { IdyllDocument } from 'idyll-document';
 import * as components from 'idyll-components';
 
 // An example functional component
@@ -69,7 +69,7 @@ import * as components from 'idyll-components';
       <Highlight className="javascript">
         {`import React from 'react';
 import ReactDOM from 'react-dom';
-import IdyllDocument from 'idyll-document';
+import { IdyllDocument } from 'idyll-document';
 import * as components from 'idyll-components';
 
 // You must provide idyllMarkup
@@ -87,7 +87,7 @@ ReactDOM.render(
       <p>To add additional components: </p>
 
       <Highlight className="javascript">
-        {`import IdyllDocument from 'idyll-document';
+        {`import { IdyllDocument } from 'idyll-document';
 import * as components from 'idyll-components';
 import IdyllVegalite from 'idyll-vega-lite';
 

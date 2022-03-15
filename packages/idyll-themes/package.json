@@ -42,12 +42,12 @@
     "@babel/core": "^7.17.5",
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.0.2",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
-    "jest": "^20.0.4",
+    "jest": "27",
     "rimraf": "^2.6.2",
-    "rollup": "^2.70.0",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^21.0.2"
+    "rollup": "^2.70.0"
   }
 }

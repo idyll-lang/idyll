@@ -10,14 +10,16 @@
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.mjs",
+  "type": "commonjs",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c rollup.config.js",
     "dev": "rollup -c rollup.config.js -w",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
   },
   "jest": {
+    "transform": {},
     "testMatch": [
       "**/test/**/*.js"
     ]
@@ -43,12 +45,12 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.0.2",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
-    "jest": "^20.0.4",
+    "jest": "27",
     "rimraf": "^2.6.2",
-    "rollup": "^2.70.0",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "^21.0.2"
+    "rollup": "^2.70.0"
   }
 }

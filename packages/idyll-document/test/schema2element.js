@@ -23,8 +23,11 @@ describe('ReactJsonSchema', () => {
   });
 
   it('can parse a schema', () => {
+    console.log(components);
+    console.log(schema);
     const rjs = new ReactJsonSchema(components);
     const tree = rjs.parseSchema({ component: 'div', children: schema });
+    console.log(JSON.stringify(tree));
     expect(shallow(tree)).toMatchSnapshot();
   });
 });

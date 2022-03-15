@@ -3,7 +3,7 @@
     [
       "@babel/preset-env",
       {
-        "modules": false
+        "targets": { "esmodules": false, "node": "current" }
       }
     ],
     "@babel/preset-react"

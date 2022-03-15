@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import * as components from 'idyll-components';
 
-import IdyllDocument from '../src/';
+import { IdyllDocument } from '../src/';
 import ast from './fixtures/ast.json';
 
 let component, idyllContext;
