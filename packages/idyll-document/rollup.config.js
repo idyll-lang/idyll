@@ -24,12 +24,11 @@ export default {
     }
   ],
   plugins: [
-    nodeResolve(),
-    commonjs(),
     babel({
       babelHelpers: 'runtime',
       exclude: 'node_modules/**' // only transpile our source code
-    })
+    }),
     // jsx( { factory: "React.createElement" } ),
+    commonjs()
   ]
 };

@@ -1,19 +1,22 @@
-const parse = require('./parser');
-const Lexer = require('./lexer');
-const Processor = require('./processors');
-const { cleanNewlines } = require('./processors/pre');
-const {
+import parse from './parser';
+import Lexer from './lexer';
+import Processor from './processors';
+import { cleanNewlines } from './processors/pre';
+import {
   hoistVariables,
   flattenChildren,
   cleanResults,
   makeFullWidth,
   wrapText,
   autoLinkify
-} = require('./processors/post');
-const { convertV1ToV2 } = require('idyll-ast').converters;
+} from './processors/post';
+
+import { converters } from 'idyll-ast';
+const convertV1ToV2 = converters;
+
 const matter = require('gray-matter');
 
-module.exports = function(input, options, alias, callback) {
+export default function(input, options, alias, callback) {
   input = Processor(input)
     .pipe(cleanNewlines)
     .end();
@@ -88,4 +91,4 @@ module.exports = function(input, options, alias, callback) {
       ? new Promise(resolve => resolve(astTransform))
       : astTransform;
   }
-};
+}

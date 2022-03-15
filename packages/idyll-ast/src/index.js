@@ -6,14 +6,15 @@
  * the package idyll-astV2.
  */
 
-const error = require('./error');
+import * as error from './error';
+import schema from './ast.schema.json';
+import converters from './converters';
+
 const Ajv = require('ajv');
 const ajv = new Ajv();
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
-const schema = require('./ast.schema.json');
 const validator = ajv.compile(schema);
 const validatorProps = ajv.compile(schema.properties.properties);
-const converters = require('./converters');
 const htmlTags = require('html-tags');
 
 /**
@@ -1108,7 +1109,8 @@ function toMarkup(ast, options = { insertFullWidth: false }) {
   return cleanedMarkup;
 }
 
-module.exports = {
+import * as v1 from './v1';
+export {
   appendNode,
   appendNodes,
   converters,
@@ -1140,5 +1142,6 @@ module.exports = {
   setProperties,
   walkNodes,
   walkNodesBreadthFirst,
-  toMarkup
+  toMarkup,
+  v1
 };

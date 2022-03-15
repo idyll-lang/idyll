@@ -6,6 +6,10 @@
     ".": {
       "require": "./dist/cjs/index.js",
       "default": "./dist/esm/index.mjs"
+    },
+    "./v1": {
+      "require": "./dist/cjs/v1/index.js",
+      "default": "./dist/esm/v1/index.mjs"
     }
   },
   "main": "dist/cjs/index.js",
@@ -39,6 +43,7 @@
     "@babel/preset-env": "^7.16.11",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^21.0.2",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.1.3",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",

@@ -1,5 +1,6 @@
 const smartquotes = require('smartquotes');
 
+import v1 from 'idyll-ast';
 const {
   modifyNodesByName,
   modifyChildren,
@@ -12,7 +13,7 @@ const {
   getNodeName,
   createTextNode,
   createNode
-} = require('idyll-ast/v1');
+} = v1;
 
 const attrConvert = list => {
   return (list || []).reduce((acc, [name, [type, val]]) => {
@@ -256,7 +257,7 @@ function getHyperLinksFromText(textNode) {
   return textNode.match(regexURL);
 }
 
-module.exports = {
+export {
   cleanResults,
   flattenChildren,
   hoistVariables,

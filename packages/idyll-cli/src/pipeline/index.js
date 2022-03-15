@@ -3,7 +3,6 @@ const Promise = require('bluebird');
 const writeFile = Promise.promisify(fs.writeFile);
 const { copy, pathExists } = require('fs-extra');
 const compile = require('idyll-compiler');
-const Terser = require('terser');
 const { paramCase } = require('change-case');
 const debug = require('debug')('idyll:cli');
 const { ComponentResolver } = require('../resolvers');
