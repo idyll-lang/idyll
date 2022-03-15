@@ -16,7 +16,7 @@
     "build": "rollup -c rollup.config.js",
     "dev": "rollup -c rollup.config.js -w",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "npm run build && jest"
   },
   "resolutions": {
     "jest-environment-jsdom": "27.3.1"
