@@ -26,7 +26,6 @@
     "idyll-compiler": "^5.0.0-alpha.0",
     "idyll-components": "^6.0.0-alpha.0",
     "idyll-document": "^4.0.0-alpha.0",
-    "isomorphic-fetch": "^2.2.1",
     "markdown-in-js": "^1.1.3",
     "next": "^12.1.0",
     "react": "17",
