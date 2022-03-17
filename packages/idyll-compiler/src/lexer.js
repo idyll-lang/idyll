@@ -500,7 +500,7 @@ const lex = function(options, alias = {}) {
     currentInput = str;
     var vals = [];
     var output = [];
-    var positions = [];
+    var positions = [[0, 0]];
 
     lexer.input = str.trim();
     var token = lexer.lex();

@@ -5,33 +5,14 @@ module.exports = function(input, tokenChunks, positions, options) {
   options = options || {};
 
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
-  // console.log(tokens);
+  let tokenPosition = 0;
 
   const processToken = token => {
-    // try {
     p.feed(token);
+    tokenPosition++;
     if (token !== 'EOF') {
       p.feed(' ');
     }
-    // } catch(err) {
-    //   console.log(err);
-    //   throw err;
-    // }
-    // console.log("tokenchunk", tokenChunk)
-    // if (typeof tokenChunk[0] === 'string') {
-    //   console.log('feeding ', tokenChunk.join(" "))
-    //   try {
-    //     p.feed(tokenChunk.join(" "));
-    //     if (tokenChunk[0] !== "EOF") {
-    //       p.feed(" ");
-    //     }
-    //   } catch(err) {
-    //     console.log("error when feeding");
-    //     console.log(err);
-    //   }
-    // } else {
-    //   console.log("not feeding");
-    // }
   };
 
   const processTokenChunk = tokenChunk => {
@@ -42,33 +23,13 @@ module.exports = function(input, tokenChunks, positions, options) {
         processTokenChunk(token);
       }
     });
-    // console.log("tokenchunk", tokenChunk)
-    // if (typeof tokenChunk[0] === 'string') {
-    //   console.log('feeding ', tokenChunk.join(" "))
-    //   try {
-    //     p.feed(tokenChunk.join(" "));
-    //     if (tokenChunk[0] !== "EOF") {
-    //       p.feed(" ");
-    //     }
-    //   } catch(err) {
-    //     console.log("error when feeding");
-    //     console.log(err);
-    //   }
-    // } else {
-    //   console.log("not feeding");
-    // }
   };
 
-  // p.feed(tokenChunks.flat(Number.POSITIVE_INFINITY).join(" "));
-  // console.log('tokenChunks', tokenChunks.flat(Number.POSITIVE_INFINITY).join(" "));
-
-  tokenChunks.forEach((tokenChunk, i) => {
+  tokenChunks.forEach(tokenChunk => {
     try {
       processTokenChunk(tokenChunk);
     } catch (err) {
-      const index = i;
-      const position = positions[index];
-      console.log(i, tokenChunk[i]);
+      const position = positions[tokenPosition];
       const message =
         'Error parsing input at line ' +
         position[0] +
@@ -86,20 +47,12 @@ module.exports = function(input, tokenChunks, positions, options) {
       throw e;
     }
   });
-  // console.log(p);
   var results = p.results;
 
   if (results.length) {
-    // console.log('Results length: ' + results.length);
     if (results.length > 1) {
-      console.warn('This resulted in an ambiguous parse');
-      console.log(tokenChunks);
-      // console.log(p)
-      throw new Error('This resulted in an ambiguous parse');
-      // console.log(JSON.stringify(results, null, 2));
-      // console.log(str);
+      console.warn('Warning: this Idyll markup resulted in an ambiguous parse');
     }
-    // console.log(JSON.stringify(results[0]));
 
     return results[0];
   }
