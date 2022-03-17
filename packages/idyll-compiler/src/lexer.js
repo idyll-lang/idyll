@@ -500,13 +500,12 @@ const lex = function(options, alias = {}) {
     currentInput = str;
     var vals = [];
     var output = [];
-    var positions = [[0, 0]];
+    var positions = [];
 
     lexer.input = str.trim();
     var token = lexer.lex();
-    // console.log(currentInput)
+
     while (token) {
-      // console.log("pushing token ", token);
       output.push(token);
       positions.push([row, column]);
       token = lexer.lex();

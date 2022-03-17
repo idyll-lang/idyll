@@ -5,11 +5,9 @@ module.exports = function(input, tokenChunks, positions, options) {
   options = options || {};
 
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
-  let tokenPosition = 0;
 
   const processToken = token => {
     p.feed(token);
-    tokenPosition++;
     if (token !== 'EOF') {
       p.feed(' ');
     }
@@ -25,11 +23,11 @@ module.exports = function(input, tokenChunks, positions, options) {
     });
   };
 
-  tokenChunks.forEach(tokenChunk => {
+  tokenChunks.forEach((tokenChunk, index) => {
     try {
       processTokenChunk(tokenChunk);
     } catch (err) {
-      const position = positions[tokenPosition];
+      const position = positions[index];
       const message =
         'Error parsing input at line ' +
         position[0] +
