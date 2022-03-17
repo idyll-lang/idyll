@@ -25,7 +25,7 @@
     "update-snapshot": " jest --updateSnapshot"
   },
   "jest": {
-    "testEnvironment": "jsdom",
+    "transform": {},
     "setupFiles": [
       "<rootDir>/setupJest.js"
     ],
@@ -38,6 +38,7 @@
     }
   },
   "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.17.7",
     "change-case": "^3.0.1",
     "cross-env": "^5.2.0",
     "csv-parse": "5",

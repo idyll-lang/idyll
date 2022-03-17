@@ -33,6 +33,7 @@ module.exports = function(opts, paths, output) {
     outfile: paths.JS_OUTPUT_FILE,
     loader: { '.js': 'jsx' },
     minify: opts.minify,
+    logLevel: 'error',
     define: {
       process: JSON.stringify({
         env: {

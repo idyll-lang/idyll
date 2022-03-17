@@ -26,9 +26,9 @@ module.exports = paths => {
     }
   };
 
-  //   require('babel-register')({
-  //     presets: ['env', 'stage-2', 'react'],
-  //     babelrc: false,
-  //     only: isWindows ? undefined : new RegExp(`(${transformFolders.join('|')})`)
-  // });
+  require('@babel/register')({
+    presets: ['env', 'stage-2', 'react'],
+    babelrc: false,
+    only: isWindows ? undefined : new RegExp(`(${transformFolders.join('|')})`)
+  });
 };

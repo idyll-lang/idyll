@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class RoughComponent extends React.Component {
   constructor(props) {
@@ -39,4 +39,4 @@ class RoughComponent extends React.Component {
   }
 }
 
-export default RoughComponent;
+module.exports = RoughComponent;

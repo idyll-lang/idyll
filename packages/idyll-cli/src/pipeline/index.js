@@ -96,7 +96,6 @@ const build = (opts, paths, resolvers) => {
             template,
             opts
           );
-          console.log(output.html);
         }
       });
     })

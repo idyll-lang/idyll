@@ -171,7 +171,6 @@ exports.getBaseHTML = (ast, template, opts) => {
 
 exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
   const components = {};
-  console.log('getting html');
 
   for (key of Object.keys(_components)) {
     // .forEach(key => {

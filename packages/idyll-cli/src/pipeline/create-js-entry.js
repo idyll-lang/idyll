@@ -15,11 +15,22 @@ module.exports = ({
     var mountNode = document.getElementById('idyll-mount');
 
     var ast = ${JSON.stringify(ast)};
-    var components = {${components
-      .map(([k, p]) => {
-        return `"${k}": require("${p}")`;
+
+
+    ${components
+      .map(([k, p], i) => {
+        return `import _component_${i} from '${p}'`;
       })
-      .join(', ')}};
+      .join('\n')}
+
+    var components = {};
+    ${components
+      .map(([k, p], i) => {
+        return `components[${k}] = _component_${i}`;
+      })
+      .join('\n')}
+   
+
     var datasets = ${JSON.stringify(data)};
 
     ${syntaxHighlighting}
