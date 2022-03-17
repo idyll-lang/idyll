@@ -12,7 +12,6 @@
     "build": "npm run compile && npm run build:es && npm run build:cjs",
     "dev": "concurrently \"yarn run compile\" \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
     "test": "npm run compile && mocha",
-    "nearley-debug": "nearley-test src/grammar.js -i 'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START \"Slideshow\" TOKEN_VALUE_END CLOSE_BRACKET OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START \"Slideshow\" TOKEN_VALUE_END CLOSE_BRACKET EOF'",
     "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
   },
