@@ -163,7 +163,7 @@ Function to append multiple top-level children to the root element.
 
 ### idyll-ast~createNode ⇒ <code>object</code>
 
-Function to creat a new AST node following the schema.
+Function to create a new AST node following the schema.
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - New component node.
@@ -236,10 +236,10 @@ Function to get all the nodes with the passed name in the passed AST.
 
 ### idyll-ast~getNodesByType ⇒ <code>Array.&lt;object&gt;</code>
 
-Function to get all the nodes with the passed name in the passed AST.
+Function to get all the nodes with the passed type in the passed AST.
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
-**Returns**: <code>Array.&lt;object&gt;</code> - Array of nodes matching the name
+**Returns**: <code>Array.&lt;object&gt;</code> - Array of nodes matching the type
 
 | Param | Type                | Description       |
 | ----- | ------------------- | ----------------- |
@@ -276,7 +276,7 @@ Function to get the type information of a node
 
 ### idyll-ast~getText ⇒ <code>string</code>
 
-Function to get all the text from textnodes from the passes AST node
+Function to get all the text from textnodes from the passed AST node
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
 
@@ -330,7 +330,7 @@ Function to pass in a filter function to the children.
 
 ### idyll-ast~modifyNodesByName ⇒ <code>object</code>
 
-Function to modfiy nodes based on the name property.
+Function to modiy nodes based on the name property.
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - ast
@@ -360,7 +360,7 @@ Function to modify a single node using a modifier and name property.
 
 ### idyll-ast~getNodeName ⇒ <code>string</code>
 
-Function to get the name of a componenet
+Function to get the name of a component
 
 **Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>string</code> - name of the passed node
