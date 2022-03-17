@@ -33,12 +33,7 @@ module.exports = function(input, options, alias, callback) {
     return new Promise((resolve, reject) => reject(err));
   }
   try {
-    output = parse(
-      content,
-      lexResults.tokens.join(' '),
-      lexResults.positions,
-      options
-    );
+    output = parse(content, lexResults.tokens, lexResults.positions, options);
   } catch (err) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
     if (options.async) {

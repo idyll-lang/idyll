@@ -194,7 +194,7 @@ LinkInline -> "LINK" __ TokenValue __ TokenValue {%
   }
 %}
 
-OpenComponent -> OpenComponentStart __ Blocks:? OpenComponentEnd {%
+OpenComponent -> OpenComponentStart __ Blocks OpenComponentEnd {%
   function(data, location, reject) {
     return [data[0][0], data[0][1], data[2] || []];
   }
@@ -206,7 +206,11 @@ OpenComponentStart -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties "CL
   }
 %}
 
-OpenComponentEnd -> "OPEN_BRACKET" __ "FORWARD_SLASH" __ ComponentName __ "CLOSE_BRACKET"
+OpenComponentEnd -> "OPEN_BRACKET" __ "FORWARD_SLASH" __ ComponentName __ "CLOSE_BRACKET" {%
+  function(data, location, reject) {
+    return data;
+  }
+%}
 
 ClosedComponent -> "OPEN_BRACKET" __ ComponentName __ ComponentProperties "FORWARD_SLASH" __ "CLOSE_BRACKET" {%
   function(data, location, reject) {
