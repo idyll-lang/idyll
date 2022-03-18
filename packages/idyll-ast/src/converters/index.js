@@ -74,7 +74,7 @@ function convertHelper(jsonElement) {
  * @param {*} arrayAst
  * @return Json structred ast correspoding to the arrayAst.
  */
-const convertV1ToV2 = (arrayAst, injectIds = false) => {
+const convertV1ToV2 = (arrayAst, injectIds) => {
   let jsonAst = new Object();
   if (injectIds) {
     jsonAst.id = 0;
