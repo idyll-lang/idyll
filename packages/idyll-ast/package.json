@@ -20,6 +20,7 @@
     "build": "rollup -c rollup.config.js",
     "dev": "rollup -c rollup.config.js -w",
     "test": "mocha",
+    "generate-docs": "jsdoc2md src/index.js",
     "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
   },
@@ -48,7 +49,7 @@
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "expect.js": "^0.3.1",
-    "jsdoc-to-markdown": "^4.0.1",
+    "jsdoc-to-markdown": "^7.1.1",
     "mocha": "6.1",
     "rimraf": "^2.6.2",
     "rollup": "^2.70.0"

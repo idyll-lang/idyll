@@ -4,7 +4,6 @@ import exampleMarkup from '../../../components/editor/initial';
 import TopNav from '../../../components/top-nav';
 import Fonts from '../../../components/fonts';
 import Head from 'next/head';
-import 'isomorphic-fetch';
 
 import { Router } from 'next/router';
 import { logPageView, initGA } from '../../../components/analytics';

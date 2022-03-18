@@ -104,28 +104,32 @@ Only **component** nodes can have any children. **textnodes**, **var**, **derive
   - [~createNode](#module_idyll-ast..createNode) ⇒ <code>object</code>
   - [~createTextNode](#module_idyll-ast..createTextNode) ⇒
   - [~getChildren](#module_idyll-ast..getChildren) ⇒ <code>Array.&lt;object&gt;</code>
+  - [~setChildren](#module_idyll-ast..setChildren) ⇒ <code>object</code>
   - [~getNodesByName](#module_idyll-ast..getNodesByName) ⇒ <code>Array.&lt;object&gt;</code>
   - [~getNodesByType](#module_idyll-ast..getNodesByType) ⇒ <code>Array.&lt;object&gt;</code>
+  - [~hasType](#module_idyll-ast..hasType) ⇒ <code>boolean</code>
+  - [~getType](#module_idyll-ast..getType) ⇒ <code>string</code>
   - [~getText](#module_idyll-ast..getText) ⇒ <code>string</code>
   - [~filterNodes](#module_idyll-ast..filterNodes) ⇒ <code>Array.&lt;object&gt;</code>
   - [~modifyChildren](#module_idyll-ast..modifyChildren) ⇒ <code>object</code>
   - [~filterChildren](#module_idyll-ast..filterChildren) ⇒ <code>object</code>
-  - [~pruneNodes](#module_idyll-ast..pruneNodes) ⇒ <code>Array.&lt;object&gt;</code>
   - [~modifyNodesByName](#module_idyll-ast..modifyNodesByName) ⇒ <code>object</code>
   - [~handleNodeByName](#module_idyll-ast..handleNodeByName) ⇒ <code>object</code>
   - [~getNodeName](#module_idyll-ast..getNodeName) ⇒ <code>string</code>
+  - [~getPropertyKeys](#module_idyll-ast..getPropertyKeys) ⇒ <code>Array.&lt;string&gt;</code>
   - [~getProperty](#module_idyll-ast..getProperty) ⇒
   - [~getProperties](#module_idyll-ast..getProperties) ⇒ <code>object</code>
   - [~getPropertiesByType](#module_idyll-ast..getPropertiesByType) ⇒ <code>Array.&lt;object&gt;</code>
   - [~prependNode](#module_idyll-ast..prependNode) ⇒ <code>object</code>
   - [~prependNodes](#module_idyll-ast..prependNodes) ⇒ <code>object</code>
   - [~removeNodesByName](#module_idyll-ast..removeNodesByName)
+  - [~removeNodesByType](#module_idyll-ast..removeNodesByType)
   - [~removeProperties](#module_idyll-ast..removeProperties) ⇒ <code>object</code>
   - [~setProperty](#module_idyll-ast..setProperty) ⇒ <code>object</code>
   - [~setProperties](#module_idyll-ast..setProperties) ⇒ <code>object</code>
-  - [~toMarkup](#module_idyll-ast..toMarkup) ⇒ <code>string</code>
-  - [~walkNodes](#module_idyll-ast..walkNodes) : <code>function</code>
+  - [~walkNodes](#module_idyll-ast..walkNodes)
   - [~walkNodeBreadthFirst](#module_idyll-ast..walkNodeBreadthFirst)
+  - [~toMarkup](#module_idyll-ast..toMarkup) ⇒ <code>string</code>
 
 <a name="module_idyll-ast..appendNode"></a>
 
@@ -133,7 +137,7 @@ Only **component** nodes can have any children. **textnodes**, **var**, **derive
 
 Function to append a top-level child to the root element.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - Modifed ast node
 
 | Param | Type                | Description |
@@ -147,7 +151,7 @@ Function to append a top-level child to the root element.
 
 Function to append multiple top-level children to the root element.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - modified ast
 
 | Param | Type                              | Description              |
@@ -161,7 +165,7 @@ Function to append multiple top-level children to the root element.
 
 Function to create a new AST node following the schema.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - New component node.
 
 | Param    | Type                              | Description                  |
@@ -179,7 +183,7 @@ Function to create a new AST node following the schema.
 
 Function to create a new textnode
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: New textnode
 
 | Param | Type            |
@@ -193,7 +197,7 @@ Function to create a new textnode
 
 Function to return the children of the passed node.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>Array.&lt;object&gt;</code> - children of the node
 
 | Param | Type                | Description |
@@ -206,7 +210,7 @@ Function to return the children of the passed node.
 
 Function to set children of the passed node.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - modified node
 
 | Param    | Type                |
@@ -220,7 +224,7 @@ Function to set children of the passed node.
 
 Function to get all the nodes with the passed name in the passed AST.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>Array.&lt;object&gt;</code> - Array of nodes matching the name
 
 | Param | Type                | Description       |
@@ -228,13 +232,13 @@ Function to get all the nodes with the passed name in the passed AST.
 | ast   | <code>object</code> | AST object        |
 | name  | <code>string</code> | name of the nodes |
 
-<a name="module_idyll-ast..getNodesByName"></a>
+<a name="module_idyll-ast..getNodesByType"></a>
 
 ### idyll-ast~getNodesByType ⇒ <code>Array.&lt;object&gt;</code>
 
 Function to get all the nodes with the passed type in the passed AST.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>Array.&lt;object&gt;</code> - Array of nodes matching the type
 
 | Param | Type                | Description       |
@@ -248,7 +252,7 @@ Function to get all the nodes with the passed type in the passed AST.
 
 Function to check if a node has type attribute or not
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>boolean</code> - true if type exists, false otherwise
 
 | Param | Type                |
@@ -261,7 +265,7 @@ Function to check if a node has type attribute or not
 
 Function to get the type information of a node
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>string</code> - type of the node
 
 | Param | Type                | Description |
@@ -286,7 +290,7 @@ Function to get all the text from textnodes from the passed AST node
 
 Function to find certain nodes based on a filter passed.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>Array.&lt;object&gt;</code> - Array of all the nodes found
 
 | Param  | Type                  | Description                   |
@@ -300,7 +304,7 @@ Function to find certain nodes based on a filter passed.
 
 Function to modify children of a passed AST node using a passed modifier.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - node with modified children.
 
 | Param    | Type                  |
@@ -314,7 +318,7 @@ Function to modify children of a passed AST node using a passed modifier.
 
 Function to pass in a filter function to the children.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - node with modified children
 
 | Param  | Type                  | Description     |
@@ -326,9 +330,9 @@ Function to pass in a filter function to the children.
 
 ### idyll-ast~modifyNodesByName ⇒ <code>object</code>
 
-Function to modify nodes based on the name property.
+Function to modiy nodes based on the name property.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - ast
 
 | Param    | Type                  |
@@ -343,7 +347,7 @@ Function to modify nodes based on the name property.
 
 Function to modify a single node using a modifier and name property.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - if node.name = name then modifier(node), else node.
 
 | Param    | Type                  |
@@ -358,7 +362,7 @@ Function to modify a single node using a modifier and name property.
 
 Function to get the name of a component
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>string</code> - name of the passed node
 
 | Param | Type                |
@@ -371,7 +375,7 @@ Function to get the name of a component
 
 Function to return a the list of property keys of a node
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>Array.&lt;string&gt;</code> - keys
 
 | Param | Type                |
@@ -384,7 +388,7 @@ Function to return a the list of property keys of a node
 
 Getter function to a return a specific property of a node based on a key.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: null, if the property does not exist, else property.data.
 
 | Param | Type                |
@@ -398,7 +402,7 @@ Getter function to a return a specific property of a node based on a key.
 
 Function to return all the properties of a given node.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - properties of the node, or null if none exists,
 
 | Param | Type            |
@@ -411,7 +415,7 @@ Function to return all the properties of a given node.
 
 Function to get properties of a particular type of a given node.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>Array.&lt;object&gt;</code> - Array of properties if they exists, or an empty array of no properties of the given type exists.
 
 | Param | Type                |
@@ -425,7 +429,7 @@ Function to get properties of a particular type of a given node.
 
 Function to prepend a node in the children array of root.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - modfied ast.
 
 | Param | Type                |
@@ -439,7 +443,7 @@ Function to prepend a node in the children array of root.
 
 Function to prepend multiple nodes in the children array of root.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - modfied ast.
 
 | Param | Type                              |
@@ -460,13 +464,26 @@ Function remove node with a particular name from the ast
 | ast   | <code>\*</code> |
 | name  | <code>\*</code> |
 
+<a name="module_idyll-ast..removeNodesByType"></a>
+
+### idyll-ast~removeNodesByType
+
+Function remove node with a particular name from the ast
+
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+
+| Param | Type            |
+| ----- | --------------- |
+| ast   | <code>\*</code> |
+| type  | <code>\*</code> |
+
 <a name="module_idyll-ast..removeProperties"></a>
 
 ### idyll-ast~removeProperties ⇒ <code>object</code>
 
 Function to remove a property from a node
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - Modified node
 
 | Param | Type                |
@@ -480,7 +497,7 @@ Function to remove a property from a node
 
 Function to add a property to a node or change the value if the property already exists.
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - Modfied Node
 
 | Param | Type            |
@@ -495,26 +512,13 @@ Function to add a property to a node or change the value if the property already
 
 Function to add multiple properties to a node
 
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
 **Returns**: <code>object</code> - Modified node
 
 | Param      | Type                |
 | ---------- | ------------------- |
 | node       | <code>object</code> |
 | properties | <code>object</code> |
-
-<a name="module_idyll-ast..walkNodes"></a>
-
-### idyll-ast~toMarkup ⇒ <code>string</code>
-
-Function to convert an AST back into idyll markup
-
-**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)
-**Returns**: <code>string</code> - markup string
-
-| Param | Type                |
-| ----- | ------------------- |
-| node  | <code>object</code> |
 
 <a name="module_idyll-ast..walkNodes"></a>
 
@@ -541,3 +545,16 @@ Function to breadth-first traversal on the AST.
 | ----- | --------------------- |
 | ast   | <code>object</code>   |
 | f     | <code>function</code> |
+
+<a name="module_idyll-ast..toMarkup"></a>
+
+### idyll-ast~toMarkup ⇒ <code>string</code>
+
+Function to convert AST back to idyll markup
+
+**Kind**: inner property of [<code>idyll-ast</code>](#module_idyll-ast)  
+**Returns**: <code>string</code> - Markup string
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| ast   | <code>object</code> | AST node    |

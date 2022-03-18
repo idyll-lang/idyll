@@ -52,7 +52,7 @@ const appendNodes = function(ast, nodes) {
  * @name createNode
  * @type {function}
  * @description
- * Function to creat a new AST node following the schema.
+ * Function to create a new AST node following the schema.
  * @param {integer} id   Id of the node
  * @param {string} name  Name of the node.
  * @param {string} type Type of the node.
@@ -195,10 +195,10 @@ function getNodesByNameHelper(childArray, name) {
  * @name getNodesByType
  * @type {function}
  * @description
- * Function to get all the nodes with the passed name in the passed AST.
+ * Function to get all the nodes with the passed type in the passed AST.
  * @param {object} ast  AST object
  * @param {string} type type of the nodes
- * @return {object[]} Array of nodes matching the name
+ * @return {object[]} Array of nodes matching the type
  */
 const getNodesByType = function(ast, type) {
   typeCheckObject(ast, 'ast');
@@ -256,7 +256,7 @@ const getType = function(node) {
  * @name getText
  * @type {function}
  * @description
- * Function to get all the text from textnodes from the passes AST node
+ * Function to get all the text from textnodes from the passed AST node
  * @param {object} ast AST node
  * @return {string}
  */
@@ -343,7 +343,7 @@ const filterChildren = function(node, filter) {
 /**
  * @name modifyNodesByName
  * @description
- * Function to modfiy nodes based on the name property.
+ * Function to modiy nodes based on the name property.
  * @param {object} ast
  * @param {string} name
  * @param {function} modifier
@@ -406,7 +406,7 @@ const handleNodeByName = function(node, name, modifier) {
 /**
  * @name getNodeName
  * @description
- * Function to get the name of a componenet
+ * Function to get the name of a component
  * @param {object}  node
  * @return {string} name of the passed node
  */

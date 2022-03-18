@@ -8,7 +8,8 @@ describe('compiler', function() {
     it('should tokenize the input', function() {
       var lex = Lexer();
       var results = lex('Hello \n\nWorld! []');
-      expect(results.tokens.join(' ')).to.eql(
+      // expect(true).to.be(false)
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "Hello " TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "World" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "! " TOKEN_VALUE_END OPEN_BRACKET CLOSE_BRACKET EOF'
       );
     });
@@ -16,14 +17,14 @@ describe('compiler', function() {
     it('should tokenize the input with a complex component', function() {
       var lex = Lexer();
       var results = lex('Hello \n\nWorld \n\n [VarDisplay var:v work:"no" /]');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "Hello " TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "World " TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "VarDisplay" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "var" TOKEN_VALUE_END PARAM_SEPARATOR COMPONENT_WORD TOKEN_VALUE_START "v" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "work" TOKEN_VALUE_END PARAM_SEPARATOR STRING TOKEN_VALUE_START "&quot;no&quot;" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
       );
     });
     it('should support single quotes around strings', function() {
       var lex = Lexer();
       var results = lex("Hello \n\nWorld \n\n [VarDisplay var:v work:'no' /]");
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "Hello " TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "World " TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "VarDisplay" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "var" TOKEN_VALUE_END PARAM_SEPARATOR COMPONENT_WORD TOKEN_VALUE_START "v" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "work" TOKEN_VALUE_END PARAM_SEPARATOR STRING TOKEN_VALUE_START "&quot;no&quot;" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
       );
     });
@@ -31,7 +32,8 @@ describe('compiler', function() {
     it('should recognize headings', function() {
       var lex = Lexer();
       var results = lex('\n## my title');
-      expect(results.tokens.join(' ')).to.eql(
+      // expect(true).to.be(false);
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'BREAK HEADER_2 WORDS TOKEN_VALUE_START "my title" TOKEN_VALUE_END HEADER_END EOF'
       );
     });
@@ -39,7 +41,7 @@ describe('compiler', function() {
     it('should recognize block quotes', function() {
       var lex = Lexer();
       var results = lex('\n> My blockquote');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'BREAK QUOTE_START WORDS TOKEN_VALUE_START "My blockquote" TOKEN_VALUE_END QUOTE_END EOF'
       );
     });
@@ -47,7 +49,7 @@ describe('compiler', function() {
     it('should handle newlines', function() {
       var lex = Lexer();
       var results = lex('\n\n\n\n text \n\n');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "text" TOKEN_VALUE_END EOF'
       );
     });
@@ -55,7 +57,7 @@ describe('compiler', function() {
     it('should ignore escaped brackets', function() {
       var lex = Lexer();
       var results = lex('Text with a range, \\[0, 20\\].');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "Text with a range, " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "[" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "0" TOKEN_VALUE_END WORDS TOKEN_VALUE_START ", " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "2" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "0" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "]" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF'
       );
     });
@@ -63,7 +65,7 @@ describe('compiler', function() {
     it('should handle markdown formating in a list element', function() {
       var lex = Lexer();
       var results = lex('- **test**');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'BREAK UNORDERED_LIST LIST_ITEM STRONG WORDS TOKEN_VALUE_START "test" TOKEN_VALUE_END STRONG_END LIST_END EOF'
       );
     });
@@ -71,7 +73,7 @@ describe('compiler', function() {
     it('should handle equations', function() {
       var lex = Lexer();
       var results = lex('[Equation]y = 0[/Equation]');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
@@ -79,7 +81,7 @@ describe('compiler', function() {
     it('should handle backticks in a paragraph', function() {
       var lex = Lexer();
       var results = lex('regular text and stuff, then some `code`');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "regular text and stuff, then some " TOKEN_VALUE_END INLINE_CODE TOKEN_VALUE_START "code" TOKEN_VALUE_END EOF'
       );
     });
@@ -89,7 +91,7 @@ describe('compiler', function() {
       var results = lex(
         'regular text and stuff, then a [link](https://idyll-lang.github.io/).'
       );
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "regular text and stuff, then a " TOKEN_VALUE_END LINK TOKEN_VALUE_START "link" TOKEN_VALUE_END TOKEN_VALUE_START "https://idyll-lang.github.io/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF'
       );
     });
@@ -99,7 +101,7 @@ describe('compiler', function() {
       var results = lex(
         'This is an image inline ![image](https://idyll-lang.github.io/logo-text.svg).'
       );
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "This is an image inline " TOKEN_VALUE_END IMAGE TOKEN_VALUE_START "image" TOKEN_VALUE_END TOKEN_VALUE_START "https://idyll-lang.github.io/logo-text.svg" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF'
       );
     });
@@ -109,7 +111,7 @@ describe('compiler', function() {
       var results = lex(
         'This component name has a period separator [component.val /].'
       );
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component.val" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF'
       );
     });
@@ -119,7 +121,7 @@ describe('compiler', function() {
       var results = lex(
         'This component name has a period separator [component.val.v /].'
       );
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "This component name has a period separator " TOKEN_VALUE_END OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component.val.v" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET WORDS TOKEN_VALUE_START "." TOKEN_VALUE_END EOF'
       );
     });
@@ -127,7 +129,7 @@ describe('compiler', function() {
     it('should handle an i tag', function() {
       var lex = Lexer();
       var results = lex('[i]not even em[/i]');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "i" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "not even em" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "i" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
@@ -144,7 +146,7 @@ describe('compiler', function() {
 
         not a comment: https://stuff.com
       `);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "Text. " TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/ Not a comment.\n        " TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/not a comment\n          " TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK WORDS TOKEN_VALUE_START "not a comment: https:" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "/stuff.com" TOKEN_VALUE_END EOF'
       );
     });
@@ -155,7 +157,7 @@ describe('compiler', function() {
       `;
       var lex = Lexer();
       var results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'BREAK ORDERED_LIST LIST_ITEM WORDS TOKEN_VALUE_START "bar" TOKEN_VALUE_END LIST_END EOF'
       );
     });
@@ -166,7 +168,7 @@ describe('compiler', function() {
       `;
       var lex = Lexer();
       var results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "1" TOKEN_VALUE_END WORDS TOKEN_VALUE_START ".bar" TOKEN_VALUE_END EOF'
       );
     });
@@ -177,7 +179,7 @@ describe('compiler', function() {
       `;
       var lex = Lexer();
       var results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'BREAK UNORDERED_LIST LIST_ITEM WORDS TOKEN_VALUE_START "bar" TOKEN_VALUE_END LIST_END EOF'
       );
     });
@@ -188,7 +190,7 @@ describe('compiler', function() {
       `;
       var lex = Lexer();
       var results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "-bar" TOKEN_VALUE_END EOF'
       );
     });
@@ -202,7 +204,7 @@ describe('compiler', function() {
       `;
       var lex = Lexer();
       var results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'BREAK HEADER_2 WORDS TOKEN_VALUE_START "This is a header" TOKEN_VALUE_END HEADER_END WORDS TOKEN_VALUE_START "And this is a normal paragraph." TOKEN_VALUE_END BREAK OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET BREAK HEADER_1 WORDS TOKEN_VALUE_START "This header is inside a component." TOKEN_VALUE_END HEADER_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
@@ -210,7 +212,7 @@ describe('compiler', function() {
       const input = `[component number:.1 /]`;
       const lex = Lexer();
       const results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "number" TOKEN_VALUE_END PARAM_SEPARATOR NUMBER TOKEN_VALUE_START ".1" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
       );
     });
@@ -223,7 +225,7 @@ describe('compiler', function() {
       const input = `[component number:1.1 /]`;
       const lex = Lexer();
       const results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "component" TOKEN_VALUE_END COMPONENT_WORD TOKEN_VALUE_START "number" TOKEN_VALUE_END PARAM_SEPARATOR NUMBER TOKEN_VALUE_START "1.1" TOKEN_VALUE_END FORWARD_SLASH CLOSE_BRACKET EOF'
       );
     });
@@ -231,14 +233,14 @@ describe('compiler', function() {
     it('should handle equation alias', function() {
       var lex = Lexer({}, { Eq: 'equation' });
       var results = lex('[Eq]y = 0[/Eq]');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "equation" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
     it('should handle code alias', function() {
       var lex = Lexer({}, { Cd: 'code' });
       var results = lex('[Cd]y = 0[/Cd]');
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'OPEN_BRACKET COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET WORDS TOKEN_VALUE_START "y = 0" TOKEN_VALUE_END OPEN_BRACKET FORWARD_SLASH COMPONENT_NAME TOKEN_VALUE_START "code" TOKEN_VALUE_END CLOSE_BRACKET EOF'
       );
     });
@@ -251,7 +253,7 @@ describe('compiler', function() {
       `;
       const lex = Lexer();
       const results = lex(input);
-      expect(results.tokens.join(' ')).to.eql(
+      expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "Idyll is based on Markdown" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "!" TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "Idyll posts are designed to support interaction and\n        data-driven graphics." TOKEN_VALUE_END EOF'
       );
     });
@@ -333,6 +335,74 @@ describe('compiler', function() {
         ])
       );
     });
+
+    it('should parse a nested component unambiguously', function() {
+      var input =
+        '[Slideshow]text and stuff fewer of newlines.[OpenComponent][/OpenComponent][/Slideshow]';
+      expect(compile(input, { async: false })).to.eql(
+        AST.convertV1ToV2([
+          [
+            'TextContainer',
+            [],
+            [
+              [
+                'Slideshow',
+                [],
+                ['text and stuff fewer of newlines.', ['OpenComponent', [], []]]
+              ]
+            ]
+          ]
+        ])
+      );
+    });
+
+    it('should parse a simple nested component unambiguously', function() {
+      var input = '[Slideshow][OpenComponent][/OpenComponent][/Slideshow]';
+      expect(compile(input, { async: false })).to.eql(
+        AST.convertV1ToV2([
+          [
+            'TextContainer',
+            [],
+            [['Slideshow', [], [['OpenComponent', [], []]]]]
+          ]
+        ])
+      );
+    });
+
+    it('should handle an incline closed components with properties', function() {
+      var input = `
+        [meta title:"Compiler Test" description:"Short description of your project" /]
+      `;
+      expect(compile(input, { async: false })).to.eql(
+        AST.convertV1ToV2([
+          [
+            'TextContainer',
+            [],
+            [
+              [
+                'meta',
+                [
+                  ['title', ['value', 'Compiler Test']],
+                  [
+                    'description',
+                    ['value', 'Short description of your project']
+                  ]
+                ],
+                []
+              ]
+            ]
+          ]
+        ])
+      );
+    });
+
+    it('should parse an open component unambiguously', function() {
+      var input = '[Slideshow][/Slideshow]';
+      expect(compile(input, { async: false })).to.eql(
+        AST.convertV1ToV2([['TextContainer', [], [['Slideshow', [], []]]]])
+      );
+    });
+
     it('should handle an inline closed component', function() {
       var input =
         'This is a normal text paragraph that [VarDisplay var:var /] has a component embedded in it.';

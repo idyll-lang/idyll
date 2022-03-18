@@ -17,7 +17,7 @@ can play around with the language.
 _Idyll is a program that is used via the command line. If you aren't comfortable with the command line already, I'd recommend watching Daniel Shiffman's [short introduction](https://www.youtube.com/watch?v=oK8EvVeVltE) before starting._
 
 To use Idyll you must first install it using \`npm\`.
-If you don't have \`npm\`, first install it by following [these instructions](https://www.npmjs.com/get-npm).
+If you don't have \`npm\`, get it by installing [node.js version 14 or later](https://nodejs.org/en/download/).
 
 ~~~sh
 $ npm install -g idyll

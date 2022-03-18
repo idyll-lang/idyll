@@ -51,7 +51,7 @@
     "gray-matter": "^3.1.1",
     "idyll-ast": "^2.2.6",
     "lex": "^1.7.9",
-    "nearley": "^2.15.0",
+    "nearley": "^2.20.1",
     "smartquotes": "^2.0.0"
   }
 }
