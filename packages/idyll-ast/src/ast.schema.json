@@ -5,7 +5,7 @@
   "type": "object",
   "properties": {
     "id": {
-      "desceription": "A unique identifier for the current element",
+      "description": "A unique identifier for the current element",
       "type": "integer"
     },
     "type": {
