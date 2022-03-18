@@ -5,7 +5,6 @@ import { hashCode } from '../components/editor/utils';
 import TopNav from '../components/top-nav';
 import Fonts from '../components/fonts';
 import Head from 'next/head';
-import 'isomorphic-fetch';
 
 import request from 'superagent';
 import Router from 'next/router';
