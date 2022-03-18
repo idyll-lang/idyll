@@ -85,6 +85,9 @@ const convertV1ToV2 = (arrayAst, injectIds) => {
   let id = 1;
   arrayAst.forEach(element => {
     let childData = inverseConvertHelper(element, id, injectIds);
+    if (injectIds) {
+      id = childData.id;
+    }
     jsonAst.children.push(childData.data);
   });
   return jsonAst;
