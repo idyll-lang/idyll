@@ -65,7 +65,7 @@
                 "type": "string"
               }
             },
-            "required": ["id", "type", "value"],
+            "required": ["type", "value"],
             "additionalProperties": false
           },
           {
@@ -116,7 +116,7 @@
                 }
               },
               "additionalProperties": false,
-              "required": ["id", "type", "properties"]
+              "required": ["type", "properties"]
             }
           },
           {
@@ -166,13 +166,12 @@
                   "additionalProperties": false
                 }
               },
-              "required": ["id", "type", "properties"]
+              "required": ["type", "properties"]
             }
           }
         ]
-      },
-      "uniqueItems": true
+      }
     }
   },
-  "required": ["id", "type"]
+  "required": ["type"]
 }
