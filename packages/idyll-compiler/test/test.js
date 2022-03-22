@@ -1576,30 +1576,30 @@ End text
         name: 'div',
         children: [
           {
-            id: 2,
+            id: 1,
             type: 'component',
             name: 'TextContainer',
             children: [
               {
-                id: 3,
+                id: 2,
                 type: 'component',
                 name: 'p',
                 children: [
-                  { id: 4, type: 'textnode', value: 'This is ' },
+                  { id: 3, type: 'textnode', value: 'This is ' },
                   {
-                    id: 5,
+                    id: 4,
                     type: 'component',
                     name: 'strong',
-                    children: [{ id: 6, type: 'textnode', value: 'bold text.' }]
+                    children: [{ id: 5, type: 'textnode', value: 'bold text.' }]
                   }
                 ]
               },
               {
-                id: 7,
+                id: 6,
                 type: 'component',
                 name: 'p',
                 children: [
-                  { id: 8, type: 'textnode', value: 'This is a new paragraph.' }
+                  { id: 7, type: 'textnode', value: 'This is a new paragraph.' }
                 ]
               }
             ]
@@ -1619,17 +1619,17 @@ End text
       name: 'div',
       children: [
         {
-          id: 2,
+          id: 1,
           type: 'component',
           name: 'TextContainer',
           children: [
             {
-              id: 3,
+              id: 2,
               type: 'component',
               name: 'p',
               children: [
                 {
-                  id: 4,
+                  id: 3,
                   type: 'textnode',
                   value: 'Test 1 2Three 1 2 Three 123Four'
                 }
@@ -1658,12 +1658,12 @@ End text
       name: 'div',
       children: [
         {
-          id: 2,
+          id: 1,
           type: 'component',
           name: 'TextContainer',
           children: [
             {
-              id: 3,
+              id: 2,
               type: 'component',
               name: 'equation',
               properties: {
@@ -1674,7 +1674,7 @@ End text
               },
               children: [
                 {
-                  id: 4,
+                  id: 3,
                   type: 'textnode',
                   value:
                     '\begin{aligned}\n      (overline{p + a})star(chi - p - a) &= chi star(overline{p + a}) - (p + a)star(overline{p + a}) \\\n      &= chistar\bar p + chistar\bar a - pstar\bar p - astar\bar a - 2 pstar\bar a \\\n      &= \bar pstar(chi - p) + \bar astar(chi - a) - 2 pstar\bar a\n      end{aligned}'
@@ -1698,7 +1698,7 @@ End text
       name: 'div',
       children: [
         {
-          id: 2,
+          id: 1,
           type: 'var',
           properties: {
             name: { type: 'variable', value: 'x' },
@@ -1706,7 +1706,7 @@ End text
           }
         },
         {
-          id: 3,
+          id: 2,
           type: 'var',
           properties: {
             name: { type: 'variable', value: 'b' },
@@ -1714,7 +1714,7 @@ End text
           }
         },
         {
-          id: 4,
+          id: 3,
           type: 'derived',
           properties: {
             name: { type: 'variable', value: 'y' },
@@ -1722,7 +1722,7 @@ End text
           }
         },
         {
-          id: 5,
+          id: 4,
           type: 'derived',
           properties: {
             name: { type: 'variable', value: 'a' },

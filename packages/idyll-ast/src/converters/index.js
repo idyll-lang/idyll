@@ -75,17 +75,15 @@ function convertHelper(jsonElement) {
  * @return Json structred ast correspoding to the arrayAst.
  */
 const convertV1ToV2 = arrayAst => {
-  let jsonAst = new Object();
-  jsonAst.id = 0;
+  let _id = 0;
+  const id = () => _id++;
+
+  const jsonAst = new Object();
+  jsonAst.id = id();
   jsonAst.type = 'component';
   jsonAst.name = 'div';
-  jsonAst.children = [];
-  let id = 1;
-  arrayAst.forEach(element => {
-    let childData = inverseConvertHelper(element, id);
-    id = childData.id;
-    jsonAst.children.push(childData.data);
-  });
+  jsonAst.children = arrayAst.map(element => inverseConvertHelper(element, id));
+
   return jsonAst;
 };
 
@@ -96,7 +94,7 @@ const convertV1ToV2 = arrayAst => {
  */
 function inverseConvertHelper(arrayElement, id) {
   let elementJson = new Object();
-  elementJson.id = ++id;
+  elementJson.id = id();
 
   if (typeof arrayElement === 'string') {
     elementJson.type = 'textnode';
@@ -123,19 +121,13 @@ function inverseConvertHelper(arrayElement, id) {
       });
     }
     if (arrayElement[2]) {
-      let children = [];
-      arrayElement[2].forEach(element => {
-        let childData = inverseConvertHelper(element, id);
-        id = childData.id;
-        children.push(childData.data);
-      });
-      elementJson.children = children;
+      elementJson.children = arrayElement[2].map(element =>
+        inverseConvertHelper(element, id)
+      );
     }
   }
-  let result = new Object();
-  result.id = id;
-  result.data = elementJson;
-  return result;
+
+  return elementJson;
 }
 
 module.exports = {
