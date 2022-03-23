@@ -22,11 +22,8 @@ exports.builder = yargs => {
       'open',
       'Automatically open the page in the default browser during watch mode.'
     )
-    .default('open', true)
     .boolean('minify')
-    .default('minify', false)
-    .boolean('ssr')
-    .default('ssr', true);
+    .boolean('ssr');
 };
 
 exports.handler = argv => {
