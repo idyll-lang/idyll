@@ -310,22 +310,20 @@ export const splitAST = ast => {
       const type = getType(node);
       const props = getProperties(node);
       const children = getChildren(node);
-      if (node.id != 0) {
-        if (type === 'var') {
-          state.vars.push(node);
-        } else if (state[type]) {
-          state[type].push(node);
-        } else if (storeElements) {
-          state.elements.push(node);
-        }
-        if (
-          !children ||
-          (children.length === 1 && getType(children[0]) === 'textnode')
-        ) {
-          return;
-        }
-        children.forEach(handleNode(false));
+      if (type === 'var') {
+        state.vars.push(node);
+      } else if (state[type]) {
+        state[type].push(node);
+      } else if (storeElements) {
+        state.elements.push(node);
       }
+      if (
+        !children ||
+        (children.length === 1 && getType(children[0]) === 'textnode')
+      ) {
+        return;
+      }
+      children.forEach(handleNode(false));
     };
   };
 

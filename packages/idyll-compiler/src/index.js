@@ -20,7 +20,7 @@ module.exports = function(input, options, alias, callback) {
   const { content, data } = matter(input.trim());
   options = Object.assign(
     {},
-    { spellcheck: false, smartquotes: true, async: true },
+    { spellcheck: false, smartquotes: true, async: true, injectIds: false },
     options || {}
   );
   const lex = Lexer({}, alias);
@@ -52,7 +52,7 @@ module.exports = function(input, options, alias, callback) {
     .pipe(autoLinkify)
     .end();
 
-  astTransform = convertV1ToV2(astTransform);
+  astTransform = convertV1ToV2(astTransform, options.injectIds);
 
   if (options.postProcessors) {
     // Turn them all into promises
