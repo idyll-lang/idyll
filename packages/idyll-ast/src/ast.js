@@ -440,6 +440,7 @@ function extractText(node) {
  *  Only descendants of this node are considered for removal.
  * @param {function(object): boolean} predicate Filter function to test nodes.
  *  If the predicate returns true, the node is removed from the AST.
+ * @returns {object} The AST node width descendants removed.
  */
 function removeNodes(node, predicate) {
   if (hasChildren(node)) {
@@ -452,6 +453,7 @@ function removeNodes(node, predicate) {
       }
     });
   }
+  return node;
 }
 
 module.exports = {
@@ -497,92 +499,3 @@ module.exports = {
   extractText,
   removeNodes
 };
-
-// ??
-// function prepareProperties(props) {
-//   const output = {};
-//   for (const key in props) {
-//     const value = props[key];
-//     output[key] = prepareProperty(value);
-//   }
-//   return output;
-// }
-
-// function prepareProperty(value) {
-//   return (value && value.type && value.value !== undefined)
-//     ? value
-//     : { type: VALUE, value };
-// }
-//
-
-///////
-
-// /**
-//  * @name walkNodes
-//  * @description
-//  * Function to do a depth-first traversal of the AST.
-//  * @param {object} ast  AST node
-//  * @param {function} f   callback function for each node.
-//  */
-// const walkNodes = function(ast, f) {
-//   checkASTandFunction(ast, 'ast', f, 'f');
-//   walkNodesHelper(ast.children, f);
-//   f(ast);
-// };
-
-// //Helper function for walkNodes
-// function walkNodesHelper(astArray, f) {
-//   (astArray || []).forEach(node => {
-//     let children = getChildren(node);
-//     if (children.length > 0) {
-//       walkNodesHelper(children, f);
-//     }
-//     f(node);
-//   });
-// }
-
-// /**
-//  * @name walkNodeBreadthFirst
-//  * @description
-//  * Function to breadth-first traversal on the AST.
-//  * @param {object} ast
-//  * @param {function} f
-//  */
-// const walkNodesBreadthFirst = function(ast, f) {
-//   checkASTandFunction(ast, 'ast', f, 'f');
-//   f(ast);
-//   walkNodesBreadthFirstHelper(ast, f);
-// };
-
-// // Helper function for walkNodeBreadthFirst
-// function walkNodesBreadthFirstHelper(ast, f) {
-//   let childAst = [];
-//   (ast || []).forEach(node => {
-//     f(node);
-//     childAst = childAst.concat(getChildren(node));
-//   });
-//   if (childAst.length > 0) {
-//     walkNodesBreadthFirstHelper(childAst, f);
-//   }
-// }
-
-// ///////
-
-// /**
-//  * @name getNodes
-//  * @description
-//  * Function to retrieve all nodes that match the given predicate function
-//  * @param {*} node
-//  * @param {*} predicate
-//  */
-// function getNodes(node, predicate) {
-//   const nodes = [];
-
-//   walkNodes(node, n => {
-//     if (predicate(n)) {
-//       nodes.push(n);
-//     }
-//   });
-
-//   return nodes;
-// }
