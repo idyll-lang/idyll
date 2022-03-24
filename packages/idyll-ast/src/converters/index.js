@@ -74,12 +74,12 @@ function convertHelper(jsonElement) {
  * @param {*} arrayAst
  * @return Json structred ast correspoding to the arrayAst.
  */
-const convertV1ToV2 = arrayAst => {
+const convertV1ToV2 = (arrayAst, injectIds) => {
   let _id = 0;
-  const id = () => _id++;
+  const id = injectIds ? () => _id++ : null;
 
   const jsonAst = new Object();
-  jsonAst.id = id();
+  if (id) jsonAst.id = id();
   jsonAst.type = 'component';
   jsonAst.name = 'div';
   jsonAst.children = arrayAst.map(element => inverseConvertHelper(element, id));
@@ -94,7 +94,7 @@ const convertV1ToV2 = arrayAst => {
  */
 function inverseConvertHelper(arrayElement, id) {
   let elementJson = new Object();
-  elementJson.id = id();
+  if (id) elementJson.id = id();
 
   if (typeof arrayElement === 'string') {
     elementJson.type = 'textnode';
