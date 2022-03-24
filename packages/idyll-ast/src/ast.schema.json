@@ -21,7 +21,7 @@
       "description": "The properties/attributes of the element",
       "type": "object",
       "patternProperties": {
-        "^w+": {
+        "^\\w+": {
           "description": "Object containing data for the particular property",
           "type": "object",
           "properties": {
