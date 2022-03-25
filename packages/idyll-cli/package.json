@@ -7,7 +7,7 @@
     "idyll": "bin/idyll.js"
   },
   "scripts": {
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
