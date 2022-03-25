@@ -25,16 +25,6 @@
   "bugs": {
     "url": "https://github.com/idyll-lang/idyll/issues"
   },
-  "jest": {
-    "transform": {},
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "csv-parse/sync": "csv-parse/dist/cjs/sync.cjs",
-      "idyll-ast/v1": "idyll-ast/dist/cjs/v1/index.js"
-    }
-  },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
     "@babel/register": "^7.17.7",
