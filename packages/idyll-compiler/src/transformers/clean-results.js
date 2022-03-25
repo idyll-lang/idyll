@@ -1,10 +1,6 @@
-const {
-  getChildren,
-  getNodeName,
-  isTextNode,
-  mapChildren
-} = require('idyll-ast');
-const flattenChildren = require('./flatten-children');
+import { getChildren, getNodeName, isTextNode, mapChildren } from 'idyll-ast';
+
+import flattenChildren from './flatten-children';
 
 const RAW_NODES = ['pre', 'code', 'codehighlight', 'equation'];
 
@@ -53,4 +49,4 @@ function cleanResults(ast) {
   });
 }
 
-module.exports = cleanResults;
+export default cleanResults;

@@ -1,7 +1,7 @@
-const ast = require('./ast');
-const validate = require('./validate');
-const converters = require('./converters');
-const toMarkup = require('./to-markup');
+import * as ast from './ast';
+import * as validate from './validate';
+import * as converters from './converters';
+import { toMarkup } from './to-markup';
 
 module.exports = {
   ...ast,

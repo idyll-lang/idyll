@@ -1,10 +1,10 @@
-const {
+import {
   VALUE,
   createComponentNode,
   createTextNode,
   isTextNode,
   mapChildren
-} = require('idyll-ast');
+} from 'idyll-ast';
 
 const urlPattern = /(http|https|ftp|ftps)\:\/\/([a-zA-Z0-9\-\.]+\.)+[a-zA-Z]{2,3}(\/\S*)?/g;
 
@@ -54,4 +54,4 @@ function linkifyNode(node) {
   return createComponentNode('span', null, nodes);
 }
 
-module.exports = autoLinkify;
+export default autoLinkify;

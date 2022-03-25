@@ -1,7 +1,8 @@
-var expect = require('expect.js');
-var { compile, Lexer } = require('../dist/cjs/');
-var fs = require('fs');
-var AST = require('idyll-ast').converters;
+import expect from 'expect.js';
+import Lexer from '../src/lexer';
+import compile from '../src';
+
+import { converters as AST } from 'idyll-ast';
 
 function appendTextNode(ast, value) {
   ast.children.push({

@@ -456,7 +456,7 @@ function removeNodes(node, predicate) {
   return node;
 }
 
-module.exports = {
+export {
   VALUE,
   VARIABLE,
   EXPRESSION,

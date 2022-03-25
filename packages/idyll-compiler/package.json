@@ -16,7 +16,7 @@
     "compile": "nearleyc src/grammar.ne -o src/grammar.js",
     "build": "npm run compile && rollup -c rollup.config.js",
     "dev": "rollup -c rollup.config.js -w",
-    "test": "npm run build && mocha",
+    "test": "npm run build && mocha --require esm",
     "prepublish": "npm run build",
     "prepublishOnly": "npm run build"
   },
@@ -42,8 +42,9 @@
     "@rollup/plugin-commonjs": "^21.0.2",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
+    "esm": "^3.2.25",
     "expect.js": "^0.3.1",
-    "mocha": "^9.2.2",
+    "mocha": "8",
     "rimraf": "^2.6.2",
     "rollup": "^2.70.0"
   },

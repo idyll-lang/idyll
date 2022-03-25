@@ -1,19 +1,30 @@
-const lexer = require('./lexer');
-const parse = require('./parser');
-const { convertV1ToV2 } = require('idyll-ast').converters;
-const parseFrontMatter = require('gray-matter');
+import lexer from './lexer';
+import parse from './parser';
 
-const cleanNewlines = require('./util/clean-newlines');
-const pipeline = require('./util/pipeline');
+import { converters } from 'idyll-ast';
+const { convertV1ToV2 } = converters;
+
+import parseFrontMatter from 'gray-matter';
+import cleanNewlines from './util/clean-newlines';
+import pipeline from './util/pipeline';
+
+// AST transformer imports
+import hoistVariables from './transformers/hoist-variables';
+import flattenChildren from './transformers/flatten-children';
+import makeFullWidth from './transformers/make-full-width';
+import wrapText from './transformers/wrap-text';
+import cleanResults from './transformers/clean-results';
+import smartQuotes from './transformers/smart-quotes';
+import autoLinkify from './transformers/auto-linkify';
 
 const astTransformers = [
-  require('./transformers/hoist-variables'),
-  require('./transformers/flatten-children'),
-  require('./transformers/make-full-width'),
-  require('./transformers/wrap-text'),
-  require('./transformers/clean-results'),
-  require('./transformers/smart-quotes'),
-  require('./transformers/auto-linkify')
+  hoistVariables,
+  flattenChildren,
+  makeFullWidth,
+  wrapText,
+  cleanResults,
+  smartQuotes,
+  autoLinkify
 ];
 
 export default function(input, options, alias, callback) {

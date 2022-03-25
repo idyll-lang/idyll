@@ -1,4 +1,4 @@
-const { visitNodes } = require('idyll-ast');
+import { visitNodes } from 'idyll-ast';
 
 function injectIds(ast) {
   let id = -1;
@@ -6,4 +6,4 @@ function injectIds(ast) {
   return ast;
 }
 
-module.exports = injectIds;
+export default injectIds;

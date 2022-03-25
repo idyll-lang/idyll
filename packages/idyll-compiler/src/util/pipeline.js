@@ -1,4 +1,4 @@
-module.exports = function pipeline(...operations) {
+export default function pipeline(...operations) {
   operations = operations.flat();
   return async function(input, ...args) {
     let result = input;
@@ -7,4 +7,4 @@ module.exports = function pipeline(...operations) {
     }
     return result;
   };
-};
+}

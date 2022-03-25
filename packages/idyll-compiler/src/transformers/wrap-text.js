@@ -1,10 +1,10 @@
-const {
+import {
   createComponentNode,
   getNodeName,
   isTextNode,
   mapChildren,
   queryNodes
-} = require('idyll-ast');
+} from 'idyll-ast';
 
 const TEXT_CONTAINER = 'TextContainer';
 
@@ -20,4 +20,4 @@ function wrapText(ast) {
   return ast;
 }
 
-module.exports = wrapText;
+export default wrapText;

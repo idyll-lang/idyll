@@ -1,4 +1,4 @@
-const { getChildren, getNodeName, hasChildren } = require('idyll-ast');
+import { getChildren, getNodeName, hasChildren } from 'idyll-ast';
 
 const IDYLL_CONTAINER = '_idyllContainer';
 
@@ -18,4 +18,4 @@ function flattenChildren(node) {
   return node;
 }
 
-module.exports = flattenChildren;
+export default flattenChildren;

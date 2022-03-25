@@ -1,4 +1,4 @@
-const {
+import {
   DERIVED,
   VAR,
   DATA,
@@ -14,7 +14,7 @@ const {
   setValueProperty,
   setExpressionProperty,
   removeProperty
-} = require('idyll-ast');
+} from 'idyll-ast';
 
 const TEXT_CONTAINER = 'TextContainer';
 const FULLWIDTH = 'fullwidth';
@@ -91,4 +91,4 @@ function makeFullWidth(ast) {
   return ast;
 }
 
-module.exports = makeFullWidth;
+export default makeFullWidth;

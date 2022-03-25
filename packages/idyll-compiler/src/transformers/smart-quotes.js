@@ -1,5 +1,5 @@
-const smartquotes = require('smartquotes');
-const { getChildren, getNodeName, isTextNode } = require('idyll-ast');
+import smartquotes from 'smartquotes';
+import { getChildren, getNodeName, isTextNode } from 'idyll-ast';
 
 const RAW_NODES = ['pre', 'code', 'codehighlight', 'equation'];
 
@@ -24,4 +24,4 @@ function smartQuoteHelper(node) {
   }
 }
 
-module.exports = smartQuotes;
+export default smartQuotes;
