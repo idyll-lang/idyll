@@ -12,12 +12,14 @@ fs.readdirSync(`${__dirname}/src/`).forEach(file => {
         file: `dist/cjs/${file}`,
         format: 'cjs',
         sourcemap: false,
-        name: 'idyll-components'
+        name: 'idyll-components',
+        exports: 'auto'
       },
       {
         file: `dist/esm/${path.parse(file).name}.mjs`,
         format: 'esm',
-        sourcemap: false
+        sourcemap: false,
+        exports: 'auto'
       }
     ],
     plugins: [

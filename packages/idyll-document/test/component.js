@@ -1,11 +1,11 @@
-const fs = require('fs');
-const { join } = require('path');
-const React = require('react');
-const { mount, shallow } = require('enzyme');
-const { compile } = require('idyll-compiler');
-const components = require('idyll-components');
+import fs from 'fs';
+import { join } from 'path';
+import React from 'react';
+import { mount, shallow } from 'enzyme';
+import compile from 'idyll-compiler';
+import * as components from 'idyll-components';
 
-const { IdyllDocument } = require('../dist/cjs');
+const { IdyllDocument } = require('../src');
 
 const fixture = f => fs.readFileSync(join(__dirname, `fixtures/${f}`), 'utf8');
 

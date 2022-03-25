@@ -25,13 +25,13 @@
     "update-snapshot": " jest --updateSnapshot"
   },
   "jest": {
-    "transform": {},
     "setupFiles": [
       "<rootDir>/setupJest.js"
     ],
     "testMatch": [
       "**/test/**/*.js"
     ],
+    "testEnvironment": "jsdom",
     "moduleNameMapper": {
       "csv-parse/sync": "csv-parse/dist/cjs/sync.cjs",
       "idyll-ast/v1": "idyll-ast/dist/cjs/v1/index.js"

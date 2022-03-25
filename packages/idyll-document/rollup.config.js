@@ -10,12 +10,14 @@ export default {
       file: 'dist/cjs/index.js',
       format: 'cjs',
       sourcemap: true,
-      name: 'idyll-document'
+      name: 'idyll-document',
+      exports: 'auto'
     },
     {
       file: 'dist/esm/index.mjs',
       format: 'esm',
       sourcemap: true,
+      exports: 'auto',
       plugins: [
         replace({
           'csv-parse/sync': 'csv-parse/browser/esm/sync'

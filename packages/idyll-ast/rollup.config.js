@@ -23,8 +23,8 @@ export default [
         babelHelpers: 'runtime',
         exclude: 'node_modules/**' // only transpile our source code
       }),
-      json()
-      // commonjs()
+      json(),
+      commonjs()
     ]
   },
   {

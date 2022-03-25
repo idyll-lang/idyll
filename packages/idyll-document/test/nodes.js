@@ -1,8 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import * as components from 'idyll-components';
-
-import { IdyllDocument } from '../src/';
 import { translate, mapTree } from '../src/utils';
 import ReactJsonSchema from '../src/utils/schema2element';
 import ast from './fixtures/ast.json';
