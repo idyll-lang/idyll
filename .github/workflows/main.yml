@@ -18,7 +18,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: test module
         run: |
-          yarn
+          yarn global add lerna
           lerna bootstrap
           cd packages/idyll-ast && yarn test && cd ../..
           cd packages/idyll-compiler && yarn test && cd ../..
