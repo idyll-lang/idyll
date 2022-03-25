@@ -42,100 +42,102 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 let output;
 let idyll;
 
-before(function(done) {
-  this.timeout(10000);
-  rimraf.sync(PROJECT_BUILD_DIR);
-  rimraf.sync(PROJECT_IDYLL_CACHE);
-  idyll = Idyll({
-    inputFile: join(PROJECT_DIR, 'index.idl'),
-    output: PROJECT_BUILD_DIR,
-    template: join(PROJECT_DIR, 'index.html'),
-    components: join(PROJECT_DIR, 'components'),
-    layout: 'centered',
-    theme: join(PROJECT_DIR, 'custom-theme.css'),
-    css: join(PROJECT_DIR, 'styles.css'),
-    outputCSS: '__idyll_styles.css',
-    outputJS: '__idyll_index.js',
-    compiler: {
-      spellcheck: false
-    },
-    minify: false,
-    watch: true,
-    open: false,
-    ssr: true
+describe('static assets', function() {
+  before(function(done) {
+    this.timeout(10000);
+    rimraf.sync(PROJECT_BUILD_DIR);
+    rimraf.sync(PROJECT_IDYLL_CACHE);
+    idyll = Idyll({
+      inputFile: join(PROJECT_DIR, 'index.idl'),
+      output: PROJECT_BUILD_DIR,
+      template: join(PROJECT_DIR, 'index.html'),
+      components: join(PROJECT_DIR, 'components'),
+      layout: 'centered',
+      theme: join(PROJECT_DIR, 'custom-theme.css'),
+      css: join(PROJECT_DIR, 'styles.css'),
+      outputCSS: '__idyll_styles.css',
+      outputJS: '__idyll_index.js',
+      compiler: {
+        spellcheck: false
+      },
+      minify: false,
+      watch: true,
+      open: false,
+      ssr: true
+    });
+
+    idyll
+      .on('update', o => {
+        output = o;
+        projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
+        projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
+        // Timeout required to ensure browsersync is running.
+        setTimeout(done, 2000);
+      })
+      .build();
   });
 
-  idyll
-    .on('update', o => {
-      output = o;
-      projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
-      projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
-      // Timeout required to ensure browsersync is running.
-      setTimeout(done, 2000);
-    })
-    .build();
-});
-
-after(() => {
-  idyll.stopWatching();
-});
-
-it('options work as expected', () => {
-  expect(idyll.getOptions()).toEqual({
-    alias: {},
-    layout: 'centered',
-    theme: join(PROJECT_DIR, 'custom-theme.css'),
-    context: undefined,
-    compileLibs: false,
-    env: undefined,
-    minify: false,
-    ssr: true,
-    watch: true,
-    open: false,
-    inputFile: join(PROJECT_DIR, 'index.idl'),
-    output: PROJECT_BUILD_DIR,
-    template: join(PROJECT_DIR, 'index.html'),
-    components: join(PROJECT_DIR, 'components'),
-    css: join(PROJECT_DIR, 'styles.css'),
-    defaultComponents: dirname(require.resolve('idyll-components')),
-    temp: '.idyll',
-    static: 'static',
-    staticOutputDir: 'static',
-    outputCSS: '__idyll_styles.css',
-    outputJS: '__idyll_index.js',
-    datasets: 'data',
-    transform: [],
-    port: 3000,
-    compiler: {
-      spellcheck: false
-    },
-    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
+  after(() => {
+    idyll.stopWatching();
   });
-});
 
-it('creates the expected files', () => {
-  expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
-});
+  it('options work as expected', () => {
+    expect(idyll.getOptions()).toEqual({
+      alias: {},
+      layout: 'centered',
+      theme: join(PROJECT_DIR, 'custom-theme.css'),
+      context: undefined,
+      compileLibs: false,
+      env: undefined,
+      minify: false,
+      ssr: true,
+      watch: true,
+      open: false,
+      inputFile: join(PROJECT_DIR, 'index.idl'),
+      output: PROJECT_BUILD_DIR,
+      template: join(PROJECT_DIR, 'index.html'),
+      components: join(PROJECT_DIR, 'components'),
+      css: join(PROJECT_DIR, 'styles.css'),
+      defaultComponents: dirname(require.resolve('idyll-components')),
+      temp: '.idyll',
+      static: 'static',
+      staticOutputDir: 'static',
+      outputCSS: '__idyll_styles.css',
+      outputJS: '__idyll_index.js',
+      datasets: 'data',
+      transform: [],
+      port: 3000,
+      compiler: {
+        spellcheck: false
+      },
+      inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
+    });
+  });
 
-// it('creates the expected HTML', function(done) {
-//   this.timeout(10000);
-//   const dom = new JSDOM(projectBuildResults['index.html'], {
-//     url: 'http://localhost:3000',
-//     referrer: 'http://localhost:3000',
-//     runScripts: 'dangerously',
-//     resources: 'usable',
-//     pretendToBeVisual: true
-//   });
-//   // Timeout required to ensure that the JSDOM page load completes.
-//   setTimeout(() => {
-//     const document = dom.window.document;
-//     const svgNode = document.querySelector('svg');
-//     const imgNode = document.querySelector('img');
-//     expect(imgNode.src).toEqual(
-//       'http://localhost:3000/static/images/wearable.jpg'
-//     );
-//     expect(svgNode.childNodes.length).toEqual(5);
-//     dom.window.close();
-//     done();
-//   }, 2000);
-// });
+  it('creates the expected files', () => {
+    expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
+  });
+
+  // it('creates the expected HTML', function(done) {
+  //   this.timeout(10000);
+  //   const dom = new JSDOM(projectBuildResults['index.html'], {
+  //     url: 'http://localhost:3000',
+  //     referrer: 'http://localhost:3000',
+  //     runScripts: 'dangerously',
+  //     resources: 'usable',
+  //     pretendToBeVisual: true
+  //   });
+  //   // Timeout required to ensure that the JSDOM page load completes.
+  //   setTimeout(() => {
+  //     const document = dom.window.document;
+  //     const svgNode = document.querySelector('svg');
+  //     const imgNode = document.querySelector('img');
+  //     expect(imgNode.src).toEqual(
+  //       'http://localhost:3000/static/images/wearable.jpg'
+  //     );
+  //     expect(svgNode.childNodes.length).toEqual(5);
+  //     dom.window.close();
+  //     done();
+  //   }, 2000);
+  // });
+});

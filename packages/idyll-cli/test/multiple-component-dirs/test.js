@@ -39,194 +39,197 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 let output;
 let idyll;
 
-before(done => {
-  rimraf.sync(PROJECT_BUILD_DIR);
-  rimraf.sync(PROJECT_IDYLL_CACHE);
-  idyll = Idyll({
-    inputFile: join(PROJECT_DIR, 'index.idl'),
-    output: PROJECT_BUILD_DIR,
-    htmlTemplate: join(PROJECT_DIR, '_index.html'),
-    components: [
-      join(PROJECT_DIR, 'components-1'),
-      join(PROJECT_DIR, 'components-2')
-    ],
-    datasets: join(PROJECT_DIR, 'data'),
-    layout: 'centered',
-    theme: join(PROJECT_DIR, 'custom-theme.css'),
-    css: join(PROJECT_DIR, 'styles.css'),
-    compiler: {
-      spellcheck: false
-    },
-    minify: false
-  });
-
-  idyll
-    .on('update', o => {
-      output = o;
-      projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
-      projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
-      done();
-    })
-    .build();
-});
-
-it('options work as expected', () => {
-  expect(idyll.getOptions()).toEqual({
-    alias: {
-      PackageJsonComponentTest: 'CustomComponent'
-    },
-    context: undefined,
-    layout: 'centered',
-    theme: join(PROJECT_DIR, 'custom-theme.css'),
-    minify: false,
-    ssr: true,
-    watch: false,
-    open: true,
-    compileLibs: false,
-    inputFile: join(PROJECT_DIR, 'index.idl'),
-    output: PROJECT_BUILD_DIR,
-    outputCSS: 'idyll_styles.css',
-    outputJS: 'idyll_index.js',
-    htmlTemplate: join(PROJECT_DIR, '_index.html'),
-    components: [
-      join(PROJECT_DIR, 'components-1'),
-      join(PROJECT_DIR, 'components-2')
-    ],
-    css: join(PROJECT_DIR, 'styles.css'),
-    defaultComponents: dirname(require.resolve('idyll-components')),
-    temp: '.idyll',
-    template: resolve(join(__dirname, '/../../src/client/_index.html')),
-    datasets: join(PROJECT_DIR, 'data'),
-    static: 'static',
-    staticOutputDir: 'static',
-    transform: [],
-    port: 3000,
-    compiler: {
-      spellcheck: false
-    },
-    inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
-  });
-});
-
-it('creates the expected files', () => {
-  expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
-});
-
-it('creates the expected HTML', () => {
-  expect(projectBuildResults['index.html']).toEqual(
-    EXPECTED_BUILD_RESULTS['index.html']
-  );
-});
-
-// it('creates the expected build artifacts', () => {
-//   Object.keys(EXPECTED_IDYLL_RESULTS).forEach((key) => {
-//     expect(projectIdyllResults[key]).toEqual(EXPECTED_IDYLL_RESULTS[key]);
-//   })
-// })
-it('should construct the AST properly', () => {
-  const ast = [
-    ['var', [['name', ['value', 'exampleVar']], ['value', ['value', 5]]], []],
-    [
-      'data',
-      [
-        ['name', ['value', 'myData']],
-        ['source', ['value', 'example-data.json']]
+describe('multiple component directories', function() {
+  before(function(done) {
+    this.timeout(10000);
+    rimraf.sync(PROJECT_BUILD_DIR);
+    rimraf.sync(PROJECT_IDYLL_CACHE);
+    idyll = Idyll({
+      inputFile: join(PROJECT_DIR, 'index.idl'),
+      output: PROJECT_BUILD_DIR,
+      htmlTemplate: join(PROJECT_DIR, '_index.html'),
+      components: [
+        join(PROJECT_DIR, 'components-1'),
+        join(PROJECT_DIR, 'components-2')
       ],
-      []
-    ],
-    [
-      'TextContainer',
-      [],
+      datasets: join(PROJECT_DIR, 'data'),
+      layout: 'centered',
+      theme: join(PROJECT_DIR, 'custom-theme.css'),
+      css: join(PROJECT_DIR, 'styles.css'),
+      compiler: {
+        spellcheck: false
+      },
+      minify: false
+    });
+
+    idyll
+      .on('update', o => {
+        output = o;
+        projectBuildFilenames = getFilenames(PROJECT_BUILD_DIR);
+        projectBuildResults = dirToHash(PROJECT_BUILD_DIR);
+        done();
+      })
+      .build();
+  });
+
+  it('options work as expected', () => {
+    expect(idyll.getOptions()).toEqual({
+      alias: {
+        PackageJsonComponentTest: 'CustomComponent'
+      },
+      context: undefined,
+      layout: 'centered',
+      theme: join(PROJECT_DIR, 'custom-theme.css'),
+      minify: false,
+      ssr: true,
+      watch: false,
+      open: true,
+      compileLibs: false,
+      inputFile: join(PROJECT_DIR, 'index.idl'),
+      output: PROJECT_BUILD_DIR,
+      outputCSS: 'idyll_styles.css',
+      outputJS: 'idyll_index.js',
+      htmlTemplate: join(PROJECT_DIR, '_index.html'),
+      components: [
+        join(PROJECT_DIR, 'components-1'),
+        join(PROJECT_DIR, 'components-2')
+      ],
+      css: join(PROJECT_DIR, 'styles.css'),
+      defaultComponents: dirname(require.resolve('idyll-components')),
+      temp: '.idyll',
+      template: resolve(join(__dirname, '/../../src/client/_index.html')),
+      datasets: join(PROJECT_DIR, 'data'),
+      static: 'static',
+      staticOutputDir: 'static',
+      transform: [],
+      port: 3000,
+      compiler: {
+        spellcheck: false
+      },
+      inputString: fs.readFileSync(join(PROJECT_DIR, 'index.idl'), 'utf-8')
+    });
+  });
+
+  it('creates the expected files', () => {
+    expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
+  });
+
+  it('creates the expected HTML', () => {
+    expect(projectBuildResults['index.html']).toEqual(
+      EXPECTED_BUILD_RESULTS['index.html']
+    );
+  });
+
+  // it('creates the expected build artifacts', () => {
+  //   Object.keys(EXPECTED_IDYLL_RESULTS).forEach((key) => {
+  //     expect(projectIdyllResults[key]).toEqual(EXPECTED_IDYLL_RESULTS[key]);
+  //   })
+  // })
+  it('should construct the AST properly', () => {
+    const ast = [
+      ['var', [['name', ['value', 'exampleVar']], ['value', ['value', 5]]], []],
       [
+        'data',
         [
-          'meta',
-          [
-            ['title', ['value', 'Page Title']],
-            ['description', ['value', 'Short description of your project']]
-          ],
-          []
+          ['name', ['value', 'myData']],
+          ['source', ['value', 'example-data.json']]
         ],
+        []
+      ],
+      [
+        'TextContainer',
+        [],
         [
-          'Header',
           [
-            ['title', ['value', 'Welcome to Idyll']],
-            ['subtitle', ['value', 'Open index.idl to start writing']],
-            ['author', ['value', 'Your Name Here']],
-            ['authorLink', ['value', 'https://idyll-lang.github.io']]
-          ],
-          []
-        ],
-        [
-          'p',
-          [],
-          [
-            'This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text.'
-          ]
-        ],
-        ['Table', [['data', ['variable', 'myData']]], []],
-        ['p', [], ['Here is how you can use a variable:']],
-        [
-          'Range',
-          [
-            ['min', ['value', 0]],
-            ['max', ['value', 10]],
-            ['value', ['variable', 'exampleVar']]
-          ],
-          []
-        ],
-        ['Display', [['value', ['variable', 'exampleVar']]], []],
-        [
-          'CodeHighlight',
-          [['language', ['value', 'js']]],
-          ['var code = true;']
-        ],
-        ['p', [], ['And here is a custom component:']],
-        ['CustomComponent', [], []],
-        [
-          'p',
-          [],
-          [
-            'You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist.'
-          ]
-        ],
-        [
-          'ReactSimplePieChart',
-          [
+            'meta',
             [
-              'slices',
-              [
-                'expression',
-                "[{\n    color: '#7b3af5',\n    value: 0.1,\n  }, {\n    color: '#EAE7D6',\n    value: 0.9, },\n  ]"
-              ]
+              ['title', ['value', 'Page Title']],
+              ['description', ['value', 'Short description of your project']]
+            ],
+            []
+          ],
+          [
+            'Header',
+            [
+              ['title', ['value', 'Welcome to Idyll']],
+              ['subtitle', ['value', 'Open index.idl to start writing']],
+              ['author', ['value', 'Your Name Here']],
+              ['authorLink', ['value', 'https://idyll-lang.github.io']]
+            ],
+            []
+          ],
+          [
+            'p',
+            [],
+            [
+              'This is an Idyll file. Write text\nas you please in here. To add interactivity,\nyou can add  different components to the text.'
             ]
           ],
-          []
-        ],
-        ['PackageJsonComponentTest', [], []],
-        [
-          'p',
-          [],
+          ['Table', [['data', ['variable', 'myData']]], []],
+          ['p', [], ['Here is how you can use a variable:']],
           [
-            'This adds support for indexed components: ',
-            ['CustomComponent.IndexedComponent', [], []]
-          ]
-        ],
-        ['FunctionalComponent', [], []],
-        ['FunctionalDefaultComponent', [], []],
-        ['CapitalPascal', [], []]
+            'Range',
+            [
+              ['min', ['value', 0]],
+              ['max', ['value', 10]],
+              ['value', ['variable', 'exampleVar']]
+            ],
+            []
+          ],
+          ['Display', [['value', ['variable', 'exampleVar']]], []],
+          [
+            'CodeHighlight',
+            [['language', ['value', 'js']]],
+            ['var code = true;']
+          ],
+          ['p', [], ['And here is a custom component:']],
+          ['CustomComponent', [], []],
+          [
+            'p',
+            [],
+            [
+              'You can use standard html tags if a\ncomponent with the same name\ndoesn’t exist.'
+            ]
+          ],
+          [
+            'ReactSimplePieChart',
+            [
+              [
+                'slices',
+                [
+                  'expression',
+                  "[{\n    color: '#7b3af5',\n    value: 0.1,\n  }, {\n    color: '#EAE7D6',\n    value: 0.9, },\n  ]"
+                ]
+              ]
+            ],
+            []
+          ],
+          ['PackageJsonComponentTest', [], []],
+          [
+            'p',
+            [],
+            [
+              'This adds support for indexed components: ',
+              ['CustomComponent.IndexedComponent', [], []]
+            ]
+          ],
+          ['FunctionalComponent', [], []],
+          ['FunctionalDefaultComponent', [], []],
+          ['CapitalPascal', [], []]
+        ]
       ]
-    ]
-  ];
+    ];
 
-  expect(output.ast).toEqual(AST.convertV1ToV2(ast));
-});
+    expect(output.ast).toEqual(AST.convertV1ToV2(ast));
+  });
 
-it('should include npm components', () => {
-  expect(Object.keys(output.components)).toContain('react-simple-pie-chart');
-});
+  it('should include npm components', () => {
+    expect(Object.keys(output.components)).toContain('react-simple-pie-chart');
+  });
 
-it('should include components configured in package.json', () => {
-  expect(Object.keys(output.components)).toContain(
-    'package-json-component-test'
-  );
+  it('should include components configured in package.json', () => {
+    expect(Object.keys(output.components)).toContain(
+      'package-json-component-test'
+    );
+  });
 });

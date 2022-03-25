@@ -39,7 +39,8 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 let output;
 let idyll;
 
-before(done => {
+before(function(done) {
+  this.timeout(10000);
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_CACHE);
   idyll = Idyll({

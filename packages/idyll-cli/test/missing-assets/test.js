@@ -46,71 +46,73 @@ function createWithOptions(opts) {
   });
 }
 
-it('handles missing layout css file', done => {
-  const idyll = createWithOptions({
-    layout: 'nonexistent-layout'
+describe('missing assets', function() {
+  it('handles missing layout css file', done => {
+    const idyll = createWithOptions({
+      layout: 'nonexistent-layout'
+    });
+
+    idyll
+      .on('update', () => {
+        const outputCSSPath = join(
+          PROJECT_BUILD_DIR,
+          'static',
+          '__idyll_styles.css'
+        );
+        const outputCSS = readFileSync(outputCSSPath, 'utf8');
+
+        expect(outputCSS.includes(themeCSS)).toBe(true);
+        expect(outputCSS.includes(layoutCSS)).toBe(false);
+        expect(outputCSS.includes(customCSS)).toBe(true);
+
+        done();
+      })
+      .build();
   });
 
-  idyll
-    .on('update', () => {
-      const outputCSSPath = join(
-        PROJECT_BUILD_DIR,
-        'static',
-        '__idyll_styles.css'
-      );
-      const outputCSS = readFileSync(outputCSSPath, 'utf8');
+  it('handles missing theme css file', done => {
+    const idyll = createWithOptions({
+      theme: join(PROJECT_DIR, 'non-existent-theme.css')
+    });
 
-      expect(outputCSS.includes(themeCSS)).toBe(true);
-      expect(outputCSS.includes(layoutCSS)).toBe(false);
-      expect(outputCSS.includes(customCSS)).toBe(true);
+    idyll
+      .on('update', () => {
+        const outputCSSPath = join(
+          PROJECT_BUILD_DIR,
+          'static',
+          '__idyll_styles.css'
+        );
+        const outputCSS = readFileSync(outputCSSPath, 'utf8');
 
-      done();
-    })
-    .build();
-});
+        expect(outputCSS.includes(themeCSS)).toBe(false);
+        expect(outputCSS.includes(layoutCSS)).toBe(true);
+        expect(outputCSS.includes(customCSS)).toBe(true);
 
-it('handles missing theme css file', done => {
-  const idyll = createWithOptions({
-    theme: join(PROJECT_DIR, 'non-existent-theme.css')
+        done();
+      })
+      .build();
   });
 
-  idyll
-    .on('update', () => {
-      const outputCSSPath = join(
-        PROJECT_BUILD_DIR,
-        'static',
-        '__idyll_styles.css'
-      );
-      const outputCSS = readFileSync(outputCSSPath, 'utf8');
+  it('handles missing custom css file', done => {
+    const idyll = createWithOptions({
+      css: 'missing.css'
+    });
 
-      expect(outputCSS.includes(themeCSS)).toBe(false);
-      expect(outputCSS.includes(layoutCSS)).toBe(true);
-      expect(outputCSS.includes(customCSS)).toBe(true);
+    idyll
+      .on('update', () => {
+        const outputCSSPath = join(
+          PROJECT_BUILD_DIR,
+          'static',
+          '__idyll_styles.css'
+        );
+        const outputCSS = readFileSync(outputCSSPath, 'utf8');
 
-      done();
-    })
-    .build();
-});
+        expect(outputCSS.includes(themeCSS)).toBe(true);
+        expect(outputCSS.includes(layoutCSS)).toBe(true);
+        expect(outputCSS.includes(customCSS)).toBe(false);
 
-it('handles missing custom css file', done => {
-  const idyll = createWithOptions({
-    css: 'missing.css'
+        done();
+      })
+      .build();
   });
-
-  idyll
-    .on('update', () => {
-      const outputCSSPath = join(
-        PROJECT_BUILD_DIR,
-        'static',
-        '__idyll_styles.css'
-      );
-      const outputCSS = readFileSync(outputCSSPath, 'utf8');
-
-      expect(outputCSS.includes(themeCSS)).toBe(true);
-      expect(outputCSS.includes(layoutCSS)).toBe(true);
-      expect(outputCSS.includes(customCSS)).toBe(false);
-
-      done();
-    })
-    .build();
 });
