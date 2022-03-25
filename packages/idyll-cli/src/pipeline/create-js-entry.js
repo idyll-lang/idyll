@@ -10,7 +10,7 @@ module.exports = ({
     import React from 'react';
     import ReactDOM from 'react-dom';
 
-    import { IdyllDocument } from 'idyll-document';
+    import IdyllDocument from 'idyll-document';
 
     var mountNode = document.getElementById('idyll-mount');
 

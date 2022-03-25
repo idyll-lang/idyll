@@ -3,9 +3,9 @@ import Link from 'next/link';
 import markdown from 'markdown-in-js';
 import Layout from '../../components/layout';
 import Donate from '../../components/donate-link';
-import { compile } from 'idyll-compiler';
+import compile from 'idyll-compiler';
 import * as components from 'idyll-components';
-import { IdyllDocument } from 'idyll-document';
+import IdyllDocument from 'idyll-document';
 
 const idyllMarkup = `
 # Introduction

@@ -180,7 +180,7 @@ exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
-  const { IdyllDocument } = require('idyll-document');
+  const IdyllDocument = require('idyll-document');
   const meta = parseMeta(ast);
   const context = require(opts.context
     ? opts.context

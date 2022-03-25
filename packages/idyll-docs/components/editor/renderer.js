@@ -1,6 +1,6 @@
 import React from 'react';
 import * as components from 'idyll-components';
-import { IdyllDocument } from 'idyll-document';
+import IdyllDocument from 'idyll-document';
 import { resolveScopedStyles } from './utils';
 import styles from './styles/idyll';
 

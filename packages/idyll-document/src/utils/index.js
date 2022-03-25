@@ -1,4 +1,4 @@
-const falafel = require('falafel');
+import falafel from 'falafel';
 import { parse } from 'csv-parse/sync';
 
 const {

@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const esbuild = require('esbuild');
 const createJSEntry = require('./create-js-entry');
+const NodeModulesPolyfills = require('@esbuild-plugins/node-modules-polyfill')
+  .default;
 
 /**
  * Returns the input package's node_modules directory.
@@ -41,6 +43,7 @@ module.exports = function(opts, paths, output) {
           NODE_ENV: process.env.NODE_ENV
         }
       })
-    }
+    },
+    plugins: [NodeModulesPolyfills()]
   });
 };

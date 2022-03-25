@@ -148,4 +148,4 @@ class IdyllDocument extends React.Component {
   }
 }
 
-export { IdyllDocument };
+export default IdyllDocument;

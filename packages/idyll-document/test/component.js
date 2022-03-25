@@ -5,7 +5,7 @@ import { mount, shallow } from 'enzyme';
 import compile from 'idyll-compiler';
 import * as components from 'idyll-components';
 
-const { IdyllDocument } = require('../src');
+import IdyllDocument from '../src';
 
 const fixture = f => fs.readFileSync(join(__dirname, `fixtures/${f}`), 'utf8');
 

@@ -1,7 +1,8 @@
 import commonjs from '@rollup/plugin-commonjs';
-import jsx from 'rollup-plugin-jsx';
 import replace from '@rollup/plugin-replace';
 import { babel } from '@rollup/plugin-babel';
+import builtins from 'rollup-plugin-node-builtins';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default {
   input: 'src/index.js',
@@ -31,6 +32,8 @@ export default {
       exclude: 'node_modules/**' // only transpile our source code
     }),
     // jsx( { factory: "React.createElement" } ),
-    commonjs()
+    // nodeResolve(),
+    commonjs(),
+    builtins()
   ]
 };
