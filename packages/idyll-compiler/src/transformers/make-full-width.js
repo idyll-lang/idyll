@@ -44,7 +44,7 @@ function makeFullWidth(ast) {
       hasProperty(child, 'fullWidth')
     ) {
       if (childName === FULLWIDTH) {
-        child.name = 'div'; // TODO: use API?
+        child.name = 'div';
         const className = getProperty(child, CLASS_NAME);
         if (className) {
           switch (className.type) {
