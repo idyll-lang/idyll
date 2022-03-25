@@ -20,7 +20,7 @@ module.exports = function(input, options, alias, callback) {
   // prepare compiler options
   options = Object.assign(
     {},
-    { spellcheck: false, smartquotes: true, async: true, injectIds: false },
+    { spellcheck: false, smartquotes: true },
     options || {}
   );
 
