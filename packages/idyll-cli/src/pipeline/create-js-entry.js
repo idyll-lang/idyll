@@ -26,7 +26,7 @@ module.exports = ({
     var components = {};
     ${components
       .map(([k, p], i) => {
-        return `components[${k}] = _component_${i}`;
+        return `components["${k}"] = _component_${i}`;
       })
       .join('\n')}
    

@@ -174,7 +174,14 @@ exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
     try {
       components[key] = require(_components[key]);
     } catch (e) {
-      components[key] = await import(_components[key]);
+      try {
+        components[key] = await import(_components[key]);
+      } catch (e) {
+        console.warn(
+          `Could not import component ${key} for server-side rendering.`
+        );
+        components[key] = () => null;
+      }
     }
   }
   exports.getHighlightJS(ast, paths, true);

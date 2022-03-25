@@ -7,7 +7,16 @@
     "idyll": "bin/idyll.js"
   },
   "scripts": {
-    "test": "jest"
+    "test": "run-s test:jest:*",
+    "test:jest": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --verbose=false",
+    "test:jest:basic-project": "npm run test:jest -- test/basic-project/test.js",
+    "test:jest:batteries-included": "npm run test:jest -- test/batteries-included/test.js",
+    "test:jest:env-options": "npm run test:jest -- test/env-options/test.js",
+    "test:jest:minified-project": "npm run test:jest -- test/minified-project/test.js",
+    "test:jest:missing-assets": "npm run test:jest -- test/missing-assets/test.js",
+    "test:jest:multiple-component-dirs": "npm run test:jest -- test/multiple-component-dirs/test.js",
+    "test:jest:path-builder": "npm run test:jest -- test/path-builder/test.js",
+    "test:jest:static-assets": "npm run test:jest -- test/static-assets/test.js"
   },
   "repository": {
     "type": "git",
@@ -83,9 +92,11 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
+    "cross-env": "^7.0.3",
     "expect": "^27.5.1",
     "jest": "27",
     "jsdom": "^11.10.0",
+    "npm-run-all": "^4.1.5",
     "rimraf": "2.6.2"
   }
 }
