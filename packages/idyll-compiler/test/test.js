@@ -1569,7 +1569,7 @@ End text
         This is a new paragraph.
       `;
 
-      expect(compile(input, { async: false })).to.eql({
+      expect(compile(input, { async: false, injectIds: true })).to.eql({
         id: 0,
         type: 'component',
         name: 'div',
@@ -1612,7 +1612,7 @@ End text
       Test 1 2Three 1 2 Three 123Four
     `;
 
-    expect(compile(input, { async: false })).to.eql({
+    expect(compile(input, { async: false, injectIds: true })).to.eql({
       id: 0,
       type: 'component',
       name: 'div',
@@ -1651,7 +1651,7 @@ End text
       [/Equation]
     `;
 
-    expect(compile(input, { async: false })).to.eql({
+    expect(compile(input, { async: false, injectIds: true })).to.eql({
       id: 0,
       type: 'component',
       name: 'div',
@@ -1691,7 +1691,7 @@ End text
       ~ x=1, y:=x*2
       ~ a:=x+y, b="somestring"
     `;
-    expect(compile(input, { async: false })).to.eql({
+    expect(compile(input, { async: false, injectIds: true })).to.eql({
       id: 0,
       type: 'component',
       name: 'div',
