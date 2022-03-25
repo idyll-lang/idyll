@@ -16,7 +16,7 @@
     "build": "rollup -c rollup.config.js",
     "dev": "rollup -c rollup.config.js -w",
     "prepublishOnly": "npm run build",
-    "test": "yarn node --experimental-vm-modules $(yarn bin jest)"
+    "test": "jest"
   },
   "jest": {
     "transform": {},
