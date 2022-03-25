@@ -25,7 +25,7 @@ module.exports = function(opts, paths, output) {
     syntaxHighlighting: output.syntaxHighlighting,
     context:
       opts.context ||
-      path.join(__dirname, '..', 'client', 'context').replace('\\', '\\\\')
+      path.join(__dirname, '..', 'client', 'context').replace(/\\/g, '\\\\')
   });
 
   const entryPath = path.join(paths.TMP_DIR, 'entrypoint.js');
