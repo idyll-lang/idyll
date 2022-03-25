@@ -8,12 +8,14 @@ export default {
       file: 'dist/cjs/index.js',
       format: 'cjs',
       sourcemap: true,
-      name: 'idyll-compiler'
+      name: 'idyll-compiler',
+      exports: 'auto'
     },
     {
       file: 'dist/esm/index.mjs',
       format: 'esm',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'auto'
     }
   ],
   plugins: [

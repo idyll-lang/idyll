@@ -1,44 +1,36 @@
-const astTestVar = {
-  id: 0,
+const astTestVar = () => ({
   type: 'component',
   name: 'root',
   children: [
     {
-      id: 1,
       type: 'component',
       name: 'textContainer',
       children: [
         {
-          id: 2,
           type: 'component',
           name: 'p',
           children: [
             {
-              id: 3,
               type: 'textnode',
               value: 'This is the first paragraph'
             }
           ]
         },
         {
-          id: 3,
           type: 'component',
           name: 'div',
           children: [
             {
-              id: 4,
               type: 'component',
               name: 'h1',
               children: [
                 {
-                  id: 5,
                   type: 'textnode',
                   value: 'This is a header'
                 }
               ]
             },
             {
-              id: 6,
               type: 'var',
               properties: {
                 name: {
@@ -52,12 +44,10 @@ const astTestVar = {
               }
             },
             {
-              id: 7,
               type: 'component',
               name: 'p',
               children: [
                 {
-                  id: 8,
                   type: 'component',
                   name: 'a',
                   properties: {
@@ -68,14 +58,12 @@ const astTestVar = {
                   },
                   children: [
                     {
-                      id: 9,
                       type: 'textnode',
                       value: 'This is a link to a website'
                     }
                   ]
                 },
                 {
-                  id: 10,
                   type: 'data',
                   properties: {
                     name: {
@@ -95,49 +83,41 @@ const astTestVar = {
       ]
     }
   ]
-};
+});
 
-const astTestMeta = {
-  id: 0,
+const astTestMeta = () => ({
   type: 'component',
   name: 'root',
   children: [
     {
-      id: 1,
       type: 'component',
       name: 'textContainer',
       children: [
         {
-          id: 2,
           type: 'component',
           name: 'p',
           children: [
             {
-              id: 3,
               type: 'textnode',
               value: 'This is the first paragraph'
             }
           ]
         },
         {
-          id: 3,
           type: 'component',
           name: 'div',
           children: [
             {
-              id: 4,
               type: 'component',
               name: 'h1',
               children: [
                 {
-                  id: 5,
                   type: 'textnode',
                   value: 'This is a header'
                 }
               ]
             },
             {
-              id: 6,
               type: 'var',
               properties: {
                 name: {
@@ -151,12 +131,10 @@ const astTestMeta = {
               }
             },
             {
-              id: 7,
               type: 'component',
               name: 'p',
               children: [
                 {
-                  id: 8,
                   type: 'component',
                   name: 'a',
                   properties: {
@@ -167,14 +145,12 @@ const astTestMeta = {
                   },
                   children: [
                     {
-                      id: 9,
                       type: 'textnode',
                       value: 'This is a link to a website'
                     }
                   ]
                 },
                 {
-                  id: 10,
                   type: 'data',
                   properties: {
                     name: {
@@ -194,7 +170,6 @@ const astTestMeta = {
       ]
     },
     {
-      id: 11,
       type: 'component',
       name: 'meta',
       properties: {
@@ -210,49 +185,41 @@ const astTestMeta = {
       children: []
     }
   ]
-};
+});
 
-const updatedASTWithNode = {
-  id: 0,
+const updatedASTWithNode = () => ({
   type: 'component',
   name: 'root',
   children: [
     {
-      id: 1,
       type: 'component',
       name: 'textContainer',
       children: [
         {
-          id: 2,
           type: 'component',
           name: 'p',
           children: [
             {
-              id: 3,
               type: 'textnode',
               value: 'This is the first paragraph'
             }
           ]
         },
         {
-          id: 3,
           type: 'component',
           name: 'div',
           children: [
             {
-              id: 4,
               type: 'component',
               name: 'h1',
               children: [
                 {
-                  id: 5,
                   type: 'textnode',
                   value: 'This is a header'
                 }
               ]
             },
             {
-              id: 6,
               type: 'var',
               properties: {
                 name: {
@@ -266,12 +233,10 @@ const updatedASTWithNode = {
               }
             },
             {
-              id: 7,
               type: 'component',
               name: 'p',
               children: [
                 {
-                  id: 8,
                   type: 'component',
                   name: 'a',
                   properties: {
@@ -282,14 +247,12 @@ const updatedASTWithNode = {
                   },
                   children: [
                     {
-                      id: 9,
                       type: 'textnode',
                       value: 'This is a link to a website'
                     }
                   ]
                 },
                 {
-                  id: 10,
                   type: 'data',
                   properties: {
                     name: {
@@ -309,61 +272,51 @@ const updatedASTWithNode = {
       ]
     },
     {
-      id: 11,
       type: 'component',
       name: 'p',
       children: [
         {
-          id: 12,
           type: 'textnode',
           value: 'This is a new node'
         }
       ]
     }
   ]
-};
+});
 
-const updatedASTWithNodes = {
-  id: 0,
+const updatedASTWithNodes = () => ({
   type: 'component',
   name: 'root',
   children: [
     {
-      id: 1,
       type: 'component',
       name: 'textContainer',
       children: [
         {
-          id: 2,
           type: 'component',
           name: 'p',
           children: [
             {
-              id: 3,
               type: 'textnode',
               value: 'This is the first paragraph'
             }
           ]
         },
         {
-          id: 3,
           type: 'component',
           name: 'div',
           children: [
             {
-              id: 4,
               type: 'component',
               name: 'h1',
               children: [
                 {
-                  id: 5,
                   type: 'textnode',
                   value: 'This is a header'
                 }
               ]
             },
             {
-              id: 6,
               type: 'var',
               properties: {
                 name: {
@@ -377,12 +330,10 @@ const updatedASTWithNodes = {
               }
             },
             {
-              id: 7,
               type: 'component',
               name: 'p',
               children: [
                 {
-                  id: 8,
                   type: 'component',
                   name: 'a',
                   properties: {
@@ -393,14 +344,12 @@ const updatedASTWithNodes = {
                   },
                   children: [
                     {
-                      id: 9,
                       type: 'textnode',
                       value: 'This is a link to a website'
                     }
                   ]
                 },
                 {
-                  id: 10,
                   type: 'data',
                   properties: {
                     name: {
@@ -420,69 +369,58 @@ const updatedASTWithNodes = {
       ]
     },
     {
-      id: 11,
       type: 'component',
       name: 'p',
       children: [
         {
-          id: 12,
           type: 'textnode',
           value: 'This is a new node'
         }
       ]
     },
     {
-      id: 13,
       type: 'component',
       name: 'p',
       children: [
         {
-          id: 14,
           type: 'textnode',
           value: 'This is a new node'
         }
       ]
     }
   ]
-};
+});
 
-const testChildren = [
+const testChildren = () => [
   {
-    id: 1,
     type: 'component',
     name: 'textContainer',
     children: [
       {
-        id: 2,
         type: 'component',
         name: 'p',
         children: [
           {
-            id: 3,
             type: 'textnode',
             value: 'This is the first paragraph'
           }
         ]
       },
       {
-        id: 3,
         type: 'component',
         name: 'div',
         children: [
           {
-            id: 4,
             type: 'component',
             name: 'h1',
             children: [
               {
-                id: 5,
                 type: 'textnode',
                 value: 'This is a header'
               }
             ]
           },
           {
-            id: 6,
             type: 'var',
             properties: {
               name: {
@@ -496,12 +434,10 @@ const testChildren = [
             }
           },
           {
-            id: 7,
             type: 'component',
             name: 'p',
             children: [
               {
-                id: 8,
                 type: 'component',
                 name: 'a',
                 properties: {
@@ -512,14 +448,12 @@ const testChildren = [
                 },
                 children: [
                   {
-                    id: 9,
                     type: 'textnode',
                     value: 'This is a link to a website'
                   }
                 ]
               },
               {
-                id: 10,
                 type: 'data',
                 properties: {
                   name: {
@@ -539,12 +473,10 @@ const testChildren = [
     ]
   },
   {
-    id: 11,
     type: 'component',
     name: 'p',
     children: [
       {
-        id: 12,
         type: 'textnode',
         value: 'This is a new node'
       }
@@ -552,47 +484,39 @@ const testChildren = [
   }
 ];
 
-const nodesWithChildren = {
-  id: 0,
+const nodesWithChildren = () => ({
   type: 'component',
   name: 'root',
   children: [
     {
-      id: 1,
       type: 'component',
       name: 'textContainer',
       children: [
         {
-          id: 2,
           type: 'component',
           name: 'p',
           children: [
             {
-              id: 3,
               type: 'textnode',
               value: 'This is the first paragraph'
             }
           ]
         },
         {
-          id: 3,
           type: 'component',
           name: 'div',
           children: [
             {
-              id: 4,
               type: 'component',
               name: 'h1',
               children: [
                 {
-                  id: 5,
                   type: 'textnode',
                   value: 'This is a header'
                 }
               ]
             },
             {
-              id: 6,
               type: 'var',
               properties: {
                 name: {
@@ -606,12 +530,10 @@ const nodesWithChildren = {
               }
             },
             {
-              id: 7,
               type: 'component',
               name: 'p',
               children: [
                 {
-                  id: 8,
                   type: 'component',
                   name: 'a',
                   properties: {
@@ -622,14 +544,12 @@ const nodesWithChildren = {
                   },
                   children: [
                     {
-                      id: 9,
                       type: 'textnode',
                       value: 'This is a link to a website'
                     }
                   ]
                 },
                 {
-                  id: 10,
                   type: 'data',
                   properties: {
                     name: {
@@ -649,81 +569,68 @@ const nodesWithChildren = {
       ]
     }
   ]
-};
+});
 
-const modifiedNode = {
-  id: 0,
+const modifiedNode = () => ({
   type: 'component',
   name: 'root',
   children: [
     {
-      id: 1,
       type: 'component',
       name: 'p',
       children: [
         {
-          id: 2,
           type: 'textnode',
           value: 'This is a new node'
         }
       ]
     },
     {
-      id: 11,
       type: 'component',
       name: 'p',
       children: [
         {
-          id: 12,
           type: 'textnode',
           value: 'This is a new node'
         }
       ]
     }
   ]
-};
+});
 
-const paraNode = {
-  id: 0,
+const paraNode = () => ({
   type: 'component',
   name: 'root',
   children: [
     {
-      id: 1,
       type: 'component',
       name: 'textContainer',
       children: [
         {
-          id: 2,
           type: 'component',
           name: 'paragraph',
           children: [
             {
-              id: 3,
               type: 'textnode',
               value: 'This is the first paragraph'
             }
           ]
         },
         {
-          id: 3,
           type: 'component',
           name: 'div',
           children: [
             {
-              id: 4,
               type: 'component',
               name: 'h1',
               children: [
                 {
-                  id: 5,
                   type: 'textnode',
                   value: 'This is a header'
                 }
               ]
             },
             {
-              id: 6,
               type: 'var',
               properties: {
                 name: {
@@ -737,12 +644,10 @@ const paraNode = {
               }
             },
             {
-              id: 7,
               type: 'component',
               name: 'paragraph',
               children: [
                 {
-                  id: 8,
                   type: 'component',
                   name: 'a',
                   properties: {
@@ -753,14 +658,12 @@ const paraNode = {
                   },
                   children: [
                     {
-                      id: 9,
                       type: 'textnode',
                       value: 'This is a link to a website'
                     }
                   ]
                 },
                 {
-                  id: 10,
                   type: 'data',
                   properties: {
                     name: {
@@ -780,16 +683,14 @@ const paraNode = {
       ]
     }
   ]
-};
+});
 
-const createComponent = function(id) {
+const createComponent = function() {
   return {
-    id: id++,
     type: 'component',
     name: 'p',
     children: [
       {
-        id: id,
         type: 'textnode',
         value: 'This is a new node'
       }
@@ -797,9 +698,8 @@ const createComponent = function(id) {
   };
 };
 
-const createAnchorNode = function(id) {
+const createAnchorNode = function() {
   return {
-    id: id++,
     type: 'component',
     name: 'a',
     properties: {
@@ -810,7 +710,6 @@ const createAnchorNode = function(id) {
     },
     children: [
       {
-        id: id,
         type: 'textnode',
         value: 'Link to a website'
       }
@@ -818,17 +717,15 @@ const createAnchorNode = function(id) {
   };
 };
 
-const createExampleTextNode = function(id) {
+const createExampleTextNode = function() {
   return {
-    id: id,
     type: 'textnode',
     value: 'This is an example textnode'
   };
 };
 
-const createExampleVarNode = function(id) {
+const createExampleVarNode = function() {
   return {
-    id: id,
     type: 'var',
     properties: {
       name: {
@@ -843,9 +740,8 @@ const createExampleVarNode = function(id) {
   };
 };
 
-const createExampleData = function(id) {
+const createExampleData = function() {
   return {
-    id: id,
     type: 'data',
     properties: {
       name: {

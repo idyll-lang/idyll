@@ -2,11 +2,13 @@ const falafel = require('falafel');
 import { parse } from 'csv-parse/sync';
 
 const {
+  cloneNode,
   getChildren,
   getNodeName,
+  getNodeType,
   getProperties,
-  getType,
-  removeNodesByName
+  isTextNode,
+  removeNodes
 } = require('idyll-ast');
 
 const isPropertyAccess = node => {
@@ -165,8 +167,8 @@ export const getVars = (arr, context = {}) => {
   };
 
   const pluck = (acc, val) => {
-    const variableType = getType(val);
-    const attrs = getProperties(val) || [];
+    const variableType = getNodeType(val);
+    const attrs = getProperties(val) || {};
 
     if (!attrs.name || !attrs.value) return attrs;
 
@@ -307,8 +309,7 @@ export const splitAST = ast => {
 
   const handleNode = storeElements => {
     return node => {
-      const type = getType(node);
-      const props = getProperties(node);
+      const type = getNodeType(node);
       const children = getChildren(node);
       if (type === 'var') {
         state.vars.push(node);
@@ -317,10 +318,7 @@ export const splitAST = ast => {
       } else if (storeElements) {
         state.elements.push(node);
       }
-      if (
-        !children ||
-        (children.length === 1 && getType(children[0]) === 'textnode')
-      ) {
+      if (!children || (children.length === 1 && isTextNode(children[0]))) {
         return;
       }
       children.forEach(handleNode(false));
@@ -377,7 +375,7 @@ export const translate = ast => {
     return reducedProps;
   };
   const tNode = node => {
-    if (getType(node) === 'textnode') return node;
+    if (isTextNode(node)) return node;
 
     let name = getNodeName(node);
 
@@ -400,7 +398,7 @@ export const mapTree = (tree, mapFn, filterFn = () => true, depth = 0) => {
   const walkFn = depth => (acc, node) => {
     //To check for textnodes
     if (node.component) {
-      //To check for childrens
+      //To check for children
       if (node.children) {
         node.children = node.children.reduce(walkFn(depth + 1), []);
       }
@@ -416,7 +414,7 @@ export const mapTree = (tree, mapFn, filterFn = () => true, depth = 0) => {
 };
 
 export const filterASTForDocument = ast => {
-  return removeNodesByName(ast, 'meta');
+  return removeNodes(cloneNode(ast), node => getNodeName(node) === 'meta');
 };
 
 export const findWrapTargets = (schema, state, components) => {
@@ -436,7 +434,7 @@ export const findWrapTargets = (schema, state, components) => {
   //Array of keys for the runtime state passed.
   const stateKeys = Object.keys(state);
 
-  //Populating target with the custom componenets
+  //Populating target with the custom components
   //Walk the whole tree, collect and return the nodes
   //for wrapping
   mapTree(schema, node => {
