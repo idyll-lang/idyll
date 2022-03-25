@@ -40,7 +40,7 @@ let output;
 let idyll;
 
 before(function(done) {
-  this.timeout(10000);
+  this.timeout(60000);
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_CACHE);
   idyll = Idyll({

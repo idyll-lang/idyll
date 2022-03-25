@@ -38,7 +38,7 @@ let projectBuildResults;
 
 describe('batteries-included project', function() {
   before(function(done) {
-    this.timeout(10000);
+    this.timeout(60000);
     rimraf.sync(PROJECT_BUILD_DIR);
     idyll({
       inputFile: join(PROJECT_DIR, 'index.idl'),
