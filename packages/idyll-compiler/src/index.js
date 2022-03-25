@@ -1,39 +1,50 @@
+const lexer = require('./lexer');
 const parse = require('./parser');
-const Lexer = require('./lexer');
-const Processor = require('./processors');
-const { cleanNewlines } = require('./processors/pre');
-const {
-  hoistVariables,
-  flattenChildren,
-  cleanResults,
-  makeFullWidth,
-  wrapText,
-  autoLinkify
-} = require('./processors/post');
 const { convertV1ToV2 } = require('idyll-ast').converters;
-const matter = require('gray-matter');
+const parseFrontMatter = require('gray-matter');
+
+const cleanNewlines = require('./util/clean-newlines');
+const pipeline = require('./util/pipeline');
+
+const astTransformers = [
+  require('./transformers/hoist-variables'),
+  require('./transformers/flatten-children'),
+  require('./transformers/make-full-width'),
+  require('./transformers/wrap-text'),
+  require('./transformers/clean-results'),
+  require('./transformers/smart-quotes'),
+  require('./transformers/auto-linkify')
+];
 
 module.exports = function(input, options, alias, callback) {
-  input = Processor(input)
-    .pipe(cleanNewlines)
-    .end();
-  const { content, data } = matter(input.trim());
+  // prepare compiler options
   options = Object.assign(
     {},
-    { spellcheck: false, smartquotes: true, async: true, injectIds: false },
+    { spellcheck: false, smartquotes: true },
     options || {}
   );
-  const lex = Lexer({}, alias);
-  let lexResults = '',
-    output = [];
+
+  // pre-process input text
+  input = cleanNewlines(input).trim();
+
+  // parse YAML front matter, discard for now
+  const { content, data } = parseFrontMatter(input);
+
+  // perform lexing
+  const lex = lexer({}, alias);
+  let lexResults = '';
   try {
     lexResults = lex(content);
   } catch (err) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
     return new Promise((resolve, reject) => reject(err));
   }
+
+  // perform parsing to construct an Idyll AST
+  let ast;
   try {
-    output = parse(content, lexResults.tokens, lexResults.positions, options);
+    ast = parse(content, lexResults.tokens, lexResults.positions, options);
+    ast = convertV1ToV2(ast);
   } catch (err) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
     if (options.async) {
@@ -43,44 +54,9 @@ module.exports = function(input, options, alias, callback) {
     }
   }
 
-  let astTransform = Processor(output, options)
-    .pipe(hoistVariables)
-    .pipe(flattenChildren)
-    .pipe(makeFullWidth)
-    .pipe(wrapText)
-    .pipe(cleanResults)
-    .pipe(autoLinkify)
-    .end();
+  // construct AST transformation pipeline
+  const transform = pipeline(astTransformers, options.postProcessors || []);
 
-  astTransform = convertV1ToV2(astTransform, options.injectIds);
-
-  if (options.postProcessors) {
-    // Turn them all into promises
-    const promises = options.postProcessors.map(f => {
-      return ast => {
-        return new Promise((resolve, reject) => {
-          if (f.length === 2) {
-            f(ast, (err, value) => {
-              if (err) {
-                return reject(err);
-              }
-              resolve(value);
-            });
-          } else {
-            resolve(f(ast));
-          }
-        });
-      };
-    });
-
-    return promises.reduce((promise, f, i) => {
-      return promise.then(val => {
-        return f(val);
-      });
-    }, Promise.resolve(astTransform));
-  } else {
-    return options.async
-      ? new Promise(resolve => resolve(astTransform))
-      : astTransform;
-  }
+  // apply AST transformations and return result
+  return transform(ast, options);
 };

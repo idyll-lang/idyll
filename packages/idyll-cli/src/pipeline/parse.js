@@ -1,35 +1,28 @@
-const fs = require('fs');
 const path = require('path');
 const mustache = require('mustache');
 const resolve = require('resolve');
 const slash = require('slash');
-const { paramCase, pascalCase } = require('change-case');
-
-const debug = require('debug')('idyll:cli');
 
 const {
-  getNodesByName,
-  getNodesByType,
   getProperty,
-  filterNodes,
-  getType,
-  getProperties,
-  getPropertyKeys
+  getNodeType,
+  getNodeName,
+  getPropertyKeys,
+  isTextNode,
+  queryNodes
 } = require('idyll-ast');
 
 exports.getComponentNodes = ast => {
   const ignoreTypes = new Set(['var', 'data', 'meta', 'derived']);
-  let filter = filterNodes(ast, node => {
-    if (node.type === 'textnode') {
-      return false;
-    }
-    return !ignoreTypes.has(getType(node).toLowerCase());
-  });
-  return filter;
+  return queryNodes(
+    ast,
+    node =>
+      !isTextNode(node) && !ignoreTypes.has(getNodeType(node).toLowerCase())
+  );
 };
 
 exports.getDataNodes = ast => {
-  const nodes = getNodesByType(ast, 'data');
+  const nodes = queryNodes(ast, node => getNodeType(node) === 'data');
   return nodes.map(node => {
     return {
       node,
@@ -47,7 +40,10 @@ exports.getHighlightJS = (ast, paths, server) => {
     html: 'htmlbars'
   };
 
-  const codeHighlightNodes = getNodesByName(ast, 'CodeHighlight');
+  const codeHighlightNodes = queryNodes(
+    ast,
+    node => getNodeName(node) === 'CodeHighlight'
+  );
   if (!codeHighlightNodes.length) {
     return ' ';
   }
@@ -122,7 +118,7 @@ exports.getHighlightJS = (ast, paths, server) => {
 
 const parseMeta = ast => {
   // there should only be one meta node
-  const metaNodes = getNodesByType(ast, 'meta');
+  const metaNodes = queryNodes(ast, node => getNodeType(node) === 'meta');
 
   let metaProperties = {};
   if (metaNodes.length > 1) {

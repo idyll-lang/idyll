@@ -32,21 +32,17 @@ describe('IdyllDocument', () => {
 });
 
 describe('Source to Doc', () => {
-  it('can create a header', done => {
-    compile('# A header').then(ast => {
-      const doc = mount(<IdyllDocument ast={ast} components={components} />);
-      expect(doc).toBeDefined();
-      expect(doc.find('h1').length).toBe(1);
-      done();
-    });
+  it('can create a header', async () => {
+    const ast = await compile('# A header');
+    const doc = mount(<IdyllDocument ast={ast} components={components} />);
+    expect(doc).toBeDefined();
+    expect(doc.find('h1').length).toBe(1);
   });
 
-  it('can create an SVG', done => {
-    compile('[SVG /]').then(ast => {
-      const doc = mount(<IdyllDocument ast={ast} components={components} />);
-      expect(doc).toBeDefined();
-      done();
-    });
+  it('can create an SVG', async () => {
+    const ast = await compile('[SVG /]');
+    const doc = mount(<IdyllDocument ast={ast} components={components} />);
+    expect(doc).toBeDefined();
   });
 
   it('works with markup instead of an AST', done => {

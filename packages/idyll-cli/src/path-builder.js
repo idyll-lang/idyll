@@ -1,4 +1,4 @@
-const { dirname, isAbsolute, join, parse, resolve, relative } = require('path');
+const { dirname, isAbsolute, join, resolve } = require('path');
 
 const debug = require('debug')('idyll:cli');
 
