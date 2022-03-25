@@ -1,8 +1,7 @@
-jest.setTimeout(60000);
-
 const fs = require('fs');
 const http = require('http');
 const { join, resolve, dirname } = require('path');
+const expect = require('expect');
 
 const rimraf = require('rimraf');
 const { JSDOM } = require('jsdom');
@@ -43,12 +42,10 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 let output;
 let idyll;
 
-beforeAll(() => {
+before(function(done) {
+  this.timeout(10000);
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_CACHE);
-});
-
-beforeAll(done => {
   idyll = Idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
@@ -79,11 +76,11 @@ beforeAll(done => {
     .build();
 });
 
-afterAll(() => {
+after(() => {
   idyll.stopWatching();
 });
 
-test('options work as expected', () => {
+it('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
     alias: {},
     layout: 'centered',
@@ -116,11 +113,12 @@ test('options work as expected', () => {
   });
 });
 
-test('creates the expected files', () => {
+it('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 });
 
-// test('creates the expected HTML', done => {
+// it('creates the expected HTML', function(done) {
+//   this.timeout(10000);
 //   const dom = new JSDOM(projectBuildResults['index.html'], {
 //     url: 'http://localhost:3000',
 //     referrer: 'http://localhost:3000',

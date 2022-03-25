@@ -1,10 +1,9 @@
-jest.setTimeout(30000);
-
 const { readFileSync, existsSync } = require('fs');
 const http = require('http');
 const { join, resolve, dirname } = require('path');
 
 const rimraf = require('rimraf');
+const expect = require('expect');
 
 const layouts = require('idyll-layouts');
 const Idyll = require('../../');
@@ -21,7 +20,7 @@ const themeCSS = readFileSync(themeCSSPath, 'utf8');
 const layoutCSS = layouts[layoutCSSKey].styles;
 const customCSS = readFileSync(customCSSPath, 'utf8');
 
-beforeAll(() => {
+before(() => {
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_CACHE);
 });
@@ -47,7 +46,7 @@ function createWithOptions(opts) {
   });
 }
 
-test('handles missing layout css file', done => {
+it('handles missing layout css file', done => {
   const idyll = createWithOptions({
     layout: 'nonexistent-layout'
   });
@@ -70,7 +69,7 @@ test('handles missing layout css file', done => {
     .build();
 });
 
-test('handles missing theme css file', done => {
+it('handles missing theme css file', done => {
   const idyll = createWithOptions({
     theme: join(PROJECT_DIR, 'non-existent-theme.css')
   });
@@ -93,7 +92,7 @@ test('handles missing theme css file', done => {
     .build();
 });
 
-test('handles missing custom css file', done => {
+it('handles missing custom css file', done => {
   const idyll = createWithOptions({
     css: 'missing.css'
   });

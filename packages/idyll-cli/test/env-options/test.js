@@ -1,8 +1,7 @@
-jest.setTimeout(30000);
-
 const Idyll = require('../../src');
 const fs = require('fs');
 const { join, resolve, dirname } = require('path');
+const expect = require('expect');
 
 const getFilenames = dir => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');
@@ -26,7 +25,7 @@ const PROJECT_DIR = join(__dirname, 'outer-project', 'inner-project');
 
 const PROJECT_BUILD_DIR = join(PROJECT_DIR, 'build');
 
-test('no env provided', () => {
+it('no env provided', () => {
   const idyll = Idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
@@ -74,7 +73,7 @@ test('no env provided', () => {
   });
 });
 
-test('my-env provided', () => {
+it('my-env provided', () => {
   const idyll = Idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,

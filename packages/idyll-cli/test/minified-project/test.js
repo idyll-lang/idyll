@@ -1,10 +1,9 @@
-jest.setTimeout(30000);
-
 const Idyll = require('../../');
 const fs = require('fs');
 const { join, resolve, dirname } = require('path');
 const rimraf = require('rimraf');
 var AST = require('idyll-ast').converters;
+const expect = require('expect');
 
 const getFilenames = dir => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');
@@ -37,15 +36,12 @@ const EXPECTED_BUILD_DIR = join(EXPECTED_DIR, 'build');
 const EXPECTED_BUILD_FILENAMES = getFilenames(EXPECTED_BUILD_DIR);
 const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
-beforeAll(() => {
-  rimraf.sync(PROJECT_BUILD_DIR);
-  rimraf.sync(PROJECT_IDYLL_CACHE);
-});
-
 let output;
 let idyll;
 
-beforeAll(done => {
+before(done => {
+  rimraf.sync(PROJECT_BUILD_DIR);
+  rimraf.sync(PROJECT_IDYLL_CACHE);
   idyll = Idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
@@ -73,7 +69,7 @@ beforeAll(done => {
     .build();
 });
 
-test('options work as expected', () => {
+it('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
     alias: {
       PackageJsonComponentTest: 'CustomComponent'
@@ -109,22 +105,22 @@ test('options work as expected', () => {
   });
 });
 
-test('creates the expected files', () => {
+it('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 });
 
-test('creates the expected HTML', () => {
+it('creates the expected HTML', () => {
   expect(projectBuildResults['index.html']).toEqual(
     EXPECTED_BUILD_RESULTS['index.html']
   );
 });
 
-// test('creates the expected build artifacts', () => {
+// it('creates the expected build artifacts', () => {
 //   Object.keys(EXPECTED_IDYLL_RESULTS).forEach((key) => {
 //     expect(projectIdyllResults[key]).toEqual(EXPECTED_IDYLL_RESULTS[key]);
 //   })
 // })
-test('should construct the AST properly', () => {
+it('should construct the AST properly', () => {
   const ast = [
     ['var', [['name', ['value', 'exampleVar']], ['value', ['value', 5]]], []],
     [
@@ -231,18 +227,18 @@ test('should construct the AST properly', () => {
   expect(output.ast).toEqual(AST.convertV1ToV2(ast));
 });
 
-test('should include npm components', () => {
+it('should include npm components', () => {
   expect(Object.keys(output.components)).toContain('react-simple-pie-chart');
 });
 
-test('should include components configured in package.json', () => {
+it('should include components configured in package.json', () => {
   expect(Object.keys(output.components)).toContain(
     'package-json-component-test'
   );
 });
 
 // Tests for default and custom components
-test('Idyll getComponents() gets all default & custom components', () => {
+it('Idyll getComponents() gets all default & custom components', () => {
   var defaultComponentsDirectory =
     __dirname + '/../../../idyll-components/src/';
   var idyllComponents = idyll.getComponents();
@@ -265,7 +261,7 @@ test('Idyll getComponents() gets all default & custom components', () => {
 
 // Tests that getDatasets returns all datasets
 // in an Idyll project
-test('Idyll getDatasets() gets all default datasets', () => {
+it('Idyll getDatasets() gets all default datasets', () => {
   var datasets = idyll.getDatasets();
   var datasetNames = datasets.map(dataset => dataset.name);
   var thisDatasetPath = __dirname + '/src/data/';

@@ -1,5 +1,6 @@
 const { dirname, join } = require('path');
 const pathBuilder = require('../../src/path-builder');
+const expect = require('expect');
 
 function opts(inputPath, outputPath) {
   const overrideOpts = {};

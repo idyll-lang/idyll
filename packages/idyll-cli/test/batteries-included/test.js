@@ -1,10 +1,9 @@
-jest.setTimeout(30000);
-
 const idyll = require('../../');
 const fs = require('fs');
 const { join } = require('path');
 const rimraf = require('rimraf');
 const AST = require('idyll-ast').converters;
+const expect = require('expect');
 
 const getFilenames = dir => {
   return fs.readdirSync(dir).filter(f => f !== '.DS_Store');
@@ -33,15 +32,12 @@ const EXPECTED_BUILD_DIR = join(EXPECTED_DIR, 'build');
 const EXPECTED_BUILD_FILENAMES = getFilenames(EXPECTED_BUILD_DIR);
 const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
-beforeAll(() => {
-  rimraf.sync(PROJECT_BUILD_DIR);
-});
-
 let output;
 let projectBuildFilenames;
 let projectBuildResults;
 
-beforeAll(done => {
+before(done => {
+  rimraf.sync(PROJECT_BUILD_DIR);
   idyll({
     inputFile: join(PROJECT_DIR, 'index.idl'),
     output: PROJECT_BUILD_DIR,
@@ -59,10 +55,10 @@ beforeAll(done => {
     .build();
 });
 
-test('creates the expected files', () => {
+it('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 });
-test('should construct the AST properly', () => {
+it('should construct the AST properly', () => {
   const ast = [
     ['var', [['name', ['value', 'exampleVar']], ['value', ['value', 5]]], []],
     [

@@ -27,7 +27,7 @@ module.exports = paths => {
   };
 
   require('@babel/register')({
-    presets: ['env', 'stage-2', 'react'],
+    presets: ['@babel/env', '@babel/preset-react'],
     babelrc: false,
     only: isWindows ? undefined : new RegExp(`(${transformFolders.join('|')})`)
   });
