@@ -18,7 +18,6 @@ describe('compiler', function() {
     it('should tokenize the input', function() {
       var lex = Lexer();
       var results = lex('Hello \n\nWorld! []');
-      // expect(true).to.be(false)
       expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'WORDS TOKEN_VALUE_START "Hello " TOKEN_VALUE_END BREAK WORDS TOKEN_VALUE_START "World" TOKEN_VALUE_END WORDS TOKEN_VALUE_START "! " TOKEN_VALUE_END OPEN_BRACKET CLOSE_BRACKET EOF'
       );
@@ -42,7 +41,6 @@ describe('compiler', function() {
     it('should recognize headings', function() {
       var lex = Lexer();
       var results = lex('\n## my title');
-      // expect(true).to.be(false);
       expect(results.tokens.flat(Number.POSITIVE_INFINITY).join(' ')).to.eql(
         'BREAK HEADER_2 WORDS TOKEN_VALUE_START "my title" TOKEN_VALUE_END HEADER_END EOF'
       );
@@ -1249,25 +1247,29 @@ End text
       );
     });
 
-    // it('should respect linebreaks', async function() {
-    //   const input = `
-    //   How many
-    //   lines should
+    it('should respect linebreaks', async function() {
+      const input = `
+      How many
+      lines should
 
-    //   this text
-    //   be
-    //   on
-    //   ?
-    //   `;
-    //   expect(await compile(input)).to.eql(AST.convertV1ToV2(
-    //   [
-    //     ['TextContainer', [], [
-    //       ['code', [], [
-    //         '(n - 1)!/2 possible paths'
-    //       ]]
-    //     ]]
-    //   ]);
-    // });
+      this text
+      be
+      on
+      ?
+      `;
+      expect(await compile(input)).to.eql(
+        AST.convertV1ToV2([
+          [
+            'TextContainer',
+            [],
+            [
+              ['p', [], ['How many\n      lines should']],
+              ['p', [], ['this text\n      be\n      on\n      ?']]
+            ]
+          ]
+        ])
+      );
+    });
   });
 
   describe('error handling', function() {
