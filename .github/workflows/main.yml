@@ -19,7 +19,7 @@ jobs:
       - name: test module
         run: |
           yarn global add lerna
-          lerna bootstrap
+          lerna clean -y && lerna bootstrap
           cd packages/idyll-ast && yarn test && cd ../..
           cd packages/idyll-compiler && yarn test && cd ../..
           cd packages/idyll-components && yarn test && cd ../..
