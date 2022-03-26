@@ -3,8 +3,8 @@ const { getChildren, getNodeName, isTextNode } = require('idyll-ast');
 
 const RAW_NODES = ['pre', 'code', 'codehighlight', 'equation'];
 
-function smartQuotes(ast, options) {
-  if (options.smartquotes) {
+function smartQuotes(ast, context) {
+  if (context.smartquotes) {
     smartQuoteHelper(ast);
   }
   return ast;

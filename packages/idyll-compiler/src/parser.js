@@ -1,9 +1,7 @@
 const grammar = require('./grammar');
 const nearley = require('nearley');
 
-module.exports = function(input, tokenChunks, positions, options) {
-  options = options || {};
-
+module.exports = function(input, tokenChunks, positions) {
   const p = new nearley.Parser(grammar.ParserRules, grammar.ParserStart);
 
   const processToken = token => {

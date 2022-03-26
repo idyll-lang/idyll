@@ -1,8 +1,7 @@
-var expect = require('expect.js');
-var Lexer = require('../src/lexer');
-var compile = require('../src');
-var fs = require('fs');
-var AST = require('idyll-ast').converters;
+const expect = require('expect.js');
+const Lexer = require('../src/lexer');
+const compile = require('../src');
+const AST = require('idyll-ast').converters;
 
 function appendTextNode(ast, value) {
   ast.children.push({
@@ -1289,7 +1288,7 @@ End text
     it('should handle a synchronous post-processing plugin', async function() {
       const input = 'Hello World';
       const output = await compile(input, {
-        postProcessors: [ast => appendTextNode(ast, ':)')]
+        plugins: [ast => appendTextNode(ast, ':)')]
       });
 
       expect(output).to.eql(
@@ -1303,7 +1302,7 @@ End text
     it('should handle an asynchronous post-processing plugin', async function() {
       const input = 'Hello World';
       const output = await compile(input, {
-        postProcessors: [ast => Promise.resolve(appendTextNode(ast, ':)'))]
+        plugins: [ast => Promise.resolve(appendTextNode(ast, ':)'))]
       });
 
       expect(output).to.eql(
@@ -1317,7 +1316,7 @@ End text
     it('should handle multiple synchronous post-processing plugins', async function() {
       const input = 'Hello World';
       const output = await compile(input, {
-        postProcessors: [
+        plugins: [
           ast => appendTextNode(ast, ':)'),
           ast => appendTextNode(ast, ':(')
         ]
@@ -1335,7 +1334,7 @@ End text
     it('should handle multiple asynchronous post-processing plugins', async function() {
       const input = 'Hello World';
       const output = await compile(input, {
-        postProcessors: [
+        plugins: [
           ast => Promise.resolve(appendTextNode(ast, ':)')),
           ast => Promise.resolve(appendTextNode(ast, ':('))
         ]
@@ -1353,7 +1352,7 @@ End text
     it('should handle mixed synchronous and asynchronous post-processing plugins', async function() {
       const input = 'Hello World';
       const output = await compile(input, {
-        postProcessors: [
+        plugins: [
           ast => Promise.resolve(appendTextNode(ast, '1')),
           ast => appendTextNode(ast, '2'),
           ast => Promise.resolve(appendTextNode(ast, '3')),
