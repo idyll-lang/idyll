@@ -146,20 +146,25 @@ const idyll = (options = {}, cb) => {
   }
   Object.assign(opts, parentInputConfig.idyll, inputConfig.idyll, options);
 
-  // Resolve compiler plugins:
-  if (opts.compiler.postProcessors) {
-    opts.compiler.postProcessors = opts.compiler.postProcessors.map(
-      processor => {
-        try {
-          return require(require.resolve(processor, {
-            paths: [paths.INPUT_DIR]
-          }));
-        } catch (e) {
-          console.log(e);
-          console.warn('\n\nCould not find post-processor plugin: ', processor);
-        }
+  // Resolve compiler plugins
+  // Keep postProcessors for now backwards compatibility
+  const plugins = opts.compiler.plugins || opts.compiler.postProcessors;
+  if (plugins) {
+    opts.compiler.plugins = plugins.map(plugin => {
+      // if plugin is a function, use as-is
+      if (typeof plugin === 'function') {
+        return plugin;
       }
-    );
+      // otherwise resolve strings to node modules
+      try {
+        return require(require.resolve(plugin, {
+          paths: [paths.INPUT_DIR]
+        }));
+      } catch (e) {
+        console.log(e);
+        console.warn('\n\nCould not find compiler plugin: ', plugin);
+      }
+    });
   }
 
   // Resolve context:
