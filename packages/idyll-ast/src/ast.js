@@ -40,6 +40,11 @@ const DERIVED = 'derived';
  */
 const DATA = 'data';
 
+/**
+ * Node type string for meta nodes.
+ */
+const META = 'meta';
+
 // -- AST Nodes ----
 
 /**
@@ -107,6 +112,15 @@ function isComponentNode(node) {
  */
 function isVariableNode(node) {
   return node.type === VAR || node.type === DERIVED || node.type === DATA;
+}
+
+/**
+ * Test if a node is a meta node.
+ * @param {object} node The AST node.
+ * @return {boolean} True if the node is a mate node, false otherwise.
+ */
+function isMetaNode(node) {
+  return node.type === META;
 }
 
 /**
@@ -275,12 +289,44 @@ function setProperties(node, properties) {
 }
 
 /**
+ * Remove all properties from an AST node.
+ * @param {object} node The AST node.
+ * @returns {object} The modified AST node.
+ */
+function clearProperties(node) {
+  delete node.properties;
+  return node;
+}
+
+/**
  * Retrieves an array of property keys for a node.
  * @param {object} node The AST node.
  * @return {string[]} The property keys, or an empty array if none.
  */
 function getPropertyKeys(node) {
   return Object.keys(node.properties || {});
+}
+
+/**
+ * Retrieves the property type for a node property.
+ * @param {object} node The AST node.
+ * @param {string} key The property key.
+ * @return {string} The property type, or null if the property is not defined.
+ */
+function getPropertyType(node, key) {
+  const prop = getProperty(node, key);
+  return (prop && prop.type) || null;
+}
+
+/**
+ * Retrieves the property value for a node property.
+ * @param {object} node The AST node.
+ * @param {string} key The property key.
+ * @return {string} The property value, or null if the property is not defined.
+ */
+function getPropertyValue(node, key) {
+  const prop = getProperty(node, key);
+  return (prop && prop.value) || null;
 }
 
 /**
@@ -465,12 +511,14 @@ module.exports = {
   VAR,
   DERIVED,
   DATA,
+  META,
   createNode,
   createComponentNode,
   createTextNode,
   isTextNode,
   isComponentNode,
   isVariableNode,
+  isMetaNode,
   getNodeName,
   getNodeType,
   hasChildren,
@@ -485,7 +533,10 @@ module.exports = {
   hasProperties,
   getProperties,
   setProperties,
+  clearProperties,
   getPropertyKeys,
+  getPropertyType,
+  getPropertyValue,
   hasProperty,
   getProperty,
   setProperty,
