@@ -16,7 +16,7 @@ const defaultPlugins = [
   require('./plugins/auto-linkify')
 ];
 
-module.exports = function(input, context = {}) {
+module.exports = async function(input, context = {}) {
   // prepare compiler options
   context = Object.assign({ spellcheck: false, smartquotes: true }, context);
 
