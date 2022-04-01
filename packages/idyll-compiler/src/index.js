@@ -1,8 +1,7 @@
 import lexer from './lexer';
 import parse from './parser';
 
-import { converters } from 'idyll-ast';
-const { convertV1ToV2 } = converters;
+import { convertV1ToV2 } from 'idyll-ast';
 
 import parseFrontMatter from 'gray-matter';
 import cleanNewlines from './util/clean-newlines';

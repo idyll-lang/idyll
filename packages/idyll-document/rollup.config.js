@@ -4,11 +4,18 @@ import { babel } from '@rollup/plugin-babel';
 import builtins from 'rollup-plugin-node-builtins';
 
 const pkg = require('./package.json');
-const dependencies = Object.keys(pkg.dependencies || {});
+const dependencies = [
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.peerDependencies || {})
+];
 
 export default {
   input: 'src/index.js',
-  external: [/@babel\/runtime/, ...dependencies],
+  external: [/@babel\/runtime/, /csv-parse\/sync/, ...dependencies],
+  onwarn: function(warning, warn) {
+    if (warning.code === 'EVAL') return;
+    warn(warning);
+  },
   output: [
     {
       file: 'dist/cjs/index.js',

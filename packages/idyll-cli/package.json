@@ -28,7 +28,6 @@
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
     "@babel/register": "^7.17.7",
-    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "bluebird": "^3.5.0",
     "brfs-node-15": "^2.0.2",
     "browser-sync": "^2.27.9",
@@ -54,6 +53,7 @@
     "insert-css": "^2.0.0",
     "mkdirp": "^0.5.1",
     "mustache": "^2.3.0",
+    "node-stdlib-browser": "^1.2.0",
     "ora": "^2.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

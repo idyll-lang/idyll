@@ -176,12 +176,14 @@ exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
     try {
       components[key] = require(_components[key]);
     } catch (e) {
+      // console.log(e);
       try {
         components[key] = await import(_components[key]);
-      } catch (e) {
+      } catch (er) {
         console.warn(
           `Could not import component ${key} for server-side rendering.`
         );
+        console.error(er);
         components[key] = () => null;
       }
     }

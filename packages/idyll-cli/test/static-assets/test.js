@@ -119,7 +119,7 @@ describe('static assets', function() {
   });
 
   // it('creates the expected HTML', function(done) {
-  //   this.timeout(10000);
+  //   this.timeout(60000);
   //   const dom = new JSDOM(projectBuildResults['index.html'], {
   //     url: 'http://localhost:3000',
   //     referrer: 'http://localhost:3000',

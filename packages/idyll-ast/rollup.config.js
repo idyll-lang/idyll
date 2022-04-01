@@ -19,7 +19,8 @@ export default [
       {
         file: 'dist/esm/index.mjs',
         format: 'esm',
-        sourcemap: true
+        sourcemap: true,
+        exports: 'auto'
       }
     ],
     plugins: [
@@ -44,7 +45,8 @@ export default [
       {
         file: 'dist/esm/v1/index.mjs',
         format: 'esm',
-        sourcemap: true
+        sourcemap: true,
+        exports: 'auto'
       }
     ],
     plugins: [

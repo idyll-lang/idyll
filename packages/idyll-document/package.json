@@ -45,6 +45,7 @@
     "falafel": "^2.1.0",
     "fast-deep-equal": "^2.0.1",
     "html-tags": "^2.0.0",
+    "idyll-ast": "^2.2.6",
     "idyll-compiler": "^5.0.0-alpha.0",
     "idyll-layouts": "^3.0.7",
     "idyll-themes": "^3.1.10",

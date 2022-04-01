@@ -2,7 +2,7 @@ const idyll = require('../../');
 const fs = require('fs');
 const { join } = require('path');
 const rimraf = require('rimraf');
-const AST = require('idyll-ast').converters;
+const AST = require('idyll-ast');
 const expect = require('expect');
 
 const getFilenames = dir => {

@@ -2,8 +2,9 @@ const path = require('path');
 const fs = require('fs');
 const esbuild = require('esbuild');
 const createJSEntry = require('./create-js-entry');
-const NodeModulesPolyfills = require('@esbuild-plugins/node-modules-polyfill')
-  .default;
+
+const plugin = require('node-stdlib-browser/helpers/esbuild/plugin');
+const stdLibBrowser = require('node-stdlib-browser');
 
 /**
  * Returns the input package's node_modules directory.
@@ -44,8 +45,12 @@ module.exports = function(opts, paths, output) {
           NODE_DEBUG: process.env.NODE_DEBUG,
           NODE_ENV: process.env.NODE_ENV
         }
-      })
+      }),
+      global: 'global',
+      process: 'process',
+      Buffer: 'Buffer'
     },
-    plugins: [NodeModulesPolyfills()]
+    inject: [require.resolve('node-stdlib-browser/helpers/esbuild/shim')],
+    plugins: [plugin(stdLibBrowser)]
   });
 };
