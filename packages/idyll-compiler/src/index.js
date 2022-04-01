@@ -17,7 +17,7 @@ import cleanResults from './transformers/clean-results';
 import smartQuotes from './transformers/smart-quotes';
 import autoLinkify from './transformers/auto-linkify';
 
-const astTransformers = [
+const defaultPlugins = [
   hoistVariables,
   flattenChildren,
   makeFullWidth,
@@ -27,47 +27,40 @@ const astTransformers = [
   autoLinkify
 ];
 
-export default function(input, options, alias, callback) {
+export default async function(input, context = {}) {
   // prepare compiler options
-  options = Object.assign(
-    {},
-    { spellcheck: false, smartquotes: true },
-    options || {}
-  );
+  context = Object.assign({ spellcheck: false, smartquotes: true }, context);
 
   // pre-process input text
   input = cleanNewlines(input).trim();
 
-  // parse YAML front matter, discard for now
+  // parse YAML front matter
   const { content, data } = parseFrontMatter(input);
+  context.metadata = data || {};
 
   // perform lexing
-  const lex = lexer({}, alias);
+  const lex = lexer({}, context.alias);
   let lexResults = '';
   try {
     lexResults = lex(content);
   } catch (err) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
-    return new Promise((resolve, reject) => reject(err));
+    throw err;
   }
 
   // perform parsing to construct an Idyll AST
   let ast;
   try {
-    ast = parse(content, lexResults.tokens, lexResults.positions, options);
+    ast = parse(content, lexResults.tokens, lexResults.positions);
     ast = convertV1ToV2(ast);
   } catch (err) {
     console.warn(`\nError parsing Idyll markup:\n${err.message}`);
-    if (options.async) {
-      return new Promise((resolve, reject) => reject(err));
-    } else {
-      throw err;
-    }
+    throw err;
   }
 
   // construct AST transformation pipeline
-  const transform = pipeline(astTransformers, options.postProcessors || []);
+  const transform = pipeline(defaultPlugins, context.plugins || []);
 
   // apply AST transformations and return result
-  return transform(ast, options);
+  return transform(ast, context);
 }

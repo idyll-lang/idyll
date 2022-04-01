@@ -29,12 +29,12 @@ const build = (opts, paths, resolvers) => {
     }
   }
 
-  // opts.compilerOptions is kept for backwards compatability
-  return compile(
-    opts.inputString,
-    opts.compiler || opts.compilerOptions,
-    opts.alias
-  )
+  const context = {
+    ...opts.compiler,
+    paths,
+    alias: opts.alias
+  };
+  return compile(opts.inputString, context)
     .then(ast => {
       return Promise.try(async () => {
         const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');

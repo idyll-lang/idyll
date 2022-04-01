@@ -3,6 +3,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "test": "lerna run test",
     "postinstall": "cd packages/idyll-compiler && npm run build && cd ../idyll-components && npm run build && cd ../idyll-document && npm run build && cd ../idyll-layouts && npm run build && cd ../idyll-themes && npm run build && cd ../idyll-ast && npm run build"
   },
   "devDependencies": {
