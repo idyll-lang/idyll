@@ -8,6 +8,7 @@
     "css": "styles.css",
     "authorView": false
   },
+  "type": "module",
   "scripts": {
     "start": "idyll",
     "build": "idyll build",
