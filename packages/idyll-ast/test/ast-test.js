@@ -113,6 +113,18 @@ describe('ast', function() {
     });
   });
 
+  describe('isMetaNode', function() {
+    it('should return true if a node is a meta node', function() {
+      expect(util.isMetaNode({ type: 'meta' })).to.eql(true);
+    });
+
+    it('should return false if a node is not a meta node', function() {
+      expect(util.isMetaNode({ type: 'textnode', value: 'text' })).to.eql(
+        false
+      );
+    });
+  });
+
   describe('getNodeName', function() {
     it('should return name if a node is a component node', function() {
       expect(util.getNodeName({ type: 'component', name: 'p' })).to.eql('p');
@@ -312,9 +324,31 @@ describe('ast', function() {
     });
   });
 
+  describe('clearProperties', function() {
+    it('should remove all properties of a node', function() {
+      const node = createAnchorNode();
+      util.clearProperties(node);
+      expect(util.getProperties(node)).to.eql(null);
+    });
+  });
+
   describe('getPropertyKeys', function() {
     it('should return property keys of a node', function() {
-      expect(util.getPropertyKeys(createAnchorNode(0))).to.eql(['href']);
+      expect(util.getPropertyKeys(createAnchorNode())).to.eql(['href']);
+    });
+  });
+
+  describe('getPropertyType', function() {
+    it('should return the type of a node property', function() {
+      expect(util.getPropertyType(createAnchorNode(), 'href')).to.eql('value');
+    });
+  });
+
+  describe('getPropertyValue', function() {
+    it('should return the value of a node property', function() {
+      expect(util.getPropertyValue(createAnchorNode(), 'href')).to.eql(
+        'www.example.com'
+      );
     });
   });
 
