@@ -9,13 +9,13 @@ import cleanNewlines from './util/clean-newlines';
 import pipeline from './util/pipeline';
 
 // AST transformer imports
-import hoistVariables from './transformers/hoist-variables';
-import flattenChildren from './transformers/flatten-children';
-import makeFullWidth from './transformers/make-full-width';
-import wrapText from './transformers/wrap-text';
-import cleanResults from './transformers/clean-results';
-import smartQuotes from './transformers/smart-quotes';
-import autoLinkify from './transformers/auto-linkify';
+import hoistVariables from './plugins/hoist-variables';
+import flattenChildren from './plugins/flatten-children';
+import makeFullWidth from './plugins/make-full-width';
+import wrapText from './plugins/wrap-text';
+import cleanResults from './plugins/clean-results';
+import smartQuotes from './plugins/smart-quotes';
+import autoLinkify from './plugins/auto-linkify';
 
 const defaultPlugins = [
   hoistVariables,
