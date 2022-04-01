@@ -5,7 +5,7 @@ const os = require('os');
 
 const debug = require('debug')('idyll:cli');
 
-module.exports = paths => {
+module.exports = (paths, opts) => {
   const transformFolders = [
     ...paths.COMPONENT_DIRS,
     ...paths.DEFAULT_COMPONENT_DIRS
@@ -25,4 +25,12 @@ module.exports = paths => {
         return originalLoad.apply(Module, arguments);
     }
   };
+
+  if (opts.transformComponents) {
+    require('@babel/register')({
+      presets: ['@babel/env', '@babel/preset-react'],
+      babelrc: false,
+      only: isWindows ? undefined : transformFolders
+    });
+  }
 };

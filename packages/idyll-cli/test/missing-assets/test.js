@@ -36,6 +36,7 @@ function createWithOptions(opts) {
     css: customCSSPath,
     outputCSS: '__idyll_styles.css',
     outputJS: '__idyll_index.js',
+    transformComponents: true,
     compiler: {
       spellcheck: false
     },

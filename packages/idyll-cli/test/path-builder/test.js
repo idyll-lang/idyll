@@ -28,6 +28,7 @@ function opts(inputPath, outputPath) {
     output: 'build',
     outputCSS: 'idyll_styles.css',
     outputJS: 'idyll_index.js',
+    transformComponents: true,
     port: 3000,
     temp: '.idyll',
     template: '',

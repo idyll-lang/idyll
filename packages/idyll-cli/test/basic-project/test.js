@@ -54,6 +54,7 @@ before(function(done) {
     css: join(PROJECT_DIR, 'styles.css'),
     googleFonts: ['Hanalei Fill'],
     favicon: 'static/favicon.ico',
+    transformComponents: true,
     compiler: {
       spellcheck: false
     },
@@ -90,6 +91,7 @@ it('options work as expected', () => {
     defaultComponents: dirname(require.resolve('idyll-components')),
     temp: '.idyll',
     template: resolve(join(__dirname, '/../../src/client/_index.html')),
+    transformComponents: true,
     datasets: join(PROJECT_DIR, 'data'),
     static: 'static',
     staticOutputDir: 'static',

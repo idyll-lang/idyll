@@ -43,6 +43,7 @@ describe('batteries-included project', function() {
     idyll({
       inputFile: join(PROJECT_DIR, 'index.idl'),
       output: PROJECT_BUILD_DIR,
+      transformComponents: true,
       compiler: {
         spellcheck: false
       },
