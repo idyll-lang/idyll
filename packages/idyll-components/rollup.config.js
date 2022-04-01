@@ -3,10 +3,17 @@ import { babel } from '@rollup/plugin-babel';
 import fs from 'fs';
 import path from 'path';
 
+const pkg = require('./package.json');
+const dependencies = [
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.peerDependencies || {})
+];
+
 const builds = [];
 fs.readdirSync(`${__dirname}/src/`).forEach(file => {
   builds.push({
     input: `src/${file}`,
+    external: [/@babel\/runtime/, /react-syntax-highlighter/, ...dependencies],
     output: [
       {
         file: `dist/cjs/${file}`,

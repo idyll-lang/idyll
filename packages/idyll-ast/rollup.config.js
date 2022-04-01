@@ -2,9 +2,13 @@ import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
 
+const pkg = require('./package.json');
+const dependencies = Object.keys(pkg.dependencies || {});
+
 export default [
   {
     input: 'src/index.js',
+    external: [/@babel\/runtime/, ...dependencies],
     output: [
       {
         file: 'dist/cjs/index.js',
@@ -29,6 +33,7 @@ export default [
   },
   {
     input: 'v1/src/index.js',
+    external: [/@babel\/runtime/, ...dependencies],
     output: [
       {
         file: 'dist/cjs/v1/index.js',
