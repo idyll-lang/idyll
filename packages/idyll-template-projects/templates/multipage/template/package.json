@@ -2,6 +2,7 @@
   "name": "idyll-basic-template",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "idyll": {
     "theme": "idyll",
     "layout": "centered",
@@ -16,7 +17,7 @@
   "dependencies": {
     "idyll": "^5.0.0",
     "idyll-d3-component": "^2.0.0",
-    "d3": "^6.7.0",
+    "d3": "7",
     "d3-selection": "^2.0.0",
     "d3-transition": "^2.0.0"
   },
