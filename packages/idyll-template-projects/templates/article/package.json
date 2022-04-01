@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "idyll": {
-    "theme": "default",
+    "theme": "idyll",
     "layout": "centered",
     "css": "styles.css",
     "authorView": false
