@@ -16,7 +16,9 @@ function resolveWithBase(base) {
 }
 
 module.exports = function(opts) {
-  const projectBaseDir = getBaseDir(opts.inputFile);
+  const projectBaseDir = getBaseDir(
+    opts.inputFile || (opts.inputDir ? opts.inputDir + '/.' : null)
+  );
   const resolveWithProjBase = resolveWithBase(projectBaseDir);
 
   const getComponentDirs = paths => {
