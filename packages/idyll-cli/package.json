@@ -32,7 +32,6 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.24.1",
     "babelify": "^7.3.0",
-    "bluebird": "^3.5.0",
     "brfs-node-15": "^2.0.2",
     "browser-sync": "^2.27.9",
     "browserify": "^17.0.0",
