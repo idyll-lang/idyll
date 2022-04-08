@@ -65,11 +65,7 @@ function getAST() {
       []
     ],
     ['Display', [['value', ['variable', 'exampleVar']]], []],
-    [
-      'CodeHighlight',
-      [['language', ['value', 'js']]],
-      ['var code = true;']
-    ],
+    ['CodeHighlight', [['language', ['value', 'js']]], ['var code = true;']],
     ['p', [], ['And here is a custom component:']],
     ['CustomComponent', [], []],
     [
@@ -143,7 +139,7 @@ const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 let output;
 let idyll;
 
-before(function (done) {
+before(function(done) {
   this.timeout(60000);
   rimraf.sync(PROJECT_BUILD_DIR);
   rimraf.sync(PROJECT_IDYLL_CACHE);
@@ -159,6 +155,7 @@ before(function (done) {
     css: join(PROJECT_DIR, 'styles.css'),
     googleFonts: ['Hanalei Fill'],
     favicon: 'static/favicon.ico',
+    transformComponents: true,
     compiler: {
       spellcheck: false
     },
@@ -200,7 +197,7 @@ it('options work as expected', () => {
     static: 'static',
     staticOutputDir: 'static',
     transform: [],
-    transformComponents: false,
+    transformComponents: true,
     port: 3000,
     googleFonts: ['Hanalei Fill'],
     outputCSS: 'idyll_styles.css',
