@@ -3,7 +3,6 @@ const { writeFile } = fs.promises;
 const { copy, pathExists } = require('fs-extra');
 const { isVariableNode } = require('idyll-ast');
 const compile = require('idyll-compiler');
-const Terser = require('terser');
 const { paramCase } = require('change-case');
 const debug = require('debug')('idyll:cli');
 const { ComponentResolver } = require('../resolvers');
@@ -84,9 +83,9 @@ const build = async (opts, paths, resolvers) => {
     }
   };
   if (!opts.ssr) {
-    output.html = getBaseHTML(ast, template, opts);
+    output.html = await getBaseHTML(ast, template, opts);
   } else {
-    output.html = getHTML(
+    output.html = await getHTML(
       paths,
       ast,
       output.components,
@@ -96,19 +95,10 @@ const build = async (opts, paths, resolvers) => {
     );
   }
 
-  let js = await bundleJS(opts, paths, output); // create index.js bundle
-
-  // minify bundle if necessary and store it
-  if (opts.minify) {
-    js = Terser.minify(js, {
-      mangle: { keep_fnames: true }
-    }).code;
-  }
-  output.js = js;
+  bundleJS(opts, paths, output);
 
   // write output
   await Promise.all([
-    writeFile(paths.JS_OUTPUT_FILE, output.js),
     writeFile(paths.CSS_OUTPUT_FILE, output.css),
     writeFile(paths.HTML_OUTPUT_FILE, output.html),
     pathExists(paths.STATIC_DIR)

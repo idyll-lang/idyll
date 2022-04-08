@@ -268,7 +268,7 @@ const removeProperty = function(node, key) {
   return node;
 };
 
-module.exports = {
+export {
   appendNode,
   appendNodes,
   createNode,

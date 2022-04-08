@@ -7,7 +7,7 @@ class RoughComponent extends React.Component {
 
     this.setSvgRef = element => {
       this.svg = element;
-    }
+    };
   }
 
   componentDidMount() {
@@ -16,7 +16,7 @@ class RoughComponent extends React.Component {
       rc.circle(50, 50, 80, { fill: 'red' }), // fill with red hachure
       rc.rectangle(120, 15, 80, 80, { fill: 'red' }),
       rc.circle(50, 150, 80, {
-        fill: "rgb(10,150,10)",
+        fill: 'rgb(10,150,10)',
         fillWeight: 3 // thicker lines for hachure
       }),
       rc.rectangle(220, 15, 80, 80, {
@@ -31,14 +31,11 @@ class RoughComponent extends React.Component {
     ];
     nodes.forEach(node => {
       this.svg.appendChild(node);
-    })
+    });
   }
 
   render() {
-    return (
-      <svg width='400' height='400' ref={this.setSvgRef}>
-      </svg>
-    );
+    return <svg width="400" height="400" ref={this.setSvgRef} />;
   }
 }
 

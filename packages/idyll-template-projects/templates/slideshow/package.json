@@ -2,13 +2,14 @@
   "name": "slideshow",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "idyll": {
-    "theme": "default",
+    "theme": "idyll",
     "layout": "blog",
     "css": "styles.css"
   },
   "dependencies": {
-    "d3": "^6.7.0",
+    "d3": "7",
     "d3-selection": "^2.0.0",
     "d3-transition": "^2.0.0",
     "idyll": "^5.0.0",

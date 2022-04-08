@@ -2,15 +2,16 @@
   "name": "post-1",
   "version": "1.0.0",
   "license": "MIT",
+  "type": "module",
   "idyll": {
-    "theme": "default",
+    "theme": "idyll",
     "layout": "centered",
     "css": "styles.css",
     "authorView": false,
     "output": "docs/"
   },
   "dependencies": {
-    "d3": "^6.7.0",
+    "d3": "7",
     "d3-selection": "^2.0.0",
     "d3-transition": "^2.0.0",
     "idyll": "^5.0.0",

@@ -1,3 +1,17 @@
 {
-  "presets": [ "./.babelrc.js" ]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": { "esmodules": false, "node": "current" }
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "ignore": [
+    "node_modules/**"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime"
+  ]
 }

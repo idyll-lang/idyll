@@ -476,15 +476,17 @@ class IdyllRuntime extends React.PureComponent {
         const { idyllASTNode, ...rest } = node;
         return rest;
       }
-      const {
+      let {
         component,
         children,
         idyllASTNode,
         key,
-        __vars__ = {},
-        __expr__ = {},
+        __vars__,
+        __expr__,
         ...props // actual component props
       } = node;
+      __vars__ = __vars__ || {};
+      __expr__ = __expr__ || {};
 
       // assign the initial values for tracked vars and expressions
       Object.keys(props).forEach(k => {

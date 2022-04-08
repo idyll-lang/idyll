@@ -12,4 +12,4 @@ Graphic._idyll = {
   tagType: 'open'
 };
 
-module.exports = Graphic;
+export default Graphic;

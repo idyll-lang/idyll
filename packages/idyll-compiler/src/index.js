@@ -1,22 +1,32 @@
-const lexer = require('./lexer');
-const parse = require('./parser');
-const { convertV1ToV2 } = require('idyll-ast').converters;
-const parseFrontMatter = require('gray-matter');
+import lexer from './lexer';
+import parse from './parser';
 
-const cleanNewlines = require('./util/clean-newlines');
-const pipeline = require('./util/pipeline');
+import { convertV1ToV2 } from 'idyll-ast';
+
+import parseFrontMatter from 'gray-matter';
+import cleanNewlines from './util/clean-newlines';
+import pipeline from './util/pipeline';
+
+// AST transformer imports
+import hoistVariables from './plugins/hoist-variables';
+import flattenChildren from './plugins/flatten-children';
+import makeFullWidth from './plugins/make-full-width';
+import wrapText from './plugins/wrap-text';
+import cleanResults from './plugins/clean-results';
+import smartQuotes from './plugins/smart-quotes';
+import autoLinkify from './plugins/auto-linkify';
 
 const defaultPlugins = [
-  require('./plugins/hoist-variables'),
-  require('./plugins/flatten-children'),
-  require('./plugins/make-full-width'),
-  require('./plugins/wrap-text'),
-  require('./plugins/clean-results'),
-  require('./plugins/smart-quotes'),
-  require('./plugins/auto-linkify')
+  hoistVariables,
+  flattenChildren,
+  makeFullWidth,
+  wrapText,
+  cleanResults,
+  smartQuotes,
+  autoLinkify
 ];
 
-module.exports = async function(input, context = {}) {
+export default async function(input, context = {}) {
   // prepare compiler options
   context = Object.assign({ spellcheck: false, smartquotes: true }, context);
 
@@ -52,4 +62,4 @@ module.exports = async function(input, context = {}) {
 
   // apply AST transformations and return result
   return transform(ast, context);
-};
+}

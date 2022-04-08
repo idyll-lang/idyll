@@ -3,10 +3,12 @@ const { dirname, basename, extname, join } = require('path');
 const EventEmitter = require('events');
 const mkdirp = require('mkdirp');
 const commandLineArgs = require('command-line-args');
+const os = require('os');
 
 const pathBuilder = require('./path-builder');
 const configureNode = require('./node-config');
 const pipeline = require('./pipeline');
+
 const { ComponentResolver, DataResolver, CSSResolver } = require('./resolvers');
 
 const debug = require('debug')('idyll:cli');
@@ -106,6 +108,7 @@ const idyll = (options = {}, cb) => {
       temp: '.idyll',
       template: join(__dirname, 'client', '_index.html'),
       transform: [],
+      transformComponents: false,
       compiler: {},
       compileLibs: false,
       env: commandLineOptions.env
@@ -117,7 +120,7 @@ const idyll = (options = {}, cb) => {
   debug('Reading from paths:', paths);
 
   createDirectories(paths);
-  configureNode(paths);
+  configureNode(paths, opts);
 
   const inputPackage = fs.existsSync(paths.PACKAGE_FILE)
     ? require(paths.PACKAGE_FILE)

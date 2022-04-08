@@ -1,12 +1,12 @@
-const htmlTags = require('html-tags');
-const {
+import htmlTags from 'html-tags';
+import {
   VALUE,
   EXPRESSION,
   VARIABLE,
   getChildren,
   hasChildren,
   isComponentNode
-} = require('./ast');
+} from './ast';
 
 /**
  * Convert an AST to valid Idyll markup.
@@ -200,4 +200,4 @@ function propertyToString(property) {
   }
 }
 
-module.exports = toMarkup;
+export { toMarkup };

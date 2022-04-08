@@ -1,4 +1,4 @@
-const {
+import {
   VAR,
   DERIVED,
   DATA,
@@ -6,7 +6,7 @@ const {
   prependChildren,
   queryNodes,
   removeNodes
-} = require('idyll-ast');
+} from 'idyll-ast';
 
 const rank = {
   [VAR]: 0,
@@ -24,4 +24,4 @@ function hoistVariables(ast) {
   return ast;
 }
 
-module.exports = hoistVariables;
+export default hoistVariables;

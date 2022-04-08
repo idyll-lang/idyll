@@ -18,12 +18,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: test module
         run: |
-          npm i -g lerna
-          lerna bootstrap
-          cd packages/idyll-ast && npm test && cd ../..
-          cd packages/idyll-compiler && npm test && cd ../..
-          cd packages/idyll-components && npm test && cd ../..
-          cd packages/idyll-cli && npm test && cd ../..
-          cd packages/idyll-document && npm test && cd ../..
-          cd packages/idyll-layouts && npm test && cd ../..
-          cd packages/idyll-themes && npm test && cd ../..
+          yarn global add lerna
+          lerna clean -y && lerna bootstrap
+          cd packages/idyll-ast && yarn test && cd ../..
+          cd packages/idyll-compiler && yarn test && cd ../..
+          cd packages/idyll-components && yarn test && cd ../..
+          cd packages/idyll-document && yarn test && cd ../..
+          cd packages/idyll-layouts && yarn test && cd ../..
+          cd packages/idyll-themes && yarn test && cd ../..
+          cd packages/idyll-cli && yarn test && cd ../..

@@ -22,8 +22,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged",
-      "pre-push": "lerna run test"
+      "pre-commit": "pretty-quick --staged"
     }
   }
 }

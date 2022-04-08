@@ -1,5 +1,5 @@
-const schema = require('./ast.schema.json');
-const Ajv = require('ajv');
+import schema from './ast.schema.json';
+import Ajv from 'ajv';
 
 const ajv = new Ajv();
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
@@ -48,7 +48,4 @@ function validateProperties(properties) {
   }
 }
 
-module.exports = {
-  validateNode,
-  validateProperties
-};
+export { validateNode, validateProperties };

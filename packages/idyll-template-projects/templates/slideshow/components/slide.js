@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import TextContainer from 'idyll-components/dist/cjs/text-container';
 
 class Slide extends React.Component {
@@ -12,4 +12,4 @@ class Slide extends React.Component {
   }
 }
 
-module.exports = Slide;
+export default Slide;

@@ -1,7 +1,7 @@
-import React from 'react';
-import { mount, shallow } from 'enzyme';
+const React = require('react');
+const { mount, shallow } = require('enzyme');
 
-import {
+const {
   Action,
   Analytics,
   Annotation,
@@ -45,7 +45,7 @@ import {
   Desmos,
   Cite,
   References
-} from '../src/';
+} = require('../dist/cjs/index.js');
 
 describe('Sanity Check', () => {
   describe('Shallow Mount', () => {

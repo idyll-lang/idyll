@@ -1,5 +1,3 @@
-import React from 'react';
-import { mount, shallow } from 'enzyme';
 import * as components from 'idyll-components';
 
 import ReactJsonSchema from '../src/utils/schema2element';
@@ -25,6 +23,6 @@ describe('ReactJsonSchema', () => {
   it('can parse a schema', () => {
     const rjs = new ReactJsonSchema(components);
     const tree = rjs.parseSchema({ component: 'div', children: schema });
-    expect(shallow(tree)).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
   });
 });

@@ -2,16 +2,24 @@
   "name": "idyll-components",
   "version": "6.0.0-alpha.0",
   "description": "Components that ship by default in new Idyll projects",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "default": "./dist/esm/index.mjs"
+    }
+  },
   "main": "dist/cjs/index.js",
-  "module": "dist/es/index.js",
+  "module": "dist/esm/index.mjs",
+  "type": "commonjs",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build:cjs": "cross-env BABEL_ENV=cjs babel src -d dist/cjs",
-    "build:es": "cross-env BABEL_ENV=es babel src -d dist/es",
-    "build": "npm run build:cjs && npm run build:es",
-    "dev": "concurrently \"yarn run build:es --watch\" \"yarn run build:cjs --watch\"",
+    "build": "rollup -c rollup.config.js",
+    "dev": "rollup -c rollup.config.js -w",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "npm run build && jest"
+  },
+  "resolutions": {
+    "jest-environment-jsdom": "27.3.1"
   },
   "jest": {
     "setupFiles": [
@@ -19,7 +27,8 @@
     ],
     "testMatch": [
       "**/test/**/*.js"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "repository": {
     "type": "git",
@@ -58,17 +67,21 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.0.2",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
-    "babel-cli": "6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-react": "^6.24.1",
+    "babel-jest": "^27.5.1",
     "concurrently": "^4.1.0",
     "cross-env": "^5.0.5",
     "enzyme": "^3.0.0",
-    "jest": "^20.0.4",
+    "jest": "27",
+    "jest-environment-jsdom": "^27",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "rollup": "^2.70.0"
   }
 }

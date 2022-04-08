@@ -126,6 +126,6 @@ Cite._idyll = {
     }
   ]
 };
-export { References };
+
 Cite.References = References;
 export default Cite;

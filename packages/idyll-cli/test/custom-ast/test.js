@@ -1,10 +1,9 @@
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000; // 30 second timeout
-
 const Idyll = require('../../');
 const fs = require('fs');
 const { join, resolve, dirname } = require('path');
 const rimraf = require('rimraf');
-const AST = require('idyll-ast').converters;
+const AST = require('idyll-ast');
+const expect = require('expect');
 
 function getAST() {
   const vars = [
@@ -66,11 +65,7 @@ function getAST() {
       []
     ],
     ['Display', [['value', ['variable', 'exampleVar']]], []],
-    [
-      'CodeHighlight',
-      [['language', ['value', 'js']]],
-      ['var code = true;']
-    ],
+    ['CodeHighlight', [['language', ['value', 'js']]], ['var code = true;']],
     ['p', [], ['And here is a custom component:']],
     ['CustomComponent', [], []],
     [
@@ -141,15 +136,13 @@ const EXPECTED_BUILD_DIR = join(EXPECTED_DIR, 'build');
 const EXPECTED_BUILD_FILENAMES = getFilenames(EXPECTED_BUILD_DIR);
 const EXPECTED_BUILD_RESULTS = dirToHash(EXPECTED_BUILD_DIR);
 
-beforeAll(() => {
-  rimraf.sync(PROJECT_BUILD_DIR);
-  rimraf.sync(PROJECT_IDYLL_CACHE);
-});
-
 let output;
 let idyll;
 
-beforeAll(done => {
+before(function(done) {
+  this.timeout(60000);
+  rimraf.sync(PROJECT_BUILD_DIR);
+  rimraf.sync(PROJECT_IDYLL_CACHE);
   idyll = Idyll({
     ast: getAST(),
     inputDir: PROJECT_DIR,
@@ -162,6 +155,7 @@ beforeAll(done => {
     css: join(PROJECT_DIR, 'styles.css'),
     googleFonts: ['Hanalei Fill'],
     favicon: 'static/favicon.ico',
+    transformComponents: true,
     compiler: {
       spellcheck: false
     },
@@ -178,7 +172,7 @@ beforeAll(done => {
     .build();
 });
 
-test('options work as expected', () => {
+it('options work as expected', () => {
   expect(idyll.getOptions()).toEqual({
     alias: {
       PackageJsonComponentTest: 'CustomComponent'
@@ -203,6 +197,7 @@ test('options work as expected', () => {
     static: 'static',
     staticOutputDir: 'static',
     transform: [],
+    transformComponents: true,
     port: 3000,
     googleFonts: ['Hanalei Fill'],
     outputCSS: 'idyll_styles.css',
@@ -214,32 +209,32 @@ test('options work as expected', () => {
   });
 });
 
-test('creates the expected files', () => {
+it('creates the expected files', () => {
   expect(projectBuildFilenames).toEqual(EXPECTED_BUILD_FILENAMES);
 });
 
-test('creates the expected HTML', () => {
+it('creates the expected HTML', () => {
   expect(projectBuildResults['index.html']).toEqual(
     EXPECTED_BUILD_RESULTS['index.html']
   );
 });
 
-test('should construct the AST properly', () => {
+it('should construct the AST properly', () => {
   expect(output.ast).toEqual(getAST());
 });
 
-test('should include npm components', () => {
+it('should include npm components', () => {
   expect(Object.keys(output.components)).toContain('react-simple-pie-chart');
 });
 
-test('should include components configured in package.json', () => {
+it('should include components configured in package.json', () => {
   expect(Object.keys(output.components)).toContain(
     'package-json-component-test'
   );
 });
 
 // Tests for default and custom components
-test('Idyll getComponents() gets all default & custom components', () => {
+it('Idyll getComponents() gets all default & custom components', () => {
   var defaultComponentsDirectory =
     __dirname + '/../../../idyll-components/src/';
   var idyllComponents = idyll.getComponents();
@@ -262,7 +257,7 @@ test('Idyll getComponents() gets all default & custom components', () => {
 
 // Tests that getDatasets returns all datasets
 // in an Idyll project
-test('Idyll getDatasets() gets all default datasets', () => {
+it('Idyll getDatasets() gets all default datasets', () => {
   var datasets = idyll.getDatasets();
   var datasetNames = datasets.map(dataset => dataset.name);
   var thisDatasetPath = __dirname + '/src/data/';

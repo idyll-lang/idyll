@@ -26,4 +26,5 @@ Conditional._idyll = {
     }
   ]
 };
-module.exports = Conditional;
+
+export default Conditional;

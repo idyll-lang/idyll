@@ -517,4 +517,4 @@ const lex = function(options, alias = {}) {
   };
 };
 
-module.exports = lex;
+export default lex;

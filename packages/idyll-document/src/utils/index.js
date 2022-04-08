@@ -1,5 +1,5 @@
-const falafel = require('falafel');
-const parse = require('csv-parse/lib/es5/sync');
+import falafel from 'falafel';
+import { parse } from 'csv-parse/sync';
 
 const {
   cloneNode,

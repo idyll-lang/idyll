@@ -167,16 +167,31 @@ exports.getBaseHTML = (ast, template, opts) => {
   );
 };
 
-exports.getHTML = (paths, ast, _components, datasets, template, opts) => {
+exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
   const components = {};
-  Object.keys(_components).forEach(key => {
+
+  for (key of Object.keys(_components)) {
+    // .forEach(key => {
     delete require.cache[require.resolve(_components[key])];
-    components[key] = require(_components[key]);
-  });
+    try {
+      components[key] = require(_components[key]);
+    } catch (e) {
+      // console.log(e);
+      try {
+        components[key] = await import(_components[key]);
+      } catch (er) {
+        console.warn(
+          `Could not import component ${key} for server-side rendering.`
+        );
+        console.error(er);
+        components[key] = () => null;
+      }
+    }
+  }
   exports.getHighlightJS(ast, paths, true);
   const ReactDOMServer = require('react-dom/server');
   const React = require('react');
-  const IdyllDocument = require('idyll-document').default;
+  const IdyllDocument = require('idyll-document');
   const meta = parseMeta(ast);
   const context = require(opts.context
     ? opts.context

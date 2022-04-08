@@ -1,11 +1,6 @@
-const React = require('react');
-const D3Component = require('idyll-d3-component');
-const d3 = Object.assign(
-  {},
-  require('d3'),
-  require('d3-transition'),
-  require('d3-selection')
-);
+import React from 'react';
+import D3Component from 'idyll-d3-component';
+import * as d3 from 'd3';
 
 const size = 600;
 
@@ -34,4 +29,4 @@ class CustomD3Component extends D3Component {
   }
 }
 
-module.exports = CustomD3Component;
+export default CustomD3Component;
