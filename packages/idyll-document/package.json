@@ -33,7 +33,6 @@
     "csv-parse": "^4.8.2",
     "falafel": "^2.1.0",
     "fast-deep-equal": "^2.0.1",
-    "html-tags": "^2.0.0",
     "idyll-compiler": "^5.0.0-alpha.0",
     "idyll-layouts": "^3.0.7",
     "idyll-themes": "^3.1.10",
@@ -42,8 +41,7 @@
     "react-dom-factories": "^1.0.1",
     "react-tooltip": "4.2.15",
     "scrollmonitor": "1.2.3",
-    "scrollparent": "^2.0.1",
-    "styled-jsx": "^2.2.4"
+    "scrollparent": "^2.0.1"
   },
   "devDependencies": {
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",

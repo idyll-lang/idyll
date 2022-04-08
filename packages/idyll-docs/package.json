@@ -17,8 +17,6 @@
     "start": "NODE_ENV=production next"
   },
   "dependencies": {
-    "cords": "^1.0.4",
-    "cors": "^2.8.4",
     "draft-js": "^0.11.7",
     "fontfaceobserver": "^2.0.13",
     "html-react-parser": "^1.4.8",
@@ -32,9 +30,7 @@
     "react-ga": "^2.4.1",
     "react-highlight": "^0.12.0",
     "showdown": "^1.8.6",
-    "superagent": "^3.8.2",
-    "uuid": "^3.2.1",
-    "whatwg-fetch": "^2.0.3"
+    "superagent": "^3.8.2"
   },
   "devDependencies": {
     "babel-plugin-convert-to-json": "^0.1.0",
