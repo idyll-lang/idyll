@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "brfs-node-15": "^2.0.2",
     "browser-sync": "^2.27.9",
     "bs-pretty-message": "^1.0.8",
