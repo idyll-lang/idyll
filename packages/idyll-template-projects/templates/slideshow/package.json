@@ -12,7 +12,7 @@
     "d3": "7",
     "d3-selection": "^2.0.0",
     "d3-transition": "^2.0.0",
-    "idyll": "^idyll@6.0.0-alpha.3",
+    "idyll": "6.0.0-alpha.4",
     "idyll-d3-component": "^2.0.0",
     "react-map-gl": "^5.0.3",
     "vega": "^5.4.0",
