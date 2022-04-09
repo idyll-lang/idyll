@@ -27,6 +27,12 @@
   },
   "homepage": "https://github.com/idyll-lang/idyll#readme",
   "dependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/register": "^7.17.7",
+    "@babel/runtime": "^7.17.9",
     "brfs-node-15": "^2.0.2",
     "browser-sync": "^2.27.9",
     "bs-pretty-message": "^1.0.8",
@@ -66,11 +72,6 @@
     "yargs": "^13.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
-    "@babel/register": "^7.17.7",
     "cross-env": "^7.0.3",
     "expect": "^27.5.1",
     "jsdom": "^11.10.0",
