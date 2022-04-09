@@ -1,6 +1,6 @@
 {
   "name": "idyll-layouts",
-  "version": "3.0.7",
+  "version": "4.0.0-alpha.0",
   "description": "Default layouts for Idyll",
   "exports": {
     ".": {
