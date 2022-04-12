@@ -1,6 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const pkg = require('./package.json');
 const dependencies = Object.keys(pkg.dependencies || {});
@@ -28,7 +29,10 @@ export default [
         babelHelpers: 'runtime',
         exclude: 'node_modules/**' // only transpile our source code
       }),
-      json(),
+      json({
+        compact: true
+      }),
+      nodeResolve(),
       commonjs()
     ]
   },
@@ -54,7 +58,9 @@ export default [
         babelHelpers: 'runtime',
         exclude: 'node_modules/**' // only transpile our source code
       }),
-      json(),
+      json({
+        compact: true
+      }),
       commonjs()
     ]
   }

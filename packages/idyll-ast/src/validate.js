@@ -1,8 +1,9 @@
 import schema from './ast.schema.json';
 import Ajv from 'ajv';
+import metaSchema from 'ajv/lib/refs/json-schema-draft-06.json';
 
 const ajv = new Ajv();
-ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
+ajv.addMetaSchema(metaSchema);
 
 let astValidator;
 let propValidator;
