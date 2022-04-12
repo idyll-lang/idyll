@@ -1,6 +1,6 @@
 {
   "name": "idyll-document",
-  "version": "4.0.0-alpha.2",
+  "version": "4.0.0-alpha.3",
   "license": "MIT",
   "authors": [
     "Matthew Conlen",
@@ -44,8 +44,8 @@
     "csv-parse": "5",
     "falafel": "^2.1.0",
     "fast-deep-equal": "^2.0.1",
-    "idyll-ast": "^3.0.0-alpha.0",
-    "idyll-compiler": "^5.0.0-alpha.1",
+    "idyll-ast": "^3.0.0-alpha.1",
+    "idyll-compiler": "^5.0.0-alpha.2",
     "idyll-layouts": "^4.0.0-alpha.0",
     "idyll-themes": "^4.0.0-alpha.0",
     "object.entries": "^1.0.4",
