@@ -54,7 +54,6 @@ before(function(done) {
     css: join(PROJECT_DIR, 'styles.css'),
     googleFonts: ['Hanalei Fill'],
     favicon: 'static/favicon.ico',
-    transformComponents: true,
     compiler: {
       spellcheck: false
     },
