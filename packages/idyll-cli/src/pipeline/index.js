@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { writeFile, readdir } = fs.promises;
+const { writeFile } = fs.promises;
 const { copy, pathExists } = require('fs-extra');
 const { isVariableNode } = require('idyll-ast');
 const compile = require('idyll-compiler');
