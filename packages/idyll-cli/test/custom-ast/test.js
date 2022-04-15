@@ -197,7 +197,7 @@ it('options work as expected', () => {
     static: 'static',
     staticOutputDir: 'static',
     transform: [],
-    transformComponents: true,
+    compileUserComponents: true,
     port: 3000,
     googleFonts: ['Hanalei Fill'],
     outputCSS: 'idyll_styles.css',

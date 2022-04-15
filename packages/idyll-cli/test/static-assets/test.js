@@ -100,7 +100,7 @@ describe('static assets', function() {
       components: join(PROJECT_DIR, 'components'),
       css: join(PROJECT_DIR, 'styles.css'),
       defaultComponents: dirname(require.resolve('idyll-components')),
-      transformComponents: true,
+      compileUserComponents: true,
       temp: '.idyll',
       static: 'static',
       staticOutputDir: 'static',
