@@ -1,6 +1,7 @@
 {
   "name": "missing-assets",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "start": "idyll index.idl --watch --template index.html --css styles.css --layout centered --theme github --spellcheck",
     "build": "idyll index.idl --template index.html --layout centered --theme ./custom-theme.css --css styles.css"

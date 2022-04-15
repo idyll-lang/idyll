@@ -70,7 +70,7 @@ class ReactJsonSchema {
       if (!Component) Component = componentMap[pascalCase(name)];
 
       for (let i = 0; i < subs.length; i++) {
-        Component = Component[subs[i]];
+        Component = Component.default[subs[i]] || Component[subs[i]];
       }
     }
 

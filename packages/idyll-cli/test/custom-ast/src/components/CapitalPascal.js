@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class PascalComponent extends React.PureComponent {
   render() {
@@ -8,4 +8,4 @@ class PascalComponent extends React.PureComponent {
   }
 }
 
-module.exports = PascalComponent;
+export default PascalComponent;

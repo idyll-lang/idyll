@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { readdir, writeFile } = fs.promises;
-const { ensureDir } = require('fs-extra');
+const { ensureDir, pathExists } = require('fs-extra');
 const path = require('path');
 const babel = require('@babel/core');
 
@@ -9,6 +9,10 @@ module.exports = async paths => {
   const tempComponentDir = path.join(paths.TMP_DIR, 'components');
   await ensureDir(tempComponentDir);
   for (const dir of paths.COMPONENT_DIRS) {
+    const hasPath = await pathExists(dir);
+    if (!hasPath) {
+      continue;
+    }
     const tempComponentSubdir = path.join(
       tempComponentDir,
       `${componentDirIndex}`

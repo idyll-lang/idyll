@@ -173,10 +173,10 @@ exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
   for (key of Object.keys(_components)) {
     // .forEach(key => {
     delete require.cache[require.resolve(_components[key])];
+
     try {
       components[key] = require(_components[key]);
     } catch (e) {
-      // console.log(e);
       try {
         components[key] = await import(_components[key]);
       } catch (er) {

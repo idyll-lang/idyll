@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 
 class CustomComponent extends React.PureComponent {
   render() {
@@ -7,9 +7,9 @@ class CustomComponent extends React.PureComponent {
   }
 }
 
-module.exports = CustomComponent;
+export default CustomComponent;
 
-module.exports.IndexedComponent = class extends React.PureComponent {
+CustomComponent.IndexedComponent = class extends React.PureComponent {
   render() {
     const { hasError, updateProps, idyll, ...props } = this.props;
     return <div {...props}>This is another custom component</div>;

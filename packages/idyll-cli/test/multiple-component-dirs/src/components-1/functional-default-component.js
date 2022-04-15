@@ -1,8 +1,9 @@
-const React = require('react');
+import React from 'react';
 
-export default () =>
+export default () => (
   <div>
     This is some text
     <button>And a button</button>
     Then some more text
   </div>
+);
