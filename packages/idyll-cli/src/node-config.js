@@ -25,12 +25,4 @@ module.exports = (paths, opts) => {
         return originalLoad.apply(Module, arguments);
     }
   };
-
-  if (opts.transformComponents) {
-    require('@babel/register')({
-      presets: ['@babel/env', '@babel/preset-react'],
-      babelrc: false,
-      only: isWindows ? undefined : transformFolders
-    });
-  }
 };

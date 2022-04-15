@@ -54,7 +54,6 @@ describe('static assets', function() {
       components: join(PROJECT_DIR, 'components'),
       layout: 'centered',
       theme: join(PROJECT_DIR, 'custom-theme.css'),
-      transformComponents: true,
       css: join(PROJECT_DIR, 'styles.css'),
       outputCSS: '__idyll_styles.css',
       outputJS: '__idyll_index.js',
