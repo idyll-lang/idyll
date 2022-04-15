@@ -16,7 +16,9 @@ module.exports = async paths => {
     await ensureDir(tempComponentSubdir);
     const files = await readdir(dir);
     for (const file of files) {
-      const { code } = await babel.transformFileAsync(path.join(dir, file));
+      const { code } = await babel.transformFileAsync(path.join(dir, file), {
+        presets: ['@babel/preset-react']
+      });
       await writeFile(
         path.join(tempComponentSubdir, path.basename(file)),
         code,
