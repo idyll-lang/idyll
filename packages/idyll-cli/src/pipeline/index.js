@@ -58,7 +58,7 @@ const build = async (opts, paths, resolvers) => {
   const uniqueComponents = Array.from(new Set(nameArray));
   const components = uniqueComponents.reduce((acc, name) => {
     let resolved = resolvers.get('components').resolve(name);
-    if (resolved) acc[paramCase(name)] = resolved;
+    if (resolved) acc[paramCase(name)] = resolved.replace(/\\/g, '\\\\');
     return acc;
   }, {});
 
