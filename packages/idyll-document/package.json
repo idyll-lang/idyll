@@ -75,8 +75,7 @@
     "react-test-renderer": "^17.0.2",
     "rimraf": "^2.6.2",
     "rollup": "^2.70.0",
-    "rollup-plugin-jsx": "^1.0.3",
-    "rollup-plugin-node-builtins": "^2.1.2"
+    "rollup-plugin-jsx": "^1.0.3"
   },
   "peerDependencies": {
     "react": "16 || 17 || 18",
