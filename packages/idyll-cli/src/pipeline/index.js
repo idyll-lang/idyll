@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { writeFile } = fs.promises;
+const { writeFile, readdir } = fs.promises;
 const { copy, pathExists } = require('fs-extra');
 const { isVariableNode } = require('idyll-ast');
 const compile = require('idyll-compiler');
@@ -16,6 +16,7 @@ const {
 } = require('./parse');
 const bundleJS = require('./bundle-js');
 const errors = require('../errors');
+const compileUserComponents = require('./compile-user-components');
 
 let output;
 
@@ -29,6 +30,10 @@ const build = async (opts, paths, resolvers) => {
     }
   }
 
+  if (opts.compileUserComponents) {
+    paths = await compileUserComponents(paths);
+  }
+
   const ast =
     opts.ast ||
     (await compile(opts.inputString, {
@@ -39,7 +44,6 @@ const build = async (opts, paths, resolvers) => {
 
   const template = fs.readFileSync(paths.HTML_TEMPLATE_FILE, 'utf8');
 
-  /* Change here */
   resolvers.set('components', new ComponentResolver(opts, paths));
 
   let nameArray = [];
