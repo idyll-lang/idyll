@@ -2,6 +2,7 @@ const path = require('path');
 const mustache = require('mustache');
 const resolve = require('resolve');
 const slash = require('slash');
+const os = require('os');
 
 const {
   getProperty,
@@ -169,6 +170,7 @@ exports.getBaseHTML = (ast, template, opts) => {
 
 exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
   const components = {};
+  const isWindows = os.platform().includes('win');
 
   for (key of Object.keys(_components)) {
     // .forEach(key => {
@@ -178,7 +180,9 @@ exports.getHTML = async (paths, ast, _components, datasets, template, opts) => {
       components[key] = require(_components[key]);
     } catch (e) {
       try {
-        components[key] = await import(_components[key]);
+        components[key] = await import(isWindows
+          ? `file://${_components[key]}`
+          : _components[key]);
       } catch (er) {
         console.warn(
           `Could not import component ${key} for server-side rendering.`
