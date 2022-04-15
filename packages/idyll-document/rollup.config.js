@@ -1,7 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import { babel } from '@rollup/plugin-babel';
-import builtins from 'rollup-plugin-node-builtins';
 
 const pkg = require('./package.json');
 const dependencies = [
@@ -33,8 +32,7 @@ export default [
       }),
       // jsx( { factory: "React.createElement" } ),
       // nodeResolve(),
-      commonjs(),
-      builtins()
+      commonjs()
     ]
   },
   {
@@ -69,8 +67,7 @@ export default [
       }),
       // jsx( { factory: "React.createElement" } ),
       // nodeResolve(),
-      commonjs(),
-      builtins()
+      commonjs()
     ]
   }
 ];

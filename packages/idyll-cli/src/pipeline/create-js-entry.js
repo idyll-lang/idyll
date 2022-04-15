@@ -19,7 +19,7 @@ var ast = ${JSON.stringify(ast)};
 
 ${components
     .map(([k, p], i) => {
-      return `import _component_${i} from '${p}'`;
+      return `import _component_${i} from '${p.replace(/\\/g, '\\\\')}'`;
     })
     .join('\n')}
 

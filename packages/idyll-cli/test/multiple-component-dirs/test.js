@@ -55,7 +55,6 @@ describe('multiple component directories', function() {
       datasets: join(PROJECT_DIR, 'data'),
       layout: 'centered',
       theme: join(PROJECT_DIR, 'custom-theme.css'),
-      transformComponents: true,
       css: join(PROJECT_DIR, 'styles.css'),
       compiler: {
         spellcheck: false
@@ -99,7 +98,7 @@ describe('multiple component directories', function() {
       defaultComponents: dirname(require.resolve('idyll-components')),
       temp: '.idyll',
       template: resolve(join(__dirname, '/../../src/client/_index.html')),
-      transformComponents: true,
+      compileUserComponents: true,
       datasets: join(PROJECT_DIR, 'data'),
       static: 'static',
       staticOutputDir: 'static',

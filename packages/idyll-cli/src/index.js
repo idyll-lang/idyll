@@ -108,9 +108,9 @@ const idyll = (options = {}, cb) => {
       temp: '.idyll',
       template: join(__dirname, 'client', '_index.html'),
       transform: [],
-      transformComponents: false,
       compiler: {},
       compileLibs: false,
+      compileUserComponents: true,
       env: commandLineOptions.env
     },
     options

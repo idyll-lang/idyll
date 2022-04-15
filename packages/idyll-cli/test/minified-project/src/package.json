@@ -5,6 +5,7 @@
     "start": "idyll index.idl --watch --css styles.css --layout centered --theme github --spellcheck",
     "build": "idyll index.idl --layout centered --theme ./custom-theme.css --css styles.css"
   },
+  "type": "module",
   "idyll": {
     "alias": {
       "PackageJsonComponentTest": "CustomComponent"

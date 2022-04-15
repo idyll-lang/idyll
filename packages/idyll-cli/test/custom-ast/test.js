@@ -155,7 +155,6 @@ before(function(done) {
     css: join(PROJECT_DIR, 'styles.css'),
     googleFonts: ['Hanalei Fill'],
     favicon: 'static/favicon.ico',
-    transformComponents: true,
     compiler: {
       spellcheck: false
     },
@@ -197,7 +196,7 @@ it('options work as expected', () => {
     static: 'static',
     staticOutputDir: 'static',
     transform: [],
-    transformComponents: true,
+    compileUserComponents: true,
     port: 3000,
     googleFonts: ['Hanalei Fill'],
     outputCSS: 'idyll_styles.css',

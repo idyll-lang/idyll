@@ -36,7 +36,6 @@ describe('env-options', function() {
       theme: join(PROJECT_DIR, 'custom-theme.css'),
       css: join(PROJECT_DIR, 'styles.css'),
       googleFonts: ['Hanalei Fill'],
-      transformComponents: true,
       favicon: 'static/favicon.ico',
       compiler: {
         spellcheck: false
@@ -49,6 +48,7 @@ describe('env-options', function() {
       compileLibs: false,
       compiler: { spellcheck: false },
       components: join(PROJECT_DIR, 'components'),
+      compileUserComponents: true,
       css: join(PROJECT_DIR, 'styles.css'),
       datasets: join(PROJECT_DIR, 'data'),
       env: undefined,
@@ -70,7 +70,6 @@ describe('env-options', function() {
       temp: '.idyll',
       template: resolve(join(__dirname, '/../../src/client/_index.html')),
       theme: join(PROJECT_DIR, 'custom-theme.css'),
-      transformComponents: true,
       transform: [],
       watch: false
     });
@@ -86,7 +85,6 @@ describe('env-options', function() {
       theme: join(PROJECT_DIR, 'custom-theme.css'),
       css: join(PROJECT_DIR, 'styles.css'),
       googleFonts: ['Hanalei Fill'],
-      transformComponents: true,
       favicon: 'static/favicon.ico',
       compiler: {
         spellcheck: false
@@ -101,6 +99,7 @@ describe('env-options', function() {
       compileLibs: false,
       compiler: { spellcheck: false },
       components: join(PROJECT_DIR, 'components'),
+      compileUserComponents: true,
       css: join(PROJECT_DIR, 'styles.css'),
       datasets: join(PROJECT_DIR, 'data'),
       env: 'my-env',
@@ -122,7 +121,6 @@ describe('env-options', function() {
       temp: '.idyll',
       template: resolve(join(__dirname, '/../../src/client/_index.html')),
       theme: join(PROJECT_DIR, 'custom-theme.css'),
-      transformComponents: true,
       transform: [],
       watch: false
     });

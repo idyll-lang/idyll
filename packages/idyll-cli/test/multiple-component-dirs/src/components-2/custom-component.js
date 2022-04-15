@@ -1,25 +1,17 @@
-const React = require('react');
+import React from 'react';
 
 class CustomComponent extends React.PureComponent {
   render() {
-    const {hasError, updateProps, idyll, ...props} = this.props;
-    return (
-      <div {...props}>
-        This is a custom component
-      </div>
-    );
+    const { hasError, updateProps, idyll, ...props } = this.props;
+    return <div {...props}>This is a custom component</div>;
   }
 }
 
-module.exports = CustomComponent;
+export default CustomComponent;
 
-module.exports.IndexedComponent = class extends React.PureComponent {
+CustomComponent.IndexedComponent = class extends React.PureComponent {
   render() {
-    const {hasError, updateProps, idyll, ...props} = this.props;
-    return (
-      <div {...props}>
-        This is another custom component
-      </div>
-    );
+    const { hasError, updateProps, idyll, ...props } = this.props;
+    return <div {...props}>This is another custom component</div>;
   }
 };

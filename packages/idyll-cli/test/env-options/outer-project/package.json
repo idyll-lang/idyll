@@ -4,6 +4,7 @@
   "scripts": {
     "start": "idyll index.idl --watch --css styles.css --layout centered --theme github --spellcheck"
   },
+  "type": "module",
   "idyll": [
     [
       "default-env",

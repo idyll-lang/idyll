@@ -14,7 +14,6 @@ module.exports = (paths, opts) => {
   debug('Reading components from directories:', transformFolders);
 
   const originalLoad = Module._load;
-  const isWindows = os.platform().includes('win');
   Module._load = function(path) {
     switch (path) {
       case 'react':
@@ -25,12 +24,4 @@ module.exports = (paths, opts) => {
         return originalLoad.apply(Module, arguments);
     }
   };
-
-  if (opts.transformComponents) {
-    require('@babel/register')({
-      presets: ['@babel/env', '@babel/preset-react'],
-      babelrc: false,
-      only: isWindows ? undefined : transformFolders
-    });
-  }
 };

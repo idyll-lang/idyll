@@ -1,15 +1,11 @@
-const React = require('react');
+import React from 'react';
 
 class PascalComponent extends React.PureComponent {
   render() {
-    const {hasError, updateProps, idyll, ...props} = this.props;
+    const { hasError, updateProps, idyll, ...props } = this.props;
 
-    return (
-      <div {...props}>
-        This is a custom component
-      </div>
-    );
+    return <div {...props}>This is a custom component</div>;
   }
 }
 
-module.exports = PascalComponent;
+export default PascalComponent;

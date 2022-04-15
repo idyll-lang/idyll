@@ -1,5 +1,5 @@
-const React = require('react');
+import React from 'react';
 
-module.exports = () => {
+export default () => {
   return <div>Let's put the fun back in functional!</div>;
 };
