@@ -15,6 +15,7 @@ import wrapText from './plugins/wrap-text';
 import cleanResults from './plugins/clean-results';
 import smartQuotes from './plugins/smart-quotes';
 import autoLinkify from './plugins/auto-linkify';
+import smartEmEn from './plugins/smart-emen';
 
 const defaultPlugins = [
   hoistVariables,
@@ -23,12 +24,16 @@ const defaultPlugins = [
   wrapText,
   cleanResults,
   smartQuotes,
-  autoLinkify
+  autoLinkify,
+  smartEmEn
 ];
 
 export default async function(input, context = {}) {
   // prepare compiler options
-  context = Object.assign({ spellcheck: false, smartquotes: true }, context);
+  context = Object.assign(
+    { spellcheck: false, smartquotes: true, smartemen: true },
+    context
+  );
 
   // pre-process input text
   input = cleanNewlines(input).trim();
