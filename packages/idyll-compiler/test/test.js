@@ -1268,6 +1268,46 @@ End text
         ])
       );
     });
+
+    it('should convert --- and -- to dash em and en dash', async function() {
+      const input = '-- Hello--- she tried to say but was rudely--interrupted';
+      expect(await compile(input)).to.eql(
+        convertV1ToV2([
+          [
+            'TextContainer',
+            [],
+            [
+              [
+                'p',
+                [],
+                [
+                  '\u2013 Hello\u2014 she tried to say but was rudely\u2013interrupted'
+                ]
+              ]
+            ]
+          ]
+        ])
+      );
+    });
+    it('should not convert --- and -- in code blocks', async function() {
+      const input =
+        '`-- Hello--- she tried to say but was rudely--interrupted`';
+      expect(await compile(input)).to.eql(
+        convertV1ToV2([
+          [
+            'TextContainer',
+            [],
+            [
+              [
+                'code',
+                [],
+                ['-- Hello--- she tried to say but was rudely--interrupted']
+              ]
+            ]
+          ]
+        ])
+      );
+    });
   });
 
   describe('error handling', function() {
