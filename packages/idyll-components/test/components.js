@@ -44,7 +44,8 @@ const {
   H6,
   Desmos,
   Cite,
-  References
+  References,
+  Ga4Analytics
 } = require('../dist/cjs/index.js');
 
 describe('Sanity Check', () => {
@@ -180,6 +181,9 @@ describe('Sanity Check', () => {
       });
       it('<Preload />', () => {
         expect(() => shallow(<Preload />)).not.toThrow();
+      });
+      it('<Ga4Analytics />', () => {
+        expect(() => shallow(<Ga4Analytics />)).not.toThrow();
       });
     });
   });
@@ -322,6 +326,9 @@ describe('Sanity Check', () => {
       });
       it('<Preload />', () => {
         expect(() => mount(<Preload />)).not.toThrow();
+      });
+      it('<Ga4Analytics />', () => {
+        expect(() => mount(<Ga4Analytics />)).not.toThrow();
       });
     });
   });
