@@ -343,6 +343,15 @@ const components = [
           }
         },
         {
+          Ga4Analytics: {
+            thumbnail: 'analytics.png',
+            component: COMPONENTS.Ga4Analytics,
+            description:
+              'This component uses Google Analytics 4 code on your page. Universal Analytics properties will stop collecting data starting July 1, 2023. Google recommends to use Google Analytics 4 property instead.',
+            liveExample: false
+          }
+        },
+        {
           Meta: {
             thumbnail: 'meta.png',
             component: null,
